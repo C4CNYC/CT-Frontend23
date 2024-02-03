@@ -1,4 +1,4 @@
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { ISettings, OrganizationResponce } from '../interfaces/organization.interface'
 

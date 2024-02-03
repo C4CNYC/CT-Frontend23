@@ -2,8 +2,8 @@ import { Box, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 import { CustomAvatar } from '@/components'
-import { getLinearGradient } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { getLinearGradient } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 const StyledInfo = styled('div')(({ theme }) => ({
   left: 0,

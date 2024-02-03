@@ -10,10 +10,9 @@ import { StepWizardChildProps } from 'react-step-wizard'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { RHFTextField, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
-
-import { STUDENT_PATH_AFTER_LOGIN } from '../../../config'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IProps {
   isValid?: boolean
@@ -35,7 +34,7 @@ export default function SignInLogin({
       setIsLoading(true)
       try {
         await loginWithGoogle(token)
-        router.push(STUDENT_PATH_AFTER_LOGIN)
+        router.push(STUDENT_PATH_PAGE.home)
       } catch (error: any) {
         enqueueSnackbar(error.message, { variant: 'error' })
       }

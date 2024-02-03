@@ -1,9 +1,9 @@
 import { Stack, SxProps } from '@mui/material'
 import { Theme } from '@mui/system'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import Preferences from '@/sections/dashboard/lessons/LessonStep/Modals/Preferences'
 import Validation from '@/sections/dashboard/lessons/LessonStep/Modals/Validation'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 

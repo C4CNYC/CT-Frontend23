@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 
-import { useSocket } from '@/lib/hooks'
+import { useSocket } from '@/hooks'
 import { setCode, toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'

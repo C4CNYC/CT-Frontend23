@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { useDebounceCallback } from '@/lib/hooks'
+import { useDebounceCallback } from '@/hooks'
 
 import SkeletonViewBlock from './SkeletonViewBlock'
 

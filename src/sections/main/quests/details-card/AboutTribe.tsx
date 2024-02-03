@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import { format } from 'date-fns'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,

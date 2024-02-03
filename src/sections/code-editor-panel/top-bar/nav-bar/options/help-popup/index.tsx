@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import { Box } from '@mui/system'
 
 import { Accordion, AccordionDetails, AccordionSummary, Iconify, MenuPopover } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import HelpQuestionModal from './modals/HelpQuestion'
 import Solution from './options/solution'

@@ -3,7 +3,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/system/Stack'
 
-import { SetFilterType, useFilters } from '@/lib/hooks'
+import { SetFilterType, useFilters } from '@/hooks'
 import { ITaskSearchParams } from '@/redux/services/interfaces/task.interface'
 import { useGetTasksQuery } from '@/redux/services/manager/tasks-manager'
 

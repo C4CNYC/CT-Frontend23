@@ -2,9 +2,9 @@ import { IconButton, IconButtonProps } from '@mui/material'
 
 import { Iconify } from '@/components/iconify'
 import { useSettingsContext } from '@/components/settings'
-import { useResponsive } from '@/lib/hooks/useResponsive'
+import { useResponsive } from '@/hooks/useResponsive'
 
-import { NAV } from '../../../config'
+import { NAV_SIZES } from '../../../theme/consts'
 
 export default function NavToggleButton({
   sx,
@@ -26,7 +26,7 @@ export default function NavToggleButton({
         p: 0.5,
         top: 32,
         position: 'fixed',
-        left: NAV.W_DASHBOARD - 12,
+        left: NAV_SIZES.W_DASHBOARD - 12,
         bgcolor: 'background.default',
         zIndex: (theme) => theme.zIndex.appBar + 1,
         border: (theme) => `dashed 1px ${theme.palette.divider}`,

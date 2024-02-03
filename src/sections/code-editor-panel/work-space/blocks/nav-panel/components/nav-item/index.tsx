@@ -12,8 +12,8 @@ import {
   Tooltip,
 } from '@mui/material'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IFriend } from '@/redux/interfaces/friends.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 interface NavItemProps {
   onClick?: () => void

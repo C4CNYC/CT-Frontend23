@@ -26,9 +26,8 @@ import {
   useTable,
 } from '@/components'
 import { ModalIntegration } from '@/components/modal-integration'
+import { useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
-import { useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useDeleteIntegrationMutation,
   useGetIntegrationsListQuery,
@@ -37,6 +36,7 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
+import { useTranslate } from '@/utils/translateHelper'
 
 AppsPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 

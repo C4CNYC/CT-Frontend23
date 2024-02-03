@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import { localStorageAvailable } from '@/lib/utils/localStorageAvailable'
-import { voidFunction } from '@/lib/utils/voidFunction'
+import { localStorageAvailable } from '@/utils/localStorageAvailable'
+import { voidFunction } from '@/utils/voidFunction'
 
 import { defaultSettings } from './config-setting'
 import { defaultPreset, getPresets, presetsOption } from './presets'

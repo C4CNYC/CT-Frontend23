@@ -5,7 +5,7 @@ import { HiDotsVertical } from '@react-icons/all-files/hi/HiDotsVertical'
 import { MdIosShare } from '@react-icons/all-files/md/MdIosShare'
 import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 
-import { convertNumber } from '@/lib/utils'
+import { convertNumber } from '@/utils'
 
 interface IActionBlockProps {
   certificate: number

@@ -1,8 +1,8 @@
 import { type FC, useState } from 'react'
 
-import { type BaseResponseInterface } from '@/lib/utils'
 import { type IChallanges } from '@/redux/interfaces/challenges.interface'
 import { type ILesson } from '@/redux/interfaces/content.interface'
+import { type BaseResponseInterface } from '@/utils'
 
 import SkeletonDrawer from '../skeleton-drawer'
 

@@ -10,13 +10,13 @@ import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 
 import { Iconify } from '@/components/iconify'
-import { useFilters } from '@/lib/hooks'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import { ClassSearchParams, IClass } from '@/redux/interfaces/class.interface'
 import { useGetClassesQuery } from '@/redux/services/manager/classes-manager'
 import { RootState, useSelector } from '@/redux/store'
 import SchoolFiltersSkeleton from '@/sections/schools/school-filter-skeleton'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   filterName: string

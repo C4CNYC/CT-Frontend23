@@ -8,7 +8,7 @@ import ForbiddenIllustration from '@/assets/illustrations/ForbiddenIllustration'
 import { MotionContainer, varBounce } from '@/components'
 // layouts
 import CompactLayout from '@/layouts/compact'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 Page403.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>
 

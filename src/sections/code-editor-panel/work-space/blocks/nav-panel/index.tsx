@@ -9,11 +9,11 @@ import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { SimpleInfiniteList } from '@/components'
-import { useLessonStatus, useSocket } from '@/lib/hooks'
-import { type BaseResponseInterface } from '@/lib/utils'
+import { useLessonStatus, useSocket } from '@/hooks'
 import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { useSelector, RootState } from '@/redux/store'
 import { ILessonUserStatus } from '@/types'
+import { type BaseResponseInterface } from '@/utils'
 
 import CodeBlock from './components/code-block'
 import CustomNavItem from './components/custom-nav-item'

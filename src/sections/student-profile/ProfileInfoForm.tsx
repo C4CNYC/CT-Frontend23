@@ -11,13 +11,13 @@ import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
 import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IUser } from '@/redux/interfaces/auth.interface'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
 } from '@/redux/services/auth'
+import { useTranslate } from '@/utils/translateHelper'
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),

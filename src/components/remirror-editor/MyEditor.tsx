@@ -5,9 +5,9 @@ import { Remirror, ThemeProvider, useRemirror } from '@remirror/react'
 import { ImageAttributes, ImageExtension } from 'remirror/extensions'
 import 'remirror/styles/all.css'
 
-import { BaseResponseInterface, isJson } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useCreateMediaMutation } from '@/redux/services/manager/media-manager'
+import { BaseResponseInterface, isJson } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 

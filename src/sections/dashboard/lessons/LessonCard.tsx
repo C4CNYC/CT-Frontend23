@@ -7,11 +7,10 @@ import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import { useRouter } from 'next/router'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
+import { useDeleteLessonMutation } from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
-
-import { useDeleteLessonMutation } from '../../../redux/services/manager/lessons-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   lesson: ILesson

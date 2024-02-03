@@ -3,7 +3,7 @@ import { AiFillStar } from '@react-icons/all-files/ai/AiFillStar'
 import { AiOutlineHeart } from '@react-icons/all-files/ai/AiOutlineHeart'
 import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 
-import { convertNumber } from '@/lib/utils'
+import { convertNumber } from '@/utils'
 
 interface ICourseStatistics {
   likesCount: number

@@ -1,9 +1,8 @@
 import { type DropResult } from '@hello-pangea/dnd'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
-
-import { type IAssignmentsCard } from '../../types/assignments'
+import { type IAssignmentsCard } from '@/types/assignments'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 // solution for count order depend of new position
 

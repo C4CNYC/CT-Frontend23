@@ -12,7 +12,6 @@ import { useSnackbar } from 'notistack'
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { ConfirmDialog, MenuPopover } from '@/components'
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IAssignmentReduced } from '@/redux/interfaces/assignment.interface'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useDeleteAssignmentMutation } from '@/redux/services/manager/assignments-manager'
@@ -20,6 +19,7 @@ import {
   usePinAssignmentMutation, // useUnpinAssignmentMutation,
 } from '@/redux/services/manager/assignments-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IQuestItemProps {
   assignment: IAssignmentReduced

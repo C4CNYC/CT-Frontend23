@@ -14,9 +14,9 @@ import { MdIosShare } from '@react-icons/all-files/md/MdIosShare'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IModuleContent } from '@/redux/interfaces/content.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 import ActionsBlock from './ActionsBlock'
 import ImageLightBox from './ImageLightBox'

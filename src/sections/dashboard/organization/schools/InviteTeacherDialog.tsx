@@ -14,14 +14,14 @@ import {
 import { useSnackbar } from 'notistack'
 
 import { Scrollbar } from '@/components'
-import { useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import {
   useCreateOrgMemberMutation,
   useGetOrgMembersQuery,
 } from '@/redux/services/admin/members-admin'
 import { useAddTeacherMutation } from '@/redux/services/admin/school-amdin'
 import { Role } from '@/redux/services/enums/role.enum'
+import { useTranslate } from '@/utils/translateHelper'
 
 import UserItem from './UserItem'
 

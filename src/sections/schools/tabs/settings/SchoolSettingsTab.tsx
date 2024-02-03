@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Box } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetSchoolSettingsQuery } from '@/redux/services/manager/schools-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import SettingsForm from './SettingsForm'
 import SkeletonSettingsTab from './SkeletonSettingsTab'

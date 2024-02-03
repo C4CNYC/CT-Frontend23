@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Box, Button, Collapse, Tab, Tabs, Theme, alpha, useTheme } from '@mui/material'
 import { BsBookmarkCheckFill } from '@react-icons/all-files/bs/BsBookmarkCheckFill'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface ICreatePaletteProps {
   choosenColor: string

@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import { Button, Stack, useMediaQuery, useTheme } from '@mui/material'
 import { HiMenuAlt2 } from '@react-icons/all-files/hi/HiMenuAlt2'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { ILesson } from '@/redux/interfaces/content.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { SWITCH_BTN_SX, getLessonListSx } from './constants'
 import RoadIcon from './icons/RoadIcon'

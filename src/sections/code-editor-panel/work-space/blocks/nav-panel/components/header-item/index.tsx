@@ -5,8 +5,8 @@ import { FaChevronLeft } from '@react-icons/all-files/fa/FaChevronLeft'
 import { FaChevronRight } from '@react-icons/all-files/fa/FaChevronRight'
 import { useSelector } from 'react-redux'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { RootState } from '@/redux/store'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface HeaderItemProps {
   onClick: () => void

@@ -2,8 +2,8 @@ import { type FC, type ReactNode, useMemo, useState } from 'react'
 
 import { Box, Collapse, useMediaQuery, useTheme } from '@mui/material'
 
-import { localStorageAvailable } from '@/lib/utils'
 import { useSelector } from '@/redux/store'
+import { localStorageAvailable } from '@/utils'
 
 import { getBoxStyles } from './constants'
 import Header from './header'

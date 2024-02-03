@@ -16,8 +16,8 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useInviteStudentMutation } from '@/redux/services/manager/students-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { FormProvider, RHFTextField } from '../hook-form'
 import { Iconify } from '../iconify'

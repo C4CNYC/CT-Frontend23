@@ -4,9 +4,9 @@ import { CgBrowser } from '@react-icons/all-files/cg/CgBrowser'
 import { TbArrowBarToRight } from '@react-icons/all-files/tb/TbArrowBarToRight'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { toggleBrowser } from '@/redux/slices/code-panel-global'
 import { type RootState } from '@/redux/store'
+import { useTranslate } from '@/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 

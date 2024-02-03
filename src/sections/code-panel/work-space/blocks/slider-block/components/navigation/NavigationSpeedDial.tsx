@@ -6,8 +6,8 @@ import { MdOutlineNoteAlt } from '@react-icons/all-files/md/MdOutlineNoteAlt'
 import { TbMessageCircle } from '@react-icons/all-files/tb/TbMessageCircle'
 import { useAtom } from 'jotai'
 
-import { voidFunction } from '@/lib/utils'
 import { chatHandlerAtom } from '@/sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom'
+import { voidFunction } from '@/utils'
 
 interface Props {
   stepHasValidation: boolean

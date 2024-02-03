@@ -1,5 +1,5 @@
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IProgress } from '@/redux/interfaces/progress.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { managerApi } from '.'
 

@@ -7,11 +7,11 @@ import { useDispatch } from 'react-redux'
 
 import { type AuthUserType } from '@/auth/types'
 import { EditorMode } from '@/components/code-editor-collab/hook/constants'
-import { type BaseResponseInterface } from '@/lib/utils'
-import { mapValidations } from '@/lib/utils/validationMaping'
 import { type IValidation } from '@/redux/interfaces/content.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
+import { type BaseResponseInterface } from '@/utils'
+import { mapValidations } from '@/utils/validationMaping'
 
 import BaseBlock from '../base-block'
 import CodeEditorController from '../code-editor-controller'

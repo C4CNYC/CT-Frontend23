@@ -1,7 +1,7 @@
-import { UserType } from '@/lib/utils'
 import { PATH_AUTH } from '@/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import InviteFriendsModal from '@/sections/invite-friends/InviteFriendsModal'
+import { UserType } from '@/utils'
 
 import MenuHugDialog from './MenuHugDialog'
 

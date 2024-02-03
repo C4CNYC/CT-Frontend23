@@ -11,13 +11,13 @@ import { useAtom } from 'jotai'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ILesson } from '@/redux/interfaces/content.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import {
   IGlobalCodePanelAtom,
   globalCodePanelAtom,
 } from '@/sections/code-panel/atoms/global-code-panel.atom'
+import { useTranslate } from '@/utils/translateHelper'
 
 import RocketIcon from '../icons/RocketIcon'
 

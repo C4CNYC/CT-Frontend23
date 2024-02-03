@@ -5,8 +5,8 @@ import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from 
 import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useSelector } from '@/redux/store'
+import { useTranslate } from '@/utils/translateHelper'
 
 import {
   COPY_BLOCK_CUSTOM_STYLES,

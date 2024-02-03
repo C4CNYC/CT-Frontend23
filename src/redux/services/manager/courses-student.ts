@@ -1,4 +1,3 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import {
   ICourseContent,
   ICourseElement,
@@ -6,6 +5,7 @@ import {
   ILesson,
   IModuleContent,
 } from '@/redux/interfaces/content.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { managerApi } from '.'
 

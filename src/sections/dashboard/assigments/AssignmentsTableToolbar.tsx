@@ -2,7 +2,7 @@ import { Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/materia
 import { DatePicker } from '@mui/x-date-pickers'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 const INPUT_WIDTH = 160
 

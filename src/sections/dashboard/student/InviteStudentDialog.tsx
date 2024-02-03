@@ -8,8 +8,8 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useInviteStudentMutation } from '@/redux/services/manager/students-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValueProps {
   email: string

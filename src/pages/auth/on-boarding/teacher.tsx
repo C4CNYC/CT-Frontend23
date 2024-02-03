@@ -1,7 +1,7 @@
 import GuestGuard from '@/auth/GuestGuard'
 import LoginLayout from '@/layouts/login/LoginLayout'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import TeacherStepper from '@/sections/on-boarding-register/teacher/TeacherStepper'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function TeacherOnBoarding(): React.ReactElement {
   const translate = useTranslate()

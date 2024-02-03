@@ -1,9 +1,9 @@
 import { Card, Divider, Skeleton, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
 import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IGeneralInfo {
   activeTab: boolean

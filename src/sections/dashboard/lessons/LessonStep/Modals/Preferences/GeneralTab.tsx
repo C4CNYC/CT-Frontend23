@@ -2,8 +2,8 @@ import { Grid } from '@mui/material'
 import { Box, Stack } from '@mui/system'
 
 import { RHFSelect, RHFSwitch, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { LessonContentComplexity } from '@/redux/services/enums/lesson-content-complexity.enum'
+import { useTranslate } from '@/utils/translateHelper'
 
 export const GeneralTab = (): React.ReactElement => {
   const translate = useTranslate()

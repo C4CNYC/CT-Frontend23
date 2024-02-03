@@ -10,11 +10,11 @@ import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField } from '@/components'
-import { getRandomColor } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { IGoals } from '@/redux/interfaces/goals.interface'
 import { usePostGoalMutation, useUpdateGoalMutation } from '@/redux/services/manager/goals-student'
+import { getRandomColor } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps {
   title: string

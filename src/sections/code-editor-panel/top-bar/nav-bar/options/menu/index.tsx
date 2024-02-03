@@ -12,11 +12,11 @@ import { useDispatch } from 'react-redux'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { Iconify, MenuPopover } from '@/components'
 // local files
-import { UserType } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
 import { PATH_AUTH } from '@/routes/paths'
+import { UserType } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 import config, { ILinks } from './config'
 import {

@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Box, Card, Grid, Stack, Typography } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetSchoolProfileQuery } from '@/redux/services/manager/schools-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import SkeletonSocialsTab from './SkeletonSocialsTab'
 import SocialItem from './SocialItem'

@@ -7,8 +7,8 @@ import { AnimatePresence, m } from 'framer-motion'
 import { useAtom } from 'jotai'
 
 import { Iconify } from '@/components/iconify'
-import { IValidationMap } from '@/lib/utils/validationMaping'
 import { globalCodePanelAtom } from '@/sections/code-panel/atoms/global-code-panel.atom'
+import { IValidationMap } from '@/utils/validationMaping'
 
 import { checkersAnimationAtom } from './checkers-animation-atom'
 import CheckersCompleated from './CheckersCompleated'

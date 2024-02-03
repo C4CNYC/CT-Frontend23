@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import * as _ from 'lodash-es'
 import { useRouter } from 'next/router'
 
-import { BaseSearchInterface } from '@/lib/utils'
+import { BaseSearchInterface } from '@/utils'
 
 export const DEFAULT_TAKE_PER_PAGE = 10
 

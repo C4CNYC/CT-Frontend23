@@ -6,7 +6,6 @@ import { useSnackbar } from 'notistack'
 
 import { Iconify, UploadImageModal, useSettingsContext } from '@/components'
 import DashboardLayout from '@/layouts/dashboard'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useGetOrganizationQuery,
   useUpdateOrgCoverMutation,
@@ -18,6 +17,7 @@ import SkeletonProfileOrg from '@/sections/dashboard/organization/general/tabs/p
 import SettingsTab from '@/sections/dashboard/organization/general/tabs/settings/settings'
 import { ProfileCover } from '@/sections/dashboard/user/profile'
 import SkeletonSchool from '@/sections/schools/skeleton-school'
+import { useTranslate } from '@/utils/translateHelper'
 
 const TABS = [
   {

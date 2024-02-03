@@ -3,8 +3,8 @@ import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Dialog, DialogTitle, IconButton } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IAuthor } from '@/redux/services/interfaces/author.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import AuthorForm from './AuthorForm'
 

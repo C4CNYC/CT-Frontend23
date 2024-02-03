@@ -12,11 +12,11 @@ import {
 import { type DragEndEvent } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
-import { useFilters } from '@/lib/hooks/useFilters'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { useFilters } from '@/hooks/useFilters'
 import { IFriend } from '@/redux/interfaces/friends.interface'
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
 import { useSelector } from '@/redux/store'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { type DraggableBlockConfig, getDraggableBlockConfig } from './utils'
 

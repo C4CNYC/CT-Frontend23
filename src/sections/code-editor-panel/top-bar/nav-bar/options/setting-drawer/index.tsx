@@ -11,9 +11,9 @@ import {
   updateFontSize,
   updateLineWrap,
 } from '@/components/real-time-editor'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { setSlideIndex } from '@/redux/slices/code-panel-global'
 import { setStartTour } from '@/redux/slices/tour'
+import { useTranslate } from '@/utils/translateHelper'
 
 import EditColors from './preferences/EditColors'
 import EditorFontSize from './preferences/EditorFontSize'

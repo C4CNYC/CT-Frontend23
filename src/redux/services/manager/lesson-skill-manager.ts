@@ -1,4 +1,4 @@
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { ISkill } from '../interfaces/skill.interface'
 

@@ -23,11 +23,11 @@ import * as Yup from 'yup'
 
 import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
 import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import { useUpdateAssignmentMutation } from '@/redux/services/manager/assignments-manager'
 import SkillsAutocomplete from '@/sections/main/quests/add-quest/components/SkillsAutocomplete'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IAssignmentDarawerProps {
   openDetails: boolean

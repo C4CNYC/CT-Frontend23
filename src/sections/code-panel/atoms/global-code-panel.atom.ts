@@ -1,6 +1,6 @@
 import { atomWithStorage } from 'jotai/utils'
 
-import { voidFunction } from '@/lib/utils'
+import { voidFunction } from '@/utils'
 
 export interface IGlobalCodePanelAtom {
   slideIndex: number

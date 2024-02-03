@@ -5,10 +5,10 @@ import { UseFormReturn } from 'react-hook-form'
 
 import { RHFSelect, RHFTextField } from '@/components'
 import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { AVATAR_SX, INPUT_TEXT_SX, inputNameStyles, selectStyle } from './constants'
 

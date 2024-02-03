@@ -9,8 +9,8 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, Iconify, RHFTextField, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useSubmitPasswordMutation } from '@/redux/services/auth'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { PATH_AUTH } from '../../routes/paths'
 

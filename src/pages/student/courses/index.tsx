@@ -3,10 +3,10 @@ import Head from 'next/head'
 
 import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CourseList from '@/sections/courses/CourseList'
+import { useTranslate } from '@/utils/translateHelper'
 
 Courses.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

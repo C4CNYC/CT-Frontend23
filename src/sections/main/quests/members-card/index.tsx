@@ -31,8 +31,7 @@ import {
   useSnackbar,
   useTable,
 } from '@/components'
-import { useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-student'
@@ -43,6 +42,7 @@ import {
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { UserTableToolbar } from '@/sections/dashboard/user/list'
+import { useTranslate } from '@/utils/translateHelper'
 
 import MemberRow from './MemberRow'
 

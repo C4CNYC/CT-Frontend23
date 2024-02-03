@@ -4,8 +4,8 @@ import Close from '@mui/icons-material/Close'
 import { IconButton, Stack, Typography } from '@mui/material'
 
 import { EditorMode } from '@/components/code-editor-collab/hook/constants'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { type CodeEditorControllerRoom } from '@/redux/slices/code-editor-controller'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface TitleProps {
   room: CodeEditorControllerRoom | null

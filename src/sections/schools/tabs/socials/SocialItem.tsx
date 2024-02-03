@@ -7,14 +7,13 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
+import { SOCIAL_ICONS } from '@/assets/data'
 import { FormProvider, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 } from '@/redux/services/manager/schools-manager'
-
-import { SOCIAL_ICONS } from '../../../../assets/data'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps {
   socialID: string

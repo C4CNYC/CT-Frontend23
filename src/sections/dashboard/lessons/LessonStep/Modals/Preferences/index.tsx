@@ -20,9 +20,9 @@ import * as Yup from 'yup'
 
 import { FormProvider, RHFCode, RHFTextField } from '@/components'
 import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { LessonContentComplexity } from '@/redux/services/enums/lesson-content-complexity.enum'
 import { useUpdateLessonContentMutation } from '@/redux/services/manager/lesson-content-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { GeneralTab } from './GeneralTab'
 

@@ -2,9 +2,9 @@ import { Avatar, Box, Link, Tooltip, Typography, useMediaQuery, useTheme } from 
 import NextLink from 'next/link'
 
 import { useSettingsContext } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { TRIBE_LINK_SX, getSignOfActiveLink, getTribeTitleSx } from './constants'
 

@@ -11,8 +11,6 @@ import * as Yup from 'yup'
 
 import { FormProvider, useSnackbar } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { createRandomAvatar } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useCreateClassesMutation,
   useUpdateClassesAvatarMutation,
@@ -25,6 +23,8 @@ import ChooseShoolModal from '@/sections/main/create-class/ChooseShoolModal'
 import CreateClassSkeleton from '@/sections/main/create-class/CreateClassSkeleton'
 import CreateHeader from '@/sections/main/create-class/createHeader'
 import CreatePalette, { CLASS_PALETTE } from '@/sections/main/create-class/createPalette'
+import { createRandomAvatar } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)]

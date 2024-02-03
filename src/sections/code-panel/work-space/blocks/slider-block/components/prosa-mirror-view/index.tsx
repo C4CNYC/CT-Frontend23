@@ -38,7 +38,7 @@ import {
 } from 'remirror/extensions'
 import 'remirror/styles/all.css'
 
-import { isJson, voidFunction } from '@/lib/utils'
+import { isJson, voidFunction } from '@/utils'
 
 type Extensions =
   | HeadingExtension

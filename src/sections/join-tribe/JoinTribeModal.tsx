@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import { Box, Dialog } from '@mui/material'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IClass } from '@/redux/interfaces/class.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import JoinTribeLogin from './join-tribe-login'
 import JoinTribeRegister from './join-tribe-register.tsx'

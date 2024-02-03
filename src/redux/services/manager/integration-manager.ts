@@ -1,4 +1,4 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { IIntegration, IIntegrationSearch } from '../interfaces/integration.interface'
 

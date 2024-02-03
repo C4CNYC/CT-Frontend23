@@ -2,7 +2,7 @@ import { Avatar, Box, Chip, LinearProgress, Link, Tooltip, Typography } from '@m
 import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 import NextLink from 'next/link'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   progress: number | null

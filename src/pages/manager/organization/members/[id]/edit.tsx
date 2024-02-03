@@ -4,10 +4,10 @@ import { useRouter } from 'next/router'
 
 import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import DashboardLayout from '@/layouts/dashboard'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetOrgMemberQuery } from '@/redux/services/admin/members-admin'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import UserNewEditForm from '@/sections/dashboard/user/UserNewEditForm'
+import { useTranslate } from '@/utils/translateHelper'
 
 UserEditPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 

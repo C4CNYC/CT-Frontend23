@@ -14,9 +14,9 @@ import CodeEditorCollab from '@/components/code-editor-collab'
 import { RoomStatus } from '@/components/code-editor-collab/components/status-label'
 import { EditorMode } from '@/components/code-editor-collab/hook/constants'
 import { createSocket, waitConnectSocket } from '@/components/code-editor-collab/hook/utils/socket'
-import { voidFunction, type BaseResponseInterface } from '@/lib/utils'
 import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
+import { voidFunction, type BaseResponseInterface } from '@/utils'
 
 import { getRandomIndex } from '../../hook/utils'
 

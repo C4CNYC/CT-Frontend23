@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Collapse } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import useActiveLink from '@/lib/hooks/useActiveLink'
+import useActiveLink from '@/hooks/useActiveLink'
 
 import { NavListProps } from '../types'
 

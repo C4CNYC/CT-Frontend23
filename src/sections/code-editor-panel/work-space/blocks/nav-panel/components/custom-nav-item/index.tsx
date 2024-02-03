@@ -12,7 +12,7 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface NavItemProps {
   onClick?: () => void

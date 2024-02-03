@@ -1,6 +1,6 @@
 import { SxProps, Theme } from '@mui/system'
 
-import { getLinearGradient } from '@/lib/utils'
+import { getLinearGradient } from '@/utils'
 
 export const JOIN_STACK_SX = {
   justifyContent: 'space-between',

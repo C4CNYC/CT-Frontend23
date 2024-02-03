@@ -8,8 +8,8 @@ import * as Yup from 'yup'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 import EmailStep from './email-step'
 import PasswordStep from './password-step'

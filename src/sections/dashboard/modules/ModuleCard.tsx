@@ -5,11 +5,10 @@ import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mu
 import Link from 'next/link'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useDeleteModuleMutation } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
-
-import { useDeleteModuleMutation } from '../../../redux/services/manager/modules-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function ModuleCard({ module }: any): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()

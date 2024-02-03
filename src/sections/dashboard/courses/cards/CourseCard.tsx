@@ -5,13 +5,12 @@ import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mu
 import Link from 'next/link'
 
 import { ConfirmDialog, Iconify, Image, Label, MenuPopover, useSnackbar } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
+import { useDeleteCourseMutation } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
-
-import { useDeleteCourseMutation } from '../../../../redux/services/manager/courses-manager'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface

@@ -9,10 +9,9 @@ import * as Yup from 'yup'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 import { SingLink } from '@/sections/on-boarding-register/links'
-
-import { STUDENT_PATH_AFTER_LOGIN } from '../../../config'
+import { useTranslate } from '@/utils/translateHelper'
 
 import EmailNotFound from './EmailNotFound'
 import SignInLogin from './SignInLogin'
@@ -43,7 +42,7 @@ export default function SignInMain(): React.ReactElement {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await login(data.email, data.password, 'codetribe')
-      replace(STUDENT_PATH_AFTER_LOGIN)
+      replace(STUDENT_PATH_PAGE.home)
     } catch (e: any) {
       setError(e.message)
     }

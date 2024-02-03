@@ -2,8 +2,8 @@ import { Link, Typography } from '@mui/material'
 import { HiArrowRight } from '@react-icons/all-files/hi/HiArrowRight'
 import nextLink from 'next/link'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { PATH_AUTH } from '@/routes/paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   isRegister?: boolean

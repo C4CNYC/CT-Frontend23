@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 
 import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IModuleContent } from '@/redux/interfaces/content.interface'
 import {
   useGetCoursContentQuery,
@@ -24,6 +23,7 @@ import {
 import LessonsList from '@/sections/module/LessonsList'
 import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
+import { useTranslate } from '@/utils/translateHelper'
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

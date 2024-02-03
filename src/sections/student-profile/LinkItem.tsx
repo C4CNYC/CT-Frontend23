@@ -9,13 +9,13 @@ import * as Yup from 'yup'
 
 import { SOCIAL_ICONS } from '@/assets/data'
 import { FormProvider, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { ISocials } from '@/redux/interfaces/socials.interface'
 import {
   useRemoveSocialsMutation,
   useUpdateSocialsMutation,
 } from '@/redux/services/manager/socials-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 import LinkSelect from './LinkSelect'
 

@@ -1,4 +1,4 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { IStudent } from '../interfaces/user.interface'
 

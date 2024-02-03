@@ -1,4 +1,4 @@
-import { BaseSearchInterface } from '@/lib/utils'
+import { BaseSearchInterface } from '@/utils'
 
 export interface ITask {
   language: string

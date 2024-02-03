@@ -18,13 +18,13 @@ import parse from 'autosuggest-highlight/parse'
 import { useRouter } from 'next/router'
 
 import { useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import {
   useRemoveSkillAssignmentMutation,
   useUpdateSkillAssignmentMutation,
 } from '@/redux/services/manager/assignments-manager'
 import { useGetSkillQuery } from '@/redux/services/manager/skills-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface ISkillsAutocompleteProps {
   setAssignmentsSkillsId: (s: ISkill[]) => void

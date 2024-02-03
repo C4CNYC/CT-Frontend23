@@ -9,8 +9,6 @@ import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
 
 import { EmptyContent, LoadingScreen } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
@@ -19,6 +17,8 @@ import { useSelector } from '@/redux/store'
 import BrowserView, {
   CodeDocument,
 } from '@/sections/code-editor-panel/work-space/blocks/view-block/browser-view/index'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 

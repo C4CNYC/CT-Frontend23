@@ -52,7 +52,7 @@ const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     const file = new FormData()
-    const { getImageFromCode } = await import('@/lib/utils/getImageFromCode')
+    const { getImageFromCode } = await import('@/utils/getImageFromCode')
     const cover = await getImageFromCode(code)
     try {
       const postedProject = await postProject({

@@ -9,12 +9,12 @@ import dynamic from 'next/dynamic'
 import Carousel from 'react-slick'
 
 import { EmptyContent } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
 import { globalCodePanelAtom } from '@/sections/code-panel/atoms/global-code-panel.atom'
 import { CodePanelContext } from '@/sections/code-panel/context/CodePanel.context'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import BaseBlock from '../BaseBlock'
 import BrowserView from '../view-block/BrowserView'

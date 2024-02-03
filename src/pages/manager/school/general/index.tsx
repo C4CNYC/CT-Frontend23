@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux'
 
 import { Iconify, UploadImageModal, useSettingsContext } from '@/components'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useGetSchoolProfileQuery,
   useUpdateSchoolCoverImgMutation,
@@ -24,6 +23,7 @@ import {
   SchoolSocialsTab,
 } from '@/sections/schools/tabs'
 import SkeletonProfileTab from '@/sections/schools/tabs/profile/SkeletomProfileTab'
+import { useTranslate } from '@/utils/translateHelper'
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

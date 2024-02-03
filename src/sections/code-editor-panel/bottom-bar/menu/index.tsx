@@ -12,8 +12,8 @@ import makeStyles from '@mui/styles/makeStyles'
 import { Box } from '@mui/system'
 import { GiSave } from '@react-icons/all-files/gi/GiSave'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { SupportedLang } from '@/sections/code-editor-panel/work-space/types'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { getActions } from './config'
 import {

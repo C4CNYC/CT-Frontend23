@@ -3,7 +3,7 @@ import { AiOutlineUserAdd } from '@react-icons/all-files/ai/AiOutlineUserAdd'
 import { FaChartLine } from '@react-icons/all-files/fa/FaChartLine'
 import { TbBrandWechat } from '@react-icons/all-files/tb/TbBrandWechat'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function TribeButtons(): React.ReactElement {
   const translate = useTranslate()

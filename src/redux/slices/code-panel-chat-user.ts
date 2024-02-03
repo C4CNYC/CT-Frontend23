@@ -1,6 +1,6 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { type BaseResponseInterface } from '@/lib/utils'
+import { type BaseResponseInterface } from '@/utils'
 
 import { type IFriend } from '../interfaces/friends.interface'
 

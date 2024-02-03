@@ -4,7 +4,7 @@
 import { Breakpoint, useTheme } from '@mui/material/styles'
 import { Variant } from '@mui/material/styles/createTypography'
 
-import { useWidth } from '@/lib/hooks'
+import { useWidth } from '@/hooks'
 import { remToPx } from '@/theme/typography'
 
 export function useTypography(variant: Variant): Record<string, string | number | undefined> {

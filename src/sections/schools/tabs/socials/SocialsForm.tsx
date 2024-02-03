@@ -7,12 +7,11 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
+import { Socials } from '@/assets/data'
 import { FormProvider, RHFSelect, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { SchoolSocials } from '@/redux/services/interfaces/school.interface'
 import { useCreateSchoolSocialMutation } from '@/redux/services/manager/schools-manager'
-
-import { Socials } from '../../../../assets/data'
-import { SchoolSocials } from '../../../../redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 const URL =
   // eslint-disable-next-line no-useless-escape

@@ -2,7 +2,7 @@ import { Tab, Tabs } from '@mui/material'
 import { Box } from '@mui/system'
 
 import { Iconify } from '@/components/iconify'
-import { voidFunction } from '@/lib/utils'
+import { voidFunction } from '@/utils'
 
 interface ISmallScreenTabs {
   index: number

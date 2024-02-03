@@ -14,11 +14,10 @@ import {
 } from '@mui/material'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { Status } from '@/redux/enums/assignments.enum'
 import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
-
-import { fDate } from '../../../lib/utils/formatTime'
+import { fDate } from '@/utils/formatTime'
+import { useTranslate } from '@/utils/translateHelper'
 
 import AssignmentDrawer from './AssignmentDrawer'
 

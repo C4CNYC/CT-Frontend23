@@ -1,8 +1,8 @@
 import { Avatar, Message, MessageInput, MessageList } from '@chatscope/chat-ui-kit-react'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IFriend } from '@/redux/interfaces/friends.interface'
 import { convertTimestamp } from '@/sections/chat/helpers'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 interface IMessages {
   senderId: string

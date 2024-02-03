@@ -10,10 +10,10 @@ import { useSnackbar } from 'notistack'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { Iconify, MenuPopover } from '@/components'
-import { UserType } from '@/lib/utils'
 import { useSelector } from '@/redux/store'
 import { PATH_AUTH } from '@/routes/paths'
 import { startTour } from '@/sections/code-panel/code-panel-tour/tour-atom'
+import { UserType } from '@/utils'
 
 import config, { ILinks } from './config'
 import MobileHamburger from './MobileHamburger'

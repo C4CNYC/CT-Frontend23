@@ -3,11 +3,11 @@ import React from 'react'
 import { Divider, Drawer, DrawerProps, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
 
+import { countries } from '@/assets/data'
 import { Scrollbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { countries } from '../../../../assets/data'
 import TeacherSection from '../../organization/schools/TeachersSection'
 import ClassSection from '../classes/ClassSection'
 

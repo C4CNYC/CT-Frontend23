@@ -5,9 +5,9 @@ import NextLink from 'next/link'
 import { PasswordIcon } from '@/assets/icons'
 import { Iconify } from '@/components/iconify'
 import CompactLayout from '@/layouts/compact'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { PATH_AUTH } from '@/routes/paths'
 import AuthResetPasswordForm from '@/sections/auth/AuthResetPasswordForm'
+import { useTranslate } from '@/utils/translateHelper'
 
 ResetPasswordPage.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>
 

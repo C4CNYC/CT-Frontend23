@@ -5,11 +5,11 @@ import { useTheme } from '@mui/material/styles'
 import { useSelector } from 'react-redux'
 
 import { NavSectionHorizontal } from '@/components/nav-section'
-import { bgBlur } from '@/lib/utils/cssStyles'
 import { Role } from '@/redux/services/enums/role.enum'
 import { RootState } from '@/redux/store'
+import { bgBlur } from '@/utils/cssStyles'
 
-import { HEADER } from '../../../config'
+import { HEADER_SIZES } from '../../../theme/consts'
 
 import { menuConfig } from './config-navigation'
 
@@ -28,7 +28,7 @@ function NavHorizontal({ isManager }: INavHorizontal): React.ReactElement {
       color='transparent'
       sx={{
         boxShadow: 0,
-        top: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
+        top: HEADER_SIZES.H_DASHBOARD_DESKTOP_OFFSET,
       }}
     >
       <Toolbar

@@ -3,10 +3,10 @@ import { useTheme } from '@mui/material/styles'
 import NextLink from 'next/link'
 
 import { Logo } from '@/components/logo'
-import { bgBlur } from '@/lib/utils'
+import { bgBlur } from '@/utils'
 
-import { HEADER } from '../../config'
 import { PATH_PAGE } from '../../routes/paths'
+import { HEADER_SIZES } from '../../theme/consts'
 
 interface Props {
   isOffset: boolean
@@ -24,8 +24,8 @@ export default function Header({ isOffset }: Props): React.ReactElement | null {
         sx={{
           justifyContent: 'space-between',
           height: {
-            xs: HEADER.H_MOBILE,
-            md: HEADER.H_MAIN_DESKTOP,
+            xs: HEADER_SIZES.H_MOBILE,
+            md: HEADER_SIZES.H_MAIN_DESKTOP,
           },
           transition: theme.transitions.create(['height', 'background-color'], {
             easing: theme.transitions.easing.easeInOut,
@@ -34,7 +34,7 @@ export default function Header({ isOffset }: Props): React.ReactElement | null {
           ...(isOffset && {
             ...bgBlur({ color: theme.palette.background.default }),
             height: {
-              md: HEADER.H_MAIN_DESKTOP - 16,
+              md: HEADER_SIZES.H_MAIN_DESKTOP - 16,
             },
           }),
         }}

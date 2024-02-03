@@ -2,9 +2,9 @@
 import { Box, BoxProps } from '@mui/material'
 
 import { useSettingsContext } from '@/components/settings'
-import { useResponsive } from '@/lib/hooks/useResponsive'
+import { useResponsive } from '@/hooks/useResponsive'
 
-import { HEADER, NAV } from '../../config'
+import { HEADER_SIZES, NAV_SIZES } from '../../theme/consts'
 
 const SPACING = 8
 
@@ -22,12 +22,12 @@ export default function Main({ children, sx, ...other }: BoxProps): React.ReactE
       <Box
         component='main'
         sx={{
-          pt: `${HEADER.H_MOBILE + SPACING}px`,
-          pb: `${HEADER.H_MOBILE + SPACING}px`,
+          pt: `${HEADER_SIZES.H_MOBILE + SPACING}px`,
+          pb: `${HEADER_SIZES.H_MOBILE + SPACING}px`,
           ...(isDesktop && {
             px: 2,
-            pt: `${HEADER.H_DASHBOARD_DESKTOP + 80}px`,
-            pb: `${HEADER.H_DASHBOARD_DESKTOP + SPACING}px`,
+            pt: `${HEADER_SIZES.H_DASHBOARD_DESKTOP + 80}px`,
+            pb: `${HEADER_SIZES.H_DASHBOARD_DESKTOP + SPACING}px`,
           }),
         }}
       >
@@ -41,13 +41,13 @@ export default function Main({ children, sx, ...other }: BoxProps): React.ReactE
       component='main'
       sx={{
         flexGrow: 1,
-        py: `${HEADER.H_MOBILE + SPACING}px`,
+        py: `${HEADER_SIZES.H_MOBILE + SPACING}px`,
         ...(isDesktop && {
           px: 2,
-          py: `${HEADER.H_DASHBOARD_DESKTOP + SPACING}px`,
-          width: `calc(100% - ${NAV.W_DASHBOARD}px)`,
+          py: `${HEADER_SIZES.H_DASHBOARD_DESKTOP + SPACING}px`,
+          width: `calc(100% - ${NAV_SIZES.W_DASHBOARD}px)`,
           ...(isNavMini && {
-            width: `calc(100% - ${NAV.W_DASHBOARD_MINI}px)`,
+            width: `calc(100% - ${NAV_SIZES.W_DASHBOARD_MINI}px)`,
           }),
         }),
         ...sx,

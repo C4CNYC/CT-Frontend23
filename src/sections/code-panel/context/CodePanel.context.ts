@@ -1,8 +1,8 @@
 import { createContext } from 'react'
 
 import { AuthUserType } from '@/auth/types'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { ILesson, ILessonContent } from '@/redux/interfaces/content.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { SupportedLang } from '../work-space'
 

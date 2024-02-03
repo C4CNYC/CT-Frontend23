@@ -2,7 +2,7 @@ import { Box, Button, IconButton, Stack, StackProps, Typography } from '@mui/mat
 import { alpha, styled } from '@mui/material/styles'
 import { useDropzone } from 'react-dropzone'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { Iconify } from '../iconify'
 

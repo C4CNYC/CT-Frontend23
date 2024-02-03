@@ -1,4 +1,4 @@
-import { BaseSearchInterface } from '@/lib/utils'
+import { BaseSearchInterface } from '@/utils'
 
 import { IStudent } from '../services/interfaces/user.interface'
 import { ISchool } from '../slices/global'

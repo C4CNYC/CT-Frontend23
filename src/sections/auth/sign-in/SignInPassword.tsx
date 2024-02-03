@@ -7,9 +7,9 @@ import NextLink from 'next/link'
 import { StepWizardChildProps } from 'react-step-wizard'
 
 import { Iconify, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { PATH_AUTH } from '@/routes/paths'
 import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { RESER_PASS_SX, TYPO_CONT_SX, getButtonSx } from './constants'
 

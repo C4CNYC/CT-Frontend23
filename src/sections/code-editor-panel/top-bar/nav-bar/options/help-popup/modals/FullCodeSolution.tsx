@@ -4,8 +4,8 @@ import { type FC, useState } from 'react'
 import { Box, Button, Dialog, DialogActions, DialogContent, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useSelector } from '@/redux/store'
+import { useTranslate } from '@/utils/translateHelper'
 
 import {
   BUTTON_STYLES,

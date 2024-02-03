@@ -13,11 +13,11 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useCreateSkillMutation,
   useUpdateSkillMutation,
 } from '@/redux/services/manager/skills-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required('Skill name is required'),

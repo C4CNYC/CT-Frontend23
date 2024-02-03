@@ -3,9 +3,9 @@ import { type FC, useMemo } from 'react'
 import { Button, IconButton, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 
 import { Iconify } from '@/components/iconify'
-import { type BaseResponseInterface } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { type ILesson } from '@/redux/interfaces/content.interface'
+import { type BaseResponseInterface } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { ICON_BTN_SX, TYP_SX, getButtonSx } from './constants'
 

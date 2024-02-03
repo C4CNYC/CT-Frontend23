@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Box } from '@mui/material'
 
 import { useSettingsContext } from '@/components/settings'
-import { useResponsive } from '@/lib/hooks/useResponsive'
+import { useResponsive } from '@/hooks/useResponsive'
 
 import AuthGuard from '../../auth/AuthGuard'
 

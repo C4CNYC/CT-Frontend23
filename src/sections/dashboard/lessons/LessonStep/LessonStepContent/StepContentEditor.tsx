@@ -9,13 +9,13 @@ import { MdOutlinePermMedia } from '@react-icons/all-files/md/MdOutlinePermMedia
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import {
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { LessonContentContext } from './LessonContent.context'
 import SkeletonContentCode from './SkeletonContentCode'

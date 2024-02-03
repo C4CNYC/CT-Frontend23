@@ -5,13 +5,13 @@ import Head from 'next/head'
 
 import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard/'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import TribesFillter from '@/sections/dashboard/tribes/fillter'
 import SkeletonTribes from '@/sections/dashboard/tribes/skeletonTribes'
 import TribeItem from '@/sections/dashboard/tribes/tiribe-card/TribeItem'
 import TribesCounter from '@/sections/dashboard/tribes/tribesCounter'
+import { useTranslate } from '@/utils/translateHelper'
 
 enum TabType {
   Active = 'active',

@@ -17,7 +17,7 @@ import {
 import { BsChatText } from '@react-icons/all-files/bs/BsChatText'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import FullCodeSolutionModal from '../../modals/FullCodeSolution'
 

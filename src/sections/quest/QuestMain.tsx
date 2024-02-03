@@ -1,9 +1,9 @@
 import { Avatar, Stack, Tooltip, Typography } from '@mui/material'
 
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IStudent, IUser } from '@/redux/services/interfaces/user.interface'
 import { TOOLTIP_TEXT } from '@/sections/main/quests/add-quest/constants'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IQuestMainProps {
   mentor?: IStudent & BaseResponseInterface

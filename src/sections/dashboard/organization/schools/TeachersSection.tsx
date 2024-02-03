@@ -5,13 +5,13 @@ import Image from 'next/image'
 import { useSnackbar } from 'notistack'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useDeleteTeacherMutation,
   useGetTeacherListQuery,
 } from '@/redux/services/admin/school-amdin'
 import InviteTeacherDialog from '@/sections/dashboard/organization/schools/InviteTeacherDialog'
 import SkeletonSchoolDetailsDrawer from '@/sections/dashboard/schools/portal/SkeletonSchoolDetailsDrawer'
+import { useTranslate } from '@/utils/translateHelper'
 
 import TeacherItem from './TeacherItem'
 

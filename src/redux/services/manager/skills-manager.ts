@@ -1,4 +1,4 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { ISkill, ISkillSearch } from '../interfaces/skill.interface'
 

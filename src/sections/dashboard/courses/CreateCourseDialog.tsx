@@ -21,13 +21,12 @@ import {
   SingleFilePreview,
   useSnackbar,
 } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
-
 import {
   useCreateCourseMutation,
   useUpdateCourseCoverMutation,
   useUpdateCourseMutation,
-} from '../../../redux/services/manager/courses-manager'
+} from '@/redux/services/manager/courses-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import AuthorsTab from './authors-tab/AuthorsTab'
 

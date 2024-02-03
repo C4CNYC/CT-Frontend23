@@ -1,5 +1,5 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import { IModule, IModulesSearchParams } from '@/redux/interfaces/content.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { managerApi } from '.'
 

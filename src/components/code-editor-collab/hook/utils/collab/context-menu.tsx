@@ -11,7 +11,7 @@ import { Button, Grow, MenuItem, MenuList, Paper, Popper } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { createRoot } from 'react-dom/client'
 
-import generateId from '../../../../../lib/utils/generate-id'
+import generateId from '@/utils/generate-id'
 
 import { addComment } from './comments'
 

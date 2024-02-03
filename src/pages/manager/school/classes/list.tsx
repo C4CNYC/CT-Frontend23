@@ -30,10 +30,8 @@ import {
   useSettingsContext,
   useTable,
 } from '@/components'
+import { useFilters } from '@/hooks'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
-import { useFilters } from '@/lib/hooks'
-import { createRandomAvatar, getRandomColor } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ClassSearchParams } from '@/redux/interfaces/class.interface'
 import {
   useCreateClassesMutation,
@@ -49,6 +47,8 @@ import { ClassesTableRow } from '@/sections/dashboard/classes/list'
 import AddClassDialog from '@/sections/dashboard/schools/classes/CreateClassDialog'
 import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
+import { createRandomAvatar, getRandomColor } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 const STATUS_OPTIONS = ['all']
 
