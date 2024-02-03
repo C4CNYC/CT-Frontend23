@@ -1,27 +1,27 @@
-import { type FC, type RefObject, useEffect, useMemo } from "react"
+import { type FC, type RefObject, useEffect, useMemo } from 'react'
 
-import { DndContext } from "@dnd-kit/core"
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
-import AssignmentIcon from "@mui/icons-material/Assignment"
-import EventNoteIcon from "@mui/icons-material/EventNote"
-import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined"
-import { CircularProgress, Divider, Drawer, List, Stack } from "@mui/material"
-import { useRouter } from "next/router"
+import { DndContext } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import EventNoteIcon from '@mui/icons-material/EventNote'
+import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
+import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
+import { useRouter } from 'next/router'
 
-import { SimpleInfiniteList } from "@components"
-import { useLessonStatus, useSocket } from "@hooks"
-import { type BaseResponseInterface } from "@utils"
-import { type IFriend } from "src/redux/interfaces/friends.interface"
-import { useSelector, RootState } from "src/redux/store"
-import { ILessonUserStatus } from "src/types"
+import { SimpleInfiniteList } from '@/components'
+import { useLessonStatus, useSocket } from '@/lib/hooks'
+import { type BaseResponseInterface } from '@/lib/utils'
+import { type IFriend } from '@/redux/interfaces/friends.interface'
+import { useSelector, RootState } from '@/redux/store'
+import { ILessonUserStatus } from '@/types'
 
-import CodeBlock from "./components/code-block"
-import CustomNavItem from "./components/custom-nav-item"
-import HeaderItem from "./components/header-item"
-import LoadListSkeleton from "./components/load-list-skeleton"
-import NavItem from "./components/nav-item"
-import SortableItem from "./components/sortable-item"
-import { useNavPanel } from "./hook"
+import CodeBlock from './components/code-block'
+import CustomNavItem from './components/custom-nav-item'
+import HeaderItem from './components/header-item'
+import LoadListSkeleton from './components/load-list-skeleton'
+import NavItem from './components/nav-item'
+import SortableItem from './components/sortable-item'
+import { useNavPanel } from './hook'
 import {
   DIVIDER_SX,
   DIVIDER_SX_BOTTOM,
@@ -31,7 +31,7 @@ import {
   STACK_SX,
   getDrawerSx,
   getStackCodeBoxSx,
-} from "./styles"
+} from './styles'
 
 interface NavPanelProps {
   cursorName?: string
@@ -64,7 +64,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   const socket = useSocket()
   const usersStatus = useLessonStatus()
   const room = useSelector((state: RootState) => state.codeEditorController.room)
-  const roomId = room?.roomId ?? ""
+  const roomId = room?.roomId ?? ''
 
   const drawerSx = useMemo(() => {
     return getDrawerSx(isOpen, isRealtimeCodeEnabled)
@@ -84,17 +84,19 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
       } else {
         return {
           ..._user,
-          status: usersStatus.filter((_userStatus: ILessonUserStatus) => _userStatus.id === _user.id)[0].status,
+          status: usersStatus.filter(
+            (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
+          )[0].status,
         }
       }
     })
     setUsers(_users)
   }, [usersStatus, users.length])
 
-  const onChangeUserStatus = (status: string = "active") => {
+  const onChangeUserStatus = (status: string = 'active') => {
     try {
       // if (socket && socket.connected && router.query.lessonId) {
-      socket?.emit("changeStatusInLesson", {
+      socket?.emit('changeStatusInLesson', {
         lesson: router.query.lessonId,
         user: roomId,
         status,
@@ -108,12 +110,17 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
       )
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      console.log("onChangeUserStatusError: ", error)
+      console.log('onChangeUserStatusError: ', error)
     }
   }
 
   return (
-    <Drawer ref={drawerRef} open={isOpen} variant="permanent" sx={drawerSx}>
+    <Drawer
+      ref={drawerRef}
+      open={isOpen}
+      variant='permanent'
+      sx={drawerSx}
+    >
       <HeaderItem
         activeUsers={activeUsersAmount}
         onClick={() => {
@@ -133,7 +140,12 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
               loading={isUsersLoading}
               hasNextPage={hasNextPage}
               onLoadMore={onLoadMore}
-              loaderComponent={<CircularProgress color="primary" size={LOADER_SIZE} />}
+              loaderComponent={
+                <CircularProgress
+                  color='primary'
+                  size={LOADER_SIZE}
+                />
+              }
             >
               {users.map((user, index) => (
                 <NavItem
@@ -157,7 +169,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
       <List sx={LIST_SX}>
         <CustomNavItem
           icon={<SpeakerNotesOutlinedIcon sx={ICON_SX} />}
-          name="Group Chat"
+          name='Group Chat'
           onToggle={() => {
             setIsOpen(!isOpen)
           }}
@@ -165,7 +177,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
 
         <CustomNavItem
           icon={<EventNoteIcon sx={ICON_SX} />}
-          name="Notes"
+          name='Notes'
           onToggle={() => {
             setIsOpen(!isOpen)
           }}
@@ -173,7 +185,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
 
         <CustomNavItem
           icon={<AssignmentIcon sx={ICON_SX} />}
-          name="Sandbox"
+          name='Sandbox'
           onToggle={() => {
             setIsOpen(!isOpen)
           }}
@@ -183,10 +195,16 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
       {isRealtimeCodeEnabled && (
         <Stack sx={stackCodeBoxSx}>
           <DndContext onDragEnd={onDragEnd}>
-            <SortableContext items={previewUsers} strategy={verticalListSortingStrategy}>
+            <SortableContext
+              items={previewUsers}
+              strategy={verticalListSortingStrategy}
+            >
               {previewUsers.map((user) => {
                 return (
-                  <SortableItem key={user.id} id={user.id}>
+                  <SortableItem
+                    key={user.id}
+                    id={user.id}
+                  >
                     <CodeBlock
                       onClose={() => {
                         onDeletePreviewUser(user.id)

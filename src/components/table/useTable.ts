@@ -1,103 +1,85 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react'
 
-//
-import { TableProps } from "./types";
+import { TableProps } from './types'
 
-// ----------------------------------------------------------------------
-
-type ReturnType = TableProps;
+type ReturnType = TableProps
 
 export interface UseTableProps {
-  defaultDense?: boolean;
-  defaultOrder?: "asc" | "desc";
-  defaultOrderBy?: string;
-  defaultSelected?: string[];
-  defaultRowsPerPage?: number;
-  defaultCurrentPage?: number;
+  defaultDense?: boolean
+  defaultOrder?: 'asc' | 'desc'
+  defaultOrderBy?: string
+  defaultSelected?: string[]
+  defaultRowsPerPage?: number
+  defaultCurrentPage?: number
 }
 
 export function useTable(props?: UseTableProps): ReturnType {
-  const [dense, setDense] = useState(!!props?.defaultDense);
+  const [dense, setDense] = useState(!!props?.defaultDense)
 
-  const [orderBy, setOrderBy] = useState(props?.defaultOrderBy ?? "name");
+  const [orderBy, setOrderBy] = useState(props?.defaultOrderBy ?? 'name')
 
-  const [order, setOrder] = useState<"asc" | "desc">(
-    props?.defaultOrder ?? "asc"
-  );
+  const [order, setOrder] = useState<'asc' | 'desc'>(props?.defaultOrder ?? 'asc')
 
-  const [page, setPage] = useState(props?.defaultCurrentPage ?? 0);
+  const [page, setPage] = useState(props?.defaultCurrentPage ?? 0)
 
-  const [rowsPerPage, setRowsPerPage] = useState(
-    props?.defaultRowsPerPage ?? 5
-  );
+  const [rowsPerPage, setRowsPerPage] = useState(props?.defaultRowsPerPage ?? 5)
 
-  const [selected, setSelected] = useState<string[]>(
-    props?.defaultSelected ?? []
-  );
+  const [selected, setSelected] = useState<string[]>(props?.defaultSelected ?? [])
 
   const onSort = useCallback(
     (id: string) => {
-      const isAsc = orderBy === id && order === "asc";
-      if (id !== "") {
-        setOrder(isAsc ? "desc" : "asc");
-        setOrderBy(id);
+      const isAsc = orderBy === id && order === 'asc'
+      if (id !== '') {
+        setOrder(isAsc ? 'desc' : 'asc')
+        setOrderBy(id)
       }
     },
     [order, orderBy]
-  );
+  )
 
   const onSelectRow = useCallback(
     (id: string) => {
-      const selectedIndex = selected.indexOf(id);
+      const selectedIndex = selected.indexOf(id)
 
-      let newSelected: string[] = [];
+      let newSelected: string[] = []
 
       if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selected, id);
+        newSelected = newSelected.concat(selected, id)
       } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selected.slice(1));
+        newSelected = newSelected.concat(selected.slice(1))
       } else if (selectedIndex === selected.length - 1) {
-        newSelected = newSelected.concat(selected.slice(0, -1));
+        newSelected = newSelected.concat(selected.slice(0, -1))
       } else if (selectedIndex > 0) {
         newSelected = newSelected.concat(
           selected.slice(0, selectedIndex),
           selected.slice(selectedIndex + 1)
-        );
+        )
       }
-      setSelected(newSelected);
+      setSelected(newSelected)
     },
     [selected]
-  );
+  )
 
-  const onSelectAllRows = useCallback(
-    (checked: boolean, newSelecteds: string[]) => {
-      if (checked) {
-        setSelected(newSelecteds);
-        return;
-      }
-      setSelected([]);
-    },
-    []
-  );
+  const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
+    if (checked) {
+      setSelected(newSelecteds)
+      return
+    }
+    setSelected([])
+  }, [])
 
   const onChangePage = useCallback((event: unknown, newPage: number) => {
-    setPage(newPage);
-  }, []);
+    setPage(newPage)
+  }, [])
 
-  const onChangeRowsPerPage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setPage(0);
-      setRowsPerPage(parseInt(event.target.value, 10));
-    },
-    []
-  );
+  const onChangeRowsPerPage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setPage(0)
+    setRowsPerPage(parseInt(event.target.value, 10))
+  }, [])
 
-  const onChangeDense = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setDense(event.target.checked);
-    },
-    []
-  );
+  const onChangeDense = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setDense(event.target.checked)
+  }, [])
 
   return {
     dense,
@@ -121,5 +103,5 @@ export function useTable(props?: UseTableProps): ReturnType {
     setOrderBy,
     setSelected,
     setRowsPerPage,
-  };
+  }
 }

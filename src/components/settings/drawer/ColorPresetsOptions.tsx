@@ -1,33 +1,23 @@
-// @mui
-import { RadioGroup } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { RadioGroup } from '@mui/material'
+import { alpha } from '@mui/material/styles'
 
-//
-import { useSettingsContext } from "../SettingsContext";
-import {
-  MaskControl,
-  StyledCard,
-  StyledCircleColor,
-  StyledWrap,
-} from "../styles";
-
-// ----------------------------------------------------------------------
+import { useSettingsContext } from '../SettingsContext'
+import { MaskControl, StyledCard, StyledCircleColor, StyledWrap } from '../styles'
 
 export default function ColorPresetsOptions(): React.ReactElement {
-  const { themeColorPresets, onChangeColorPresets, presetsOption } =
-    useSettingsContext();
+  const { themeColorPresets, onChangeColorPresets, presetsOption } = useSettingsContext()
 
   return (
     <RadioGroup
-      name="themeColorPresets"
+      name='themeColorPresets'
       value={themeColorPresets}
       onChange={onChangeColorPresets}
     >
-      <StyledWrap sx={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+      <StyledWrap sx={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
         {presetsOption.map((color) => {
-          const { name, value } = color;
+          const { name, value } = color
 
-          const selected = themeColorPresets === name;
+          const selected = themeColorPresets === name
 
           return (
             <StyledCard
@@ -41,13 +31,16 @@ export default function ColorPresetsOptions(): React.ReactElement {
                 }),
               }}
             >
-              <StyledCircleColor selected={selected} color={value} />
+              <StyledCircleColor
+                selected={selected}
+                color={value}
+              />
 
               <MaskControl value={name} />
             </StyledCard>
-          );
+          )
         })}
       </StyledWrap>
     </RadioGroup>
-  );
+  )
 }

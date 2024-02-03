@@ -1,6 +1,7 @@
-import { cloneElement, type FC, type ReactNode, ReactElement } from "react";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from '@dnd-kit/utilities';
+import { cloneElement, type FC, ReactElement } from 'react'
+
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 interface SortableProps {
   id: string
@@ -8,20 +9,15 @@ interface SortableProps {
 }
 
 const SortableItem: FC<SortableProps> = ({ children, id }) => {
-  const {
-    attributes,
-    listeners,
-    isDragging,
-    transition,
-    transform,
-    setNodeRef,
-  } = useSortable({ id })
+  const { attributes, listeners, isDragging, transition, transform, setNodeRef } = useSortable({
+    id,
+  })
   return (
     <div
       style={{
         transition,
         transform: CSS.Translate.toString(transform),
-        zIndex: isDragging ? 1250 : 1200
+        zIndex: isDragging ? 1250 : 1200,
       }}
       ref={setNodeRef}
     >
@@ -30,4 +26,4 @@ const SortableItem: FC<SortableProps> = ({ children, id }) => {
   )
 }
 
-export default SortableItem;
+export default SortableItem

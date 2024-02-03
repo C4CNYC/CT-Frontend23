@@ -5,21 +5,21 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   i18n: {
     // locales: ["en", "ar", "es", "pt", "fr", "vn"],
-    locales: ["en"],
-    defaultLocale: "en",
+    locales: ['en'],
+    defaultLocale: 'en',
   },
-  eslint: {
-    // ESLint managed on the workspace level
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    // ignoreBuildErrors: true,
-  },
-  transpilePackages: ["mui-tel-input"],
+  // eslint: {
+  //   // ESLint managed on the workspace level
+  //   ignoreDuringBuilds: true,
+  // },
+  // typescript: {
+  //   // !! WARN !!
+  //   // Dangerously allow production builds to successfully complete even if
+  //   // your project has type errors.
+  //   // !! WARN !!
+  //   ignoreBuildErrors: true,
+  // },
+  transpilePackages: ['mui-tel-input'],
   // experimental: {
   //   fallbackNodePolyfills: false
   // }
@@ -37,6 +37,3 @@ const nextConfig = {
 }
 
 module.exports = withBundleAnalyzer(nextConfig)
-
-
-

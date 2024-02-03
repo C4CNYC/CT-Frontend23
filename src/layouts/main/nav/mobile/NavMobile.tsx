@@ -1,44 +1,35 @@
-// next
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-// @mui
-import { Drawer, IconButton, List } from "@mui/material";
+import { Drawer, IconButton, List } from '@mui/material'
+import { useRouter } from 'next/router'
 
-// components
-import { Logo } from "src/components/logo";
-import { Iconify } from "src/components/iconify";
-import { Scrollbar } from "src/components/scrollbar";
+import { Iconify } from '@/components/iconify'
+import { Logo } from '@/components/logo'
+import { Scrollbar } from '@/components/scrollbar'
 
-// config
-import { NAV } from "../../../../config";
-//
-import { NavProps } from "../types";
-import NavList from "./NavList";
+import { NAV } from '../../../../config'
+import { NavProps } from '../types'
 
-// ----------------------------------------------------------------------
+import NavList from './NavList'
 
-export default function NavMobile({
-  isOffset,
-  data,
-}: NavProps): React.ReactElement | null {
-  const { pathname } = useRouter();
+export default function NavMobile({ isOffset, data }: NavProps): React.ReactElement | null {
+  const { pathname } = useRouter()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (open) {
-      handleClose();
+      handleClose()
     }
-  }, [pathname]);
+  }, [pathname])
 
   const handleOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
@@ -47,11 +38,11 @@ export default function NavMobile({
         sx={{
           ml: 1,
           ...(isOffset && {
-            color: "text.primary",
+            color: 'text.primary',
           }),
         }}
       >
-        <Iconify icon="eva:menu-2-fill" />
+        <Iconify icon='eva:menu-2-fill' />
       </IconButton>
 
       <Drawer
@@ -67,13 +58,19 @@ export default function NavMobile({
         <Scrollbar>
           <Logo sx={{ mx: 2.5, my: 3 }} />
 
-          <List component="nav" disablePadding>
+          <List
+            component='nav'
+            disablePadding
+          >
             {data.map((link) => (
-              <NavList key={link.title} item={link} />
+              <NavList
+                key={link.title}
+                item={link}
+              />
             ))}
           </List>
         </Scrollbar>
       </Drawer>
     </>
-  );
+  )
 }

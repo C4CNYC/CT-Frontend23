@@ -1,1 +1,1 @@
-export { default as FileFilterName } from "./filter/FileFilterName";
+export { default as FileFilterName } from './filter/FileFilterName'

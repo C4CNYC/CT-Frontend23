@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext } from 'react'
 
+import { Divider, Stack } from '@mui/material'
 import {
   BasicFormattingButtonGroup,
   CommandButtonGroup,
@@ -14,59 +15,61 @@ import {
   ToggleSuperscriptButton,
   ToggleTaskListButton,
   Toolbar,
-} from "@remirror/react";
+} from '@remirror/react'
 
-import { Divider, Stack } from "@mui/material";
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { LessonContentContext } from '@/sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context'
 
-import { LessonContentContext } from "@sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context";
+import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 
-import { SaveButton } from "./SaveButton";
+import MenuItems from './MenuItems'
+import { SaveButton } from './SaveButton'
 import {
   FontFamilyButtons,
   FontSizeButtons,
   TextBgColorPicker,
   TextCaseSelect,
   TextColorPicker,
-} from "./toolbars";
-import EmojiPickerBtn from "./toolbars/EmojiPicker";
-import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import MenuItems from "./MenuItems";
+} from './toolbars'
+import EmojiPickerBtn from './toolbars/EmojiPicker'
 
 interface Props {
-  saveContent: () => void;
-  data: (ILessonContent & BaseResponseInterface);
-  lessonId: string;
+  saveContent: () => void
+  data: ILessonContent & BaseResponseInterface
+  lessonId: string
 }
 
-export default function EditorToolbar({
-  saveContent,
-  data,
-  lessonId
-}: Props): React.ReactElement {
-  const { locked } = useContext(LessonContentContext);
+export default function EditorToolbar({ saveContent, data, lessonId }: Props): React.ReactElement {
+  const { locked } = useContext(LessonContentContext)
 
   return (
     <>
       <Toolbar
         style={{
-          position: "sticky",
+          position: 'sticky',
           zIndex: 500,
           top: 0,
-          padding: "15px",
-          overflowX: "scroll",
-          overflowY: "scroll",
-          scrollbarWidth: "none",
-          borderBottom: "1px solid #cbcbcb",
+          padding: '15px',
+          overflowX: 'scroll',
+          overflowY: 'scroll',
+          scrollbarWidth: 'none',
+          borderBottom: '1px solid #cbcbcb',
         }}
       >
         <>
-          {" "}
-          <Stack direction="column" sx={{ width: "100%", gap: 1 }}>
-            <Stack direction="row" justifyContent="space-between" gap={1}>
+          {' '}
+          <Stack
+            direction='column'
+            sx={{ width: '100%', gap: 1 }}
+          >
+            <Stack
+              direction='row'
+              justifyContent='space-between'
+              gap={1}
+            >
               <Stack
-                flexDirection="row"
-                sx={{ flexWrap: "wrap", gap: 1, alignItems: "center" }}
+                flexDirection='row'
+                sx={{ flexWrap: 'wrap', gap: 1, alignItems: 'center' }}
               >
                 <ToggleBoldButton />
                 <CommandButtonGroup>
@@ -83,16 +86,19 @@ export default function EditorToolbar({
               <SaveButton onClick={saveContent} />
             </Stack>
 
-            <MenuItems data={data} lessonId={lessonId} />
+            <MenuItems
+              data={data}
+              lessonId={lessonId}
+            />
           </Stack>
         </>
       </Toolbar>
       {!locked ? (
         <FloatingToolbar
           sx={{
-            "&>div": {
-              borderRadius: "5px",
-              boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)",
+            '&>div': {
+              borderRadius: '5px',
+              boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)',
             },
           }}
           style={{
@@ -101,17 +107,17 @@ export default function EditorToolbar({
           }}
         >
           <Stack
-            borderRadius="5px"
-            display="flex"
-            flexDirection="row"
-            p="5px 10px"
-            alignItems="center"
-            alignContent="center"
+            borderRadius='5px'
+            display='flex'
+            flexDirection='row'
+            p='5px 10px'
+            alignItems='center'
+            alignContent='center'
           >
             <BasicFormattingButtonGroup />
             <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: '70%' }}
+              orientation='vertical'
               flexItem
             />
             <CommandButtonGroup>
@@ -120,8 +126,8 @@ export default function EditorToolbar({
               <IncreaseFontSizeButton />
             </CommandButtonGroup>
             <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: '70%' }}
+              orientation='vertical'
               flexItem
             />
             <Toolbar>
@@ -130,20 +136,20 @@ export default function EditorToolbar({
               <TextCaseSelect />
             </Toolbar>
             <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: '70%' }}
+              orientation='vertical'
               flexItem
             />
             <ToggleStrikeButton />
             <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: '70%' }}
+              orientation='vertical'
               flexItem
             />
             <TextAlignmentButtonGroup />
             <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: '70%' }}
+              orientation='vertical'
               flexItem
             />
             <FontFamilyButtons />
@@ -151,5 +157,5 @@ export default function EditorToolbar({
         </FloatingToolbar>
       ) : null}
     </>
-  );
+  )
 }

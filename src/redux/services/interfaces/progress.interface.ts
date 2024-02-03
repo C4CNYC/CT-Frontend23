@@ -1,17 +1,17 @@
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 
-import { ILesson, ILessonContent, IModule } from "./courseUnits.interface";
-import { ILessonContentValidation } from "./lessonContentValidation.interface";
-import { IStudent } from "./user.interface";
+import { ILesson, ILessonContent, IModule } from './courseUnits.interface'
+import { ILessonContentValidation } from './lessonContentValidation.interface'
+import { IStudent } from './user.interface'
 
 export interface IProgress {
-  unit: IModule & BaseResponseInterface;
-  student: IStudent & BaseResponseInterface;
-  completed_chalanges: Array<ILessonContent & BaseResponseInterface>;
+  unit: IModule & BaseResponseInterface
+  student: IStudent & BaseResponseInterface
+  completed_chalanges: Array<ILessonContent & BaseResponseInterface>
 }
 
 export interface IProgressSearch {
-  class_id?: string;
+  class_id?: string
 }
 
 export interface IProgressContent {
@@ -24,26 +24,24 @@ export interface IProgressContent {
               contents: Array<
                 ILessonContent &
                   BaseResponseInterface & {
-                    validations: Array<
-                      ILessonContentValidation & BaseResponseInterface
-                    >;
+                    validations: Array<ILessonContentValidation & BaseResponseInterface>
                   }
-              >;
+              >
             }
-        >;
+        >
       }
-  >;
+  >
 }
 
 export type IProgressChalanges = Array<{
-  id: string;
-  name: string;
-  type: string;
-  chalanges: Array<ILessonContent & BaseResponseInterface>;
+  id: string
+  name: string
+  type: string
+  chalanges: Array<ILessonContent & BaseResponseInterface>
   lessons: Array<{
-    id: string;
-    name: string;
-    type: string;
-    chalanges: Array<ILessonContent & BaseResponseInterface>;
-  }>;
-}>;
+    id: string
+    name: string
+    type: string
+    chalanges: Array<ILessonContent & BaseResponseInterface>
+  }>
+}>

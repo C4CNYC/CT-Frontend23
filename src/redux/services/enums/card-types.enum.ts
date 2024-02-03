@@ -1,5 +1,5 @@
 export enum CardTypes {
-  lesson = "lesson",
-  course = "course",
-  module = "module",
+  lesson = 'lesson',
+  course = 'course',
+  module = 'module',
 }

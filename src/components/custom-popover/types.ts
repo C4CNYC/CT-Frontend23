@@ -1,7 +1,4 @@
-// @mui
-import { PopoverProps } from '@mui/material/Popover';
-
-// ----------------------------------------------------------------------
+import { PopoverProps } from '@mui/material/Popover'
 
 export type MenuPopoverArrowValue =
   | 'top-left'
@@ -15,10 +12,10 @@ export type MenuPopoverArrowValue =
   | 'left-bottom'
   | 'right-top'
   | 'right-center'
-  | 'right-bottom';
+  | 'right-bottom'
 
 export interface MenuPopoverProps extends Omit<PopoverProps, 'open'> {
-  open: HTMLElement | null;
-  arrow?: MenuPopoverArrowValue;
-  hiddenArrow?: boolean;
+  open: HTMLElement | null
+  arrow?: MenuPopoverArrowValue
+  hiddenArrow?: boolean
 }

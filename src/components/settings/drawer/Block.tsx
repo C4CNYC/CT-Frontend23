@@ -1,16 +1,12 @@
-// @mui
-import { Stack, StackProps, Tooltip, Typography } from "@mui/material";
+import { Stack, StackProps, Tooltip, Typography } from '@mui/material'
 
-//
-import { Iconify } from "../../iconify";
+import { Iconify } from '../../iconify'
 
-// ----------------------------------------------------------------------
-
-const SPACING = 2.5;
+const SPACING = 2.5
 
 interface Props extends StackProps {
-  title: string;
-  tooltip?: string;
+  title: string
+  tooltip?: string
 }
 
 export default function Block({
@@ -21,26 +17,37 @@ export default function Block({
   ...other
 }: Props): React.ReactElement | null {
   return (
-    <Stack spacing={1.5} sx={{ mb: SPACING, ...sx }} {...other}>
+    <Stack
+      spacing={1.5}
+      sx={{ mb: SPACING, ...sx }}
+      {...other}
+    >
       <Stack
-        direction="row"
-        alignItems="center"
+        direction='row'
+        alignItems='center'
         sx={{
-          color: "text.secondary",
+          color: 'text.secondary',
         }}
       >
-        <Typography variant="caption" sx={{ fontWeight: "fontWeightMedium" }}>
+        <Typography
+          variant='caption'
+          sx={{ fontWeight: 'fontWeightMedium' }}
+        >
           {title}
         </Typography>
 
         {tooltip && (
           <Tooltip title={tooltip}>
-            <Iconify icon="eva:info-outline" width={16} sx={{ mx: 0.5 }} />
+            <Iconify
+              icon='eva:info-outline'
+              width={16}
+              sx={{ mx: 0.5 }}
+            />
           </Tooltip>
         )}
       </Stack>
 
       {children}
     </Stack>
-  );
+  )
 }

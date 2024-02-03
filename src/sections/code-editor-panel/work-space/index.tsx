@@ -1,27 +1,27 @@
-import { type FC, useRef, useState } from "react"
+import { type FC, useRef, useState } from 'react'
 
-import { useTheme } from "@mui/material/styles"
-import useMediaQuery from "@mui/material/useMediaQuery"
-import { Stack, type StackProps } from "@mui/system"
-import { FaDesktop } from "@react-icons/all-files/fa/FaDesktop"
-import { TiDocumentText } from "@react-icons/all-files/ti/TiDocumentText"
-import { useRouter } from "next/router"
-import { useDispatch } from "react-redux"
-import SwipeableViews from "react-swipeable-views"
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Stack, type StackProps } from '@mui/system'
+import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
+import { TiDocumentText } from '@react-icons/all-files/ti/TiDocumentText'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import SwipeableViews from 'react-swipeable-views'
 
-import { useSocket } from "@hooks"
-import { TAB_TITLES } from "@sections/code-editor-panel/work-space/TAB_TITLES"
-import { WorkSpaceProps } from "@sections/code-editor-panel/work-space/types"
-import { setCode, toggleBrowser, toggleInstrations } from "src/redux/slices/code-panel-global"
-import { setTab } from "src/redux/slices/mobile-tab-manager"
-import { useSelector } from "src/redux/store"
+import { useSocket } from '@/lib/hooks'
+import { setCode, toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
+import { setTab } from '@/redux/slices/mobile-tab-manager'
+import { useSelector } from '@/redux/store'
+import { TAB_TITLES } from '@/sections/code-editor-panel/work-space/TAB_TITLES'
+import { WorkSpaceProps } from '@/sections/code-editor-panel/work-space/types'
 
-import CodeEditorBlock from "./blocks/code-editor-block"
-import HidedTabBtn from "./blocks/code-editor-block/hided-tab-btn"
-import NavPanel from "./blocks/nav-panel"
-import SliderBlock from "./blocks/slider-block"
-import ViewBlock from "./blocks/view-block"
-import { CodeDocument } from "./blocks/view-block/browser-view"
+import CodeEditorBlock from './blocks/code-editor-block'
+import HidedTabBtn from './blocks/code-editor-block/hided-tab-btn'
+import NavPanel from './blocks/nav-panel'
+import SliderBlock from './blocks/slider-block'
+import ViewBlock from './blocks/view-block'
+import { CodeDocument } from './blocks/view-block/browser-view'
 
 let previousLength: number | null = null
 let checkValueTimeout: any | null = null
@@ -60,29 +60,29 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
       previousLength = doc?.htmlBody?.length // Store the current value
       if (router.query.lessonId && user) {
-        socket?.emit("changeStatusInLesson", {
+        socket?.emit('changeStatusInLesson', {
           lesson: router.query.lessonId,
           user: user?.id,
-          status: "active",
+          status: 'active',
         })
       }
 
       // Set up the check for 30 seconds later
       checkValueTimeout = setTimeout(() => {
         if (doc?.htmlBody?.length === previousLength) {
-          socket?.emit("changeStatusInLesson", {
+          socket?.emit('changeStatusInLesson', {
             lesson: router.query.lessonId,
             user: user?.id,
-            status: "idle",
+            status: 'idle',
           })
         }
       }, 30000) // 30 seconds
 
       setDocument(doc as CodeDocument)
-      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join("") ?? ""))
+      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? ''))
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      console.log("Error: ", error)
+      console.log('Error: ', error)
     }
   }
 
@@ -96,7 +96,10 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
   if (isDesktop) {
     return (
-      <Stack ref={wrapperRef} {...STACK_PROPS}>
+      <Stack
+        ref={wrapperRef}
+        {...STACK_PROPS}
+      >
         {!isInstructionsHidden ? (
           <SliderBlock
             onSubmitChallenge={onSubmitChallenge}
@@ -104,7 +107,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
             data={data}
             integrations={lesson?.integrations ?? []}
             isFetching={isFetching}
-            code={document?.htmlBody?.join("") ?? ""}
+            code={document?.htmlBody?.join('') ?? ''}
           />
         ) : (
           <HidedTabBtn
@@ -115,9 +118,9 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         )}
 
         <CodeEditorBlock
-          preloadedCode={(lastLessonCode ?? data[slideIndex]?.preload_body) || ""}
-          validations={data[slideIndex]?.validations || ""}
-          code={document?.htmlBody?.join("") ?? ""}
+          preloadedCode={(lastLessonCode ?? data[slideIndex]?.preload_body) || ''}
+          validations={data[slideIndex]?.validations || ''}
+          code={document?.htmlBody?.join('') ?? ''}
           user={user}
           onChangeCode={onChangeCode}
         />
@@ -125,10 +128,17 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         {!isBrowserHidden ? (
           <ViewBlock code={document} />
         ) : (
-          <HidedTabBtn title={TAB_TITLES.browser_preview} icon={<FaDesktop size={20} />} openPanelFnc={openPreview} />
+          <HidedTabBtn
+            title={TAB_TITLES.browser_preview}
+            icon={<FaDesktop size={20} />}
+            openPanelFnc={openPreview}
+          />
         )}
 
-        <NavPanel wrapperListenerRef={wrapperRef} cursorName={user?.first_name} />
+        <NavPanel
+          wrapperListenerRef={wrapperRef}
+          cursorName={user?.first_name}
+        />
       </Stack>
     )
   }
@@ -146,11 +156,11 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         data={data}
         integrations={lesson?.integrations ?? []}
         isFetching={isFetching}
-        code={document?.htmlBody?.join("") ?? ""}
+        code={document?.htmlBody?.join('') ?? ''}
       />
 
       <CodeEditorBlock
-        code={document?.htmlBody?.join("") ?? ""}
+        code={document?.htmlBody?.join('') ?? ''}
         onChangeCode={onChangeCode}
         user={user}
         preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
@@ -165,9 +175,9 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 const STACK_PROPS: StackProps = {
   px: 1,
   gap: 1,
-  display: "flex",
-  direction: "row",
-  alignItems: "stretch",
+  display: 'flex',
+  direction: 'row',
+  alignItems: 'stretch',
 }
 
 export default WorkSpace

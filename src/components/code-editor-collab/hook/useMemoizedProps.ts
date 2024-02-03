@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef } from "react";
-import { File, type FileInfo } from "./utils/collab/requests";
+import { useCallback, useEffect, useRef } from 'react'
+
+import { File, type FileInfo } from './utils/collab/requests'
 
 export interface MemoizedProps {
   code?: string
@@ -12,13 +13,13 @@ export interface MemoizedProps {
   defaultFileName: string
 }
 
-interface MemoizedPropsReturn extends Omit<MemoizedProps, "cursorText" | "withTooltip"> {
+interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {
   cursorText: string
   withTooltip: boolean
 }
 
 export const useMemoizedProps = ({
-  cursorText = "Unknown",
+  cursorText = 'Unknown',
   withTooltip = true,
   onChange,
   onResetFileManager,
@@ -27,38 +28,38 @@ export const useMemoizedProps = ({
   preloadedCode,
   defaultFileName,
 }: MemoizedProps): MemoizedPropsReturn => {
-  const codeRef = useRef(code);
-  const onChangeRef = useRef(onChange);
-  const withTooltipRef = useRef(withTooltip);
-  const preloadedCodeRef = useRef(preloadedCode);
-  const setActiveFileRef = useRef(setActiveFile);
-  const cursorTextRef = useRef<string>(cursorText);
-  const onResetFileManagerRef = useRef(onResetFileManager);
-  const defaultFileNameRef = useRef(defaultFileName);
+  const codeRef = useRef(code)
+  const onChangeRef = useRef(onChange)
+  const withTooltipRef = useRef(withTooltip)
+  const preloadedCodeRef = useRef(preloadedCode)
+  const setActiveFileRef = useRef(setActiveFile)
+  const cursorTextRef = useRef<string>(cursorText)
+  const onResetFileManagerRef = useRef(onResetFileManager)
+  const defaultFileNameRef = useRef(defaultFileName)
 
   useEffect(() => {
-    setActiveFileRef.current = setActiveFile;
-  }, [setActiveFile]);
+    setActiveFileRef.current = setActiveFile
+  }, [setActiveFile])
 
   useEffect(() => {
-    onResetFileManagerRef.current = onResetFileManager;
-  }, [onResetFileManager]);
+    onResetFileManagerRef.current = onResetFileManager
+  }, [onResetFileManager])
 
   useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
+    onChangeRef.current = onChange
+  }, [onChange])
 
   const _onChange = useCallback((code: Record<string, string>): void => {
-    onChangeRef.current?.(code);
-  }, []);
+    onChangeRef.current?.(code)
+  }, [])
 
   const _onResetFileManager = useCallback((fileInfo?: FileInfo) => {
-    onResetFileManagerRef.current(fileInfo);
-  }, []);
+    onResetFileManagerRef.current(fileInfo)
+  }, [])
 
   const _setActiveFile = useCallback((fileName: File) => {
-    setActiveFileRef.current(fileName);
-  }, []);
+    setActiveFileRef.current(fileName)
+  }, [])
 
   return {
     onChange: _onChange,
@@ -68,6 +69,6 @@ export const useMemoizedProps = ({
     withTooltip: withTooltipRef.current,
     preloadedCode: preloadedCodeRef.current,
     defaultFileName: defaultFileNameRef.current,
-    code: codeRef.current
+    code: codeRef.current,
   }
 }

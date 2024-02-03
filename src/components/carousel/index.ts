@@ -1,3 +1,3 @@
-export * from "./CarouselArrowIndex";
-export * from "./CarouselArrows";
-export * from "./CarouselDots";
+export * from './CarouselArrowIndex'
+export * from './CarouselArrows'
+export * from './CarouselDots'

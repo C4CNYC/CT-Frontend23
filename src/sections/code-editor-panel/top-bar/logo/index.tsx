@@ -1,39 +1,39 @@
-import NextLink from "next/link";
-import { forwardRef } from "react";
+import { forwardRef } from 'react'
 
-import { Box, BoxProps, Link, useMediaQuery, useTheme } from "@mui/material";
+import { Box, BoxProps, Link, useMediaQuery, useTheme } from '@mui/material'
+import NextLink from 'next/link'
 
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
-import { icon } from "./icon";
+import { icon } from './icon'
 
 export interface LogoProps extends BoxProps {
-  disabledLink?: boolean;
+  disabledLink?: boolean
 }
 
 // eslint-disable-next-line react/display-name
 const Logo = forwardRef<HTMLDivElement, LogoProps>(
   ({ disabledLink = false, sx, ...other }, ref): React.ReactElement | null => {
-    const theme = useTheme();
+    const theme = useTheme()
     const logo = (
       <Box
         ref={ref}
-        component="div"
+        component='div'
         sx={{
-          display: "inline-flex",
+          display: 'inline-flex',
           ...sx,
         }}
         {...other}
       >
-        {icon(theme.palette.mode === "light")}{" "}
+        {icon(theme.palette.mode === 'light')}{' '}
       </Box>
-    );
+    )
 
-    const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-    if (!isDesktop) return null;
+    const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+    if (!isDesktop) return null
 
     if (disabledLink) {
-      return logo;
+      return logo
     }
 
     return (
@@ -44,10 +44,10 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
       >
         {logo}
       </Link>
-    );
+    )
   }
-);
+)
 
-const LINK_SX = { display: "contents" };
+const LINK_SX = { display: 'contents' }
 
-export default Logo;
+export default Logo

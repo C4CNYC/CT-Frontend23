@@ -1,21 +1,14 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
-import {
-  IModule,
-  IModulesSearchParams,
-} from "src/redux/interfaces/content.interface";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
+import { IModule, IModulesSearchParams } from '@/redux/interfaces/content.interface'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getModuleWithLessons: builder.query<
-      IModule & BaseResponseInterface,
-      { id: string }
-    >({
+    getModuleWithLessons: builder.query<IModule & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/module/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
     }),
     getModulesList: builder.query<
@@ -23,19 +16,19 @@ const extendedApi = managerApi.injectEndpoints({
       IModulesSearchParams
     >({
       query: (params) => ({
-        url: "/student/content/module",
-        method: "GET",
+        url: '/student/content/module',
+        method: 'GET',
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Modules"],
+      providesTags: ['Modules'],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetModuleWithLessonsQuery,
   useGetModulesListQuery,
   // -------------mutation-----------
-} = extendedApi;
+} = extendedApi

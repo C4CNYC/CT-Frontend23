@@ -1,32 +1,31 @@
-import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { type BaseResponseInterface } from "@utils";
+import { type BaseResponseInterface } from '@/lib/utils'
 
-import { type IFriend } from "../interfaces/friends.interface";
+import { type IFriend } from '../interfaces/friends.interface'
 
 export type User =
   | (IFriend & BaseResponseInterface)
-  | (Pick<IFriend, "first_name" | "last_name" | "avatar"> &
-      Pick<BaseResponseInterface, "id">);
+  | (Pick<IFriend, 'first_name' | 'last_name' | 'avatar'> & Pick<BaseResponseInterface, 'id'>)
 
 interface UserSlice {
   user: User | null
 }
 
 const initialState: UserSlice = {
-  user: null
-};
+  user: null,
+}
 
 export const codePanelChatUser = createSlice({
-  name: "tour",
+  name: 'tour',
   initialState,
   reducers: {
     setUser: (state, { payload }: PayloadAction<User | null>): void => {
       state.user = payload
-    }
+    },
   },
-});
+})
 
-export const { setUser } = codePanelChatUser.actions;
+export const { setUser } = codePanelChatUser.actions
 
-export default codePanelChatUser.reducer;
+export default codePanelChatUser.reducer

@@ -1,82 +1,63 @@
-import Link from "next/link";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { LoadingButton } from '@mui/lab'
+import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import Link from 'next/link'
 
-import {
-  ConfirmDialog,
-  Iconify,
-  Label,
-  MenuPopover,
-  TextMaxLine,
-  useSnackbar,
-} from "@components";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 
-import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
-
-// ----------------------------------------------------------------------
+import { useDeleteModuleMutation } from '../../../redux/services/manager/modules-manager'
 
 export default function ModuleCard({ module }: any): React.ReactElement | null {
-  const { enqueueSnackbar } = useSnackbar();
-  const [openConfirm, setOpenConfirm] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const translate = useTranslate();
+  const { enqueueSnackbar } = useSnackbar()
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const translate = useTranslate()
 
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const [deleteModule] = useDeleteModuleMutation();
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const [deleteModule] = useDeleteModuleMutation()
 
   const onDelete = async (): Promise<void> => {
-    setLoading(true);
+    setLoading(true)
     try {
-      await deleteModule({ id: module.id }).unwrap();
-      handleCloseConfirm();
-      enqueueSnackbar(translate("modules_deleted_msg"));
+      await deleteModule({ id: module.id }).unwrap()
+      handleCloseConfirm()
+      enqueueSnackbar(translate('modules_deleted_msg'))
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   const handleOpenConfirm = (): void => {
-    setOpenConfirm(true);
-  };
+    setOpenConfirm(true)
+  }
 
   const handleCloseConfirm = (): void => {
-    setOpenConfirm(false);
-  };
+    setOpenConfirm(false)
+  }
 
-  const handleOpenPopover = async (
-    event: React.MouseEvent<HTMLElement>
-  ): Promise<void> => {
-    setOpenPopover(event.currentTarget);
-    event.stopPropagation();
-    event.preventDefault();
-  };
+  const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
+    setOpenPopover(event.currentTarget)
+    event.stopPropagation()
+    event.preventDefault()
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
   const getDurationString = (obj: Record<string, number>) => {
-    let str = "";
+    let str = ''
     for (const [key, value] of Object.entries(obj)) {
-      str += `${value} ${key} `;
+      str += `${value} ${key} `
     }
-    return str;
-  };
+    return str
+  }
 
   return (
     <>
@@ -84,70 +65,76 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
         component={Link}
         href={`${MANAGER_PATH_DASHBOARD.lessons.root}?module_id=${module.id}`}
         sx={{
-          textDecoration: "none",
+          textDecoration: 'none',
           p: 2.5,
           width: 1,
           boxShadow: 0,
-          bgcolor: "background.default",
-          maxWidth: "auto",
+          bgcolor: 'background.default',
+          maxWidth: 'auto',
           border: (theme) => `solid 1px ${theme.palette.divider}`,
-          "&:hover": {
-            bgcolor: "grey.100",
+          '&:hover': {
+            bgcolor: 'grey.100',
           },
         }}
       >
         <Stack
-          direction="row"
-          alignItems="center"
-          sx={{ top: 8, right: 8, position: "absolute" }}
+          direction='row'
+          alignItems='center'
+          sx={{ top: 8, right: 8, position: 'absolute' }}
         >
           <IconButton
-            color={openPopover ? "inherit" : "default"}
+            color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
           >
-            <Iconify icon="eva:more-vertical-fill" />
+            <Iconify icon='eva:more-vertical-fill' />
           </IconButton>
         </Stack>
         <Label
-          variant="soft"
-          color={module.active ? "success" : "error"}
+          variant='soft'
+          color={module.active ? 'success' : 'error'}
           sx={{
-            textTransform: "uppercase",
-            mr: "auto",
-            position: "absolute",
+            textTransform: 'uppercase',
+            mr: 'auto',
+            position: 'absolute',
             top: 10,
             left: 10,
           }}
         >
-          {module.active ? translate("active") : translate("not_active")}
+          {module.active ? translate('active') : translate('not_active')}
         </Label>
 
         <Box
-          component="img"
-          src={module.avatar ?? "/assets/icons/files/ic_folder.svg"}
+          component='img'
+          src={module.avatar ?? '/assets/icons/files/ic_folder.svg'}
           alt={module.avatar}
           sx={{ width: 40, height: 40, mt: 4 }}
         />
 
-        <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
+        <TextMaxLine
+          variant='h6'
+          sx={{ mt: 1, mb: 0.5 }}
+        >
           {module.name}
         </TextMaxLine>
 
         <Stack
-          direction="row"
-          alignItems="center"
+          direction='row'
+          alignItems='center'
           spacing={0.75}
-          sx={{ typography: "caption", color: "text.disabled" }}
+          sx={{ typography: 'caption', color: 'text.disabled' }}
         >
-          <Typography variant="caption" noWrap>
+          <Typography
+            variant='caption'
+            noWrap
+          >
             {module.description}
           </Typography>
           <Box
             sx={{
               width: 2,
               height: 2,
-              borderRadius: "50%",
-              bgcolor: "currentColor",
+              borderRadius: '50%',
+              bgcolor: 'currentColor',
             }}
           />
         </Stack>
@@ -156,7 +143,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow="right-top"
+        arrow='right-top'
         sx={{ width: 160 }}
       >
         <CreateModuleDialog
@@ -166,8 +153,8 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             name: module.name,
             description: module.description as string,
             active: module.active as boolean,
-            tips: "",
-            duration: module.duration ? getDurationString(module.duration) : "",
+            tips: '',
+            duration: module.duration ? getDurationString(module.duration) : '',
             teacher_slides: module.teacher_slides as string,
             teacher_forum: module.teacher_forum as string,
             lesson_plans: module.lesson_plans as string,
@@ -178,41 +165,41 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           moduleTips={module.tips}
         >
           <MenuItem>
-            <Iconify icon="eva:edit-fill" />
-            {translate("actions_edit")}
+            <Iconify icon='eva:edit-fill' />
+            {translate('actions_edit')}
           </MenuItem>
         </CreateModuleDialog>
 
-        <Divider sx={{ borderStyle: "dashed" }} />
+        <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem
           onClick={() => {
-            handleOpenConfirm();
-            handleClosePopover();
+            handleOpenConfirm()
+            handleClosePopover()
           }}
-          sx={{ color: "error.main" }}
+          sx={{ color: 'error.main' }}
         >
-          <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_delete")}
+          <Iconify icon='eva:trash-2-outline' />
+          {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
-        content={translate("messages_delete_question")}
+        title={translate('actions_delete')}
+        content={translate('messages_delete_question')}
         action={
           <LoadingButton
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             onClick={onDelete}
             loading={loading}
           >
-            {translate("actions_delete")}
+            {translate('actions_delete')}
           </LoadingButton>
         }
       />
     </>
-  );
+  )
 }

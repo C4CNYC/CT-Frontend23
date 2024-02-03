@@ -1,18 +1,13 @@
-import { MotionProps, m } from "framer-motion";
+import { Box, BoxProps } from '@mui/material'
+import { MotionProps, m } from 'framer-motion'
 
-// @mui
-import { Box, BoxProps } from "@mui/material";
+import { varContainer } from './variants'
 
-//
-import { varContainer } from "./variants";
-
-// ----------------------------------------------------------------------
-
-type IProps = BoxProps & MotionProps;
+type IProps = BoxProps & MotionProps
 
 export interface MotionContainerProps extends IProps {
-  animate?: boolean;
-  action?: boolean;
+  animate?: boolean
+  action?: boolean
 }
 
 export function MotionContainer({
@@ -26,25 +21,25 @@ export function MotionContainer({
       <Box
         component={m.div}
         initial={false}
-        animate={animate ? "animate" : "exit"}
+        animate={animate ? 'animate' : 'exit'}
         variants={varContainer()}
         {...other}
       >
         {children}
       </Box>
-    );
+    )
   }
 
   return (
     <Box
       component={m.div}
-      initial="initial"
-      animate="animate"
-      exit="exit"
+      initial='initial'
+      animate='animate'
+      exit='exit'
       variants={varContainer()}
       {...other}
     >
       {children}
     </Box>
-  );
+  )
 }

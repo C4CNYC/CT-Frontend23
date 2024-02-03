@@ -27,16 +27,9 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components": ["src/components"],
-      "@hooks": ["src/lib/hooks"],
-      "@types": ["src/types"],
-      "@sections/*": ["src/sections/*"],
-      "@routes/*": ["src/routes/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@assets/*": ["src/assets/*"],
-      "@theme/*": ["src/theme/*"],
-      "@utils": ["src/lib/utils"],
-      "src": ["src"]
+      "@/*": [
+        "./src/*"
+      ],
     },
     "incremental": true,
     "plugins": [

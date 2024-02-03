@@ -1,35 +1,26 @@
-// @mui
 // hooks
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps } from '@mui/material'
 
-// components
-import { useSettingsContext } from "src/components/settings";
-import { useResponsive } from "src/lib/hooks/useResponsive";
+import { useSettingsContext } from '@/components/settings'
+import { useResponsive } from '@/lib/hooks/useResponsive'
 
-// config
-import { HEADER, NAV } from "../../config";
+import { HEADER, NAV } from '../../config'
 
-// ----------------------------------------------------------------------
+const SPACING = 8
 
-const SPACING = 8;
+export default function Main({ children, sx, ...other }: BoxProps): React.ReactElement {
+  const { themeLayout } = useSettingsContext()
 
-export default function Main({
-  children,
-  sx,
-  ...other
-}: BoxProps): React.ReactElement {
-  const { themeLayout } = useSettingsContext();
+  const isNavHorizontal = themeLayout === 'horizontal'
 
-  const isNavHorizontal = themeLayout === "horizontal";
+  const isNavMini = themeLayout === 'mini'
 
-  const isNavMini = themeLayout === "mini";
-
-  const isDesktop = useResponsive("up", "md");
+  const isDesktop = useResponsive('up', 'md')
 
   if (isNavHorizontal) {
     return (
       <Box
-        component="main"
+        component='main'
         sx={{
           pt: `${HEADER.H_MOBILE + SPACING}px`,
           pb: `${HEADER.H_MOBILE + SPACING}px`,
@@ -42,12 +33,12 @@ export default function Main({
       >
         {children}
       </Box>
-    );
+    )
   }
 
   return (
     <Box
-      component="main"
+      component='main'
       sx={{
         flexGrow: 1,
         py: `${HEADER.H_MOBILE + SPACING}px`,
@@ -65,5 +56,5 @@ export default function Main({
     >
       {children}
     </Box>
-  );
+  )
 }

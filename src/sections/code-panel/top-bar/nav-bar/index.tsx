@@ -1,19 +1,19 @@
-import { useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/system";
+import { useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/system'
 
-import DesktopBar from "./DesktopBar";
-import MobileBar from "./MobileBar";
+import DesktopBar from './DesktopBar'
+import MobileBar from './MobileBar'
 
 interface INavBar {
-  chatComponent?: React.ReactElement | null;
+  chatComponent?: React.ReactElement | null
 }
 
 const NavBar = ({ chatComponent }: INavBar): React.ReactElement => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
 
-  if (isDesktop) return <DesktopBar chatComponent={chatComponent} />;
-  return <MobileBar />;
-};
+  if (isDesktop) return <DesktopBar chatComponent={chatComponent} />
+  return <MobileBar />
+}
 
-export default NavBar;
+export default NavBar

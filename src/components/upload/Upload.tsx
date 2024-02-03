@@ -1,42 +1,31 @@
-import { useDropzone } from "react-dropzone";
+import { Box, Button, IconButton, Stack, StackProps, Typography } from '@mui/material'
+import { alpha, styled } from '@mui/material/styles'
+import { useDropzone } from 'react-dropzone'
 
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  StackProps,
-  Typography,
-} from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { useTranslate } from '@/lib/utils/translateHelper'
 
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Iconify } from '../iconify'
 
-import { Iconify } from "../iconify";
-import RejectionFiles from "./errors/RejectionFiles";
-import { UploadIllustration } from "./illustrations";
-import MultiFilePreview from "./preview/MultiFilePreview";
-import { SingleFilePreview } from "./preview/SingleFilePreview";
-import { UploadProps } from "./types";
+import RejectionFiles from './errors/RejectionFiles'
+import { UploadIllustration } from './illustrations'
+import MultiFilePreview from './preview/MultiFilePreview'
+import { SingleFilePreview } from './preview/SingleFilePreview'
+import { UploadProps } from './types'
 
-// ----------------------------------------------------------------------
-
-const StyledDropZone = styled("div")(({ theme }) => ({
-  outline: "none",
-  cursor: "pointer",
-  overflow: "hidden",
-  position: "relative",
+const StyledDropZone = styled('div')(({ theme }) => ({
+  outline: 'none',
+  cursor: 'pointer',
+  overflow: 'hidden',
+  position: 'relative',
   padding: theme.spacing(1),
   borderRadius: theme.shape.borderRadius,
-  transition: theme.transitions.create("padding"),
+  transition: theme.transitions.create('padding'),
   backgroundColor: theme.palette.background.neutral,
   border: `1px dashed ${alpha(theme.palette.grey[500], 0.32)}`,
-  "&:hover": {
+  '&:hover': {
     opacity: 0.72,
   },
-}));
-
-// ----------------------------------------------------------------------
+}))
 
 export function Upload({
   disabled,
@@ -55,26 +44,20 @@ export function Upload({
   sx,
   ...other
 }: UploadProps): React.ReactElement | null {
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragReject,
-    fileRejections,
-  } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
     multiple,
     disabled,
     ...other,
-  });
+  })
 
-  const hasFile = !!file && !multiple;
+  const hasFile = !!file && !multiple
 
-  const hasFiles = files && multiple && files.length > 0;
+  const hasFiles = files && multiple && files.length > 0
 
-  const isError = isDragReject || !!error;
+  const isError = isDragReject || !!error
 
   return (
-    <Box sx={{ width: 1, position: "relative", ...sx }}>
+    <Box sx={{ width: 1, position: 'relative', ...sx }}>
       <StyledDropZone
         {...getRootProps()}
         sx={{
@@ -82,16 +65,16 @@ export function Upload({
             opacity: 0.72,
           }),
           ...(isError && {
-            color: "error.main",
-            bgcolor: "error.lighter",
-            borderColor: "error.light",
+            color: 'error.main',
+            bgcolor: 'error.lighter',
+            borderColor: 'error.light',
           }),
           ...(disabled && {
             opacity: 0.48,
-            pointerEvents: "none",
+            pointerEvents: 'none',
           }),
           ...(hasFile && {
-            padding: "12% 0",
+            padding: '12% 0',
           }),
         }}
       >
@@ -114,21 +97,24 @@ export function Upload({
 
       {hasFile && onDelete && (
         <IconButton
-          size="small"
+          size='small'
           onClick={onDelete}
           sx={{
             top: 16,
             right: 16,
             zIndex: 9,
-            position: "absolute",
+            position: 'absolute',
             color: (theme) => alpha(theme.palette.common.white, 0.8),
             bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
-            "&:hover": {
+            '&:hover': {
               bgcolor: (theme) => alpha(theme.palette.grey[900], 0.48),
             },
           }}
         >
-          <Iconify icon="eva:close-fill" width={18} />
+          <Iconify
+            icon='eva:close-fill'
+            width={18}
+          />
         </IconButton>
       )}
 
@@ -142,12 +128,16 @@ export function Upload({
             />
           </Box>
 
-          <Stack direction="row" justifyContent="flex-end" spacing={1.5}>
+          <Stack
+            direction='row'
+            justifyContent='flex-end'
+            spacing={1.5}
+          >
             {onRemoveAll && (
               <Button
-                color="inherit"
-                variant="outlined"
-                size="small"
+                color='inherit'
+                variant='outlined'
+                size='small'
                 onClick={onRemoveAll}
               >
                 Remove all
@@ -155,7 +145,11 @@ export function Upload({
             )}
 
             {onUpload && (
-              <Button size="small" variant="contained" onClick={onUpload}>
+              <Button
+                size='small'
+                variant='contained'
+                onClick={onUpload}
+              >
                 Upload files
               </Button>
             )}
@@ -163,28 +157,26 @@ export function Upload({
         </>
       )}
     </Box>
-  );
+  )
 }
 
-// ----------------------------------------------------------------------
-
 function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
-  const translate = useTranslate();
+  const translate = useTranslate()
   return (
     <Stack
       spacing={2}
-      alignItems="center"
-      justifyContent="center"
+      alignItems='center'
+      justifyContent='center'
       direction={{
-        xs: "column",
-        md: "row",
+        xs: 'column',
+        md: 'row',
       }}
       sx={{
         width: 1,
         padding: 0,
         textAlign: {
-          xs: "center",
-          md: "left",
+          xs: 'center',
+          md: 'left',
         },
         ...sx,
       }}
@@ -193,14 +185,20 @@ function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
       <UploadIllustration sx={{ width: 120 }} />
 
       <div>
-        <Typography gutterBottom variant="h5">
-          {translate("image_choose_image")}
+        <Typography
+          gutterBottom
+          variant='h5'
+        >
+          {translate('image_choose_image')}
         </Typography>
 
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {translate("image_drope_file")}
+        <Typography
+          variant='body2'
+          sx={{ color: 'text.secondary' }}
+        >
+          {translate('image_drope_file')}
         </Typography>
       </div>
     </Stack>
-  );
+  )
 }

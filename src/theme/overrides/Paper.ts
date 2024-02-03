@@ -1,6 +1,4 @@
-import { type Theme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import { type Theme } from '@mui/material/styles'
 
 export default function Paper(theme: Theme): unknown {
   return {
@@ -10,9 +8,9 @@ export default function Paper(theme: Theme): unknown {
       },
       styleOverrides: {
         root: {
-          backgroundImage: "none",
+          backgroundImage: 'none',
         },
       },
     },
-  };
+  }
 }

@@ -1,57 +1,57 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 
-import { IUser } from "../interfaces/auth.interface";
-import { OrganizationResponce } from "../services/interfaces/organization.interface";
+import { IUser } from '../interfaces/auth.interface'
+import { OrganizationResponce } from '../services/interfaces/organization.interface'
 
 export interface CounterState {
-  org_id: string;
-  organizations: OrganizationResponce[];
-  user: IUser | null;
-  isStudent: boolean | null;
+  org_id: string
+  organizations: OrganizationResponce[]
+  user: IUser | null
+  isStudent: boolean | null
 }
 
 export interface ISchool extends BaseResponseInterface {
-  name: string;
-  city: string;
-  avatar: string;
-  cover: string;
-  country: string;
+  name: string
+  city: string
+  avatar: string
+  cover: string
+  country: string
 }
 
 const initialState: CounterState = {
-  org_id: "",
+  org_id: '',
   organizations: [],
   user: null,
   isStudent: true,
-};
+}
 
 export const globalSlice = createSlice({
-  name: "global",
+  name: 'global',
   initialState,
   reducers: {
     setOrganization: (state, action: PayloadAction<string>) => {
-      state.org_id = action.payload;
+      state.org_id = action.payload
     },
     setOrganizationList: (state, action: PayloadAction<any[]>) => {
-      state.organizations = action.payload;
+      state.organizations = action.payload
     },
     setUser: (state, action: PayloadAction<IUser>) => {
-      state.user = action.payload;
+      state.user = action.payload
     },
     cleanUser: (state, action: PayloadAction<undefined>) => {
-      state.user = null;
+      state.user = null
     },
     setStudentMode: (state, action: PayloadAction<boolean>) => {
-      state.isStudent = action.payload;
+      state.isStudent = action.payload
     },
     cleanUserRole: (state, action: PayloadAction<undefined>) => {
-      state.isStudent = null;
+      state.isStudent = null
     },
   },
-});
+})
 
 export const {
   setUser,
@@ -60,6 +60,6 @@ export const {
   cleanUser,
   setStudentMode,
   cleanUserRole,
-} = globalSlice.actions;
+} = globalSlice.actions
 
-export default globalSlice.reducer;
+export default globalSlice.reducer

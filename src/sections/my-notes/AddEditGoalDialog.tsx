@@ -1,112 +1,97 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { MuiColorInput } from "mui-color-input";
-import { useSnackbar } from "notistack";
-import { Controller, useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
+import { Box, Stack } from '@mui/system'
+import { MuiColorInput } from 'mui-color-input'
+import { useSnackbar } from 'notistack'
+import { Controller, useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
-import { Box, Stack } from "@mui/system";
-
-import { FormProvider, RHFTextField } from "@components";
-import { getRandomColor } from "@utils";
-import { APIError } from "src/redux/interfaces/custom-error.interface";
-import { IGoals } from "src/redux/interfaces/goals.interface";
-import {
-  usePostGoalMutation,
-  useUpdateGoalMutation,
-} from "src/redux/services/manager/goals-student";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { FormProvider, RHFTextField } from '@/components'
+import { getRandomColor } from '@/lib/utils'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { APIError } from '@/redux/interfaces/custom-error.interface'
+import { IGoals } from '@/redux/interfaces/goals.interface'
+import { usePostGoalMutation, useUpdateGoalMutation } from '@/redux/services/manager/goals-student'
 
 interface FormValuesProps {
-  title: string;
-  description: string;
-  color: string;
-  id?: string;
+  title: string
+  description: string
+  color: string
+  id?: string
 }
 
 interface IAddEditNotesDialogProps {
-  children: React.ReactElement;
-  note?: IGoals;
+  children: React.ReactElement
+  note?: IGoals
 }
 
-const AddEditNotesDialog = ({
-  children,
-  note,
-}: IAddEditNotesDialogProps): React.ReactElement => {
-  const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
-  const [open, setOpen] = useState(false);
+const AddEditNotesDialog = ({ children, note }: IAddEditNotesDialogProps): React.ReactElement => {
+  const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
+  const [open, setOpen] = useState(false)
 
-  const [postNote, { isLoading }] = usePostGoalMutation();
-  const [editNote, { isLoading: isEditing }] = useUpdateGoalMutation();
+  const [postNote, { isLoading }] = usePostGoalMutation()
+  const [editNote, { isLoading: isEditing }] = useUpdateGoalMutation()
 
   const handleClickOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   const defaultValues = {
-    title: note?.title ?? "",
-    description: note?.description ?? "",
+    title: note?.title ?? '',
+    description: note?.description ?? '',
     color: note?.color ?? getRandomColor(),
-  };
+  }
   const CreateGoalSchema = Yup.object().shape({
     title: Yup.string(),
     description: Yup.string(),
     color: Yup.string(),
-  });
+  })
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateGoalSchema),
     defaultValues,
-  });
+  })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       if (note) {
-        await editNote({ id: note.id as string, ...data }).unwrap();
+        await editNote({ id: note.id as string, ...data }).unwrap()
       } else {
-        await postNote(data).unwrap();
+        await postNote(data).unwrap()
       }
 
-      enqueueSnackbar(
-        note ? translate("messages_edited") : translate("messages_added")
-      );
-      methods.reset();
+      enqueueSnackbar(note ? translate('messages_edited') : translate('messages_added'))
+      methods.reset()
     } catch (error: any) {
-      const typedError = error as APIError;
+      const typedError = error as APIError
       enqueueSnackbar(typedError.data.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-    handleClose();
-  };
+    handleClose()
+  }
 
   return (
     <>
       <Box
         onClick={handleClickOpen}
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         {children}
       </Box>
       <Dialog
-        maxWidth="sm"
+        maxWidth='sm'
         open={open}
         onClose={handleClose}
         fullWidth
@@ -114,38 +99,38 @@ const AddEditNotesDialog = ({
           zIndex: 1101,
         }}
       >
-        <DialogTitle>
-          {note ? translate("actions_edit") : translate("actions_create")}
-        </DialogTitle>
+        <DialogTitle>{note ? translate('actions_edit') : translate('actions_create')}</DialogTitle>
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <DialogContent>
-            <Stack gap={3} p={1}>
-              <RHFTextField name="title" label={translate("title")} />
+            <Stack
+              gap={3}
+              p={1}
+            >
+              <RHFTextField
+                name='title'
+                label={translate('title')}
+              />
               <RHFTextField
                 multiline
                 rows={3}
-                name="description"
-                label={translate("description")}
+                name='description'
+                label={translate('description')}
               />
               <Controller
                 control={methods.control}
-                name="color"
+                name='color'
                 render={({ field, fieldState }) => (
                   <MuiColorInput
-                    sx={{ maxWidth: "250px" }}
+                    sx={{ maxWidth: '250px' }}
                     {...field}
                     value={field.value}
-                    helperText={
-                      fieldState.invalid
-                        ? translate("messages_invalid_color")
-                        : ""
-                    }
+                    helperText={fieldState.invalid ? translate('messages_invalid_color') : ''}
                     error={fieldState.invalid}
                     isAlphaHidden
-                    format="hex"
+                    format='hex'
                   />
                 )}
               />
@@ -153,21 +138,24 @@ const AddEditNotesDialog = ({
           </DialogContent>
 
           <DialogActions>
-            <Button color="error" onClick={handleClose}>
-              {translate("actions_cancel")}
+            <Button
+              color='error'
+              onClick={handleClose}
+            >
+              {translate('actions_cancel')}
             </Button>
             <LoadingButton
-              type="submit"
-              variant="contained"
+              type='submit'
+              variant='contained'
               loading={isLoading || isEditing}
             >
-              {translate("actions_save")}
+              {translate('actions_save')}
             </LoadingButton>
           </DialogActions>
         </FormProvider>
       </Dialog>
     </>
-  );
-};
+  )
+}
 
-export default AddEditNotesDialog;
+export default AddEditNotesDialog

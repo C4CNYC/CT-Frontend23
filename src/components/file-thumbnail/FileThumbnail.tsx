@@ -1,19 +1,16 @@
-import { Box, Stack, SxProps, Tooltip } from "@mui/material";
-import { Theme } from "@mui/material/styles";
+import { Box, Stack, SxProps, Tooltip } from '@mui/material'
+import { Theme } from '@mui/material/styles'
 
-//
-import { DownloadButton } from "./DownloadButton";
-import { fileData, fileFormat, fileThumb } from "./utils";
-
-// ----------------------------------------------------------------------
+import { DownloadButton } from './DownloadButton'
+import { fileData, fileFormat, fileThumb } from './utils'
 
 export interface FileIconProps {
-  file: File | string;
-  tooltip?: boolean;
-  imageView?: boolean;
-  onDownload?: VoidFunction;
-  sx?: SxProps<Theme>;
-  imgSx?: SxProps<Theme>;
+  file: File | string
+  tooltip?: boolean
+  imageView?: boolean
+  onDownload?: VoidFunction
+  sx?: SxProps<Theme>
+  imgSx?: SxProps<Theme>
 }
 
 export function FileThumbnail({
@@ -24,26 +21,26 @@ export function FileThumbnail({
   sx,
   imgSx,
 }: FileIconProps): React.ReactElement | null {
-  const { name = "", path = "", preview = "" } = fileData(file);
+  const { name = '', path = '', preview = '' } = fileData(file)
 
-  const format = fileFormat((path || preview) as string);
+  const format = fileFormat((path || preview) as string)
 
   const renderContent =
-    format === "image" && imageView ? (
+    format === 'image' && imageView ? (
       <Box
-        component="img"
+        component='img'
         src={preview as string}
         sx={{
           width: 1,
           height: 1,
           flexShrink: 0,
-          objectFit: "cover",
+          objectFit: 'cover',
           ...imgSx,
         }}
       />
     ) : (
       <Box
-        component="img"
+        component='img'
         src={fileThumb(format)}
         sx={{
           width: 32,
@@ -52,26 +49,26 @@ export function FileThumbnail({
           ...sx,
         }}
       />
-    );
+    )
 
   if (tooltip) {
     return (
       <Tooltip title={name}>
         <Stack
           flexShrink={0}
-          component="span"
-          alignItems="center"
-          justifyContent="center"
+          component='span'
+          alignItems='center'
+          justifyContent='center'
           sx={{
-            width: "fit-content",
-            height: "inherit",
+            width: 'fit-content',
+            height: 'inherit',
           }}
         >
           {renderContent}
           {onDownload && <DownloadButton onDownload={onDownload} />}
         </Stack>
       </Tooltip>
-    );
+    )
   }
 
   return (
@@ -79,5 +76,5 @@ export function FileThumbnail({
       {renderContent}
       {onDownload && <DownloadButton onDownload={onDownload} />}
     </>
-  );
+  )
 }

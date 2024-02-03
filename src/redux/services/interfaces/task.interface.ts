@@ -1,21 +1,21 @@
-import { BaseSearchInterface } from "@utils";
+import { BaseSearchInterface } from '@/lib/utils'
 
 export interface ITask {
-  name: string;
-  body: string;
-  id: string;
-  language: string;
+  name: string
+  body: string
+  id: string
+  language: string
 }
 
 export interface ITaskSearchParams extends BaseSearchInterface {
-  name?: string;
+  name?: string
 }
 
 export interface ITaskCreate {
-  language: string;
-  name: string;
-  body: string;
+  language: string
+  name: string
+  body: string
 }
 export interface ITaskDelete {
-  id: string;
+  id: string
 }

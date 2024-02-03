@@ -1,3 +1,3 @@
-import { ActivityStatus } from "./activity-status";
+import { ActivityStatus } from './activity-status'
 
-export type RoomActivity = Record<string, ActivityStatus>;
+export type RoomActivity = Record<string, ActivityStatus>

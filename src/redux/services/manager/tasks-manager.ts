@@ -1,12 +1,8 @@
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 
-import { managerApi } from ".";
-import {
-  ITask,
-  ITaskCreate,
-  ITaskDelete,
-  ITaskSearchParams,
-} from "../interfaces/task.interface";
+import { ITask, ITaskCreate, ITaskDelete, ITaskSearchParams } from '../interfaces/task.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,11 +11,11 @@ const extendedApi = managerApi.injectEndpoints({
       ITaskSearchParams
     >({
       query: (params) => ({
-        url: "/manager/task",
-        method: "GET",
+        url: '/manager/task',
+        method: 'GET',
         params,
       }),
-      providesTags: ["Tasks"],
+      providesTags: ['Tasks'],
     }),
     updateTask: builder.mutation<
       ITask & BaseResponseInterface,
@@ -27,39 +23,33 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id, ...body }) => ({
         url: `/manager/task/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Tasks" }],
+      invalidatesTags: [{ type: 'Tasks' }],
     }),
-    createTask: builder.mutation<
-      ITaskCreate & BaseResponseInterface,
-      ITaskCreate
-    >({
+    createTask: builder.mutation<ITaskCreate & BaseResponseInterface, ITaskCreate>({
       query: ({ ...body }) => ({
-        url: "/manager/task",
-        method: "POST",
+        url: '/manager/task',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Tasks" }],
+      invalidatesTags: [{ type: 'Tasks' }],
     }),
-    deleteTask: builder.mutation<
-      ITaskDelete & BaseResponseInterface,
-      ITaskDelete
-    >({
+    deleteTask: builder.mutation<ITaskDelete & BaseResponseInterface, ITaskDelete>({
       query: ({ id }) => ({
         url: `/manager/task/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Tasks" }],
+      invalidatesTags: [{ type: 'Tasks' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 export const {
   useGetTasksQuery,
   // -------------mutation-----------
   useCreateTaskMutation,
   useDeleteTaskMutation,
   useUpdateTaskMutation,
-} = extendedApi;
+} = extendedApi

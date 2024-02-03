@@ -1,41 +1,35 @@
-import { FaPlus } from "@react-icons/all-files/fa/FaPlus";
+import { Card, CardHeader, CardProps, IconButton, Typography } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa/FaPlus'
 
-import {
-  Card,
-  CardHeader,
-  CardProps,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { IGoals } from '@/redux/interfaces/goals.interface'
 
-import { IGoals } from "src/redux/interfaces/goals.interface";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import AddEditGoalDialog from "./AddEditGoalDialog";
-import NotesItem from "./NotesItem";
-import { BUTTON_SX, CARD_SX } from "./constants";
+import AddEditGoalDialog from './AddEditGoalDialog'
+import { BUTTON_SX, CARD_SX } from './constants'
+import NotesItem from './NotesItem'
 
 interface INotesListProps extends CardProps {
-  list: IGoals[];
+  list: IGoals[]
 }
 
 export default function NotesList({ list }: INotesListProps) {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
     <Card sx={CARD_SX}>
-      <CardHeader
-        title={<Typography variant="h5">{translate("notes_my")}</Typography>}
-      />
+      <CardHeader title={<Typography variant='h5'>{translate('notes_my')}</Typography>} />
       <AddEditGoalDialog>
         <IconButton sx={BUTTON_SX}>
-          {translate("notes_add")}
+          {translate('notes_add')}
           <FaPlus size={20} />
         </IconButton>
       </AddEditGoalDialog>
       {list.map((goal) => (
-        <NotesItem key={goal.id} note={goal} />
+        <NotesItem
+          key={goal.id}
+          note={goal}
+        />
       ))}
     </Card>
-  );
+  )
 }

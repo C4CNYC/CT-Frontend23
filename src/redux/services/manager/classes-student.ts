@@ -1,60 +1,60 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import {
   ClassSearchParams,
   IClass,
   IClassProgress,
   IMentor,
-} from "src/redux/interfaces/class.interface";
+} from '@/redux/interfaces/class.interface'
 
-import { managerApi } from ".";
-import { IStudent, IStudentSearchParams } from "../interfaces/user.interface";
+import { IStudent, IStudentSearchParams } from '../interfaces/user.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     createClass: builder.mutation<void, IClass>({
       query: ({ ...body }) => ({
-        url: "/student/class",
-        method: "POST",
+        url: '/student/class',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Classes"],
+      invalidatesTags: ['Classes'],
     }),
     joinClass: builder.mutation<
-      { status: "joined"; tribe: IClass & BaseResponseInterface },
+      { status: 'joined'; tribe: IClass & BaseResponseInterface },
       { share_token: string }
     >({
       query: ({ ...body }) => ({
-        url: "/student/class/join",
-        method: "POST",
+        url: '/student/class/join',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["ClassesStudent"],
+      invalidatesTags: ['ClassesStudent'],
     }),
     getStudentClasses: builder.query<
       BaseListResponseInterface<IClass & BaseResponseInterface>,
       ClassSearchParams
     >({
       query: ({ ...params }) => ({
-        url: "/student/class",
-        method: "GET",
+        url: '/student/class',
+        method: 'GET',
         params,
       }),
-      providesTags: ["ClassesStudent", "Classes"],
+      providesTags: ['ClassesStudent', 'Classes'],
     }),
     getClass: builder.query<IClass & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/class/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["ClassesStudent"],
+      providesTags: ['ClassesStudent'],
     }),
     getClassProgress: builder.query<IClassProgress[], { id: string }>({
       query: ({ id }) => ({
         url: `/student/class/${id}/progress`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["ClassesStudentProgress"],
+      providesTags: ['ClassesStudentProgress'],
     }),
     getClassStudents: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
@@ -62,25 +62,25 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id, ...params }) => ({
         url: `/student/class/${id}/students`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
-      providesTags: ["ClassesStudentList"],
+      providesTags: ['ClassesStudentList'],
     }),
     getClassMentor: builder.query<IMentor[], { id: string }>({
       query: ({ id }) => ({
         url: `/student/class/${id}/mentor`,
-        method: "GET",
+        method: 'GET',
       }),
       transformResponse: (response: IMentor[]) => {
-        const manager = response.filter((el) => el.role === "manager");
-        return manager ?? response;
+        const manager = response.filter((el) => el.role === 'manager')
+        return manager ?? response
       },
-      providesTags: ["ClassesStudent"],
+      providesTags: ['ClassesStudent'],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetStudentClassesQuery,
@@ -91,4 +91,4 @@ export const {
   // -------------mutation-----------
   useJoinClassMutation,
   useCreateClassMutation,
-} = extendedApi;
+} = extendedApi

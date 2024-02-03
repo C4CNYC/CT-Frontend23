@@ -1,29 +1,23 @@
-import {
-  Button,
-  InputAdornment,
-  MenuItem,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
+import { Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
+import { DatePicker } from '@mui/x-date-pickers'
 
-import { Iconify } from "src/components/iconify";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Iconify } from '@/components/iconify'
+import { useTranslate } from '@/lib/utils/translateHelper'
 
-const INPUT_WIDTH = 160;
+const INPUT_WIDTH = 160
 
 interface Props {
-  filterName: string;
-  isFiltered: boolean;
-  filterType: string;
-  optionsType: string[];
-  filterEndDate: Date | null;
-  onResetFilter: VoidFunction;
-  filterStartDate: Date | null;
-  onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFilterService: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFilterStartDate: (value: Date | null) => void;
-  onFilterEndDate: (value: Date | null) => void;
+  filterName: string
+  isFiltered: boolean
+  filterType: string
+  optionsType: string[]
+  filterEndDate: Date | null
+  onResetFilter: VoidFunction
+  filterStartDate: Date | null
+  onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onFilterService: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onFilterStartDate: (value: Date | null) => void
+  onFilterEndDate: (value: Date | null) => void
 }
 
 export default function AssignmentsTableToolbar({
@@ -39,22 +33,22 @@ export default function AssignmentsTableToolbar({
   onFilterEndDate,
   onFilterStartDate,
 }: Props) {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
     <Stack
       spacing={2}
-      alignItems="center"
+      alignItems='center'
       direction={{
-        xs: "column",
-        md: "row",
+        xs: 'column',
+        md: 'row',
       }}
       sx={{ px: 2.5, py: 3 }}
     >
       <TextField
         fullWidth
         select
-        label={translate("type")}
+        label={translate('type')}
         value={filterType}
         onChange={onFilterService}
         SelectProps={{
@@ -66,7 +60,7 @@ export default function AssignmentsTableToolbar({
         }}
         sx={{
           maxWidth: { md: INPUT_WIDTH },
-          textTransform: "capitalize",
+          textTransform: 'capitalize',
         }}
       >
         {optionsType.map((option) => (
@@ -76,8 +70,8 @@ export default function AssignmentsTableToolbar({
             sx={{
               mx: 1,
               borderRadius: 0.75,
-              typography: "body2",
-              textTransform: "capitalize",
+              typography: 'body2',
+              textTransform: 'capitalize',
             }}
           >
             {option}
@@ -86,7 +80,7 @@ export default function AssignmentsTableToolbar({
       </TextField>
 
       <DatePicker
-        label={translate("assignments_start_date")}
+        label={translate('assignments_start_date')}
         value={filterStartDate}
         onChange={onFilterStartDate}
         renderInput={(params) => (
@@ -101,7 +95,7 @@ export default function AssignmentsTableToolbar({
       />
 
       <DatePicker
-        label={translate("assignments_end_date")}
+        label={translate('assignments_end_date')}
         value={filterEndDate}
         onChange={onFilterEndDate}
         renderInput={(params) => (
@@ -119,11 +113,14 @@ export default function AssignmentsTableToolbar({
         fullWidth
         value={filterName}
         onChange={onFilterName}
-        placeholder={translate("assignments_search")}
+        placeholder={translate('assignments_search')}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
+            <InputAdornment position='start'>
+              <Iconify
+                icon='eva:search-fill'
+                sx={{ color: 'text.disabled' }}
+              />
             </InputAdornment>
           ),
         }}
@@ -131,14 +128,14 @@ export default function AssignmentsTableToolbar({
 
       {isFiltered && (
         <Button
-          color="error"
+          color='error'
           sx={{ flexShrink: 0 }}
           onClick={onResetFilter}
-          startIcon={<Iconify icon="eva:trash-2-outline" />}
+          startIcon={<Iconify icon='eva:trash-2-outline' />}
         >
-          {translate("actions_clear")}
+          {translate('actions_clear')}
         </Button>
       )}
     </Stack>
-  );
+  )
 }

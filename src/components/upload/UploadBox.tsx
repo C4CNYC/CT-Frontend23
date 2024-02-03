@@ -1,35 +1,28 @@
-import { useDropzone } from "react-dropzone";
+import { alpha, styled } from '@mui/material/styles'
+import { useDropzone } from 'react-dropzone'
 
-// @mui
-import { alpha, styled } from "@mui/material/styles";
+import { Iconify } from '../iconify'
 
-//
-import { Iconify } from "../iconify";
-//
-import { UploadProps } from "./types";
+import { UploadProps } from './types'
 
-// ----------------------------------------------------------------------
-
-const StyledDropZone = styled("div")(({ theme }) => ({
+const StyledDropZone = styled('div')(({ theme }) => ({
   width: 64,
   height: 64,
   fontSize: 24,
-  display: "flex",
+  display: 'flex',
   flexShrink: 0,
-  cursor: "pointer",
-  alignItems: "center",
-  justifyContent: "center",
+  cursor: 'pointer',
+  alignItems: 'center',
+  justifyContent: 'center',
   margin: theme.spacing(0.5),
   color: theme.palette.text.disabled,
   borderRadius: theme.shape.borderRadius,
   border: `dashed 1px ${theme.palette.divider}`,
   backgroundColor: alpha(theme.palette.grey[500], 0.08),
-  "&:hover": {
+  '&:hover': {
     opacity: 0.72,
   },
-}));
-
-// ----------------------------------------------------------------------
+}))
 
 export default function UploadBox({
   placeholder,
@@ -38,13 +31,12 @@ export default function UploadBox({
   sx,
   ...other
 }: UploadProps): React.ReactElement | null {
-  const { getRootProps, getInputProps, isDragActive, isDragReject } =
-    useDropzone({
-      disabled,
-      ...other,
-    });
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
+    disabled,
+    ...other,
+  })
 
-  const isError = isDragReject || error;
+  const isError = isDragReject || error
 
   return (
     <StyledDropZone
@@ -54,20 +46,25 @@ export default function UploadBox({
           opacity: 0.72,
         }),
         ...(isError && {
-          color: "error.main",
-          bgcolor: "error.lighter",
-          borderColor: "error.light",
+          color: 'error.main',
+          bgcolor: 'error.lighter',
+          borderColor: 'error.light',
         }),
         ...(disabled && {
           opacity: 0.48,
-          pointerEvents: "none",
+          pointerEvents: 'none',
         }),
         ...sx,
       }}
     >
       <input {...getInputProps()} />
 
-      {placeholder ?? <Iconify icon="eva:cloud-upload-fill" width={28} />}
+      {placeholder ?? (
+        <Iconify
+          icon='eva:cloud-upload-fill'
+          width={28}
+        />
+      )}
     </StyledDropZone>
-  );
+  )
 }

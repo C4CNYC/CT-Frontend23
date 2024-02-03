@@ -1,16 +1,16 @@
-import { ActivityStatus } from "../../types/collab/activity-status";
+import { ActivityStatus } from '../../types/collab/activity-status'
 
 export function getActivityColor(status: ActivityStatus | undefined) {
   switch (status) {
     case ActivityStatus.ACTIVE:
-      return "#0EBE37";
+      return '#0EBE37'
     case ActivityStatus.INACTIVE:
-      return "#E27510";
+      return '#E27510'
     case ActivityStatus.IDLE:
-      return "#C0521A";
+      return '#C0521A'
     case ActivityStatus.AWAY:
-      return "#C4C4C4";
+      return '#C4C4C4'
     default:
-      return "transparent";
+      return 'transparent'
   }
 }

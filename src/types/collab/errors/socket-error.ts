@@ -1,4 +1,4 @@
 export interface SocketError {
-  error: string;
-  message: string;
+  error: string
+  message: string
 }

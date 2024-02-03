@@ -1,27 +1,27 @@
-import { type FC, useMemo, useState, useEffect } from "react"
+import { type FC, useMemo, useState, useEffect } from 'react'
 
-import { type DraggableAttributes } from "@dnd-kit/core"
-import { type SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities"
-import CloseIcon from "@mui/icons-material/Close"
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator"
-import { Box, Stack, Avatar, Typography } from "@mui/material"
-import { useRouter } from "next/router"
-import { useDispatch } from "react-redux"
-import { Socket } from "socket.io-client"
+import { type DraggableAttributes } from '@dnd-kit/core'
+import { type SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
+import CloseIcon from '@mui/icons-material/Close'
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
+import { Box, Stack, Avatar, Typography } from '@mui/material'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { Socket } from 'socket.io-client'
 
-import { voidFunction, type BaseResponseInterface } from "@utils"
-import OpenCodeIcon from "src/assets/icons/OpenCodeIcon"
-import CodeEditorCollab from "src/components/code-editor-collab"
-import { RoomStatus } from "src/components/code-editor-collab/components/status-label"
-import { EditorMode } from "src/components/code-editor-collab/hook/constants"
-import { createSocket, waitConnectSocket } from "src/components/code-editor-collab/hook/utils/socket"
-import { type IFriend } from "src/redux/interfaces/friends.interface"
-import { setRoom } from "src/redux/slices/code-editor-controller"
+import OpenCodeIcon from '@/assets/icons/OpenCodeIcon'
+import CodeEditorCollab from '@/components/code-editor-collab'
+import { RoomStatus } from '@/components/code-editor-collab/components/status-label'
+import { EditorMode } from '@/components/code-editor-collab/hook/constants'
+import { createSocket, waitConnectSocket } from '@/components/code-editor-collab/hook/utils/socket'
+import { voidFunction, type BaseResponseInterface } from '@/lib/utils'
+import { type IFriend } from '@/redux/interfaces/friends.interface'
+import { setRoom } from '@/redux/slices/code-editor-controller'
 
-import { getRandomIndex } from "../../hook/utils"
+import { getRandomIndex } from '../../hook/utils'
 
-import { BOX_COLORS, HEADER_COLORS } from "./constants"
-import styles from "./styles"
+import { BOX_COLORS, HEADER_COLORS } from './constants'
+import styles from './styles'
 
 let previousValue: string | null = null
 let checkValueTimeout: any | null = null
@@ -105,35 +105,54 @@ const CodeBlock: FC<CodeBlockProps> = ({
     }
 
     previousValue = value // Store the current value
-    onChangeUserStatus("active")
+    onChangeUserStatus('active')
 
     // Set up the check for 30 seconds later
     checkValueTimeout = setTimeout(() => {
       if (value === previousValue) {
         // eslint-disable-next-line no-console
         console.log(`Value after 30 seconds: ${value} (unchanged)`)
-        onChangeUserStatus("idle")
+        onChangeUserStatus('idle')
       } else {
         // eslint-disable-next-line no-console
-        console.log("Value has changed")
+        console.log('Value has changed')
       }
     }, 30000) // 30 seconds
   }
 
   return (
     <Box sx={boxSx}>
-      <Stack direction="row" justifyContent="space-between" sx={headerSx}>
-        <Stack alignItems="center" direction="row" height="100%">
-          <DragIndicatorIcon sx={styles.DRAG_INDICATOR_SX} {...attributes} {...listeners} />
+      <Stack
+        direction='row'
+        justifyContent='space-between'
+        sx={headerSx}
+      >
+        <Stack
+          alignItems='center'
+          direction='row'
+          height='100%'
+        >
+          <DragIndicatorIcon
+            sx={styles.DRAG_INDICATOR_SX}
+            {...attributes}
+            {...listeners}
+          />
 
-          <Avatar sx={styles.AVATAR_SX} src={data.avatar} />
+          <Avatar
+            sx={styles.AVATAR_SX}
+            src={data.avatar}
+          />
 
           <Typography sx={styles.TYP_NAME_SX}>
             {data.first_name} {data.last_name}
           </Typography>
         </Stack>
 
-        <Stack alignItems="center" direction="row" height="100%">
+        <Stack
+          alignItems='center'
+          direction='row'
+          height='100%'
+        >
           <OpenCodeIcon
             onClick={onOpenCode}
             sx={{
@@ -142,7 +161,10 @@ const CodeBlock: FC<CodeBlockProps> = ({
             }}
           />
 
-          <CloseIcon sx={styles.CLOSE_ICON_SX} onClick={onClose} />
+          <CloseIcon
+            sx={styles.CLOSE_ICON_SX}
+            onClick={onClose}
+          />
         </Stack>
       </Stack>
 

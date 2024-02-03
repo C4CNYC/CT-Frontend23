@@ -1,15 +1,15 @@
-import { type FC } from "react";
+import { type FC } from 'react'
 
-import CssIcon from "react-devicons/css3/original";
-import HtmlIcon from "react-devicons/html5/original";
-import JsIcon from "react-devicons/javascript/original";
+import CssIcon from 'react-devicons/css3/original'
+import HtmlIcon from 'react-devicons/html5/original'
+import JsIcon from 'react-devicons/javascript/original'
 
-import { getFileExtension } from "src/lib/utils/getFileExtension";
+import { getFileExtension } from '@/lib/utils/getFileExtension'
 
 export enum SupportedExtensions {
-  Css = "css",
-  Html = "html",
-  Js = "js"
+  Css = 'css',
+  Html = 'html',
+  Js = 'js',
 }
 
 interface DevIconProps {
@@ -20,22 +20,19 @@ interface DevIconProps {
 const iconMap = {
   [SupportedExtensions.Html]: HtmlIcon,
   [SupportedExtensions.Css]: CssIcon,
-  [SupportedExtensions.Js]: JsIcon
+  [SupportedExtensions.Js]: JsIcon,
 }
 
-const DevIcon: FC<DevIconProps> = ({
-  fileName,
-  sx
-}) => {
-  const extension = getFileExtension(fileName) as SupportedExtensions | null;
+const DevIcon: FC<DevIconProps> = ({ fileName, sx }) => {
+  const extension = getFileExtension(fileName) as SupportedExtensions | null
 
   if (extension == null || iconMap[extension] == null) {
-    return null;
+    return null
   }
 
-  const Component = iconMap[extension];
+  const Component = iconMap[extension]
 
   return <Component style={sx} />
 }
 
-export default DevIcon;
+export default DevIcon

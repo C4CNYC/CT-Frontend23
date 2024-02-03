@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from 'react'
 
-import { Box, Collapse, useMediaQuery } from "@mui/material"
-import { useTheme } from "@mui/material/styles"
-import { BiCodeAlt } from "@react-icons/all-files/bi/BiCodeAlt"
+import { Box, Collapse, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 
-import { AuthUserType } from "src/auth/types"
-import CodeEditorCollab from "src/components/code-editor-collab"
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface"
-import { mapValidations } from "src/lib/utils/validationMaping"
-import { IValidation } from "src/redux/interfaces/content.interface"
+import { AuthUserType } from '@/auth/types'
+import CodeEditorCollab from '@/components/code-editor-collab'
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { mapValidations } from '@/lib/utils/validationMaping'
+import { IValidation } from '@/redux/interfaces/content.interface'
 
-import BaseBlock from "../BaseBlock"
+import BaseBlock from '../BaseBlock'
 
-import Checkers from "./checkers-code-editor"
-import { CodingSymbols, CodingTools } from "./CodingControls"
-import HidedTabBtn from "./HidedTabBtn"
-import MumuSpeedDial from "./MumuSpeedDial"
+import Checkers from './checkers-code-editor'
+import { CodingSymbols, CodingTools } from './CodingControls'
+import HidedTabBtn from './HidedTabBtn'
+import MumuSpeedDial from './MumuSpeedDial'
 
 const TYPING_DELEY = 20000
 const FIRST_LOADING_DELEY = 15000
@@ -30,11 +30,22 @@ interface ICodeEditorBlock {
   preloadedCode: string
 }
 
-const title = "Code Editor"
-const icon = <BiCodeAlt size="20px" color="#43D4DD" />
+const title = 'Code Editor'
+const icon = (
+  <BiCodeAlt
+    size='20px'
+    color='#43D4DD'
+  />
+)
 
 const CodeEditorBlock = React.memo(
-  ({ user, validations, code, onChangeCode, preloadedCode }: ICodeEditorBlock): React.ReactElement => {
+  ({
+    user,
+    validations,
+    code,
+    onChangeCode,
+    preloadedCode,
+  }: ICodeEditorBlock): React.ReactElement => {
     const theme = useTheme()
     const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
     const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
@@ -65,7 +76,11 @@ const CodeEditorBlock = React.memo(
     }
 
     return (
-      <BaseBlock title={title} icon={icon} className="codeEditorTour">
+      <BaseBlock
+        title={title}
+        icon={icon}
+        className='codeEditorTour'
+      >
         <style>
           {`
           .cm-editor{
@@ -79,24 +94,32 @@ const CodeEditorBlock = React.memo(
         </style>
         <HidedTabBtn />
         <MumuSpeedDial typing={typing} />
-        {validations?.length ? <Checkers checkers={mapValidations(code ?? "", validations)} /> : null}
+        {validations?.length ? (
+          <Checkers checkers={mapValidations(code ?? '', validations)} />
+        ) : null}
         {/* {user?.id ? ( */}
-          <CodeEditorCollab
-            preloadedCode={preloadedCode}
-            cursorText={`${user?.first_name} ${user?.last_name?.[0]}.`}
-            // @ts-expect-error
-            onChange={onChangeCode}
-            roomId={user?.id}
-            code={code}
-          />
+        <CodeEditorCollab
+          preloadedCode={preloadedCode}
+          cursorText={`${user?.first_name} ${user?.last_name?.[0]}.`}
+          // @ts-expect-error
+          onChange={onChangeCode}
+          roomId={user?.id}
+          code={code}
+        />
         {/* ) : ( */}
         {/*   <CodeEditor code={code} onChangeCode={onChangeCode} preloadedCode={preloadedCode} /> */}
         {/* )} */}
-        <Box sx={{ display: isDesktop ? "none" : "block" }}>
-          <Collapse in={codingSymbols} timeout={!codingSymbols ? 0 : 1000}>
+        <Box sx={{ display: isDesktop ? 'none' : 'block' }}>
+          <Collapse
+            in={codingSymbols}
+            timeout={!codingSymbols ? 0 : 1000}
+          >
             <CodingSymbols symbolsHandler={symbolsHandler} />
           </Collapse>
-          <Collapse in={!codingSymbols} timeout={codingSymbols ? 0 : 1000}>
+          <Collapse
+            in={!codingSymbols}
+            timeout={codingSymbols ? 0 : 1000}
+          >
             <CodingTools symbolsHandler={symbolsHandler} />
           </Collapse>
         </Box>

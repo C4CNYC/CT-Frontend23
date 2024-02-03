@@ -1,15 +1,13 @@
 // @types
-import { VariantsType } from "../types";
-//
-import { varTranEnter, varTranExit } from "./transition";
+import { VariantsType } from '../types'
 
-// ----------------------------------------------------------------------
+import { varTranEnter, varTranExit } from './transition'
 
 export const varBounce = (props?: VariantsType) => {
-  const durationIn = props?.durationIn;
-  const durationOut = props?.durationOut;
-  const easeIn = props?.easeIn;
-  const easeOut = props?.easeOut;
+  const durationIn = props?.durationIn
+  const durationOut = props?.durationOut
+  const easeIn = props?.easeIn
+  const easeOut = props?.easeOut
 
   return {
     // IN
@@ -110,5 +108,5 @@ export const varBounce = (props?: VariantsType) => {
     outRight: {
       animate: { x: [0, -24, 720], scaleX: [1, 0.9, 2], opacity: [1, 1, 0] },
     },
-  };
-};
+  }
+}

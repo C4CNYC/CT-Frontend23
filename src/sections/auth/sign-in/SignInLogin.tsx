@@ -1,28 +1,22 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { useGoogleLogin } from "@react-oauth/google";
-import { FaArrowRight } from "@react-icons/all-files/fa/FaArrowRight";
-import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
-import { StepWizardChildProps } from "react-step-wizard";
+import { LoadingButton } from '@mui/lab'
+import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
+import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle'
+import { useGoogleLogin } from '@react-oauth/google'
+import { useRouter } from 'next/router'
+import { StepWizardChildProps } from 'react-step-wizard'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Divider,
-  IconButton,
-  InputAdornment,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { useAuthContext } from '@/auth/useAuthContext'
+import { RHFTextField, useSnackbar } from '@/components'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
 
-import { RHFTextField, useSnackbar } from "@components";
-import { styledRegisterInput } from "@sections/on-boarding-register/styles";
-import { useAuthContext } from "src/auth/useAuthContext";
-import { STUDENT_PATH_AFTER_LOGIN } from "../../../config";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { STUDENT_PATH_AFTER_LOGIN } from '../../../config'
 
 interface IProps {
-  isValid?: boolean;
+  isValid?: boolean
 }
 
 export default function SignInLogin({
@@ -30,100 +24,106 @@ export default function SignInLogin({
   goToStep,
   nextStep,
 }: Partial<StepWizardChildProps> & IProps): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
-  const router = useRouter();
-  const { loginWithGoogle } = useAuthContext();
-  const [isLoading, setIsLoading] = useState(false);
-  const translate = useTranslate();
+  const { enqueueSnackbar } = useSnackbar()
+  const router = useRouter()
+  const { loginWithGoogle } = useAuthContext()
+  const [isLoading, setIsLoading] = useState(false)
+  const translate = useTranslate()
 
   const onLoginWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
-      setIsLoading(true);
+      setIsLoading(true)
       try {
-        await loginWithGoogle(token);
-        router.push(STUDENT_PATH_AFTER_LOGIN);
+        await loginWithGoogle(token)
+        router.push(STUDENT_PATH_AFTER_LOGIN)
       } catch (error: any) {
-        enqueueSnackbar(error.message, { variant: "error" });
+        enqueueSnackbar(error.message, { variant: 'error' })
       }
-      setIsLoading(false);
+      setIsLoading(false)
     },
-  });
+  })
 
   return (
     <>
       <Stack
-        direction="row"
-        sx={{ alignItems: "center", ml: { xs: 3, sm: 3, md: 0 } }}
+        direction='row'
+        sx={{ alignItems: 'center', ml: { xs: 3, sm: 3, md: 0 } }}
       >
-        <Typography variant="h3">{translate("sign_in")}</Typography>
-        <Typography variant="h2" sx={{ ml: 1 }}>
+        <Typography variant='h3'>{translate('sign_in')}</Typography>
+        <Typography
+          variant='h2'
+          sx={{ ml: 1 }}
+        >
           🫶
         </Typography>
       </Stack>
       <Typography
-        variant="body1"
+        variant='body1'
         sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 2 }}
       >
-        {translate("login_welcome_back")}
+        {translate('login_welcome_back')}
       </Typography>
       <Stack sx={{ mt: 1 }}>
         <RHFTextField
-          name="email"
-          label={translate("email")}
+          name='email'
+          label={translate('email')}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           onKeyDown={(e) => {
-            if (goToStep && isValid && e.code === "Enter") {
-              goToStep(2);
+            if (goToStep && isValid && e.code === 'Enter') {
+              goToStep(2)
             }
           }}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
+              <InputAdornment position='end'>
                 <IconButton
-                  edge="end"
+                  edge='end'
                   onClick={() => {
                     if (nextStep && isValid) {
-                      nextStep();
+                      nextStep()
                     }
                   }}
                 >
-                  <FaArrowRight color={isValid ? "#43D4DD" : ""} />
+                  <FaArrowRight color={isValid ? '#43D4DD' : ''} />
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
-        <Divider sx={{ my: 3 }} flexItem>
+        <Divider
+          sx={{ my: 3 }}
+          flexItem
+        >
           <Typography
             sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
-            variant="body1"
+            variant='body1'
           >
-            {translate("login_or")}
+            {translate('login_or')}
           </Typography>
         </Divider>
         <LoadingButton
           onClick={() => {
-            onLoginWithGoogle();
+            onLoginWithGoogle()
           }}
           loading={isLoading}
           sx={(theme) => ({
             color: theme.palette.grey[600],
-            textTransform: "none",
+            textTransform: 'none',
             py: 1.5,
             mb: 1,
             gap: 2,
             background: theme.palette.grey[200],
             fontWeight: 400,
-            fontSize: "1.3em",
-            "&:hover": {
+            fontSize: '1.3em',
+            '&:hover': {
               color: theme.palette.grey[900],
             },
           })}
         >
-          <FcGoogle size="50px" />
-          {translate("ligin_with_google")}
+          <FcGoogle size='50px' />
+          {translate('ligin_with_google')}
         </LoadingButton>
       </Stack>
     </>
-  );
+  )
 }

@@ -1,31 +1,34 @@
-import React, { useEffect } from "react"
+import React, { useEffect } from 'react'
 
-import { Button, Typography } from "@mui/material"
-import { m } from "framer-motion"
-import Link from "next/link"
+import { Button, Typography } from '@mui/material'
+import { m } from 'framer-motion'
+import Link from 'next/link'
 
-import SkeletonPanel from "@layouts/dashboard/SkeletonPanel"
-import PageNotFoundIllustration from "src/assets/illustrations/PageNotFoundIllustration"
-import { MotionContainer, varBounce } from "src/components/animate"
-import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager"
-import { setSchool } from "src/redux/slices/manager"
-import { RootState, dispatch, useSelector } from "src/redux/store"
+import PageNotFoundIllustration from '@/assets/illustrations/PageNotFoundIllustration'
+import { MotionContainer, varBounce } from '@/components/animate'
+import SkeletonPanel from '@/layouts/dashboard/SkeletonPanel'
+import { useGetMySchoolsQuery } from '@/redux/services/manager/schools-manager'
+import { setSchool } from '@/redux/slices/manager'
+import { RootState, dispatch, useSelector } from '@/redux/store'
 
-import CompactLayout from "../compact"
+import CompactLayout from '../compact'
 
-import DashboardLayout from "./DashboardLayout"
+import DashboardLayout from './DashboardLayout'
 
 interface Props {
   children: React.ReactElement
   isFullScreen?: boolean
 }
-export function SchoolDashboardLayout({ children, isFullScreen }: Props): React.ReactElement | null {
+export function SchoolDashboardLayout({
+  children,
+  isFullScreen,
+}: Props): React.ReactElement | null {
   const { data, isLoading } = useGetMySchoolsQuery({})
   const schoolId = useSelector((state: RootState) => state.manager.schoolId)
 
   useEffect(() => {
     if (!data?.data) return
-    dispatch(setSchool(!(schoolId === "") ? schoolId : data.data[0] ? data.data[0].id : ""))
+    dispatch(setSchool(!(schoolId === '') ? schoolId : data.data[0] ? data.data[0].id : ''))
   }, [data])
 
   if (!data?.data.length && !isLoading) {
@@ -33,13 +36,16 @@ export function SchoolDashboardLayout({ children, isFullScreen }: Props): React.
       <CompactLayout>
         <MotionContainer>
           <m.div variants={varBounce().in}>
-            <Typography variant="h3" paragraph>
+            <Typography
+              variant='h3'
+              paragraph
+            >
               Sorry, any school found!
             </Typography>
           </m.div>
 
           <m.div variants={varBounce().in}>
-            <Typography sx={{ color: "text.secondary" }}>
+            <Typography sx={{ color: 'text.secondary' }}>
               Sorry, you don't have access to any shool. Pleas contact with you administrator.
             </Typography>
           </m.div>
@@ -53,7 +59,12 @@ export function SchoolDashboardLayout({ children, isFullScreen }: Props): React.
             />
           </m.div>
 
-          <Button component={Link} href="/" size="large" variant="contained">
+          <Button
+            component={Link}
+            href='/'
+            size='large'
+            variant='contained'
+          >
             Contact Admin
           </Button>
         </MotionContainer>

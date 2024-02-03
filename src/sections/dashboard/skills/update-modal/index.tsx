@@ -1,66 +1,65 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Button } from '@mui/material'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import { Box, Stack } from '@mui/system'
+import { useSnackbar } from 'notistack'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { LoadingButton } from "@mui/lab";
-import { Button } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Box, Stack } from "@mui/system";
-
-import { FormProvider, RHFTextField } from "@components";
+import { FormProvider, RHFTextField } from '@/components'
+import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useCreateSkillMutation,
   useUpdateSkillMutation,
-} from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+} from '@/redux/services/manager/skills-manager'
 
 const IntegrationSchema = Yup.object().shape({
-  name: Yup.string().required("Skill name is required"),
-  description: Yup.string().required("Description is required"),
-});
+  name: Yup.string().required('Skill name is required'),
+  description: Yup.string().required('Description is required'),
+})
 
 interface Props {
-  id?: string;
-  defaultValues?: IntegrationForm;
-  children: React.ReactElement;
+  id?: string
+  defaultValues?: IntegrationForm
+  children: React.ReactElement
 }
 interface IntegrationForm {
-  name: string;
-  description: string;
+  name: string
+  description: string
 }
 
 export default function UpdateModalSkills({
   children,
   id,
   defaultValues = {
-    name: "",
-    description: "",
+    name: '',
+    description: '',
   },
 }: Props): React.ReactElement {
-  const [createSkill, { isLoading: creatLoading }] = useCreateSkillMutation();
-  const [updateSkill, { isLoading: updateLoading }] = useUpdateSkillMutation();
-  const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
+  const [createSkill, { isLoading: creatLoading }] = useCreateSkillMutation()
+  const [updateSkill, { isLoading: updateLoading }] = useUpdateSkillMutation()
+  const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const handleOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   const methods = useForm<IntegrationForm>({
     resolver: yupResolver(IntegrationSchema),
     defaultValues,
-  });
+  })
 
-  const { handleSubmit } = methods;
+  const { handleSubmit } = methods
   const onSubmit = async (data: IntegrationForm): Promise<void> => {
     try {
       if (id) {
@@ -68,36 +67,50 @@ export default function UpdateModalSkills({
           id,
           name: data.name,
           description: data.description,
-        }).unwrap();
+        }).unwrap()
       } else {
         await createSkill({
           name: data.name,
           description: data.description,
-        }).unwrap();
+        }).unwrap()
       }
-      methods.reset();
-      handleClose();
-      enqueueSnackbar(
-        id ? translate("skills_updated_msg") : translate("skills_created_msg")
-      );
+      methods.reset()
+      handleClose()
+      enqueueSnackbar(id ? translate('skills_updated_msg') : translate('skills_created_msg'))
     } catch (e: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-  };
+  }
 
   return (
     <>
       <div onClick={handleOpen}>{children}</div>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
-        <DialogTitle sx={{ pb: 3 }}>{translate("skills")}</DialogTitle>
-        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth='xs'
+      >
+        <DialogTitle sx={{ pb: 3 }}>{translate('skills')}</DialogTitle>
+        <FormProvider
+          methods={methods}
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <DialogContent sx={{ p: 3 }}>
             <Stack spacing={4}>
-              <Box display="flex" flexDirection="column" gap={2} mb={3}>
-                <RHFTextField placeholder={translate("name")} name="name" />
+              <Box
+                display='flex'
+                flexDirection='column'
+                gap={2}
+                mb={3}
+              >
                 <RHFTextField
-                  name="description"
-                  label={translate("skills_description")}
+                  placeholder={translate('name')}
+                  name='name'
+                />
+                <RHFTextField
+                  name='description'
+                  label={translate('skills_description')}
                   required
                   multiline
                   rows={3}
@@ -106,20 +119,24 @@ export default function UpdateModalSkills({
             </Stack>
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" color="inherit" onClick={handleClose}>
-              {translate("actions_cancel")}
+            <Button
+              variant='outlined'
+              color='inherit'
+              onClick={handleClose}
+            >
+              {translate('actions_cancel')}
             </Button>
             <LoadingButton
-              type="submit"
-              variant="contained"
-              color="primary"
+              type='submit'
+              variant='contained'
+              color='primary'
               loading={creatLoading || updateLoading}
             >
-              {translate("actions_save")}
+              {translate('actions_save')}
             </LoadingButton>
           </DialogActions>
         </FormProvider>
       </Dialog>
     </>
-  );
+  )
 }

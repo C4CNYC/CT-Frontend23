@@ -1,8 +1,4 @@
-import * as React from "react";
-
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
+import React from 'react'
 
 import {
   Autocomplete,
@@ -14,46 +10,51 @@ import {
   TextField,
   Typography,
   alpha,
-} from "@mui/material";
+} from '@mui/material'
+import match from 'autosuggest-highlight/match'
+import parse from 'autosuggest-highlight/parse'
+import { useSnackbar } from 'notistack'
 
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
-import { useFilters } from "@hooks";
-import { ICourse } from "src/types";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
+import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
+import { useFilters } from '@/lib/hooks'
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,
-} from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+} from '@/redux/services/manager/classes-manager'
+import { ICourse } from '@/types'
 
-import { useManagerGetCourseQuery } from "../../redux/services/manager/courses-manager";
+import { useManagerGetCourseQuery } from '../../redux/services/manager/courses-manager'
 
-type CourseType = ICourse & BaseResponseInterface;
+type CourseType = ICourse & BaseResponseInterface
 
 interface IClassCoursesAutocompleteProps {
-  classId: string;
+  classId: string
 }
 
 export default function ClassCoursesAutocomplete({
   classId,
 }: IClassCoursesAutocompleteProps): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
 
-  const { filters, setFilter } = useFilters({ name: "", take: 50 });
-  const translate = useTranslate();
-  const [addCourse] = useAddCourseToClassMutation();
-  const [removeCourse] = useRemoveCourseFromClassMutation();
+  const { filters, setFilter } = useFilters({ name: '', take: 50 })
+  const translate = useTranslate()
+  const [addCourse] = useAddCourseToClassMutation()
+  const [removeCourse] = useRemoveCourseFromClassMutation()
   const { data: classCourses } = useManagerGetCourseQuery(
     { class_id: classId, take: 50 },
     { skip: !classId }
-  );
-  const { data: courses } = useManagerGetCourseQuery(
-    { ...filters },
-    { skip: !classId }
-  );
+  )
+  const { data: courses } = useManagerGetCourseQuery({ ...filters }, { skip: !classId })
 
   if (!courses?.data || !classCourses?.data) {
-    return <Skeleton variant="rounded" height="56px" />;
+    return (
+      <Skeleton
+        variant='rounded'
+        height='56px'
+      />
+    )
   }
 
   const onChange = async (
@@ -65,37 +66,40 @@ export default function ClassCoursesAutocomplete({
     try {
       const payload = {
         id: classId,
-        course_id: details?.option.id ?? "",
-      };
+        course_id: details?.option.id ?? '',
+      }
       switch (reason) {
-        case "selectOption": {
-          await addCourse(payload).unwrap();
-          enqueueSnackbar(translate("classes_course_added_msg"));
-          return;
+        case 'selectOption': {
+          await addCourse(payload).unwrap()
+          enqueueSnackbar(translate('classes_course_added_msg'))
+          return
         }
-        case "removeOption": {
-          await removeCourse(payload).unwrap();
-          enqueueSnackbar(translate("classes_course_removed_msg"));
+        case 'removeOption': {
+          await removeCourse(payload).unwrap()
+          enqueueSnackbar(translate('classes_course_removed_msg'))
         }
       }
     } catch {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-  };
+  }
 
   return (
     <Autocomplete<CourseType, true>
       multiple
-      id="add-user-input"
+      id='add-user-input'
       value={classCourses.data}
       onChange={onChange}
       options={courses.data}
       popupIcon={null}
       noOptionsText={
-        <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
+        <SearchNotFound
+          sx={{ p: '20px 0' }}
+          query={filters.name}
+        />
       }
       onInputChange={(event, value) => {
-        setFilter("name", value);
+        setFilter('name', value)
       }}
       getOptionLabel={(option) => option.name}
       renderTags={(tagValue, getTagProps): React.ReactElement[] =>
@@ -114,23 +118,26 @@ export default function ClassCoursesAutocomplete({
           />
         ))
       }
-      style={{ width: "100%" }}
+      style={{ width: '100%' }}
       renderInput={(params) => (
-        <TextField {...params} placeholder={translate("courses")} />
+        <TextField
+          {...params}
+          placeholder={translate('courses')}
+        />
       )}
       renderOption={(props, recipient, { inputValue }) => {
-        const { name, cover } = recipient;
-        const matches = match(name, inputValue);
-        const parts = parse(name, matches);
+        const { name, cover } = recipient
+        const matches = match(name, inputValue)
+        const parts = parse(name, matches)
 
-        const selected = classCourses.data.find((c) => c.name === name);
+        const selected = classCourses.data.find((c) => c.name === name)
 
         return (
           <Box
-            component="li"
+            component='li'
             sx={{
-              p: "12px !important",
-              pointerEvents: selected ? "none" : "auto",
+              p: '12px !important',
+              pointerEvents: selected ? 'none' : 'auto',
             }}
             {...props}
           >
@@ -139,50 +146,54 @@ export default function ClassCoursesAutocomplete({
                 mr: 1.5,
                 width: 32,
                 height: 32,
-                overflow: "hidden",
-                borderRadius: "50%",
-                position: "relative",
+                overflow: 'hidden',
+                borderRadius: '50%',
+                position: 'relative',
               }}
             >
-              <CustomAvatar alt={name} src={cover} name={name} />
+              <CustomAvatar
+                alt={name}
+                src={cover}
+                name={name}
+              />
               <Box
                 sx={{
                   top: 0,
                   opacity: 0,
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  position: "absolute",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  position: 'absolute',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
                   transition: (theme) =>
-                    theme.transitions.create("opacity", {
+                    theme.transitions.create('opacity', {
                       easing: theme.transitions.easing.easeInOut,
                       duration: theme.transitions.duration.shorter,
                     }),
                   ...(selected && {
                     opacity: 1,
-                    color: "primary.main",
+                    color: 'primary.main',
                   }),
                 }}
               >
-                <Iconify icon="eva:checkmark-fill" />
+                <Iconify icon='eva:checkmark-fill' />
               </Box>
             </Box>
 
             {parts.map((part, index) => (
               <Typography
                 key={index}
-                variant="subtitle2"
-                color={part.highlight ? "primary" : "textPrimary"}
+                variant='subtitle2'
+                color={part.highlight ? 'primary' : 'textPrimary'}
               >
                 {part.text}
               </Typography>
             ))}
           </Box>
-        );
+        )
       }}
     />
-  );
+  )
 }

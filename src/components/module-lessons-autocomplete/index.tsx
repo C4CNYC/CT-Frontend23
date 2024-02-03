@@ -1,1 +1,1 @@
-export { default as ModuleLessonsAutocomplete } from "./ModuleLessonAutocomplete";
+export { default as ModuleLessonsAutocomplete } from './ModuleLessonAutocomplete'

@@ -1,19 +1,19 @@
-import { Box } from "@mui/material";
+import { Box } from '@mui/material'
 
-import { IValidationMap } from "src/lib/utils/validationMaping";
+import { IValidationMap } from '@/lib/utils/validationMaping'
 
-import CheckersItemButton from "./CheckersItemButton";
+import CheckersItemButton from './CheckersItemButton'
 
 interface Props {
-  checkers: IValidationMap[];
+  checkers: IValidationMap[]
 }
 
 export default function CheckersMenu({ checkers }: Props): React.ReactElement {
   return (
     <Box
       sx={{
-        paddingTop: "32px",
-        paddingBottom: "5px",
+        paddingTop: '32px',
+        paddingBottom: '5px',
       }}
     >
       {checkers.map((item) => (
@@ -24,5 +24,5 @@ export default function CheckersMenu({ checkers }: Props): React.ReactElement {
         />
       ))}
     </Box>
-  );
+  )
 }

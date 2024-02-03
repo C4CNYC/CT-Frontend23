@@ -1,40 +1,35 @@
-import { useSelector } from "react-redux";
+import { Box, Stack } from '@mui/material'
+import { useTheme } from '@mui/system'
+import { useSelector } from 'react-redux'
 
-import { Box, Stack } from "@mui/material";
-import { useTheme } from "@mui/system";
+import { LogoMin } from '@/components/logo'
+import { NavSectionMini } from '@/components/nav-section'
+import { hideScrollbarX } from '@/lib/utils/cssStyles'
+import { Role } from '@/redux/services/enums/role.enum'
+import { RootState } from '@/redux/store'
 
-import { LogoMin } from "src/components/logo";
-import { NavSectionMini } from "src/components/nav-section";
-import { hideScrollbarX } from "src/lib/utils/cssStyles";
-import { Role } from "src/redux/services/enums/role.enum";
-import { RootState } from "src/redux/store";
+import { NAV } from '../../../config'
 
-import { NAV } from "../../../config";
-import LetsCodeBtn from "./LestCodeBtn";
-import NavToggleButton from "./NavToggleButton";
-import { menuConfig } from "./config-navigation";
+import { menuConfig } from './config-navigation'
+import LetsCodeBtn from './LestCodeBtn'
+import NavToggleButton from './NavToggleButton'
 
 interface INavMini {
-  isManager?: boolean;
+  isManager?: boolean
 }
 
 export default function NavMini({ isManager }: INavMini): React.ReactElement {
-  const user = useSelector((state: RootState) => state.global.user);
-  const theme = useTheme();
-  const menu = isManager
-    ? menuConfig[user?.role as Role]
-    : menuConfig[Role.Student];
+  const user = useSelector((state: RootState) => state.global.user)
+  const theme = useTheme()
+  const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
 
   return (
     <Box
-      component="nav"
+      component='nav'
       sx={{
         flexShrink: { md: 0 },
         width: { md: NAV.W_DASHBOARD_MINI },
-        bgcolor:
-          theme.palette.mode === "light"
-            ? "#E6F5FD"
-            : theme.palette.background.paper,
+        bgcolor: theme.palette.mode === 'light' ? '#E6F5FD' : theme.palette.background.paper,
       }}
     >
       <NavToggleButton
@@ -48,7 +43,7 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
         sx={{
           pb: 2,
           height: 1,
-          position: "fixed",
+          position: 'fixed',
           width: NAV.W_DASHBOARD_MINI,
           borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
           ...hideScrollbarX,
@@ -64,5 +59,5 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
         <NavSectionMini data={menu} />
       </Stack>
     </Box>
-  );
+  )
 }

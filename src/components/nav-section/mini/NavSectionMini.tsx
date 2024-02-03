@@ -1,22 +1,16 @@
-import { memo } from "react";
+import { memo } from 'react'
 
-import { Box, Stack } from "@mui/material";
+import { Box, Stack } from '@mui/material'
 
-//
-import { NavListProps, NavSectionProps } from "../types";
-import NavList from "./NavList";
+import { NavListProps, NavSectionProps } from '../types'
 
-// ----------------------------------------------------------------------
+import NavList from './NavList'
 
-function NavSectionMini({
-  data,
-  sx,
-  ...other
-}: NavSectionProps): React.ReactElement | null {
+function NavSectionMini({ data, sx, ...other }: NavSectionProps): React.ReactElement | null {
   return (
     <Stack
       spacing={0.5}
-      alignItems="center"
+      alignItems='center'
       sx={{
         px: 0.75,
         ...sx,
@@ -31,16 +25,14 @@ function NavSectionMini({
         />
       ))}
     </Stack>
-  );
+  )
 }
 
-export default memo(NavSectionMini);
-
-// ----------------------------------------------------------------------
+export default memo(NavSectionMini)
 
 interface ItemsProps {
-  items: NavListProps[];
-  isLastGroup: boolean;
+  items: NavListProps[]
+  isLastGroup: boolean
 }
 
 function Items({ items, isLastGroup }: ItemsProps): React.ReactElement | null {
@@ -59,12 +51,12 @@ function Items({ items, isLastGroup }: ItemsProps): React.ReactElement | null {
         <Box
           sx={{
             width: 24,
-            height: "1px",
-            bgcolor: "divider",
-            my: "8px !important",
+            height: '1px',
+            bgcolor: 'divider',
+            my: '8px !important',
           }}
         />
       )}
     </>
-  );
+  )
 }

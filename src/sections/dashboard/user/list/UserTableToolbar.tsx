@@ -1,26 +1,15 @@
-// @mui
-import {
-  Box,
-  Button,
-  InputAdornment,
-  MenuItem,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
 
-// components
-import { Iconify } from "src/components/iconify";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-// ----------------------------------------------------------------------
+import { Iconify } from '@/components/iconify'
+import { useTranslate } from '@/lib/utils/translateHelper'
 
 interface Props {
-  filterName: string;
-  filterRole?: string;
-  optionsRole?: string[];
-  onResetFilter: VoidFunction;
-  onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFilterRole?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  filterName: string
+  filterRole?: string
+  optionsRole?: string[]
+  onResetFilter: VoidFunction
+  onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onFilterRole?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function UserTableToolbar({
@@ -31,15 +20,15 @@ export default function UserTableToolbar({
   onFilterRole,
   onResetFilter,
 }: Props): React.ReactElement | null {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
     <Stack
       spacing={2}
-      alignItems="center"
+      alignItems='center'
       direction={{
-        xs: "column",
-        sm: "row",
+        xs: 'column',
+        sm: 'row',
       }}
       sx={{ px: 2.5, py: 3 }}
     >
@@ -47,7 +36,7 @@ export default function UserTableToolbar({
         <TextField
           fullWidth
           select
-          label={translate("role")}
+          label={translate('role')}
           value={filterRole}
           onChange={onFilterRole}
           SelectProps={{
@@ -61,7 +50,7 @@ export default function UserTableToolbar({
           }}
           sx={{
             maxWidth: { sm: 240 },
-            textTransform: "capitalize",
+            textTransform: 'capitalize',
           }}
         >
           {optionsRole?.map((option) => (
@@ -71,8 +60,8 @@ export default function UserTableToolbar({
               sx={{
                 mx: 1,
                 borderRadius: 0.75,
-                typography: "body2",
-                textTransform: "capitalize",
+                typography: 'body2',
+                textTransform: 'capitalize',
               }}
             >
               {option}
@@ -80,32 +69,37 @@ export default function UserTableToolbar({
           ))}
         </TextField>
       ) : null}
-      <Box display="flex" flexDirection="row" width="100%" gap="25px">
+      <Box
+        display='flex'
+        flexDirection='row'
+        width='100%'
+        gap='25px'
+      >
         <TextField
           fullWidth
           value={filterName}
           onChange={onFilterName}
-          placeholder={translate("actions_search")}
+          placeholder={translate('actions_search')}
           InputProps={{
             startAdornment: (
-              <InputAdornment position="start">
+              <InputAdornment position='start'>
                 <Iconify
-                  icon="eva:search-fill"
-                  sx={{ color: "text.disabled" }}
+                  icon='eva:search-fill'
+                  sx={{ color: 'text.disabled' }}
                 />
               </InputAdornment>
             ),
           }}
         />
         <Button
-          color="error"
+          color='error'
           sx={{ flexShrink: 0 }}
           onClick={onResetFilter}
-          startIcon={<Iconify icon="eva:trash-2-outline" />}
+          startIcon={<Iconify icon='eva:trash-2-outline' />}
         >
-          {translate("actions_clear")}
+          {translate('actions_clear')}
         </Button>
       </Box>
     </Stack>
-  );
+  )
 }

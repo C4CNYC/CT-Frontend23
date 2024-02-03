@@ -1,95 +1,102 @@
-import Head from "next/head";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
+import { Box, Card, Container, Skeleton, Tab, Tabs } from '@mui/material'
+import Head from 'next/head'
 
-import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
-import { StudentDashboardLayout } from "@layouts/dashboard";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import ProfileCover from "@sections/student-profile/ProfileCover";
-import ProfileLinks from "@sections/student-profile/ProfileLinks";
-import ProfileMain from "@sections/student-profile/ProfileMain";
-import { useProfileQuery } from "src/redux/services/auth";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { CustomBreadcrumbs, Iconify, useSettingsContext } from '@/components'
+import { StudentDashboardLayout } from '@/layouts/dashboard'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { useProfileQuery } from '@/redux/services/auth'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import ProfileCover from '@/sections/student-profile/ProfileCover'
+import ProfileLinks from '@/sections/student-profile/ProfileLinks'
+import ProfileMain from '@/sections/student-profile/ProfileMain'
 
 UserProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
-);
+)
 
 export default function UserProfile(): React.ReactElement {
-  const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useProfileQuery();
-  const [currentTab, setCurrentTab] = useState("profile");
-  const translate = useTranslate();
+  const { themeStretch } = useSettingsContext()
+  const { data, isLoading } = useProfileQuery()
+  const [currentTab, setCurrentTab] = useState('profile')
+  const translate = useTranslate()
 
   const TABS = [
     {
-      value: "profile",
-      label: "profile",
-      icon: <Iconify icon="ic:round-account-box" />,
+      value: 'profile',
+      label: 'profile',
+      icon: <Iconify icon='ic:round-account-box' />,
       component: (
-        <ProfileMain data={data} isFriend={false} isLoading={isLoading} />
+        <ProfileMain
+          data={data}
+          isFriend={false}
+          isLoading={isLoading}
+        />
       ),
     },
     {
-      value: "links",
-      label: "profile_links",
-      icon: <Iconify icon="nimbus:planet" />,
-      component: <ProfileLinks studentId={data?.id ?? ""} />,
+      value: 'links',
+      label: 'profile_links',
+      icon: <Iconify icon='nimbus:planet' />,
+      component: <ProfileLinks studentId={data?.id ?? ''} />,
     },
-  ];
+  ]
 
   return (
     <>
       <Head>
-        <title>{translate("profile")} | CodeTribe</title>
+        <title>{translate('profile')} | CodeTribe</title>
       </Head>
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading=""
+          heading=''
           links={[
             {
-              name: translate("home"),
+              name: translate('home'),
               href: STUDENT_PATH_DASHBOARD.class.root,
             },
-            { name: translate("profile") },
+            { name: translate('profile') },
           ]}
         />
         <Card
           sx={{
             mb: 3,
             height: 280,
-            position: "relative",
+            position: 'relative',
           }}
         >
           {!isLoading ? (
             <ProfileCover
-              name={data?.first_name ?? ""}
-              lastName={data?.last_name ?? ""}
+              name={data?.first_name ?? ''}
+              lastName={data?.last_name ?? ''}
               avatar={data?.avatar}
               cover={data?.student_profile.cover}
             />
           ) : (
-            <Skeleton variant="rounded" height="280px" />
+            <Skeleton
+              variant='rounded'
+              height='280px'
+            />
           )}
 
           <Tabs
             value={currentTab}
             onChange={(event, newValue: string) => {
-              setCurrentTab(newValue);
+              setCurrentTab(newValue)
             }}
             sx={{
               width: 1,
               bottom: 0,
               zIndex: 9,
-              position: "absolute",
-              bgcolor: "background.paper",
-              "& .MuiTabs-flexContainer": {
+              position: 'absolute',
+              bgcolor: 'background.paper',
+              '& .MuiTabs-flexContainer': {
                 pr: { xs: 0, md: 3 },
                 pl: { xs: 2, md: 0 },
                 justifyContent: {
-                  sm: "center",
-                  md: "flex-end",
+                  sm: 'center',
+                  md: 'flex-end',
                 },
               },
             }}
@@ -106,13 +113,9 @@ export default function UserProfile(): React.ReactElement {
         </Card>
 
         {TABS.map((tab) => {
-          return (
-            tab.value === currentTab && (
-              <Box key={tab.value}> {tab.component} </Box>
-            )
-          );
+          return tab.value === currentTab && <Box key={tab.value}> {tab.component} </Box>
         })}
       </Container>
     </>
-  );
+  )
 }

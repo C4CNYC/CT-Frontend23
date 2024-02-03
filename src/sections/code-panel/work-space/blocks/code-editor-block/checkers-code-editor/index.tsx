@@ -1,122 +1,120 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
-import { AnimatePresence, m } from "framer-motion";
-import { useAtom } from "jotai";
+import { Box } from '@mui/material'
+import { Stack } from '@mui/system'
+import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types'
+import { AnimatePresence, m } from 'framer-motion'
+import { useAtom } from 'jotai'
 
-import { Box } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Iconify } from '@/components/iconify'
+import { IValidationMap } from '@/lib/utils/validationMaping'
+import { globalCodePanelAtom } from '@/sections/code-panel/atoms/global-code-panel.atom'
 
-import { Iconify } from "src/components/iconify";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { IValidationMap } from "src/lib/utils/validationMaping";
-
-import CheckersCompleated from "./CheckersCompleated";
-import CheckersMenu from "./CheckersMenu";
-import { checkersAnimationAtom } from "./checkers-animation-atom";
+import { checkersAnimationAtom } from './checkers-animation-atom'
+import CheckersCompleated from './CheckersCompleated'
+import CheckersMenu from './CheckersMenu'
 
 interface ICheckers {
-  checkers: IValidationMap[];
+  checkers: IValidationMap[]
 }
 
 const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
-  const [{ nextStepAble, isBrowserHidden }, setGlobalAtom] =
-    useAtom(globalCodePanelAtom);
-  const [{ visible, openText }, setAnimation] = useAtom(checkersAnimationAtom);
-  const [timeoutId, setTimeoutId] = useState<TimeoutId | null>(null);
+  const [{ nextStepAble, isBrowserHidden }, setGlobalAtom] = useAtom(globalCodePanelAtom)
+  const [{ visible, openText }, setAnimation] = useAtom(checkersAnimationAtom)
+  const [timeoutId, setTimeoutId] = useState<TimeoutId | null>(null)
   const handleCollaps = (): void => {
     if (visible) {
       if (openText) {
         setAnimation((prev) => ({
           ...prev,
           openText: false,
-        }));
+        }))
         const id = setTimeout(() => {
           setAnimation((prev) => ({
             ...prev,
             visible: false,
-          }));
-        }, 500);
-        setTimeoutId(id);
+          }))
+        }, 500)
+        setTimeoutId(id)
       } else {
         setAnimation((prev) => ({
           ...prev,
           visible: false,
-        }));
+        }))
       }
     } else {
       setAnimation((prev) => ({
         ...prev,
         visible: true,
-      }));
+      }))
     }
-  };
+  }
   useEffect(() => {
     return () => {
       if (timeoutId) {
-        clearTimeout(timeoutId);
+        clearTimeout(timeoutId)
       }
-    };
-  }, [timeoutId]);
+    }
+  }, [timeoutId])
 
   useEffect(() => {
-    const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true);
-    if (allPased === nextStepAble) return;
+    const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
+    if (allPased === nextStepAble) return
     setGlobalAtom((prev) => ({
       ...prev,
       nextStepAble: allPased,
-    }));
-  }, [checkers]);
+    }))
+  }, [checkers])
 
   const checkersAnimation = {
     open: {
-      height: "auto",
+      height: 'auto',
       opacity: 1,
     },
     closed: {
-      height: "0px",
+      height: '0px',
     },
-  };
+  }
   return (
     <>
       <CheckersCompleated />
       <Stack
         sx={{
-          top: isBrowserHidden ? "40px" : "38px",
-          right: isBrowserHidden ? "45px" : "15px",
-          position: "absolute",
+          top: isBrowserHidden ? '40px' : '38px',
+          right: isBrowserHidden ? '45px' : '15px',
+          position: 'absolute',
           zIndex: 300,
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            position: "absolute",
-            top: "8px",
-            right: "7px",
+            display: 'flex',
+            justifyContent: 'flex-end',
+            position: 'absolute',
+            top: '8px',
+            right: '7px',
             zIndex: 301,
-            ":hover": {
-              cursor: "pointer",
+            ':hover': {
+              cursor: 'pointer',
             },
           }}
         >
           <Iconify
-            sx={{ "& path": { fill: "#000000" } }}
-            icon={visible ? "ic:baseline-remove-red-eye" : "mdi:eye-off"}
-            width="22px"
+            sx={{ '& path': { fill: '#000000' } }}
+            icon={visible ? 'ic:baseline-remove-red-eye' : 'mdi:eye-off'}
+            width='22px'
             onClick={handleCollaps}
           />
         </Box>
         <AnimatePresence>
           <m.div
             initial={false}
-            animate={visible ? "open" : "closed"}
+            animate={visible ? 'open' : 'closed'}
             variants={checkersAnimation}
             style={{
-              background: "#155275CC",
-              borderRadius: "16px",
-              overflow: "hidden",
+              background: '#155275CC',
+              borderRadius: '16px',
+              overflow: 'hidden',
             }}
           >
             <CheckersMenu checkers={checkers} />
@@ -124,7 +122,7 @@ const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
         </AnimatePresence>
       </Stack>
     </>
-  );
-};
+  )
+}
 
-export default Checkers;
+export default Checkers

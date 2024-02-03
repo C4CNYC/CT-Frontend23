@@ -1,11 +1,7 @@
-// @mui
-import { Box, Checkbox } from "@mui/material";
+import { Box, Checkbox } from '@mui/material'
 
-//
-import { Icon } from "./Icon";
-import { ColorMultiPickerProps } from "./types";
-
-// ----------------------------------------------------------------------
+import { Icon } from './Icon'
+import { ColorMultiPickerProps } from './types'
 
 export function ColorMultiPicker({
   colors,
@@ -17,29 +13,34 @@ export function ColorMultiPicker({
   return (
     <Box sx={sx}>
       {colors.map((color) => {
-        const whiteColor = color === "#FFFFFF" || color === "white";
+        const whiteColor = color === '#FFFFFF' || color === 'white'
 
         return (
           <Checkbox
             key={color}
-            size="small"
+            size='small'
             value={color}
-            color="default"
+            color='default'
             checked={selected.includes(color)}
             onChange={() => {
-              onChangeColor(color);
+              onChangeColor(color)
             }}
             icon={<Icon whiteColor={whiteColor} />}
-            checkedIcon={<Icon checked whiteColor={whiteColor} />}
+            checkedIcon={
+              <Icon
+                checked
+                whiteColor={whiteColor}
+              />
+            }
             sx={{
               color,
-              "&:hover": { opacity: 0.72 },
-              "& svg": { width: 12, height: 12 },
+              '&:hover': { opacity: 0.72 },
+              '& svg': { width: 12, height: 12 },
             }}
             {...other}
           />
-        );
+        )
       })}
     </Box>
-  );
+  )
 }

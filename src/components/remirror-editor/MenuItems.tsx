@@ -1,28 +1,31 @@
-import Preferences from "@sections/dashboard/lessons/LessonStep/Modals/Preferences";
-import { ChallengeBtn, MediaBtn, SettingsBtn, TipsBtn } from "./controls-btn";
-import { Stack, SxProps } from "@mui/material";
-import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import { Theme } from "@mui/system";
-import Validation from "@sections/dashboard/lessons/LessonStep/Modals/Validation";
+import { Stack, SxProps } from '@mui/material'
+import { Theme } from '@mui/system'
+
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import Preferences from '@/sections/dashboard/lessons/LessonStep/Modals/Preferences'
+import Validation from '@/sections/dashboard/lessons/LessonStep/Modals/Validation'
+
+import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
+
+import { ChallengeBtn, MediaBtn, SettingsBtn, TipsBtn } from './controls-btn'
 
 const MenuItems = ({
   data,
   lessonId,
   style = {},
 }: {
-  data: (ILessonContent & BaseResponseInterface);
-  lessonId: string;
-  style?: SxProps<Theme>;
+  data: ILessonContent & BaseResponseInterface
+  lessonId: string
+  style?: SxProps<Theme>
 }) => {
   return (
     <Stack
-      direction="row"
+      direction='row'
       sx={{
-        maxWidth: "450px",
+        maxWidth: '450px',
         gap: 1,
-        flexWrap: "wrap",
-        justifyContent: "space-between",
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
         ...style,
       }}
     >

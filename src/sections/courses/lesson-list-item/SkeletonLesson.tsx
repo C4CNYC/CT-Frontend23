@@ -1,15 +1,15 @@
-import { Skeleton } from "@mui/material";
+import { Skeleton } from '@mui/material'
 
 export default function SkeletonLesson(): React.ReactElement {
   return (
     <Skeleton
       sx={{
-        display: "flex",
-        flexBasis: { sm: "100%", md: "48%" },
-        height: "232px",
+        display: 'flex',
+        flexBasis: { sm: '100%', md: '48%' },
+        height: '232px',
       }}
-      animation="wave"
-      variant="rounded"
+      animation='wave'
+      variant='rounded'
     />
-  );
+  )
 }

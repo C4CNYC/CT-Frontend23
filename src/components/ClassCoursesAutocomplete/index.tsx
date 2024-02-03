@@ -1,1 +1,1 @@
-export { default as ClassCoursesAutocomplete } from "./ClassCoursesAutocomplete";
+export { default as ClassCoursesAutocomplete } from './ClassCoursesAutocomplete'

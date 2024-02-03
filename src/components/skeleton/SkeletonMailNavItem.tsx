@@ -1,22 +1,23 @@
-// @mui
-import { Skeleton, Stack, StackProps } from "@mui/material";
+import { Skeleton, Stack, StackProps } from '@mui/material'
 
-// ----------------------------------------------------------------------
-
-export function SkeletonMailNavItem({
-  sx,
-  ...other
-}: StackProps): React.ReactElement | null {
+export function SkeletonMailNavItem({ sx, ...other }: StackProps): React.ReactElement | null {
   return (
     <Stack
       spacing={1}
-      direction="row"
-      alignItems="center"
+      direction='row'
+      alignItems='center'
       sx={{ px: 3, py: 1, ...sx }}
       {...other}
     >
-      <Skeleton variant="circular" width={32} height={32} />
-      <Skeleton variant="text" sx={{ width: 0.5, height: 16 }} />
+      <Skeleton
+        variant='circular'
+        width={32}
+        height={32}
+      />
+      <Skeleton
+        variant='text'
+        sx={{ width: 0.5, height: 16 }}
+      />
     </Stack>
-  );
+  )
 }

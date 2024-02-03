@@ -1,152 +1,150 @@
-import Head from "next/head";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { useSnackbar } from "notistack";
-import { BsPeopleFill } from "@react-icons/all-files/bs/BsPeopleFill";
-import { MdContacts } from "@react-icons/all-files/md/MdContacts";
-import { useSelector } from "react-redux";
+import { Box, Card, Container, Stack, Tab, Tabs } from '@mui/material'
+import { BsPeopleFill } from '@react-icons/all-files/bs/BsPeopleFill'
+import { MdContacts } from '@react-icons/all-files/md/MdContacts'
+import Head from 'next/head'
+import { useSnackbar } from 'notistack'
+import { useSelector } from 'react-redux'
 
-import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
-
-import { Iconify, UploadImageModal, useSettingsContext } from "@components";
-import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
-import { ProfileCover } from "@sections/dashboard/user/profile";
+import { Iconify, UploadImageModal, useSettingsContext } from '@/components'
+import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import {
+  useGetSchoolProfileQuery,
+  useUpdateSchoolCoverImgMutation,
+} from '@/redux/services/manager/schools-manager'
+import { RootState } from '@/redux/store'
+import { ProfileCover } from '@/sections/dashboard/user/profile'
+import SkeletonSchool from '@/sections/schools/skeleton-school'
 import {
   SchoolContactsTab,
   SchoolProfileTab,
   SchoolSettingsTab,
   SchoolSocialsTab,
-} from "@sections/schools/tabs";
-import SkeletonProfileTab from "@sections/schools/tabs/profile/SkeletomProfileTab";
-import {
-  useGetSchoolProfileQuery,
-  useUpdateSchoolCoverImgMutation,
-} from "src/redux/services/manager/schools-manager";
-import { RootState } from "src/redux/store";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import SkeletonSchool from "@sections/schools/skeleton-school";
+} from '@/sections/schools/tabs'
+import SkeletonProfileTab from '@/sections/schools/tabs/profile/SkeletomProfileTab'
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
-);
+)
 
 export default function UserProfilePage(): React.ReactElement {
-  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-  const translate = useTranslate();
-  const [currentTab, setCurrentTab] = useState("profile");
-  const { themeStretch } = useSettingsContext();
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId)
+  const translate = useTranslate()
+  const [currentTab, setCurrentTab] = useState('profile')
+  const { themeStretch } = useSettingsContext()
   const { data, isLoading, isFetching } = useGetSchoolProfileQuery(
     { schoolId },
     { skip: !schoolId }
-  );
+  )
   const TABS = [
     {
-      value: "profile",
-      label: "general",
-      icon: <Iconify icon="ic:round-account-box" />,
+      value: 'profile',
+      label: 'general',
+      icon: <Iconify icon='ic:round-account-box' />,
       component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
-      value: "settings",
-      label: "settings",
-      icon: <Iconify icon="ic:baseline-settings-applications" />,
+      value: 'settings',
+      label: 'settings',
+      icon: <Iconify icon='ic:baseline-settings-applications' />,
       component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {
-      value: "contacts",
-      label: "contacts",
+      value: 'contacts',
+      label: 'contacts',
       icon: <MdContacts />,
       component: <SchoolContactsTab schoolId={schoolId} />,
     },
     {
-      value: "socials",
-      label: "social_networks",
+      value: 'socials',
+      label: 'social_networks',
       icon: <BsPeopleFill />,
       component: <SchoolSocialsTab schoolId={schoolId} />,
     },
-  ];
+  ]
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
 
-  const [updateSchoolCoverImage] = useUpdateSchoolCoverImgMutation();
+  const [updateSchoolCoverImage] = useUpdateSchoolCoverImgMutation()
 
-  const onUpload = async (
-    data: File,
-    id: string | undefined
-  ): Promise<void> => {
+  const onUpload = async (data: File, id: string | undefined): Promise<void> => {
     try {
-      const file = new FormData();
-      file.append("file", data);
+      const file = new FormData()
+      file.append('file', data)
       if (!id) {
-        return;
+        return
       } else {
-        await updateSchoolCoverImage({ id, file }).unwrap();
+        await updateSchoolCoverImage({ id, file }).unwrap()
       }
-      enqueueSnackbar(translate("messages_img_updated"));
+      enqueueSnackbar(translate('messages_img_updated'))
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_img_not_updated"), {
-        variant: "error",
-      });
+      enqueueSnackbar(translate('messages_img_not_updated'), {
+        variant: 'error',
+      })
     }
-  };
+  }
 
   if (isLoading || isFetching) {
     return (
       <>
         <SkeletonSchool />
-        <Container maxWidth={themeStretch ? false : "lg"}>
+        <Container maxWidth={themeStretch ? false : 'lg'}>
           <SkeletonProfileTab />
         </Container>
       </>
-    );
+    )
   }
 
   return (
     <>
       <Head>
-        <title> {translate("organization")} | CodeTribe </title>
+        <title> {translate('organization')} | CodeTribe </title>
       </Head>
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <Card
           sx={{
             mb: 3,
             height: 280,
-            position: "relative",
+            position: 'relative',
           }}
         >
           <Stack
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 0,
               zIndex: 10,
-              mt: "10px",
-              mr: "10px",
+              mt: '10px',
+              mr: '10px',
             }}
           >
-            <UploadImageModal onUpload={onUpload} id={schoolId} />
+            <UploadImageModal
+              onUpload={onUpload}
+              id={schoolId}
+            />
           </Stack>
           <ProfileCover
-            name={data?.name ?? ""}
+            name={data?.name ?? ''}
             avatar={data?.avatar}
             cover={data?.cover}
           />
           <Tabs
             value={currentTab}
             onChange={(event, newValue) => {
-              setCurrentTab(newValue);
+              setCurrentTab(newValue)
             }}
             sx={{
               width: 1,
               bottom: 0,
               zIndex: 9,
-              position: "absolute",
-              bgcolor: "background.paper",
-              "& .MuiTabs-flexContainer": {
+              position: 'absolute',
+              bgcolor: 'background.paper',
+              '& .MuiTabs-flexContainer': {
                 pr: { md: 3 },
                 justifyContent: {
-                  sm: "center",
-                  md: "flex-end",
+                  sm: 'center',
+                  md: 'flex-end',
                 },
               },
             }}
@@ -163,12 +161,9 @@ export default function UserProfilePage(): React.ReactElement {
         </Card>
 
         {TABS.map(
-          (tab) =>
-            tab.value === currentTab && (
-              <Box key={tab.value}> {tab.component} </Box>
-            )
+          (tab) => tab.value === currentTab && <Box key={tab.value}> {tab.component} </Box>
         )}
       </Container>
     </>
-  );
+  )
 }

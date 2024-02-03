@@ -1,16 +1,13 @@
-// @mui
-import { Checkbox, Stack, StackProps, Typography } from "@mui/material";
+import { Checkbox, Stack, StackProps, Typography } from '@mui/material'
 
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-// ----------------------------------------------------------------------
+import { useTranslate } from '@/lib/utils/translateHelper'
 
 interface Props extends StackProps {
-  dense?: boolean;
-  action?: React.ReactNode;
-  rowCount: number;
-  numSelected: number;
-  onSelectAllRows: (checked: boolean) => void;
+  dense?: boolean
+  action?: React.ReactNode
+  rowCount: number
+  numSelected: number
+  onSelectAllRows: (checked: boolean) => void
 }
 
 export function TableSelectedAction({
@@ -22,16 +19,16 @@ export function TableSelectedAction({
   sx,
   ...other
 }: Props): React.ReactElement | null {
-  if (!numSelected) {
-    return null;
-  }
+  const translate = useTranslate()
 
-  const translate = useTranslate();
+  if (!numSelected) {
+    return null
+  }
 
   return (
     <Stack
-      direction="row"
-      alignItems="center"
+      direction='row'
+      alignItems='center'
       sx={{
         pl: 1,
         pr: 2,
@@ -40,8 +37,8 @@ export function TableSelectedAction({
         width: 1,
         zIndex: 9,
         height: 58,
-        position: "absolute",
-        bgcolor: "primary.lighter",
+        position: 'absolute',
+        bgcolor: 'primary.lighter',
         ...(dense && {
           height: 38,
         }),
@@ -53,25 +50,25 @@ export function TableSelectedAction({
         indeterminate={numSelected > 0 && numSelected < rowCount}
         checked={rowCount > 0 && numSelected === rowCount}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          onSelectAllRows(event.target.checked);
+          onSelectAllRows(event.target.checked)
         }}
       />
 
       <Typography
-        variant="subtitle1"
+        variant='subtitle1'
         sx={{
           ml: 2,
           flexGrow: 1,
-          color: "primary.main",
+          color: 'primary.main',
           ...(dense && {
             ml: 3,
           }),
         }}
       >
-        {numSelected} {translate("selected")}
+        {numSelected} {translate('selected')}
       </Typography>
 
       {action && action}
     </Stack>
-  );
+  )
 }

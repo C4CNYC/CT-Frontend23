@@ -1,3 +1,3 @@
 export interface APIError {
-  data: Record<"message", string>;
+  data: Record<'message', string>
 }

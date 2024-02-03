@@ -1,28 +1,21 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Dialog, DialogActions, IconButton, Typography } from '@mui/material'
 
-import { ClassMembersAutocomplete } from "../class-members-autocomplete";
-import { Iconify } from "../iconify";
+import { ClassMembersAutocomplete } from '../class-members-autocomplete'
+import { Iconify } from '../iconify'
 
 interface Props {
-  children: React.ReactElement;
-  rowId: string;
+  children: React.ReactElement
+  rowId: string
 }
 export default function JoinGroupModal({ children, rowId }: Props) {
-  const [open, setOpenDialog] = useState(false);
+  const [open, setOpenDialog] = useState(false)
   return (
     <>
       <Box
         onClick={() => {
-          setOpenDialog(true);
+          setOpenDialog(true)
         }}
       >
         {children}
@@ -30,35 +23,38 @@ export default function JoinGroupModal({ children, rowId }: Props) {
       <Dialog
         open={open}
         onClose={() => {
-          setOpenDialog(false);
+          setOpenDialog(false)
         }}
         fullWidth
-        scroll="body"
+        scroll='body'
       >
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: '100%' }}>
           <Box mb={2}>
             <Box
               sx={{
-                justifyContent: "end",
-                alignItems: "flex-end",
-                display: "flex",
+                justifyContent: 'end',
+                alignItems: 'flex-end',
+                display: 'flex',
                 p: 1,
               }}
             >
               <IconButton>
                 <Iconify
-                  icon="ep:close"
+                  icon='ep:close'
                   width={24}
                   height={24}
                   onClick={() => {
-                    setOpenDialog(false);
+                    setOpenDialog(false)
                   }}
                 />
               </IconButton>
             </Box>
-            <Box ml="32px">
-              <Typography variant="h4">Join your group</Typography>
-              <Typography variant="body1" sx={{ color: "#4f4f4f", mb: "16px" }}>
+            <Box ml='32px'>
+              <Typography variant='h4'>Join your group</Typography>
+              <Typography
+                variant='body1'
+                sx={{ color: '#4f4f4f', mb: '16px' }}
+              >
                 Enter your Join Code to find your group
               </Typography>
               <ClassMembersAutocomplete classId={rowId} />
@@ -66,40 +62,40 @@ export default function JoinGroupModal({ children, rowId }: Props) {
             <DialogActions>
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
+                  display: 'flex',
+                  justifyContent: 'flex-end',
                   gap: 2,
                 }}
               >
                 <Button
                   onClick={() => {
-                    setOpenDialog(false);
+                    setOpenDialog(false)
                   }}
-                  variant="contained"
+                  variant='contained'
                   sx={{
-                    background: "#f0f0f0",
-                    color: "#292929",
-                    p: "8px 28px",
-                    width: "auto",
-                    fontSize: "16px",
-                    "&:hover": {
-                      background: "#bebebe",
-                      boxShadow: "none",
+                    background: '#f0f0f0',
+                    color: '#292929',
+                    p: '8px 28px',
+                    width: 'auto',
+                    fontSize: '16px',
+                    '&:hover': {
+                      background: '#bebebe',
+                      boxShadow: 'none',
                     },
                   }}
                 >
                   Cancel
                 </Button>
                 <Button
-                  variant="contained"
+                  variant='contained'
                   sx={{
-                    p: "8px 28px",
-                    width: "auto",
-                    fontSize: "16px",
-                    backgroundColor: "#f1c1e2",
-                    "&:hover": {
-                      background: "#f1c1e2",
-                      boxShadow: "none",
+                    p: '8px 28px',
+                    width: 'auto',
+                    fontSize: '16px',
+                    backgroundColor: '#f1c1e2',
+                    '&:hover': {
+                      background: '#f1c1e2',
+                      boxShadow: 'none',
                     },
                   }}
                 >
@@ -111,5 +107,5 @@ export default function JoinGroupModal({ children, rowId }: Props) {
         </Box>
       </Dialog>
     </>
-  );
+  )
 }

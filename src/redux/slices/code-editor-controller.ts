@@ -1,6 +1,6 @@
-import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import type { EditorMode } from "src/components/code-editor-collab/hook/constants";
+import type { EditorMode } from '@/components/code-editor-collab/hook/constants'
 
 export interface CodeEditorControllerRoom {
   roomId: string
@@ -14,23 +14,23 @@ interface StateControllerProps {
   room: CodeEditorControllerRoom | null
 }
 
-const emptyRoom = { roomId: "" }
+const emptyRoom = { roomId: '' }
 
-const initialState: StateControllerProps = { room: null };
+const initialState: StateControllerProps = { room: null }
 
 export const CodeEditorControllerSlice = createSlice({
-  name: "code-panel-controller",
+  name: 'code-panel-controller',
   initialState,
   reducers: {
     setRoom: (state, action: PayloadAction<CodeEditorControllerRoom | null>) => {
-      state.room = action.payload;
+      state.room = action.payload
     },
     resetRoom: (state) => {
-      state.room = emptyRoom;
-    }
+      state.room = emptyRoom
+    },
   },
-});
+})
 
-export const { setRoom, resetRoom } = CodeEditorControllerSlice.actions;
+export const { setRoom, resetRoom } = CodeEditorControllerSlice.actions
 
-export default CodeEditorControllerSlice.reducer;
+export default CodeEditorControllerSlice.reducer

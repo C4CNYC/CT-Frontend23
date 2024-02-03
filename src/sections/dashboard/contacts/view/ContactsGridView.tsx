@@ -1,22 +1,18 @@
-import { useRef } from "react";
+import { useRef } from 'react'
 
-// @mui
-import { Box, Collapse, TableProps } from "@mui/material";
+import { Box, Collapse, TableProps } from '@mui/material'
 
 // @types
-import { IFile } from "src/types";
+import { IFile } from '@/types'
 
-// components
 //
 
-// ----------------------------------------------------------------------
-
 interface Props {
-  table: TableProps;
-  data: IFile[];
-  dataFiltered: IFile[];
-  onOpenConfirm: VoidFunction;
-  onDeleteItem: (id: string) => void;
+  table: TableProps
+  data: IFile[]
+  dataFiltered: IFile[]
+  onOpenConfirm: VoidFunction
+  onDeleteItem: (id: string) => void
 }
 
 export default function ContactsGridView({
@@ -26,19 +22,22 @@ export default function ContactsGridView({
   onDeleteItem,
   onOpenConfirm,
 }: Props): React.ReactElement | null {
-  const containerRef = useRef(null);
+  const containerRef = useRef(null)
 
   return (
     <>
       <Box ref={containerRef}>
-        <Collapse in unmountOnExit>
+        <Collapse
+          in
+          unmountOnExit
+        >
           <Box
             gap={3}
-            display="grid"
+            display='grid'
             gridTemplateColumns={{
-              xs: "repeat(1, 1fr)",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
+              xs: 'repeat(1, 1fr)',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
             }}
           >
             {/* {dataFiltered
@@ -85,5 +84,5 @@ export default function ContactsGridView({
         )} */}
       </Box>
     </>
-  );
+  )
 }

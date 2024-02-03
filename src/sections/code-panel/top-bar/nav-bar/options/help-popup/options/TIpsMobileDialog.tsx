@@ -1,5 +1,3 @@
-import { MdOutlineTipsAndUpdates } from "@react-icons/all-files/md/MdOutlineTipsAndUpdates";
-
 import {
   Alert,
   Box,
@@ -12,15 +10,16 @@ import {
   Typography,
   alpha,
   useTheme,
-} from "@mui/material";
+} from '@mui/material'
+import { MdOutlineTipsAndUpdates } from '@react-icons/all-files/md/MdOutlineTipsAndUpdates'
 
-import { EmptyContent, Iconify } from "@components";
+import { EmptyContent, Iconify } from '@/components'
 
 interface Props {
-  open: boolean;
-  onClose: () => void;
-  tips?: string[];
-  isLoading: boolean;
+  open: boolean
+  onClose: () => void
+  tips?: string[]
+  isLoading: boolean
 }
 
 export default function TipsMobileDialog({
@@ -29,70 +28,83 @@ export default function TipsMobileDialog({
   tips,
   isLoading,
 }: Props): React.ReactElement {
-  const theme = useTheme();
+  const theme = useTheme()
 
   return (
     <Dialog
       open={open}
       onClose={onClose}
-      scroll="paper"
+      scroll='paper'
       PaperProps={{
         sx: {
-          width: "450px",
-          maxHeight: "60vh",
+          width: '450px',
+          maxHeight: '60vh',
         },
       }}
     >
       <DialogTitle
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        <MdOutlineTipsAndUpdates size="30px" color="#FBDD3F" />
+        <MdOutlineTipsAndUpdates
+          size='30px'
+          color='#FBDD3F'
+        />
         <Typography
-          variant="h5"
-          sx={{ flexGrow: 1, ml: 1, alignSelf: "flex-end" }}
+          variant='h5'
+          sx={{ flexGrow: 1, ml: 1, alignSelf: 'flex-end' }}
         >
           Tips
         </Typography>
         <IconButton
           onClick={onClose}
-          sx={{ selfAlign: "flex-end", mr: "-10px" }}
+          sx={{ selfAlign: 'flex-end', mr: '-10px' }}
         >
-          <Iconify width="20px" icon="ic:round-close" />
+          <Iconify
+            width='20px'
+            icon='ic:round-close'
+          />
         </IconButton>
       </DialogTitle>
       <DialogContent
         sx={{
           pb: 3,
-          "&::-webkit-scrollbar": {
-            width: "0.3em",
+          '&::-webkit-scrollbar': {
+            width: '0.3em',
           },
-          "&::-webkit-scrollbar-thumb": {
+          '&::-webkit-scrollbar-thumb': {
             backgroundColor: alpha(theme.palette.grey[600], 0.48),
-            borderRadius: "2px",
+            borderRadius: '2px',
           },
         }}
       >
         <Stack spacing={2}>
           {isLoading ? (
-            <Skeleton variant="rounded" width="100%" height="50px" />
+            <Skeleton
+              variant='rounded'
+              width='100%'
+              height='50px'
+            />
           ) : null}
           {tips?.length && !isLoading ? (
             tips.map((t, i) => (
-              <Alert key={i} severity="info">
+              <Alert
+                key={i}
+                severity='info'
+              >
                 {t}
               </Alert>
             ))
           ) : (
             <Box>
-              <EmptyContent title="No data" />
+              <EmptyContent title='No data' />
             </Box>
           )}
           {!tips}
         </Stack>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

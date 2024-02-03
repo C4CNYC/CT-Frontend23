@@ -1,16 +1,14 @@
 // @types
-import { VariantsType } from "../types";
-//
-import { varTranEnter, varTranExit } from "./transition";
+import { VariantsType } from '../types'
 
-// ----------------------------------------------------------------------
+import { varTranEnter, varTranExit } from './transition'
 
 export const varFade = (props?: VariantsType) => {
-  const distance = props?.distance ?? 120;
-  const durationIn = props?.durationIn;
-  const durationOut = props?.durationOut;
-  const easeIn = props?.easeIn;
-  const easeOut = props?.easeOut;
+  const distance = props?.distance ?? 120
+  const durationIn = props?.durationIn
+  const durationOut = props?.durationOut
+  const easeIn = props?.easeIn
+  const easeOut = props?.easeOut
 
   return {
     // IN
@@ -130,5 +128,5 @@ export const varFade = (props?: VariantsType) => {
         transition: varTranExit({ durationOut, easeOut }),
       },
     },
-  };
-};
+  }
+}

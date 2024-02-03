@@ -1,37 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react'
 
-import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react'
 // import { useS3Upload } from "next-s3-upload";
-import { ImageAttributes, ImageExtension } from "remirror/extensions";
-import "remirror/styles/all.css";
+import { ImageAttributes, ImageExtension } from 'remirror/extensions'
+import 'remirror/styles/all.css'
 
-import { BaseResponseInterface, isJson } from "@utils";
-import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { BaseResponseInterface, isJson } from '@/lib/utils'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { useCreateMediaMutation } from '@/redux/services/manager/media-manager'
 
-import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
-import EditorToolbar from "./EditorToolbar";
-import { extensions } from "./extensions-template";
+import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
+
+import EditorToolbar from './EditorToolbar'
+import { extensions } from './extensions-template'
 
 interface FileWithProgress {
-  file: File;
-  progress: SetProgress;
+  file: File
+  progress: SetProgress
 }
-declare type SetProgress = (progress: number) => void;
+declare type SetProgress = (progress: number) => void
 
-export declare type DelayedPromiseCreator<Value> = (
-  props: unknown
-) => Promise<Value>;
-declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
+export declare type DelayedPromiseCreator<Value> = (props: unknown) => Promise<Value>
+declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>
 
 interface Props {
-  editable?: boolean;
-  multimediaValue: string;
-  setMultimediaValue?: (value: string) => void;
-  onSubmit?: () => void;
-  locked?: boolean;
-  data: ILessonContent & BaseResponseInterface;
-  lessonId: string;
+  editable?: boolean
+  multimediaValue: string
+  setMultimediaValue?: (value: string) => void
+  onSubmit?: () => void
+  locked?: boolean
+  data: ILessonContent & BaseResponseInterface
+  lessonId: string
 }
 
 function Editor({
@@ -44,17 +43,17 @@ function Editor({
   lessonId,
 }: Props): React.ReactElement {
   // const { uploadToS3 } = useS3Upload();
-  const [createMedia] = useCreateMediaMutation();
-  const translate = useTranslate();
+  const [createMedia] = useCreateMediaMutation()
+  const translate = useTranslate()
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
-    let completed = 0;
-    const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
+    let completed = 0
+    const promises: Array<DelayedPromiseCreator<ImageAttributes>> = []
 
     for (const { file, progress } of files) {
       promises.push(
         async () =>
           await new Promise<ImageAttributes>((resolve, reject) => {
-            completed += 1;
+            completed += 1
             // @TODO S3 upload tmp disabled, needs to be moved to server side
             console.error('S3 upload tmp disabled, needs to be moved to server side')
             alert('S3 upload tmp disabled, needs to be moved to server side')
@@ -83,34 +82,32 @@ function Editor({
             //     });
             // });
           })
-      );
+      )
     }
-    return promises;
-  };
+    return promises
+  }
 
   // ToDo find better solution for type
   const newExtentions: any = [
     ...extensions(),
     new ImageExtension({ enableResizing: true, uploadHandler }),
-  ];
+  ]
 
   const { manager, state, setState, onChange } = useRemirror({
     extensions: newExtentions,
-    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : "",
-    stringHandler: "html",
-  });
+    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : '',
+    stringHandler: 'html',
+  })
 
   useEffect(() => {
     if (!editable) {
-      setState(
-        isJson(multimediaValue) ? JSON.parse(multimediaValue) : multimediaValue
-      );
+      setState(isJson(multimediaValue) ? JSON.parse(multimediaValue) : multimediaValue)
     }
-  }, [multimediaValue]);
+  }, [multimediaValue])
 
   const saveContent = async (): Promise<void> => {
-    if (onSubmit) onSubmit();
-  };
+    if (onSubmit) onSubmit()
+  }
   return (
     <ThemeProvider>
       <style>
@@ -150,22 +147,21 @@ function Editor({
       </style>
       <Remirror
         editable={editable}
-        placeholder={translate("start_type_here")}
+        placeholder={translate('start_type_here')}
         manager={manager}
         state={state}
         // initialContent={state}
         autoFocus={editable}
-        autoRender="end"
+        autoRender='end'
         onChange={(parameter) => {
-          onChange(parameter);
+          onChange(parameter)
           if (setMultimediaValue) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
-            setMultimediaValue(parameter.state);
+            setMultimediaValue(parameter.state)
           }
         }}
       >
-        {typeof locked === "undefined" ? (
+        {typeof locked === 'undefined' ? (
           editable ? (
             <EditorToolbar
               saveContent={saveContent}
@@ -182,6 +178,6 @@ function Editor({
         )}
       </Remirror>
     </ThemeProvider>
-  );
+  )
 }
-export const MyEditor = React.memo(Editor);
+export const MyEditor = React.memo(Editor)

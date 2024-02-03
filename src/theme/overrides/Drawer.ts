@@ -1,17 +1,15 @@
-import { type DrawerProps } from "@mui/material";
-import { type Theme, alpha } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import { type DrawerProps } from '@mui/material'
+import { type Theme, alpha } from '@mui/material/styles'
 
 export default function Drawer(theme: Theme): unknown {
-  const isLight = theme.palette.mode === "light";
+  const isLight = theme.palette.mode === 'light'
 
   return {
     MuiDrawer: {
       styleOverrides: {
         root: ({ ownerState }: { ownerState: DrawerProps }) => ({
-          ...(ownerState.variant === "temporary" && {
-            "& .MuiDrawer-paper": {
+          ...(ownerState.variant === 'temporary' && {
+            '& .MuiDrawer-paper': {
               boxShadow: `-40px 40px 80px -8px ${alpha(
                 isLight ? theme.palette.grey[500] : theme.palette.common.black,
                 0.24
@@ -21,5 +19,5 @@ export default function Drawer(theme: Theme): unknown {
         }),
       },
     },
-  };
+  }
 }

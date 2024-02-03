@@ -1,32 +1,25 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { useGoogleLogin } from "@react-oauth/google";
-import { FaArrowRight } from "@react-icons/all-files/fa/FaArrowRight";
-import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
-import { MdArrowBackIosNew } from "@react-icons/all-files/md/MdArrowBackIosNew";
+import { LoadingButton } from '@mui/lab'
+import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
+import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle'
+import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
+import { useGoogleLogin } from '@react-oauth/google'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Divider,
-  IconButton,
-  InputAdornment,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { useAuthContext } from '@/auth/useAuthContext'
+import { RHFTextField, useSnackbar } from '@/components'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { Role } from '@/redux/services/enums/role.enum'
 
-import { RHFTextField, useSnackbar } from "@components";
-import { useAuthContext } from "src/auth/useAuthContext";
-import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import { styledRegisterInput } from "../styles";
+import { styledRegisterInput } from '../styles'
 
 interface Props {
-  isValid?: boolean;
-  isTeacher: boolean;
-  nextStep: () => void;
-  prevStep?: () => void;
-  goToStep: (s: number) => void;
+  isValid?: boolean
+  isTeacher: boolean
+  nextStep: () => void
+  prevStep?: () => void
+  goToStep: (s: number) => void
 }
 
 export default function SingUp({
@@ -36,103 +29,115 @@ export default function SingUp({
   isTeacher,
   goToStep,
 }: Props): React.ReactElement {
-  const { registerWithGoogle } = useAuthContext();
-  const { enqueueSnackbar } = useSnackbar();
-  const [isLoading, setIsLoading] = useState(false);
-  const translate = useTranslate();
+  const { registerWithGoogle } = useAuthContext()
+  const { enqueueSnackbar } = useSnackbar()
+  const [isLoading, setIsLoading] = useState(false)
+  const translate = useTranslate()
 
   const onRegisterWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
-      setIsLoading(true);
+      setIsLoading(true)
       try {
-        const role = isTeacher ? Role.Manager : Role.Student;
-        await registerWithGoogle(token, role);
+        const role = isTeacher ? Role.Manager : Role.Student
+        await registerWithGoogle(token, role)
         if (isTeacher) {
-          goToStep(3);
+          goToStep(3)
         } else {
-          goToStep(2);
+          goToStep(2)
         }
       } catch (error: any) {
-        enqueueSnackbar(error.message, { variant: "error" });
+        enqueueSnackbar(error.message, { variant: 'error' })
       }
-      setIsLoading(false);
+      setIsLoading(false)
     },
-  });
+  })
 
   return (
     <>
       {isTeacher && (
-        <IconButton onClick={prevStep} sx={{ ml: "-30px", mt: "-30px" }}>
+        <IconButton
+          onClick={prevStep}
+          sx={{ ml: '-30px', mt: '-30px' }}
+        >
           <MdArrowBackIosNew />
         </IconButton>
       )}
-      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "40px" }}>
-        <Typography variant="h3">{translate("login_sign_up")}</Typography>
-        <Typography variant="h3" sx={{ ml: 1 }}>
+      <Stack
+        direction='row'
+        sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: '40px' }}
+      >
+        <Typography variant='h3'>{translate('login_sign_up')}</Typography>
+        <Typography
+          variant='h3'
+          sx={{ ml: 1 }}
+        >
           😃
         </Typography>
       </Stack>
-      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
-        {translate("login_my_first_time")}
+      <Typography
+        variant='body1'
+        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}
+      >
+        {translate('login_my_first_time')}
       </Typography>
       <Stack sx={{ mt: 1 }}>
         <RHFTextField
-          name="email"
-          label={translate("email")}
-          defaultValue=""
+          name='email'
+          label={translate('email')}
+          defaultValue=''
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
+              <InputAdornment position='end'>
                 <IconButton
-                  edge="end"
+                  edge='end'
                   onClick={() => {
-                    if (!isValid) return;
-                    nextStep();
+                    if (!isValid) return
+                    nextStep()
                   }}
                 >
-                  <FaArrowRight color={isValid ? "#43D4DD" : ""} />
+                  <FaArrowRight color={isValid ? '#43D4DD' : ''} />
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
-        <Divider sx={{ my: 3 }} flexItem>
+        <Divider
+          sx={{ my: 3 }}
+          flexItem
+        >
           <Typography
             sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
-            variant="body1"
+            variant='body1'
           >
-            {translate("login_or")}
+            {translate('login_or')}
           </Typography>
         </Divider>
         <LoadingButton
           onClick={() => {
-            onRegisterWithGoogle();
+            onRegisterWithGoogle()
           }}
           loading={isLoading}
           sx={(theme) => ({
             color:
-              theme.palette.mode === "light"
-                ? theme.palette.grey[600]
-                : theme.palette.text.primary,
-            textTransform: "none",
+              theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.text.primary,
+            textTransform: 'none',
             py: 1.5,
             mb: 1,
             gap: 2,
-            background:
-              theme.palette.mode === "light" ? theme.palette.grey[200] : "",
+            background: theme.palette.mode === 'light' ? theme.palette.grey[200] : '',
             fontWeight: 400,
-            fontSize: "1.3em",
-            "&:hover": {
+            fontSize: '1.3em',
+            '&:hover': {
               color: theme.palette.grey[900],
-              background: theme.palette.mode === "light" ? "" : "#fff",
+              background: theme.palette.mode === 'light' ? '' : '#fff',
             },
           })}
         >
-          <FcGoogle size="50px" />
-          {translate("login_sign_up_with_google")}
+          <FcGoogle size='50px' />
+          {translate('login_sign_up_with_google')}
         </LoadingButton>
       </Stack>
     </>
-  );
+  )
 }

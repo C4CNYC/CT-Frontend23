@@ -1,68 +1,67 @@
-import React, { MouseEventHandler, useCallback, useState } from "react";
+import React, { MouseEventHandler, useCallback, useState } from 'react'
 
-import { useCommands } from "@remirror/react";
-import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiOutlineClear } from "@react-icons/all-files/ai/AiOutlineClear";
-import { MdFormatColorText } from "@react-icons/all-files/md/MdFormatColorText";
-
-import { IconButton, Stack } from "@mui/material";
-import ToggleButton from "@mui/material/ToggleButton";
+import { IconButton, Stack } from '@mui/material'
+import ToggleButton from '@mui/material/ToggleButton'
+import { AiOutlineClear } from '@react-icons/all-files/ai/AiOutlineClear'
+import { MdFormatColorText } from '@react-icons/all-files/md/MdFormatColorText'
+import { useCommands } from '@remirror/react'
+import { useDetectClickOutside } from 'react-detect-click-outside'
 
 export default function TextColorPicker(): JSX.Element {
-  const [edit, setEdit] = useState<boolean>(false);
-  const [color, setColor] = useState<string>("#000");
-  const commands = useCommands();
+  const [edit, setEdit] = useState<boolean>(false)
+  const [color, setColor] = useState<string>('#000')
+  const commands = useCommands()
 
-  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (e: any) => {
-      e.preventDefault();
-    },
-    []
-  );
+  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback((e: any) => {
+    e.preventDefault()
+  }, [])
 
   const handleChange = useCallback(
     (e: any) => {
-      e.preventDefault();
-      setColor(e.target.value);
-      commands.setTextColor(color);
+      e.preventDefault()
+      setColor(e.target.value)
+      commands.setTextColor(color)
     },
     [commands.setTextColor, color]
-  );
+  )
 
   const closeMenu = (): void => {
-    setEdit(false);
-  };
-  const ref = useDetectClickOutside({ onTriggered: closeMenu });
+    setEdit(false)
+  }
+  const ref = useDetectClickOutside({ onTriggered: closeMenu })
 
   return (
-    <Stack direction="row" ref={ref}>
+    <Stack
+      direction='row'
+      ref={ref}
+    >
       {edit && (
         <div
           style={{
-            position: "absolute",
-            top: "29px",
-            width: "100px",
-            display: "flex",
-            alignItems: "center",
-            backgroundColor: "white",
-            border: "1px solid rgba(0, 0, 0, 0.12)",
-            borderRadius: "4px",
-            padding: "5px",
+            position: 'absolute',
+            top: '29px',
+            width: '100px',
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            border: '1px solid rgba(0, 0, 0, 0.12)',
+            borderRadius: '4px',
+            padding: '5px',
             zIndex: 2,
           }}
         >
           <input
-            type="color"
-            id="favcolor"
-            name="favcolor"
+            type='color'
+            id='favcolor'
+            name='favcolor'
             value={color}
             onChange={handleChange}
           />
           <IconButton
-            sx={{ p: "10px" }}
+            sx={{ p: '10px' }}
             onClick={() => {
-              commands.removeTextColor();
-              setEdit(!edit);
+              commands.removeTextColor()
+              setEdit(!edit)
             }}
           >
             <AiOutlineClear size={20} />
@@ -70,16 +69,16 @@ export default function TextColorPicker(): JSX.Element {
         </div>
       )}
       <ToggleButton
-        value="left"
-        key="left"
-        size="small"
+        value='left'
+        key='left'
+        size='small'
         onMouseDown={handleMouseDown}
         onClick={() => {
-          setEdit(!edit);
+          setEdit(!edit)
         }}
       >
         <MdFormatColorText size={13} />
       </ToggleButton>
     </Stack>
-  );
+  )
 }

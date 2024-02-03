@@ -1,10 +1,10 @@
-import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material"
-import { AiOutlineCode } from "@react-icons/all-files/ai/AiOutlineCode"
-import { useAtom } from "jotai"
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
+import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
+import { useAtom } from 'jotai'
 // import { CopyBlock, dracula } from "react-code-blocks";
 
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom"
-import { Iconify } from "src/components/iconify"
+import { Iconify } from '@/components/iconify'
+import { globalCodePanelAtom } from '@/sections/code-panel/atoms/global-code-panel.atom'
 
 interface Props {
   open: boolean
@@ -18,36 +18,48 @@ export default function SolutionMobileDialog({ open, onClose }: Props): React.Re
       <Dialog
         open={open}
         onClose={onClose}
-        scroll="paper"
+        scroll='paper'
         PaperProps={{
           sx: {
             minWidth: {
-              xs: "calc(90% - 32px)",
-              sm: "400px",
-              md: "400px",
-              lg: "450px",
+              xs: 'calc(90% - 32px)',
+              sm: '400px',
+              md: '400px',
+              lg: '450px',
             },
             height: {
-              xs: "50vh",
-              sm: "50vh",
-              md: "450px",
-              lg: "450px",
+              xs: '50vh',
+              sm: '50vh',
+              md: '450px',
+              lg: '450px',
             },
           },
         }}
       >
         <DialogTitle
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          <AiOutlineCode size="30px" color="#EE467A" />
-          <Typography variant="h5" sx={{ flexGrow: 1, ml: 1, alignSelf: "flex-end" }}>
+          <AiOutlineCode
+            size='30px'
+            color='#EE467A'
+          />
+          <Typography
+            variant='h5'
+            sx={{ flexGrow: 1, ml: 1, alignSelf: 'flex-end' }}
+          >
             Solution
           </Typography>
-          <IconButton onClick={onClose} sx={{ selfAlign: "flex-end", mr: "-10px" }}>
-            <Iconify width="20px" icon="ic:round-close" />
+          <IconButton
+            onClick={onClose}
+            sx={{ selfAlign: 'flex-end', mr: '-10px' }}
+          >
+            <Iconify
+              width='20px'
+              icon='ic:round-close'
+            />
           </IconButton>
         </DialogTitle>
         <DialogContent sx={{ py: 2 }}>
@@ -65,17 +77,17 @@ export default function SolutionMobileDialog({ open, onClose }: Props): React.Re
           {/*   }} */}
           {/* /> */}
           <Box
-            component="div"
+            component='div'
             style={{
-              height: "100%",
-              width: "100%",
-              overflowY: "visible",
-              borderRadius: "0",
-              boxShadow: "none",
-              fontSize: "0.75rem",
+              height: '100%',
+              width: '100%',
+              overflowY: 'visible',
+              borderRadius: '0',
+              boxShadow: 'none',
+              fontSize: '0.75rem',
             }}
           >
-            {solutionCode || "NO SOLUTION"}
+            {solutionCode || 'NO SOLUTION'}
           </Box>
         </DialogContent>
       </Dialog>

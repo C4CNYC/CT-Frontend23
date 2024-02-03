@@ -1,12 +1,8 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 
-import { managerApi } from ".";
-import {
-  IStudent,
-  IStudentSearchParams,
-  StudentSearchParams,
-} from "../interfaces/user.interface";
+import { IStudent, IStudentSearchParams, StudentSearchParams } from '../interfaces/user.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,9 +12,9 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, studentId }) => ({
         url: `/manager/school/${schoolId}/student/${studentId}`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Students"],
+      providesTags: ['Students'],
     }),
     getStudents: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
@@ -26,10 +22,10 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, ...params }) => ({
         url: `/manager/school/${schoolId}/student`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
-      providesTags: ["Students"],
+      providesTags: ['Students'],
     }),
     getClassPending: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
@@ -37,21 +33,18 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ classId, ...params }) => ({
         url: `/manager/school/{schoolId}/class/${classId}/student/pending`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
-      providesTags: ["Pendings"],
+      providesTags: ['Pendings'],
     }),
-    updateClassPending: builder.mutation<
-      void,
-      { classId: string; student_id: string }
-    >({
+    updateClassPending: builder.mutation<void, { classId: string; student_id: string }>({
       query: ({ classId, ...body }) => ({
         url: `/manager/school/{schoolId}/class/${classId}/student/pending`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Pendings", "ClassesStudentList"],
+      invalidatesTags: ['Pendings', 'ClassesStudentList'],
     }),
     getGoogleClasses: builder.query<
       any[],
@@ -59,46 +52,43 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, classId, ...body }) => ({
         url: `/manager/school/${schoolId}/class/${classId}/student/google-classes`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
     }),
     migrateGoogleClassesStudents: builder.mutation<
       any[],
       {
-        access_token: string;
-        schoolId: string;
-        classId: string;
-        google_class_id: string;
+        access_token: string
+        schoolId: string
+        classId: string
+        google_class_id: string
       }
     >({
       query: ({ schoolId, classId, ...body }) => ({
         url: `/manager/school/${schoolId}/class/${classId}/student/migrate/google-classes`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
     }),
-    createStudent: builder.mutation<
-      IStudent & BaseResponseInterface,
-      { schoolId: string }
-    >({
+    createStudent: builder.mutation<IStudent & BaseResponseInterface, { schoolId: string }>({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/student`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Students", "School"],
+      invalidatesTags: ['Students', 'School'],
     }),
     updateStudent: builder.mutation<
       void,
-      { schoolId: string; studentId: string } & Omit<IStudent, "email">
+      { schoolId: string; studentId: string } & Omit<IStudent, 'email'>
     >({
       query: ({ schoolId, studentId, ...body }) => ({
         url: `/manager/school/${schoolId}/student/${studentId}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Students"],
+      invalidatesTags: ['Students'],
     }),
     updateStudentAvatar: builder.mutation<
       void,
@@ -106,42 +96,33 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, studentId, file }) => ({
         url: `/manager/school/${schoolId}/student/${studentId}/avatar`,
-        method: "PATCH",
+        method: 'PATCH',
         body: file,
       }),
-      invalidatesTags: ["Students", "School"],
+      invalidatesTags: ['Students', 'School'],
     }),
-    studentJoinClass: builder.mutation<
-      void,
-      { classId: string; student_id: string }
-    >({
+    studentJoinClass: builder.mutation<void, { classId: string; student_id: string }>({
       query: ({ classId, ...body }) => ({
         url: `/manager/school/{schoolId}/class/${classId}/student`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Students"],
+      invalidatesTags: ['Students'],
     }),
-    studentLeftClass: builder.mutation<
-      void,
-      { classId: string; student_id: string }
-    >({
+    studentLeftClass: builder.mutation<void, { classId: string; student_id: string }>({
       query: ({ classId, ...body }) => ({
         url: `/manager/school/{schoolId}/class/${classId}/student`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: ["Students", "ClassesStudent"],
+      invalidatesTags: ['Students', 'ClassesStudent'],
     }),
-    deleteStudent: builder.mutation<
-      void,
-      { schoolId: string; studentId: string }
-    >({
+    deleteStudent: builder.mutation<void, { schoolId: string; studentId: string }>({
       query: ({ schoolId, studentId }) => ({
         url: `/manager/school/${schoolId}/student/${studentId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Students"],
+      invalidatesTags: ['Students'],
     }),
     inviteStudent: builder.mutation<
       IStudent & BaseResponseInterface,
@@ -149,14 +130,14 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/student/invite`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["ClassesStudentList"],
+      invalidatesTags: ['ClassesStudentList'],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetStudentQuery,
@@ -173,4 +154,4 @@ export const {
   useUpdateStudentMutation,
   useUpdateStudentAvatarMutation,
   useInviteStudentMutation,
-} = extendedApi;
+} = extendedApi

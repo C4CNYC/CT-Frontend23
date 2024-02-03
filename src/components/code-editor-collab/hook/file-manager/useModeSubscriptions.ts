@@ -1,9 +1,10 @@
-import type { Socket } from "socket.io-client";
-import { useMemo, useEffect, useRef } from "react";
+import { useMemo, useEffect, useRef } from 'react'
 
-import { EmitSocketEvents, SubscribedEvents } from "../utils/socket";
-import { EditorMode } from "../constants";
-import { File } from "../utils/collab/requests";
+import type { Socket } from 'socket.io-client'
+
+import { EditorMode } from '../constants'
+import { File } from '../utils/collab/requests'
+import { SubscribedEvents } from '../utils/socket'
 
 interface UseModeSubscriotionsProps {
   roomId: string
@@ -20,59 +21,59 @@ export const useModeSubscriptions = ({
   onUpdateFileList,
   socket,
   setActiveFile,
-  mode
+  mode,
 }: UseModeSubscriotionsProps) => {
-  const deleteFileRef = useRef(onDeleteFile);
-  const setActiveFileRef = useRef(setActiveFile);
+  const deleteFileRef = useRef(onDeleteFile)
+  const setActiveFileRef = useRef(setActiveFile)
 
   useEffect(() => {
-    setActiveFileRef.current = setActiveFile;
-  }, [setActiveFile]);
+    setActiveFileRef.current = setActiveFile
+  }, [setActiveFile])
 
   useEffect(() => {
-    deleteFileRef.current = onDeleteFile;
-  }, [onDeleteFile]);
+    deleteFileRef.current = onDeleteFile
+  }, [onDeleteFile])
 
   const modeSockets = useMemo(() => {
-    const deleteEvent = `${SubscribedEvents.DeleteResponse}${roomId}`;
-    const fileChangedEvent = `${SubscribedEvents.ActiveFileChanged}${roomId}`;
-    const addFileEvent = `${SubscribedEvents.CreateFileResponse}${roomId}`;
+    const deleteEvent = `${SubscribedEvents.DeleteResponse}${roomId}`
+    const fileChangedEvent = `${SubscribedEvents.ActiveFileChanged}${roomId}`
+    const addFileEvent = `${SubscribedEvents.CreateFileResponse}${roomId}`
 
     return {
       subscribe: {
         [EditorMode.SubOwner]: () => {
           socket?.on(deleteEvent, (fileName: File) => {
-            deleteFileRef.current(fileName);
-          });
-          socket?.on(addFileEvent, onUpdateFileList);
+            deleteFileRef.current(fileName)
+          })
+          socket?.on(addFileEvent, onUpdateFileList)
         },
         [EditorMode.Watcher]: () => {
           socket?.on(fileChangedEvent, (fileName: File) => {
-            setActiveFileRef.current(fileName);
-          });
-          socket?.on(addFileEvent, onUpdateFileList);
+            setActiveFileRef.current(fileName)
+          })
+          socket?.on(addFileEvent, onUpdateFileList)
         },
-        [EditorMode.Owner]: () => socket?.on(addFileEvent, onUpdateFileList)
+        [EditorMode.Owner]: () => socket?.on(addFileEvent, onUpdateFileList),
       },
       unsubscribe: {
         [EditorMode.SubOwner]: () => {
-          socket?.off(addFileEvent);
-          socket?.off(deleteEvent);
+          socket?.off(addFileEvent)
+          socket?.off(deleteEvent)
         },
         [EditorMode.Watcher]: () => {
-          socket?.off(fileChangedEvent);
-          socket?.off(addFileEvent);
+          socket?.off(fileChangedEvent)
+          socket?.off(addFileEvent)
         },
-        [EditorMode.Owner]: () => socket?.off(addFileEvent)
-      }
+        [EditorMode.Owner]: () => socket?.off(addFileEvent),
+      },
     }
-  }, [roomId, socket, onUpdateFileList]);
+  }, [roomId, socket, onUpdateFileList])
 
   useEffect(() => {
-    modeSockets.subscribe[mode]();
+    modeSockets.subscribe[mode]()
 
     return () => {
-      modeSockets.unsubscribe[mode]();
+      modeSockets.unsubscribe[mode]()
     }
-  }, [mode, modeSockets]);
+  }, [mode, modeSockets])
 }

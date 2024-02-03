@@ -1,2 +1,2 @@
-export * from "./Iconify";
-export * from "./types";
+export * from './Iconify'
+export * from './types'

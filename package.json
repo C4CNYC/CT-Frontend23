@@ -4,6 +4,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev -p 8080",
+    "dev:turbo": "next dev -p 8080 --turbo",
     "start": "next start",
     "build": "next build",
     "analyze": "ANALYZE=true yarn build",

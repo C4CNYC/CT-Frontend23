@@ -1,1 +1,1 @@
-export * from "./SvgColor";
+export * from './SvgColor'

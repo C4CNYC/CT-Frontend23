@@ -1,21 +1,21 @@
-import { type FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from 'react'
 
-import SkeletonViewBlock from "../skeleton-view-box";
+import SkeletonViewBlock from '../skeleton-view-box'
 
 export interface CodeDocument {
-  htmlBody?: string[];
-  cssBody?: string[];
-  jsBody?: string[];
+  htmlBody?: string[]
+  cssBody?: string[]
+  jsBody?: string[]
 }
 
 interface BrowserViewProps {
-  document: CodeDocument | null;
-  isOpenHeader?: boolean;
+  document: CodeDocument | null
+  isOpenHeader?: boolean
 }
 
 enum TagNames {
-  Style = "style",
-  Script = "script",
+  Style = 'style',
+  Script = 'script',
 }
 
 const getBody = (bodyList: string[], tagName: TagNames): string =>
@@ -27,42 +27,45 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
       ${body}
     </${tagName}>
   `,
-    ""
-  );
+    ''
+  )
 
 const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
-  const [docSrc, setDocSrc] = useState("");
+  const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
     if (document == null) {
-      return;
+      return
     }
 
-    const { htmlBody = [], cssBody = [], jsBody = [] } = document;
+    const { htmlBody = [], cssBody = [], jsBody = [] } = document
     setDocSrc(`
       <html style="height: 100%">
         <head>
           ${getBody(cssBody, TagNames.Style)}
         </head>
         <body style="height: 100%; margin: 0;">
-          ${htmlBody.join("\n")}
+          ${htmlBody.join('\n')}
           ${getBody(jsBody, TagNames.Script)}
         </body>
       </html>
-    `);
-  }, [document]);
+    `)
+  }, [document])
 
   return document != null ? (
-    <iframe srcDoc={docSrc} style={IFRAME_STYLE} />
+    <iframe
+      srcDoc={docSrc}
+      style={IFRAME_STYLE}
+    />
   ) : (
     <SkeletonViewBlock isOpenHeader={isOpenHeader} />
-  );
-};
+  )
+}
 
 const IFRAME_STYLE = {
   border: 0,
-  width: "100%",
-  height: "100%",
-};
+  width: '100%',
+  height: '100%',
+}
 
-export default BrowserView;
+export default BrowserView

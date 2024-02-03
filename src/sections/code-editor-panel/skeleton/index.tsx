@@ -1,27 +1,19 @@
-import { type FC, useMemo } from "react"
+import { type FC, useMemo } from 'react'
 
-import {
-  Box,
-  Skeleton,
-  useMediaQuery,
-  useTheme,
-  SkeletonProps
-} from "@mui/material";
+import { Box, Skeleton, useMediaQuery, useTheme, SkeletonProps } from '@mui/material'
 
-import { getSkeletonCodePanelStyles, getTopBarSkeletonStyles } from "./styles"
+import { getSkeletonCodePanelStyles, getTopBarSkeletonStyles } from './styles'
 
 const SkeletonCodePanel: FC = () => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
   const styles = useMemo(() => getSkeletonCodePanelStyles(isDesktop), [isDesktop])
 
   return (
     <Box sx={styles.MainBox}>
       <CPTopBarSkeleton />
 
-      <Box
-        sx={styles.BoxTop}
-      >
+      <Box sx={styles.BoxTop}>
         <Skeleton
           sx={styles.SkeletonSimpleVariant}
           {...SKELETON_ROUNDEN_PROPS}
@@ -55,12 +47,12 @@ const SkeletonCodePanel: FC = () => {
         </Box>
       </Box>
     </Box>
-  );
+  )
 }
 
 export const CPTopBarSkeleton = (): React.ReactElement => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
   const styles = useMemo(() => getTopBarSkeletonStyles(isDesktop), [isDesktop])
 
   return (
@@ -76,29 +68,29 @@ export const CPTopBarSkeleton = (): React.ReactElement => {
       />
 
       {isDesktop && (
-         <>
-         <Skeleton
-           sx={styles.DesktopSkeletonTop}
-           {...SKELETON_ROUNDEN_PROPS}
-         />
-         <Skeleton
-           sx={styles.DesktopSkeletonBottom}
-           {...SKELETON_ROUNDEN_PROPS}
-         />
-       </>
+        <>
+          <Skeleton
+            sx={styles.DesktopSkeletonTop}
+            {...SKELETON_ROUNDEN_PROPS}
+          />
+          <Skeleton
+            sx={styles.DesktopSkeletonBottom}
+            {...SKELETON_ROUNDEN_PROPS}
+          />
+        </>
       )}
     </Box>
-  );
-};
+  )
+}
 
 const SKELETON_ROUNDEN_PROPS: SkeletonProps = {
-  variant: "rounded",
-  animation: "wave"
+  variant: 'rounded',
+  animation: 'wave',
 }
 
 const SKELETON_RECT_PROPS: SkeletonProps = {
-  variant: "rectangular",
-  animation: "wave"
+  variant: 'rectangular',
+  animation: 'wave',
 }
 
 export default SkeletonCodePanel

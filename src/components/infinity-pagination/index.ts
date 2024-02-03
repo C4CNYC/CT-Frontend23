@@ -1,1 +1,1 @@
-export * from "./SimpleInfiniteList";
+export * from './SimpleInfiniteList'

@@ -1,17 +1,11 @@
-// next
-import NextLink from "next/link";
+import { Link, ListItemIcon, ListItemText } from '@mui/material'
+import NextLink from 'next/link'
 
-// @mui
-import { Link, ListItemIcon, ListItemText } from "@mui/material";
+import { Iconify } from '@/components/iconify'
 
-// components
-import { Iconify } from "src/components/iconify";
+import { NavItemMobileProps } from '../types'
 
-//
-import { NavItemMobileProps } from "../types";
-import { ListItem } from "./styles";
-
-// ----------------------------------------------------------------------
+import { ListItem } from './styles'
 
 export default function NavItem({
   item,
@@ -20,44 +14,57 @@ export default function NavItem({
   isExternalLink,
   ...other
 }: NavItemMobileProps): React.ReactElement | null {
-  const { title, path, icon, children } = item;
+  const { title, path, icon, children } = item
 
   const renderContent = (
-    <ListItem active={active} {...other}>
+    <ListItem
+      active={active}
+      {...other}
+    >
       <ListItemIcon> {icon} </ListItemIcon>
 
-      <ListItemText disableTypography primary={title} />
+      <ListItemText
+        disableTypography
+        primary={title}
+      />
 
       {!!children && (
         <Iconify
           width={16}
-          icon={
-            open ? "eva:arrow-ios-downward-fill" : "eva:arrow-ios-forward-fill"
-          }
+          icon={open ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
           sx={{ ml: 1 }}
         />
       )}
     </ListItem>
-  );
+  )
 
   // ExternalLink
   if (isExternalLink) {
     return (
-      <Link href={path} target="_blank" rel="noopener" underline="none">
+      <Link
+        href={path}
+        target='_blank'
+        rel='noopener'
+        underline='none'
+      >
         {renderContent}
       </Link>
-    );
+    )
   }
 
   // Has child
   if (children) {
-    return renderContent;
+    return renderContent
   }
 
   // Default
   return (
-    <Link component={NextLink} href={path} underline="none">
+    <Link
+      component={NextLink}
+      href={path}
+      underline='none'
+    >
       {renderContent}
     </Link>
-  );
+  )
 }

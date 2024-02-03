@@ -1,88 +1,88 @@
-import { Skeleton, TableCell, TableRow } from "@mui/material";
+import { Skeleton, TableCell, TableRow } from '@mui/material'
 
 export default function SkeletonMembers(): React.ReactElement {
   return (
-    <TableRow sx={{ height: "72px" }}>
-      <TableCell sx={{ p: "16px 0" }}>
+    <TableRow sx={{ height: '72px' }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
+          variant='rectangular'
+          width='100%'
+          height='40px'
           sx={{
-            borderTopLeftRadius: "16px",
-            borderBottomLeftRadius: "16px",
+            borderTopLeftRadius: '16px',
+            borderBottomLeftRadius: '16px',
           }}
-          animation="wave"
+          animation='wave'
         />
       </TableCell>
-      <TableCell sx={{ p: "16px 0" }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
-          animation="wave"
+          variant='rectangular'
+          width='100%'
+          height='40px'
+          animation='wave'
         />
       </TableCell>
-      <TableCell sx={{ p: "16px 0" }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
-          animation="wave"
+          variant='rectangular'
+          width='100%'
+          height='40px'
+          animation='wave'
         />
       </TableCell>
-      <TableCell sx={{ p: "16px 0" }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
-          animation="wave"
+          variant='rectangular'
+          width='100%'
+          height='40px'
+          animation='wave'
         />
       </TableCell>
-      <TableCell sx={{ p: "16px 0" }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
-          animation="wave"
+          variant='rectangular'
+          width='100%'
+          height='40px'
+          animation='wave'
         />
       </TableCell>
-      <TableCell sx={{ p: "16px 0" }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
-          animation="wave"
+          variant='rectangular'
+          width='100%'
+          height='40px'
+          animation='wave'
         />
       </TableCell>
-      <TableCell sx={{ p: "16px 0" }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
-          animation="wave"
+          variant='rectangular'
+          width='100%'
+          height='40px'
+          animation='wave'
         />
       </TableCell>
-      <TableCell sx={{ p: "16px 0" }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
-          animation="wave"
+          variant='rectangular'
+          width='100%'
+          height='40px'
+          animation='wave'
         />
       </TableCell>
-      <TableCell sx={{ p: "16px 0" }}>
+      <TableCell sx={{ p: '16px 0' }}>
         <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="40px"
+          variant='rectangular'
+          width='100%'
+          height='40px'
           sx={{
-            borderTopRightRadius: "16px",
-            borderBottomRightRadius: "16px",
+            borderTopRightRadius: '16px',
+            borderBottomRightRadius: '16px',
           }}
-          animation="wave"
+          animation='wave'
         />
       </TableCell>
     </TableRow>
-  );
+  )
 }

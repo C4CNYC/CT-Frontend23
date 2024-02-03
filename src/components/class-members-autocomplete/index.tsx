@@ -1,1 +1,1 @@
-export { default as ClassMembersAutocomplete } from "./ClassMembersAutocomplete";
+export { default as ClassMembersAutocomplete } from './ClassMembersAutocomplete'
