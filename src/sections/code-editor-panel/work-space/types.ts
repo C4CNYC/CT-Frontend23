@@ -1,7 +1,6 @@
+import type { AuthUserType } from '@/auth/types'
 import type { BaseResponseInterface } from '@/lib/utils'
-
-import type { AuthUserType } from '../../../auth/types'
-import type { ILesson, ILessonContent } from '../../../redux/interfaces/content.interface'
+import type { ILesson, ILessonContent } from '@/redux/interfaces/content.interface'
 
 export type SupportedLang = 'html' | 'javascript'
 

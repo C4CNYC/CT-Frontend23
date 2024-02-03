@@ -13,7 +13,7 @@ import { useSocket } from '@/lib/hooks'
 import { setCode, toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'
-import { TAB_TITLES } from '@/sections/code-editor-panel/work-space/TAB_TITLES'
+import { TAB_TITLES } from '@/sections/code-editor-panel/work-space/consts'
 import { WorkSpaceProps } from '@/sections/code-editor-panel/work-space/types'
 
 import CodeEditorBlock from './blocks/code-editor-block'
