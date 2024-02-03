@@ -1,7 +1,7 @@
 import { Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   filterName: string

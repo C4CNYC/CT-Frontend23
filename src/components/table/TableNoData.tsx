@@ -1,6 +1,6 @@
 import { TableCell, TableRow } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { EmptyContent } from '../empty-content'
 

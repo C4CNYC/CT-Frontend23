@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux'
 // import { isValidLastVisitedData } from "@sections/code-editor-panel/helpers"
 import { useAuthContext } from '@/auth/useAuthContext'
 import { resetLessonEvent } from '@/components/real-time-editor'
-import { useTranslate } from '@/lib/utils/translateHelper'
 // import type { LastVisitedState } from "src/redux/interfaces/content.interface"
 import { useGetChallangesQuery } from '@/redux/services/manager/challenges-student'
 import {
@@ -20,6 +19,7 @@ import {
   useGetLessonStudentQuery,
   // useUpdateStudentLastVisitedDataMutation,
 } from '@/redux/services/manager/lesson-student'
+import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
 import {
   setCourseId,
@@ -33,8 +33,7 @@ import type { BottomBarProps } from '@/sections/code-editor-panel/bottom-bar'
 import { type LessonManagerProps } from '@/sections/code-editor-panel/bottom-bar/lesson-manager'
 import { getNextLessonId } from '@/sections/code-editor-panel/utils/navigation'
 import { WorkSpaceProps } from '@/sections/code-editor-panel/work-space/types'
-
-import { useGetModuleWithLessonsQuery } from '../../redux/services/manager/modules-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface UseCodePanelReturn {
   workSpaceProps: WorkSpaceProps

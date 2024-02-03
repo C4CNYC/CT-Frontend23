@@ -3,10 +3,9 @@ import { useContext, useState } from 'react'
 import { Box } from '@mui/material'
 
 import { ResizerUi } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { MyEditor } from '@/components/remirror-editor/MyEditor'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
-
-import { MyEditor } from '../../../../../components/remirror-editor/MyEditor'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { LessonContentContext } from './LessonContent.context'
 

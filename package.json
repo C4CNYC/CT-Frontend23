@@ -8,7 +8,6 @@
     "start": "next start",
     "build": "next build",
     "analyze": "ANALYZE=true yarn build",
-    "build-netlify": "next build && cp -r .next _next && mv _next .next/",
     "export": "yarn build && next export -o _static",
     "lint": "next lint",
     "lint:fix": "next lint --fix",

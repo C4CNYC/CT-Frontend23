@@ -5,11 +5,11 @@ import { Box, Button, Dialog, IconButton, Skeleton, Typography } from '@mui/mate
 import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useGetGoogleClassesQuery,
   useMigrateGoogleClassesStudentsMutation,
 } from '@/redux/services/manager/students-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { Iconify } from '../iconify'
 import { useSnackbar } from '../snackbar'

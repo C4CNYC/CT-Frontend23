@@ -16,14 +16,14 @@ import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
 import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
-import { useFilters } from '@/lib/hooks'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import {
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,
 } from '@/redux/services/manager/classes-manager'
 import { ICourse } from '@/types'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { useManagerGetCourseQuery } from '../../redux/services/manager/courses-manager'
 

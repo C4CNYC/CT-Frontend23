@@ -3,7 +3,7 @@ import { type FC, memo } from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 import type { Socket } from 'socket.io-client'
 
-import { voidFunction } from '@/lib/utils'
+import { voidFunction } from '@/utils'
 
 import FileModal from './components/file-modal'
 import FileSwitcher from './components/file-switcher'

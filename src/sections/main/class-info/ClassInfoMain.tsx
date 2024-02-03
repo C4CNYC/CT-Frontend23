@@ -2,10 +2,10 @@ import { Avatar, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/system'
 import { FaSchool } from '@react-icons/all-files/fa/FaSchool'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { IUser } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { CLASS_AVATAR_SX, CLASS_INFO_WRAPPER, TEACHER_EMOJI_SX } from './constants'
 

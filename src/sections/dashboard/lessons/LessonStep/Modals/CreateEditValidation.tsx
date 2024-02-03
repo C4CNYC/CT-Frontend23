@@ -18,11 +18,11 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useCreateLessonContentValidationManagerMutation,
   useUpdateLessonContentValidationManagerMutation,
 } from '@/redux/services/manager/lesson-content-validation-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps {
   regex: string

@@ -6,9 +6,9 @@ import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 
 import { AuthUserType } from '@/auth/types'
 import CodeEditorCollab from '@/components/code-editor-collab'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { mapValidations } from '@/lib/utils/validationMaping'
 import { IValidation } from '@/redux/interfaces/content.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { mapValidations } from '@/utils/validationMaping'
 
 import BaseBlock from '../BaseBlock'
 

@@ -1,4 +1,4 @@
-import { BaseResponseInterface, BaseSearchInterface } from '@/lib/utils'
+import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { SchoolType } from '../enums/school-type.enum'
 

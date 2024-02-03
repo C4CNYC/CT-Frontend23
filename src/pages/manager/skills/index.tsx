@@ -28,15 +28,15 @@ import {
   useSettingsContext,
   useTable,
 } from '@/components'
+import { useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
-import { useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetSkillQuery, useRemoveSkillMutation } from '@/redux/services/manager/skills-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
 import UpdateModalSkills from '@/sections/dashboard/skills/update-modal'
+import { useTranslate } from '@/utils/translateHelper'
 
 Skills.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 

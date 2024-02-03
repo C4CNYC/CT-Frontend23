@@ -2,11 +2,11 @@ import { createContext, useCallback, useEffect, useMemo, useReducer } from 'reac
 
 import { useDispatch } from 'react-redux'
 
-import { axios } from '@/lib/utils/axios'
-import { localStorageAvailable } from '@/lib/utils/localStorageAvailable'
-import { voidFunction } from '@/lib/utils/voidFunction'
 import { Role } from '@/redux/services/enums/role.enum'
 import { cleanUser, cleanUserRole, setUser } from '@/redux/slices/global'
+import { axios } from '@/utils/axios'
+import { localStorageAvailable } from '@/utils/localStorageAvailable'
+import { voidFunction } from '@/utils/voidFunction'
 
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
 import { isValidToken, setSession } from './utils'

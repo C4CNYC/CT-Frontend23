@@ -17,8 +17,8 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   children: React.ReactElement[] | React.ReactElement

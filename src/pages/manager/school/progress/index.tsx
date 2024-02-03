@@ -5,10 +5,8 @@ import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
 import { CustomBreadcrumbs } from '@/components'
+import { useFilters } from '@/hooks'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
-import { useFilters } from '@/lib/hooks'
-import { getCountTakingElment } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useGetProgressContentQuery,
   useGetProgressQuery,
@@ -24,6 +22,8 @@ import {
   SkeletonProgressTable,
   SkeletonProgressTableRow,
 } from '@/sections/dashboard/progress/progressTable/SkeletonProgressTable'
+import { getCountTakingElment } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

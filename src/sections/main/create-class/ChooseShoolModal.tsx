@@ -14,8 +14,8 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ISchool } from '@/redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IChooseShoolModalProps {
   openDialog: boolean

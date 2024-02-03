@@ -17,9 +17,7 @@ import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 
 import { Iconify, SearchNotFound } from '@/components'
-import { useFilters } from '@/lib/hooks'
-import { BaseResponseInterface, voidFunction } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { useGetIntegrationsListQuery } from '@/redux/services/manager/integration-manager'
 import {
@@ -28,6 +26,8 @@ import {
   useRemoveIntegrationMutation,
 } from '@/redux/services/manager/lessons-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { BaseResponseInterface, voidFunction } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 export function IntegrationsTab({ contentId }: { contentId: string }): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()

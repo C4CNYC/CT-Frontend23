@@ -5,9 +5,9 @@ import { SlArrowDown } from '@react-icons/all-files/sl/SlArrowDown'
 import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ICourseElement } from '@/redux/interfaces/content.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 import CourseAvatar from './CourseAvarar'
 import CourseButtons from './CourseButtons'

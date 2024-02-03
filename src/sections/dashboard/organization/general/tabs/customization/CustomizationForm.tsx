@@ -5,9 +5,9 @@ import { useSnackbar } from 'notistack'
 import { Controller, useForm } from 'react-hook-form'
 
 import { FormProvider, RHFTextField } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { useUpdateOrgCustomizationMutation } from '@/redux/services/admin/organization-customization'
 import { CustomizationResponce } from '@/redux/services/interfaces/organization.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { useLocales } from '../../../../../../locales'
 

@@ -6,12 +6,12 @@ import { Iconify } from '@/components/iconify'
 import { Logo } from '@/components/logo'
 import { useSettingsContext } from '@/components/settings'
 import ThemeSwitcher from '@/components/theme-switcher'
-import { useOffSetTop } from '@/lib/hooks/useOffSetTop'
-import { useResponsive } from '@/lib/hooks/useResponsive'
-import { bgBlur } from '@/lib/utils/cssStyles'
+import { useOffSetTop } from '@/hooks/useOffSetTop'
+import { useResponsive } from '@/hooks/useResponsive'
 import { useSelector } from '@/redux/store'
+import { bgBlur } from '@/utils/cssStyles'
 
-import { HEADER, NAV } from '../../../config'
+import { HEADER_SIZES, NAV_SIZES } from '../../../theme/consts'
 
 import AccountPopover from './AccountPopover'
 import LanguagePopover from './LanguagePopover'
@@ -36,7 +36,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
 
   const isSchoolSection = router.pathname.includes('dashboard/school')
 
-  const isOffset = useOffSetTop(HEADER.H_DASHBOARD_DESKTOP) && !isNavHorizontal
+  const isOffset = useOffSetTop(HEADER_SIZES.H_DASHBOARD_DESKTOP) && !isNavHorizontal
 
   const renderContent = (
     <>
@@ -83,7 +83,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
     <AppBar
       sx={{
         boxShadow: 'none',
-        height: HEADER.H_MOBILE,
+        height: HEADER_SIZES.H_MOBILE,
         zIndex: theme.zIndex.appBar + 1,
         ...bgBlur({
           color: theme.palette.background.default,
@@ -92,19 +92,19 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
           duration: theme.transitions.duration.shorter,
         }),
         ...(isDesktop && {
-          width: `calc(100% - ${NAV.W_DASHBOARD + 1}px)`,
-          height: HEADER.H_DASHBOARD_DESKTOP,
+          width: `calc(100% - ${NAV_SIZES.W_DASHBOARD + 1}px)`,
+          height: HEADER_SIZES.H_DASHBOARD_DESKTOP,
           ...(isOffset && {
-            height: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
+            height: HEADER_SIZES.H_DASHBOARD_DESKTOP_OFFSET,
           }),
           ...(isNavHorizontal && {
             width: 1,
             bgcolor: 'background.default',
-            height: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
+            height: HEADER_SIZES.H_DASHBOARD_DESKTOP_OFFSET,
             borderBottom: `dashed 1px ${theme.palette.divider}`,
           }),
           ...(isNavMini && {
-            width: `calc(100% - ${NAV.W_DASHBOARD_MINI + 1}px)`,
+            width: `calc(100% - ${NAV_SIZES.W_DASHBOARD_MINI + 1}px)`,
           }),
         }),
       }}

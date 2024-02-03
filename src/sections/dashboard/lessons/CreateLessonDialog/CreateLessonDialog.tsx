@@ -12,13 +12,13 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
-import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
-
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
-} from '../../../../redux/services/manager/lessons-manager'
+} from '@/redux/services/manager/lessons-manager'
+import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
+import { useTranslate } from '@/utils/translateHelper'
+
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
 import SkillsTab from './SkillsTab'

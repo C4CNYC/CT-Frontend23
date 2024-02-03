@@ -35,9 +35,8 @@ import {
   useSettingsContext,
   useTable,
 } from '@/components'
+import { useFilters } from '@/hooks'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
-import { useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useDeleteStudentMutation,
   useGetStudentsQuery,
@@ -49,6 +48,7 @@ import InviteStudentDialog from '@/sections/dashboard/student/InviteStudentDialo
 import PendingInvitesTab from '@/sections/dashboard/student/PendingInvitesTab'
 import { UserTableRow } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
+import { useTranslate } from '@/utils/translateHelper'
 
 const STATUS_OPTIONS = ['all', 'invites']
 

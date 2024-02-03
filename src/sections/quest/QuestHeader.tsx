@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 // import { TbShare2 } from "react-icons/tb"; // Hide share link
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function QuestHeader(): React.ReactElement {
   const { back } = useRouter()

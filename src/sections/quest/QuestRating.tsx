@@ -6,8 +6,8 @@ import { BsFillInfoCircleFill } from '@react-icons/all-files/bs/BsFillInfoCircle
 import { RiShareBoxFill } from '@react-icons/all-files/ri/RiShareBoxFill'
 import NextLink from 'next/link'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { QUEST_DIVIDER, QUEST_LINK_SX, getQuestCardWraperSx } from './constants'
 

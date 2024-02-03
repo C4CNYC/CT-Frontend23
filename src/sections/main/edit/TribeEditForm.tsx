@@ -15,8 +15,8 @@ import {
   RHFTextField,
   RHFUploadAvatar, // useSnackbar,
 } from '@/components'
-import { BaseResponseInterface, getRandomColor } from '@/lib/utils'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface, getRandomColor } from '@/utils'
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string }

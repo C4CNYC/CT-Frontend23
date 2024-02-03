@@ -9,8 +9,8 @@ import { useGoogleLogin } from '@react-oauth/google'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { RHFTextField, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { Role } from '@/redux/services/enums/role.enum'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { styledRegisterInput } from '../styles'
 

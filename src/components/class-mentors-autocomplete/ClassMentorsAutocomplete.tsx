@@ -16,8 +16,7 @@ import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
 import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
-import { useFilters } from '@/lib/hooks'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { useFilters } from '@/hooks'
 import { useGetOrgMembersQuery } from '@/redux/services/admin/members-admin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IUser } from '@/redux/services/interfaces/user.interface'
@@ -27,6 +26,7 @@ import {
   useUpdateMentorMutation,
 } from '@/redux/services/manager/class-mentor-manager'
 import { RootState } from '@/redux/store'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 type UserType = IUser & BaseResponseInterface
 

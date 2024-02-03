@@ -11,9 +11,8 @@ import { dracula } from '@uiw/codemirror-theme-dracula'
 import type { Socket } from 'socket.io-client'
 // import { langs } from "@uiw/codemirror-extensions-langs";
 
-import { getFileExtension } from '@/lib/utils/getFileExtension'
-
-import { useAuthContext } from '../../../auth/useAuthContext'
+import { useAuthContext } from '@/auth/useAuthContext'
+import { getFileExtension } from '@/utils/getFileExtension'
 
 import { BASIC_SETUP, Extensions } from './constants'
 import { commentsExtension } from './utils/collab/comments'

@@ -12,7 +12,6 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 
 import GuestGuard from '@/auth/GuestGuard'
 import { EmptyContent } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useGetPublicCourseContentQuery,
   useGetPublicLessonContentQuery,
@@ -26,6 +25,7 @@ import BottomBar from '@/sections/code-panel/bottom-bar'
 import { CodePanelContext } from '@/sections/code-panel/context/CodePanel.context'
 import TopPanel from '@/sections/code-panel/top-bar'
 import WorkSpace, { SupportedLang } from '@/sections/code-panel/work-space'
+import { useTranslate } from '@/utils/translateHelper'
 
 // import { CodePanelChat } from "@sections/chat";
 

@@ -5,7 +5,7 @@ import { Box } from '@mui/system'
 import { MuiColorInput, matchIsValidColor } from 'mui-color-input'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import BasePreference from './BasePreference'
 

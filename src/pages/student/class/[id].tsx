@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 
 import { useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetClassQuery } from '@/redux/services/manager/classes-student'
 import { useGetPublicTribeQuery } from '@/redux/services/public/tribe-public'
 import { setClass } from '@/redux/slices/code-panel'
@@ -15,6 +14,7 @@ import { useDispatch } from '@/redux/store'
 import JoinTribeModal from '@/sections/join-tribe/JoinTribeModal'
 import DefaultClassInfo from '@/sections/main/class-info/DefaultClassInfo'
 import ClassInfoTable from '@/sections/main/quests/ClassInfoTable'
+import { useTranslate } from '@/utils/translateHelper'
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

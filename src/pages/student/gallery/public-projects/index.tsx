@@ -8,9 +8,8 @@ import {
   SimpleInfiniteList,
   useSettingsContext,
 } from '@/components'
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { StudentDashboardLayout } from '@/layouts/dashboard/StudentDashboardLayout'
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/lib/hooks'
-import { getCountTakingElment } from '@/lib/utils'
 import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
 import { useGetProjectsQuery } from '@/redux/services/manager/gallery-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -21,6 +20,7 @@ import {
   SkeletonGalleryFilter,
   SkeletonGalleryItem,
 } from '@/sections/dashboard/gallery/SkeletonGallery'
+import { getCountTakingElment } from '@/utils'
 
 PublicProjects.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

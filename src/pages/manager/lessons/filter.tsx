@@ -4,9 +4,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/system/Stack'
 
-import { SetFilterType, useFilters } from '@/lib/hooks'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { SetFilterType, useFilters } from '@/hooks'
 import {
   ILessonSearchParams,
   IModule,
@@ -14,6 +12,8 @@ import {
 } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
 import SkeletonFilter from '@/sections/dashboard/skeleton/skeletonFilter'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   filters: ILessonSearchParams

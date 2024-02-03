@@ -8,9 +8,9 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ISocials } from '@/redux/interfaces/socials.interface'
 import { usePostSocialMutation } from '@/redux/services/manager/socials-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 import LinkSelect from './LinkSelect'
 

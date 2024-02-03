@@ -1,5 +1,3 @@
-// import { LessonsManager } from "./LessonsManager";
-// import Menu from "./Menu";
 import { Stack } from '@mui/system'
 import dynamic from 'next/dynamic'
 

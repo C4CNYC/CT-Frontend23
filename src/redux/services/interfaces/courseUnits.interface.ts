@@ -1,4 +1,4 @@
-import { BaseResponseInterface, BaseSearchInterface } from '@/lib/utils'
+import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { LessonContentComplexity } from '../enums/lesson-content-complexity.enum'
 import { LessonContentType } from '../enums/lesson-content-type.enum'

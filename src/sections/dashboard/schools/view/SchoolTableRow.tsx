@@ -4,8 +4,8 @@ import { Avatar, Button, Divider, IconButton, MenuItem, TableCell, TableRow } fr
 import { BiDotsVerticalRounded } from '@react-icons/all-files/bi/BiDotsVerticalRounded'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import SchoolDetailsDrawer from '../portal/SchoolDetailsDrawer'
 

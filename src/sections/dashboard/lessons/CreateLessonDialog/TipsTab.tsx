@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { LoadingButton } from '@mui/lab'
 import { Checkbox, Collapse, List, ListItem, Stack, Typography } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface ITipsTabProps {
   tips: string[]

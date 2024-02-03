@@ -1,7 +1,7 @@
 import { ListItemButton, ListItemIcon, ListSubheader } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 
-import { ICON, NAV } from '../../../config'
+import { ICON_SIZES, NAV_SIZES } from '../../../theme/consts'
 import { NavItemProps } from '../types'
 
 type StyledItemProps = Omit<NavItemProps, 'item'> & {
@@ -37,16 +37,16 @@ export const StyledItem = styled(ListItemButton, {
     marginBottom: theme.spacing(0.5),
     color: theme.palette.text.secondary,
     borderRadius: theme.shape.borderRadius,
-    height: NAV.H_DASHBOARD_ITEM,
+    height: NAV_SIZES.H_DASHBOARD_ITEM,
     fontSize: 16,
     // Sub item
     ...(subItem && {
-      height: NAV.H_DASHBOARD_ITEM_SUB,
+      height: NAV_SIZES.H_DASHBOARD_ITEM_SUB,
       ...(depth > 2 && {
         paddingLeft: theme.spacing(depth),
       }),
       ...(caption && {
-        height: NAV.H_DASHBOARD_ITEM,
+        height: NAV_SIZES.H_DASHBOARD_ITEM,
       }),
     }),
     // Active item
@@ -77,8 +77,8 @@ export const StyledIcon = styled(ListItemIcon)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: ICON.NAV_ITEM,
-  height: ICON.NAV_ITEM,
+  width: ICON_SIZES.NAV_ITEM,
+  height: ICON_SIZES.NAV_ITEM,
 })
 
 interface StyledDotIconProps {

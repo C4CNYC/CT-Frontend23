@@ -10,12 +10,12 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { useCodePanel } from '@/lib/hooks/useCodePanel'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useCodePanel } from '@/hooks/useCodePanel'
 import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
 import { useSelector } from '@/redux/store'
 import SolutionMobileDialog from '@/sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/solution-mobile-dialog'
 import UnstuckMobileDialog from '@/sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog'
+import { useTranslate } from '@/utils/translateHelper'
 
 import TipsPopover from '../tips-popover'
 

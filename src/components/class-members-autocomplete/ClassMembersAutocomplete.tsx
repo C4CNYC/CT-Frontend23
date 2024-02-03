@@ -18,9 +18,7 @@ import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
 import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
-import { useFilters } from '@/lib/hooks'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import {
   useGetStudentsQuery,
@@ -28,6 +26,8 @@ import {
   useStudentLeftClassMutation,
 } from '@/redux/services/manager/students-manager'
 import { RootState } from '@/redux/store'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 type StudentType = IStudent & BaseResponseInterface
 

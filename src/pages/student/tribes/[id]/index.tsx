@@ -5,11 +5,11 @@ import { useRouter } from 'next/router'
 
 import { Iconify, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { fNumber } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetClassQuery } from '@/redux/services/manager/classes-student'
 import SkeletonTribe from '@/sections/skeleton/SekeltonTribe'
 import ProfileCover from '@/sections/student-profile/ProfileCover'
+import { fNumber } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

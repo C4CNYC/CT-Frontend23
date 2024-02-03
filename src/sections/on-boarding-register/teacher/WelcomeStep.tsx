@@ -1,6 +1,6 @@
 import { Button, Stack, Typography } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import {
   LAUNCH_SESSION_BTN_SX,

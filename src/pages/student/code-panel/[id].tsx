@@ -9,15 +9,14 @@ import { useRouter } from 'next/router'
 import { FullScreen } from 'react-full-screen'
 import { Socket, io } from 'socket.io-client'
 
-import { useCodePanel } from '@/lib/hooks/useCodePanel'
+import { useAuthContext } from '@/auth/useAuthContext'
+import { LessonUserContext } from '@/context/lesson-context'
+import { SocketContext } from '@/context/socket-context'
+import { useCodePanel } from '@/hooks/useCodePanel'
+import { useSelector } from '@/redux/store'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-editor-panel/skeleton'
 import { ILessonUserStatus } from '@/types'
-
-import { useAuthContext } from '../../../auth/useAuthContext'
-import { LessonUserContext } from '../../../context/lesson-context'
-import { SocketContext } from '../../../context/socket-context'
-import generateId from '../../../lib/utils/generate-id'
-import { useSelector } from '../../../redux/store'
+import generateId from '@/utils/generate-id'
 
 import SignUpDialog from './sign-up-dialog'
 

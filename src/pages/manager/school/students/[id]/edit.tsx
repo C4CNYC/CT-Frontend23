@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux'
 
 import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetStudentQuery } from '@/redux/services/manager/students-manager'
 import { RootState } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import StudentNewEditForm from '@/sections/dashboard/student/StudentNewEditForm'
 import SkeletonEditUserForm from '@/sections/dashboard/user/skeleton/SkeletonEditUserForm'
+import { useTranslate } from '@/utils/translateHelper'
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

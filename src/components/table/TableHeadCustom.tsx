@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { Theme } from '@mui/material/styles'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 const visuallyHidden = {
   border: 0,

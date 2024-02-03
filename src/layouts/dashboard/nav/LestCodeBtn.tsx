@@ -6,9 +6,9 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { getLetsCodeBtnSx } from './constants'
 

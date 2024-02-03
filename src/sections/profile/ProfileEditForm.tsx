@@ -9,11 +9,10 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
-import { fData } from '@/lib/utils/formatNumber'
 import { IUser } from '@/redux/interfaces/auth.interface'
 import { useUdpateProfileAvatarMutation, useUpdateProfileMutation } from '@/redux/services/auth'
-
-import { BaseResponseInterface } from '../../lib/utils/baseResponse.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { fData } from '@/utils/formatNumber'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }

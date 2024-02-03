@@ -3,8 +3,8 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   setOptions: (event: string) => void

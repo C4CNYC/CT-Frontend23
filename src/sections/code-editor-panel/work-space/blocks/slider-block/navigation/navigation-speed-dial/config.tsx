@@ -6,7 +6,7 @@ import { BiMedal } from '@react-icons/all-files/bi/BiMedal'
 import { MdOutlineNoteAlt } from '@react-icons/all-files/md/MdOutlineNoteAlt'
 import { TbMessageCircle } from '@react-icons/all-files/tb/TbMessageCircle'
 
-import { voidFunction } from '@/lib/utils'
+import { voidFunction } from '@/utils'
 
 interface Action {
   icon: ReactNode

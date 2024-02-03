@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles'
 
-import { bgBlur } from '@/lib/utils'
+import { bgBlur } from '@/utils'
 
 export const StyledRoot = styled('main')(({ theme }) => ({
   height: '100%',

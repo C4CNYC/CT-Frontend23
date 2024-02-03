@@ -14,9 +14,7 @@ import FileManagerFileItem from '@/components/file-manager/file-manager-file-ite
 import FileManagerFolderItem from '@/components/file-manager/file-manager-folder-item'
 import FileManagerNewFolderDialog from '@/components/file-manager/file-manager-new-folder-dialog'
 import FileManagerPanel from '@/components/file-manager/file-manager-panel'
-import { useCopyToClipboard } from '@/lib/hooks'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useCopyToClipboard } from '@/hooks'
 import { IMedia } from '@/redux/services/interfaces/media.interface'
 import {
   useCreateMediaMutation,
@@ -24,6 +22,8 @@ import {
   useGetAllMediaQuery,
   useUploadMediaFileMutation,
 } from '@/redux/services/manager/media-manager'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 export interface MediaModalProps {
   children: React.ReactElement

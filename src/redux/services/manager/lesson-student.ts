@@ -1,4 +1,3 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import {
   ILesson,
   ILessonContent,
@@ -6,6 +5,7 @@ import {
   LastVisitedBody,
   LastVisitedData,
 } from '@/redux/interfaces/content.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { managerApi } from '.'
 

@@ -1,9 +1,9 @@
 import { Box, Link, ListItemText, Tooltip } from '@mui/material'
 import NextLink from 'next/link'
 
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { Iconify } from '@/components/iconify'
 
-import RoleBasedGuard from '../../../auth/RoleBasedGuard'
 import { useLocales } from '../../../locales'
 import { NavItemProps } from '../types'
 

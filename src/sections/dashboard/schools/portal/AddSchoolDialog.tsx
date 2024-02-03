@@ -12,11 +12,10 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
+import { countries } from '@/assets/data'
 import { FormProvider, RHFSelect, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useCreateOrganizationSchoolMutation } from '@/redux/services/admin/school-amdin'
-
-import { countries } from '../../../../assets/data'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps {
   name: string

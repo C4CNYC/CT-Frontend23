@@ -6,10 +6,10 @@ import { useRouter } from 'next/router'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { ConfirmDialog, Iconify, MenuPopover, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import { useUpdateClassPendingMutation } from '@/redux/services/manager/students-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IMemberRowProps {
   row: IStudent

@@ -5,7 +5,7 @@ import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 import { RxExternalLink } from '@react-icons/all-files/rx/RxExternalLink'
 import NextLink from 'next/link'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { ICON_BTN_SX, LINK_SX, STACK_SX, getBaseStackSx } from './constants'
 

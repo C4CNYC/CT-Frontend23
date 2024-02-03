@@ -11,8 +11,8 @@ import { Stack } from '@mui/system'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 
-import { fData } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { fData } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { FormProvider, RHFUploadAvatar } from '../hook-form'
 

@@ -5,10 +5,10 @@ import { Stack } from '@mui/system'
 import { AnimatePresence, m } from 'framer-motion'
 import { useDispatch } from 'react-redux'
 
-import { type IValidationMap } from '@/lib/utils/validationMaping'
 import { setIsVisible } from '@/redux/slices/checkers-animation'
 import { setNextStepAble } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
+import { type IValidationMap } from '@/utils/validationMaping'
 
 import CheckersCompleated from './checkers-compleated'
 import CheckersMenu from './checkers-menu'

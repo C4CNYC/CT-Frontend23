@@ -3,8 +3,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { LoadingScreen } from '@/components'
-
-import { STUDENT_PATH_AFTER_LOGIN } from '../config'
+import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 
 import { useAuthContext } from './useAuthContext'
 
@@ -22,7 +21,7 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
       if (route.includes('public')) {
         push(asPath)
       } else {
-        push(STUDENT_PATH_AFTER_LOGIN)
+        push(STUDENT_PATH_PAGE.home)
       }
     }
   }, [isAuthenticated])

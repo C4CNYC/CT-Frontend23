@@ -3,7 +3,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/system/Stack'
 
-import { SetFilterType } from '@/lib/hooks'
+import { SetFilterType } from '@/hooks'
 import { IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
 
 interface Props {

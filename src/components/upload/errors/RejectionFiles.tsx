@@ -2,7 +2,7 @@ import { Box, Paper, Typography } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 import { FileRejection } from 'react-dropzone'
 
-import { fData } from '@/lib/utils'
+import { fData } from '@/utils'
 
 import { fileData } from '../../file-thumbnail'
 

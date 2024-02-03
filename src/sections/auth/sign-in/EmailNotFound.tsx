@@ -5,7 +5,7 @@ import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import { StepWizardChildProps } from 'react-step-wizard'
 
 import { Image } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   setError: Dispatch<SetStateAction<string>>

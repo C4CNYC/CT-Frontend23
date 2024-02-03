@@ -1,7 +1,7 @@
 import { Avatar, Button, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@mui/material'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IUser } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 interface Props {
   invited: boolean

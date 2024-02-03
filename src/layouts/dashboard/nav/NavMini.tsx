@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux'
 
 import { LogoMin } from '@/components/logo'
 import { NavSectionMini } from '@/components/nav-section'
-import { hideScrollbarX } from '@/lib/utils/cssStyles'
 import { Role } from '@/redux/services/enums/role.enum'
 import { RootState } from '@/redux/store'
+import { hideScrollbarX } from '@/utils/cssStyles'
 
-import { NAV } from '../../../config'
+import { NAV_SIZES } from '../../../theme/consts'
 
 import { menuConfig } from './config-navigation'
 import LetsCodeBtn from './LestCodeBtn'
@@ -28,14 +28,14 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
       component='nav'
       sx={{
         flexShrink: { md: 0 },
-        width: { md: NAV.W_DASHBOARD_MINI },
+        width: { md: NAV_SIZES.W_DASHBOARD_MINI },
         bgcolor: theme.palette.mode === 'light' ? '#E6F5FD' : theme.palette.background.paper,
       }}
     >
       <NavToggleButton
         sx={{
           top: 22,
-          left: NAV.W_DASHBOARD_MINI - 12,
+          left: NAV_SIZES.W_DASHBOARD_MINI - 12,
         }}
       />
 
@@ -44,7 +44,7 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
           pb: 2,
           height: 1,
           position: 'fixed',
-          width: NAV.W_DASHBOARD_MINI,
+          width: NAV_SIZES.W_DASHBOARD_MINI,
           borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
           ...hideScrollbarX,
         }}

@@ -4,7 +4,7 @@ import { IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import BasePreference from './BasePreference'
 

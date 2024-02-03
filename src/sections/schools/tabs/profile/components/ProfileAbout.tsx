@@ -2,10 +2,9 @@ import { Card, CardHeader, Link, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { SchoolProfile } from '@/redux/services/interfaces/school.interface'
 import { useGetMySchoolsQuery } from '@/redux/services/manager/schools-manager'
-
-import { SchoolProfile } from '../../../../../redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,

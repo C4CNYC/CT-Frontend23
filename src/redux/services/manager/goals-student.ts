@@ -1,5 +1,5 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import { IGoals } from '@/redux/interfaces/goals.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { managerApi } from '.'
 

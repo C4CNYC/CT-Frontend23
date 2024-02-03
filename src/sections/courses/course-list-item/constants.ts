@@ -1,4 +1,4 @@
-import { addAlpha } from '@/lib/utils'
+import { addAlpha } from '@/utils'
 
 export const COURSE_ITEM_WRAPPER_SX = {
   background: '#ECF4FF',

@@ -2,7 +2,7 @@ import { Box, Card, CardHeader, Container, Typography } from '@mui/material'
 import Head from 'next/head'
 
 import { useSettingsContext } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function PermissionDeniedPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext()

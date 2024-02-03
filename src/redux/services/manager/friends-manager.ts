@@ -1,5 +1,5 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import { IFriend, IFriendsSearchParams } from '@/redux/interfaces/friends.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { managerApi } from '.'
 

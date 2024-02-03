@@ -4,12 +4,11 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 
 import { FormProvider, RHFSelect, RHFSwitch } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { SchoolSettings } from '@/redux/services/interfaces/school.interface'
 import { useUpdateSchoolSettingsMutation } from '@/redux/services/manager/schools-manager'
 import { setSchoolSettings } from '@/redux/slices/schoolSettings'
 import { dispatch } from '@/redux/store'
-
-import { SchoolSettings } from '../../../../redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps {
   language: string

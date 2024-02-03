@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { GiThreeFriends } from '@react-icons/all-files/gi/GiThreeFriends'
 
-import { convertNumber } from '@/lib/utils'
+import { convertNumber } from '@/utils'
 
 interface IModuleStatistics {
   progress: number

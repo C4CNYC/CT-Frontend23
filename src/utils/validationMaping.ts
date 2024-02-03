@@ -1,5 +1,5 @@
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { ILessonContentValidation } from '@/redux/services/interfaces/lessonContentValidation.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 export interface IValidationMap {
   text: string

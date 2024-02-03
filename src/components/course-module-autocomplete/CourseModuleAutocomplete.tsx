@@ -17,15 +17,15 @@ import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
 import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
-import { useFilters } from '@/lib/hooks'
-import { BaseResponseInterface, voidFunction } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import { IModule } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useAddModuleToCourseMutation,
   useRemoveModuleFromCourseMutation,
 } from '@/redux/services/manager/courses-manager'
 import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
+import { BaseResponseInterface, voidFunction } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { BOX_SX, getItemWrapperSx } from './constants'
 

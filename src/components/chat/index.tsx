@@ -14,12 +14,12 @@ import * as _ from 'lodash-es'
 import { useSelector } from 'react-redux'
 
 import { Iconify } from '@/components/iconify'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 // import { useAuthContext } from "src/auth/useAuthContext";
 import { IFriend } from '@/redux/interfaces/friends.interface'
 import { RootState } from '@/redux/store'
 import { chatHandlerAtom } from '@/sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom'
 import { helpMsgAtom } from '@/sections/code-panel/top-bar/nav-bar/options/help-popup/modals/helpMsgAtom'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 // import { ChatgptFirebaseOnSendMessage } from "../../sections/chat/hooks/useChatgptChat.hook";
 import { chatAtom } from './atoms/chat.atom'

@@ -10,13 +10,13 @@ import {
 import { Stack } from '@mui/system'
 import { useSelector } from 'react-redux'
 
-import { useFilters } from '@/lib/hooks'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetClassesQuery } from '@/redux/services/manager/classes-manager'
 import { RootState } from '@/redux/store'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IFilterCoursesAutocomplete {
   classId: string

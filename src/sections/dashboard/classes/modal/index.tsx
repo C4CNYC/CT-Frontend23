@@ -17,9 +17,9 @@ import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 
 import { ClassMembersAutocomplete, ClassMentorsAutocomplete, FormProvider } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { Role } from '@/redux/services/enums/role.enum'
 import { RootState } from '@/redux/store'
+import { useTranslate } from '@/utils/translateHelper'
 
 import AddClassTab from './AddClassTab'
 

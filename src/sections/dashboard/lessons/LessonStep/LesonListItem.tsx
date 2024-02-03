@@ -8,10 +8,10 @@ import * as _ from 'lodash-es'
 import { useRouter } from 'next/router'
 
 import { Iconify, MenuPopover } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
 import Preferences from './Modals/Preferences'

@@ -1,6 +1,6 @@
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { Unit } from '@/redux/interfaces/challenges.interface'
 import { ILesson } from '@/redux/interfaces/content.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 export function getNextLessonId(
   courseContent: Unit[],

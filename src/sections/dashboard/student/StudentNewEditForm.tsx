@@ -20,8 +20,6 @@ import {
   RHFUploadAvatar,
   useSnackbar,
 } from '@/components'
-import { BaseResponseInterface, createRandomAvatar, getRandomColor } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import {
   useCreateStudentMutation,
@@ -30,6 +28,8 @@ import {
 } from '@/redux/services/manager/students-manager'
 import { RootState } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { BaseResponseInterface, createRandomAvatar, getRandomColor } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string }

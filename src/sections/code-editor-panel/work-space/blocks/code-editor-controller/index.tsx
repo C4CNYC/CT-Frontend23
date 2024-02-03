@@ -2,13 +2,12 @@ import { type FC, memo, useState, useEffect } from 'react'
 
 import { Socket } from 'socket.io-client'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import CodeEditorCollab from '@/components/code-editor-collab'
 import { waitConnectSocket } from '@/components/code-editor-collab/hook/utils/socket'
-import { useSocket } from '@/lib/hooks/useSocket'
-import { voidFunction } from '@/lib/utils'
+import { useSocket } from '@/hooks/useSocket'
 import { useSelector } from '@/redux/store'
-
-import { useAuthContext } from '../../../../../auth/useAuthContext'
+import { voidFunction } from '@/utils'
 
 interface CodeEditorControllerProps {
   onChange?: (value: Record<string, string>) => void

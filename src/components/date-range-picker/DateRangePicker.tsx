@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import { CalendarPicker, DatePicker } from '@mui/x-date-pickers'
 
-import { useResponsive } from '@/lib/hooks'
+import { useResponsive } from '@/hooks'
 
 import { DateRangePickerProps } from './types'
 

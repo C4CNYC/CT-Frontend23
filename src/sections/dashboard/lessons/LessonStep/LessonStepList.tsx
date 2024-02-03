@@ -10,9 +10,6 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { getOrder } from '@/lib/utils/getTaskOrder'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useCreateLessonContentMutation,
@@ -23,6 +20,9 @@ import {
 import { useGetLessonQuery } from '@/redux/services/manager/lessons-manager'
 import { getBoard, persistCard } from '@/redux/slices/lesson-steps'
 import { RootState, useDispatch } from '@/redux/store'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { getOrder } from '@/utils/getTaskOrder'
+import { useTranslate } from '@/utils/translateHelper'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 

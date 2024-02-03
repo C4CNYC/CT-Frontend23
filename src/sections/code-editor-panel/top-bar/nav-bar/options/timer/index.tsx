@@ -5,7 +5,7 @@ import { IconButton, InputBase, Popover, Stack, Typography } from '@mui/material
 import { MdOutlineTimer } from '@react-icons/all-files/md/MdOutlineTimer'
 import { RxCross2 } from '@react-icons/all-files/rx/RxCross2'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import TimerButton from './button/timer-button'
 // local files

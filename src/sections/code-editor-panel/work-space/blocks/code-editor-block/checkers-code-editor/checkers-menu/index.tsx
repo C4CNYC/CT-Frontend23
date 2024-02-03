@@ -3,7 +3,7 @@ import { type FC } from 'react'
 import { Box, Typography } from '@mui/material'
 import { CgClose } from '@react-icons/all-files/cg/CgClose'
 
-import { type IValidationMap } from '@/lib/utils/validationMaping'
+import { type IValidationMap } from '@/utils/validationMaping'
 
 import CheckersItemButton from '../checkers-item-button'
 import { CheckerIcon } from '../CheckersIcon'

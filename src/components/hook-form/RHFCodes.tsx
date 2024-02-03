@@ -5,7 +5,7 @@ import { Stack, TextField, TextFieldProps } from '@mui/material'
 import { Controller, useFormContext } from 'react-hook-form'
 
 // hooks
-import { useEventListener } from '@/lib/hooks'
+import { useEventListener } from '@/hooks'
 
 type Props = TextFieldProps & {
   keyName?: string

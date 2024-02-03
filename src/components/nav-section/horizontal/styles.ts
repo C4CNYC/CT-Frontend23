@@ -1,9 +1,9 @@
 import { ListItemButton, ListItemIcon, Popover } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 
-import { bgBlur } from '@/lib/utils'
+import { bgBlur } from '@/utils'
 
-import { ICON, NAV } from '../../../config'
+import { ICON_SIZES, NAV_SIZES } from '../../../theme/consts'
 import { NavItemProps } from '../types'
 
 type StyledItemProps = Omit<NavItemProps, 'item'>
@@ -40,7 +40,7 @@ export const StyledItem = styled(ListItemButton, {
     padding: theme.spacing(0, 0.75),
     color: theme.palette.text.secondary,
     borderRadius: theme.shape.borderRadius,
-    height: NAV.H_DASHBOARD_ITEM_HORIZONTAL,
+    height: NAV_SIZES.H_DASHBOARD_ITEM_HORIZONTAL,
     '&:hover': hoverStyle,
     // Sub item
     ...(subItem && {
@@ -78,8 +78,8 @@ export const StyledItem = styled(ListItemButton, {
 export const StyledIcon = styled(ListItemIcon)({
   marginRight: 8,
   flexShrink: 0,
-  width: ICON.NAV_ITEM_HORIZONTAL,
-  height: ICON.NAV_ITEM_HORIZONTAL,
+  width: ICON_SIZES.NAV_ITEM_HORIZONTAL,
+  height: ICON_SIZES.NAV_ITEM_HORIZONTAL,
 })
 
 export const StyledPopover = styled(Popover)(({ theme }) => ({

@@ -2,7 +2,7 @@ import { Box, IconButton, SxProps, Typography } from '@mui/material'
 import { Theme, styled, useTheme } from '@mui/material/styles'
 
 import { IconifyProps } from '@/components'
-import { bgBlur } from '@/lib/utils'
+import { bgBlur } from '@/utils'
 
 import { LeftIcon, RightIcon } from './Icon'
 
