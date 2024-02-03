@@ -1,31 +1,28 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import * as _ from "lodash-es";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import * as _ from 'lodash-es'
 
 const initialState: {
-  items: Record<string, { id: string; email: string; avatar: string }>;
-} = { items: {} };
+  items: Record<string, { id: string; email: string; avatar: string }>
+} = { items: {} }
 
 export const rabitsSlice = createSlice({
-  name: "schoolSettings",
+  name: 'schoolSettings',
   initialState,
   reducers: {
-    createRabit: (
-      state,
-      action: PayloadAction<{ id: string; email: string; avatar: string }>
-    ) => {
+    createRabit: (state, action: PayloadAction<{ id: string; email: string; avatar: string }>) => {
       state.items = {
         ...state.items,
         [action.payload.id]: action.payload,
-      };
+      }
     },
     removeRabit: (state, action: PayloadAction<{ id: string }>) => {
       state.items = {
         ..._.omit(state.items, action.payload.id),
-      };
+      }
     },
   },
-});
+})
 
-export const { createRabit, removeRabit } = rabitsSlice.actions;
+export const { createRabit, removeRabit } = rabitsSlice.actions
 
-export default rabitsSlice.reducer;
+export default rabitsSlice.reducer

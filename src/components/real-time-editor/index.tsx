@@ -1,7 +1,7 @@
 export interface State {
-  connected: boolean;
-  version?: number;
-  doc?: string;
+  connected: boolean
+  version?: number
+  doc?: string
 }
 
-export * from "./events";
+export * from './events'

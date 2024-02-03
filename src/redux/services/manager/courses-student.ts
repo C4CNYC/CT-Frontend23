@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import {
   ICourseContent,
   ICourseElement,
   ICourseSearchParams,
   ILesson,
   IModuleContent,
-} from "src/redux/interfaces/content.interface";
+} from '@/redux/interfaces/content.interface'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,34 +16,28 @@ const extendedApi = managerApi.injectEndpoints({
       ICourseSearchParams
     >({
       query: (params) => ({
-        url: "/student/course",
-        method: "GET",
+        url: '/student/course',
+        method: 'GET',
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Courses"],
+      providesTags: ['Courses'],
     }),
-    getCours: builder.query<
-      ICourseElement & BaseResponseInterface,
-      { id: string }
-    >({
+    getCours: builder.query<ICourseElement & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/course/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Courses"],
+      providesTags: ['Courses'],
     }),
-    getCoursContent: builder.query<
-      ICourseContent & BaseResponseInterface,
-      { id: string }
-    >({
+    getCoursContent: builder.query<ICourseContent & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/course/${id}/content`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Courses"],
+      providesTags: ['Courses'],
     }),
     getCourseContentList: builder.query<
       Array<ICourseContent & BaseResponseInterface>,
@@ -52,13 +45,14 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       queryFn: async ({ ids }, _queryApi, _extraOptions, fetch) => {
         const promises = ids.map(async (id) => {
-          return (await fetch(`/student/course/${id}/content`)).data as ICourseContent & BaseResponseInterface;
-        });
+          return (await fetch(`/student/course/${id}/content`)).data as ICourseContent &
+            BaseResponseInterface
+        })
         return await Promise.all(promises).then((results) => {
-          return { data: results };
-        });
+          return { data: results }
+        })
       },
-      providesTags: ["CoursesList"],
+      providesTags: ['CoursesList'],
     }),
     getStudentCourseModules: builder.query<
       Array<IModuleContent & BaseResponseInterface>,
@@ -66,35 +60,28 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id }) => ({
         url: `/student/course/${id}/modules`,
-        method: "GET",
+        method: 'GET',
       }),
     }),
-    getStudentModulesLessons: builder.query<
-      Array<ILesson & BaseResponseInterface>,
-      { id: string }
-    >({
-      query: ({ id }) => ({
-        url: `/student/modules/${id}/lessons`,
-        method: "GET",
-      }),
-    }),
-    courseAddLike: builder.mutation<
-      ICourseContent & BaseResponseInterface,
-      { id: string }
-    >({
+    getStudentModulesLessons: builder.query<Array<ILesson & BaseResponseInterface>, { id: string }>(
+      {
+        query: ({ id }) => ({
+          url: `/student/modules/${id}/lessons`,
+          method: 'GET',
+        }),
+      }
+    ),
+    courseAddLike: builder.mutation<ICourseContent & BaseResponseInterface, { id: string }>({
       query: ({ id, ...body }) => ({
         url: `/student/course/${id}/like/add`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
     }),
-    courseRemoveLike: builder.mutation<
-      ICourseContent & BaseResponseInterface,
-      { id: string }
-    >({
+    courseRemoveLike: builder.mutation<ICourseContent & BaseResponseInterface, { id: string }>({
       query: ({ id, ...body }) => ({
         url: `/student/course/${id}/like/remove`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
     }),
@@ -104,14 +91,14 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id, ...body }) => ({
         url: `/student/course/${id}/rating`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Courses" }],
+      invalidatesTags: [{ type: 'Courses' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetCourseQuery,
@@ -124,4 +111,4 @@ export const {
   useCourseAddLikeMutation,
   useCourseRemoveLikeMutation,
   useCourseAddRatingMutation,
-} = extendedApi;
+} = extendedApi

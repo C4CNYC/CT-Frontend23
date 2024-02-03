@@ -1,15 +1,24 @@
-import { Dispatch, type MutableRefObject, RefObject, SetStateAction, useEffect, useMemo, useRef, useState } from "react"
+import {
+  Dispatch,
+  type MutableRefObject,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
-import { type DragEndEvent } from "@dnd-kit/core"
-import { arrayMove } from "@dnd-kit/sortable"
+import { type DragEndEvent } from '@dnd-kit/core'
+import { arrayMove } from '@dnd-kit/sortable'
 
-import { useFilters } from "src/lib/hooks/useFilters"
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface"
-import { IFriend } from "src/redux/interfaces/friends.interface"
-import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager"
-import { useSelector } from "src/redux/store"
+import { useFilters } from '@/lib/hooks/useFilters'
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { IFriend } from '@/redux/interfaces/friends.interface'
+import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
+import { useSelector } from '@/redux/store'
 
-import { type DraggableBlockConfig, getDraggableBlockConfig } from "./utils"
+import { type DraggableBlockConfig, getDraggableBlockConfig } from './utils'
 
 type FriendUser = IFriend & BaseResponseInterface
 
@@ -31,9 +40,11 @@ interface UseNavPanelReturn {
 }
 
 const DEFAULT_FILTERS = { take: 50, page: 1 }
-const FILTER_NAME = "page"
+const FILTER_NAME = 'page'
 
-export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>): UseNavPanelReturn => {
+export const useNavPanel = (
+  wrapperListenerRef: RefObject<HTMLDivElement | null>
+): UseNavPanelReturn => {
   const drawerRef = useRef<HTMLDivElement | null>(null)
   const [isOpen, setIsOpen] = useState(false)
   const [previewUsers, setPreviewUsers] = useState<FriendUser[]>([])
@@ -42,10 +53,11 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
   const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
   const [users, setUsers] = useState<FriendUser[]>([])
 
-  const { data: availableUsers, isLoading: isAvailableUsersLoading } = useGetFriendsStudentContentQuery(filters)
+  const { data: availableUsers, isLoading: isAvailableUsersLoading } =
+    useGetFriendsStudentContentQuery(filters)
 
   useEffect(() => {
-    setFilter("class_id", classId as string)
+    setFilter('class_id', classId as string)
   }, [classId])
 
   const onLoadMore = () => {
@@ -106,7 +118,9 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
         const config = getDraggableBlockConfig(contentRect)
 
         setDraggableConfig(config)
-        setPreviewUsers((prev) => (config.blockAmount < prev.length ? prev.slice(0, config.blockAmount) : prev))
+        setPreviewUsers((prev) =>
+          config.blockAmount < prev.length ? prev.slice(0, config.blockAmount) : prev
+        )
       })
 
       resizeObserver.observe(wrapperListenerRef.current)
@@ -123,7 +137,9 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
     if (availableUsers?.data != null) {
       setUsers((prev) => [
         ...prev,
-        ...availableUsers.data.map((_user) => (_user.status ? _user : { ..._user, status: "inactive" })),
+        ...availableUsers.data.map((_user) =>
+          _user.status ? _user : { ..._user, status: 'inactive' }
+        ),
       ])
     }
   }, [availableUsers?.data])
@@ -135,7 +151,7 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
       inactive: 3,
     }
     const sortedUsers = users
-    const activeUsersAmount = users.filter(({ status }) => status !== "inactive").length
+    const activeUsersAmount = users.filter(({ status }) => status !== 'inactive').length
     sortedUsers.sort((a, b) => statusOrder[a.status] - statusOrder[b.status])
 
     return { activeUsersAmount, sortedUsers }

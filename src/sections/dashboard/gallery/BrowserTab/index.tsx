@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 interface Props {
-  code: string;
+  code: string
 }
 
 export default function BrowserTab({ code }: Props): React.ReactElement {
@@ -9,10 +9,10 @@ export default function BrowserTab({ code }: Props): React.ReactElement {
     <iframe
       style={{
         border: 0,
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
       }}
-      src={"data:text/html," + encodeURIComponent(code)}
+      src={'data:text/html,' + encodeURIComponent(code)}
     />
-  );
+  )
 }

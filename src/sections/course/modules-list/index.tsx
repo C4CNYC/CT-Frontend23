@@ -1,29 +1,24 @@
-import { useRouter } from "next/router";
+import { Skeleton, Stack, useTheme } from '@mui/material'
+import { useRouter } from 'next/router'
 
-import { Skeleton, Stack, useTheme } from "@mui/material";
+import { useGetStudentCourseModulesQuery } from '@/redux/services/manager/courses-student'
+import { useGetStudentLastVisitedUnitAndLessonQuery } from '@/redux/services/manager/lesson-student'
 
-import { useGetStudentCourseModulesQuery } from "src/redux/services/manager/courses-student";
-import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
-
-import ModuleItem from "./module-item";
+import ModuleItem from './module-item'
 
 export default function ModulesListBlock(): React.ReactElement {
-  const theme = useTheme();
-  const { query } = useRouter();
+  const theme = useTheme()
+  const { query } = useRouter()
   const { data, isLoading } = useGetStudentCourseModulesQuery(
     { id: query?.id as string },
     { skip: !query?.id }
-  );
-  const { data: lastVisitedData } =
-    useGetStudentLastVisitedUnitAndLessonQuery();
+  )
+  const { data: lastVisitedData } = useGetStudentLastVisitedUnitAndLessonQuery()
 
   return (
     <Stack
       sx={{
-        background:
-          theme.palette.mode === "light"
-            ? "#ECF4FF"
-            : theme.palette.background.neutral,
+        background: theme.palette.mode === 'light' ? '#ECF4FF' : theme.palette.background.neutral,
         px: { xs: 1, lg: 2, xl: 3 },
         py: 4,
         borderRadius: 3,
@@ -39,19 +34,19 @@ export default function ModulesListBlock(): React.ReactElement {
               lastVisited={m.id === lastVisitedData?.lastVisitedUnitId}
             />
           ))
-        : Array.from("12345").map((el) => (
+        : Array.from('12345').map((el) => (
             <Skeleton
               key={el}
-              variant="rounded"
+              variant='rounded'
               sx={{
-                width: "100%",
-                height: "200px",
-                mb: "24px",
-                background: "#fff",
-                display: "flex",
+                width: '100%',
+                height: '200px',
+                mb: '24px',
+                background: '#fff',
+                display: 'flex',
               }}
             />
           ))}
     </Stack>
-  );
+  )
 }

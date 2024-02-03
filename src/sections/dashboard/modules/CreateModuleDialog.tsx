@@ -1,78 +1,64 @@
-import { useRouter } from "next/router";
-import * as React from "react";
-import { useState } from "react";
+import React from 'react'
+import { useState } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Box, Button, DialogActions, Grid, Tab, Tabs, Typography } from '@mui/material'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  DialogActions,
-  Grid,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-
-import {
-  FormProvider,
-  ModuleLessonsAutocomplete,
-  useSnackbar,
-} from "@components";
-import TipsTab from "@sections/dashboard/lessons/CreateLessonDialog/TipsTab";
-import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { FormProvider, ModuleLessonsAutocomplete, useSnackbar } from '@/components'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { useAddModuleToCourseMutation } from '@/redux/services/manager/courses-manager'
 
 import {
   useCreateModuleMutation,
   useUpdateModuleAvatarMutation,
   useUpdateModuleMutation,
-} from "../../../redux/services/manager/modules-manager";
-import MainTab from "./MainTab";
-import SettingsTab from "./SettingsTab";
-import { DIALOG_ACTIONS_SX, TAB_PANEL_SX, TAB_SX } from "./constants";
+} from '../../../redux/services/manager/modules-manager'
+
+import { DIALOG_ACTIONS_SX, TAB_PANEL_SX, TAB_SX } from './constants'
+import MainTab from './MainTab'
+import SettingsTab from './SettingsTab'
 
 interface FormValuesProps {
-  name: string;
-  description: string;
-  active: boolean;
-  tips: string;
-  duration: string;
-  teacher_slides: string;
-  teacher_forum: string;
-  lesson_plans: string;
-  initial_enrolled: number;
-  initial_likes: number;
-  initial_stars: number;
+  name: string
+  description: string
+  active: boolean
+  tips: string
+  duration: string
+  teacher_slides: string
+  teacher_forum: string
+  lesson_plans: string
+  initial_enrolled: number
+  initial_likes: number
+  initial_stars: number
 }
 
 interface Prop {
-  defaultValues?: FormValuesProps;
-  children: React.ReactElement;
-  isEdit?: boolean;
-  id?: string;
-  moduleTips?: string[] | [];
+  defaultValues?: FormValuesProps
+  children: React.ReactElement
+  isEdit?: boolean
+  id?: string
+  moduleTips?: string[] | []
 }
 
 interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
+  children?: React.ReactNode
+  index: number
+  value: number
 }
 
 function TabPanel(props: TabPanelProps): React.ReactElement {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, ...other } = props
 
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
@@ -84,17 +70,17 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
         </Box>
       )}
     </div>
-  );
+  )
 }
 
 function a11yProps(index: number): Record<string, string> {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
+    'aria-controls': `simple-tabpanel-${index}`,
+  }
 }
 const durationRegexp =
-  /^(?!.*(second|minute|hour|day|week|month|year).*\1)\d+\s?(?:second|minute|hour|day|week|month|year)s?(?: ?\d+\s?(?:second|minute|hour|day|week|month|year)s?)*$/gm;
+  /^(?!.*(second|minute|hour|day|week|month|year).*\1)\d+\s?(?:second|minute|hour|day|week|month|year)s?(?: ?\d+\s?(?:second|minute|hour|day|week|month|year)s?)*$/gm
 
 export default function CreateModuleDialog({
   id,
@@ -103,138 +89,155 @@ export default function CreateModuleDialog({
   defaultValues,
   moduleTips,
 }: Prop): React.ReactElement {
-  const { query } = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
+  const { query } = useRouter()
+  const { enqueueSnackbar } = useSnackbar()
 
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = React.useState(0);
-  const [uploadedFile, setUploadedFile] = useState<null | File>(null);
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = React.useState(0)
+  const [uploadedFile, setUploadedFile] = useState<null | File>(null)
 
-  const [addToCourse, { isLoading: isAddToCourseLoading }] =
-    useAddModuleToCourseMutation();
-  const [editModule, { isLoading: isEditLoading }] = useUpdateModuleMutation();
-  const [createModule, { isLoading: isCreateLoading }] =
-    useCreateModuleMutation();
-  const [updateAvatar] = useUpdateModuleAvatarMutation();
-  const translate = useTranslate();
+  const [addToCourse, { isLoading: isAddToCourseLoading }] = useAddModuleToCourseMutation()
+  const [editModule, { isLoading: isEditLoading }] = useUpdateModuleMutation()
+  const [createModule, { isLoading: isCreateLoading }] = useCreateModuleMutation()
+  const [updateAvatar] = useUpdateModuleAvatarMutation()
+  const translate = useTranslate()
 
   const handleClickOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleChange = (_: React.SyntheticEvent, newValue: number): void => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
 
   const CreateCourseSchema = Yup.object().shape({
-    name: Yup.string().required(translate("required_name")),
+    name: Yup.string().required(translate('required_name')),
     description:
-      Yup.string().required(translate("required_description")) &&
-      Yup.string().max(100, translate("write_less_msg")),
+      Yup.string().required(translate('required_description')) &&
+      Yup.string().max(100, translate('write_less_msg')),
     duration: Yup.string()
       .trim()
       .nullable()
-      .transform((v, o) => (o === "" ? null : v))
-      .matches(durationRegexp, translate("use_key_words_msg")),
+      .transform((v, o) => (o === '' ? null : v))
+      .matches(durationRegexp, translate('use_key_words_msg')),
     initial_likes: Yup.number().positive(),
     initial_stars: Yup.number().positive(),
     initial_enrolled: Yup.number().positive(),
-  });
+  })
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateCourseSchema),
     defaultValues,
-  });
+  })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      const file = new FormData();
+      const file = new FormData()
       if (isEdit && id) {
         await editModule({
           id,
           ...data,
-          tips:
-            data.tips.trim() !== "" && moduleTips
-              ? [...moduleTips, data.tips]
-              : [],
+          tips: data.tips.trim() !== '' && moduleTips ? [...moduleTips, data.tips] : [],
           duration: data.duration?.trim(),
-        }).unwrap();
+        }).unwrap()
         if (uploadedFile) {
-          file.append("file", uploadedFile);
-          await updateAvatar({ id, file }).unwrap();
+          file.append('file', uploadedFile)
+          await updateAvatar({ id, file }).unwrap()
         }
       } else {
-        const module = await createModule({
+        const m = await createModule({
           ...data,
           tips: data?.tips ? [data.tips] : [],
-          duration: data?.duration?.trim() ?? "1 month",
-        }).unwrap();
+          duration: data?.duration?.trim() ?? '1 month',
+        }).unwrap()
         if (query.course_id) {
           await addToCourse({
             id: query.course_id as string,
-            unit_id: module.id,
-          }).unwrap();
+            unit_id: m.id,
+          }).unwrap()
         }
         if (uploadedFile) {
-          file.append("file", uploadedFile);
-          await updateAvatar({ id: module.id, file }).unwrap();
+          file.append('file', uploadedFile)
+          await updateAvatar({ id: m.id, file }).unwrap()
         }
       }
       enqueueSnackbar(
-        !isEdit
-          ? translate("messages_create_success")
-          : translate("messages_update_success")
-      );
-      methods.reset();
-      handleClose();
+        !isEdit ? translate('messages_create_success') : translate('messages_update_success')
+      )
+      methods.reset()
+      handleClose()
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-  };
+  }
 
   return (
     <>
       <Box
         onClick={() => {
-          handleClickOpen();
+          handleClickOpen()
         }}
       >
         {children}
       </Box>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
         <DialogTitle>
-          {isEdit
-            ? translate("modules_update_module")
-            : translate("modules_create_module")}
+          {isEdit ? translate('modules_update_module') : translate('modules_create_module')}
         </DialogTitle>
-        <DialogContent sx={{ p: 0, mt: "-10px" }}>
+        <DialogContent sx={{ p: 0, mt: '-10px' }}>
           <FormProvider
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', pl: 3 }}>
               {isEdit ? (
                 <Tabs
                   value={value}
                   onChange={handleChange}
-                  aria-label="basic tabs example"
+                  aria-label='basic tabs example'
                 >
-                  <Tab label={translate("general")} {...a11yProps(0)} />
-                  <Tab label={translate("lessons")} {...a11yProps(1)} />
-                  <Tab label={translate("settings")} {...a11yProps(2)} />
+                  <Tab
+                    label={translate('general')}
+                    {...a11yProps(0)}
+                  />
+                  <Tab
+                    label={translate('lessons')}
+                    {...a11yProps(1)}
+                  />
+                  <Tab
+                    label={translate('settings')}
+                    {...a11yProps(2)}
+                  />
                 </Tabs>
               ) : null}
             </Box>
-            <TabPanel value={value} index={0}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={12}>
-                  <Box rowGap={3} display="grid" mt={2}>
+            <TabPanel
+              value={value}
+              index={0}
+            >
+              <Grid
+                container
+                spacing={3}
+              >
+                <Grid
+                  item
+                  xs={12}
+                  md={12}
+                >
+                  <Box
+                    rowGap={3}
+                    display='grid'
+                    mt={2}
+                  >
                     <MainTab
                       uploadedFile={uploadedFile}
                       setUploadedFile={setUploadedFile}
@@ -243,15 +246,32 @@ export default function CreateModuleDialog({
                 </Grid>
               </Grid>
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel
+              value={value}
+              index={1}
+            >
               <Box sx={TAB_PANEL_SX}>
                 <ModuleLessonsAutocomplete id={id as string} />
               </Box>
             </TabPanel>
-            <TabPanel value={value} index={2}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={12}>
-                  <Box rowGap={3} display="grid" mt={2}>
+            <TabPanel
+              value={value}
+              index={2}
+            >
+              <Grid
+                container
+                spacing={3}
+              >
+                <Grid
+                  item
+                  xs={12}
+                  md={12}
+                >
+                  <Box
+                    rowGap={3}
+                    display='grid'
+                    mt={2}
+                  >
                     <SettingsTab />
                   </Box>
                 </Grid>
@@ -259,17 +279,13 @@ export default function CreateModuleDialog({
             </TabPanel>
             <DialogActions>
               <Box sx={DIALOG_ACTIONS_SX}>
-                <Button onClick={handleClose}>
-                  {translate("actions_close")}
-                </Button>
+                <Button onClick={handleClose}>{translate('actions_close')}</Button>
                 <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={
-                    isEditLoading || isCreateLoading || isAddToCourseLoading
-                  }
+                  type='submit'
+                  variant='contained'
+                  loading={isEditLoading || isCreateLoading || isAddToCourseLoading}
                 >
-                  {translate("actions_save")}
+                  {translate('actions_save')}
                 </LoadingButton>
               </Box>
             </DialogActions>
@@ -277,5 +293,5 @@ export default function CreateModuleDialog({
         </DialogContent>
       </Dialog>
     </>
-  );
+  )
 }

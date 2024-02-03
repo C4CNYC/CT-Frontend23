@@ -1,7 +1,4 @@
 // form
-import { Controller, useFormContext } from "react-hook-form";
-
-// @mui
 import {
   Box,
   Checkbox,
@@ -15,16 +12,15 @@ import {
   SelectProps,
   TextField,
   TextFieldProps,
-} from "@mui/material";
-
-// ----------------------------------------------------------------------
+} from '@mui/material'
+import { Controller, useFormContext } from 'react-hook-form'
 
 type RHFSelectProps = TextFieldProps & {
-  name: string;
-  native?: boolean;
-  maxHeight?: boolean | number;
-  children: React.ReactNode;
-};
+  name: string
+  native?: boolean
+  maxHeight?: boolean | number
+  children: React.ReactNode
+}
 
 export function RHFSelect({
   name,
@@ -34,7 +30,7 @@ export function RHFSelect({
   children,
   ...other
 }: RHFSelectProps): React.ReactElement | null {
-  const { control } = useFormContext();
+  const { control } = useFormContext()
 
   return (
     <Controller
@@ -52,19 +48,18 @@ export function RHFSelect({
                 sx: {
                   ...(!native && {
                     px: 1,
-                    maxHeight:
-                      typeof maxHeight === "number" ? maxHeight : "unset",
-                    "& .MuiMenuItem-root": {
+                    maxHeight: typeof maxHeight === 'number' ? maxHeight : 'unset',
+                    '& .MuiMenuItem-root': {
                       px: 1,
                       borderRadius: 0.75,
-                      typography: "body2",
-                      textTransform: "capitalize",
+                      typography: 'body2',
+                      textTransform: 'capitalize',
                     },
                   }),
                 },
               },
             },
-            sx: { textTransform: "capitalize" },
+            sx: { textTransform: 'capitalize' },
           }}
           error={!!error}
           helperText={error ? error?.message : helperText}
@@ -74,22 +69,20 @@ export function RHFSelect({
         </TextField>
       )}
     />
-  );
+  )
 }
 
-// ----------------------------------------------------------------------
-
 interface RHFMultiSelectProps extends SelectProps {
-  name: string;
-  label?: string;
-  chip?: boolean;
-  checkbox?: boolean;
-  placeholder?: string;
-  helperText?: React.ReactNode;
+  name: string
+  label?: string
+  chip?: boolean
+  checkbox?: boolean
+  placeholder?: string
+  helperText?: React.ReactNode
   options: Array<{
-    label: string;
-    value: string;
-  }>;
+    label: string
+    value: string
+  }>
 }
 
 export function RHFMultiSelect({
@@ -103,33 +96,38 @@ export function RHFMultiSelect({
   sx,
   ...other
 }: RHFMultiSelectProps): React.ReactElement | null | string {
-  const { control } = useFormContext();
+  const { control } = useFormContext()
 
   const renderValues = (selectedIds: string[]): React.ReactElement | string => {
-    const selectedItems = options.filter((item) =>
-      selectedIds.includes(item.value)
-    );
+    const selectedItems = options.filter((item) => selectedIds.includes(item.value))
 
     if (!selectedItems.length && placeholder) {
       return (
-        <Box component="em" sx={{ color: "text.disabled" }}>
+        <Box
+          component='em'
+          sx={{ color: 'text.disabled' }}
+        >
           {placeholder}
         </Box>
-      );
+      )
     }
 
     if (chip) {
       return (
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
           {selectedItems.map((item) => (
-            <Chip key={item.value} size="small" label={item.label} />
+            <Chip
+              key={item.value}
+              size='small'
+              label={item.label}
+            />
           ))}
         </Box>
-      );
+      )
     }
 
-    return selectedItems.map((item) => item.label).join(", ");
-  };
+    return selectedItems.map((item) => item.label).join(', ')
+  }
 
   return (
     <Controller
@@ -144,7 +142,13 @@ export function RHFMultiSelect({
             multiple
             displayEmpty={!!placeholder}
             labelId={name}
-            input={<OutlinedInput fullWidth label={label} error={!!error} />}
+            input={
+              <OutlinedInput
+                fullWidth
+                label={label}
+                error={!!error}
+              />
+            }
             renderValue={renderValues}
             MenuProps={{
               PaperProps: {
@@ -156,12 +160,12 @@ export function RHFMultiSelect({
             {placeholder && (
               <MenuItem
                 disabled
-                value=""
+                value=''
                 sx={{
                   py: 1,
                   px: 2,
                   borderRadius: 0.75,
-                  typography: "body2",
+                  typography: 'body2',
                 }}
               >
                 <em> {placeholder} </em>
@@ -169,7 +173,7 @@ export function RHFMultiSelect({
             )}
 
             {options.map((option) => {
-              const selected = field.value.includes(option.value);
+              const selected = field.value.includes(option.value)
 
               return (
                 <MenuItem
@@ -179,9 +183,9 @@ export function RHFMultiSelect({
                     py: 1,
                     px: 2,
                     borderRadius: 0.75,
-                    typography: "body2",
+                    typography: 'body2',
                     ...(selected && {
-                      fontWeight: "fontWeightMedium",
+                      fontWeight: 'fontWeightMedium',
                     }),
                     ...(checkbox && {
                       p: 0.25,
@@ -189,22 +193,24 @@ export function RHFMultiSelect({
                   }}
                 >
                   {checkbox && (
-                    <Checkbox disableRipple size="small" checked={selected} />
+                    <Checkbox
+                      disableRipple
+                      size='small'
+                      checked={selected}
+                    />
                   )}
 
                   {option.label}
                 </MenuItem>
-              );
+              )
             })}
           </Select>
 
           {(!!error || helperText) && (
-            <FormHelperText error={!!error}>
-              {error ? error?.message : helperText}
-            </FormHelperText>
+            <FormHelperText error={!!error}>{error ? error?.message : helperText}</FormHelperText>
           )}
         </FormControl>
       )}
     />
-  );
+  )
 }

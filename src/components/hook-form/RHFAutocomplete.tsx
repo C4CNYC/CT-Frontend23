@@ -1,37 +1,30 @@
 // form
-import { Controller, useFormContext } from "react-hook-form";
-
-// @mui
-import { Autocomplete, AutocompleteProps, TextField } from "@mui/material";
-
-// ----------------------------------------------------------------------
+import { Autocomplete, AutocompleteProps, TextField } from '@mui/material'
+import { Controller, useFormContext } from 'react-hook-form'
 
 interface Props<
   T,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
-  FreeSolo extends boolean | undefined
+  FreeSolo extends boolean | undefined,
 > extends AutocompleteProps<T, Multiple, DisableClearable, FreeSolo> {
-  name: string;
-  label?: string;
-  helperText?: React.ReactNode;
+  name: string
+  label?: string
+  helperText?: React.ReactNode
 }
 
 export function RHFAutocomplete<
   T,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
-  FreeSolo extends boolean | undefined
+  FreeSolo extends boolean | undefined,
 >({
   name,
   label,
   helperText,
   ...other
-}: Omit<
-  Props<T, Multiple, DisableClearable, FreeSolo>,
-  "renderInput"
->): React.ReactElement {
-  const { control, setValue } = useFormContext();
+}: Omit<Props<T, Multiple, DisableClearable, FreeSolo>, 'renderInput'>): React.ReactElement {
+  const { control, setValue } = useFormContext()
 
   return (
     <Controller
@@ -41,7 +34,7 @@ export function RHFAutocomplete<
         <Autocomplete
           {...field}
           onChange={(event, newValue) => {
-            setValue(name, newValue, { shouldValidate: true });
+            setValue(name, newValue, { shouldValidate: true })
           }}
           renderInput={(params) => (
             <TextField
@@ -55,5 +48,5 @@ export function RHFAutocomplete<
         />
       )}
     />
-  );
+  )
 }

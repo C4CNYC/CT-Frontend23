@@ -1,35 +1,34 @@
 // import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import { useAtom } from "jotai";
-import Draggable from "react-draggable";
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material'
+import { useAtom } from 'jotai'
+import Draggable from 'react-draggable'
 
-import CloseIcon from "@mui/icons-material/Close";
-import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { Iconify } from '@/components/iconify'
 
-import { Iconify } from "src/components/iconify";
-
-import { chatHandlerAtom } from "./chatHendlerAtom";
+import { chatHandlerAtom } from './chatHendlerAtom'
 
 interface IChatPopup {
-  chatComponent?: React.ReactElement | null;
+  chatComponent?: React.ReactElement | null
 }
 
 const ChatPopup = ({ chatComponent }: IChatPopup): React.ReactElement => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const [isChatVisible, setChatVisible] = useAtom(chatHandlerAtom);
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const [isChatVisible, setChatVisible] = useAtom(chatHandlerAtom)
   return (
     <>
       <IconButton
         sx={{
-          display: isDesktop ? "inline-flex" : "none",
-          background: isChatVisible ? "#c5d6e3" : "#fff",
-          "&:hover": { background: isChatVisible ? "#c5d6e3" : "" },
+          display: isDesktop ? 'inline-flex' : 'none',
+          background: isChatVisible ? '#c5d6e3' : '#fff',
+          '&:hover': { background: isChatVisible ? '#c5d6e3' : '' },
         }}
         onClick={() => {
-          setChatVisible(!isChatVisible);
+          setChatVisible(!isChatVisible)
         }}
       >
-        <Iconify icon="ph:chat" />
+        <Iconify icon='ph:chat' />
       </IconButton>
 
       {isChatVisible ? (
@@ -37,21 +36,21 @@ const ChatPopup = ({ chatComponent }: IChatPopup): React.ReactElement => {
           <Draggable>
             <div
               style={{
-                position: "absolute",
-                height: "500px",
-                width: "350px",
+                position: 'absolute',
+                height: '500px',
+                width: '350px',
                 right: 20,
                 bottom: 20,
                 zIndex: 5000,
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
               <IconButton
                 onClick={() => {
-                  setChatVisible(false);
+                  setChatVisible(false)
                 }}
-                sx={{ alignSelf: "flex-end", p: "2px", mb: "2px" }}
+                sx={{ alignSelf: 'flex-end', p: '2px', mb: '2px' }}
               >
                 <CloseIcon />
               </IconButton>
@@ -61,15 +60,15 @@ const ChatPopup = ({ chatComponent }: IChatPopup): React.ReactElement => {
         ) : (
           <Box
             sx={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
-              height: "100vh",
-              width: "100vw",
+              height: '100vh',
+              width: '100vw',
               zIndex: 5000,
-              background: "#fff",
+              background: '#fff',
             }}
           >
             {/* <IconButton
@@ -85,7 +84,7 @@ const ChatPopup = ({ chatComponent }: IChatPopup): React.ReactElement => {
         )
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default ChatPopup;
+export default ChatPopup

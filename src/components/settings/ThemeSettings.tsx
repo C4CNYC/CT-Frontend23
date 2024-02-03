@@ -1,12 +1,10 @@
-import ThemeColorPresets from "./ThemeColorPresets";
-import ThemeContrast from "./ThemeContrast";
+import ThemeColorPresets from './ThemeColorPresets'
+import ThemeContrast from './ThemeContrast'
 // import ThemeRtlLayout from "./ThemeRtlLayout";
 // import SettingsDrawer from "./drawer";
 
-// ----------------------------------------------------------------------
-
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export function ThemeSettings({ children }: Props): React.ReactElement | null {
@@ -14,10 +12,10 @@ export function ThemeSettings({ children }: Props): React.ReactElement | null {
     <ThemeColorPresets>
       <ThemeContrast>
         {/* <ThemeRtlLayout> */}
-          {children}
-          {/* <SettingsDrawer /> */}
+        {children}
+        {/* <SettingsDrawer /> */}
         {/* </ThemeRtlLayout> */}
       </ThemeContrast>
     </ThemeColorPresets>
-  );
+  )
 }

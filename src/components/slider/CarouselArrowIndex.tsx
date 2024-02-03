@@ -1,12 +1,10 @@
-import { Box, IconButton, SxProps, Typography } from "@mui/material";
-import { Theme, styled, useTheme } from "@mui/material/styles";
+import { Box, IconButton, SxProps, Typography } from '@mui/material'
+import { Theme, styled, useTheme } from '@mui/material/styles'
 
-import { IconifyProps } from "@components";
-import { bgBlur } from "@utils";
+import { IconifyProps } from '@/components'
+import { bgBlur } from '@/lib/utils'
 
-import { LeftIcon, RightIcon } from "./Icon";
-
-// ----------------------------------------------------------------------
+import { LeftIcon, RightIcon } from './Icon'
 
 const StyledRoot = styled(Box)(({ theme }) => ({
   ...bgBlur({
@@ -14,33 +12,31 @@ const StyledRoot = styled(Box)(({ theme }) => ({
     color: theme.palette.grey[900],
   }),
   zIndex: 9,
-  display: "inline-flex",
-  alignItems: "center",
-  position: "absolute",
+  display: 'inline-flex',
+  alignItems: 'center',
+  position: 'absolute',
   bottom: theme.spacing(2),
   right: theme.spacing(2),
   padding: theme.spacing(0.25),
   color: theme.palette.common.white,
   borderRadius: theme.shape.borderRadius,
-}));
+}))
 
 const StyledIconButton = styled(IconButton)({
   width: 28,
   height: 28,
   padding: 0,
   opacity: 0.48,
-  "&:hover": { opacity: 1 },
-});
-
-// ----------------------------------------------------------------------
+  '&:hover': { opacity: 1 },
+})
 
 interface Props {
-  index: number;
-  total: number;
-  icon?: IconifyProps; // Right icon
-  onNext?: VoidFunction;
-  onPrevious?: VoidFunction;
-  sx?: SxProps<Theme>;
+  index: number
+  total: number
+  icon?: IconifyProps // Right icon
+  onNext?: VoidFunction
+  onPrevious?: VoidFunction
+  sx?: SxProps<Theme>
 }
 
 export default function CarouselArrowIndex({
@@ -52,23 +48,42 @@ export default function CarouselArrowIndex({
   sx,
   ...other
 }: Props): React.ReactElement {
-  const theme = useTheme();
+  const theme = useTheme()
 
-  const isRTL = theme.direction === "rtl";
+  const isRTL = theme.direction === 'rtl'
 
   return (
-    <StyledRoot sx={sx} {...other}>
-      <StyledIconButton color="inherit" onClick={onPrevious}>
-        <LeftIcon icon={icon} isRTL={isRTL} />
+    <StyledRoot
+      sx={sx}
+      {...other}
+    >
+      <StyledIconButton
+        color='inherit'
+        onClick={onPrevious}
+      >
+        <LeftIcon
+          icon={icon}
+          isRTL={isRTL}
+        />
       </StyledIconButton>
 
-      <Typography variant="subtitle2" component="span" sx={{ mx: 0.25 }}>
+      <Typography
+        variant='subtitle2'
+        component='span'
+        sx={{ mx: 0.25 }}
+      >
         {index + 1}/{total}
       </Typography>
 
-      <StyledIconButton color="inherit" onClick={onNext}>
-        <RightIcon icon={icon} isRTL={isRTL} />
+      <StyledIconButton
+        color='inherit'
+        onClick={onNext}
+      >
+        <RightIcon
+          icon={icon}
+          isRTL={isRTL}
+        />
       </StyledIconButton>
     </StyledRoot>
-  );
+  )
 }

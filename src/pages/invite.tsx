@@ -1,6 +1,6 @@
-import Head from "next/head";
+import Head from 'next/head'
 
-import InviteAuth from "@sections/auth/InviteAuth";
+import InviteAuth from '@/sections/auth/InviteAuth'
 
 export default function InvitePage(): React.ReactElement {
   return (
@@ -10,5 +10,5 @@ export default function InvitePage(): React.ReactElement {
       </Head>
       <InviteAuth />
     </>
-  );
+  )
 }

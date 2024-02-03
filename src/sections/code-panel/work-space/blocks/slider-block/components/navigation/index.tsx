@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { Button } from "@mui/material";
-import { Box, useTheme } from "@mui/system";
+import { Button } from '@mui/material'
+import { Box, useTheme } from '@mui/system'
 
-import NavigationElement from "./NavigationElement";
-import NavigationSpeedDial from "./NavigationSpeedDial";
-import { stylesNext, stylesPrev, stylesSkip } from "./navigation-styles";
+import { stylesNext, stylesPrev, stylesSkip } from './navigation-styles'
+import NavigationElement from './NavigationElement'
+import NavigationSpeedDial from './NavigationSpeedDial'
 
 export enum BtnType {
-  next = "NEXT",
-  compleated = "YOU DID IT 🙌",
-  coding = "LET’S GET CODING",
+  next = 'NEXT',
+  compleated = 'YOU DID IT 🙌',
+  coding = 'LET’S GET CODING',
 }
 
 interface INavigation {
-  hasPrev: boolean;
-  canMoveNext: boolean;
-  stepHasValidation: boolean;
-  onNext: (skip?: boolean) => void;
-  onPrev: () => void;
-  hasNextStep: boolean;
+  hasPrev: boolean
+  canMoveNext: boolean
+  stepHasValidation: boolean
+  onNext: (skip?: boolean) => void
+  onPrev: () => void
+  hasNextStep: boolean
 }
 
 const Navigation = ({
@@ -30,66 +30,66 @@ const Navigation = ({
   hasNextStep,
   canMoveNext,
 }: INavigation): React.ReactElement => {
-  const theme = useTheme();
-  const [btnNext, setBtnNext] = useState<BtnType>(BtnType.next);
+  const theme = useTheme()
+  const [btnNext, setBtnNext] = useState<BtnType>(BtnType.next)
   const getNextBtnType = (): void => {
     if (stepHasValidation) {
       if (canMoveNext) {
-        setBtnNext(BtnType.compleated);
+        setBtnNext(BtnType.compleated)
       } else {
-        setBtnNext(BtnType.coding);
+        setBtnNext(BtnType.coding)
       }
     } else {
-      setBtnNext(BtnType.next);
+      setBtnNext(BtnType.next)
     }
-  };
+  }
   useEffect(() => {
-    getNextBtnType();
-  }, [stepHasValidation, canMoveNext]);
+    getNextBtnType()
+  }, [stepHasValidation, canMoveNext])
   return (
     <Box
       sx={{
-        position: "absolute",
-        bottom: "15px",
-        left: "0",
-        width: "100%",
-        zIndex: "11",
+        position: 'absolute',
+        bottom: '15px',
+        left: '0',
+        width: '100%',
+        zIndex: '11',
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          maxWidth: "450px",
-          height: "50px",
-          width: "100%",
-          margin: "0 auto",
-          position: "relative",
+          display: 'flex',
+          justifyContent: 'center',
+          maxWidth: '450px',
+          height: '50px',
+          width: '100%',
+          margin: '0 auto',
+          position: 'relative',
           [theme.breakpoints.down(450)]: {
-            px: "5px",
+            px: '5px',
           },
         }}
       >
         <NavigationElement
-          sx={stylesPrev()}
+          sx={stylesPrev(theme)}
           disabled={!hasPrev}
-          direction="prev"
+          direction='prev'
           onClick={onPrev}
         />
         <NavigationSpeedDial stepHasValidation={stepHasValidation} />
         <NavigationElement
-          sx={stylesNext(btnNext)}
+          sx={stylesNext(btnNext, theme)}
           onClick={() => {
-            onNext();
+            onNext()
           }}
           backType={btnNext}
         >
           {stepHasValidation && !canMoveNext ? (
             <Button
               onClick={() => {
-                onNext(true);
+                onNext(true)
               }}
-              sx={stylesSkip()}
+              sx={stylesSkip(theme)}
             >
               SKIP
             </Button>
@@ -97,7 +97,7 @@ const Navigation = ({
         </NavigationElement>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default Navigation;
+export default Navigation

@@ -1,43 +1,28 @@
-import { forwardRef } from "react";
+import { forwardRef } from 'react'
 
-// @mui
-import { IconButton, Stack, StackProps } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { IconButton, Stack, StackProps } from '@mui/material'
+import { alpha } from '@mui/material/styles'
 
-// components
-import { Iconify } from "../iconify";
-
-// ----------------------------------------------------------------------
+import { Iconify } from '../iconify'
 
 export interface IncrementerButtonProps extends StackProps {
-  name?: string;
-  quantity: number;
-  disabledIncrease?: boolean;
-  disabledDecrease?: boolean;
-  onIncrease: VoidFunction;
-  onDecrease: VoidFunction;
+  name?: string
+  quantity: number
+  disabledIncrease?: boolean
+  disabledDecrease?: boolean
+  onIncrease: VoidFunction
+  onDecrease: VoidFunction
 }
 
 // eslint-disable-next-line react/display-name
 const IncrementerButton = forwardRef<HTMLDivElement, IncrementerButtonProps>(
-  (
-    {
-      quantity,
-      onIncrease,
-      onDecrease,
-      disabledIncrease,
-      disabledDecrease,
-      sx,
-      ...other
-    },
-    ref
-  ) => (
+  ({ quantity, onIncrease, onDecrease, disabledIncrease, disabledDecrease, sx, ...other }, ref) => (
     <Stack
       ref={ref}
       flexShrink={0}
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
+      direction='row'
+      alignItems='center'
+      justifyContent='space-between'
       sx={{
         mb: 0.5,
         py: 0.5,
@@ -50,28 +35,34 @@ const IncrementerButton = forwardRef<HTMLDivElement, IncrementerButtonProps>(
       {...other}
     >
       <IconButton
-        size="small"
-        color="inherit"
+        size='small'
+        color='inherit'
         onClick={onDecrease}
         disabled={disabledDecrease}
-        sx={{ color: "text.secondary" }}
+        sx={{ color: 'text.secondary' }}
       >
-        <Iconify icon="eva:minus-fill" width={16} />
+        <Iconify
+          icon='eva:minus-fill'
+          width={16}
+        />
       </IconButton>
 
       {quantity}
 
       <IconButton
-        size="small"
-        color="inherit"
+        size='small'
+        color='inherit'
         onClick={onIncrease}
         disabled={disabledIncrease}
-        sx={{ color: "text.secondary" }}
+        sx={{ color: 'text.secondary' }}
       >
-        <Iconify icon="eva:plus-fill" width={16} />
+        <Iconify
+          icon='eva:plus-fill'
+          width={16}
+        />
       </IconButton>
     </Stack>
   )
-);
+)
 
-export default IncrementerButton;
+export default IncrementerButton

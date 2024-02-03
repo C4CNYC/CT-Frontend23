@@ -1,48 +1,44 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { Fade, Portal, Stack } from "@mui/material";
+import { Fade, Portal, Stack } from '@mui/material'
+import { useRouter } from 'next/router'
 
-import useActiveLink from "src/lib/hooks/useActiveLink";
+import useActiveLink from '@/lib/hooks/useActiveLink'
 
-import { NavItemProps } from "../types";
-import { NavItem, NavItemDashboard } from "./NavItem";
-import { StyledMenu, StyledSubheader } from "./styles";
+import { NavItemProps } from '../types'
 
-// ----------------------------------------------------------------------
+import { NavItem, NavItemDashboard } from './NavItem'
+import { StyledMenu, StyledSubheader } from './styles'
 
 interface NavListProps {
-  item: NavItemProps;
-  isOffset: boolean;
+  item: NavItemProps
+  isOffset: boolean
 }
 
-export default function NavList({
-  item,
-  isOffset,
-}: NavListProps): React.ReactElement | null {
-  const { pathname } = useRouter();
+export default function NavList({ item, isOffset }: NavListProps): React.ReactElement | null {
+  const { pathname } = useRouter()
 
-  const [openMenu, setOpenMenu] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false)
 
-  const { path, children } = item;
+  const { path, children } = item
 
-  const { active, isExternalLink } = useActiveLink(path, false);
+  const { active, isExternalLink } = useActiveLink(path, false)
 
   useEffect(() => {
     if (openMenu) {
-      handleCloseMenu();
+      handleCloseMenu()
     }
-  }, [pathname]);
+  }, [pathname])
 
   const handleOpenMenu = (): void => {
     if (children) {
-      setOpenMenu(true);
+      setOpenMenu(true)
     }
-  };
+  }
 
   const handleCloseMenu = (): void => {
-    setOpenMenu(false);
-  };
+    setOpenMenu(false)
+  }
 
   return (
     <>
@@ -68,7 +64,7 @@ export default function NavList({
                   key={list.subheader}
                   subheader={list.subheader}
                   items={list.items}
-                  isDashboard={list.subheader === "Dashboard"}
+                  isDashboard={list.subheader === 'Dashboard'}
                   onClose={handleCloseMenu}
                 />
               ))}
@@ -77,16 +73,14 @@ export default function NavList({
         </Portal>
       )}
     </>
-  );
+  )
 }
 
-// ----------------------------------------------------------------------
-
 interface NavSubListProps {
-  isDashboard: boolean;
-  subheader: string;
-  items: NavItemProps[];
-  onClose: VoidFunction;
+  isDashboard: boolean
+  subheader: string
+  items: NavItemProps[]
+  onClose: VoidFunction
 }
 
 function NavSubList({
@@ -95,21 +89,25 @@ function NavSubList({
   subheader,
   onClose,
 }: NavSubListProps): React.ReactElement | null {
-  const { pathname } = useRouter();
+  const { pathname } = useRouter()
 
-  const isActive = (path: string): boolean => pathname === path;
+  const isActive = (path: string): boolean => pathname === path
 
   return (
     <Stack
       spacing={2.5}
-      gridColumn={isDashboard ? "span 6" : "span 2"}
-      alignItems="flex-start"
+      gridColumn={isDashboard ? 'span 6' : 'span 2'}
+      alignItems='flex-start'
     >
       <StyledSubheader disableSticky>{subheader}</StyledSubheader>
 
       {items.map((item) =>
         isDashboard ? (
-          <NavItemDashboard key={item.title} item={item} onClick={onClose} />
+          <NavItemDashboard
+            key={item.title}
+            item={item}
+            onClick={onClose}
+          />
         ) : (
           <NavItem
             subItem
@@ -121,5 +119,5 @@ function NavSubList({
         )
       )}
     </Stack>
-  );
+  )
 }

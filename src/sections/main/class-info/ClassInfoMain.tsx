@@ -1,71 +1,75 @@
-import { FaSchool } from "@react-icons/all-files/fa/FaSchool";
+import { Avatar, Stack, Typography, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/system'
+import { FaSchool } from '@react-icons/all-files/fa/FaSchool'
 
-import { Avatar, Stack, Typography, useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/system";
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { IClass } from '@/redux/interfaces/class.interface'
+import { IUser } from '@/redux/services/interfaces/user.interface'
 
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import { IClass } from "src/redux/interfaces/class.interface";
-import { IUser } from "src/redux/services/interfaces/user.interface";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import {
-  CLASS_AVATAR_SX,
-  CLASS_INFO_WRAPPER,
-  TEACHER_EMOJI_SX,
-} from "./constants";
+import { CLASS_AVATAR_SX, CLASS_INFO_WRAPPER, TEACHER_EMOJI_SX } from './constants'
 
 interface Props {
-  classData: IClass;
-  teacher?: IUser & BaseResponseInterface;
+  classData: IClass
+  teacher?: IUser & BaseResponseInterface
 }
 
-export default function ClassInfoMain({
-  classData,
-  teacher,
-}: Props): React.ReactElement {
-  const translate = useTranslate();
+export default function ClassInfoMain({ classData, teacher }: Props): React.ReactElement {
+  const translate = useTranslate()
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <Stack direction={isMobile ? "column" : "row"} alignItems="center" gap={2}>
+    <Stack
+      direction={isMobile ? 'column' : 'row'}
+      alignItems='center'
+      gap={2}
+    >
       <Avatar
         sx={CLASS_AVATAR_SX}
-        src={classData.avatar ?? ""}
+        src={classData.avatar ?? ''}
         alt={classData.name}
       />
-      <Stack alignItems={isMobile ? "center" : "start"}>
-        <Typography variant="h2" sx={{ color: "#fff" }}>
+      <Stack alignItems={isMobile ? 'center' : 'start'}>
+        <Typography
+          variant='h2'
+          sx={{ color: '#fff' }}
+        >
           {classData?.name}
         </Typography>
-        <Stack direction="row" sx={CLASS_INFO_WRAPPER}>
-          <Typography variant="subtitle2" sx={{ color: "#fff" }}>
+        <Stack
+          direction='row'
+          sx={CLASS_INFO_WRAPPER}
+        >
+          <Typography
+            variant='subtitle2'
+            sx={{ color: '#fff' }}
+          >
             <FaSchool
-              color="#fff"
-              size="16px"
-              style={{ marginRight: "10px" }}
+              color='#fff'
+              size='16px'
+              style={{ marginRight: '10px' }}
             />
             {classData?.school?.name}
           </Typography>
           <Avatar
             sx={TEACHER_EMOJI_SX}
-            src={teacher?.avatar ?? ""}
-            alt={teacher?.first_name ?? "Teacher avatar"}
+            src={teacher?.avatar ?? ''}
+            alt={teacher?.first_name ?? 'Teacher avatar'}
           >
             &#128540;
           </Avatar>
           <Typography
-            variant="subtitle2"
+            variant='subtitle2'
             sx={{
-              color: "#fff",
+              color: '#fff',
             }}
           >
-            {translate("teacher")}: {teacher?.first_name ?? ""}{" "}
-            {teacher?.last_name ?? ""}
+            {translate('teacher')}: {teacher?.first_name ?? ''} {teacher?.last_name ?? ''}
           </Typography>
         </Stack>
       </Stack>
     </Stack>
-  );
+  )
 }

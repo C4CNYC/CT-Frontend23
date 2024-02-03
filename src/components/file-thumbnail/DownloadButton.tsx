@@ -1,23 +1,16 @@
-// @mui
-import { IconButton } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { IconButton } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
-// utils
-import { bgBlur } from "@utils";
+import { bgBlur } from '@/lib/utils'
 
-//
-import { Iconify } from "../iconify";
-
-// ----------------------------------------------------------------------
+import { Iconify } from '../iconify'
 
 interface Props {
-  onDownload?: VoidFunction;
+  onDownload?: VoidFunction
 }
 
-export function DownloadButton({
-  onDownload,
-}: Props): React.ReactElement | null {
-  const theme = useTheme();
+export function DownloadButton({ onDownload }: Props): React.ReactElement | null {
+  const theme = useTheme()
 
   return (
     <IconButton
@@ -31,15 +24,15 @@ export function DownloadButton({
         height: 1,
         zIndex: 9,
         opacity: 0,
-        position: "absolute",
-        borderRadius: "unset",
+        position: 'absolute',
+        borderRadius: 'unset',
         // color: 'common.white',
-        justifyContent: "center",
-        bgcolor: "grey.800",
-        color: "common.white",
-        transition: theme.transitions.create("opacity"),
+        justifyContent: 'center',
+        bgcolor: 'grey.800',
+        color: 'common.white',
+        transition: theme.transitions.create('opacity'),
 
-        "&:hover": {
+        '&:hover': {
           opacity: 1,
           ...bgBlur({
             opacity: 0.64,
@@ -48,7 +41,10 @@ export function DownloadButton({
         },
       }}
     >
-      <Iconify icon="eva:arrow-circle-down-fill" width={24} />
+      <Iconify
+        icon='eva:arrow-circle-down-fill'
+        width={24}
+      />
     </IconButton>
-  );
+  )
 }

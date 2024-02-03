@@ -1,38 +1,36 @@
-import { MuiColorInput } from "mui-color-input";
-import { useSnackbar } from "notistack";
-import { Controller, useForm } from "react-hook-form";
+import { LoadingButton } from '@mui/lab'
+import { Box, Stack, Typography } from '@mui/material'
+import { MuiColorInput } from 'mui-color-input'
+import { useSnackbar } from 'notistack'
+import { Controller, useForm } from 'react-hook-form'
 
-import { LoadingButton } from "@mui/lab";
-import { Box, Stack, Typography } from "@mui/material";
+import { FormProvider, RHFTextField } from '@/components'
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { useUpdateOrgCustomizationMutation } from '@/redux/services/admin/organization-customization'
+import { CustomizationResponce } from '@/redux/services/interfaces/organization.interface'
 
-import { FormProvider, RHFTextField } from "@components";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin/organization-customization";
-import { CustomizationResponce } from "src/redux/services/interfaces/organization.interface";
-
-import { useLocales } from "../../../../../../locales";
+import { useLocales } from '../../../../../../locales'
 
 interface FormValuesProps {
-  description: string;
-  welcome_message: string;
-  custom_group_name: string;
-  primaryColor: string;
-  secondaryColor: string;
-  alternativeColor: string;
+  description: string
+  welcome_message: string
+  custom_group_name: string
+  primaryColor: string
+  secondaryColor: string
+  alternativeColor: string
 }
 
 interface CustomizationFormProps {
-  customization?: CustomizationResponce & BaseResponseInterface;
+  customization?: CustomizationResponce & BaseResponseInterface
 }
 
 export default function CustomizationForm({
   customization,
 }: CustomizationFormProps): React.ReactElement | null {
-  const [updateCustomization, { isLoading }] =
-    useUpdateOrgCustomizationMutation();
-  const { translate } = useLocales();
+  const [updateCustomization, { isLoading }] = useUpdateOrgCustomizationMutation()
+  const { translate } = useLocales()
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
 
   const defaultValues = {
     description: customization?.description as string,
@@ -41,15 +39,15 @@ export default function CustomizationForm({
     primaryColor: customization?.theme?.primaryColor as string,
     secondaryColor: customization?.theme?.secondaryColor as string,
     alternativeColor: customization?.theme?.alternativeColor as string,
-  };
+  }
 
   const methods = useForm<FormValuesProps>({
     // resolver: yupResolver(UpdateUserSchema),
     defaultValues,
-  });
+  })
 
-  const { handleSubmit, formState, reset, control } = methods;
-  const isFormEdited = formState.isDirty;
+  const { handleSubmit, formState, reset, control } = methods
+  const isFormEdited = formState.isDirty
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -62,46 +60,55 @@ export default function CustomizationForm({
           secondaryColor: data.secondaryColor,
           alternativeColor: data.alternativeColor,
         },
-      }).unwrap();
-      enqueueSnackbar("Update success!");
-      reset({}, { keepValues: true });
+      }).unwrap()
+      enqueueSnackbar('Update success!')
+      reset({}, { keepValues: true })
     } catch (error: any) {}
-  };
+  }
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+    <FormProvider
+      methods={methods}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Box
         gap={2.5}
-        display="grid"
-        justifyItems={{ xs: "center", sm: "start" }}
+        display='grid'
+        justifyItems={{ xs: 'center', sm: 'start' }}
         gridTemplateColumns={{
-          xs: "repeat(1, 1fr)",
-          sm: "repeat(1, 1fr)",
-          md: "repeat(3, 1fr)",
+          xs: 'repeat(1, 1fr)',
+          sm: 'repeat(1, 1fr)',
+          md: 'repeat(3, 1fr)',
         }}
       >
         <Box>
-          <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>{`${translate(
-            "organizations.general_page.tabs.content.customization.primary_color"
+          <Typography
+            variant='h6'
+            sx={{ mt: 2, mb: 1 }}
+          >{`${translate(
+            'organizations.general_page.tabs.content.customization.primary_color'
           )}`}</Typography>
           <Controller
             control={control}
-            name="primaryColor"
+            name='primaryColor'
             render={({ field, fieldState }) => (
               <MuiColorInput
                 {...field}
                 value={field.value}
-                helperText={fieldState.invalid ? "Color is invalid" : ""}
+                helperText={fieldState.invalid ? 'Color is invalid' : ''}
                 error={fieldState.invalid}
                 isAlphaHidden
-                format="hex"
+                format='hex'
               />
             )}
           />
         </Box>
         <Box>
-          <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>{`${translate(
-            "organizations.general_page.tabs.content.customization.secondary_color"
+          <Typography
+            variant='h6'
+            sx={{ mt: 2, mb: 1 }}
+          >{`${translate(
+            'organizations.general_page.tabs.content.customization.secondary_color'
           )}`}</Typography>
           <Controller
             control={control}
@@ -109,18 +116,21 @@ export default function CustomizationForm({
               <MuiColorInput
                 {...field}
                 value={field.value}
-                helperText={fieldState.invalid ? "Color is invalid" : ""}
+                helperText={fieldState.invalid ? 'Color is invalid' : ''}
                 error={fieldState.invalid}
                 isAlphaHidden
-                format="hex"
+                format='hex'
               />
             )}
-            name="secondaryColor"
+            name='secondaryColor'
           />
         </Box>
         <Box>
-          <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>{`${translate(
-            "organizations.general_page.tabs.content.customization.alternative_color"
+          <Typography
+            variant='h6'
+            sx={{ mt: 2, mb: 1 }}
+          >{`${translate(
+            'organizations.general_page.tabs.content.customization.alternative_color'
           )}`}</Typography>
           <Controller
             control={control}
@@ -128,73 +138,82 @@ export default function CustomizationForm({
               <MuiColorInput
                 {...field}
                 value={field.value}
-                helperText={fieldState.invalid ? "Color is invalid" : ""}
+                helperText={fieldState.invalid ? 'Color is invalid' : ''}
                 error={fieldState.invalid}
                 isAlphaHidden
-                format="hex"
+                format='hex'
               />
             )}
-            name="alternativeColor"
+            name='alternativeColor'
           />
         </Box>
       </Box>
 
-      <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>{`${translate(
-        "organizations.general_page.tabs.content.customization.seo_description"
+      <Typography
+        variant='h6'
+        sx={{ mt: 4, mb: 2 }}
+      >{`${translate(
+        'organizations.general_page.tabs.content.customization.seo_description'
       )}`}</Typography>
       <RHFTextField
-        name="description"
+        name='description'
         label={`${translate(
-          "organizations.general_page.tabs.content.customization.seo_input_label"
+          'organizations.general_page.tabs.content.customization.seo_input_label'
         )}`}
         multiline
         rows={3}
         sx={{ mb: 2 }}
         helperText={`${translate(
-          "organizations.general_page.tabs.content.customization.seo_description_note"
+          'organizations.general_page.tabs.content.customization.seo_description_note'
         )}`}
       />
 
-      <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>{`${translate(
-        "organizations.general_page.tabs.content.customization.groups_name"
+      <Typography
+        variant='h6'
+        sx={{ mt: 4, mb: 2 }}
+      >{`${translate(
+        'organizations.general_page.tabs.content.customization.groups_name'
       )}`}</Typography>
       <RHFTextField
-        name="custom_group_name"
+        name='custom_group_name'
         label={`${translate(
-          "organizations.general_page.tabs.content.customization.groups_input_label"
+          'organizations.general_page.tabs.content.customization.groups_input_label'
         )}`}
         sx={{ mb: 2 }}
         helperText={`${translate(
-          "organizations.general_page.tabs.content.customization.groups_note"
+          'organizations.general_page.tabs.content.customization.groups_note'
         )}`}
       />
 
-      <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>{`${translate(
-        "organizations.general_page.tabs.content.customization.first_slide_text"
+      <Typography
+        variant='h6'
+        sx={{ mt: 4, mb: 2 }}
+      >{`${translate(
+        'organizations.general_page.tabs.content.customization.first_slide_text'
       )}`}</Typography>
       <RHFTextField
-        name="welcome_message"
+        name='welcome_message'
         label={`${translate(
-          "organizations.general_page.tabs.content.customization.first_slide_input_label"
+          'organizations.general_page.tabs.content.customization.first_slide_input_label'
         )}`}
         multiline
         rows={3}
         sx={{ mb: 2 }}
         helperText={`${translate(
-          "organizations.general_page.tabs.content.customization.first_slide_note"
+          'organizations.general_page.tabs.content.customization.first_slide_note'
         )}`}
       />
       <Stack>
         <LoadingButton
-          type="submit"
-          variant="contained"
+          type='submit'
+          variant='contained'
           loading={isLoading}
           disabled={!isFormEdited}
-          sx={{ ml: "auto", mt: 4, mb: 10 }}
+          sx={{ ml: 'auto', mt: 4, mb: 10 }}
         >
-          {`${translate("actions_save_changes")}`}
+          {`${translate('actions_save_changes')}`}
         </LoadingButton>
       </Stack>
     </FormProvider>
-  );
+  )
 }

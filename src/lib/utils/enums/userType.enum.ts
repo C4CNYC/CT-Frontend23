@@ -1,4 +1,4 @@
 export enum UserType {
-  Anonim = "anonim",
-  Authorized = "authorized",
+  Anonim = 'anonim',
+  Authorized = 'authorized',
 }

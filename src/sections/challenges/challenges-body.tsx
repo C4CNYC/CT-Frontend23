@@ -1,11 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import SplitPane from "react-split-pane";
+import { Box, Container } from '@mui/material'
+import SplitPane from 'react-split-pane'
 
-import { Box, Container } from "@mui/material";
-
-import ChallengeTask from "./challenge-task";
-import CodeTab from "./code-tab";
+import ChallengeTask from './challenge-task'
+import CodeTab from './code-tab'
 
 export default function ChallnegesBody(): React.ReactElement {
   return (
@@ -73,21 +71,21 @@ export default function ChallnegesBody(): React.ReactElement {
         sx={{
           paddingLeft: 0,
           paddingRight: 0,
-          position: "relative",
+          position: 'relative',
         }}
       >
         <SplitPane
-          split="vertical"
+          split='vertical'
           minSize={300}
           maxSize={-100}
-          defaultSize={"50%"}
+          defaultSize={'50%'}
         >
           <ChallengeTask />
-          <Box sx={{ height: "100%" }}>
+          <Box sx={{ height: '100%' }}>
             <CodeTab />
           </Box>
         </SplitPane>
       </Container>
     </>
-  );
+  )
 }

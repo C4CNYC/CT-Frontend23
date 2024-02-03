@@ -1,45 +1,37 @@
-// @mui
-import { ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { ListItemButton, ListItemIcon, ListSubheader } from '@mui/material'
+import { alpha, styled } from '@mui/material/styles'
 
-// config
-import { ICON, NAV } from "../../../config";
-//
-import { NavItemProps } from "../types";
+import { ICON, NAV } from '../../../config'
+import { NavItemProps } from '../types'
 
-// ----------------------------------------------------------------------
-
-type StyledItemProps = Omit<NavItemProps, "item"> & {
-  caption?: boolean;
-  disabled?: boolean;
-};
+type StyledItemProps = Omit<NavItemProps, 'item'> & {
+  caption?: boolean
+  disabled?: boolean
+}
 
 export const StyledItem = styled(ListItemButton, {
-  shouldForwardProp: (prop) => prop !== "active" && prop !== "caption",
+  shouldForwardProp: (prop) => prop !== 'active' && prop !== 'caption',
 })<StyledItemProps>(({ active, disabled, depth, caption, theme }) => {
-  const isLight = theme.palette.mode === "light";
+  const isLight = theme.palette.mode === 'light'
 
-  const subItem = depth !== 1;
+  const subItem = depth !== 1
 
   const activeStyle = {
     color: theme.palette.primary.main,
-    backgroundColor: alpha(
-      theme.palette.primary.main,
-      theme.palette.action.selectedOpacity
-    ),
+    backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
     ...(!isLight && {
       color: theme.palette.primary.light,
     }),
-  };
+  }
 
   const activeSubStyle = {
     color: theme.palette.text.primary,
-    backgroundColor: "transparent",
-  };
+    backgroundColor: 'transparent',
+  }
 
   return {
-    position: "relative",
-    textTransform: "capitalize",
+    position: 'relative',
+    textTransform: 'capitalize',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1.5),
     marginBottom: theme.spacing(0.5),
@@ -60,7 +52,7 @@ export const StyledItem = styled(ListItemButton, {
     // Active item
     ...(active && {
       ...activeStyle,
-      "&:hover": {
+      '&:hover': {
         ...activeStyle,
       },
     }),
@@ -68,52 +60,46 @@ export const StyledItem = styled(ListItemButton, {
     ...(subItem &&
       active && {
         ...activeSubStyle,
-        "&:hover": {
+        '&:hover': {
           ...activeSubStyle,
         },
       }),
     // Disabled
     ...(disabled && {
-      "&.Mui-disabled": {
+      '&.Mui-disabled': {
         opacity: 0.64,
       },
     }),
-  };
-});
-
-// ----------------------------------------------------------------------
+  }
+})
 
 export const StyledIcon = styled(ListItemIcon)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   width: ICON.NAV_ITEM,
   height: ICON.NAV_ITEM,
-});
-
-// ----------------------------------------------------------------------
+})
 
 interface StyledDotIconProps {
-  active?: boolean;
+  active?: boolean
 }
 
-export const StyledDotIcon = styled("span", {
-  shouldForwardProp: (prop) => prop !== "active",
+export const StyledDotIcon = styled('span', {
+  shouldForwardProp: (prop) => prop !== 'active',
 })<StyledDotIconProps>(({ active, theme }) => ({
   width: 4,
   height: 4,
-  borderRadius: "50%",
+  borderRadius: '50%',
   backgroundColor: theme.palette.text.disabled,
-  transition: theme.transitions.create("transform", {
+  transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shorter,
   }),
   ...(active && {
-    transform: "scale(2)",
+    transform: 'scale(2)',
     backgroundColor: theme.palette.primary.main,
   }),
-}));
-
-// ----------------------------------------------------------------------
+}))
 
 export const StyledSubheader = styled(ListSubheader)(({ theme }) => ({
   ...theme.typography.overline,
@@ -121,4 +107,4 @@ export const StyledSubheader = styled(ListSubheader)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(1),
   color: theme.palette.text.secondary,
-}));
+}))

@@ -1,100 +1,107 @@
-import React, { MouseEventHandler, useCallback, useState } from "react";
+import React, { MouseEventHandler, useCallback, useState } from 'react'
 
-import { useCommands } from "@remirror/react";
-import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiFillCheckCircle } from "@react-icons/all-files/ai/AiFillCheckCircle";
-import { AiFillYoutube } from "@react-icons/all-files/ai/AiFillYoutube";
-import { RxCrossCircled } from "@react-icons/all-files/rx/RxCrossCircled";
-import "remirror/styles/all.css";
+import { IconButton, Stack, TextField } from '@mui/material'
+import ToggleButton from '@mui/material/ToggleButton'
+import { AiFillCheckCircle } from '@react-icons/all-files/ai/AiFillCheckCircle'
+import { AiFillYoutube } from '@react-icons/all-files/ai/AiFillYoutube'
+import { RxCrossCircled } from '@react-icons/all-files/rx/RxCrossCircled'
+import { useCommands } from '@remirror/react'
+import { useDetectClickOutside } from 'react-detect-click-outside'
 
-import { IconButton, Stack, TextField } from "@mui/material";
-import ToggleButton from "@mui/material/ToggleButton";
+import 'remirror/styles/all.css'
 
 export default function AddIframeButton(): JSX.Element {
-  const { addYouTubeVideo } = useCommands();
-  const [href, setHref] = useState<string>("");
-  const [edit, setEdit] = useState<boolean>(false);
+  const { addYouTubeVideo } = useCommands()
+  const [href, setHref] = useState<string>('')
+  const [edit, setEdit] = useState<boolean>(false)
 
   const handleChange = useCallback((e: any) => {
-    setHref(e.target.value);
-  }, []);
+    setHref(e.target.value)
+  }, [])
 
-  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (e: any) => {
-      e.preventDefault();
-    },
-    []
-  );
+  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback((e: any) => {
+    e.preventDefault()
+  }, [])
 
   const handleSubmit = useCallback(
     (e: any) => {
-      e.preventDefault();
-      addYouTubeVideo({ video: href, showControls: true });
-      setHref("");
-      setEdit(!edit);
+      e.preventDefault()
+      addYouTubeVideo({ video: href, showControls: true })
+      setHref('')
+      setEdit(!edit)
     },
     [addYouTubeVideo, href]
-  );
+  )
 
   const closeMenu = (): void => {
-    setEdit(false);
-  };
-  const ref = useDetectClickOutside({ onTriggered: closeMenu });
+    setEdit(false)
+  }
+  const ref = useDetectClickOutside({ onTriggered: closeMenu })
 
   return (
-    <Stack direction="row" style={{ marginLeft: "10px" }} ref={ref}>
+    <Stack
+      direction='row'
+      style={{ marginLeft: '10px' }}
+      ref={ref}
+    >
       {edit && (
         <div
           style={{
-            position: "absolute",
-            top: "44px",
-            width: "280px",
-            display: "flex",
-            alignItems: "center",
-            backgroundColor: "white",
-            border: "1px solid rgba(0, 0, 0, 0.12)",
-            borderRadius: "4px",
-            padding: "5px",
+            position: 'absolute',
+            top: '44px',
+            width: '280px',
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            border: '1px solid rgba(0, 0, 0, 0.12)',
+            borderRadius: '4px',
+            padding: '5px',
             zIndex: 2,
           }}
         >
           <TextField
-            variant="outlined"
-            size="small"
-            type="url"
-            placeholder="Enter youtube link..."
+            variant='outlined'
+            size='small'
+            type='url'
+            placeholder='Enter youtube link...'
             value={href}
             onChange={handleChange}
             required
           />
           <IconButton
-            sx={{ p: "10px" }}
+            sx={{ p: '10px' }}
             onClick={handleSubmit}
             disabled={!href}
           >
-            <AiFillCheckCircle size={22} color="green" />
+            <AiFillCheckCircle
+              size={22}
+              color='green'
+            />
           </IconButton>
 
           <IconButton
-            sx={{ p: "10px" }}
+            sx={{ p: '10px' }}
             onClick={() => {
-              setEdit(!edit);
+              setEdit(!edit)
             }}
           >
-            <RxCrossCircled size={22} color="red" />
+            <RxCrossCircled
+              size={22}
+              color='red'
+            />
           </IconButton>
         </div>
       )}
       <ToggleButton
-        value="left"
-        key="left"
+        value='left'
+        key='left'
         onMouseDown={handleMouseDown}
         onClick={() => {
-          setEdit(!edit);
+          setEdit(!edit)
         }}
       >
         <AiFillYoutube size={22} />
       </ToggleButton>
     </Stack>
-  );
+  )
 }

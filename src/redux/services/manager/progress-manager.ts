@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 
-import { managerApi } from ".";
-import { ILessonContent } from "../interfaces/courseUnits.interface";
+import { ILessonContent } from '../interfaces/courseUnits.interface'
 import {
   IProgress,
   IProgressChalanges,
   IProgressContent,
   IProgressSearch,
-} from "../interfaces/progress.interface";
+} from '../interfaces/progress.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,14 +18,14 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id }) => ({
         url: `/manager/course/${id}/progress`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
     }),
     getProgressContent: builder.query<IProgressChalanges, { id: string }>({
       query: ({ id }) => ({
         url: `/manager/course/${id}/progress/content`,
-        method: "GET",
+        method: 'GET',
       }),
       transformResponse: (
         response: IProgressContent & BaseResponseInterface
@@ -36,40 +36,38 @@ const extendedApi = managerApi.injectEndpoints({
             {
               id: curr.id,
               name: curr.name,
-              type: "module",
+              type: 'module',
               chalanges: [],
               lessons: curr.lessons
                 .map((lesson) => ({
                   id: lesson.id,
                   name: lesson.name,
-                  type: "lesson",
-                  chalanges:
-                    lesson.contents.filter(
-                      (content) => content.validations.length
-                    ) || [],
+                  type: 'lesson',
+                  chalanges: lesson.contents.filter((content) => content.validations.length) || [],
                 }))
                 .filter((d) => d.chalanges.length),
             },
           ],
           []
-        );
+        )
         return data
           .map((unit) => ({
             ...unit,
-            chalanges: unit.lessons.reduce<
-              Array<ILessonContent & BaseResponseInterface>
-            >((acc, curr) => [...acc, ...curr.chalanges], []),
+            chalanges: unit.lessons.reduce<Array<ILessonContent & BaseResponseInterface>>(
+              (acc, curr) => [...acc, ...curr.chalanges],
+              []
+            ),
           }))
-          .filter((d) => d.chalanges.length);
+          .filter((d) => d.chalanges.length)
       },
       keepUnusedDataFor: 0,
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetProgressQuery,
   useGetProgressContentQuery,
   // -------------mutation-----------
-} = extendedApi;
+} = extendedApi

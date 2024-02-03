@@ -1,45 +1,46 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Stack, Switch, Typography } from "@mui/material";
+import { Stack, Switch, Typography } from '@mui/material'
 
-import { Iconify } from "src/components/iconify";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Iconify } from '@/components/iconify'
+import { useTranslate } from '@/lib/utils/translateHelper'
 
-import BasePreference from "./BasePreference";
+import BasePreference from './BasePreference'
 
 interface IEditorWordWrap {
-  onUpdateWordWrap: (newValue: boolean) => void;
+  onUpdateWordWrap: (newValue: boolean) => void
 }
 
-const EditorWordWrap = ({
-  onUpdateWordWrap,
-}: IEditorWordWrap): React.ReactElement => {
-  const [wordWrap, setWordWrap] = useState(true);
-  const translate = useTranslate();
+const EditorWordWrap = ({ onUpdateWordWrap }: IEditorWordWrap): React.ReactElement => {
+  const [wordWrap, setWordWrap] = useState(true)
+  const translate = useTranslate()
   return (
     <BasePreference
-      title={translate("word_wrap")}
+      title={translate('word_wrap')}
       abandonmentIcon={
-        <Iconify width="27px" icon="material-symbols:wrap-text-rounded" />
+        <Iconify
+          width='27px'
+          icon='material-symbols:wrap-text-rounded'
+        />
       }
     >
       <Stack
-        direction="row"
+        direction='row'
         spacing={1}
-        alignItems="center"
-        justifyContent="center"
+        alignItems='center'
+        justifyContent='center'
       >
-        <Typography variant="subtitle1">{translate("enable")}</Typography>
+        <Typography variant='subtitle1'>{translate('enable')}</Typography>
         <Switch
           checked={wordWrap}
           onChange={(e, newvalue) => {
-            setWordWrap(!wordWrap);
-            onUpdateWordWrap(newvalue);
+            setWordWrap(!wordWrap)
+            onUpdateWordWrap(newvalue)
           }}
         />
       </Stack>
     </BasePreference>
-  );
-};
+  )
+}
 
-export default EditorWordWrap;
+export default EditorWordWrap

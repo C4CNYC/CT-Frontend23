@@ -1,12 +1,6 @@
-// @mui
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps } from '@mui/material'
 
-// ----------------------------------------------------------------------
-
-export default function BadgeDot({
-  sx,
-  ...other
-}: BoxProps): React.ReactElement {
+export default function BadgeDot({ sx, ...other }: BoxProps): React.ReactElement {
   return (
     <Box
       sx={{
@@ -14,12 +8,12 @@ export default function BadgeDot({
         right: 4,
         width: 8,
         height: 8,
-        borderRadius: "50%",
-        position: "absolute",
-        bgcolor: "error.main",
+        borderRadius: '50%',
+        position: 'absolute',
+        bgcolor: 'error.main',
         ...sx,
       }}
       {...other}
     />
-  );
+  )
 }

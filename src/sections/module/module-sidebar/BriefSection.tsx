@@ -1,8 +1,3 @@
-import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
-import { LuSchool } from "@react-icons/all-files/lu/LuSchool";
-import { MdOutlinePlayLesson } from "@react-icons/all-files/md/MdOutlinePlayLesson";
-import { SiLevelsdotfyi } from "@react-icons/all-files/si/SiLevelsdotfyi";
-
 import {
   Box,
   List,
@@ -11,16 +6,19 @@ import {
   ListItemText,
   Typography,
   useTheme,
-} from "@mui/material";
+} from '@mui/material'
+import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
+import { LuSchool } from '@react-icons/all-files/lu/LuSchool'
+import { MdOutlinePlayLesson } from '@react-icons/all-files/md/MdOutlinePlayLesson'
+import { SiLevelsdotfyi } from '@react-icons/all-files/si/SiLevelsdotfyi'
 
-import { convertDuration } from "@utils";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { useTranslate } from '@/lib/utils/translateHelper'
 
 interface IBriefSectionProps {
-  duration: string;
-  level: string;
-  lessons: string;
-  grade: string;
+  duration: string
+  level: string
+  lessons: string
+  grade: string
 }
 
 export default function BriefSection({
@@ -29,17 +27,14 @@ export default function BriefSection({
   lessons,
   grade,
 }: IBriefSectionProps): React.ReactElement {
-  const theme = useTheme();
-  const translate = useTranslate();
+  const theme = useTheme()
+  const translate = useTranslate()
 
   return (
     <Box
       sx={{
         borderRadius: 3,
-        bgcolor:
-          theme.palette.mode === "light"
-            ? "#F8F8F8"
-            : theme.palette.background.paper,
+        bgcolor: theme.palette.mode === 'light' ? '#F8F8F8' : theme.palette.background.paper,
         pb: 2,
       }}
     >
@@ -70,13 +65,9 @@ export default function BriefSection({
         </ListItem>
       </List>
       <Box sx={{ px: 2 }}>
-        <Typography variant="body2">
-          {translate("courses_for_beginners_info")}
-        </Typography>
-        <Typography variant="body2">
-          {translate("courses_entery_point")}
-        </Typography>
+        <Typography variant='body2'>{translate('courses_for_beginners_info')}</Typography>
+        <Typography variant='body2'>{translate('courses_entery_point')}</Typography>
       </Box>
     </Box>
-  );
+  )
 }

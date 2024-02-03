@@ -1,7 +1,7 @@
-import { FileExtension } from "@remirror/extension-file";
-import { ReactComponentExtension } from "@remirror/react";
-import jsx from "refractor/lang/jsx.js";
-import typescript from "refractor/lang/typescript.js";
+import { FileExtension } from '@remirror/extension-file'
+import { ReactComponentExtension } from '@remirror/react'
+import jsx from 'refractor/lang/jsx.js'
+import typescript from 'refractor/lang/typescript.js'
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -32,7 +32,7 @@ import {
   TextHighlightExtension,
   UnderlineExtension,
   WhitespaceExtension,
-} from "remirror/extensions";
+} from 'remirror/extensions'
 // import data from "svgmoji/emoji.json";
 
 type Extensions =
@@ -66,7 +66,7 @@ type Extensions =
   | BulletListExtension
   | OrderedListExtension
   | TaskListExtension
-  | EmojiExtension;
+  | EmojiExtension
 
 export const extensions = (): Extensions[] => [
   new HeadingExtension(),
@@ -76,7 +76,7 @@ export const extensions = (): Extensions[] => [
   //   new ImageExtension({ enableResizing: true, uploadHandler }),
   new BlockquoteExtension(),
   new CodeBlockExtension({
-    defaultLanguage: "js",
+    defaultLanguage: 'js',
     supportedLanguages: [typescript, jsx],
   }),
   new CodeExtension(),
@@ -91,7 +91,7 @@ export const extensions = (): Extensions[] => [
   new FileExtension(),
   new CalloutExtension(),
   new LinkExtension({ autoLink: true }),
-  new FontSizeExtension({ defaultSize: "16", unit: "px" }),
+  new FontSizeExtension({ defaultSize: '16', unit: 'px' }),
   new StrikeExtension(),
   new TextHighlightExtension(),
   new TextCaseExtension(),
@@ -102,4 +102,4 @@ export const extensions = (): Extensions[] => [
   new OrderedListExtension(),
   new TaskListExtension(),
   // new EmojiExtension({ data, moji: "noto" }),
-];
+]

@@ -1,9 +1,9 @@
-import { useLocales } from "src/locales";
+import { useLocales } from '@/locales'
 
 export const useTranslate = () => {
-  const { translate } = useLocales();
+  const { translate } = useLocales()
   const translateSrt = (text: string, ...arg: any) => {
-    return `${translate(text, ...arg)}`;
-  };
-  return translateSrt;
-};
+    return `${translate(text, ...arg)}`
+  }
+  return translateSrt
+}

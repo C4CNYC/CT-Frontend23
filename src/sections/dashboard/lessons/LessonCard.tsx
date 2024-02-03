@@ -1,45 +1,24 @@
-import { useRouter } from "next/router"
-import { useState } from "react"
+import { useState } from 'react'
 
-import { LoadingButton } from "@mui/lab"
-import {
-  Box,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material"
+import { Draggable } from '@hello-pangea/dnd'
+import { LoadingButton } from '@mui/lab'
+import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
+import { useRouter } from 'next/router'
 
-import {
-  ConfirmDialog,
-  Iconify,
-  Label,
-  MenuPopover,
-  TextMaxLine,
-  useSnackbar,
-} from "@components"
-import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog"
-import { BaseResponseInterface } from "@utils"
-import { ILesson } from "src/redux/services/interfaces/courseUnits.interface"
-import { useTranslate } from "src/lib/utils/translateHelper"
+import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
+import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 
-import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager"
-import { Draggable } from "@hello-pangea/dnd"
-import { RxDragHandleDots2 } from "@react-icons/all-files/rx/RxDragHandleDots2"
-
-// ----------------------------------------------------------------------
+import { useDeleteLessonMutation } from '../../../redux/services/manager/lessons-manager'
 
 interface Props {
-  lesson: ILesson;
+  lesson: ILesson
   index?: number
 }
 
-export default function LessonCard ({
-  lesson,
-  index
-}: Props): React.ReactElement | null {
+export default function LessonCard({ lesson, index }: Props): React.ReactElement | null {
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -53,10 +32,10 @@ export default function LessonCard ({
     if (lesson.id) {
       try {
         await deleteLesson({ id: lesson.id }).unwrap()
-        enqueueSnackbar(translate("lessons_deleted_msg"))
+        enqueueSnackbar(translate('lessons_deleted_msg'))
       } catch (e: any) {
         enqueueSnackbar(e.data.message, {
-          variant: "error",
+          variant: 'error',
         })
       }
       setLoading(false)
@@ -71,9 +50,7 @@ export default function LessonCard ({
     setOpenConfirm(false)
   }
 
-  const handleOpenPopover = async (
-    event: React.MouseEvent<HTMLElement>
-  ): Promise<void> => {
+  const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
     setOpenPopover(event.currentTarget)
     event.stopPropagation()
     event.preventDefault()
@@ -84,103 +61,113 @@ export default function LessonCard ({
   }
 
   const openContentCreationTool = (): void => {
-    router.push(
-      `${router.pathname}?${new URLSearchParams({ lessonId: lesson.id })}`,
-      undefined,
-      { shallow: true }
-    )
+    router.push(`${router.pathname}?${new URLSearchParams({ lessonId: lesson.id })}`, undefined, {
+      shallow: true,
+    })
   }
 
   return (
     <>
-      <Draggable draggableId={lesson.id} index={index ?? 0}>
+      <Draggable
+        draggableId={lesson.id}
+        index={index ?? 0}
+      >
         {(provided) => (
           <Card
             {...provided.draggableProps}
             ref={provided.innerRef}
             onClick={openContentCreationTool}
-            component="a"
-            href="#"
+            component='a'
+            href='#'
             sx={{
-              textDecoration: "none",
+              textDecoration: 'none',
               p: 2.5,
               width: 1,
               boxShadow: 0,
-              bgcolor: "background.default",
-              maxWidth: "auto",
+              bgcolor: 'background.default',
+              maxWidth: 'auto',
               border: (theme) => `solid 1px ${theme.palette.divider}`,
-              "&:hover": {
-                bgcolor: "grey.100",
+              '&:hover': {
+                bgcolor: 'grey.100',
               },
             }}
           >
             <Stack
-              direction="row"
-              alignItems="center"
+              direction='row'
+              alignItems='center'
               sx={{
                 top: 8,
                 right: 8,
-                position: "absolute"
+                position: 'absolute',
               }}
             >
-              <IconButton sx={{ mr: "5px" }} {...provided.dragHandleProps}>
-                <RxDragHandleDots2 size="24px" />
+              <IconButton
+                sx={{ mr: '5px' }}
+                {...provided.dragHandleProps}
+              >
+                <RxDragHandleDots2 size='24px' />
               </IconButton>
               <IconButton
-                color={openPopover ? "inherit" : "default"}
+                color={openPopover ? 'inherit' : 'default'}
                 onClick={handleOpenPopover}
               >
-                <Iconify icon="eva:more-vertical-fill"/>
+                <Iconify icon='eva:more-vertical-fill' />
               </IconButton>
             </Stack>
             <Label
-              variant="soft"
-              color={lesson.active ? "success" : "error"}
+              variant='soft'
+              color={lesson.active ? 'success' : 'error'}
               sx={{
-                textTransform: "uppercase",
-                mr: "auto",
-                position: "absolute",
+                textTransform: 'uppercase',
+                mr: 'auto',
+                position: 'absolute',
                 top: 10,
                 left: 10,
               }}
             >
-              {lesson.active ? translate("active") : translate("not_active")}
+              {lesson.active ? translate('active') : translate('not_active')}
             </Label>
             <Box
-              component="img"
-              src="/assets/icons/files/ic_file.svg"
+              component='img'
+              src='/assets/icons/files/ic_file.svg'
               sx={{
                 width: 40,
                 height: 40,
-                mt: 4
+                mt: 4,
               }}
             />
 
-            <TextMaxLine variant="h6" sx={{
-              mt: 1,
-              mb: 0.5
-            }}>
+            <TextMaxLine
+              variant='h6'
+              sx={{
+                mt: 1,
+                mb: 0.5,
+              }}
+            >
               {lesson.name}
             </TextMaxLine>
 
             <Stack
-              direction="row"
-              alignItems="center"
+              direction='row'
+              alignItems='center'
               spacing={0.75}
               sx={{
-                typography: "caption",
-                color: "text.disabled"
+                typography: 'caption',
+                color: 'text.disabled',
               }}
             >
-              <Typography variant="caption" noWrap>
+              <Typography
+                variant='caption'
+                noWrap
+              >
                 {lesson.description}
               </Typography>
               <Box
                 sx={{
                   width: 2,
                   height: 2,
-                  borderRadius: "50%",
-                  bgcolor: "currentColor",
+                  borderRadius: '50%',
+                  bgcolor: 'currentColor',
                 }}
               />
             </Stack>
@@ -190,7 +177,7 @@ export default function LessonCard ({
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow="right-top"
+        arrow='right-top'
         sx={{ width: 160 }}
       >
         <CreateLessonDialog
@@ -200,45 +187,45 @@ export default function LessonCard ({
             name: lesson.name,
             description: lesson.description,
             active: lesson.active,
-            tips: "",
+            tips: '',
             independent: lesson.independent,
             type: lesson.type,
           }}
           lessonTips={lesson.tips}
         >
           <MenuItem>
-            <Iconify icon="eva:edit-fill"/>
-            {translate("actions_edit")}
+            <Iconify icon='eva:edit-fill' />
+            {translate('actions_edit')}
           </MenuItem>
         </CreateLessonDialog>
 
-        <Divider sx={{ borderStyle: "dashed" }}/>
+        <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem
           onClick={() => {
             handleOpenConfirm()
             handleClosePopover()
           }}
-          sx={{ color: "error.main" }}
+          sx={{ color: 'error.main' }}
         >
-          <Iconify icon="eva:trash-2-outline"/>
-          {translate("actions_delete")}
+          <Iconify icon='eva:trash-2-outline' />
+          {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
-        content={translate("messages_delete_question")}
+        title={translate('actions_delete')}
+        content={translate('messages_delete_question')}
         action={
           <LoadingButton
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             onClick={onDelete}
             loading={loading}
           >
-            {translate("actions_delete")}
+            {translate('actions_delete')}
           </LoadingButton>
         }
       />

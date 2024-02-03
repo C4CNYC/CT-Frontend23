@@ -1,3 +1,3 @@
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
-export const startTour = atom<Record<string, boolean>>({ start: false });
+export const startTour = atom<Record<string, boolean>>({ start: false })

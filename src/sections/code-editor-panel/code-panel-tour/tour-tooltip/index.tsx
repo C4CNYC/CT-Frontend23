@@ -1,9 +1,18 @@
-import { type FC } from "react"
-import { type TooltipRenderProps } from "react-joyride";
+import { type FC } from 'react'
 
-import CloseIcon from "@mui/icons-material/Close";
-import { Box, Button, IconButton, Paper, Typography } from "@mui/material";
-import { BOX_CONTENT_SX, BTN_BACK_SX, ICON_BTN_SX, NEXT_BTN_SX, PAPER_SX, getBoxActionsSx, getBoxSx } from "./constants";
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Button, IconButton, Paper, Typography } from '@mui/material'
+import { type TooltipRenderProps } from 'react-joyride'
+
+import {
+  BOX_CONTENT_SX,
+  BTN_BACK_SX,
+  ICON_BTN_SX,
+  NEXT_BTN_SX,
+  PAPER_SX,
+  getBoxActionsSx,
+  getBoxSx,
+} from './constants'
 
 const TooltipTourCodePanel: FC<TooltipRenderProps> = ({
   index,
@@ -15,12 +24,19 @@ const TooltipTourCodePanel: FC<TooltipRenderProps> = ({
   skipProps,
 }) => {
   return (
-    <Paper elevation={6} {...tooltipProps} sx={PAPER_SX}>
+    <Paper
+      elevation={6}
+      {...tooltipProps}
+      sx={PAPER_SX}
+    >
       <Box sx={getBoxSx(step.title)}>
-        {step.title && <Typography variant="h5">{step.title}</Typography>}
+        {step.title && <Typography variant='h5'>{step.title}</Typography>}
 
         {index + 1 !== size && (
-          <IconButton {...skipProps} sx={ICON_BTN_SX}>
+          <IconButton
+            {...skipProps}
+            sx={ICON_BTN_SX}
+          >
             <CloseIcon />
           </IconButton>
         )}
@@ -30,35 +46,41 @@ const TooltipTourCodePanel: FC<TooltipRenderProps> = ({
 
       <Box sx={getBoxActionsSx(index)}>
         {index > 0 && (
-          <Button {...backProps} sx={BTN_BACK_SX}>
+          <Button
+            {...backProps}
+            sx={BTN_BACK_SX}
+          >
             Back
-
-            <Box id="back" />
+            <Box id='back' />
           </Button>
         )}
 
-        <Typography variant="subtitle2" sx={{ pr: index === 0 ? 10 : 0 }}>
+        <Typography
+          variant='subtitle2'
+          sx={{ pr: index === 0 ? 10 : 0 }}
+        >
           {index + 1}/{size}
         </Typography>
 
         {index + 1 < size && (
-          <Button {...primaryProps} sx={NEXT_BTN_SX}>
+          <Button
+            {...primaryProps}
+            sx={NEXT_BTN_SX}
+          >
             Next
-
-            <Box id="next" />
+            <Box id='next' />
           </Button>
         )}
 
         {index + 1 === size && (
           <Button {...skipProps}>
             Close
-
-            <Box id="close" />
+            <Box id='close' />
           </Button>
         )}
       </Box>
     </Paper>
-  );
-};
+  )
+}
 
-export default TooltipTourCodePanel;
+export default TooltipTourCodePanel

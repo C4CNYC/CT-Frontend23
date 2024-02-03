@@ -1,46 +1,31 @@
-import { forwardRef } from "react";
+import { forwardRef } from 'react'
 
-// @mui
-import { Link, Typography } from "@mui/material";
+import { Link, Typography } from '@mui/material'
 
-//
-import { TextMaxLineProps } from "./types";
-import { useTypography } from "./useTypography";
-
-// ----------------------------------------------------------------------
+import { TextMaxLineProps } from './types'
+import { useTypography } from './useTypography'
 
 // eslint-disable-next-line react/display-name
 export const TextMaxLine = forwardRef<HTMLAnchorElement, TextMaxLineProps>(
-  (
-    {
-      asLink,
-      variant = "body1",
-      line = 2,
-      persistent = false,
-      children,
-      sx,
-      ...other
-    },
-    ref
-  ) => {
-    const { lineHeight } = useTypography(variant);
+  ({ asLink, variant = 'body1', line = 2, persistent = false, children, sx, ...other }, ref) => {
+    const { lineHeight } = useTypography(variant)
 
     const styles = {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      display: "-webkit-box",
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      display: '-webkit-box',
       WebkitLineClamp: line,
-      WebkitBoxOrient: "vertical",
+      WebkitBoxOrient: 'vertical',
       ...(persistent && {
         height: Number(lineHeight) * line,
       }),
       ...sx,
-    } as const;
+    } as const
 
     if (asLink) {
       return (
         <Link
-          color="inherit"
+          color='inherit'
           ref={ref}
           variant={variant}
           sx={{ ...styles }}
@@ -48,13 +33,18 @@ export const TextMaxLine = forwardRef<HTMLAnchorElement, TextMaxLineProps>(
         >
           {children}
         </Link>
-      );
+      )
     }
 
     return (
-      <Typography ref={ref} variant={variant} sx={{ ...styles }} {...other}>
+      <Typography
+        ref={ref}
+        variant={variant}
+        sx={{ ...styles }}
+        {...other}
+      >
         {children}
       </Typography>
-    );
+    )
   }
-);
+)

@@ -1,19 +1,19 @@
-import { type RefObject, useEffect, useState, useRef, useCallback, useMemo } from "react"
+import { type RefObject, useEffect, useState, useRef, useCallback, useMemo } from 'react'
 
-import { type Extension } from "@codemirror/state"
-import { EditorView } from "@codemirror/view"
-import type { Socket } from "socket.io-client"
+import { type Extension } from '@codemirror/state'
+import { EditorView } from '@codemirror/view'
+import type { Socket } from 'socket.io-client'
 
-import { RESET_LESSON_EVENT } from "src/components/real-time-editor"
+import { RESET_LESSON_EVENT } from '@/components/real-time-editor'
 
-import { RoomStatus } from "../components/status-label"
+import { RoomStatus } from '../components/status-label'
 
-import { EditorMode } from "./constants"
-import { useInitCodemirror, UseBaseInitReturn } from "./useInitCodemirror"
-import { type MemoizedProps, useMemoizedProps } from "./useMemoizedProps"
-import { useModeSubscriptions } from "./useModeSubscriotions"
-import { type File, getFileInfo, isRoomExist } from "./utils/collab/requests"
-import { unsubscribeSocket, EmitSocketEvents } from "./utils/socket"
+import { EditorMode } from './constants'
+import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
+import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
+import { useModeSubscriptions } from './useModeSubscriotions'
+import { type File, getFileInfo, isRoomExist } from './utils/collab/requests'
+import { unsubscribeSocket, EmitSocketEvents } from './utils/socket'
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
@@ -23,7 +23,7 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
 
-interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, "baseInit" | "setIsLoading"> {
+interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' | 'setIsLoading'> {
   extensions?: Extension[]
   editorRef: RefObject<HTMLDivElement>
   isLoading: boolean
@@ -49,8 +49,15 @@ export const useCodeEditorCollab = ({
   const editorRef = useRef<HTMLDivElement | null>(null)
   const [roomStatus, setRoomStatus] = useState(RoomStatus.Active)
 
-  const { cursorText, withTooltip, onChange, setActiveFile, onResetFileManager, defaultFileName, preloadedCode } =
-    useMemoizedProps(propsToMemoize)
+  const {
+    cursorText,
+    withTooltip,
+    onChange,
+    setActiveFile,
+    onResetFileManager,
+    defaultFileName,
+    preloadedCode,
+  } = useMemoizedProps(propsToMemoize)
 
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
@@ -151,7 +158,8 @@ export const useCodeEditorCollab = ({
     const fileInfo = await getFileInfo(roomId, socket)
 
     if (fileInfo != null) {
-      const shouldChangeFile = fileInfo.activeFile != null && fileInfo.activeFile.id !== activeFile.id
+      const shouldChangeFile =
+        fileInfo.activeFile != null && fileInfo.activeFile.id !== activeFile.id
 
       if (shouldChangeFile) {
         onResetFileManager(fileInfo)
@@ -229,9 +237,9 @@ export const useCodeEditorCollab = ({
   }, [initialize, socket])
 
   useEffect(() => {
-    window.addEventListener("beforeunload", clearSocketData)
+    window.addEventListener('beforeunload', clearSocketData)
     return () => {
-      window.removeEventListener("beforeunload", clearSocketData)
+      window.removeEventListener('beforeunload', clearSocketData)
       clearSocketData()
     }
   }, [clearSocketData])

@@ -1,33 +1,26 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 
-import { adminApi } from ".";
-import {
-  IContacts,
-  OrganizationResponce,
-} from "../interfaces/organization.interface";
+import { IContacts, OrganizationResponce } from '../interfaces/organization.interface'
+
+import { adminApi } from '.'
 
 const extendedApi = adminApi.injectEndpoints({
   endpoints: (builder) => ({
-    updateOrgContacts: builder.mutation<
-      IContacts & BaseResponseInterface,
-      IContacts
-    >({
+    updateOrgContacts: builder.mutation<IContacts & BaseResponseInterface, IContacts>({
       query: ({ ...body }) => ({
-        url: "/org/contact/",
-        method: "PATCH",
+        url: '/org/contact/',
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "OrganizationContacts" }],
+      invalidatesTags: [{ type: 'OrganizationContacts' }],
     }),
     getOrgContacts: builder.query<IContacts & OrganizationResponce, void>({
       query: () => ({
-        url: "/org/contact/",
-        method: "GET",
+        url: '/org/contact/',
+        method: 'GET',
       }),
-      providesTags: ["OrganizationContacts"],
+      providesTags: ['OrganizationContacts'],
     }),
   }),
-});
-export const { useGetOrgContactsQuery, useUpdateOrgContactsMutation } =
-  extendedApi;
+})
+export const { useGetOrgContactsQuery, useUpdateOrgContactsMutation } = extendedApi

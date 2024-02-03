@@ -1,30 +1,27 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Collapse } from "@mui/material";
+import { Collapse } from '@mui/material'
+import { useRouter } from 'next/router'
 
-import { NavSectionVertical } from "src/components/nav-section";
-import useActiveLink from "src/lib/hooks/useActiveLink";
+import { NavSectionVertical } from '@/components/nav-section'
+import useActiveLink from '@/lib/hooks/useActiveLink'
 
-import { NavItemProps } from "../types";
-import NavItem from "./NavItem";
+import { NavItemProps } from '../types'
 
-// ----------------------------------------------------------------------
+import NavItem from './NavItem'
 
 interface NavListProps {
-  item: NavItemProps;
+  item: NavItemProps
 }
 
-export default function NavList({
-  item,
-}: NavListProps): React.ReactElement | null {
-  const { pathname } = useRouter();
+export default function NavList({ item }: NavListProps): React.ReactElement | null {
+  const { pathname } = useRouter()
 
-  const { path, children } = item;
+  const { path, children } = item
 
-  const { isExternalLink } = useActiveLink(path);
+  const { isExternalLink } = useActiveLink(path)
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   return (
     <>
@@ -32,31 +29,33 @@ export default function NavList({
         item={item}
         open={open}
         onClick={() => {
-          setOpen(!open);
+          setOpen(!open)
         }}
         active={pathname === path}
         isExternalLink={isExternalLink}
       />
 
       {!!children && (
-        <Collapse in={open} unmountOnExit>
+        <Collapse
+          in={open}
+          unmountOnExit
+        >
           <NavSectionVertical
             data={children}
             sx={{
-              "& .MuiList-root:last-of-type .MuiListItemButton-root": {
+              '& .MuiList-root:last-of-type .MuiListItemButton-root': {
                 height: 160,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                bgcolor: "background.neutral",
-                backgroundRepeat: "no-repeat",
-                backgroundImage:
-                  "url(/assets/illustrations/illustration_dashboard.png)",
-                "& > *:not(.MuiTouchRipple-root)": { display: "none" },
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                bgcolor: 'background.neutral',
+                backgroundRepeat: 'no-repeat',
+                backgroundImage: 'url(/assets/illustrations/illustration_dashboard.png)',
+                '& > *:not(.MuiTouchRipple-root)': { display: 'none' },
               },
             }}
           />
         </Collapse>
       )}
     </>
-  );
+  )
 }

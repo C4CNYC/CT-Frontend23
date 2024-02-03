@@ -1,16 +1,8 @@
-import { type FC, useEffect } from "react";
+import { type FC, useEffect } from 'react'
 
-import {
-  Box,
-  Button,
-  List,
-  Popover,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, List, Popover, Typography, useMediaQuery, useTheme } from '@mui/material'
 
-import { useSelector } from "src/redux/store";
+import { useSelector } from '@/redux/store'
 
 import {
   BOX_STYLES,
@@ -18,43 +10,38 @@ import {
   POPOVER_HORIZONTAL,
   POPOVER_VERTICAL,
   TYP_COLOR,
-} from "./constants";
+} from './constants'
 
 interface TipsPopoverProps {
-  openPoper: boolean;
-  anchorEl: HTMLElement | null;
-  setOpenPoper: (open: boolean) => void;
-  tips: string[];
+  openPoper: boolean
+  anchorEl: HTMLElement | null
+  setOpenPoper: (open: boolean) => void
+  tips: string[]
 }
 
-const TipsPopover: FC<TipsPopoverProps> = ({
-  openPoper,
-  anchorEl,
-  setOpenPoper,
-  tips,
-}) => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
+const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, tips }) => {
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
 
   useEffect(() => {
     if (!isDesktop && activeTab !== 1) {
-      setOpenPoper(false);
+      setOpenPoper(false)
     }
-  }, [isDesktop, activeTab]);
+  }, [isDesktop, activeTab])
 
   return (
     <Popover
-      id="popper"
+      id='popper'
       open={openPoper}
       anchorEl={anchorEl}
       slotProps={{
         paper: {
-          style: { width: "250px" },
+          style: { width: '250px' },
         },
       }}
       onClose={() => {
-        setOpenPoper(false);
+        setOpenPoper(false)
       }}
       anchorOrigin={{
         vertical: POPOVER_VERTICAL,
@@ -64,7 +51,11 @@ const TipsPopover: FC<TipsPopoverProps> = ({
       <Box sx={BOX_STYLES}>
         <List>
           {tips.map((t, i) => (
-            <Typography key={t} variant="body1" sx={TYP_COLOR}>
+            <Typography
+              key={t}
+              variant='body1'
+              sx={TYP_COLOR}
+            >
               {i + 1}. {t}
             </Typography>
           ))}
@@ -72,7 +63,7 @@ const TipsPopover: FC<TipsPopoverProps> = ({
 
         <Button
           onClick={() => {
-            setOpenPoper(false);
+            setOpenPoper(false)
           }}
           sx={BUTTON_STYLES}
         >
@@ -80,7 +71,7 @@ const TipsPopover: FC<TipsPopoverProps> = ({
         </Button>
       </Box>
     </Popover>
-  );
-};
+  )
+}
 
-export default TipsPopover;
+export default TipsPopover

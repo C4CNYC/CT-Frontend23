@@ -1,26 +1,24 @@
-import React from "react";
+import React from 'react'
 
-import {
-  CommandMenuItem,
-  DropdownButton,
-  useActive,
-  useCommands,
-} from "@remirror/react";
-import "remirror/styles/all.css";
+import { CommandMenuItem, DropdownButton, useActive, useCommands } from '@remirror/react'
+import 'remirror/styles/all.css'
 
-const FONT_SIZES = ["8", "10", "12", "14", "16", "18", "24", "30"];
+const FONT_SIZES = ['8', '10', '12', '14', '16', '18', '24', '30']
 
 export default function FontSizeButtons() {
-  const { setFontSize } = useCommands();
-  const { fontSize } = useActive();
+  const { setFontSize } = useCommands()
+  const { fontSize } = useActive()
   return (
-    <DropdownButton aria-label="Set font size" icon="fontSize">
+    <DropdownButton
+      aria-label='Set font size'
+      icon='fontSize'
+    >
       {FONT_SIZES.map((size) => (
         <CommandMenuItem
           key={size}
-          commandName="setFontSize"
+          commandName='setFontSize'
           onSelect={() => {
-            setFontSize(size);
+            setFontSize(size)
           }}
           enabled={setFontSize.enabled(size)}
           active={fontSize({ size })}
@@ -30,5 +28,5 @@ export default function FontSizeButtons() {
         />
       ))}
     </DropdownButton>
-  );
+  )
 }

@@ -1,30 +1,18 @@
-import { useMemo } from "react";
+import { useMemo } from 'react'
 
-import merge from "lodash/merge";
+import { ThemeProvider, alpha, createTheme, useTheme } from '@mui/material/styles'
+import merge from 'lodash/merge'
 
-// @mui
-import {
-  ThemeProvider,
-  alpha,
-  createTheme,
-  useTheme,
-} from "@mui/material/styles";
-
-//
-import { useSettingsContext } from "./SettingsContext";
-
-// ----------------------------------------------------------------------
+import { useSettingsContext } from './SettingsContext'
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
-export default function ThemeColorPresets({
-  children,
-}: Props): React.ReactElement | null {
-  const outerTheme = useTheme();
+export default function ThemeColorPresets({ children }: Props): React.ReactElement | null {
+  const outerTheme = useTheme()
 
-  const { presetsColor } = useSettingsContext();
+  const { presetsColor } = useSettingsContext()
 
   const themeOptions = useMemo(
     () => ({
@@ -36,9 +24,9 @@ export default function ThemeColorPresets({
       },
     }),
     [presetsColor]
-  );
+  )
 
-  const theme = createTheme(merge(outerTheme, themeOptions));
+  const theme = createTheme(merge(outerTheme, themeOptions))
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 }

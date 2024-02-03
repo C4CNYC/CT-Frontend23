@@ -1,34 +1,39 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
-import { Autocomplete, Skeleton, Stack } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { Autocomplete, Skeleton, Stack } from '@mui/material'
+import TextField from '@mui/material/TextField'
+import { useRouter } from 'next/router'
 
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { useGetMySchoolsQuery } from '@/redux/services/manager/schools-manager'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 
 export default function FilterCourses(): React.ReactElement {
-  const { push } = useRouter();
-  const { data, isLoading } = useGetMySchoolsQuery({});
-  const translate = useTranslate();
+  const { push } = useRouter()
+  const { data, isLoading } = useGetMySchoolsQuery({})
+  const translate = useTranslate()
 
   useEffect(() => {
     if (data) {
       push(
         `${MANAGER_PATH_DASHBOARD.school.assignments}?${new URLSearchParams({
-          schoolId: data.data[0].id ?? "",
+          schoolId: data.data[0].id ?? '',
         })}`,
         undefined,
         { shallow: true }
-      );
+      )
     }
-  }, [isLoading]);
+  }, [isLoading])
 
   if (isLoading) {
     return (
-      <Skeleton width={300} height={56} variant="rounded" sx={{ mb: 4 }} />
-    );
+      <Skeleton
+        width={300}
+        height={56}
+        variant='rounded'
+        sx={{ mb: 4 }}
+      />
+    )
   }
 
   return (
@@ -36,36 +41,37 @@ export default function FilterCourses(): React.ReactElement {
       <Stack
         spacing={2}
         sx={{ mb: 4 }}
-        alignItems="center"
+        alignItems='center'
         direction={{
-          xs: "column",
-          sm: "row",
+          xs: 'column',
+          sm: 'row',
         }}
       >
         <Autocomplete
           disablePortal
           loading={isLoading}
           defaultValue={data?.data[0]}
-          id="combo-box-demo"
+          id='combo-box-demo'
           options={data?.data ?? []}
           getOptionLabel={(option) => option.name}
           onChange={(e, newValue) => {
             push(
-              `${
-                MANAGER_PATH_DASHBOARD.school.assignments
-              }?${new URLSearchParams({
-                schoolId: newValue ? newValue.id : "",
+              `${MANAGER_PATH_DASHBOARD.school.assignments}?${new URLSearchParams({
+                schoolId: newValue ? newValue.id : '',
               })}`,
               undefined,
               { shallow: true }
-            );
+            )
           }}
-          sx={{ width: { xs: "100%", sm: 300 } }}
+          sx={{ width: { xs: '100%', sm: 300 } }}
           renderInput={(params) => (
-            <TextField {...params} label={translate("school")} />
+            <TextField
+              {...params}
+              label={translate('school')}
+            />
           )}
         />
       </Stack>
     </>
-  );
+  )
 }

@@ -1,40 +1,31 @@
-import { memo } from "react";
+import { memo } from 'react'
 
-import { useSelector } from "react-redux";
+import { AppBar, Box, BoxProps, Toolbar } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { useSelector } from 'react-redux'
 
-// @mui
-import { AppBar, Box, BoxProps, Toolbar } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { NavSectionHorizontal } from '@/components/nav-section'
+import { bgBlur } from '@/lib/utils/cssStyles'
+import { Role } from '@/redux/services/enums/role.enum'
+import { RootState } from '@/redux/store'
 
-// components
-import { NavSectionHorizontal } from "src/components/nav-section";
-// utils
-import { bgBlur } from "src/lib/utils/cssStyles";
-import { Role } from "src/redux/services/enums/role.enum";
-import { RootState } from "src/redux/store";
+import { HEADER } from '../../../config'
 
-// config
-import { HEADER } from "../../../config";
-//
-import { menuConfig } from "./config-navigation";
-
-// ----------------------------------------------------------------------
+import { menuConfig } from './config-navigation'
 
 interface INavHorizontal {
-  isManager?: boolean;
+  isManager?: boolean
 }
 
 function NavHorizontal({ isManager }: INavHorizontal): React.ReactElement {
-  const theme = useTheme();
-  const user = useSelector((state: RootState) => state.global.user);
-  const menu = isManager
-    ? menuConfig[user?.role as Role]
-    : menuConfig[Role.Student];
+  const theme = useTheme()
+  const user = useSelector((state: RootState) => state.global.user)
+  const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
 
   return (
     <AppBar
-      component="nav"
-      color="transparent"
+      component='nav'
+      color='transparent'
       sx={{
         boxShadow: 0,
         top: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
@@ -52,12 +43,10 @@ function NavHorizontal({ isManager }: INavHorizontal): React.ReactElement {
 
       <Shadow />
     </AppBar>
-  );
+  )
 }
 
-export default memo(NavHorizontal);
-
-// ----------------------------------------------------------------------
+export default memo(NavHorizontal)
 
 function Shadow({ sx, ...other }: BoxProps): React.ReactElement {
   return (
@@ -69,13 +58,13 @@ function Shadow({ sx, ...other }: BoxProps): React.ReactElement {
         height: 24,
         zIndex: -1,
         width: 1,
-        m: "auto",
-        borderRadius: "50%",
-        position: "absolute",
+        m: 'auto',
+        borderRadius: '50%',
+        position: 'absolute',
         boxShadow: (theme) => theme.customShadows.z8,
         ...sx,
       }}
       {...other}
     />
-  );
+  )
 }

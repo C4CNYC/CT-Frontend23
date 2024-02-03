@@ -1,40 +1,45 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { useMediaQuery } from "@mui/material"
-import { useTheme } from "@mui/material/styles"
-import { useSearchParams } from "next/navigation"
-import { useRouter } from "next/router"
-import { useSnackbar } from "notistack"
-import type Confetti from "react-confetti/dist/types/Confetti"
-import { FullScreenHandle, useFullScreenHandle } from "react-full-screen"
-import { useDispatch, useSelector } from "react-redux"
+import { useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
+import type Confetti from 'react-confetti/dist/types/Confetti'
+import { FullScreenHandle, useFullScreenHandle } from 'react-full-screen'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths"
-import type { BottomBarProps } from "@sections/code-editor-panel/bottom-bar"
-import { type LessonManagerProps } from "@sections/code-editor-panel/bottom-bar/lesson-manager"
 // import { isValidLastVisitedData } from "@sections/code-editor-panel/helpers"
-import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation"
-import { WorkSpaceProps } from "@sections/code-editor-panel/work-space/types"
-import { useAuthContext } from "src/auth/useAuthContext"
-import { resetLessonEvent } from "src/components/real-time-editor"
-import { useTranslate } from "src/lib/utils/translateHelper"
+import { useAuthContext } from '@/auth/useAuthContext'
+import { resetLessonEvent } from '@/components/real-time-editor'
+import { useTranslate } from '@/lib/utils/translateHelper'
 // import type { LastVisitedState } from "src/redux/interfaces/content.interface"
-import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student"
+import { useGetChallangesQuery } from '@/redux/services/manager/challenges-student'
 import {
   useGetLessonContentStudentQuery,
   useGetLessonStudentQuery,
   // useUpdateStudentLastVisitedDataMutation,
-} from "src/redux/services/manager/lesson-student"
-import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student"
-import { setCourseId, setLessonId, setSlideIndex, setUnitId } from "src/redux/slices/code-panel-global"
-import type { RootState } from "src/redux/store"
+} from '@/redux/services/manager/lesson-student'
+import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
+import {
+  setCourseId,
+  setLessonId,
+  setSlideIndex,
+  setUnitId,
+} from '@/redux/slices/code-panel-global'
+import type { RootState } from '@/redux/store'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import type { BottomBarProps } from '@/sections/code-editor-panel/bottom-bar'
+import { type LessonManagerProps } from '@/sections/code-editor-panel/bottom-bar/lesson-manager'
+import { getNextLessonId } from '@/sections/code-editor-panel/utils/navigation'
+import { WorkSpaceProps } from '@/sections/code-editor-panel/work-space/types'
 
-import { useGetModuleWithLessonsQuery } from "../../redux/services/manager/modules-student"
+import { useGetModuleWithLessonsQuery } from '../../redux/services/manager/modules-student'
 
 interface UseCodePanelReturn {
   workSpaceProps: WorkSpaceProps
   lessonManagerProps: LessonManagerProps
-  bottomBarProps: Omit<BottomBarProps, "lessonManagerComponent">
+  bottomBarProps: Omit<BottomBarProps, 'lessonManagerComponent'>
   isLoadingComplete: boolean
   handle: FullScreenHandle
   isDesktop: boolean
@@ -42,7 +47,7 @@ interface UseCodePanelReturn {
   onConfettiComplete: (confetti?: Confetti) => void
 }
 
-const LANGUAGE = "html"
+const LANGUAGE = 'html'
 const DESKTOP_WIDTH = 1000
 
 export const useCodePanel = (): UseCodePanelReturn => {
@@ -59,15 +64,15 @@ export const useCodePanel = (): UseCodePanelReturn => {
   const handle = useFullScreenHandle()
 
   const [confetti, setConfetti] = useState(false)
-  const [code, setCode] = useState<string>("")
+  const [code, setCode] = useState<string>('')
 
   // const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
   //   unitId: null,
   //   lessonId: null,
   // })
 
-  const unitId = searchParams.get("unitId")
-  const lessonId = searchParams.get("lessonId")
+  const unitId = searchParams.get('unitId')
+  const lessonId = searchParams.get('lessonId')
 
   const onChangeCode = useCallback(
     (code: string) => {
@@ -96,7 +101,10 @@ export const useCodePanel = (): UseCodePanelReturn => {
     { skip: !query.lessonId }
   )
 
-  const { data: module } = useGetModuleWithLessonsQuery({ id: query.unitId as string }, { skip: !query.unitId })
+  const { data: module } = useGetModuleWithLessonsQuery(
+    { id: query.unitId as string },
+    { skip: !query.unitId }
+  )
 
   const lastLessonCode = useMemo(
     () =>
@@ -108,7 +116,9 @@ export const useCodePanel = (): UseCodePanelReturn => {
             content.progress?.find((progress) => progress.progress_meta?.body.length > 0)
           )
         )
-        ?.contents.find((content) => content.progress?.find((progress) => progress.progress_meta?.body.length > 0))
+        ?.contents.find((content) =>
+          content.progress?.find((progress) => progress.progress_meta?.body.length > 0)
+        )
         ?.progress?.find((progress) => progress.progress_meta?.body.length > 0)?.progress_meta.body,
     [module, query.lessonId]
   )
@@ -174,19 +184,23 @@ export const useCodePanel = (): UseCodePanelReturn => {
         code,
       }).unwrap()
     } catch (e: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" })
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
   }
 
   const onSubmitLesson = async (): Promise<void> => {
     setConfetti(true)
     try {
-      enqueueSnackbar(translate("messages_lesson_complete"))
+      enqueueSnackbar(translate('messages_lesson_complete'))
       if (!courseContent) return
-      const nextLessonInfo = getNextLessonId(courseContent.units, query.lessonId as string, query.unitId as string)
+      const nextLessonInfo = getNextLessonId(
+        courseContent.units,
+        query.lessonId as string,
+        query.unitId as string
+      )
 
       if (nextLessonInfo) {
-        const pathStr = nextLessonInfo.path.split("/")
+        const pathStr = nextLessonInfo.path.split('/')
         push(
           `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(courseContent?.id)}?${new URLSearchParams({
             unitId: pathStr[0],
@@ -201,17 +215,17 @@ export const useCodePanel = (): UseCodePanelReturn => {
           dispatch(setSlideIndex(0))
         })
       } else {
-        enqueueSnackbar(translate("messages_course_complete"))
+        enqueueSnackbar(translate('messages_course_complete'))
       }
     } catch (e: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" })
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
   }
 
   useEffect(() => {
     if (query.id) {
       const savedCode = window?.localStorage.getItem(`code-${query.id}`)
-      setCode(savedCode ?? "")
+      setCode(savedCode ?? '')
     }
   }, [query.id])
 
@@ -229,7 +243,11 @@ export const useCodePanel = (): UseCodePanelReturn => {
   // }, [lastVisitedData])
 
   const isLoadingComplete =
-    !!lesson && !isLoadingLessonContent && !isLoadingCourseContent && !isLoadingLesson && query.id != null
+    !!lesson &&
+    !isLoadingLessonContent &&
+    !isLoadingCourseContent &&
+    !isLoadingLesson &&
+    query.id != null
 
   return {
     isLoadingComplete,

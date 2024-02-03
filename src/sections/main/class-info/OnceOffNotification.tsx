@@ -1,106 +1,112 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState } from 'react'
 
-import { useSnackbar } from "notistack";
-import { HiArrowUpTray } from "@react-icons/all-files/hi2/HiArrowUpTray";
-import { IoClose } from "@react-icons/all-files/io5/IoClose";
+import { Box, Collapse, IconButton, Stack, Typography } from '@mui/material'
+import { useTheme } from '@mui/system'
+import { HiArrowUpTray } from '@react-icons/all-files/hi2/HiArrowUpTray'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { useSnackbar } from 'notistack'
 
-import { Box, Collapse, IconButton, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/system";
-
-import { useCopyToClipboard } from "@hooks";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { BaseResponseInterface, localStorageAvailable } from "@utils";
-import { IClass } from "src/redux/interfaces/class.interface";
+import { useCopyToClipboard } from '@/lib/hooks'
+import { BaseResponseInterface, localStorageAvailable } from '@/lib/utils'
+import { IClass } from '@/redux/interfaces/class.interface'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 import {
   LINK_TEXT_SX,
   NOTIFICATION_CONTAINER_SX,
   NOTIFICATION_LINK_SX,
   getNotificationWrapperSx,
-} from "./constants";
+} from './constants'
 
-const localStorageKey = "IS_OPEN_NOTIFICATION";
+const localStorageKey = 'IS_OPEN_NOTIFICATION'
 
 interface IOnceOffNotificationProps {
-  classData: IClass & BaseResponseInterface;
+  classData: IClass & BaseResponseInterface
 }
 
 export default function OnceOffNotification({
   classData,
 }: IOnceOffNotificationProps): React.ReactElement {
-  const theme = useTheme();
-  const notificationWrapperSx = useMemo(
-    () => getNotificationWrapperSx(theme),
-    [theme]
-  );
-  const storageAvailable = localStorageAvailable();
-  const { copy } = useCopyToClipboard();
-  const { enqueueSnackbar } = useSnackbar();
+  const theme = useTheme()
+  const notificationWrapperSx = useMemo(() => getNotificationWrapperSx(theme), [theme])
+  const storageAvailable = localStorageAvailable()
+  const { copy } = useCopyToClipboard()
+  const { enqueueSnackbar } = useSnackbar()
   const getNotificationState = () => {
     if (storageAvailable) {
-      const isOpen = JSON.parse(
-        window.localStorage.getItem(localStorageKey) ?? "true"
-      );
-      return isOpen;
+      const isOpen = JSON.parse(window.localStorage.getItem(localStorageKey) ?? 'true')
+      return isOpen
     }
-    return true;
-  };
+    return true
+  }
 
   const [isOpenNotification, setIsOpenNotification] = useState<boolean>(() =>
     getNotificationState()
-  );
+  )
 
   const closeNotification = (): void => {
-    setIsOpenNotification(false);
-    window.localStorage.setItem(localStorageKey, JSON.stringify(false));
-  };
+    setIsOpenNotification(false)
+    window.localStorage.setItem(localStorageKey, JSON.stringify(false))
+  }
 
   const onCopy = (textToCopy: string) => {
     if (textToCopy) {
-      copy(textToCopy);
-      enqueueSnackbar("Copied!");
+      copy(textToCopy)
+      enqueueSnackbar('Copied!')
     }
-  };
+  }
 
   const shareLink = `${
     window.location.origin
-  }${STUDENT_PATH_DASHBOARD.joinTribe.id(classData?.setting.share_token)}`;
+  }${STUDENT_PATH_DASHBOARD.joinTribe.id(classData?.setting.share_token)}`
 
   return (
     <Collapse in={isOpenNotification}>
-      <Stack direction="row" sx={notificationWrapperSx}>
-        <Stack direction="row" sx={NOTIFICATION_CONTAINER_SX}>
-          <Typography variant="subtitle2" sx={{ mx: 1 }}>
+      <Stack
+        direction='row'
+        sx={notificationWrapperSx}
+      >
+        <Stack
+          direction='row'
+          sx={NOTIFICATION_CONTAINER_SX}
+        >
+          <Typography
+            variant='subtitle2'
+            sx={{ mx: 1 }}
+          >
             Add students to your group by sharing the
           </Typography>
           <Box
             sx={NOTIFICATION_LINK_SX}
             onClick={() => {
-              onCopy(shareLink);
+              onCopy(shareLink)
             }}
           >
             <HiArrowUpTray
-              size="18px"
-              color={theme.palette.mode === "light" ? "#364954" : "#F6F9FC"}
+              size='18px'
+              color={theme.palette.mode === 'light' ? '#364954' : '#F6F9FC'}
             />
-            <Typography variant="body2" sx={LINK_TEXT_SX}>
+            <Typography
+              variant='body2'
+              sx={LINK_TEXT_SX}
+            >
               invite link
             </Typography>
           </Box>
         </Stack>
         <IconButton
           onClick={() => {
-            closeNotification();
+            closeNotification()
           }}
           sx={{ p: 0.5 }}
-          edge="end"
+          edge='end'
         >
           <IoClose
-            size="20px"
-            color={theme.palette.mode === "light" ? "#364954" : "#F6F9FC"}
+            size='20px'
+            color={theme.palette.mode === 'light' ? '#364954' : '#F6F9FC'}
           />
         </IconButton>
       </Stack>
     </Collapse>
-  );
+  )
 }

@@ -1,97 +1,101 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
-import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
-import { Rating } from "react-simple-star-rating";
+import { Box, IconButton } from '@mui/material'
+import { AiFillHeart } from '@react-icons/all-files/ai/AiFillHeart'
+import { AiOutlineHeart } from '@react-icons/all-files/ai/AiOutlineHeart'
+import { Rating } from 'react-simple-star-rating'
 
-import { Box, IconButton } from "@mui/material";
-
-import { Image, useSnackbar } from "@components";
-import { ICourseElement } from "src/redux/interfaces/content.interface";
-import { APIError } from "src/redux/interfaces/custom-error.interface";
+import { Image, useSnackbar } from '@/components'
+import { ICourseElement } from '@/redux/interfaces/content.interface'
+import { APIError } from '@/redux/interfaces/custom-error.interface'
 import {
   useCourseAddLikeMutation,
   useCourseAddRatingMutation,
   useCourseRemoveLikeMutation,
-} from "src/redux/services/manager/courses-student";
+} from '@/redux/services/manager/courses-student'
 
-import {
-  COURSE_IMG_XS,
-  COURSE_RATING_WRAPPER_SX,
-  LIKE_BTN_WRAPPER_SX,
-} from "./constants";
+import { COURSE_IMG_XS, COURSE_RATING_WRAPPER_SX, LIKE_BTN_WRAPPER_SX } from './constants'
 
 interface Props {
-  course: ICourseElement;
+  course: ICourseElement
 }
 
 export default function CourseAvatar({ course }: Props): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
-  const [liked, setLiked] = useState(course.liked);
-  const [addLike, { isLoading }] = useCourseAddLikeMutation();
-  const [removeLike, { isLoading: isRemoving }] = useCourseRemoveLikeMutation();
-  const [updateRating] = useCourseAddRatingMutation();
+  const { enqueueSnackbar } = useSnackbar()
+  const [liked, setLiked] = useState(course.liked)
+  const [addLike, { isLoading }] = useCourseAddLikeMutation()
+  const [removeLike, { isLoading: isRemoving }] = useCourseRemoveLikeMutation()
+  const [updateRating] = useCourseAddRatingMutation()
   const likeHandler = async (): Promise<void> => {
     try {
       if (liked) {
-        removeLike({ id: course.id }).unwrap();
-        setLiked(false);
-        enqueueSnackbar("Like removed!");
+        removeLike({ id: course.id }).unwrap()
+        setLiked(false)
+        enqueueSnackbar('Like removed!')
       } else {
-        addLike({ id: course.id }).unwrap();
-        setLiked(true);
-        enqueueSnackbar("Liked!");
+        addLike({ id: course.id }).unwrap()
+        setLiked(true)
+        enqueueSnackbar('Liked!')
       }
     } catch (error: any) {
-      const typedError = error as APIError;
+      const typedError = error as APIError
       enqueueSnackbar(typedError?.data?.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-  };
+  }
 
   const handleRating = (rating: number): void => {
     try {
-      updateRating({ id: course.id, rating }).unwrap();
-      enqueueSnackbar("You rated course!");
+      updateRating({ id: course.id, rating }).unwrap()
+      enqueueSnackbar('You rated course!')
     } catch (error: any) {
-      const typedError = error as APIError;
+      const typedError = error as APIError
       enqueueSnackbar(typedError?.data?.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-  };
+  }
 
   return (
     <>
-      <Box sx={{ position: "relative", alignSelf: "center" }}>
+      <Box sx={{ position: 'relative', alignSelf: 'center' }}>
         <Box
           onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
+            e.stopPropagation()
+            e.preventDefault()
           }}
           sx={LIKE_BTN_WRAPPER_SX}
         >
-          <IconButton onClick={likeHandler} disabled={isLoading || isRemoving}>
+          <IconButton
+            onClick={likeHandler}
+            disabled={isLoading || isRemoving}
+          >
             {!liked ? (
-              <AiOutlineHeart size={26} color="#EE467A" />
+              <AiOutlineHeart
+                size={26}
+                color='#EE467A'
+              />
             ) : (
-              <AiFillHeart size={26} color="#EE467A" />
+              <AiFillHeart
+                size={26}
+                color='#EE467A'
+              />
             )}
           </IconButton>
         </Box>
         <Image
-          alt="course cover"
-          src={course.cover ?? "/assets/courses/courseImg.png"}
+          alt='course cover'
+          src={course.cover ?? '/assets/courses/courseImg.png'}
           sx={COURSE_IMG_XS}
         />
         {course.progress && course.progress > 30 && (
           <Box sx={COURSE_RATING_WRAPPER_SX}>
             <Rating
               onClick={(rating, index, e) => {
-                e?.stopPropagation();
-                e?.preventDefault();
-                handleRating(rating);
+                e?.stopPropagation()
+                e?.preventDefault()
+                handleRating(rating)
               }}
               initialValue={course.my_rating ?? 0}
               transition
@@ -101,5 +105,5 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
         )}
       </Box>
     </>
-  );
+  )
 }

@@ -1,17 +1,18 @@
-import { type Update } from "@codemirror/collab";
-import { ChangeSet, StateEffect, StateEffectType } from "@codemirror/state";
-import { type Socket } from "socket.io-client";
+import { type Update } from '@codemirror/collab'
+import { ChangeSet, StateEffect, StateEffectType } from '@codemirror/state'
+import { type Socket } from 'socket.io-client'
 
-import { EmitSocketEvents } from "../socket";
-import { type Cursor } from "./cursors";
-import { File } from "./requests";
+import { EmitSocketEvents } from '../socket'
+
+import { type Cursor } from './cursors'
+import { File } from './requests'
 
 interface PullUpdateProps {
-  roomId: string;
-  version: number;
-  fileName: File;
-  socket: Socket;
-  addCursor: StateEffectType<Cursor>;
+  roomId: string
+  version: number
+  fileName: File
+  socket: Socket
+  addCursor: StateEffectType<Cursor>
 }
 
 export const pullUpdates = ({
@@ -27,18 +28,18 @@ export const pullUpdates = ({
       version,
       fileName,
       socketId: socket.id,
-    });
-	  console.log("pullUpdates", `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`);
+    })
+    console.log('pullUpdates', `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`)
     socket.once(
       `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`,
       function (updates: Update[]) {
-        resolve(updates);
+        resolve(updates)
       }
-    );
+    )
   }).then((updates: Update[]) =>
     updates?.map((u: Update) => {
       if (u.effects?.[0] != null) {
-        const effects: StateEffect<Cursor>[] = [];
+        const effects: StateEffect<Cursor>[] = []
 
         u.effects.forEach((effect: StateEffect<Cursor>) => {
           if (effect.value?.id) {
@@ -47,23 +48,23 @@ export const pullUpdates = ({
               from: effect.value.from,
               to: effect.value.to,
               tooltipText: effect.value.tooltipText,
-            };
+            }
 
-            effects.push(addCursor.of(cursor));
+            effects.push(addCursor.of(cursor))
           }
-        });
+        })
 
         return {
           changes: ChangeSet.fromJSON(u.changes),
           clientID: u.clientID,
           effects,
-        };
+        }
       }
 
       return {
         changes: ChangeSet.fromJSON(u.changes),
         clientID: u.clientID,
-      };
+      }
     })
-  );
-};
+  )
+}

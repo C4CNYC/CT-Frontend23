@@ -1,19 +1,18 @@
-import { type FC, useEffect, useMemo } from "react";
+import { type FC, useEffect, useMemo } from 'react'
 
-import { AnimatePresence, m } from "framer-motion";
-import { useDispatch } from "react-redux";
+import { Box } from '@mui/material'
+import { Stack } from '@mui/system'
+import { AnimatePresence, m } from 'framer-motion'
+import { useDispatch } from 'react-redux'
 
-import { Box } from "@mui/material";
-import { Stack } from "@mui/system";
+import { type IValidationMap } from '@/lib/utils/validationMaping'
+import { setIsVisible } from '@/redux/slices/checkers-animation'
+import { setNextStepAble } from '@/redux/slices/code-panel-global'
+import { useSelector } from '@/redux/store'
 
-import { setIsVisible } from "src/redux/slices/checkers-animation";
-import { setNextStepAble } from "src/redux/slices/code-panel-global";
-import { useSelector } from "src/redux/store";
-import { type IValidationMap } from "src/lib/utils/validationMaping";
-
-import { CheckerIcon } from "./CheckersIcon";
-import CheckersCompleated from "./checkers-compleated";
-import CheckersMenu from "./checkers-menu";
+import CheckersCompleated from './checkers-compleated'
+import CheckersMenu from './checkers-menu'
+import { CheckerIcon } from './CheckersIcon'
 import {
   BOX_SX,
   CHECKERS_ANIMATION,
@@ -23,57 +22,53 @@ import {
   OPEN_HANDLER_ANIMATION,
   getIndicatorSx,
   getStackSx,
-} from "./constants";
+} from './constants'
 
 interface ICheckers {
-  checkers: IValidationMap[];
+  checkers: IValidationMap[]
 }
 
 const Checkers: FC<ICheckers> = ({ checkers }) => {
-  const dispatch = useDispatch();
-  const isVisible = useSelector((state) => state.checkersAnimation.isVisible);
-  const isBrowserHidden = useSelector(
-    (state) => state.codePanelGlobal.isBrowserHidden
-  );
-  const nextStepAble = useSelector(
-    (state) => state.codePanelGlobal.nextStepAble
-  );
+  const dispatch = useDispatch()
+  const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
+  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
+  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
 
   const handleCollaps = (): void => {
     if (isVisible) {
-      dispatch(setIsVisible(false));
+      dispatch(setIsVisible(false))
     } else {
-      dispatch(setIsVisible(true));
+      dispatch(setIsVisible(true))
     }
-  };
+  }
 
   useEffect(() => {
-    const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true);
-    if (allPased === nextStepAble) return;
+    const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
+    if (allPased === nextStepAble) return
 
-    dispatch(setNextStepAble(allPased));
-  }, [checkers]);
+    dispatch(setNextStepAble(allPased))
+  }, [checkers])
 
-  const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden]);
+  const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
 
   const handleIconColor = (checkers: IValidationMap[]): string => {
-    let containsValid = false;
-    let containsInvalid = false;
+    let containsValid = false
+    let containsInvalid = false
 
     checkers.forEach((checker) => {
-      checker.valid ? (containsValid = true) : (containsInvalid = true);
-    });
+      checker.valid ? (containsValid = true) : (containsInvalid = true)
+    })
 
     if (containsValid && !containsInvalid) {
-      return "#75CF6D";
+      return '#75CF6D'
     }
 
     if (containsValid && containsInvalid) {
-      return "#ED9526";
+      return '#ED9526'
     }
 
-    return "#C4C4C4";
-  };
+    return '#C4C4C4'
+  }
 
   return (
     <>
@@ -82,11 +77,14 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
       <AnimatePresence>
         <m.div
           initial={false}
-          animate={isVisible ? "closed" : "open"}
+          animate={isVisible ? 'closed' : 'open'}
           variants={OPEN_HANDLER_ANIMATION}
         >
           <Box sx={OPEN_BTN_WRAPPER_SX}>
-            <Box sx={BOX_SX} onClick={handleCollaps}>
+            <Box
+              sx={BOX_SX}
+              onClick={handleCollaps}
+            >
               <CheckerIcon
                 width={14}
                 height={15}
@@ -95,7 +93,10 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
             </Box>
             <Box sx={INDICATORS_WRAPPER_SX}>
               {checkers.map((checker, i) => (
-                <Box key={i} sx={{ ...getIndicatorSx(checker.valid) }} />
+                <Box
+                  key={i}
+                  sx={{ ...getIndicatorSx(checker.valid) }}
+                />
               ))}
             </Box>
           </Box>
@@ -105,16 +106,19 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
         <AnimatePresence>
           <m.div
             initial={false}
-            animate={isVisible ? "open" : "closed"}
+            animate={isVisible ? 'open' : 'closed'}
             variants={CHECKERS_ANIMATION}
             style={M_DIV_STYLE}
           >
-            <CheckersMenu checkers={checkers} onClose={handleCollaps} />
+            <CheckersMenu
+              checkers={checkers}
+              onClose={handleCollaps}
+            />
           </m.div>
         </AnimatePresence>
       </Stack>
     </>
-  );
-};
+  )
+}
 
-export default Checkers;
+export default Checkers

@@ -1,23 +1,28 @@
-import { Typography } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Typography } from '@mui/material'
+import { Stack } from '@mui/system'
 
-import { ILesson } from "src/redux/interfaces/content.interface";
+import { ILesson } from '@/redux/interfaces/content.interface'
 
-import QuizItem from "./QuizItem";
+import QuizItem from './QuizItem'
 
 interface IQuizItemsListProps {
-  lesson: ILesson;
+  lesson: ILesson
 }
 
-export default function QuizItemsList({
-  lesson,
-}: IQuizItemsListProps): React.ReactElement {
+export default function QuizItemsList({ lesson }: IQuizItemsListProps): React.ReactElement {
   return (
     <>
-      <Typography variant="h6" fontWeight={500} gutterBottom>
+      <Typography
+        variant='h6'
+        fontWeight={500}
+        gutterBottom
+      >
         {lesson.name}
       </Typography>
-      <Stack direction="row" sx={{ flexWrap: "wrap", gap: 1, mb: 2 }}>
+      <Stack
+        direction='row'
+        sx={{ flexWrap: 'wrap', gap: 1, mb: 2 }}
+      >
         {lesson?.skills?.map((skill) => (
           <QuizItem
             key={skill.id}
@@ -27,5 +32,5 @@ export default function QuizItemsList({
         ))}
       </Stack>
     </>
-  );
+  )
 }

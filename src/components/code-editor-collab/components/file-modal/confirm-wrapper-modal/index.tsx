@@ -1,14 +1,9 @@
-import { type FC, type ReactNode } from "react";
+import { type FC, type ReactNode } from 'react'
 
-import {
-  Box,
-  Stack,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import Close from "@mui/icons-material/Close";
+import Close from '@mui/icons-material/Close'
+import { Box, Stack, IconButton, Typography } from '@mui/material'
 
-import { styles } from "./styles"
+import { styles } from './styles'
 
 interface ConfirmModalWrapperProps {
   onClose: () => void
@@ -21,25 +16,23 @@ const ConfirmModalWrapper: FC<ConfirmModalWrapperProps> = ({
   onClose,
   isOpen,
   children,
-  title
+  title,
 }) => {
   return (
     <Stack
       onClick={onClose}
       sx={{
         ...styles.WRAPPER_STACK_SX,
-        ...(isOpen ? styles.WRAPPER_STACK_ACTIVE : {})
+        ...(isOpen ? styles.WRAPPER_STACK_ACTIVE : {}),
       }}
     >
       <Box
-        onClick={e => e.stopPropagation()}
-        flexDirection="column"
+        onClick={(e) => e.stopPropagation()}
+        flexDirection='column'
         sx={styles.WRAPPER_BOX}
       >
         <Stack sx={styles.TITLE}>
-          <Typography variant="h5">
-            {title}
-          </Typography>
+          <Typography variant='h5'>{title}</Typography>
 
           <IconButton onClick={onClose}>
             <Close />
@@ -52,4 +45,4 @@ const ConfirmModalWrapper: FC<ConfirmModalWrapperProps> = ({
   )
 }
 
-export default ConfirmModalWrapper;
+export default ConfirmModalWrapper

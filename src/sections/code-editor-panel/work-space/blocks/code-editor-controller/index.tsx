@@ -1,33 +1,32 @@
-import { type FC, memo, useState, useEffect, useMemo } from "react";
+import { type FC, memo, useState, useEffect } from 'react'
 
-import CodeEditorCollab from "src/components/code-editor-collab";
+import { Socket } from 'socket.io-client'
 
-import { useSelector } from "src/redux/store";
-import { voidFunction } from "@utils";
-import { createSocket, waitConnectSocket } from "src/components/code-editor-collab/hook/utils/socket";
-import { useAuthContext } from "../../../../../auth/useAuthContext";
-import { useSocket } from "src/lib/hooks/useSocket"
-import { Socket } from "socket.io-client"
+import CodeEditorCollab from '@/components/code-editor-collab'
+import { waitConnectSocket } from '@/components/code-editor-collab/hook/utils/socket'
+import { useSocket } from '@/lib/hooks/useSocket'
+import { voidFunction } from '@/lib/utils'
+import { useSelector } from '@/redux/store'
+
+import { useAuthContext } from '../../../../../auth/useAuthContext'
 
 interface CodeEditorControllerProps {
   onChange?: (value: Record<string, string>) => void
 }
 
-const CodeEditorController: FC<CodeEditorControllerProps> = ({
-  onChange = voidFunction
-}) => {
-  const { user } = useAuthContext();
+const CodeEditorController: FC<CodeEditorControllerProps> = ({ onChange = voidFunction }) => {
+  const { user } = useAuthContext()
 
-  const [isConnected, setIsConnected] = useState(false);
-  const room = useSelector(state => state.codeEditorController.room);
-  console.log("roomId:", room?.roomId);
+  const [isConnected, setIsConnected] = useState(false)
+  const room = useSelector((state) => state.codeEditorController.room)
+  console.log('roomId:', room?.roomId)
 
   // const socket = useMemo(() => createSocket(user?.id || generateId(20)), [user]);
   const socket = useSocket()
 
   useEffect(() => {
     const runAsyncEffect = async (socket: Socket) => {
-      const isConnected = await waitConnectSocket(socket);
+      const isConnected = await waitConnectSocket(socket)
 
       if (isConnected) {
         setIsConnected(isConnected)
@@ -48,7 +47,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
   }, [socket])
 
   if (room == null /* || !isConnected */) {
-  // if (room == null  || !isConnected ) {
+    // if (room == null  || !isConnected ) {
     return null
   }
 
@@ -65,4 +64,4 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
   )
 }
 
-export default memo(CodeEditorController);
+export default memo(CodeEditorController)

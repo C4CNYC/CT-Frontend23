@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 
-import { managerApi } from ".";
 import {
   ISchool,
   ISchoolSearchParams,
@@ -9,101 +7,82 @@ import {
   SchoolProfile,
   SchoolSettings,
   SchoolSocials,
-} from "../interfaces/school.interface";
+} from '../interfaces/school.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getMySchools: builder.query<
-      BaseListResponseInterface<ISchool>,
-      ISchoolSearchParams
-    >({
+    getMySchools: builder.query<BaseListResponseInterface<ISchool>, ISchoolSearchParams>({
       query: (params) => ({
-        url: "/manager/school",
-        method: "GET",
+        url: '/manager/school',
+        method: 'GET',
         params,
       }),
-      providesTags: ["School"],
+      providesTags: ['School'],
     }),
-    updateSchoolProfile: builder.mutation<
-      SchoolProfile & BaseResponseInterface,
-      SchoolProfile
-    >({
+    updateSchoolProfile: builder.mutation<SchoolProfile & BaseResponseInterface, SchoolProfile>({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{ type: 'School' }],
     }),
-    getSchoolProfile: builder.query<
-      SchoolProfile & BaseResponseInterface,
-      { schoolId: string }
-    >({
+    getSchoolProfile: builder.query<SchoolProfile & BaseResponseInterface, { schoolId: string }>({
       query: ({ schoolId }) => ({
         url: `/manager/school/${schoolId}`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["School"],
+      providesTags: ['School'],
     }),
-    updateSchoolSettings: builder.mutation<
-      SchoolSettings & BaseResponseInterface,
-      SchoolSettings
-    >({
+    updateSchoolSettings: builder.mutation<SchoolSettings & BaseResponseInterface, SchoolSettings>({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/setting/`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "SchoolSettings" }],
+      invalidatesTags: [{ type: 'SchoolSettings' }],
     }),
-    getSchoolSettings: builder.query<
-      SchoolSettings & BaseResponseInterface,
-      { schoolId: string }
-    >({
+    getSchoolSettings: builder.query<SchoolSettings & BaseResponseInterface, { schoolId: string }>({
       query: ({ schoolId }) => ({
         url: `/manager/school/${schoolId}/setting/`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["SchoolSettings"],
+      providesTags: ['SchoolSettings'],
     }),
-    updateSchoolContacts: builder.mutation<
-      SchoolContacts & BaseResponseInterface,
-      SchoolContacts
-    >({
+    updateSchoolContacts: builder.mutation<SchoolContacts & BaseResponseInterface, SchoolContacts>({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/contact/`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "SchoolContacts" }],
+      invalidatesTags: [{ type: 'SchoolContacts' }],
     }),
-    getSchoolContacts: builder.query<
-      SchoolContacts & BaseResponseInterface,
-      { schoolId: string }
-    >({
+    getSchoolContacts: builder.query<SchoolContacts & BaseResponseInterface, { schoolId: string }>({
       query: ({ schoolId }) => ({
         url: `/manager/school/${schoolId}/contact/`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["SchoolContacts"],
+      providesTags: ['SchoolContacts'],
     }),
     createSchoolSocial: builder.mutation<
       SchoolSocials & BaseResponseInterface,
       {
-        schoolId: string;
-        type?: string;
-        name?: string;
-        link?: string;
-        socialID: string;
+        schoolId: string
+        type?: string
+        name?: string
+        link?: string
+        socialID: string
       }
     >({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/social`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{ type: 'School' }],
     }),
     deleteSchoolSocial: builder.mutation<
       SchoolSocials & BaseResponseInterface,
@@ -111,9 +90,9 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, socialID }) => ({
         url: `/manager/school/${schoolId}/social/${socialID}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{ type: 'School' }],
     }),
     updateSchoolSocial: builder.mutation<
       SchoolSocials & BaseResponseInterface,
@@ -121,42 +100,42 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, socialID, ...body }) => ({
         url: `/manager/school/${schoolId}/social/${socialID}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{ type: 'School' }],
     }),
     updateSchoolCoverImg: builder.mutation<
       void,
       {
-        id: string;
-        file: FormData;
+        id: string
+        file: FormData
       }
     >({
       query: ({ id, file }) => ({
         url: `/manager/school/${id}/cover`,
-        method: "PATCH",
+        method: 'PATCH',
         body: file,
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{ type: 'School' }],
     }),
     updateSchoolAvatarImg: builder.mutation<
       void,
       {
-        id: string;
-        file: FormData;
+        id: string
+        file: FormData
       }
     >({
       query: ({ id, file }) => ({
         url: `/manager/school/${id}/avatar`,
-        method: "PATCH",
+        method: 'PATCH',
         body: file,
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{ type: 'School' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetSchoolContactsQuery,
@@ -172,4 +151,4 @@ export const {
   useUpdateSchoolSettingsMutation,
   useUpdateSchoolProfileMutation,
   useUpdateSchoolAvatarImgMutation,
-} = extendedApi;
+} = extendedApi

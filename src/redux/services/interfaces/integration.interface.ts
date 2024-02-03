@@ -1,9 +1,9 @@
 export interface IIntegration {
-  name: string;
-  head: string;
-  scripts: string;
+  name: string
+  head: string
+  scripts: string
 }
 
 export interface IIntegrationSearch {
-  name?: string;
+  name?: string
 }

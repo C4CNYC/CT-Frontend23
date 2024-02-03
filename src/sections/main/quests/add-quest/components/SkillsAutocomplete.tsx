@@ -1,9 +1,3 @@
-import { useRouter } from "next/router";
-
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { TbInfoCircleFilled } from "@react-icons/all-files/tb/TbInfoCircleFilled";
-
 import {
   Autocomplete,
   AutocompleteChangeDetails,
@@ -17,22 +11,26 @@ import {
   Typography,
   TypographyVariant,
   useTheme,
-} from "@mui/material";
+} from '@mui/material'
+import { TbInfoCircleFilled } from '@react-icons/all-files/tb/TbInfoCircleFilled'
+import match from 'autosuggest-highlight/match'
+import parse from 'autosuggest-highlight/parse'
+import { useRouter } from 'next/router'
 
-import { useSnackbar } from "@components";
-import { ISkill } from "src/redux/interfaces/content.interface";
+import { useSnackbar } from '@/components'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { ISkill } from '@/redux/interfaces/content.interface'
 import {
   useRemoveSkillAssignmentMutation,
   useUpdateSkillAssignmentMutation,
-} from "src/redux/services/manager/assignments-manager";
-import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+} from '@/redux/services/manager/assignments-manager'
+import { useGetSkillQuery } from '@/redux/services/manager/skills-manager'
 
 interface ISkillsAutocompleteProps {
-  setAssignmentsSkillsId: (s: ISkill[]) => void;
-  assignmentsSkillsId?: ISkill[];
-  labelProps?: TypographyVariant | undefined;
-  existedSkills: ISkill[];
+  setAssignmentsSkillsId: (s: ISkill[]) => void
+  assignmentsSkillsId?: ISkill[]
+  labelProps?: TypographyVariant | undefined
+  existedSkills: ISkill[]
 }
 
 export default function SkillsAutocomplete({
@@ -41,15 +39,15 @@ export default function SkillsAutocomplete({
   labelProps,
   existedSkills,
 }: ISkillsAutocompleteProps): React.ReactElement {
-  const theme = useTheme();
-  const { enqueueSnackbar } = useSnackbar();
+  const theme = useTheme()
+  const { enqueueSnackbar } = useSnackbar()
   const {
     query: { schoolId, assignmentId },
-  } = useRouter();
-  const { data, isLoading } = useGetSkillQuery({});
-  const translate = useTranslate();
-  const [addSkill] = useUpdateSkillAssignmentMutation();
-  const [removeSkill] = useRemoveSkillAssignmentMutation();
+  } = useRouter()
+  const { data, isLoading } = useGetSkillQuery({})
+  const translate = useTranslate()
+  const [addSkill] = useUpdateSkillAssignmentMutation()
+  const [removeSkill] = useRemoveSkillAssignmentMutation()
 
   const onChange = async (
     _event: React.SyntheticEvent<any>,
@@ -58,65 +56,68 @@ export default function SkillsAutocomplete({
     details?: AutocompleteChangeDetails<ISkill>
   ): Promise<void> => {
     if (!assignmentId) {
-      setAssignmentsSkillsId(_newValue);
+      setAssignmentsSkillsId(_newValue)
     } else {
       try {
         const payload = {
           schoolId: schoolId as string,
           assignmentId: assignmentId as string,
-          skill_id: details?.option.id ?? "",
-        };
+          skill_id: details?.option.id ?? '',
+        }
         switch (reason) {
-          case "selectOption": {
-            await addSkill(payload).unwrap();
+          case 'selectOption': {
+            await addSkill(payload).unwrap()
             enqueueSnackbar(
-              translate("messages_sth_added", {
-                name: details?.option.name ?? "",
+              translate('messages_sth_added', {
+                name: details?.option.name ?? '',
               })
-            );
-            return;
+            )
+            return
           }
-          case "removeOption": {
-            await removeSkill(payload).unwrap();
+          case 'removeOption': {
+            await removeSkill(payload).unwrap()
             enqueueSnackbar(
-              translate("messages_sth_removed", {
-                name: details?.option.name ?? "",
+              translate('messages_sth_removed', {
+                name: details?.option.name ?? '',
               })
-            );
+            )
           }
         }
       } catch (error: any) {
-        enqueueSnackbar(error.data.message, { variant: "error" });
+        enqueueSnackbar(error.data.message, { variant: 'error' })
       }
     }
-  };
+  }
 
   if (isLoading || !data) {
     return (
       <Stack>
         <Skeleton
-          variant="text"
-          animation="wave"
-          sx={{ width: "30px", height: "28px", mb: 1 }}
+          variant='text'
+          animation='wave'
+          sx={{ width: '30px', height: '28px', mb: 1 }}
         />
         <Skeleton
-          variant="rounded"
-          animation="wave"
-          sx={{ width: "100%", height: "56px" }}
+          variant='rounded'
+          animation='wave'
+          sx={{ width: '100%', height: '56px' }}
         />
         <Skeleton
-          variant="rounded"
-          animation="wave"
-          sx={{ width: "100%", height: "27px", mt: 1 }}
+          variant='rounded'
+          animation='wave'
+          sx={{ width: '100%', height: '27px', mt: 1 }}
         />
       </Stack>
-    );
+    )
   }
 
   return (
     <FormGroup>
-      <Typography variant={labelProps ?? "h5"} gutterBottom>
-        {translate("tags")}:
+      <Typography
+        variant={labelProps ?? 'h5'}
+        gutterBottom
+      >
+        {translate('tags')}:
       </Typography>
       <Autocomplete<any, true>
         multiple
@@ -125,7 +126,7 @@ export default function SkillsAutocomplete({
         limitTags={5}
         getOptionLabel={(option) => option.name}
         onChange={(e, value, reason, details) => {
-          onChange(e, value, reason, details);
+          onChange(e, value, reason, details)
         }}
         renderTags={(tagValue, getTagProps): React.ReactElement[] =>
           tagValue.map((option, index) => (
@@ -134,76 +135,79 @@ export default function SkillsAutocomplete({
               {...getTagProps({ index })}
               key={option.id}
               sx={{
-                "& .MuiChip-deleteIcon": {
-                  color: theme.palette.mode === "light" ? "" : "#333",
-                  "&:hover": {
-                    color: theme.palette.mode === "light" ? "" : "#999797",
+                '& .MuiChip-deleteIcon': {
+                  color: theme.palette.mode === 'light' ? '' : '#333',
+                  '&:hover': {
+                    color: theme.palette.mode === 'light' ? '' : '#999797',
                   },
                 },
               }}
             />
           ))
         }
-        ChipProps={{ size: "medium" }}
+        ChipProps={{ size: 'medium' }}
         sx={{
-          "& .MuiOutlinedInput-root": {
-            background: theme.palette.mode === "light" ? "#fff" : "",
-            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+          '& .MuiOutlinedInput-root': {
+            background: theme.palette.mode === 'light' ? '#fff' : '',
+            border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
           },
-          "& .MuiAutocomplete-tag": {
-            background: "#FBDD3F",
-            textTransform: "uppercase",
-            fontSize: "1.0rem",
-            color: theme.palette.mode === "light" ? "" : "#333",
+          '& .MuiAutocomplete-tag': {
+            background: '#FBDD3F',
+            textTransform: 'uppercase',
+            fontSize: '1.0rem',
+            color: theme.palette.mode === 'light' ? '' : '#333',
           },
         }}
         renderOption={(props, recipient, { inputValue }) => {
-          const { id, name } = recipient;
-          const matches = match(name, inputValue);
-          const parts = parse(name, matches);
-          const selected = existedSkills.find((c: any) => c.id === id);
+          const { id, name } = recipient
+          const matches = match(name, inputValue)
+          const parts = parse(name, matches)
+          const selected = existedSkills.find((c: any) => c.id === id)
 
           return (
             <Box
-              component="li"
+              component='li'
               sx={{
-                pointerEvents: selected ? "none" : "auto",
-                background: selected ? "rgba(251, 221, 63, .5)" : "",
+                pointerEvents: selected ? 'none' : 'auto',
+                background: selected ? 'rgba(251, 221, 63, .5)' : '',
               }}
               {...props}
             >
               {parts.map((part, index) => (
                 <Typography
                   key={index}
-                  variant="subtitle2"
-                  color={part.highlight ? "primary" : "textPrimary"}
+                  variant='subtitle2'
+                  color={part.highlight ? 'primary' : 'textPrimary'}
                 >
                   {part.text}
                 </Typography>
               ))}
             </Box>
-          );
+          )
         }}
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder={translate("tags")}
+            placeholder={translate('tags')}
             helperText={
               <Typography
-                variant="caption"
+                variant='caption'
                 sx={{
-                  fontStyle: "italic",
-                  display: "inline-flex",
-                  alignItems: "center",
+                  fontStyle: 'italic',
+                  display: 'inline-flex',
+                  alignItems: 'center',
                 }}
               >
-                <TbInfoCircleFilled color="#D9D9D9" size={22} />
-                {translate("assignments_add_tags_info")}
+                <TbInfoCircleFilled
+                  color='#D9D9D9'
+                  size={22}
+                />
+                {translate('assignments_add_tags_info')}
               </Typography>
             }
           />
         )}
       />
     </FormGroup>
-  );
+  )
 }

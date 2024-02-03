@@ -1,39 +1,35 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
-import { LoadingScreen } from "@components";
-import {
-  STUDENT_PATH_AFTER_LOGIN,
-} from "../config";
+import { useRouter } from 'next/router'
 
-import { useAuthContext } from "./useAuthContext";
+import { LoadingScreen } from '@/components'
 
-// ----------------------------------------------------------------------
+import { STUDENT_PATH_AFTER_LOGIN } from '../config'
+
+import { useAuthContext } from './useAuthContext'
 
 interface GuestGuardProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
-export default function GuestGuard({
-  children,
-}: GuestGuardProps): React.ReactElement | null {
-  const { push, route, asPath } = useRouter();
+export default function GuestGuard({ children }: GuestGuardProps): React.ReactElement | null {
+  const { push, route, asPath } = useRouter()
 
-  const { isAuthenticated, isInitialized } = useAuthContext();
+  const { isAuthenticated, isInitialized } = useAuthContext()
 
   useEffect(() => {
     if (isAuthenticated) {
-      if (route.includes("public")) {
-        push(asPath);
+      if (route.includes('public')) {
+        push(asPath)
       } else {
-        push(STUDENT_PATH_AFTER_LOGIN);
+        push(STUDENT_PATH_AFTER_LOGIN)
       }
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated])
 
   if (isInitialized === isAuthenticated) {
-    return <LoadingScreen />;
+    return <LoadingScreen />
   }
 
-  return <> {children} </>;
+  return <> {children} </>
 }

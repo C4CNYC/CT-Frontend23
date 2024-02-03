@@ -1,38 +1,31 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
+import { Box, Stack } from '@mui/system'
+import { useSnackbar } from 'notistack'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
-import { Box, Stack } from "@mui/system";
-
-import { FormProvider, RHFTextField } from "@components";
+import { FormProvider, RHFTextField } from '@/components'
 import {
   usePostProjectMutation,
   useUpdateProjectCoverMutation,
-} from "src/redux/services/manager/gallery-student";
+} from '@/redux/services/manager/gallery-student'
 // import { getImageFromCode } from "src/lib/utils/getImageFromCode";
 
 interface IPublishModal {
-  children: React.ReactElement;
-  code: string;
-  language: string;
-  isPublic: boolean;
+  children: React.ReactElement
+  code: string
+  language: string
+  isPublic: boolean
 }
 
 interface FormValuesProps {
-  title: string;
-  description: string;
-  isPublic: boolean;
+  title: string
+  description: string
+  isPublic: boolean
 }
 
 const PublishModal = ({
@@ -41,42 +34,41 @@ const PublishModal = ({
   language,
   isPublic,
 }: IPublishModal): React.ReactElement => {
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const [postProject, { isLoading }] = usePostProjectMutation();
-  const [updateCover, { isLoading: isUpdatingCover }] =
-    useUpdateProjectCoverMutation();
+  const [postProject, { isLoading }] = usePostProjectMutation()
+  const [updateCover, { isLoading: isUpdatingCover }] = useUpdateProjectCoverMutation()
   const handleClickOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const defaultValues = {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     public: isPublic,
-  };
+  }
 
   const CreateProjectSchema = Yup.object().shape({
-    title: Yup.string().required("Title is required"),
-    description: Yup.string().required("Description is required"),
+    title: Yup.string().required('Title is required'),
+    description: Yup.string().required('Description is required'),
     public: Yup.boolean(),
-  });
+  })
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateProjectSchema),
     defaultValues,
-  });
+  })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    const file = new FormData();
-    const { getImageFromCode } = await import("src/lib/utils/getImageFromCode");
-    const cover = await getImageFromCode(code);
+    const file = new FormData()
+    const { getImageFromCode } = await import('@/lib/utils/getImageFromCode')
+    const cover = await getImageFromCode(code)
     try {
       const postedProject = await postProject({
         ...data,
@@ -86,31 +78,31 @@ const PublishModal = ({
           },
         }),
         language,
-      }).unwrap();
+      }).unwrap()
       if (cover) {
-        file.append("file", cover);
-        await updateCover({ id: postedProject.id as string, file }).unwrap();
+        file.append('file', cover)
+        await updateCover({ id: postedProject.id as string, file }).unwrap()
       }
-      enqueueSnackbar("Added successfully!");
-      methods.reset();
+      enqueueSnackbar('Added successfully!')
+      methods.reset()
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-    handleClose();
-  };
+    handleClose()
+  }
 
   return (
     <>
       <Box
         onClick={handleClickOpen}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       >
         {children}
       </Box>
       <Dialog
-        maxWidth="sm"
+        maxWidth='sm'
         open={open}
         keepMounted
         onClose={handleClose}
@@ -119,30 +111,40 @@ const PublishModal = ({
           zIndex: 1800,
         }}
       >
-        <DialogTitle>{isPublic ? "PUBLISH" : "SAVE"}</DialogTitle>
+        <DialogTitle>{isPublic ? 'PUBLISH' : 'SAVE'}</DialogTitle>
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <DialogContent>
-            <Stack gap={3} p={1}>
-              <RHFTextField name="title" label="Title" required />
+            <Stack
+              gap={3}
+              p={1}
+            >
+              <RHFTextField
+                name='title'
+                label='Title'
+                required
+              />
               <RHFTextField
                 multiline
                 rows={5}
-                name="description"
-                label="Description"
+                name='description'
+                label='Description'
                 required
               />
             </Stack>
           </DialogContent>
           <DialogActions>
-            <Button color="error" onClick={handleClose}>
+            <Button
+              color='error'
+              onClick={handleClose}
+            >
               CANCEL
             </Button>
             <LoadingButton
-              type="submit"
-              variant="contained"
+              type='submit'
+              variant='contained'
               loading={isLoading || isUpdatingCover}
             >
               SAVE
@@ -151,7 +153,7 @@ const PublishModal = ({
         </FormProvider>
       </Dialog>
     </>
-  );
-};
+  )
+}
 
-export default PublishModal;
+export default PublishModal

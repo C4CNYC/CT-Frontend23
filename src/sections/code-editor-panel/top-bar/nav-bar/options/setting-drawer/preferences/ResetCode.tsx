@@ -1,25 +1,32 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material'
 
-import { Iconify } from "src/components/iconify";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Iconify } from '@/components/iconify'
+import { useTranslate } from '@/lib/utils/translateHelper'
 
-import BasePreference from "./BasePreference";
+import BasePreference from './BasePreference'
 
 interface IResetCode {
-  onReset: () => void;
+  onReset: () => void
 }
 
 const ResetCode = ({ onReset }: IResetCode): React.ReactElement => {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
-    <BasePreference title={translate("reset_lesson")}>
-      <Button onClick={onReset} fullWidth variant="contained">
-        <Iconify mr="7px" icon="carbon:reset" />
-        {translate("reset_code")}
+    <BasePreference title={translate('reset_lesson')}>
+      <Button
+        onClick={onReset}
+        fullWidth
+        variant='contained'
+      >
+        <Iconify
+          mr='7px'
+          icon='carbon:reset'
+        />
+        {translate('reset_code')}
       </Button>
     </BasePreference>
-  );
-};
+  )
+}
 
-export default ResetCode;
+export default ResetCode

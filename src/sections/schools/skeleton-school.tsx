@@ -1,21 +1,21 @@
-import { Container, Skeleton } from "@mui/material";
+import { Container, Skeleton } from '@mui/material'
 
-import { useSettingsContext } from "@components";
+import { useSettingsContext } from '@/components'
 
 export default function SkeletonSchool(): React.ReactElement {
-  const { themeStretch } = useSettingsContext();
+  const { themeStretch } = useSettingsContext()
   return (
-    <Container maxWidth={themeStretch ? false : "lg"}>
+    <Container maxWidth={themeStretch ? false : 'lg'}>
       <Skeleton
-        variant="rectangular"
-        animation="wave"
+        variant='rectangular'
+        animation='wave'
         sx={{
-          width: "100%",
-          height: "280px",
-          borderRadius: "16px",
+          width: '100%',
+          height: '280px',
+          borderRadius: '16px',
           mb: 2,
         }}
       />
     </Container>
-  );
+  )
 }

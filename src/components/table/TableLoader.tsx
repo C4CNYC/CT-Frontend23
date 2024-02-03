@@ -1,17 +1,13 @@
-// @mui
-import { TableCell, TableRow } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
-//
-import { Box } from "@mui/system";
-
-// ----------------------------------------------------------------------
+import { TableCell, TableRow } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
+import { Box } from '@mui/system'
 
 interface Props {
-  isLoading: boolean;
+  isLoading: boolean
 }
 
 export function TableLoader({ isLoading }: Props): React.ReactElement | null {
-  if (!isLoading) return null;
+  if (!isLoading) return null
 
   return (
     <TableRow>
@@ -19,15 +15,15 @@ export function TableLoader({ isLoading }: Props): React.ReactElement | null {
         <Box
           sx={{
             height: 160,
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
           }}
         >
           <CircularProgress />
         </Box>
       </TableCell>
     </TableRow>
-  );
+  )
 }

@@ -1,55 +1,53 @@
-import { combineReducers } from "redux";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import { combineReducers } from 'redux'
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage'
 
 // slices
-import { adminApi } from "./services/admin";
-import { authApi } from "./services/auth";
-import { managerApi } from "./services/manager";
-import { studentPublicApi } from "./services/public-student";
-import { publicApi } from "./services/public/tribe-public";
-import { schoolSettingsApi } from "./services/school-settings-manager";
-import { studentAuthApi } from "./services/student-auth";
-import codePanelReducer from "./slices/code-panel";
-import globalRducer from "./slices/global";
-import lessonStepsReducer from "./slices/lesson-steps";
-import managerReducer from "./slices/manager";
-import rabitsReduce from "./slices/rabits";
-import schoolSettingsReducer from "./slices/schoolSettings";
-import codePanelGlobalReducer from "./slices/code-panel-global"
-import tourReducer from "./slices/tour"
-import checkersAnimationReducer from "./slices/checkers-animation"
-import mobileTabManagerReducer from "./slices/mobile-tab-manager";
-import chatHandlerReducer from "./slices/chat-handler";
-import codeEditorCollabController from "./slices/code-editor-controller";
+import { adminApi } from './services/admin'
+import { authApi } from './services/auth'
+import { managerApi } from './services/manager'
+import { publicApi } from './services/public/tribe-public'
+import { studentPublicApi } from './services/public-student'
+import { schoolSettingsApi } from './services/school-settings-manager'
+import { studentAuthApi } from './services/student-auth'
+import chatHandlerReducer from './slices/chat-handler'
+import checkersAnimationReducer from './slices/checkers-animation'
+import codeEditorCollabController from './slices/code-editor-controller'
+import codePanelReducer from './slices/code-panel'
+import codePanelGlobalReducer from './slices/code-panel-global'
+import globalRducer from './slices/global'
+import lessonStepsReducer from './slices/lesson-steps'
+import managerReducer from './slices/manager'
+import mobileTabManagerReducer from './slices/mobile-tab-manager'
+import rabitsReduce from './slices/rabits'
+import schoolSettingsReducer from './slices/schoolSettings'
+import tourReducer from './slices/tour'
 
 interface INoopStorage {
-  getItem: (_key: string) => Promise<null>;
-  setItem: (_key: string, value: any) => Promise<any>;
-  removeItem: (_key: string) => Promise<void>;
+  getItem: (_key: string) => Promise<null>
+  setItem: (_key: string, value: any) => Promise<any>
+  removeItem: (_key: string) => Promise<void>
 }
 export const createNoopStorage = (): INoopStorage => ({
   async getItem(_key: string) {
-    return await Promise.resolve(null);
+    return await Promise.resolve(null)
   },
   async setItem(_key: string, value: any) {
-    return await Promise.resolve(value);
+    return await Promise.resolve(value)
   },
   async removeItem(_key: string) {
-    await Promise.resolve();
+    await Promise.resolve()
   },
-});
+})
 
 export const storage =
-  typeof window !== "undefined"
-    ? createWebStorage("local")
-    : createNoopStorage();
+  typeof window !== 'undefined' ? createWebStorage('local') : createNoopStorage()
 
 export const rootPersistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  keyPrefix: "redux-",
+  keyPrefix: 'redux-',
   whitelist: ['codePanel'],
-};
+}
 
 const rootReducer = combineReducers({
   [adminApi.reducerPath]: adminApi.reducer,
@@ -70,7 +68,7 @@ const rootReducer = combineReducers({
   checkersAnimation: checkersAnimationReducer,
   mobileTabManager: mobileTabManagerReducer,
   chatHandler: chatHandlerReducer,
-  codeEditorController: codeEditorCollabController
-});
+  codeEditorController: codeEditorCollabController,
+})
 
-export default rootReducer;
+export default rootReducer

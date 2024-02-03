@@ -1,58 +1,68 @@
-import React from "react";
+import React from 'react'
 
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+import { Box, Card, Grid, Stack, Typography } from '@mui/material'
 
-import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { useGetSchoolProfileQuery } from '@/redux/services/manager/schools-manager'
 
-import SkeletonSocialsTab from "./SkeletonSocialsTab";
-import SocialItem from "./SocialItem";
-import SocialsForm from "./SocialsForm";
+import SkeletonSocialsTab from './SkeletonSocialsTab'
+import SocialItem from './SocialItem'
+import SocialsForm from './SocialsForm'
 
 interface Props {
-  schoolId: string;
+  schoolId: string
 }
 
-export default function SchoolSocialsTab({
-  schoolId,
-}: Props): React.ReactElement | null {
-  const { data, isLoading } = useGetSchoolProfileQuery(
-    { schoolId },
-    { skip: !schoolId }
-  );
-  const socialLinks = data?.socials;
-  const translate = useTranslate();
+export default function SchoolSocialsTab({ schoolId }: Props): React.ReactElement | null {
+  const { data, isLoading } = useGetSchoolProfileQuery({ schoolId }, { skip: !schoolId })
+  const socialLinks = data?.socials
+  const translate = useTranslate()
 
-  if (isLoading) return <SkeletonSocialsTab />;
+  if (isLoading) return <SkeletonSocialsTab />
 
-  if (!data) return <>{translate("messages_no_data")}</>;
+  if (!data) return <>{translate('messages_no_data')}</>
 
   return (
     <>
       <Box
         sx={{
-          backgroundColor: "transparent !important",
+          backgroundColor: 'transparent !important',
           mb: 3,
           height: 420,
-          position: "relative",
+          position: 'relative',
         }}
       >
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
+        <Grid
+          container
+          spacing={3}
+        >
+          <Grid
+            item
+            xs={12}
+          >
             <Card sx={{ p: 3 }}>
               {isLoading ? null : (
-                <SocialsForm socialLinks={data.socials} schoolId={schoolId} />
+                <SocialsForm
+                  socialLinks={data.socials}
+                  schoolId={schoolId}
+                />
               )}
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                {translate("networks_tab_your_networks")}
+              <Typography
+                variant='h6'
+                sx={{ mb: 2 }}
+              >
+                {translate('networks_tab_your_networks')}
               </Typography>
               {socialLinks?.map((item: any) => (
                 <Stack
-                  direction="row"
-                  sx={{ wordBreak: "break-all" }}
+                  direction='row'
+                  sx={{ wordBreak: 'break-all' }}
                   key={item.id}
                 >
-                  <SocialItem socialItem={item} schoolId={schoolId} />
+                  <SocialItem
+                    socialItem={item}
+                    schoolId={schoolId}
+                  />
                 </Stack>
               ))}
             </Card>
@@ -60,5 +70,5 @@ export default function SchoolSocialsTab({
         </Grid>
       </Box>
     </>
-  );
+  )
 }

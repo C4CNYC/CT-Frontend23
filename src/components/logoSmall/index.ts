@@ -1,1 +1,1 @@
-export * from "./LogoSmall";
+export * from './LogoSmall'

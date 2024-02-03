@@ -1,12 +1,10 @@
-import { type Theme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import { type Theme } from '@mui/material/styles'
 
 export default function Skeleton(theme: Theme): unknown {
   return {
     MuiSkeleton: {
       defaultProps: {
-        animation: "wave",
+        animation: 'wave',
       },
       styleOverrides: {
         root: {
@@ -14,5 +12,5 @@ export default function Skeleton(theme: Theme): unknown {
         },
       },
     },
-  };
+  }
 }

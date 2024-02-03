@@ -1,16 +1,12 @@
-// ----------------------------------------------------------------------
-
-export function flattenArray<T>(list: T[], key = "children"): T[] {
-  let children: T[] = [];
+export function flattenArray<T>(list: T[], key = 'children'): T[] {
+  let children: T[] = []
 
   const flatten = list?.map((item: any) => {
     if (item[key]?.length) {
-      children = [...children, ...item[key]];
+      children = [...children, ...item[key]]
     }
-    return item;
-  });
+    return item
+  })
 
-  return flatten?.concat(
-    children.length ? flattenArray(children, key) : children
-  );
+  return flatten?.concat(children.length ? flattenArray(children, key) : children)
 }

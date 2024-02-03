@@ -1,45 +1,41 @@
-import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import { Autocomplete, Box } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/system/Stack";
+import SearchOutlined from '@mui/icons-material/SearchOutlined'
+import { Autocomplete, Box } from '@mui/material'
+import InputAdornment from '@mui/material/InputAdornment'
+import TextField from '@mui/material/TextField'
+import Stack from '@mui/system/Stack'
 
-import { SetFilterType, useFilters } from "@hooks";
-import SkeletonFilter from "@sections/dashboard/skeleton/skeletonFilter";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
+import { SetFilterType, useFilters } from '@/lib/hooks'
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   ICourse,
   ICourseSearchParams,
   IModulesSearchParams,
-} from "src/redux/services/interfaces/courseUnits.interface";
-import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+} from '@/redux/services/interfaces/courseUnits.interface'
+import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
+import SkeletonFilter from '@/sections/dashboard/skeleton/skeletonFilter'
 
 interface Props {
-  filters: IModulesSearchParams;
-  setFilter: SetFilterType;
+  filters: IModulesSearchParams
+  setFilter: SetFilterType
 }
 
-export default function FilterModules({
-  filters,
-  setFilter,
-}: Props): React.ReactElement {
-  const { filters: courseFilters, setFilter: setCourseFilters } =
-    useFilters<ICourseSearchParams>({
-      take: 50,
-      name: "",
-    });
-  const translate = useTranslate();
+export default function FilterModules({ filters, setFilter }: Props): React.ReactElement {
+  const { filters: courseFilters, setFilter: setCourseFilters } = useFilters<ICourseSearchParams>({
+    take: 50,
+    name: '',
+  })
+  const translate = useTranslate()
 
-  const { data: courses, isLoading } = useManagerGetCourseQuery(courseFilters);
+  const { data: courses, isLoading } = useManagerGetCourseQuery(courseFilters)
 
   if (isLoading) {
     return (
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: 'flex' }}>
         <SkeletonFilter />
         <SkeletonFilter />
       </Box>
-    );
+    )
   }
 
   return (
@@ -47,24 +43,27 @@ export default function FilterModules({
       <Stack
         spacing={2}
         sx={{ mb: 4 }}
-        alignItems="center"
+        alignItems='center'
         direction={{
-          xs: "column",
-          sm: "row",
+          xs: 'column',
+          sm: 'row',
         }}
       >
         <TextField
           sx={{
-            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
+            width: { xs: '100%', sm: '100%', md: '260px', lg: '260px' },
           }}
-          placeholder={translate("name")}
-          type="text"
+          placeholder={translate('name')}
+          type='text'
           onChange={(event) => {
-            setFilter("name", event.target.value);
+            setFilter('name', event.target.value)
           }}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end" sx={{ cursor: "pointer" }}>
+              <InputAdornment
+                position='end'
+                sx={{ cursor: 'pointer' }}
+              >
                 <SearchOutlined />
               </InputAdornment>
             ),
@@ -73,24 +72,25 @@ export default function FilterModules({
         <Autocomplete<ICourse & BaseResponseInterface>
           options={courses?.data ?? []}
           renderInput={(params) => (
-            <TextField {...params} label={translate("course")} />
+            <TextField
+              {...params}
+              label={translate('course')}
+            />
           )}
           onInputChange={(e, value) => {
-            setCourseFilters("name", value);
+            setCourseFilters('name', value)
           }}
-          defaultValue={
-            courses?.data.filter((m) => m.id === filters.course_id)[0]
-          }
+          defaultValue={courses?.data.filter((m) => m.id === filters.course_id)[0]}
           onChange={(event, value, reason, details) => {
-            setFilter("course_id", details?.option.id ?? "");
+            setFilter('course_id', details?.option.id ?? '')
           }}
           getOptionLabel={(option) => option.name}
           sx={{
-            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
+            width: { xs: '100%', sm: '100%', md: '260px', lg: '260px' },
             marginRight: 2,
           }}
         />
       </Stack>
     </>
-  );
+  )
 }

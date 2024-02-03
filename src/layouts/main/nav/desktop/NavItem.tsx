@@ -1,29 +1,20 @@
-// next
-import NextLink from "next/link";
-import { forwardRef } from "react";
+import { forwardRef } from 'react'
 
-import { m } from "framer-motion";
+import { CardActionArea, Link, LinkProps } from '@mui/material'
+import { m } from 'framer-motion'
+import NextLink from 'next/link'
 
-// @mui
-import { CardActionArea, Link, LinkProps } from "@mui/material";
+import { Iconify } from '@/components/iconify'
+import { Image } from '@/components/image'
 
-// components
-import { Iconify } from "src/components/iconify";
-import { Image } from "src/components/image";
+import { NavItemDesktopProps, NavItemProps } from '../types'
 
-//
-import { NavItemDesktopProps, NavItemProps } from "../types";
-import { ListItem } from "./styles";
-
-// ----------------------------------------------------------------------
+import { ListItem } from './styles'
 
 // eslint-disable-next-line react/display-name
 export const NavItem = forwardRef<HTMLDivElement, NavItemDesktopProps>(
-  (
-    { item, open, isOffset, active, subItem, isExternalLink, ...other },
-    ref
-  ) => {
-    const { title, path, children } = item;
+  ({ item, open, isOffset, active, subItem, isExternalLink, ...other }, ref) => {
+    const { title, path, children } = item
 
     const renderContent = (
       <ListItem
@@ -40,40 +31,47 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemDesktopProps>(
         {!!children && (
           <Iconify
             width={16}
-            icon="eva:arrow-ios-downward-fill"
+            icon='eva:arrow-ios-downward-fill'
             sx={{ ml: 1 }}
           />
         )}
       </ListItem>
-    );
+    )
 
     // ExternalLink
     if (isExternalLink) {
       return (
-        <Link href={path} target="_blank" rel="noopener" underline="none">
+        <Link
+          href={path}
+          target='_blank'
+          rel='noopener'
+          underline='none'
+        >
           {renderContent}
         </Link>
-      );
+      )
     }
 
     // Has child
     if (children) {
-      return renderContent;
+      return renderContent
     }
 
     // Default
     return (
-      <Link component={NextLink} href={path} underline="none">
+      <Link
+        component={NextLink}
+        href={path}
+        underline='none'
+      >
         {renderContent}
       </Link>
-    );
+    )
   }
-);
-
-// ----------------------------------------------------------------------
+)
 
 interface NavItemDashboardProps extends LinkProps {
-  item: NavItemProps;
+  item: NavItemProps
 }
 
 export function NavItemDashboard({
@@ -85,7 +83,7 @@ export function NavItemDashboard({
     <Link
       component={NextLink}
       href={item.path}
-      underline="none"
+      underline='none'
       sx={{ width: 1 }}
       {...other}
     >
@@ -95,15 +93,15 @@ export function NavItemDashboard({
           px: 10,
           minHeight: 400,
           borderRadius: 1,
-          color: "text.disabled",
-          bgcolor: "background.neutral",
+          color: 'text.disabled',
+          bgcolor: 'background.neutral',
 
           ...sx,
         }}
       >
         <m.div
-          whileTap="tap"
-          whileHover="hover"
+          whileTap='tap'
+          whileHover='hover'
           variants={{
             hover: { scale: 1.02 },
             tap: { scale: 0.98 },
@@ -111,11 +109,11 @@ export function NavItemDashboard({
         >
           <Image
             visibleByDefault
-            alt="illustration_dashboard"
-            src="/assets/illustrations/illustration_dashboard.png"
+            alt='illustration_dashboard'
+            src='/assets/illustrations/illustration_dashboard.png'
           />
         </m.div>
       </CardActionArea>
     </Link>
-  );
+  )
 }

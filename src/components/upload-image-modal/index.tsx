@@ -1,30 +1,29 @@
-import * as React from "react";
-import { useCallback } from "react";
+import React from 'react'
+import { useCallback } from 'react'
 
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
+import CloseIcon from '@mui/icons-material/Close'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import { LoadingButton } from '@mui/lab'
+import { IconButton, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Modal from '@mui/material/Modal'
+import { Stack } from '@mui/system'
+import { useSnackbar } from 'notistack'
+import { useForm } from 'react-hook-form'
 
-import CloseIcon from "@mui/icons-material/Close";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { LoadingButton } from "@mui/lab";
-import { IconButton, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import { Stack } from "@mui/system";
+import { fData } from '@/lib/utils'
+import { useTranslate } from '@/lib/utils/translateHelper'
 
-import { fData } from "@utils";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import { FormProvider, RHFUploadAvatar } from "../hook-form";
+import { FormProvider, RHFUploadAvatar } from '../hook-form'
 
 interface FormValuesProps {
-  cover: File;
+  cover: File
 }
 
 export interface UploadImageProps {
-  onUpload: (file: File, id: string | undefined) => Promise<void>;
-  id?: string;
-  color?: string;
+  onUpload: (file: File, id: string | undefined) => Promise<void>
+  id?: string
+  color?: string
 }
 
 export function UploadImageModal({
@@ -32,130 +31,140 @@ export function UploadImageModal({
   id,
   color,
 }: UploadImageProps): React.ReactElement | null {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   const handleOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const style = {
-    position: "absolute" as const,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "background.paper",
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
     boxShadow: 2,
-    borderRadius: "16px",
+    borderRadius: '16px',
     p: 4,
-    width: { xs: "90%", sm: "90%", md: "40%" },
-  };
-  const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
+    width: { xs: '90%', sm: '90%', md: '40%' },
+  }
+  const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
 
-  const methods = useForm<FormValuesProps>();
+  const methods = useForm<FormValuesProps>()
 
   const {
     setValue,
     handleSubmit,
     reset,
     formState: { isSubmitting },
-  } = methods;
+  } = methods
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (!data.cover) {
-      enqueueSnackbar(translate("messages_no_image_selected"), {
-        variant: "error",
-      });
-      return;
+      enqueueSnackbar(translate('messages_no_image_selected'), {
+        variant: 'error',
+      })
+      return
     }
-    await onUpload(data.cover, id);
-    reset();
-    handleClose();
-  };
+    await onUpload(data.cover, id)
+    reset()
+    handleClose()
+  }
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
+      const file = acceptedFiles[0]
 
       const newFile = Object.assign(file, {
         preview: URL.createObjectURL(file),
-      });
+      })
 
       if (file) {
-        setValue("cover", newFile, { shouldValidate: true });
+        setValue('cover', newFile, { shouldValidate: true })
       }
     },
     [setValue]
-  );
+  )
 
   return (
     <>
       <IconButton onClick={handleOpen}>
-        <EditOutlinedIcon style={{ color: color ?? "rgb(161, 167, 172)" }} />
+        <EditOutlinedIcon style={{ color: color ?? 'rgb(161, 167, 172)' }} />
       </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
       >
-        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <FormProvider
+          methods={methods}
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Box sx={style}>
             <Stack
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              direction="row"
+              display='flex'
+              alignItems='center'
+              justifyContent='space-between'
+              direction='row'
               mb={3}
             >
-              <Typography variant="h6" fontWeight="700">
-                {translate("avatar_upload_cover_img")}
+              <Typography
+                variant='h6'
+                fontWeight='700'
+              >
+                {translate('avatar_upload_cover_img')}
               </Typography>
               <IconButton
                 onClick={handleClose}
-                sx={{ width: "35px" }}
-                edge="end"
+                sx={{ width: '35px' }}
+                edge='end'
               >
-                <CloseIcon fontSize="small" />
+                <CloseIcon fontSize='small' />
               </IconButton>
             </Stack>
             <RHFUploadAvatar
-              name="cover"
+              name='cover'
               maxSize={20000000}
               onDrop={handleDrop}
               helperText={
                 <Typography
-                  variant="caption"
+                  variant='caption'
                   sx={{
                     mt: 2,
-                    mx: "auto",
-                    display: "block",
-                    textAlign: "center",
-                    color: "text.secondary",
-                    whiteSpace: "pre-line",
+                    mx: 'auto',
+                    display: 'block',
+                    textAlign: 'center',
+                    color: 'text.secondary',
+                    whiteSpace: 'pre-line',
                   }}
                 >
-                  {translate("general_profile_upload_img", {
-                    formats: "png",
+                  {translate('general_profile_upload_img', {
+                    formats: 'png',
                     size: fData(2000000),
                   })}
                 </Typography>
               }
             ></RHFUploadAvatar>
-            <Stack spacing={3} alignItems="flex-end" sx={{ mt: "30px" }}>
+            <Stack
+              spacing={3}
+              alignItems='flex-end'
+              sx={{ mt: '30px' }}
+            >
               <LoadingButton
-                type="submit"
-                variant="contained"
+                type='submit'
+                variant='contained'
                 loading={isSubmitting}
               >
-                {translate("actions_update")}
+                {translate('actions_update')}
               </LoadingButton>
             </Stack>
           </Box>
         </FormProvider>
       </Modal>
     </>
-  );
+  )
 }

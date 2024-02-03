@@ -1,35 +1,64 @@
-import * as React from "react"
+import React from 'react'
 
-import { DocumentHeadTags, DocumentHeadTagsProps } from "@mui/material-nextjs/v14-pagesRouter"
-import { DocumentProps, Head, Html, Main, NextScript } from "next/document"
+import { DocumentHeadTags, DocumentHeadTagsProps } from '@mui/material-nextjs/v14-pagesRouter'
+import { DocumentProps, Head, Html, Main, NextScript } from 'next/document'
 
-import { palette } from "@theme/palette"
-import { primaryFont } from "@theme/typography"
+import { palette } from '@/theme/palette'
+import { primaryFont } from '@/theme/typography'
 
 export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps) {
   return (
-    <Html lang="en" className={primaryFont.className}>
+    <Html
+      lang='en'
+      className={primaryFont.className}
+    >
       <Head>
         <DocumentHeadTags {...props} />
 
-        <meta charSet="utf-8" />
-        <link rel="manifest" href="/manifest.json" />
+        <meta charSet='utf-8' />
+        <link
+          rel='manifest'
+          href='/manifest.json'
+        />
 
         {/* PWA primary color */}
-        <meta name="theme-color" content={palette("light").primary.main} />
+        <meta
+          name='theme-color'
+          content={palette('light').primary.main}
+        />
 
         {/* Favicon */}
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+        <link
+          rel='apple-touch-icon'
+          sizes='180x180'
+          href='/favicon/apple-touch-icon.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='32x32'
+          href='/favicon/favicon-32x32.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='16x16'
+          href='/favicon/favicon-16x16.png'
+        />
 
         {/* Meta */}
         <meta
-          name="description"
-          content="Text-based Coding for Teens, Schools & Summer Camps – Coding real-world, social-impact websites. Learn web development with friends."
+          name='description'
+          content='Text-based Coding for Teens, Schools & Summer Camps – Coding real-world, social-impact websites. Learn web development with friends.'
         />
-        <meta name="keywords" content="coding,study,it,school" />
-        <meta name="author" content="codetribe.com" />
+        <meta
+          name='keywords'
+          content='coding,study,it,school'
+        />
+        <meta
+          name='author'
+          content='codetribe.com'
+        />
 
         <style>
           {`

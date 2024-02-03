@@ -1,10 +1,8 @@
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
+import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 
-import { adminApi } from ".";
-import {
-  CustomizationResponce,
-  ICustomization,
-} from "../interfaces/organization.interface";
+import { CustomizationResponce, ICustomization } from '../interfaces/organization.interface'
+
+import { adminApi } from '.'
 
 const extendedApi = adminApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,24 +11,20 @@ const extendedApi = adminApi.injectEndpoints({
       ICustomization
     >({
       query: ({ ...body }) => ({
-        url: "/org/custom/",
-        method: "PATCH",
+        url: '/org/custom/',
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "OrganizationCustomization" }],
+      invalidatesTags: [{ type: 'OrganizationCustomization' }],
     }),
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     getOrgCustomization: builder.query<CustomizationResponce, void>({
       query: () => ({
-        url: "/org/custom/",
-        method: "GET",
+        url: '/org/custom/',
+        method: 'GET',
       }),
-      providesTags: ["OrganizationCustomization"],
+      providesTags: ['OrganizationCustomization'],
     }),
   }),
-});
+})
 
-export const {
-  useGetOrgCustomizationQuery,
-  useUpdateOrgCustomizationMutation,
-} = extendedApi;
+export const { useGetOrgCustomizationQuery, useUpdateOrgCustomizationMutation } = extendedApi

@@ -1,6 +1,6 @@
-import LoginLayout from "@layouts/login/LoginLayout";
-import SignInMain from "@sections/auth/sign-in";
-import GuestGuard from "src/auth/GuestGuard";
+import GuestGuard from '@/auth/GuestGuard'
+import LoginLayout from '@/layouts/login/LoginLayout'
+import SignInMain from '@/sections/auth/sign-in'
 
 export default function SignIn(): React.ReactElement {
   return (
@@ -9,5 +9,5 @@ export default function SignIn(): React.ReactElement {
         <SignInMain />
       </LoginLayout>
     </GuestGuard>
-  );
+  )
 }

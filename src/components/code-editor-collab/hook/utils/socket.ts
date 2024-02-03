@@ -1,54 +1,54 @@
-import * as _ from "lodash-es";
-import { Socket, io } from "socket.io-client";
+import * as _ from 'lodash-es'
+import { Socket, io } from 'socket.io-client'
 
 export enum SubscribedEvents {
-  Connect = "connect",
-  PushResponse = "pushUpdateResponse",
-  GetFileInfoResponse = "getFileInfoResponse",
-  GetDocResponse = "getDocumentResponse",
-  ActiveFileChanged = "activeFileChanged",
-  DeleteResponse = "deleteFileResponse",
-  AddFile = "addFile",
-  RoomExistResponse = "isRoomExistResponse",
-  RoomDeleteResponse = "isRoomDeleted",
-  DocUpdated = "docUpdated",
-  CreateFileResponse = "createFileResponse",
+  Connect = 'connect',
+  PushResponse = 'pushUpdateResponse',
+  GetFileInfoResponse = 'getFileInfoResponse',
+  GetDocResponse = 'getDocumentResponse',
+  ActiveFileChanged = 'activeFileChanged',
+  DeleteResponse = 'deleteFileResponse',
+  AddFile = 'addFile',
+  RoomExistResponse = 'isRoomExistResponse',
+  RoomDeleteResponse = 'isRoomDeleted',
+  DocUpdated = 'docUpdated',
+  CreateFileResponse = 'createFileResponse',
 }
 
 export enum EmitSocketEvents {
-  Pull = "pullUpdates",
-  PullResponse = "pullUpdateResponse",
-  Push = "pushUpdates",
-  GetDoc = "getDocument",
-  DeleteRoom = "deleteRoom",
-  SetActiveFile = "setActiveFile",
-  DeleteFile = "deleteFile",
-  GetFileInfo = "getFileInfo",
-  CreateFile = "createFile",
-  AddFileResponse = "addFileResponse",
-  AddedFileListUpdated = "addedFileListUpdated",
+  Pull = 'pullUpdates',
+  PullResponse = 'pullUpdateResponse',
+  Push = 'pushUpdates',
+  GetDoc = 'getDocument',
+  DeleteRoom = 'deleteRoom',
+  SetActiveFile = 'setActiveFile',
+  DeleteFile = 'deleteFile',
+  GetFileInfo = 'getFileInfo',
+  CreateFile = 'createFile',
+  AddFileResponse = 'addFileResponse',
+  AddedFileListUpdated = 'addedFileListUpdated',
 }
 
 export const unsubscribeSocket = (socket?: Socket): void => {
-  if (!socket) return;
+  if (!socket) return
   _.values(SubscribedEvents).forEach((event) => {
-    socket?.off(event);
-  });
+    socket?.off(event)
+  })
 
-  socket?.disconnect();
-};
+  socket?.disconnect()
+}
 
 export const createSocket = (userId?: null | string): Socket => {
-  return io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? "", {
+  return io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
     path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-    auth: userId ? { userId } : {}
-  });
-};
+    auth: userId ? { userId } : {},
+  })
+}
 
 export const waitConnectSocket = async (socket: Socket): Promise<boolean> => {
   return await new Promise((resolve) => {
     socket.on(SubscribedEvents.Connect, () => {
-      resolve(true);
-    });
-  });
-};
+      resolve(true)
+    })
+  })
+}

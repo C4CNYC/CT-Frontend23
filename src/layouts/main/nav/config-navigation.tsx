@@ -1,24 +1,22 @@
-import { Iconify } from "src/components/iconify";
-import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
-
-// ----------------------------------------------------------------------
+import { Iconify } from '@/components/iconify'
+import { PATH_AUTH, PATH_PAGE } from '@/routes/paths'
 
 const navConfig = [
   {
-    title: "Home",
-    icon: <Iconify icon="eva:home-fill" />,
-    path: "/",
+    title: 'Home',
+    icon: <Iconify icon='eva:home-fill' />,
+    path: '/',
   },
   {
-    title: "Price",
-    icon: <Iconify icon="ic:round-grain" />,
+    title: 'Price',
+    icon: <Iconify icon='ic:round-grain' />,
     path: PATH_PAGE.components,
   },
   {
-    title: "Login",
-    icon: <Iconify icon="ic:round-grain" />,
+    title: 'Login',
+    icon: <Iconify icon='ic:round-grain' />,
     path: PATH_AUTH.signIn,
   },
-];
+]
 
-export default navConfig;
+export default navConfig

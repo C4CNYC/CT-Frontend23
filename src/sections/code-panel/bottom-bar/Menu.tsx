@@ -1,11 +1,4 @@
-import nextLink from "next/link";
-import { useContext, useState } from "react";
-
-import { BsFolder2Open } from "@react-icons/all-files/bs/BsFolder2Open";
-import { GiSave } from "@react-icons/all-files/gi/GiSave";
-import { IoSaveOutline } from "@react-icons/all-files/io5/IoSaveOutline";
-import { MdOutlinePhotoLibrary } from "@react-icons/all-files/md/MdOutlinePhotoLibrary";
-import { MdOutlineUpload } from "@react-icons/all-files/md/MdOutlineUpload";
+import { useContext, useState } from 'react'
 
 import {
   Chip,
@@ -15,45 +8,59 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import { Box } from "@mui/system";
+} from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles'
+import { Box } from '@mui/system'
+import { BsFolder2Open } from '@react-icons/all-files/bs/BsFolder2Open'
+import { GiSave } from '@react-icons/all-files/gi/GiSave'
+import { IoSaveOutline } from '@react-icons/all-files/io5/IoSaveOutline'
+import { MdOutlinePhotoLibrary } from '@react-icons/all-files/md/MdOutlinePhotoLibrary'
+import { MdOutlineUpload } from '@react-icons/all-files/md/MdOutlineUpload'
+import nextLink from 'next/link'
 
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
-import { CodePanelContext } from "../context/CodePanel.context";
-import PublishModal from "./modals/Publish";
+import { CodePanelContext } from '../context/CodePanel.context'
+
+import PublishModal from './modals/Publish'
 
 const tooltipRewrite = makeStyles(() => ({
   tooltip: {
-    color: "#364954",
-    background: "transparent",
+    color: '#364954',
+    background: 'transparent',
   },
-}));
+}))
 
 const Menu = (): React.ReactElement => {
-  const classes = tooltipRewrite();
-  const { code, language } = useContext(CodePanelContext);
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const [speedDial, setSpeedDial] = useState<boolean>(false);
-  const { publicPage } = useContext(CodePanelContext);
+  const classes = tooltipRewrite()
+  const { code, language } = useContext(CodePanelContext)
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const [speedDial, setSpeedDial] = useState<boolean>(false)
+  const { publicPage } = useContext(CodePanelContext)
   const openSpeedDial = () => {
-    setSpeedDial(true);
-  };
+    setSpeedDial(true)
+  }
   const closeSpeedDial = () => {
-    setSpeedDial(false);
-  };
+    setSpeedDial(false)
+  }
 
   const actions = [
     {
       icon: (
-        <PublishModal isPublic={true} code={code} language={language}>
-          <MdOutlineUpload size="24px" color="#FBDD3F" />
+        <PublishModal
+          isPublic={true}
+          code={code}
+          language={language}
+        >
+          <MdOutlineUpload
+            size='24px'
+            color='#FBDD3F'
+          />
         </PublishModal>
       ),
-      name: "Publish to Gallery",
-      color: "#FBDD3F",
+      name: 'Publish to Gallery',
+      color: '#FBDD3F',
       isPublic: true,
     },
     {
@@ -62,27 +69,37 @@ const Menu = (): React.ReactElement => {
           component={nextLink}
           href={STUDENT_PATH_DASHBOARD.gallery.publicProject}
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <MdOutlinePhotoLibrary size="22px" color="#FBDD3F" />
+          <MdOutlinePhotoLibrary
+            size='22px'
+            color='#FBDD3F'
+          />
         </Link>
       ),
-      name: "Go to Gallery",
-      color: "#FBDD3F",
+      name: 'Go to Gallery',
+      color: '#FBDD3F',
       isPublic: true,
     },
 
     {
       icon: (
-        <PublishModal isPublic={false} code={code} language={language}>
-          <IoSaveOutline size="22px" color="#43D4DD" />
+        <PublishModal
+          isPublic={false}
+          code={code}
+          language={language}
+        >
+          <IoSaveOutline
+            size='22px'
+            color='#43D4DD'
+          />
         </PublishModal>
       ),
       name: "Save to 'My Folder'",
-      color: "#43D4DD",
+      color: '#43D4DD',
       isPublic: false,
     },
     {
@@ -91,56 +108,59 @@ const Menu = (): React.ReactElement => {
           component={nextLink}
           href={STUDENT_PATH_DASHBOARD.gallery.privateProject}
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <BsFolder2Open size="22px" color="#43D4DD" />
+          <BsFolder2Open
+            size='22px'
+            color='#43D4DD'
+          />
         </Link>
       ),
       name: "Open 'My Folder'",
-      color: "#43D4DD",
+      color: '#43D4DD',
       isPublic: false,
     },
-  ];
+  ]
   return (
     <Box
-      className="tourBottombarMenu"
-      sx={{ width: "50px", display: !isDesktop ? "none" : "flex" }}
+      className='tourBottombarMenu'
+      sx={{ width: '50px', display: !isDesktop ? 'none' : 'flex' }}
     >
       {publicPage ?? !isDesktop ? null : (
         <SpeedDial
-          aria-describedby={"popper"}
-          ariaLabel="SpeedDial menu bottom"
+          aria-describedby={'popper'}
+          ariaLabel='SpeedDial menu bottom'
           open={speedDial}
           onClose={closeSpeedDial}
           onOpen={openSpeedDial}
           FabProps={{
-            size: "small",
+            size: 'small',
             sx: {
-              background: speedDial ? "#155275" : "white",
-              boxShadow: "none",
-              border: !speedDial ? "2px solid #b3b3b3" : "none",
-              "&:hover": {
-                background: "#155275",
+              background: speedDial ? '#155275' : 'white',
+              boxShadow: 'none',
+              border: !speedDial ? '2px solid #b3b3b3' : 'none',
+              '&:hover': {
+                background: '#155275',
               },
             },
           }}
           sx={{
-            position: "absolute",
-            bottom: "10px",
+            position: 'absolute',
+            bottom: '10px',
             right: 18,
             zIndex: 20,
-            "& .MuiSpeedDial-actions": {
+            '& .MuiSpeedDial-actions': {
               gap: 0,
             },
           }}
-          direction="up"
+          direction='up'
           icon={
             <GiSave
-              size="20px"
-              style={{ color: speedDial ? "#43D4DD" : "#b3b3b3" }}
+              size='20px'
+              style={{ color: speedDial ? '#43D4DD' : '#b3b3b3' }}
             />
           }
         >
@@ -150,34 +170,34 @@ const Menu = (): React.ReactElement => {
               icon={action.icon}
               TooltipClasses={{ tooltip: classes.tooltip }}
               tooltipTitle={
-                <Box sx={{ position: "relative" }}>
+                <Box sx={{ position: 'relative' }}>
                   <Chip
-                    label={action.isPublic ? "Public" : "Private"}
+                    label={action.isPublic ? 'Public' : 'Private'}
                     sx={{
-                      position: "absolute",
-                      left: "-80px",
-                      top: "calc(50% - 10px)",
+                      position: 'absolute',
+                      left: '-80px',
+                      top: 'calc(50% - 10px)',
                       zIndex: 1000,
                       background: action.color,
-                      height: "20px",
-                      width: "68px",
-                      "& .MuiChip-label": {
-                        whiteSpace: "nowrap",
+                      height: '20px',
+                      width: '68px',
+                      '& .MuiChip-label': {
+                        whiteSpace: 'nowrap',
                       },
                     }}
                   />
-                  <Typography variant="subtitle2">{action.name}</Typography>
+                  <Typography variant='subtitle2'>{action.name}</Typography>
                 </Box>
               }
               FabProps={{
-                size: "small",
+                size: 'small',
                 sx: {
-                  boxShadow: "none",
-                  background: "#155275",
-                  display: "flex",
-                  mb: "0px",
-                  "&:hover": {
-                    background: "#155275",
+                  boxShadow: 'none',
+                  background: '#155275',
+                  display: 'flex',
+                  mb: '0px',
+                  '&:hover': {
+                    background: '#155275',
                   },
                 },
               }}
@@ -186,7 +206,7 @@ const Menu = (): React.ReactElement => {
         </SpeedDial>
       )}
     </Box>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

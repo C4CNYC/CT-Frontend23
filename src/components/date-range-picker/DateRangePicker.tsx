@@ -1,4 +1,3 @@
-// @mui
 // hooks
 import {
   Button,
@@ -10,19 +9,16 @@ import {
   Paper,
   Stack,
   TextField,
-} from "@mui/material";
-import { CalendarPicker, DatePicker } from "@mui/x-date-pickers";
+} from '@mui/material'
+import { CalendarPicker, DatePicker } from '@mui/x-date-pickers'
 
-import { useResponsive } from "@hooks";
+import { useResponsive } from '@/lib/hooks'
 
-//
-import { DateRangePickerProps } from "./types";
-
-// ----------------------------------------------------------------------
+import { DateRangePickerProps } from './types'
 
 export function DateRangePicker({
-  title = "Select date range",
-  variant = "input",
+  title = 'Select date range',
+  variant = 'input',
   //
   startDate,
   endDate,
@@ -35,14 +31,14 @@ export function DateRangePicker({
   //
   isError,
 }: DateRangePickerProps): React.ReactElement | null {
-  const isDesktop = useResponsive("up", "md");
+  const isDesktop = useResponsive('up', 'md')
 
-  const isCalendarView = variant === "calendar";
+  const isCalendarView = variant === 'calendar'
 
   return (
     <Dialog
       fullWidth
-      maxWidth={isCalendarView ? false : "xs"}
+      maxWidth={isCalendarView ? false : 'xs'}
       open={open}
       onClose={onClose}
       PaperProps={{
@@ -59,19 +55,19 @@ export function DateRangePicker({
         sx={{
           ...(isCalendarView &&
             isDesktop && {
-              overflow: "unset",
+              overflow: 'unset',
             }),
         }}
       >
         <Stack
           spacing={isCalendarView ? 3 : 2}
-          direction={isCalendarView && isDesktop ? "row" : "column"}
-          justifyContent="center"
+          direction={isCalendarView && isDesktop ? 'row' : 'column'}
+          justifyContent='center'
           sx={{
             pt: 1,
-            "& .MuiCalendarPicker-root": {
+            '& .MuiCalendarPicker-root': {
               ...(!isDesktop && {
-                width: "auto",
+                width: 'auto',
               }),
             },
           }}
@@ -79,38 +75,44 @@ export function DateRangePicker({
           {isCalendarView ? (
             <>
               <Paper
-                variant="outlined"
+                variant='outlined'
                 sx={{
                   borderRadius: 2,
-                  borderColor: "divider",
-                  borderStyle: "dashed",
+                  borderColor: 'divider',
+                  borderStyle: 'dashed',
                 }}
               >
-                <CalendarPicker date={startDate} onChange={onChangeStartDate} />
+                <CalendarPicker
+                  date={startDate}
+                  onChange={onChangeStartDate}
+                />
               </Paper>
 
               <Paper
-                variant="outlined"
+                variant='outlined'
                 sx={{
                   borderRadius: 2,
-                  borderColor: "divider",
-                  borderStyle: "dashed",
+                  borderColor: 'divider',
+                  borderStyle: 'dashed',
                 }}
               >
-                <CalendarPicker date={endDate} onChange={onChangeEndDate} />
+                <CalendarPicker
+                  date={endDate}
+                  onChange={onChangeEndDate}
+                />
               </Paper>
             </>
           ) : (
             <>
               <DatePicker
-                label="Start date"
+                label='Start date'
                 value={startDate}
                 onChange={onChangeStartDate}
                 renderInput={(params) => <TextField {...params} />}
               />
 
               <DatePicker
-                label="End date"
+                label='End date'
                 value={endDate}
                 onChange={onChangeEndDate}
                 renderInput={(params) => <TextField {...params} />}
@@ -120,21 +122,32 @@ export function DateRangePicker({
         </Stack>
 
         {isError && (
-          <FormHelperText error sx={{ px: 2 }}>
+          <FormHelperText
+            error
+            sx={{ px: 2 }}
+          >
             End date must be later than start date
           </FormHelperText>
         )}
       </DialogContent>
 
       <DialogActions>
-        <Button variant="outlined" color="inherit" onClick={onClose}>
+        <Button
+          variant='outlined'
+          color='inherit'
+          onClick={onClose}
+        >
           Cancel
         </Button>
 
-        <Button disabled={isError} variant="contained" onClick={onClose}>
+        <Button
+          disabled={isError}
+          variant='contained'
+          onClick={onClose}
+        >
           Apply
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

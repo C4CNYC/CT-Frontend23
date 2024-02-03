@@ -1,20 +1,20 @@
-import { useContext } from "react"
+import { useContext } from 'react'
 
-import { useTheme } from "@mui/material/styles"
-import useMediaQuery from "@mui/material/useMediaQuery"
-import { Stack } from "@mui/system"
-import { useAtom } from "jotai"
-import SwipeableViews from "react-swipeable-views"
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Stack } from '@mui/system'
+import { useAtom } from 'jotai'
+import SwipeableViews from 'react-swipeable-views'
 
-import { globalCodePanelAtom } from "../atoms/global-code-panel.atom"
-import { mobileTabManager } from "../atoms/mobile-tab-manager.atom"
-import { CodePanelContext } from "../context/CodePanel.context"
+import { globalCodePanelAtom } from '../atoms/global-code-panel.atom'
+import { mobileTabManager } from '../atoms/mobile-tab-manager.atom'
+import { CodePanelContext } from '../context/CodePanel.context'
 
-import CodeEditorBlock from "./blocks/code-editor-block"
-import SliderBlock from "./blocks/slider-block"
-import ViewBlock from "./blocks/view-block"
+import CodeEditorBlock from './blocks/code-editor-block'
+import SliderBlock from './blocks/slider-block'
+import ViewBlock from './blocks/view-block'
 
-export type SupportedLang = "html" | "javascript"
+export type SupportedLang = 'html' | 'javascript'
 
 const WorkSpace = (): React.ReactElement => {
   const theme = useTheme()
@@ -29,7 +29,13 @@ const WorkSpace = (): React.ReactElement => {
 
   if (isDesktop) {
     return (
-      <Stack px={1} gap={1} display="flex" direction="row" alignItems="stretch">
+      <Stack
+        px={1}
+        gap={1}
+        display='flex'
+        direction='row'
+        alignItems='stretch'
+      >
         {!isInstructionsHidden ? (
           <SliderBlock
             onSubmitChallenge={onSubmitChallenge}
@@ -39,8 +45,8 @@ const WorkSpace = (): React.ReactElement => {
           />
         ) : null}
         <CodeEditorBlock
-          preloadedCode={data[slideIndex]?.preload_body || ""}
-          validations={data[slideIndex]?.validations || ""}
+          preloadedCode={data[slideIndex]?.preload_body || ''}
+          validations={data[slideIndex]?.validations || ''}
           code={code}
           onChangeCode={onChangeCode}
           user={user}

@@ -1,4 +1,4 @@
-import { type FC, useEffect, useMemo, useRef, useState } from "react";
+import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 
 import {
   Box,
@@ -8,90 +8,84 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from "@mui/material";
+} from '@mui/material'
 
-import SolutionMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/solution-mobile-dialog";
-import UnstuckMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog";
-import { useCodePanel } from "src/lib/hooks/useCodePanel";
-import { useGetLessonStudentQuery } from "src/redux/services/manager/lesson-student";
-import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { useCodePanel } from '@/lib/hooks/useCodePanel'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useSelector } from '@/redux/store'
+import SolutionMobileDialog from '@/sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/solution-mobile-dialog'
+import UnstuckMobileDialog from '@/sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog'
 
-import TipsPopover from "../tips-popover";
-import { IActionDialogType, actions, actionsTips } from "./config";
+import TipsPopover from '../tips-popover'
+
+import { IActionDialogType, actions, actionsTips } from './config'
 import {
   BOX_PROPS,
   SPEED_DEAL_ACTION_FAB_PROPS,
   getSpeedDealFabProps,
   getSpeedDealStyles,
-} from "./constants";
+} from './constants'
 
 interface MumuSpeedDialProps {
-  typing: boolean | null;
+  typing: boolean | null
 }
 
 const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const [actionsList, setActionsList] =
-    useState<Array<Record<string, any>>>(actions);
-  const popperRef = useRef<null | HTMLElement>(null);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [openPoper, setOpenPoper] = useState<boolean>(false);
-  const [speedDeal, setSpeedDial] = useState<boolean>(false);
-  const [dialogType, setDialogType] = useState<IActionDialogType | null>(null);
-  const translate = useTranslate();
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId);
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex);
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const [actionsList, setActionsList] = useState<Array<Record<string, any>>>(actions)
+  const popperRef = useRef<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [openPoper, setOpenPoper] = useState<boolean>(false)
+  const [speedDeal, setSpeedDial] = useState<boolean>(false)
+  const [dialogType, setDialogType] = useState<IActionDialogType | null>(null)
+  const translate = useTranslate()
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const {
     workSpaceProps: { data: workSpaceData },
-  } = useCodePanel();
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId });
+  } = useCodePanel()
+  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId })
 
-  const slideTips = (workSpaceData[slideIndex]?.tips ?? "").split("\n");
+  const slideTips = (workSpaceData[slideIndex]?.tips ?? '').split('\n')
 
-  const speedDealProps = useMemo(
-    () => getSpeedDealFabProps(speedDeal),
-    [speedDeal]
-  );
-  const speedDealStyles = useMemo(
-    () => getSpeedDealStyles(isDesktop),
-    [isDesktop]
-  );
+  const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal])
+  const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop])
 
   const openSpeedDial = () => {
-    setSpeedDial(true);
-  };
+    setSpeedDial(true)
+  }
   const closeSpeedDial = () => {
-    setSpeedDial(false);
-  };
+    setSpeedDial(false)
+  }
 
   const handleCloseDialog = () => {
-    setDialogType(null);
-  };
+    setDialogType(null)
+  }
 
   useEffect(() => {
-    setAnchorEl(popperRef.current);
-  }, []);
+    setAnchorEl(popperRef.current)
+  }, [])
 
   useEffect(() => {
     if (typing) {
-      setOpenPoper(true);
+      setOpenPoper(true)
     }
-  }, [typing]);
+  }, [typing])
 
   useEffect(() => {
     if (openPoper) {
-      setActionsList(actionsTips);
-      setSpeedDial(true);
+      setActionsList(actionsTips)
+      setSpeedDial(true)
     }
     if (!openPoper) {
-      setActionsList(actions);
-      setSpeedDial(false);
+      setActionsList(actions)
+      setSpeedDial(false)
     }
-  }, [openPoper]);
+  }, [openPoper])
 
-  const isTipsPopover = !isLoading && data?.tips.length;
+  const isTipsPopover = !isLoading && data?.tips.length
 
   return (
     <>
@@ -103,21 +97,17 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
           tips={[...(data?.tips ?? []), ...slideTips]}
         />
       )}
-      <Tooltip
-        title={
-          <Typography>{translate("code_editor_mumu_menu_tooltip")}</Typography>
-        }
-      >
+      <Tooltip title={<Typography>{translate('code_editor_mumu_menu_tooltip')}</Typography>}>
         <SpeedDial
           ref={popperRef}
-          aria-describedby={"popper"}
-          ariaLabel="SpeedDial basic example"
+          aria-describedby={'popper'}
+          ariaLabel='SpeedDial basic example'
           open={speedDeal}
           onClose={closeSpeedDial}
           onOpen={openSpeedDial}
           FabProps={speedDealProps}
           sx={speedDealStyles}
-          direction="up"
+          direction='up'
           icon={<Box sx={BOX_PROPS} />}
         >
           {actionsList.map((action) => (
@@ -125,13 +115,13 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
               key={action.name}
               icon={action.icon}
               onClick={() => {
-                setDialogType(action.type);
+                setDialogType(action.type)
                 if (action.type === IActionDialogType.tips) {
-                  setOpenPoper(true);
+                  setOpenPoper(true)
                 }
               }}
               tooltipTitle={
-                <Typography sx={{ color: action.color, p: "2px" }}>
+                <Typography sx={{ color: action.color, p: '2px' }}>
                   {translate(action.name)}
                 </Typography>
               }
@@ -158,7 +148,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
         onClose={handleCloseDialog}
       />
     </>
-  );
-};
+  )
+}
 
-export default MumuSpeedDial;
+export default MumuSpeedDial

@@ -1,31 +1,28 @@
-import { AlertProps } from "@mui/material";
-import { Theme } from "@mui/material/styles";
+import { AlertProps } from '@mui/material'
+import { Theme } from '@mui/material/styles'
 
-//
-import { ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from "./CustomIcons";
+import { ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from './CustomIcons'
 
-// ----------------------------------------------------------------------
-
-const COLORS = ["info", "success", "warning", "error"] as const;
+const COLORS = ['info', 'success', 'warning', 'error'] as const
 
 export default function Alert(theme: Theme): unknown {
-  const isLight = theme.palette.mode === "light";
+  const isLight = theme.palette.mode === 'light'
 
   const rootStyle = (ownerState: AlertProps): unknown => {
-    const standardVariant = ownerState.variant === "standard";
+    const standardVariant = ownerState.variant === 'standard'
 
-    const filledVariant = ownerState.variant === "filled";
+    const filledVariant = ownerState.variant === 'filled'
 
-    const outlinedVariant = ownerState.variant === "outlined";
+    const outlinedVariant = ownerState.variant === 'outlined'
 
     const colorStyle = COLORS.map((color) => ({
       ...(ownerState.severity === color && {
         // STANDARD
         ...(standardVariant && {
-          color: theme.palette[color][isLight ? "darker" : "lighter"],
-          backgroundColor: theme.palette[color][isLight ? "lighter" : "darker"],
-          "& .MuiAlert-icon": {
-            color: theme.palette[color][isLight ? "main" : "light"],
+          color: theme.palette[color][isLight ? 'darker' : 'lighter'],
+          backgroundColor: theme.palette[color][isLight ? 'lighter' : 'darker'],
+          '& .MuiAlert-icon': {
+            color: theme.palette[color][isLight ? 'main' : 'light'],
           },
         }),
         // FILLED
@@ -35,17 +32,17 @@ export default function Alert(theme: Theme): unknown {
         }),
         // OUTLINED
         ...(outlinedVariant && {
-          color: theme.palette[color][isLight ? "dark" : "light"],
+          color: theme.palette[color][isLight ? 'dark' : 'light'],
           border: `solid 1px ${theme.palette[color].main}`,
-          "& .MuiAlert-icon": {
+          '& .MuiAlert-icon': {
             color: theme.palette[color].main,
           },
         }),
       }),
-    }));
+    }))
 
-    return [...colorStyle];
-  };
+    return [...colorStyle]
+  }
 
   return {
     MuiAlert: {
@@ -59,8 +56,7 @@ export default function Alert(theme: Theme): unknown {
       },
 
       styleOverrides: {
-        root: ({ ownerState }: { ownerState: AlertProps }) =>
-          rootStyle(ownerState),
+        root: ({ ownerState }: { ownerState: AlertProps }) => rootStyle(ownerState),
         icon: {
           opacity: 1,
         },
@@ -73,5 +69,5 @@ export default function Alert(theme: Theme): unknown {
         },
       },
     },
-  };
+  }
 }

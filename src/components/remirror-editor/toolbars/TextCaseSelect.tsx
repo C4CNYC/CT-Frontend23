@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 import {
   CommandButtonGroup,
@@ -6,28 +6,31 @@ import {
   DropdownButton,
   useActive,
   useCommands,
-} from "@remirror/react";
-import "remirror/styles/all.css";
+} from '@remirror/react'
+import 'remirror/styles/all.css'
 
-const TEXT_CASES: Array<[React.CSSProperties["textTransform"], string]> = [
-  ["none", "None"],
-  ["uppercase", "Upper"],
-  ["lowercase", "Lower"],
-  ["capitalize", "Capitalize"],
-];
+const TEXT_CASES: Array<[React.CSSProperties['textTransform'], string]> = [
+  ['none', 'None'],
+  ['uppercase', 'Upper'],
+  ['lowercase', 'Lower'],
+  ['capitalize', 'Capitalize'],
+]
 
 export default function TextCaseSelect() {
-  const { setTextCase } = useCommands();
-  const { textCase } = useActive();
+  const { setTextCase } = useCommands()
+  const { textCase } = useActive()
   return (
     <CommandButtonGroup>
-      <DropdownButton aria-label="Text case" icon="fontSize2">
+      <DropdownButton
+        aria-label='Text case'
+        icon='fontSize2'
+      >
         {TEXT_CASES.map(([casing, label]) => (
           <CommandMenuItem
             key={casing}
-            commandName="setTextCase"
+            commandName='setTextCase'
             onSelect={() => {
-              setTextCase(casing as string);
+              setTextCase(casing as string)
             }}
             enabled={setTextCase.enabled(casing as string)}
             active={textCase({ casing })}
@@ -35,15 +38,15 @@ export default function TextCaseSelect() {
           />
         ))}
         <CommandMenuItem
-          commandName="setTextCase"
+          commandName='setTextCase'
           onSelect={() => {
-            setTextCase("small-caps");
+            setTextCase('small-caps')
           }}
-          enabled={setTextCase.enabled("small-caps")}
-          active={textCase({ casing: "small-caps" })}
-          label={<span style={{ fontVariant: "small-caps" }}>Small caps</span>}
+          enabled={setTextCase.enabled('small-caps')}
+          active={textCase({ casing: 'small-caps' })}
+          label={<span style={{ fontVariant: 'small-caps' }}>Small caps</span>}
         />
       </DropdownButton>
     </CommandButtonGroup>
-  );
+  )
 }

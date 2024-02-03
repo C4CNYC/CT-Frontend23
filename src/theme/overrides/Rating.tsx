@@ -1,9 +1,6 @@
-import { type Theme, alpha } from "@mui/material/styles";
+import { type Theme, alpha } from '@mui/material/styles'
 
-//
-import { StarIcon } from "./CustomIcons";
-
-// ----------------------------------------------------------------------
+import { StarIcon } from './CustomIcons'
 
 export default function Rating(theme: Theme): unknown {
   return {
@@ -14,7 +11,7 @@ export default function Rating(theme: Theme): unknown {
       },
       styleOverrides: {
         root: {
-          "&.Mui-disabled": {
+          '&.Mui-disabled': {
             opacity: 0.48,
           },
         },
@@ -22,18 +19,18 @@ export default function Rating(theme: Theme): unknown {
           color: alpha(theme.palette.grey[500], 0.48),
         },
         sizeSmall: {
-          "& svg": {
+          '& svg': {
             width: 20,
             height: 20,
           },
         },
         sizeLarge: {
-          "& svg": {
+          '& svg': {
             width: 28,
             height: 28,
           },
         },
       },
     },
-  };
+  }
 }

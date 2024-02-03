@@ -1,96 +1,78 @@
-import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 export interface IGlobalCodePanel {
-  slideIndex: number;
-  solutionCode: string;
-  nextStepAble: boolean;
-  lessonId: string;
-  unitId: string;
-  courseId: string;
-  code: string;
-  isInstructionsHidden: boolean;
-  isBrowserHidden: boolean;
-  isRealtimeCodeEnabled: boolean;
+  slideIndex: number
+  solutionCode: string
+  nextStepAble: boolean
+  lessonId: string
+  unitId: string
+  courseId: string
+  code: string
+  isInstructionsHidden: boolean
+  isBrowserHidden: boolean
+  isRealtimeCodeEnabled: boolean
 }
 
 const initialState: IGlobalCodePanel = {
   slideIndex: 0,
-  solutionCode: "",
-  lessonId: "",
-  unitId: "",
-  courseId: "",
+  solutionCode: '',
+  lessonId: '',
+  unitId: '',
+  courseId: '',
   nextStepAble: true,
-  code: "",
+  code: '',
   isInstructionsHidden: false,
   isBrowserHidden: false,
   isRealtimeCodeEnabled: true,
-};
+}
 
-type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T];
+type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
 
 export const codePanelSlice = createSlice({
-  name: "code-panel-global",
+  name: 'code-panel-global',
   initialState,
   reducers: {
-    setSlideIndex: (
-      state,
-      { payload }: PayloadAction<PickedStoreItem<"slideIndex">>
-    ): void => {
-      state.slideIndex = payload;
+    setSlideIndex: (state, { payload }: PayloadAction<PickedStoreItem<'slideIndex'>>): void => {
+      state.slideIndex = payload
     },
-    setSolutionCode: (
-      state,
-      { payload }: PayloadAction<PickedStoreItem<"solutionCode">>
-    ): void => {
-      state.solutionCode = payload;
+    setSolutionCode: (state, { payload }: PayloadAction<PickedStoreItem<'solutionCode'>>): void => {
+      state.solutionCode = payload
     },
-    setNextStepAble: (
-      state,
-      { payload }: PayloadAction<PickedStoreItem<"nextStepAble">>
-    ): void => {
-      state.nextStepAble = payload;
+    setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<'nextStepAble'>>): void => {
+      state.nextStepAble = payload
     },
-    setUnitId: (
-      state,
-      { payload }: PayloadAction<PickedStoreItem<"unitId">>
-    ): void => {
-      state.unitId = payload;
+    setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<'unitId'>>): void => {
+      state.unitId = payload
     },
-    setCourseId: (
-      state,
-      { payload }: PayloadAction<PickedStoreItem<"courseId">>
-    ): void => {
-      state.courseId = payload;
+    setCourseId: (state, { payload }: PayloadAction<PickedStoreItem<'courseId'>>): void => {
+      state.courseId = payload
     },
-    setLessonId: (
-      state,
-      { payload }: PayloadAction<PickedStoreItem<"lessonId">>
-    ): void => {
-      state.lessonId = payload;
+    setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<'lessonId'>>): void => {
+      state.lessonId = payload
     },
     toggleInstrations: (
       state,
-      { payload }: PayloadAction<PickedStoreItem<"isInstructionsHidden">>
+      { payload }: PayloadAction<PickedStoreItem<'isInstructionsHidden'>>
     ): void => {
-      state.isInstructionsHidden = payload;
+      state.isInstructionsHidden = payload
     },
     toggleBrowser: (
       state,
-      { payload }: PayloadAction<PickedStoreItem<"isBrowserHidden">>
+      { payload }: PayloadAction<PickedStoreItem<'isBrowserHidden'>>
     ): void => {
-      state.isBrowserHidden = payload;
+      state.isBrowserHidden = payload
     },
     toggleRealtimeCodeEnabled: (
       state,
-      { payload }: PayloadAction<PickedStoreItem<"isRealtimeCodeEnabled">>
+      { payload }: PayloadAction<PickedStoreItem<'isRealtimeCodeEnabled'>>
     ) => {
-      state.isRealtimeCodeEnabled = payload;
+      state.isRealtimeCodeEnabled = payload
     },
     setCode: (state, action: PayloadAction<string>) => {
-      state.code = action.payload;
+      state.code = action.payload
     },
   },
-});
+})
 
 export const {
   setSlideIndex,
@@ -103,6 +85,6 @@ export const {
   toggleBrowser,
   toggleRealtimeCodeEnabled,
   setCode,
-} = codePanelSlice.actions;
+} = codePanelSlice.actions
 
-export default codePanelSlice.reducer;
+export default codePanelSlice.reducer

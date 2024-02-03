@@ -1,25 +1,19 @@
-// next
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
 // hooks
-import { useOffSetTop } from "@hooks";
+import { useOffSetTop } from '@/lib/hooks'
 
-// config
-import { HEADER } from "../../config";
+import { HEADER } from '../../config'
 
 //
-const Header = dynamic(async () => await import("./Header"), { ssr: false });
-
-// ----------------------------------------------------------------------
+const Header = dynamic(async () => await import('./Header'), { ssr: false })
 
 interface Props {
-  children?: React.ReactNode;
+  children?: React.ReactNode
 }
 
-export default function SimpleLayout({
-  children,
-}: Props): React.ReactElement | null {
-  const isOffset = useOffSetTop(HEADER.H_MAIN_DESKTOP);
+export default function SimpleLayout({ children }: Props): React.ReactElement | null {
+  const isOffset = useOffSetTop(HEADER.H_MAIN_DESKTOP)
 
   return (
     <>
@@ -27,5 +21,5 @@ export default function SimpleLayout({
 
       {children}
     </>
-  );
+  )
 }

@@ -1,20 +1,12 @@
-import { type FC } from "react";
+import { type FC } from 'react'
 
 // import { CopyBlock, dracula } from "react-code-blocks";
-import { AiOutlineCode } from "@react-icons/all-files/ai/AiOutlineCode";
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
+import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
 
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  Typography,
-} from "@mui/material"
-
-import { Iconify } from "src/components/iconify";
-import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Iconify } from '@/components/iconify'
+import { useTranslate } from '@/lib/utils/translateHelper'
+import { useSelector } from '@/redux/store'
 
 import {
   COPY_BLOCK_CUSTOM_STYLES,
@@ -23,40 +15,46 @@ import {
   DIALOG_TITLE_SX,
   DIALOG_TITLE_TYP_SX,
   ICON_BUTTON_SX,
-  NO_SOLUTION_TEXT,
-} from "./constants";
+} from './constants'
 
 interface SolutionMobileDialogProps {
-  open: boolean;
-  onClose: () => void;
+  open: boolean
+  onClose: () => void
 }
 
-export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
-  open,
-  onClose,
-}) => {
-  const solutionCode = useSelector(
-    (state) => state.codePanelGlobal.solutionCode
-  );
-  const translate = useTranslate();
+export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onClose }) => {
+  const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
+  const translate = useTranslate()
 
   return (
     <>
       <Dialog
         open={open}
         onClose={onClose}
-        scroll="paper"
+        scroll='paper'
         PaperProps={DIALOG_PAPER_PROPS}
       >
         <DialogTitle sx={DIALOG_TITLE_SX}>
-          <AiOutlineCode size="30px" color="#EE467A" />
+          <AiOutlineCode
+            size='30px'
+            color='#EE467A'
+          />
 
-          <Typography variant="h5" sx={DIALOG_TITLE_TYP_SX}>
-            {translate("solution")}
+          <Typography
+            variant='h5'
+            sx={DIALOG_TITLE_TYP_SX}
+          >
+            {translate('solution')}
           </Typography>
 
-          <IconButton onClick={onClose} sx={ICON_BUTTON_SX}>
-            <Iconify width="20px" icon="ic:round-close" />
+          <IconButton
+            onClick={onClose}
+            sx={ICON_BUTTON_SX}
+          >
+            <Iconify
+              width='20px'
+              icon='ic:round-close'
+            />
           </IconButton>
         </DialogTitle>
 
@@ -67,13 +65,16 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
           {/*   theme={dracula} */}
           {/*   customStyle={COPY_BLOCK_CUSTOM_STYLES} */}
           {/* /> */}
-          <Box component="div" style={COPY_BLOCK_CUSTOM_STYLES as any}>
+          <Box
+            component='div'
+            style={COPY_BLOCK_CUSTOM_STYLES as any}
+          >
             {solutionCode || translate('no_solution')}
           </Box>
         </DialogContent>
       </Dialog>
     </>
-  );
-};
+  )
+}
 
-export default SolutionMobileDialog;
+export default SolutionMobileDialog

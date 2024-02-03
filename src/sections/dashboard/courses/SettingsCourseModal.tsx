@@ -1,31 +1,22 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState } from 'react'
 
-import CloseIcon from "@mui/icons-material/Close";
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Dialog, DialogContent, IconButton, Typography } from '@mui/material'
 
-import { CourseModuleAutocomplete } from "@components";
+import { CourseModuleAutocomplete } from '@/components'
 
 interface Props {
-  children: ReactElement;
-  id: string;
+  children: ReactElement
+  id: string
 }
 
-export default function SettingsCourseModal({
-  children,
-  id,
-}: Props): React.ReactElement {
-  const [open, setOpenDialog] = useState<boolean>(false);
+export default function SettingsCourseModal({ children, id }: Props): React.ReactElement {
+  const [open, setOpenDialog] = useState<boolean>(false)
   return (
     <>
       <Box
         onClick={() => {
-          setOpenDialog(true);
+          setOpenDialog(true)
         }}
       >
         {children}
@@ -34,12 +25,12 @@ export default function SettingsCourseModal({
         // fullWidth
         open={open}
         onClose={() => {
-          setOpenDialog(false);
+          setOpenDialog(false)
         }}
         PaperProps={{
           sx: {
-            minWidth: { xs: "90%", sm: "90%", md: "600px" },
-            minHeight: "300px",
+            minWidth: { xs: '90%', sm: '90%', md: '600px' },
+            minHeight: '300px',
           },
         }}
       >
@@ -49,15 +40,15 @@ export default function SettingsCourseModal({
             pt: 2,
             pl: 3,
             pr: 2,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
-          <Typography variant="h5">Course Preferences</Typography>
+          <Typography variant='h5'>Course Preferences</Typography>
           <IconButton
             onClick={() => {
-              setOpenDialog(false);
+              setOpenDialog(false)
             }}
           >
             <CloseIcon />
@@ -65,11 +56,11 @@ export default function SettingsCourseModal({
         </Box>
 
         <DialogContent>
-          <Box sx={{ width: "100%", pb: 4 }}>
+          <Box sx={{ width: '100%', pb: 4 }}>
             <CourseModuleAutocomplete id={id} />
           </Box>
         </DialogContent>
       </Dialog>
     </>
-  );
+  )
 }
