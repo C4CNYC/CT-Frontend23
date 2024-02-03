@@ -4,11 +4,11 @@ import { Avatar, Button, ListItem, ListItemAvatar, ListItemText, MenuItem } from
 import { useSnackbar } from 'notistack'
 
 import { Iconify, MenuPopover } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { useUpdateClassMutation } from '@/redux/services/admin/school-amdin'
 import { useUpdateClassesAvatarMutation } from '@/redux/services/manager/classes-manager'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import AddClassDialog from './CreateClassDialog'
 

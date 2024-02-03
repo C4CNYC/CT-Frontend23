@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material'
 import { add } from 'date-fns'
 
-import { bgBlur } from '@/lib/utils'
+import { bgBlur } from '@/utils'
 
 export const DATE_PARSER = (date?: string, increment: number = 0) =>
   date ? new Date(date) : add(new Date(), { days: increment })

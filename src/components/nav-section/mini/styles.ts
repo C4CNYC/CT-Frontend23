@@ -1,9 +1,9 @@
 import { ListItemButton, ListItemIcon, Popover } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 
-import { bgBlur } from '@/lib/utils'
+import { bgBlur } from '@/utils'
 
-import { ICON } from '../../../config'
+import { ICON_SIZES } from '../../../theme/consts'
 import { NavItemProps } from '../types'
 
 type StyledItemProps = Omit<NavItemProps, 'item'>
@@ -74,8 +74,8 @@ export const StyledItem = styled(ListItemButton, {
 export const StyledIcon = styled(ListItemIcon)({
   marginRight: 0,
   marginBottom: 4,
-  width: ICON.NAV_ITEM_MINI,
-  height: ICON.NAV_ITEM_MINI,
+  width: ICON_SIZES.NAV_ITEM_MINI,
+  height: ICON_SIZES.NAV_ITEM_MINI,
 })
 
 export const StyledPopover = styled(Popover)(({ theme }) => ({

@@ -1,12 +1,12 @@
 import { Box, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { CustomAvatar, Image } from '@/components'
-import { bgBlur } from '@/lib/utils'
 import { OrganizationResponce } from '@/redux/services/interfaces/organization.interface'
+import { bgBlur } from '@/utils'
 
 // auth
-import { useAuthContext } from '../../../../auth/useAuthContext'
 
 const StyledRoot = styled('div')(({ theme }) => ({
   '&:before': {

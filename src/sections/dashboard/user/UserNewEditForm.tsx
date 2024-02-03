@@ -16,8 +16,6 @@ import {
   RHFUploadAvatar,
   useSnackbar,
 } from '@/components'
-import { BaseResponseInterface, fData } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useCreateOrgMemberMutation,
   useUdpateMemberAvatarMutation,
@@ -26,6 +24,8 @@ import {
 import { Role } from '@/redux/services/enums/role.enum'
 import { IUser } from '@/redux/services/interfaces/user.interface'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { BaseResponseInterface, fData } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }

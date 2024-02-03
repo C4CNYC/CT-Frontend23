@@ -1,10 +1,10 @@
 import { Skeleton, Stack } from '@mui/material'
 
 import { EmptyContent, SimpleInfiniteList } from '@/components'
-import { FilterMode, useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { FilterMode, useFilters } from '@/hooks'
 import { IAssignmetsSearchParams } from '@/redux/interfaces/assignment.interface'
 import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 import QuestItem from './QuestItem'
 

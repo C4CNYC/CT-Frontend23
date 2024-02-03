@@ -9,12 +9,12 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFSelect, RHFSwitch, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps {
   name: string

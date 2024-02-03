@@ -3,9 +3,9 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/system/Stack'
 
-import { SetFilterType } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { SetFilterType } from '@/hooks'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   filters: ICourseSearchParams

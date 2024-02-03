@@ -2,9 +2,8 @@ import { Box, Button, Container } from '@mui/material'
 import Head from 'next/head'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IModulesSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -13,6 +12,7 @@ import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import ModuleCard from '@/sections/dashboard/modules/ModuleCard'
 // import { getCountTakingElment } from "src/lib/utils/countTakingElments";
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
+import { useTranslate } from '@/utils/translateHelper'
 
 import FilterModules from './filter'
 

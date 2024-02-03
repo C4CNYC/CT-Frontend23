@@ -9,13 +9,13 @@ import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
 import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
-import { capitalize } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { SchoolType } from '@/redux/services/enums/school-type.enum'
 import {
   useGetMySchoolsQuery,
   useUpdateSchoolProfileMutation,
 } from '@/redux/services/manager/schools-manager'
+import { capitalize } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { styledRegisterInput } from '../styles'
 

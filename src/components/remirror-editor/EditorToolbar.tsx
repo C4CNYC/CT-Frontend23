@@ -17,8 +17,8 @@ import {
   Toolbar,
 } from '@remirror/react'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { LessonContentContext } from '@/sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 

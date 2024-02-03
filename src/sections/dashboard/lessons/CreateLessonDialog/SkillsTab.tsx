@@ -16,9 +16,7 @@ import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
 import { Iconify, SearchNotFound } from '@/components'
-import { useFilters } from '@/lib/hooks'
-import { BaseResponseInterface, voidFunction } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useFilters } from '@/hooks'
 import { ISkill } from '@/redux/services/interfaces/skill.interface'
 import {
   useGetLessonSkillQuery,
@@ -26,6 +24,8 @@ import {
   useUpdateLessonSkillMutation,
 } from '@/redux/services/manager/lesson-skill-manager'
 import { useGetSkillQuery } from '@/redux/services/manager/skills-manager'
+import { BaseResponseInterface, voidFunction } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function SkillsTab({ lessonId }: { lessonId: string }): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()

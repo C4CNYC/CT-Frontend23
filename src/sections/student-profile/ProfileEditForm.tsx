@@ -9,9 +9,9 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
-import { BaseResponseInterface, fData } from '@/lib/utils'
 import { useUdpateProfileAvatarMutation, useUpdateProfileMutation } from '@/redux/services/auth'
 import { IUser } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface, fData } from '@/utils'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }

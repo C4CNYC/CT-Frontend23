@@ -8,8 +8,8 @@ import * as Yup from 'yup'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { Role } from '@/redux/services/enums/role.enum'
+import { useTranslate } from '@/utils/translateHelper'
 
 import EmailStep from './email-step'
 import PasswordStep from './password-step'

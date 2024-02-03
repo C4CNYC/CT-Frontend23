@@ -6,17 +6,13 @@ import { CgArrowUpO } from '@react-icons/all-files/cg/CgArrowUpO'
 import { HiOutlineLightBulb } from '@react-icons/all-files/hi2/HiOutlineLightBulb'
 import { useRouter } from 'next/router'
 
-import { useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useAuthContext } from '@/auth/useAuthContext'
+import { useFilters } from '@/hooks'
+import { IClassProgressCourse, IClassProgressModule } from '@/redux/interfaces/class.interface'
+import { useGetClassProgressQuery } from '@/redux/services/manager/classes-student'
 import ProgressTable from '@/sections/dashboard/progress/progressTable/ProgressTable'
 import { SkeletonProgressTable } from '@/sections/dashboard/progress/progressTable/SkeletonProgressTable'
-
-import { useAuthContext } from '../../../../auth/useAuthContext'
-import {
-  IClassProgressCourse,
-  IClassProgressModule,
-} from '../../../../redux/interfaces/class.interface'
-import { useGetClassProgressQuery } from '../../../../redux/services/manager/classes-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IProgressCardProps {
   activeTab: boolean

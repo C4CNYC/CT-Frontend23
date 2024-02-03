@@ -1,8 +1,8 @@
 import { Card, CardHeader, Link, Stack } from '@mui/material'
 
 import { SOCIAL_ICONS } from '@/assets/data'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetSocialsQuery } from '@/redux/services/manager/socials-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   studentId: string

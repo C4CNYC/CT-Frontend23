@@ -2,8 +2,8 @@ import { Box, Stack, Typography } from '@mui/material'
 import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
 import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ICourse } from '@/types'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   course: ICourse

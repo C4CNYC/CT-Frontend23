@@ -12,7 +12,7 @@ import {
 import { CiCircleQuestion } from '@react-icons/all-files/ci/CiCircleQuestion'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import {
   CLOSE_DIALOG_ICON_SX,

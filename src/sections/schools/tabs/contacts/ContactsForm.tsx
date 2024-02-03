@@ -7,10 +7,9 @@ import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { SchoolContacts } from '@/redux/services/interfaces/school.interface'
 import { useUpdateSchoolContactsMutation } from '@/redux/services/manager/schools-manager'
-
-import { SchoolContacts } from '../../../../redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email('Email must be a valid email address'),

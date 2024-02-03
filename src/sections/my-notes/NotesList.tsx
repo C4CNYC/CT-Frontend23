@@ -1,8 +1,8 @@
 import { Card, CardHeader, CardProps, IconButton, Typography } from '@mui/material'
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IGoals } from '@/redux/interfaces/goals.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import AddEditGoalDialog from './AddEditGoalDialog'
 import { BUTTON_SX, CARD_SX } from './constants'

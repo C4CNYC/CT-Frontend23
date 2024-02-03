@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { IUser } from '../interfaces/auth.interface'
 import { OrganizationResponce } from '../services/interfaces/organization.interface'

@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
-import { bgBlur } from '@/lib/utils'
+import { bgBlur } from '@/utils'
 
 import { Iconify } from '../iconify'
 

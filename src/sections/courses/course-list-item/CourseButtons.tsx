@@ -1,8 +1,8 @@
 import { Button, Link, Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { CONTINUE_COURSE_BTN_SX, ENROLL_COURSE_BTN_SX, EXPLORE_COURSE_BTN_SX } from './constants'
 

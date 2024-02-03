@@ -6,19 +6,18 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
+import { useAuthContext } from '@/auth/useAuthContext'
 import { IconButtonAnimate } from '@/components/animate'
 import { CustomAvatar } from '@/components/custom-avatar'
 import { MenuPopover } from '@/components/menu-popover'
 import { useSnackbar } from '@/components/snackbar'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useProfileQuery } from '@/redux/services/auth'
 import { Role } from '@/redux/services/enums/role.enum'
 import { setStudentMode } from '@/redux/slices/global'
 import { MANAGER_PATH_DASHBOARD, MANAGER_PATH_PAGE } from '@/routes/manager.paths'
 import { PATH_AUTH } from '@/routes/paths'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
-
-import { useAuthContext } from '../../../auth/useAuthContext'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function AccountPopover(): React.ReactElement {
   const reduxDispatch = useDispatch()

@@ -1,7 +1,7 @@
 import { Box, IconButton, SxProps, Typography } from '@mui/material'
 import { Theme, styled, useTheme } from '@mui/material/styles'
 
-import { bgBlur } from '@/lib/utils'
+import { bgBlur } from '@/utils'
 
 import { IconifyProps } from '../iconify'
 

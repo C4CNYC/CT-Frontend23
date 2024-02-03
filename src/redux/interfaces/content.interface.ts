@@ -1,5 +1,5 @@
-import { BaseResponseInterface, BaseSearchInterface } from '@/lib/utils'
 import { Unit } from '@/redux/interfaces/challenges.interface'
+import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { LessonContentType } from '../enums/lesson-content-type.enum'
 

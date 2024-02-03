@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import { Box, Tooltip } from '@mui/material'
 import { alpha, useTheme } from '@mui/material/styles'
 
-import { bgBlur } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { bgBlur } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { IconButtonAnimate } from '../../animate'
 import { SvgColor } from '../../svg-color'

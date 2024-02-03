@@ -6,7 +6,7 @@ import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { MdOutlineWifiTethering } from '@react-icons/all-files/md/MdOutlineWifiTethering'
 import nextLink from 'next/link'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function ClassInfoToggle(): React.ReactElement {
   const [openJoin, setOpenJoin] = useState<boolean>(true)

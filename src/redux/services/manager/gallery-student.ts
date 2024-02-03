@@ -1,5 +1,5 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { managerApi } from '.'
 

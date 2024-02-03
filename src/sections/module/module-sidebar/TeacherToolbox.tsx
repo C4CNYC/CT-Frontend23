@@ -4,9 +4,9 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { Role } from '@/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function TeacherToolbox({
   teacherForum,

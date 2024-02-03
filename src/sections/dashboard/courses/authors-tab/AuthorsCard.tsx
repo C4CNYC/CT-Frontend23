@@ -5,9 +5,9 @@ import NextLink from 'next/link'
 import { useSnackbar } from 'notistack'
 
 import { SvgColor } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IAuthor } from '@/redux/services/interfaces/author.interface'
 import { useDeleteAuthorMutation } from '@/redux/services/manager/author-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import AddAuthorDialog from './AddAuthorDialog'
 

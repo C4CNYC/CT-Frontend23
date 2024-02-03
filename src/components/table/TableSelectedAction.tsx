@@ -1,6 +1,6 @@
 import { Checkbox, Stack, StackProps, Typography } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props extends StackProps {
   dense?: boolean

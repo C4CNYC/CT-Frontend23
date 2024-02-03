@@ -1,10 +1,10 @@
-import { BaseListResponseInterface, BaseResponseInterface } from '@/lib/utils'
 import {
   ClassSearchParams,
   IAddCourseToClass,
   IClass,
   IRemoveCourseFromClass,
 } from '@/redux/interfaces/class.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { ClassRequest } from '../interfaces/school.interface'
 

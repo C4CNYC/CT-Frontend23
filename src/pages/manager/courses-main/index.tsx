@@ -3,10 +3,8 @@ import { Container } from '@mui/system'
 import Head from 'next/head'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/lib/hooks'
-import { getCountTakingElment } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -16,6 +14,8 @@ import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import FilterCourses from '@/sections/dashboard/courses/filter'
 import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
+import { getCountTakingElment } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 

@@ -4,7 +4,7 @@ import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
 
 import { Iconify, RHFTextField } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { styledRegisterInput } from '../styles'
 

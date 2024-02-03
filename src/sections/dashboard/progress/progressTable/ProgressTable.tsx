@@ -25,9 +25,7 @@ import { format } from 'date-fns'
 import * as _ from 'lodash-es'
 
 import { TablePaginationCustom } from '@/components'
-import { SetFilterType } from '@/lib/hooks'
-import { BaseSearchInterface } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { SetFilterType } from '@/hooks'
 import {
   IClassProgress,
   IClassProgressCourse,
@@ -35,6 +33,8 @@ import {
   IClassProgressModule,
 } from '@/redux/interfaces/class.interface'
 import { RootState, useSelector } from '@/redux/store'
+import { BaseSearchInterface } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IProgressTable {
   filters: BaseSearchInterface & {

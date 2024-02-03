@@ -3,7 +3,7 @@ import { AiOutlineHeart } from '@react-icons/all-files/ai/AiOutlineHeart'
 import { AiOutlineStar } from '@react-icons/all-files/ai/AiOutlineStar'
 import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 
-import { convertNumber } from '@/lib/utils'
+import { convertNumber } from '@/utils'
 
 interface ISocialActivityProps {
   likes: number

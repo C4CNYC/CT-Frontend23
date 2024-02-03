@@ -4,8 +4,8 @@ import { IoCheckmarkDoneCircleOutline } from '@react-icons/all-files/io5/IoCheck
 import { MdOutlineTipsAndUpdates } from '@react-icons/all-files/md/MdOutlineTipsAndUpdates'
 import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { MediaModal } from '@/sections/dashboard/medias/MediaModal'
+import { useTranslate } from '@/utils/translateHelper'
 
 export function TipsBtn(): React.ReactElement {
   const translate = useTranslate()

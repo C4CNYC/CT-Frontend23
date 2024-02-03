@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IClass } from '@/redux/interfaces/class.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import AboutTribe from './AboutTribe'
 import GeneralInfo from './GeneralInfo'

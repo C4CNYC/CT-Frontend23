@@ -4,7 +4,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, SxProps } from '@mui
 import { BiShowAlt } from '@react-icons/all-files/bi/BiShowAlt'
 
 import { Image } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IImageLightBoxProps {
   children: React.ReactElement

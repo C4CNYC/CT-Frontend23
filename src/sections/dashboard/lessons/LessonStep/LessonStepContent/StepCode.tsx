@@ -8,13 +8,13 @@ import CodeMirror from '@uiw/react-codemirror'
 import { useAtom } from 'jotai'
 
 import { ResizerUi } from '@/components'
-import { useDebounceCallback } from '@/lib/hooks'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import MenuItems from '@/components/remirror-editor/MenuItems'
+import { SaveButton } from '@/components/remirror-editor/SaveButton'
+import { useDebounceCallback } from '@/hooks'
+import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import MenuItems from '../../../../../components/remirror-editor/MenuItems'
-import { SaveButton } from '../../../../../components/remirror-editor/SaveButton'
-import { ILessonContent } from '../../../../../redux/services/interfaces/courseUnits.interface'
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
 
 interface Props {

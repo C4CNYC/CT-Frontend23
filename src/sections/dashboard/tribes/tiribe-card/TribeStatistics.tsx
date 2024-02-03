@@ -5,8 +5,8 @@ import { IoCalendar } from '@react-icons/all-files/io5/IoCalendar'
 import { TiLocation } from '@react-icons/all-files/ti/TiLocation'
 import { format } from 'date-fns'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface ITribeStatisticsProps {
   students: IStudent[]

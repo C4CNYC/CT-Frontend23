@@ -5,12 +5,12 @@ import Head from 'next/head'
 
 import { CustomBreadcrumbs, Iconify, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useProfileQuery } from '@/redux/services/auth'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import ProfileCover from '@/sections/student-profile/ProfileCover'
 import ProfileLinks from '@/sections/student-profile/ProfileLinks'
 import ProfileMain from '@/sections/student-profile/ProfileMain'
+import { useTranslate } from '@/utils/translateHelper'
 
 UserProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

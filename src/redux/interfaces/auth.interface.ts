@@ -1,4 +1,4 @@
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { Role } from '../services/enums/role.enum'
 import { IStudent } from '../services/interfaces/user.interface'

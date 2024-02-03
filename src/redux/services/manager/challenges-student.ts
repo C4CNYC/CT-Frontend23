@@ -1,5 +1,5 @@
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IChallanges } from '@/redux/interfaces/challenges.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { managerApi } from '.'
 

@@ -1,8 +1,7 @@
 import { Card, CardHeader, Link, Stack } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
-
-import { SOCIAL_ICONS } from '../../../../../assets/data'
+import { SOCIAL_ICONS } from '@/assets/data'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   socialLinks?: []

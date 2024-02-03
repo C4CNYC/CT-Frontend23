@@ -8,11 +8,11 @@ import { useSelector } from 'react-redux'
 import { Logo } from '@/components/logo'
 import { NavSectionVertical } from '@/components/nav-section'
 import { Scrollbar } from '@/components/scrollbar'
-import { useResponsive } from '@/lib/hooks'
+import { useResponsive } from '@/hooks'
 import { Role } from '@/redux/services/enums/role.enum'
 import { RootState } from '@/redux/store'
 
-import { NAV } from '../../../config'
+import { NAV_SIZES } from '../../../theme/consts'
 
 import { menuConfig } from './config-navigation'
 import LetsCodeBtn from './LestCodeBtn'
@@ -76,7 +76,7 @@ export default function NavVertical({
       component='nav'
       sx={{
         flexShrink: { md: 0 },
-        width: { md: NAV.W_DASHBOARD },
+        width: { md: NAV_SIZES.W_DASHBOARD },
         bgcolor: theme.palette.mode === 'light' ? '#E6F5FD' : theme.palette.background.paper,
       }}
     >
@@ -89,7 +89,7 @@ export default function NavVertical({
           PaperProps={{
             sx: {
               zIndex: 0,
-              width: NAV.W_DASHBOARD,
+              width: NAV_SIZES.W_DASHBOARD,
               bgcolor: 'transparent',
               borderRightStyle: 'dashed',
             },
@@ -106,7 +106,7 @@ export default function NavVertical({
           }}
           PaperProps={{
             sx: {
-              width: NAV.W_DASHBOARD,
+              width: NAV_SIZES.W_DASHBOARD,
               bgcolor: theme.palette.mode === 'light' ? '#E6F5FD' : theme.palette.background.paper,
             },
           }}

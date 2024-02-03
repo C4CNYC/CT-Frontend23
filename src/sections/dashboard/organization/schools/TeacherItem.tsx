@@ -11,8 +11,8 @@ import {
 } from '@mui/material'
 
 import { Iconify, MenuPopover } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { IUser } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 interface Props {
   person: IUser & BaseResponseInterface

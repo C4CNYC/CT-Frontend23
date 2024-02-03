@@ -16,9 +16,9 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 const CreateClassSchema = Yup.object().shape({
   code: Yup.string().required('code is required'),

@@ -4,10 +4,10 @@ import { LoadingButton } from '@mui/lab'
 import { Box, Card, IconButton, MenuItem, Stack } from '@mui/material'
 
 import { ConfirmDialog, Iconify, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ITask } from '@/redux/services/interfaces/task.interface'
 import { useDeleteTaskMutation } from '@/redux/services/manager/tasks-manager'
 import CreateCodeDialog from '@/sections/dashboard/tasks/CodeDialog'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
   task: ITask

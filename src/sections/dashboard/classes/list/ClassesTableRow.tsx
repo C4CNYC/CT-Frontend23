@@ -7,12 +7,12 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover, useSnackbar } from '@/components'
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { useStudentJoinClassMutation } from '@/redux/services/manager/students-manager'
 import { RootState } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 import ClassPreferences from '../modal'
 

@@ -7,17 +7,17 @@ import { GoTriangleDown } from '@react-icons/all-files/go/GoTriangleDown'
 import { GoTriangleUp } from '@react-icons/all-files/go/GoTriangleUp'
 import { HiLockClosed } from '@react-icons/all-files/hi2/HiLockClosed'
 import { TbPlayerPlay } from '@react-icons/all-files/tb/TbPlayerPlay'
-import { useAtom } from 'jotai'
+// import { useAtom } from 'jotai'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { ILesson } from '@/redux/interfaces/content.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import {
-  IGlobalCodePanelAtom,
-  globalCodePanelAtom,
-} from '@/sections/code-panel/atoms/global-code-panel.atom'
+// import {
+//   IGlobalCodePanelAtom,
+//   globalCodePanelAtom,
+// } from '@/sections/code-panel/atoms/global-code-panel.atom'
+import { useTranslate } from '@/utils/translateHelper'
 
 import RocketIcon from '../icons/RocketIcon'
 
@@ -59,7 +59,7 @@ export default function LessonItem({
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(600))
   const [openDetails, setOpenDetails] = useState(false)
-  const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom)
+  // const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom)
   const courseId = useRouter().query.id
   const [open, setOpen] = useState(false)
 
@@ -71,14 +71,14 @@ export default function LessonItem({
     setOpen(false)
   }
 
-  const updateCodePanelAtom = ({ courseId, unitId, lessonId }: IUpdateCodePanelAtom) => {
-    setGlobalCodePanel((prev: IGlobalCodePanelAtom) => ({
-      ...prev,
-      courseId,
-      unitId,
-      lessonId,
-    }))
-  }
+  // const updateCodePanelAtom = ({ courseId, unitId, lessonId }: IUpdateCodePanelAtom) => {
+  //   setGlobalCodePanel((prev: IGlobalCodePanelAtom) => ({
+  //     ...prev,
+  //     courseId,
+  //     unitId,
+  //     lessonId,
+  //   }))
+  // }
 
   const translate = useTranslate()
 
@@ -149,13 +149,13 @@ export default function LessonItem({
             )}?unitId=${unitId}&lessonId=${lesson.id}`}
             underline='none'
             sx={START_LINK_SX}
-            onClick={() => {
-              updateCodePanelAtom({
-                courseId: courseId as string,
-                unitId,
-                lessonId: lesson.id,
-              })
-            }}
+            // onClick={() => {
+            //   updateCodePanelAtom({
+            //     courseId: courseId as string,
+            //     unitId,
+            //     lessonId: lesson.id,
+            //   })
+            // }}
           >
             <Typography variant='h5'> {translate('actions_start')} </Typography>
             <Box sx={LINK_BTN_SX}>

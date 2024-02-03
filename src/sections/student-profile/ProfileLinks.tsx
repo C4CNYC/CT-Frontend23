@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Box, Card, Grid, Skeleton, Stack, Typography } from '@mui/material'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetSocialsQuery } from '@/redux/services/manager/socials-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 import LinkForm from './LinkForm'
 import LinkItem from './LinkItem'

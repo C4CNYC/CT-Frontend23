@@ -6,10 +6,10 @@ import { HiArrowUpTray } from '@react-icons/all-files/hi2/HiArrowUpTray'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useSnackbar } from 'notistack'
 
-import { useCopyToClipboard } from '@/lib/hooks'
-import { BaseResponseInterface, localStorageAvailable } from '@/lib/utils'
+import { useCopyToClipboard } from '@/hooks'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { BaseResponseInterface, localStorageAvailable } from '@/utils'
 
 import {
   LINK_TEXT_SX,

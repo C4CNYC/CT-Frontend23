@@ -5,13 +5,13 @@ import Image from 'next/image'
 import { useSnackbar } from 'notistack'
 
 import { Iconify } from '@/components/iconify'
-import { createRandomAvatar, getRandomColor } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useCreateClassMutation, useGetClassListQuery } from '@/redux/services/admin/school-amdin'
 import {
   useDeleteClassesMutation,
   useUpdateClassesAvatarMutation,
 } from '@/redux/services/manager/classes-manager'
+import { createRandomAvatar, getRandomColor } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 import ClassItem from './ClassItem'
 import AddClassDialog from './CreateClassDialog'

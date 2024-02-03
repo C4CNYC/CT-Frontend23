@@ -8,8 +8,8 @@ import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
 import { FormProvider, RHFSelect, useSnackbar } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useUpdateStudentProfileMutation } from '@/redux/services/auth'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { styledRegisterInput } from '../styles'
 

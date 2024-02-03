@@ -4,10 +4,10 @@ import { Box, Divider, Drawer, IconButton, Stack, Tooltip, Typography } from '@m
 import { alpha, useTheme } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 
-import { bgBlur } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { bgBlur } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { NAV } from '../../../config'
+import { NAV_SIZES } from '../../../theme/consts'
 import { Iconify } from '../../iconify'
 import { Scrollbar } from '../../scrollbar'
 import { defaultSettings } from '../config-setting'
@@ -83,7 +83,7 @@ export default function SettingsDrawer(): React.ReactElement {
               color: theme.palette.background.default,
               opacity: 0.9,
             }),
-            width: NAV.W_BASE,
+            width: NAV_SIZES.W_BASE,
             boxShadow: `-24px 12px 40px 0 ${alpha(
               theme.palette.mode === 'light' ? theme.palette.grey[500] : theme.palette.common.black,
               0.16

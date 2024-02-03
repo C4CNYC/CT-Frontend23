@@ -12,7 +12,7 @@ import { LuSchool } from '@react-icons/all-files/lu/LuSchool'
 import { MdOutlinePlayLesson } from '@react-icons/all-files/md/MdOutlinePlayLesson'
 import { SiLevelsdotfyi } from '@react-icons/all-files/si/SiLevelsdotfyi'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IBriefSectionProps {
   duration: string

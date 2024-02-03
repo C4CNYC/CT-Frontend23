@@ -3,9 +3,9 @@ import { styled } from '@mui/material/styles'
 
 import { countries } from '@/assets/data'
 import { Iconify } from '@/components/iconify'
-import { fDateTime } from '@/lib/utils'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { IUser } from '@/redux/interfaces/auth.interface'
+import { fDateTime } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,

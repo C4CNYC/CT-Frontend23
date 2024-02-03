@@ -5,10 +5,10 @@ import { IconButton, Stack, Typography, alpha } from '@mui/material'
 import { useSnackbar } from 'notistack'
 
 import { ConfirmDialog, Iconify } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { IGoals } from '@/redux/interfaces/goals.interface'
 import { useRemoveGoalMutation } from '@/redux/services/manager/goals-student'
+import { useTranslate } from '@/utils/translateHelper'
 
 import AddEditNoteDialog from './AddEditGoalDialog'
 

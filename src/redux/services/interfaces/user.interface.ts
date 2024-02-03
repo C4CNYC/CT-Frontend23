@@ -1,5 +1,5 @@
-import { BaseListResponseInterface, BaseResponseInterface, BaseSearchInterface } from '@/lib/utils'
 import { ISchool } from '@/redux/slices/global'
+import { BaseListResponseInterface, BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { Role } from '../enums/role.enum'
 

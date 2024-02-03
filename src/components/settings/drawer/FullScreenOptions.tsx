@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { SvgColor } from '../../svg-color'
 import { StyledCard } from '../styles'

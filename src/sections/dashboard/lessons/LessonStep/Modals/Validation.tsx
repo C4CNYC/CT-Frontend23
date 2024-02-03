@@ -24,11 +24,11 @@ import { format } from 'date-fns'
 import { useSnackbar } from 'notistack'
 
 import { Iconify } from '@/components/iconify'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useGetLessonContentValidationsManagerQuery,
   useRemoveLessonContentValiationManagerMutation,
 } from '@/redux/services/manager/lesson-content-validation-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 import CreateEditValidation from './CreateEditValidation'
 

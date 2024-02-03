@@ -11,11 +11,11 @@ import * as Yup from 'yup'
 
 import { FormProvider, RHFCode, RHFTextField } from '@/components'
 import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useCreateIntegrationMutation,
   useEditIntegrationMutation,
 } from '@/redux/services/manager/integration-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required('Tenant name is required'),

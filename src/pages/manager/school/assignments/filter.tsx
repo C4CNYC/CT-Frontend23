@@ -4,9 +4,9 @@ import { Autocomplete, Skeleton, Stack } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { useRouter } from 'next/router'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { useGetMySchoolsQuery } from '@/redux/services/manager/schools-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function FilterCourses(): React.ReactElement {
   const { push } = useRouter()

@@ -18,7 +18,7 @@ import { SiLevelsdotfyi } from '@react-icons/all-files/si/SiLevelsdotfyi'
 import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 import NextLink from 'next/link'
 
-import { useTranslate } from '@/lib/utils/translateHelper'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface ICourseSidebarPros {
   duration: string

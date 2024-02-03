@@ -32,9 +32,8 @@ import {
   useSettingsContext,
   useTable,
 } from '@/components'
+import { useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
-import { useFilters } from '@/lib/hooks'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import {
   useDeleteOrgMemberMutation,
   useGetOrgMembersQuery,
@@ -44,6 +43,7 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { UserTableRow, UserTableToolbar } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
+import { useTranslate } from '@/utils/translateHelper'
 
 const STATUS_OPTIONS = ['all']
 

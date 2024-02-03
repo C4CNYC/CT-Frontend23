@@ -22,7 +22,6 @@ import { animals, colors, uniqueNamesGenerator } from 'unique-names-generator'
 
 import { FormProvider, useSnackbar } from '@/components'
 import CustomTabPanel, { customTabProps } from '@/components/custom-tab-panel'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import {
@@ -34,6 +33,7 @@ import {
 } from '@/redux/services/manager/assignments-manager'
 import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 import {
   CONTAINER_INNER_SX,

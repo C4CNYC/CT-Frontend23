@@ -1,7 +1,7 @@
-import { BaseSearchInterface } from '@/lib/utils'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import { ICourse } from '@/types'
+import { BaseSearchInterface } from '@/utils'
 
 import { Status } from '../enums/assignments.enum'
 

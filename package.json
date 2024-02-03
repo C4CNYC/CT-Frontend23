@@ -8,7 +8,6 @@
     "start": "next start",
     "build": "next build",
     "analyze": "ANALYZE=true yarn build",
-    "build-netlify": "next build && cp -r .next _next && mv _next .next/",
     "export": "yarn build && next export -o _static",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -72,7 +71,6 @@
     "p-debounce": "^4.0.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
-    "react-code-blocks": "^0.1.6",
     "react-confetti": "^6.1.0",
     "react-detect-click-outside": "^1.1.7",
     "react-devicons": "^2.14.0",
@@ -142,6 +140,9 @@
     "ts-node": "10.9.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^5.3.3"
+  },
+  "browser": {
+    "crypto": false
   },
   "next-unused": {
     "alias": {},

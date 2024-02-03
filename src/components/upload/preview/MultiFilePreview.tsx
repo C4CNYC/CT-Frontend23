@@ -2,7 +2,7 @@ import { IconButton, Stack, Typography } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 import { AnimatePresence, m } from 'framer-motion'
 
-import { fData } from '@/lib/utils'
+import { fData } from '@/utils'
 
 import { varFade } from '../../animate'
 import { FileThumbnail, fileData } from '../../file-thumbnail'

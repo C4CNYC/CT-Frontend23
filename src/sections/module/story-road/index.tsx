@@ -1,7 +1,7 @@
 import { useMediaQuery, useTheme } from '@mui/material'
 
-import { BaseResponseInterface } from '@/lib/utils/baseResponse.interface'
 import { ILesson } from '@/redux/interfaces/content.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import RoadItem from './RoadItem'
 import RoadItemMobile from './RoadItemMobile'

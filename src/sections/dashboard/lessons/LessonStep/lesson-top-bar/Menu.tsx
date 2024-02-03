@@ -9,8 +9,8 @@ import { useSnackbar } from 'notistack'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { Iconify, MenuPopover } from '@/components'
-import { useTranslate } from '@/lib/utils/translateHelper'
 import { PATH_AUTH } from '@/routes/paths'
+import { useTranslate } from '@/utils/translateHelper'
 
 import { menuConfig } from './menu-config'
 

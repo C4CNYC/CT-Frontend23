@@ -8,12 +8,12 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
-import { fData } from '@/lib/utils'
 import {
   useUpdateOrgAvatarMutation,
   useUpdateOrganizationMutation,
 } from '@/redux/services/admin/organization-admin'
 import { OrganizationResponce } from '@/redux/services/interfaces/organization.interface'
+import { fData } from '@/utils'
 
 import { useLocales } from '../../../../../../locales'
 
