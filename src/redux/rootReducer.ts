@@ -21,7 +21,6 @@ import mobileTabManagerReducer from './slices/mobile-tab-manager'
 import rabitsReduce from './slices/rabits'
 import schoolSettingsReducer from './slices/schoolSettings'
 import tourReducer from './slices/tour'
-import moduleLessonReducer from "./slices/module-organizing";
 
 interface INoopStorage {
   getItem: (_key: string) => Promise<null>
@@ -61,7 +60,6 @@ const rootReducer = combineReducers({
   global: globalRducer,
   manager: managerReducer,
   lessonSteps: lessonStepsReducer,
-  moduleLesson: moduleLessonReducer,
   schoolSettings: schoolSettingsReducer,
   codePanel: codePanelReducer,
   rabits: rabitsReduce,

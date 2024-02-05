@@ -41,10 +41,10 @@ export default function ModuleOrganizing(): React.ReactElement {
               split="vertical"
               minSize={300}
               maxSize={750}
-              defaultSize={"400px"}
+              defaultSize={"400px" }
             >
               <ModuleLessonList moduleId={moduleId as string} />
-              {moduleId ? <LessonDetails /> : <NoSelectedStep />}
+              {lessonId ? <LessonDetails /> : <NoSelectedStep />}
             </ResizerUi>
           </Box>
         </FullScreen>
