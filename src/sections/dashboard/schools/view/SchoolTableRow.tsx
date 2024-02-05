@@ -1,91 +1,88 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { BiDotsVerticalRounded } from "@react-icons/all-files/bi/BiDotsVerticalRounded";
+import { Avatar, Button, Divider, IconButton, MenuItem, TableCell, TableRow } from '@mui/material'
+import { BiDotsVerticalRounded } from '@react-icons/all-files/bi/BiDotsVerticalRounded'
 
-import {
-  Avatar,
-  Button,
-  Divider,
-  IconButton,
-  MenuItem,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { ConfirmDialog, Iconify, Label, MenuPopover } from '@/components'
+import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
-import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
+import SchoolDetailsDrawer from '../portal/SchoolDetailsDrawer'
 
 interface Props {
-  row: ISchoolSummary;
+  row: ISchoolSummary
 }
 
 export default function SchoolTableRow({ row }: Props): React.ReactElement {
-  const translate = useTranslate();
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const [openConfirm, setOpenConfirm] = useState(false);
+  const translate = useTranslate()
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const [openConfirm, setOpenConfirm] = useState(false)
 
-  const [openDetails, setOpenDetails] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false)
   const handleOpenConfirm = (): void => {
-    setOpenConfirm(true);
-  };
+    setOpenConfirm(true)
+  }
 
   const handleCloseConfirm = (): void => {
-    setOpenConfirm(false);
-  };
+    setOpenConfirm(false)
+  }
 
   const handleOpenDetails = (): void => {
-    setOpenDetails(true);
-  };
+    setOpenDetails(true)
+  }
 
   const handleCloseDetails = (): void => {
-    setOpenDetails(false);
-  };
+    setOpenDetails(false)
+  }
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    setOpenPopover(event.currentTarget);
-    event.stopPropagation();
-  };
+    setOpenPopover(event.currentTarget)
+    event.stopPropagation()
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
   return (
     <TableRow>
       <TableCell>
         {row.cover ? (
           <Avatar
-            sx={{ width: "30px", height: "30px" }}
+            sx={{ width: '30px', height: '30px' }}
             alt={row.name as string}
-            src={row.cover ?? "/assets/icons/shool/school-icon.svg"}
+            src={row.cover ?? '/assets/icons/shool/school-icon.svg'}
           ></Avatar>
         ) : (
           <Avatar
-            variant="square"
-            sx={{ width: "30px", height: "30px" }}
+            variant='square'
+            sx={{ width: '30px', height: '30px' }}
             alt={row.name as string}
-            src={row.cover ?? "/assets/icons/shool/school-icon.svg"}
+            src={row.cover ?? '/assets/icons/shool/school-icon.svg'}
           ></Avatar>
         )}
       </TableCell>
-      <TableCell padding="checkbox" align="left">
+      <TableCell
+        padding='checkbox'
+        align='left'
+      >
         {row.name}
       </TableCell>
-      <TableCell align="center">{row.country}</TableCell>
-      <TableCell align="left">{row.city}</TableCell>
-      <TableCell align="left">{row.phone}</TableCell>
-      <TableCell align="left">
+      <TableCell align='center'>{row.country}</TableCell>
+      <TableCell align='left'>{row.city}</TableCell>
+      <TableCell align='left'>{row.phone}</TableCell>
+      <TableCell align='left'>
         <Label
-          variant="soft"
-          color={row.active ? "success" : "warning"}
-          sx={{ textTransform: "capitalize" }}
+          variant='soft'
+          color={row.active ? 'success' : 'warning'}
+          sx={{ textTransform: 'capitalize' }}
         >
-          {row.active ? translate("active") : translate("not_active")}
+          {row.active ? translate('active') : translate('not_active')}
         </Label>
       </TableCell>
-      <TableCell padding="checkbox" align="left">
+      <TableCell
+        padding='checkbox'
+        align='left'
+      >
         <IconButton onClick={handleOpenPopover}>
           <BiDotsVerticalRounded size={23} />
         </IconButton>
@@ -93,31 +90,31 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow="right-top"
+        arrow='right-top'
         sx={{ width: 160 }}
       >
         <MenuItem
           onClick={() => {
-            handleOpenDetails();
-            handleClosePopover();
+            handleOpenDetails()
+            handleClosePopover()
           }}
         >
           <>
-            <Iconify icon="eva:edit-fill" />
-            {translate("actions_edit")}
+            <Iconify icon='eva:edit-fill' />
+            {translate('actions_edit')}
           </>
         </MenuItem>
 
-        <Divider sx={{ borderStyle: "dashed" }} />
+        <Divider sx={{ borderStyle: 'dashed' }} />
         <MenuItem
           onClick={() => {
-            handleOpenConfirm();
-            handleClosePopover();
+            handleOpenConfirm()
+            handleClosePopover()
           }}
-          sx={{ color: "error.main" }}
+          sx={{ color: 'error.main' }}
         >
-          <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_archive")}
+          <Iconify icon='eva:trash-2-outline' />
+          {translate('actions_archive')}
         </MenuItem>
       </MenuPopover>
 
@@ -126,21 +123,24 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
         open={openDetails}
         onClose={handleCloseDetails}
         onDelete={() => {
-          handleCloseDetails();
+          handleCloseDetails()
         }}
       />
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_archive")}
-        content={translate("messages_archive_question")}
+        title={translate('actions_archive')}
+        content={translate('messages_archive_question')}
         action={
-          <Button variant="contained" color="error">
-            {translate("actions_archive")}
+          <Button
+            variant='contained'
+            color='error'
+          >
+            {translate('actions_archive')}
           </Button>
         }
       />
     </TableRow>
-  );
+  )
 }

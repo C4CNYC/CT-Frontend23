@@ -1,10 +1,4 @@
-import nextLink from "next/link";
-import { useState } from "react";
-
-import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots";
-import { FiUser } from "@react-icons/all-files/fi/FiUser";
-import { MdCopyAll } from "@react-icons/all-files/md/MdCopyAll";
-import { TbShare2 } from "@react-icons/all-files/tb/TbShare2";
+import { useState } from 'react'
 
 import {
   Button,
@@ -14,28 +8,31 @@ import {
   Stack,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import { useTheme } from "@mui/system";
+} from '@mui/material'
+import { useTheme } from '@mui/system'
+import { BsThreeDots } from '@react-icons/all-files/bs/BsThreeDots'
+import { FiUser } from '@react-icons/all-files/fi/FiUser'
+import { MdCopyAll } from '@react-icons/all-files/md/MdCopyAll'
+import { TbShare2 } from '@react-icons/all-files/tb/TbShare2'
+import nextLink from 'next/link'
 
-import { MenuPopover, useSettingsContext, useSnackbar } from "@components";
-import { useCopyToClipboard } from "@hooks";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import ClassPreferences from "@sections/dashboard/classes/modal";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import RoleBasedGuard from "src/auth/RoleBasedGuard";
-import ShareGroupModal from "src/components/share-group-modal";
-import { IClass } from "src/redux/interfaces/class.interface";
-import { useGetTeacherListQuery } from "src/redux/services/admin/school-amdin";
-import { Role } from "src/redux/services/enums/role.enum";
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
+import { MenuPopover, useSettingsContext, useSnackbar } from '@/components'
+import ShareGroupModal from '@/components/share-group-modal'
+import { useCopyToClipboard } from '@/hooks'
+import { IClass } from '@/redux/interfaces/class.interface'
+import { useGetTeacherListQuery } from '@/redux/services/admin/school-amdin'
+import { Role } from '@/redux/services/enums/role.enum'
 import {
   useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
-} from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+} from '@/redux/services/manager/classes-manager'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import ClassPreferences from '@/sections/dashboard/classes/modal'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
-import ClassInfoMain from "./ClassInfoMain";
-import OnceOffNotification from "./OnceOffNotification";
-// import ClassInfoToggle from "./ClassInfoToggle";
+import ClassInfoMain from './ClassInfoMain'
 import {
   JOIN_STACK_SX,
   MAIN_CLASS_INFO_STACK_SX,
@@ -44,43 +41,44 @@ import {
   SHARE_BUTTON_SX,
   SHARE_TOKEN_BTN_SX,
   getClassInfoWrapperSx,
-} from "./constants";
+} from './constants'
+import OnceOffNotification from './OnceOffNotification'
+// import ClassInfoToggle from "./ClassInfoToggle";
 
 interface IDefaultClassInfoProps {
-  classData: IClass & BaseResponseInterface;
+  classData: IClass & BaseResponseInterface
 }
 
 export default function DefaultClassInfo({
   classData,
 }: IDefaultClassInfoProps): React.ReactElement {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const { themeStretch } = useSettingsContext();
-  const { copy } = useCopyToClipboard();
-  const { enqueueSnackbar } = useSnackbar();
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const { themeStretch } = useSettingsContext()
+  const { copy } = useCopyToClipboard()
+  const { enqueueSnackbar } = useSnackbar()
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const translate = useTranslate()
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    setOpenPopover(event.currentTarget);
-  };
+    setOpenPopover(event.currentTarget)
+  }
 
   const { data: teachers } = useGetTeacherListQuery(
     {
       schoolId: classData?.school?.id as string,
     },
     { skip: !classData?.school?.id }
-  );
+  )
 
   const onCopy = (textToCopy: string) => {
     if (textToCopy) {
-      copy(textToCopy);
-      enqueueSnackbar(translate("messages_copied"));
+      copy(textToCopy)
+      enqueueSnackbar(translate('messages_copied'))
     }
-  };
+  }
 
-  const [updateClassByManager, { isLoading: updateResult }] =
-    useUpdateClassesMutation();
-  const [updateClassAvatar] = useUpdateClassesAvatarMutation();
+  const [updateClassByManager, { isLoading: updateResult }] = useUpdateClassesMutation()
+  const [updateClassAvatar] = useUpdateClassesAvatarMutation()
 
   const handleEditClass = async (
     id: string,
@@ -96,21 +94,21 @@ export default function DefaultClassInfo({
         name,
         description,
         cover,
-      }).unwrap();
+      }).unwrap()
       if (uploadedFile) {
-        const file = new FormData();
-        file.append("file", uploadedFile);
+        const file = new FormData()
+        file.append('file', uploadedFile)
         await updateClassAvatar({
           schoolId: classData?.school?.id as string,
           classId: id,
           file,
-        }).unwrap();
+        }).unwrap()
       }
-      enqueueSnackbar(translate("classes_class_updeted"));
+      enqueueSnackbar(translate('classes_class_updeted'))
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-  };
+  }
 
   return (
     <>
@@ -119,46 +117,51 @@ export default function DefaultClassInfo({
         {/* <ClassInfoToggle /> */}
         <Stack
           sx={() => ({
-            ...getClassInfoWrapperSx(classData?.cover ?? "#75CF6D"),
+            ...getClassInfoWrapperSx(classData?.cover ?? '#75CF6D'),
           })}
         >
-          <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
-            <Stack direction="row" sx={JOIN_STACK_SX}>
+          <Container
+            maxWidth={themeStretch ? false : 'lg'}
+            disableGutters
+          >
+            <Stack
+              direction='row'
+              sx={JOIN_STACK_SX}
+            >
               <Stack
-                direction="row"
-                alignItems="center"
-                sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
+                direction='row'
+                alignItems='center'
+                sx={{ gap: 1, flexWrap: { xs: 'wrap' } }}
               >
-                <Typography variant="subtitle2">
-                  {translate("home_join_code")}
-                </Typography>
+                <Typography variant='subtitle2'>{translate('home_join_code')}</Typography>
                 <Button
                   onClick={() => {
-                    onCopy(classData?.setting?.share_token);
+                    onCopy(classData?.setting?.share_token)
                   }}
                   sx={SHARE_TOKEN_BTN_SX}
                 >
-                  <Typography variant="subtitle2">
-                    {classData?.setting?.share_token}
-                  </Typography>
-                  <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
+                  <Typography variant='subtitle2'>{classData?.setting?.share_token}</Typography>
+                  <MdCopyAll
+                    size={20}
+                    style={{ marginBottom: '2px' }}
+                  />
                 </Button>
               </Stack>
 
               <Link
                 sx={{
-                  color: "inherit",
+                  color: 'inherit',
                 }}
-                typography="caption"
+                typography='caption'
                 href={STUDENT_PATH_DASHBOARD.tribes.root}
                 component={nextLink}
               >
-                {translate("home_see_all_groups")}
+                {translate('home_see_all_groups')}
               </Link>
             </Stack>
 
             <Stack
-              direction={isMobile ? "column" : "row"}
+              direction={isMobile ? 'column' : 'row'}
               sx={MAIN_CLASS_INFO_STACK_SX}
             >
               <ClassInfoMain
@@ -166,26 +169,39 @@ export default function DefaultClassInfo({
                 classData={classData}
               />
               <Stack
-                direction="row"
-                alignItems="center"
+                direction='row'
+                alignItems='center'
                 sx={{
-                  maxHeight: "20px",
+                  maxHeight: '20px',
                 }}
               >
                 <Link
                   sx={MEMBERS_LINK_SX}
                   href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.id}`}
                   component={nextLink}
-                  typography="button"
+                  typography='button'
                 >
-                  <FiUser color="#fff" size="18px" />
-                  {!isMobile ? translate("members") : ""}
+                  <FiUser
+                    color='#fff'
+                    size='18px'
+                  />
+                  {!isMobile ? translate('members') : ''}
                 </Link>
                 <ShareGroupModal schoolClass={classData}>
-                  <Button variant="text" disableRipple sx={SHARE_BUTTON_SX}>
-                    <TbShare2 color="#fff" size="18px" />
-                    <Typography variant="button" sx={{ ml: 0.5 }}>
-                      {!isMobile ? translate("actions_share") : ""}
+                  <Button
+                    variant='text'
+                    disableRipple
+                    sx={SHARE_BUTTON_SX}
+                  >
+                    <TbShare2
+                      color='#fff'
+                      size='18px'
+                    />
+                    <Typography
+                      variant='button'
+                      sx={{ ml: 0.5 }}
+                    >
+                      {!isMobile ? translate('actions_share') : ''}
                     </Typography>
                   </Button>
                 </ShareGroupModal>
@@ -194,14 +210,17 @@ export default function DefaultClassInfo({
                     onClick={handleOpenPopover}
                     sx={{ ml: 2, p: 0.7 }}
                   >
-                    <BsThreeDots color="#fff" size="24px" />
+                    <BsThreeDots
+                      color='#fff'
+                      size='24px'
+                    />
                   </IconButton>
                 </RoleBasedGuard>
                 <MenuPopover
-                  sx={{ minWidth: "120px" }}
+                  sx={{ minWidth: '120px' }}
                   open={openPopover}
                   onClose={() => {
-                    setOpenPopover(null);
+                    setOpenPopover(null)
                   }}
                 >
                   <ClassPreferences
@@ -211,26 +230,18 @@ export default function DefaultClassInfo({
                       cover: string,
                       uploadedFile?: File
                     ) => {
-                      handleEditClass(
-                        classData.id,
-                        name,
-                        description,
-                        cover,
-                        uploadedFile
-                      );
+                      handleEditClass(classData.id, name, description, cover, uploadedFile)
                     }}
                     defaultValues={{
                       name: classData.name,
-                      description: classData.description ?? "",
-                      cover: classData.cover ?? "",
+                      description: classData.description ?? '',
+                      cover: classData.cover ?? '',
                     }}
                     rowId={classData.id}
                     updateResult={updateResult}
                     schoolId={classData?.school?.id}
                   >
-                    <Button sx={POPOVER_EDIT_BTN_SX}>
-                      {translate("actions_edit")}
-                    </Button>
+                    <Button sx={POPOVER_EDIT_BTN_SX}>{translate('actions_edit')}</Button>
                   </ClassPreferences>
                 </MenuPopover>
               </Stack>
@@ -239,5 +250,5 @@ export default function DefaultClassInfo({
         </Stack>
       </Stack>
     </>
-  );
+  )
 }

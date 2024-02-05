@@ -1,14 +1,13 @@
-import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
-import { MdCelebration } from "@react-icons/all-files/md/MdCelebration";
+import { Box, Stack, Typography } from '@mui/material'
+import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
+import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 
-import { Box, Stack, Typography } from "@mui/material";
-
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { useTranslate } from '@/utils/translateHelper'
 
 interface ICourseSummarilyProps {
-  duration: string;
-  level: string;
-  lessonsCount: number;
+  duration: string
+  level: string
+  lessonsCount: number
 }
 
 export default function CourseSummarily({
@@ -16,34 +15,52 @@ export default function CourseSummarily({
   level,
   lessonsCount,
 }: ICourseSummarilyProps): React.ReactElement {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
     <Stack
       sx={{
-        flexDirection: { xs: "column", sm: "row" },
+        flexDirection: { xs: 'column', sm: 'row' },
         py: 2,
         gap: 3,
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <AiOutlineClockCircle size="15px" style={{ marginBottom: "3px" }} />
-        <Typography variant="body1" ml={1}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <AiOutlineClockCircle
+          size='15px'
+          style={{ marginBottom: '3px' }}
+        />
+        <Typography
+          variant='body1'
+          ml={1}
+        >
           9 Hours
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <AiOutlineClockCircle size="15px" style={{ marginBottom: "3px" }} />
-        <Typography variant="body1" sx={{ ml: 1, textTransform: "capitalize" }}>
-          {translate("grade")} {level}
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <AiOutlineClockCircle
+          size='15px'
+          style={{ marginBottom: '3px' }}
+        />
+        <Typography
+          variant='body1'
+          sx={{ ml: 1, textTransform: 'capitalize' }}
+        >
+          {translate('grade')} {level}
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <MdCelebration size="18px" style={{ marginBottom: "4px" }} />
-        <Typography variant="body1" sx={{ ml: 1 }}>
-          {lessonsCount} {`Training${lessonsCount !== 1 ? "s" : ""}`}
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <MdCelebration
+          size='18px'
+          style={{ marginBottom: '4px' }}
+        />
+        <Typography
+          variant='body1'
+          sx={{ ml: 1 }}
+        >
+          {lessonsCount} {`Training${lessonsCount !== 1 ? 's' : ''}`}
         </Typography>
       </Box>
     </Stack>
-  );
+  )
 }

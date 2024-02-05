@@ -1,81 +1,80 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import StepWizard from "react-step-wizard";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Stack } from '@mui/material'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import StepWizard from 'react-step-wizard'
+import * as Yup from 'yup'
 
-import { Stack } from "@mui/material";
+import { useAuthContext } from '@/auth/useAuthContext'
+import { FormProvider } from '@/components'
+import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
+import { SingLink } from '@/sections/on-boarding-register/links'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { FormProvider } from "@components";
-import { SingLink } from "@sections/on-boarding-register/links";
-import { useAuthContext } from "src/auth/useAuthContext";
-import { STUDENT_PATH_AFTER_LOGIN } from "../../../config";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import EmailNotFound from "./EmailNotFound";
-import SignInLogin from "./SignInLogin";
-import SignInPassword from "./SignInPassword";
+import EmailNotFound from './EmailNotFound'
+import SignInLogin from './SignInLogin'
+import SignInPassword from './SignInPassword'
 
 interface FormValuesProps {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 export default function SignInMain(): React.ReactElement {
-  const { replace } = useRouter();
-  const { login } = useAuthContext();
-  const [isError, setError] = useState("");
-  const translate = useTranslate();
+  const { replace } = useRouter()
+  const { login } = useAuthContext()
+  const [isError, setError] = useState('')
+  const translate = useTranslate()
 
   const CreateLoginSchema = Yup.object().shape({
     email: Yup.string()
-      .required(translate("required_email"))
-      .email(translate("must_be_valid_email")),
-    password: Yup.string().required(translate("required_password")),
-  });
+      .required(translate('required_email'))
+      .email(translate('must_be_valid_email')),
+    password: Yup.string().required(translate('required_password')),
+  })
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateLoginSchema),
-    mode: "all",
-  });
+    mode: 'all',
+  })
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await login(data.email, data.password, "codetribe");
-      replace(STUDENT_PATH_AFTER_LOGIN);
+      await login(data.email, data.password, 'codetribe')
+      replace(STUDENT_PATH_PAGE.home)
     } catch (e: any) {
-      setError(e.message);
+      setError(e.message)
     }
-  };
+  }
 
   return (
     <Stack
       sx={{
-        minHeight: "400px",
-        justifyContent: "center",
-        position: "relative",
+        minHeight: '400px',
+        justifyContent: 'center',
+        position: 'relative',
       }}
     >
-      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider
+        methods={methods}
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
         <StepWizard transitions={custom}>
           <SignInLogin
-            isValid={
-              !methods.formState.errors.email &&
-              methods.formState.dirtyFields.email
-            }
-            stepName="email"
+            isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
+            stepName='email'
           />
           <SignInPassword
             isSubmiting={methods.formState.isSubmitting}
             isError={isError}
-            stepName="password"
+            stepName='password'
           />
           <EmailNotFound setError={setError} />
         </StepWizard>
       </FormProvider>
       <SingLink isRegister />
     </Stack>
-  );
+  )
 }
-const custom = {};
+const custom = {}

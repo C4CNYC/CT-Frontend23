@@ -1,5 +1,3 @@
-import NextLink from "next/link";
-
 import {
   Avatar,
   AvatarGroup,
@@ -10,115 +8,126 @@ import {
   Stack,
   Tooltip,
   Typography,
-} from "@mui/material";
+} from '@mui/material'
+import NextLink from 'next/link'
 
-import { Scrollbar, SvgColor } from "@components";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { BaseResponseInterface, getLinearGradient } from "@utils";
-import { IClass } from "src/redux/interfaces/class.interface";
-import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Scrollbar, SvgColor } from '@/components'
+import { IClass } from '@/redux/interfaces/class.interface'
+import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-student'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { BaseResponseInterface, getLinearGradient } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
-import TribeButtons from "./TribeButtons";
-import TribeHeaderBtn from "./TribeHeaderBtn";
-import TribeStatistics from "./TribeStatistics";
+import TribeButtons from './TribeButtons'
+import TribeHeaderBtn from './TribeHeaderBtn'
+import TribeStatistics from './TribeStatistics'
 
 interface ITribeItemProps {
-  tribe: IClass & BaseResponseInterface;
+  tribe: IClass & BaseResponseInterface
 }
 
-export default function TribeItem({
-  tribe,
-}: ITribeItemProps): React.ReactElement {
-  const { data } = useGetClassStudentsQuery({ id: tribe.id });
-  const translate = useTranslate();
+export default function TribeItem({ tribe }: ITribeItemProps): React.ReactElement {
+  const { data } = useGetClassStudentsQuery({ id: tribe.id })
+  const translate = useTranslate()
 
   return (
     <Paper
       elevation={5}
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        position: "relative",
-        overflow: "hidden",
-        borderRadius: "16px",
-        textDecoration: "none",
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden',
+        borderRadius: '16px',
+        textDecoration: 'none',
       }}
       component={NextLink}
       href={STUDENT_PATH_DASHBOARD.tribes.tribe(tribe.id)}
     >
       <Box
         sx={{
-          height: "66px",
-          display: "flex",
-          justifyContent: "flex-end",
-          p: "5px",
-          background: getLinearGradient(tribe.cover ?? "#784af4"),
+          height: '66px',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          p: '5px',
+          background: getLinearGradient(tribe.cover ?? '#784af4'),
         }}
       >
         <Chip
-          label={translate("tribe")}
+          label={translate('tribe')}
           sx={{
-            height: "20px",
-            width: "70px",
+            height: '20px',
+            width: '70px',
             fontWeight: 500,
-            background: "linear-gradient(180deg, #4FF3FE 0%, #329096 100%)",
-            color: "#fff",
+            background: 'linear-gradient(180deg, #4FF3FE 0%, #329096 100%)',
+            color: '#fff',
           }}
         />
         <Chip
-          label={translate("admin")}
+          label={translate('admin')}
           sx={{
-            height: "20px",
-            width: "70px",
+            height: '20px',
+            width: '70px',
             fontWeight: 500,
-            background: "linear-gradient(180deg, #C2C1C1 0%, #868484 100%)",
-            color: "#fff",
+            background: 'linear-gradient(180deg, #C2C1C1 0%, #868484 100%)',
+            color: '#fff',
             ml: 1,
           }}
         />
       </Box>
 
-      <Box sx={{ position: "relative" }}>
+      <Box sx={{ position: 'relative' }}>
         <SvgColor
-          src="/assets/shape_avatar.svg"
+          src='/assets/shape_avatar.svg'
           sx={{
             width: 160,
             height: 72,
             zIndex: 9,
             bottom: -30,
-            position: "absolute",
-            color: "background.paper",
+            position: 'absolute',
+            color: 'background.paper',
           }}
         />
 
         <Avatar
-          alt="name"
-          src={tribe.avatar ?? "/assets/tribe/tribe_icon.png"}
+          alt='name'
+          src={tribe.avatar ?? '/assets/tribe/tribe_icon.png'}
           sx={{
             left: 40,
             zIndex: 9,
             width: 80,
             height: 80,
             bottom: -44,
-            position: "absolute",
+            position: 'absolute',
           }}
         />
       </Box>
       <Stack sx={{ px: 3, gap: 2, pb: 2 }}>
         <TribeHeaderBtn />
-        <Typography variant="h5" mb="-5px">
+        <Typography
+          variant='h5'
+          mb='-5px'
+        >
           {tribe.name}
         </Typography>
-        <Scrollbar sx={{ height: "63px" }}>
-          <Typography variant="body1">
-            {tribe.description ?? translate("tribes_information_about_tribe")}
+        <Scrollbar sx={{ height: '63px' }}>
+          <Typography variant='body1'>
+            {tribe.description ?? translate('tribes_information_about_tribe')}
           </Typography>
         </Scrollbar>
-        <AvatarGroup max={4} total={tribe.students?.length}>
+        <AvatarGroup
+          max={4}
+          total={tribe.students?.length}
+        >
           {data?.data.map((student) => (
-            <Tooltip key={student.id} title={student.email}>
-              <Avatar alt="student.email" src={student.avatar} />
+            <Tooltip
+              key={student.id}
+              title={student.email}
+            >
+              <Avatar
+                alt='student.email'
+                src={student.avatar}
+              />
             </Tooltip>
           ))}
         </AvatarGroup>
@@ -131,5 +140,5 @@ export default function TribeItem({
       <Divider flexItem />
       <TribeButtons />
     </Paper>
-  );
+  )
 }

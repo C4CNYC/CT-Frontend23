@@ -1,47 +1,39 @@
-// next
-import dynamic from "next/dynamic";
-
-// @mui
-import { Container, Stack } from "@mui/material";
+import { Container, Stack } from '@mui/material'
+import dynamic from 'next/dynamic'
 
 // hooks
-import { useOffSetTop } from "@hooks";
+import { useOffSetTop } from '@/hooks'
 
-// config
-import { HEADER } from "../../config";
+import { HEADER_SIZES } from '../../theme/consts'
 
 //
-const Header = dynamic(async () => await import("./Header"), { ssr: false });
-
-// ----------------------------------------------------------------------
+const Header = dynamic(async () => await import('./Header'), { ssr: false })
 
 interface Props {
-  children?: React.ReactNode;
+  children?: React.ReactNode
 }
 
-export default function CompactLayout({
-  children,
-}: Props): React.ReactElement | null {
-  const isOffset = useOffSetTop(HEADER.H_MAIN_DESKTOP);
+export default function CompactLayout({ children }: Props): React.ReactElement | null {
+  const isOffset = useOffSetTop(HEADER_SIZES.H_MAIN_DESKTOP)
 
   return (
     <>
       <Header isOffset={isOffset} />
 
-      <Container component="main">
+      <Container component='main'>
         <Stack
           sx={{
             py: 12,
-            m: "auto",
+            m: 'auto',
             maxWidth: 400,
-            minHeight: "100vh",
-            textAlign: "center",
-            justifyContent: "center",
+            minHeight: '100vh',
+            textAlign: 'center',
+            justifyContent: 'center',
           }}
         >
           {children}
         </Stack>
       </Container>
     </>
-  );
+  )
 }

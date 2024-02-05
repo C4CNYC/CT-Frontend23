@@ -1,20 +1,17 @@
-// @mui
-import { alpha, Theme } from '@mui/material/styles';
-import { dividerClasses } from '@mui/material/Divider';
-import { checkboxClasses } from '@mui/material/Checkbox';
-import { menuItemClasses } from '@mui/material/MenuItem';
-import { autocompleteClasses } from '@mui/material/Autocomplete';
-
-// ----------------------------------------------------------------------
+import { autocompleteClasses } from '@mui/material/Autocomplete'
+import { checkboxClasses } from '@mui/material/Checkbox'
+import { dividerClasses } from '@mui/material/Divider'
+import { menuItemClasses } from '@mui/material/MenuItem'
+import { alpha, Theme } from '@mui/material/styles'
 
 export const paper = ({
   theme,
   bgcolor,
   dropdown,
 }: {
-  theme: Theme;
-  bgcolor?: string;
-  dropdown?: boolean;
+  theme: Theme
+  bgcolor?: string
+  dropdown?: boolean
 }) => ({
   ...bgBlur({
     blur: 20,
@@ -33,9 +30,7 @@ export const paper = ({
     boxShadow: theme.customShadows.dropdown,
     borderRadius: theme.shape.borderRadius * 1.25,
   }),
-});
-
-// ----------------------------------------------------------------------
+})
 
 export const menuItem = (theme: Theme) => ({
   ...theme.typography.body2,
@@ -65,22 +60,20 @@ export const menuItem = (theme: Theme) => ({
   [`&+.${dividerClasses.root}`]: {
     margin: theme.spacing(0.5, 0),
   },
-});
-
-// ----------------------------------------------------------------------
+})
 
 type BgBlurProps = {
-  blur?: number;
-  opacity?: number;
-  color?: string;
-  imgUrl?: string;
-};
+  blur?: number
+  opacity?: number
+  color?: string
+  imgUrl?: string
+}
 
 export function bgBlur(props?: BgBlurProps) {
-  const color = props?.color || '#000000';
-  const blur = props?.blur || 6;
-  const opacity = props?.opacity || 0.8;
-  const imgUrl = props?.imgUrl;
+  const color = props?.color || '#000000'
+  const blur = props?.blur || 6
+  const opacity = props?.opacity || 0.8
+  const imgUrl = props?.imgUrl
 
   if (imgUrl) {
     return {
@@ -98,32 +91,30 @@ export function bgBlur(props?: BgBlurProps) {
         WebkitBackdropFilter: `blur(${blur}px)`,
         backgroundColor: alpha(color, opacity),
       },
-    } as const;
+    } as const
   }
 
   return {
     backdropFilter: `blur(${blur}px)`,
     WebkitBackdropFilter: `blur(${blur}px)`,
     backgroundColor: alpha(color, opacity),
-  };
+  }
 }
 
-// ----------------------------------------------------------------------
-
 type BgGradientProps = {
-  direction?: string;
-  color?: string;
-  startColor?: string;
-  endColor?: string;
-  imgUrl?: string;
-};
+  direction?: string
+  color?: string
+  startColor?: string
+  endColor?: string
+  imgUrl?: string
+}
 
 export function bgGradient(props?: BgGradientProps) {
-  const direction = props?.direction || 'to bottom';
-  const startColor = props?.startColor;
-  const endColor = props?.endColor;
-  const imgUrl = props?.imgUrl;
-  const color = props?.color;
+  const direction = props?.direction || 'to bottom'
+  const startColor = props?.startColor
+  const endColor = props?.endColor
+  const imgUrl = props?.imgUrl
+  const color = props?.color
 
   if (imgUrl) {
     return {
@@ -133,25 +124,21 @@ export function bgGradient(props?: BgGradientProps) {
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center center',
-    };
+    }
   }
 
   return {
     background: `linear-gradient(${direction}, ${startColor}, ${endColor})`,
-  };
+  }
 }
-
-// ----------------------------------------------------------------------
 
 export function textGradient(value: string) {
   return {
     background: `-webkit-linear-gradient(${value})`,
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
-  };
+  }
 }
-
-// ----------------------------------------------------------------------
 
 export const hideScroll = {
   x: {
@@ -170,4 +157,4 @@ export const hideScroll = {
       display: 'none',
     },
   },
-} as const;
+} as const

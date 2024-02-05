@@ -1,13 +1,11 @@
-import { type Theme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import { type Theme } from '@mui/material/styles'
 
 export default function Timeline(theme: Theme): unknown {
   return {
     MuiTimelineDot: {
       styleOverrides: {
         root: {
-          boxShadow: "none",
+          boxShadow: 'none',
         },
       },
     },
@@ -19,5 +17,5 @@ export default function Timeline(theme: Theme): unknown {
         },
       },
     },
-  };
+  }
 }

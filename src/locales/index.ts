@@ -1,2 +1,2 @@
-export { default } from "./ThemeLocalization";
-export * from "./useLocales";
+export { default } from './ThemeLocalization'
+export * from './useLocales'

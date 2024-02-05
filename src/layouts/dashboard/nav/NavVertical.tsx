@@ -1,28 +1,27 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
-import { useSelector } from "react-redux";
+import { Box, Drawer, Stack } from '@mui/material'
+import { useTheme } from '@mui/system'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
-import { Box, Drawer, Stack } from "@mui/material";
-import { useTheme } from "@mui/system";
+import { Logo } from '@/components/logo'
+import { NavSectionVertical } from '@/components/nav-section'
+import { Scrollbar } from '@/components/scrollbar'
+import { useResponsive } from '@/hooks'
+import { Role } from '@/redux/services/enums/role.enum'
+import { RootState } from '@/redux/store'
 
-import { Scrollbar } from "src/components/scrollbar";
-import { NavSectionVertical } from "src/components/nav-section";
-import { Logo } from "src/components/logo";
+import { NAV_SIZES } from '../../../theme/consts'
 
-import { useResponsive } from "@hooks";
-import { Role } from "src/redux/services/enums/role.enum";
-import { RootState } from "src/redux/store";
-
-import { NAV } from "../../../config";
-import LetsCodeBtn from "./LestCodeBtn";
-import NavToggleButton from "./NavToggleButton";
-import { menuConfig } from "./config-navigation";
+import { menuConfig } from './config-navigation'
+import LetsCodeBtn from './LestCodeBtn'
+import NavToggleButton from './NavToggleButton'
 
 interface INavVertical {
-  openNav: boolean;
-  isManager?: boolean;
-  onCloseNav: VoidFunction;
+  openNav: boolean
+  isManager?: boolean
+  onCloseNav: VoidFunction
 }
 
 export default function NavVertical({
@@ -30,29 +29,27 @@ export default function NavVertical({
   isManager,
   onCloseNav,
 }: INavVertical): React.ReactElement | null {
-  const user = useSelector((state: RootState) => state.global.user);
-  const { pathname } = useRouter();
-  const theme = useTheme();
+  const user = useSelector((state: RootState) => state.global.user)
+  const { pathname } = useRouter()
+  const theme = useTheme()
 
-  const isDesktop = useResponsive("up", "md");
-  const menu = isManager
-    ? menuConfig[user?.role as Role]
-    : menuConfig[Role.Student];
+  const isDesktop = useResponsive('up', 'md')
+  const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
 
   useEffect(() => {
     if (openNav) {
-      onCloseNav();
+      onCloseNav()
     }
-  }, [pathname]);
+  }, [pathname])
 
   const renderContent = (
     <Scrollbar
       sx={{
         height: 1,
-        "& .simplebar-content": {
+        '& .simplebar-content': {
           height: 1,
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
         },
       }}
     >
@@ -72,18 +69,15 @@ export default function NavVertical({
         <NavSectionVertical data={menu} />
       </>
     </Scrollbar>
-  );
+  )
 
   return (
     <Box
-      component="nav"
+      component='nav'
       sx={{
         flexShrink: { md: 0 },
-        width: { md: NAV.W_DASHBOARD },
-        bgcolor:
-          theme.palette.mode === "light"
-            ? "#E6F5FD"
-            : theme.palette.background.paper,
+        width: { md: NAV_SIZES.W_DASHBOARD },
+        bgcolor: theme.palette.mode === 'light' ? '#E6F5FD' : theme.palette.background.paper,
       }}
     >
       <NavToggleButton />
@@ -91,13 +85,13 @@ export default function NavVertical({
       {isDesktop ? (
         <Drawer
           open
-          variant="permanent"
+          variant='permanent'
           PaperProps={{
             sx: {
               zIndex: 0,
-              width: NAV.W_DASHBOARD,
-              bgcolor: "transparent",
-              borderRightStyle: "dashed",
+              width: NAV_SIZES.W_DASHBOARD,
+              bgcolor: 'transparent',
+              borderRightStyle: 'dashed',
             },
           }}
         >
@@ -112,11 +106,8 @@ export default function NavVertical({
           }}
           PaperProps={{
             sx: {
-              width: NAV.W_DASHBOARD,
-              bgcolor:
-                theme.palette.mode === "light"
-                  ? "#E6F5FD"
-                  : theme.palette.background.paper,
+              width: NAV_SIZES.W_DASHBOARD,
+              bgcolor: theme.palette.mode === 'light' ? '#E6F5FD' : theme.palette.background.paper,
             },
           }}
         >
@@ -124,5 +115,5 @@ export default function NavVertical({
         </Drawer>
       )}
     </Box>
-  );
+  )
 }

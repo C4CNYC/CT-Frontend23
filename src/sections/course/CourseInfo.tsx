@@ -1,30 +1,25 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState } from 'react'
 
-import { SlArrowDown } from "@react-icons/all-files/sl/SlArrowDown";
-import { SlArrowUp } from "@react-icons/all-files/sl/SlArrowUp";
+import { Button, Stack, Typography, useTheme } from '@mui/material'
+import { SlArrowDown } from '@react-icons/all-files/sl/SlArrowDown'
+import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
 
-import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { Image } from '@/components'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { Image } from "@components";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import CourseSummarily from "./CourseSummarily.1";
-import {
-  COURSE_INFO_IMAGE_SX,
-  SEE_MORE_BTN_SX,
-  getCourseInfoWrapperSx,
-} from "./constants";
+import { COURSE_INFO_IMAGE_SX, SEE_MORE_BTN_SX, getCourseInfoWrapperSx } from './constants'
+import CourseSummarily from './CourseSummarily.1'
 
 interface ICourseInfoProps {
-  cover?: string;
-  name: string;
-  description: string;
-  lessonsCount: number;
-  duration: string;
-  level: string;
+  cover?: string
+  name: string
+  description: string
+  lessonsCount: number
+  duration: string
+  level: string
 }
 
-const MAX_DESCRIPTION_LENGTH = 250;
+const MAX_DESCRIPTION_LENGTH = 250
 
 export default function CourseInfo({
   cover,
@@ -34,19 +29,25 @@ export default function CourseInfo({
   lessonsCount,
   level,
 }: ICourseInfoProps): React.ReactElement {
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
-  const translate = useTranslate();
+  const theme = useTheme()
+  const [open, setOpen] = useState(false)
+  const translate = useTranslate()
 
-  const containerStyles = useMemo(() => getCourseInfoWrapperSx(theme), [theme]);
+  const containerStyles = useMemo(() => getCourseInfoWrapperSx(theme), [theme])
 
   return (
     <Stack sx={containerStyles}>
-      <Stack maxWidth="680px">
-        <Typography variant="h3" pb={2}>
+      <Stack maxWidth='680px'>
+        <Typography
+          variant='h3'
+          pb={2}
+        >
           {name}
         </Typography>
-        <Typography variant="subtitle1" sx={{ pb: !open ? 1 : 1 }}>
+        <Typography
+          variant='subtitle1'
+          sx={{ pb: !open ? 1 : 1 }}
+        >
           {description.length > MAX_DESCRIPTION_LENGTH && !open
             ? `${description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
             : description}
@@ -54,16 +55,14 @@ export default function CourseInfo({
         <Button
           sx={SEE_MORE_BTN_SX}
           onClick={() => {
-            setOpen(!open);
+            setOpen(!open)
           }}
         >
-          {open
-            ? translate("actions_show_less")
-            : translate("actions_see_more")}
+          {open ? translate('actions_show_less') : translate('actions_see_more')}
           {open ? (
-            <SlArrowUp style={{ marginLeft: "10px" }} />
+            <SlArrowUp style={{ marginLeft: '10px' }} />
           ) : (
-            <SlArrowDown style={{ marginLeft: "10px" }} />
+            <SlArrowDown style={{ marginLeft: '10px' }} />
           )}
         </Button>
         <CourseSummarily
@@ -73,10 +72,10 @@ export default function CourseInfo({
         />
       </Stack>
       <Image
-        alt="course cover"
-        src={cover ?? "/assets/courses/courseImg.png"}
+        alt='course cover'
+        src={cover ?? '/assets/courses/courseImg.png'}
         sx={COURSE_INFO_IMAGE_SX}
       />
     </Stack>
-  );
+  )
 }

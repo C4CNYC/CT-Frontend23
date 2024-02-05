@@ -1,24 +1,20 @@
-// @mui
-import { RadioGroup } from "@mui/material";
+import { RadioGroup } from '@mui/material'
 
-//
-import { useSettingsContext } from "../SettingsContext";
-import { LayoutIcon, MaskControl, StyledCard, StyledWrap } from "../styles";
+import { useSettingsContext } from '../SettingsContext'
+import { LayoutIcon, MaskControl, StyledCard, StyledWrap } from '../styles'
 
-// ----------------------------------------------------------------------
-
-const OPTIONS = ["vertical", "horizontal", "mini"] as const;
+const OPTIONS = ['vertical', 'horizontal', 'mini'] as const
 
 export default function LayoutOptions(): React.ReactElement {
-  const { themeLayout, onChangeLayout } = useSettingsContext();
+  const { themeLayout, onChangeLayout } = useSettingsContext()
 
   return (
     <RadioGroup
-      name="themeLayout"
+      name='themeLayout'
       value={themeLayout}
       onChange={onChangeLayout}
     >
-      <StyledWrap sx={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+      <StyledWrap sx={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
         {OPTIONS.map((layout) => (
           <StyledCard
             key={layout}
@@ -32,5 +28,5 @@ export default function LayoutOptions(): React.ReactElement {
         ))}
       </StyledWrap>
     </RadioGroup>
-  );
+  )
 }

@@ -1,30 +1,22 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { useSnackbar } from "notistack";
+import { Avatar, Button, ListItem, ListItemAvatar, ListItemText, MenuItem } from '@mui/material'
+import { useSnackbar } from 'notistack'
 
-import {
-  Avatar,
-  Button,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  MenuItem,
-} from "@mui/material";
+import { Iconify, MenuPopover } from '@/components'
+import { IClass } from '@/redux/interfaces/class.interface'
+import { useUpdateClassMutation } from '@/redux/services/admin/school-amdin'
+import { useUpdateClassesAvatarMutation } from '@/redux/services/manager/classes-manager'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { Iconify, MenuPopover } from "@components";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import { IClass } from "src/redux/interfaces/class.interface";
-import { useUpdateClassMutation } from "src/redux/services/admin/school-amdin";
-import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import AddClassDialog from "./CreateClassDialog";
+import AddClassDialog from './CreateClassDialog'
 
 interface Props {
-  classes: IClass & BaseResponseInterface;
-  schoolId: string;
-  handleEditClass?: (id: string) => void;
-  handleDeleteClass: () => void;
+  classes: IClass & BaseResponseInterface
+  schoolId: string
+  handleEditClass?: (id: string) => void
+  handleDeleteClass: () => void
 }
 
 export default function ClassItem({
@@ -32,19 +24,19 @@ export default function ClassItem({
   handleDeleteClass,
   schoolId,
 }: Props): React.ReactElement | null {
-  const { enqueueSnackbar } = useSnackbar();
-  const [updateClass] = useUpdateClassMutation();
-  const [updateClassAvatar] = useUpdateClassesAvatarMutation();
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+  const { enqueueSnackbar } = useSnackbar()
+  const [updateClass] = useUpdateClassMutation()
+  const [updateClassAvatar] = useUpdateClassesAvatarMutation()
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const translate = useTranslate()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    setOpenPopover(event.currentTarget);
-  };
+    setOpenPopover(event.currentTarget)
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
 
   const updateClassByAdmin = async (
     name: string,
@@ -59,53 +51,56 @@ export default function ClassItem({
         name,
         description,
         cover,
-      }).unwrap();
-      const file = new FormData();
+      }).unwrap()
+      const file = new FormData()
       if (uploadedFile) {
-        file.append("file", uploadedFile);
+        file.append('file', uploadedFile)
         await updateClassAvatar({
           schoolId,
           classId: classes.id,
           file,
-        }).unwrap();
+        }).unwrap()
       }
-      enqueueSnackbar(`Class ${name} updated successfuly!`);
+      enqueueSnackbar(`Class ${name} updated successfuly!`)
     } catch (error: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar('Something went wrong', { variant: 'error' })
     }
-  };
+  }
 
   return (
     <>
       <ListItem
         disableGutters
-        sx={{ borderBottom: "solid 1px rgba(145, 158, 171, 0.24)" }}
+        sx={{ borderBottom: 'solid 1px rgba(145, 158, 171, 0.24)' }}
       >
         <ListItemAvatar>
-          <Avatar alt={classes.name} src={classes.avatar} />
+          <Avatar
+            alt={classes.name}
+            src={classes.avatar}
+          />
         </ListItemAvatar>
 
         <ListItemText
           primary={classes.name}
-          primaryTypographyProps={{ noWrap: true, typography: "subtitle2" }}
+          primaryTypographyProps={{ noWrap: true, typography: 'subtitle2' }}
           secondaryTypographyProps={{ noWrap: true }}
           sx={{ flexGrow: 1, pr: 1 }}
         />
 
         <Button
-          size="small"
-          color="inherit"
-          endIcon={<Iconify icon="eva:more-vertical-fill" />}
+          size='small'
+          color='inherit'
+          endIcon={<Iconify icon='eva:more-vertical-fill' />}
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,
-            textTransform: "unset",
-            fontWeight: "fontWeightMedium",
-            "& .MuiButton-endIcon": {
+            textTransform: 'unset',
+            fontWeight: 'fontWeightMedium',
+            '& .MuiButton-endIcon': {
               ml: 0,
             },
             ...(openPopover && {
-              bgcolor: "action.selected",
+              bgcolor: 'action.selected',
             }),
           }}
         ></Button>
@@ -121,8 +116,8 @@ export default function ClassItem({
             isEdit
             defaultValues={{
               name: classes.name,
-              description: classes.description ?? "",
-              cover: classes.cover ?? "",
+              description: classes.description ?? '',
+              cover: classes.cover ?? '',
             }}
             updateClass={(
               name: string,
@@ -130,27 +125,27 @@ export default function ClassItem({
               cover: string,
               uploadedFile?: File
             ) => {
-              updateClassByAdmin(name, description, cover, uploadedFile);
-              handleClosePopover();
+              updateClassByAdmin(name, description, cover, uploadedFile)
+              handleClosePopover()
             }}
           >
             <MenuItem>
-              <Iconify icon="eva:edit-fill" />
-              {translate("actions_edit")}
+              <Iconify icon='eva:edit-fill' />
+              {translate('actions_edit')}
             </MenuItem>
           </AddClassDialog>
           <MenuItem
             onClick={() => {
-              handleDeleteClass();
-              handleClosePopover();
+              handleDeleteClass()
+              handleClosePopover()
             }}
-            sx={{ color: "error.main" }}
+            sx={{ color: 'error.main' }}
           >
-            <Iconify icon="eva:trash-2-outline" />
-            {translate("actions_remove")}
+            <Iconify icon='eva:trash-2-outline' />
+            {translate('actions_remove')}
           </MenuItem>
         </>
       </MenuPopover>
     </>
-  );
+  )
 }

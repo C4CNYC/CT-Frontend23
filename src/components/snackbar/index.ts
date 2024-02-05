@@ -1,2 +1,2 @@
-export * from "notistack";
-export * from "./SnackbarProviderWrapper";
+export * from 'notistack'
+export * from './SnackbarProviderWrapper'

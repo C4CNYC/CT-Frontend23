@@ -1,4 +1,4 @@
 export interface ILessonContentValidation {
-  name: string;
-  regex: string;
+  name: string
+  regex: string
 }

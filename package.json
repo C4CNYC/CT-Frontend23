@@ -4,17 +4,14 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev -p 8080",
+    "dev:turbo": "next dev -p 8080 --turbo",
     "start": "next start",
     "build": "next build",
     "analyze": "ANALYZE=true yarn build",
-    "build-netlify": "next build && cp -r .next _next && mv _next .next/",
     "export": "yarn build && next export -o _static",
-    "lint": "eslint --ext .ts,.tsx .",
-    "lint:fix": "eslint --fix --ext .ts,.tsx .",
-    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
-    "clear": "rm -rf .next .swc _static node_modules",
-    "prepare": "husky install",
-    "pre-commit": "yarn lint && yarn build"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "clear": "rm -rf .next .swc _static node_modules"
   },
   "private": true,
   "dependencies": {
@@ -152,6 +149,7 @@
       "src"
     ],
     "exclude": [
+      ".d.ts",
       ".test.",
       ".stories.",
       "_ref"

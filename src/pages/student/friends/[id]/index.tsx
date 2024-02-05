@@ -1,34 +1,34 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
+import { Box, Card, Container, Skeleton, Tab, Tabs } from '@mui/material'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
-import { StudentDashboardLayout } from "@layouts/dashboard";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import ProfileCover from "@sections/student-profile/ProfileCover";
-import ProfileMain from "@sections/student-profile/ProfileMain";
-import { IUser } from "src/redux/interfaces/auth.interface";
-import { useGetFriendQuery } from "src/redux/services/manager/friends-manager";
+import { CustomBreadcrumbs, Iconify, useSettingsContext } from '@/components'
+import { StudentDashboardLayout } from '@/layouts/dashboard'
+import { IUser } from '@/redux/interfaces/auth.interface'
+import { useGetFriendQuery } from '@/redux/services/manager/friends-manager'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import ProfileCover from '@/sections/student-profile/ProfileCover'
+import ProfileMain from '@/sections/student-profile/ProfileMain'
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
-);
+)
 
 export default function FriendProfile(): React.ReactElement {
-  const { query } = useRouter();
-  const [currentTab, setCurrentTab] = useState("profile");
+  const { query } = useRouter()
+  const [currentTab, setCurrentTab] = useState('profile')
 
-  const { themeStretch } = useSettingsContext();
+  const { themeStretch } = useSettingsContext()
 
-  const { data, isLoading } = useGetFriendQuery({ id: query.id as string });
+  const { data, isLoading } = useGetFriendQuery({ id: query.id as string })
 
   const TABS = [
     {
-      value: "profile",
-      label: "Profile",
-      icon: <Iconify icon="ic:round-account-box" />,
+      value: 'profile',
+      label: 'Profile',
+      icon: <Iconify icon='ic:round-account-box' />,
       component: (
         <ProfileMain
           data={data as unknown as IUser}
@@ -37,26 +37,23 @@ export default function FriendProfile(): React.ReactElement {
         />
       ),
     },
-  ];
+  ]
 
   return (
     <>
       <Head>
         <title>Friend profile | CodeTribe</title>
       </Head>
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading=""
-          links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-            { name: "Profile" },
-          ]}
+          heading=''
+          links={[{ name: 'Home', href: STUDENT_PATH_DASHBOARD.class.root }, { name: 'Profile' }]}
         />
         <Card
           sx={{
             mb: 3,
             height: 280,
-            position: "relative",
+            position: 'relative',
           }}
         >
           {!isLoading ? (
@@ -66,26 +63,29 @@ export default function FriendProfile(): React.ReactElement {
               cover={data?.cover}
             />
           ) : (
-            <Skeleton variant="rounded" height="280px" />
+            <Skeleton
+              variant='rounded'
+              height='280px'
+            />
           )}
 
           <Tabs
             value={currentTab}
             onChange={(event, newValue: string) => {
-              setCurrentTab(newValue);
+              setCurrentTab(newValue)
             }}
             sx={{
               width: 1,
               bottom: 0,
               zIndex: 9,
-              position: "absolute",
-              bgcolor: "background.paper",
-              "& .MuiTabs-flexContainer": {
+              position: 'absolute',
+              bgcolor: 'background.paper',
+              '& .MuiTabs-flexContainer': {
                 pr: { xs: 0, md: 3 },
                 pl: { xs: 2, md: 0 },
                 justifyContent: {
-                  sm: "center",
-                  md: "flex-end",
+                  sm: 'center',
+                  md: 'flex-end',
                 },
               },
             }}
@@ -102,13 +102,9 @@ export default function FriendProfile(): React.ReactElement {
         </Card>
 
         {TABS.map((tab) => {
-          return (
-            tab.value === currentTab && (
-              <Box key={tab.value}> {tab.component} </Box>
-            )
-          );
+          return tab.value === currentTab && <Box key={tab.value}> {tab.component} </Box>
         })}
       </Container>
     </>
-  );
+  )
 }

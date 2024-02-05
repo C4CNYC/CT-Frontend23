@@ -1,28 +1,24 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from 'react'
+
+import { useRouter } from 'next/router'
 
 // import Login from "@pages/auth/signIn";
 
-import { LoadingScreen } from "@components";
+import { LoadingScreen } from '@/components'
 
-import { useAuthContext } from "./useAuthContext";
-
-// ----------------------------------------------------------------------
+import { useAuthContext } from './useAuthContext'
 
 interface AuthGuardProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
-
 
 /*
 TODO: This is no-bueno because it's importing a nextjs page. Functionality disabled for now, meaning no redirect after login.
  */
-export default function AuthGuard({
-  children,
-}: AuthGuardProps): React.ReactElement | null {
-  const { isAuthenticated, isInitialized } = useAuthContext();
+export default function AuthGuard({ children }: AuthGuardProps): React.ReactElement | null {
+  const { isAuthenticated, isInitialized } = useAuthContext()
 
-  const { pathname, push } = useRouter();
+  const { pathname, push } = useRouter()
 
   // const [requestedLocation, setRequestedLocation] = useState<string | null>(
   //   null
@@ -39,12 +35,12 @@ export default function AuthGuard({
 
   useEffect(() => {
     if (isInitialized && !isAuthenticated) {
-      push("/auth/signIn")
+      push('/auth/signIn')
     }
-  }, [isAuthenticated, isInitialized]);
+  }, [isAuthenticated, isInitialized])
 
   if (!isInitialized) {
-    return <LoadingScreen />;
+    return <LoadingScreen />
   }
 
   if (!isAuthenticated) {
@@ -55,5 +51,5 @@ export default function AuthGuard({
     // return <Login />;
   }
 
-  return <> {children} </>;
+  return <> {children} </>
 }

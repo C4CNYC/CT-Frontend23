@@ -1,15 +1,12 @@
-import SplitPane, { SplitPaneProps } from "react-split-pane";
+import SplitPane, { SplitPaneProps } from 'react-split-pane'
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const SP = SplitPane as any
 
-export const ResizerUi = ({
-  children,
-  ...props
-}: Props & SplitPaneProps): React.ReactElement => {
+export const ResizerUi = ({ children, ...props }: Props & SplitPaneProps): React.ReactElement => {
   return (
     <>
       <style>
@@ -61,5 +58,5 @@ export const ResizerUi = ({
       </style>
       <SP {...props}>{children}</SP>
     </>
-  );
-};
+  )
+}

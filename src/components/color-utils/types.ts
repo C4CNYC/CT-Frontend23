@@ -1,29 +1,21 @@
-// @mui
-import {
-  BoxProps,
-  CheckboxProps,
-  RadioGroupProps,
-  StackProps,
-} from "@mui/material";
-
-// ----------------------------------------------------------------------
+import { BoxProps, CheckboxProps, RadioGroupProps, StackProps } from '@mui/material'
 
 export interface ColorIconProps extends BoxProps {
-  checked?: boolean;
-  whiteColor?: boolean;
+  checked?: boolean
+  whiteColor?: boolean
 }
 
 export interface ColorPreviewProps extends StackProps {
-  colors: string[];
-  limit?: number;
+  colors: string[]
+  limit?: number
 }
 
 export interface ColorSinglePickerProps extends RadioGroupProps {
-  colors: string[];
+  colors: string[]
 }
 
 export interface ColorMultiPickerProps extends CheckboxProps {
-  colors: string[];
-  selected: string[];
-  onChangeColor: (color: string) => void;
+  colors: string[]
+  selected: string[]
+  onChangeColor: (color: string) => void
 }

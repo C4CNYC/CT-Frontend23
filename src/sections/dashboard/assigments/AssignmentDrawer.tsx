@@ -1,13 +1,7 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { format } from "date-fns";
-import { Controller, useForm } from "react-hook-form";
-import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
-import * as Yup from "yup";
-
-import { LoadingButton } from "@mui/lab";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
 import {
   Avatar,
   Box,
@@ -18,47 +12,46 @@ import {
   ListItemText,
   TextField,
   Typography,
-} from "@mui/material";
-import { useTheme } from "@mui/system";
-import { DatePicker } from "@mui/x-date-pickers";
+} from '@mui/material'
+import { useTheme } from '@mui/system'
+import { DatePicker } from '@mui/x-date-pickers'
+import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
+import { format } from 'date-fns'
+import { useRouter } from 'next/router'
+import { Controller, useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import {
-  FormProvider,
-  RHFSelect,
-  RHFTextField,
-  useSnackbar,
-} from "@components";
-import SkillsAutocomplete from "@sections/main/quests/add-quest/components/SkillsAutocomplete";
-import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
-import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
-import { ISkill } from "src/redux/interfaces/content.interface";
-import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
+import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
+import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
+import { ISkill } from '@/redux/interfaces/content.interface'
+import { useUpdateAssignmentMutation } from '@/redux/services/manager/assignments-manager'
+import SkillsAutocomplete from '@/sections/main/quests/add-quest/components/SkillsAutocomplete'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IAssignmentDarawerProps {
-  openDetails: boolean;
-  onCloseDetails: () => void;
-  assignment: IAssignmentFull;
+  openDetails: boolean
+  onCloseDetails: () => void
+  assignment: IAssignmentFull
 }
-const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
-const DATE_PARSER = (data: string | Date) => new Date(data);
+const DATE_FORMAT = 'yyyy-MM-dd HH:mm:ss.SSSX'
+const DATE_PARSER = (data: string | Date) => new Date(data)
 
 export default function AssignmentDrawer({
   openDetails,
   onCloseDetails,
   assignment,
 }: IAssignmentDarawerProps): React.ReactElement {
-  const theme = useTheme();
-  const { query } = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
-  const [assignmentsSkills, setAssignmentsSkills] = useState<ISkill[]>();
-  const translate = useTranslate();
-  const [updateAssignment, { isLoading: isUpdating }] =
-    useUpdateAssignmentMutation();
+  const theme = useTheme()
+  const { query } = useRouter()
+  const { enqueueSnackbar } = useSnackbar()
+  const [assignmentsSkills, setAssignmentsSkills] = useState<ISkill[]>()
+  const translate = useTranslate()
+  const [updateAssignment, { isLoading: isUpdating }] = useUpdateAssignmentMutation()
 
   const methods = useForm<FormAssignmentProps>({
     resolver: yupResolver(UpdateAssignmentSchema),
-    mode: "all",
+    mode: 'all',
     defaultValues: {
       name: assignment.name,
       description: JSON.parse(assignment.description),
@@ -67,7 +60,7 @@ export default function AssignmentDrawer({
       closeDate: format(DATE_PARSER(assignment.close_date), DATE_FORMAT),
       active: assignment.active,
     },
-  });
+  })
 
   const onSubmit = async (formData: FormAssignmentProps) => {
     try {
@@ -80,19 +73,19 @@ export default function AssignmentDrawer({
         description: JSON.stringify(formData.description),
         name: formData.name,
         active: formData.active,
-      }).unwrap();
-      enqueueSnackbar(translate("assignments_updated_msg"));
-      onCloseDetails();
+      }).unwrap()
+      enqueueSnackbar(translate('assignments_updated_msg'))
+      onCloseDetails()
     } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: "error" });
+      enqueueSnackbar(error.message, { variant: 'error' })
     }
-  };
+  }
 
   return (
     <Drawer
       open={openDetails}
       onClose={onCloseDetails}
-      anchor="right"
+      anchor='right'
       PaperProps={{
         sx: {
           width: {
@@ -102,75 +95,79 @@ export default function AssignmentDrawer({
         },
       }}
     >
-      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider
+        methods={methods}
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
         <List
           sx={{
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column',
             gap: 1,
           }}
         >
           <IconButton
             onClick={onCloseDetails}
-            sx={{ ml: "auto", mr: 1, mb: -2 }}
+            sx={{ ml: 'auto', mr: 1, mb: -2 }}
           >
             <IoMdClose size={25} />
           </IconButton>
           <ListItem>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              {translate("type")}:
+            <ListItemText primaryTypographyProps={{ variant: 'h6' }}>
+              {translate('type')}:
             </ListItemText>
             <ListItemText
-              primaryTypographyProps={{ variant: "button", fontSize: "1.0rem" }}
-              sx={{ minWidth: "252px" }}
+              primaryTypographyProps={{ variant: 'button', fontSize: '1.0rem' }}
+              sx={{ minWidth: '252px' }}
             >
               {assignment.type}
             </ListItemText>
           </ListItem>
           <ListItem>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              {translate("course")}:
+            <ListItemText primaryTypographyProps={{ variant: 'h6' }}>
+              {translate('course')}:
             </ListItemText>
-            <ListItemText sx={{ minWidth: "252px" }}>
-              {assignment?.course?.name}
-            </ListItemText>
+            <ListItemText sx={{ minWidth: '252px' }}>{assignment?.course?.name}</ListItemText>
           </ListItem>
           <ListItem>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              {translate("name")}:
+            <ListItemText primaryTypographyProps={{ variant: 'h6' }}>
+              {translate('name')}:
             </ListItemText>
-            <RHFTextField name="name" sx={{ maxWidth: "252px" }} />
+            <RHFTextField
+              name='name'
+              sx={{ maxWidth: '252px' }}
+            />
           </ListItem>
           <ListItem
             sx={{
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
               gap: 1,
-              alignContent: "stretch",
+              alignContent: 'stretch',
             }}
           >
-            <Typography variant="h6" alignSelf="flex-start">
-              {translate("description")}:
+            <Typography
+              variant='h6'
+              alignSelf='flex-start'
+            >
+              {translate('description')}:
             </Typography>
-            <Box width="100%">
-              <RHFRemirror name="description" />
+            <Box width='100%'>
+              <RHFRemirror name='description' />
             </Box>
           </ListItem>
           <ListItem>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              {translate("assignments_start_date")}:
+            <ListItemText primaryTypographyProps={{ variant: 'h6' }}>
+              {translate('assignments_start_date')}:
             </ListItemText>
             <Controller
-              name="startDate"
+              name='startDate'
               control={methods.control}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
                 <DatePicker
                   value={value}
                   onChange={(event) => {
-                    onChange(event as string | React.ChangeEvent<Element>);
+                    onChange(event as string | React.ChangeEvent<Element>)
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -178,12 +175,12 @@ export default function AssignmentDrawer({
                       helperText={
                         error ? (
                           <Typography
-                            variant="caption"
+                            variant='caption'
                             sx={{
-                              fontStyle: "italic",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              color: error ? theme.palette.error.main : "error",
+                              fontStyle: 'italic',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              color: error ? theme.palette.error.main : 'error',
                             }}
                           >
                             {error?.message}
@@ -198,20 +195,17 @@ export default function AssignmentDrawer({
             />
           </ListItem>
           <ListItem>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              {translate("assignments_end_date")}:
+            <ListItemText primaryTypographyProps={{ variant: 'h6' }}>
+              {translate('assignments_end_date')}:
             </ListItemText>
             <Controller
-              name="dueDate"
+              name='dueDate'
               control={methods.control}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
                 <DatePicker
                   value={value}
                   onChange={(event) => {
-                    onChange(event as string | React.ChangeEvent<Element>);
+                    onChange(event as string | React.ChangeEvent<Element>)
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -219,12 +213,12 @@ export default function AssignmentDrawer({
                       helperText={
                         error ? (
                           <Typography
-                            variant="caption"
+                            variant='caption'
                             sx={{
-                              fontStyle: "italic",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              color: error ? theme.palette.error.main : "error",
+                              fontStyle: 'italic',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              color: error ? theme.palette.error.main : 'error',
                             }}
                           >
                             {error?.message}
@@ -239,20 +233,17 @@ export default function AssignmentDrawer({
             />
           </ListItem>
           <ListItem>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              {translate("assignments_close_date")}:
+            <ListItemText primaryTypographyProps={{ variant: 'h6' }}>
+              {translate('assignments_close_date')}:
             </ListItemText>
             <Controller
-              name="closeDate"
+              name='closeDate'
               control={methods.control}
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
                 <DatePicker
                   value={value}
                   onChange={(event) => {
-                    onChange(event as string | React.ChangeEvent<Element>);
+                    onChange(event as string | React.ChangeEvent<Element>)
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -260,12 +251,12 @@ export default function AssignmentDrawer({
                       helperText={
                         error ? (
                           <Typography
-                            variant="caption"
+                            variant='caption'
                             sx={{
-                              fontStyle: "italic",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              color: error ? theme.palette.error.main : "error",
+                              fontStyle: 'italic',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              color: error ? theme.palette.error.main : 'error',
                             }}
                           >
                             {error?.message}
@@ -280,29 +271,35 @@ export default function AssignmentDrawer({
             />
           </ListItem>
           <ListItem>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              {translate("status")}:
+            <ListItemText primaryTypographyProps={{ variant: 'h6' }}>
+              {translate('status')}:
             </ListItemText>
             <RHFSelect
               native
-              name="active"
-              sx={{ maxWidth: "252px" }}
+              name='active'
+              sx={{ maxWidth: '252px' }}
               defaultValue={true as any}
             >
-              <option key="published" value={true as any}>
-                {translate("published")}
+              <option
+                key='published'
+                value={true as any}
+              >
+                {translate('published')}
               </option>
-              <option key="draft" value={false as any}>
-                {translate("draft")}
+              <option
+                key='draft'
+                value={false as any}
+              >
+                {translate('draft')}
               </option>
             </RHFSelect>
           </ListItem>
           <ListItem>
             <ListItemText>
               <SkillsAutocomplete
-                labelProps="h6"
+                labelProps='h6'
                 setAssignmentsSkillsId={(s: ISkill[]) => {
-                  setAssignmentsSkills(s);
+                  setAssignmentsSkills(s)
                 }}
                 assignmentsSkillsId={assignmentsSkills}
                 existedSkills={[]}
@@ -310,47 +307,47 @@ export default function AssignmentDrawer({
             </ListItemText>
           </ListItem>
           <ListItem>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              {translate("assignments_assign_to")}:
+            <ListItemText primaryTypographyProps={{ variant: 'h6' }}>
+              {translate('assignments_assign_to')}:
             </ListItemText>
-            <Avatar sx={{ width: "25px", height: "25px", mr: 1 }} />
+            <Avatar sx={{ width: '25px', height: '25px', mr: 1 }} />
             <ListItemText>{assignment.assignee_classes[0].name}</ListItemText>
           </ListItem>
           <ListItem>
             <LoadingButton
-              type="submit"
+              type='submit'
               loading={isUpdating}
-              variant="contained"
-              sx={{ ml: "auto", mr: 1 }}
+              variant='contained'
+              sx={{ ml: 'auto', mr: 1 }}
             >
-              {translate("actions_save")}
+              {translate('actions_save')}
             </LoadingButton>
           </ListItem>
         </List>
       </FormProvider>
     </Drawer>
-  );
+  )
 }
 
 interface FormAssignmentProps {
-  classes?: string[] | [];
-  students?: string[] | [];
-  name: string;
-  description?: string;
-  startDate: string;
-  dueDate: string;
-  closeDate: string;
-  active: boolean;
+  classes?: string[] | []
+  students?: string[] | []
+  name: string
+  description?: string
+  startDate: string
+  dueDate: string
+  closeDate: string
+  active: boolean
 }
 
 const UpdateAssignmentSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string().required('Name is required'),
   startDate: Yup.date(),
-  dueDate: Yup.date().when("startDate", (startDate, schema) => {
-    return schema.min(startDate, "Due date must be later than start date");
+  dueDate: Yup.date().when('startDate', (startDate, schema) => {
+    return schema.min(startDate, 'Due date must be later than start date')
   }),
-  closeDate: Yup.date().when("dueDate", (startDate, schema) => {
-    return schema.min(startDate, "Close date must be later than start date");
+  closeDate: Yup.date().when('dueDate', (startDate, schema) => {
+    return schema.min(startDate, 'Close date must be later than start date')
   }),
-  active: Yup.boolean().required("Choose status"),
-});
+  active: Yup.boolean().required('Choose status'),
+})

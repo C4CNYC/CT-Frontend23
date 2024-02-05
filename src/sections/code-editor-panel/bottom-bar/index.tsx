@@ -1,26 +1,24 @@
-import dynamic from "next/dynamic";
-import { type FC, type ReactNode } from "react";
+import { type FC, type ReactNode } from 'react'
 
-import { Stack } from "@mui/system";
+import { Stack } from '@mui/system'
+import dynamic from 'next/dynamic'
 
-import { useSelector } from "src/redux/store";
+import { useSelector } from '@/redux/store'
 
-import type { MenuProps } from "./menu";
-import ProgressBottomBar, {
-  type ProgressBottomBarProps,
-} from "./progress-bottom-bar";
+import type { MenuProps } from './menu'
+import ProgressBottomBar, { type ProgressBottomBarProps } from './progress-bottom-bar'
 
-const Menu = dynamic(async () => await import("./menu"));
+const Menu = dynamic(async () => await import('./menu'))
 
 export interface BottomBarProps extends ProgressBottomBarProps, MenuProps {
-  lessonManagerComponent: ReactNode;
+  lessonManagerComponent: ReactNode
 }
 
 const STACK_STYLES = {
-  width: "100%",
-  justifyContent: "flex-end",
-  alignItems: "center",
-};
+  width: '100%',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+}
 
 const BottomBar: FC<BottomBarProps> = ({
   publicPage = false,
@@ -28,29 +26,35 @@ const BottomBar: FC<BottomBarProps> = ({
   language,
   lessonManagerComponent,
 }) => {
-  const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
-  const code = useSelector((state) => state.codePanelGlobal.code);
+  const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
+  const code = useSelector((state) => state.codePanelGlobal.code)
   return (
     <Stack
-      pl="20px"
-      pr="20px"
-      height="55px"
-      direction="row"
-      justifyContent="space-between"
-      alignItems="center"
-      position="relative"
+      pl='20px'
+      pr='20px'
+      height='55px'
+      direction='row'
+      justifyContent='space-between'
+      alignItems='center'
+      position='relative'
     >
       {lessonManagerComponent}
 
-      <Stack spacing={2} direction="row" sx={STACK_STYLES}>
-        {activeTab === 0 ? (
-          <ProgressBottomBar sliderSteps={sliderSteps} />
-        ) : null}
+      <Stack
+        spacing={2}
+        direction='row'
+        sx={STACK_STYLES}
+      >
+        {activeTab === 0 ? <ProgressBottomBar sliderSteps={sliderSteps} /> : null}
 
-        <Menu code={code} language={language} publicPage={publicPage} />
+        <Menu
+          code={code}
+          language={language}
+          publicPage={publicPage}
+        />
       </Stack>
     </Stack>
-  );
-};
+  )
+}
 
-export default BottomBar;
+export default BottomBar

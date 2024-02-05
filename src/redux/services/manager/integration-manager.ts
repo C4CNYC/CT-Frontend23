@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
-import {
-  IIntegration,
-  IIntegrationSearch,
-} from "../interfaces/integration.interface";
+import { IIntegration, IIntegrationSearch } from '../interfaces/integration.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,44 +11,38 @@ const extendedApi = managerApi.injectEndpoints({
       IIntegrationSearch
     >({
       query: (params) => ({
-        url: "/manager/integration",
-        method: "GET",
+        url: '/manager/integration',
+        method: 'GET',
         params,
       }),
-      providesTags: ["Integrations"],
+      providesTags: ['Integrations'],
     }),
     createIntegration: builder.mutation<IIntegration, IIntegration>({
       query: ({ ...body }) => ({
-        url: "/manager/integration",
-        method: "POST",
+        url: '/manager/integration',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Integrations" }],
+      invalidatesTags: [{ type: 'Integrations' }],
     }),
-    editIntegration: builder.mutation<
-      IIntegration,
-      { id: string } & IIntegration
-    >({
+    editIntegration: builder.mutation<IIntegration, { id: string } & IIntegration>({
       query: ({ id, ...body }) => ({
         url: `/manager/integration/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Integrations" }],
+      invalidatesTags: [{ type: 'Integrations' }],
     }),
-    deleteIntegration: builder.mutation<
-      IIntegration,
-      { integrationId: string }
-    >({
+    deleteIntegration: builder.mutation<IIntegration, { integrationId: string }>({
       query: ({ integrationId }) => ({
         url: `/manager/integration/${integrationId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Integrations" }],
+      invalidatesTags: [{ type: 'Integrations' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetIntegrationsListQuery,
@@ -59,4 +50,4 @@ export const {
   useCreateIntegrationMutation,
   useDeleteIntegrationMutation,
   useEditIntegrationMutation,
-} = extendedApi;
+} = extendedApi

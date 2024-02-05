@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   ILesson,
   ILessonContent,
-  ILessonSearchParams, LastVisitedBody, LastVisitedData,
-} from "src/redux/interfaces/content.interface"
+  ILessonSearchParams,
+  LastVisitedBody,
+  LastVisitedData,
+} from '@/redux/interfaces/content.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,19 +17,16 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id }) => ({
         url: `/student/lesson/${id}/content`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
       transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
         res.sort((a, b) => a.meta.order - b.meta.order),
     }),
-    getLessonStudent: builder.query<
-      ILesson & BaseResponseInterface,
-      { id: string }
-    >({
+    getLessonStudent: builder.query<ILesson & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/lesson/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
     }),
@@ -37,34 +35,32 @@ const extendedApi = managerApi.injectEndpoints({
       ILessonSearchParams
     >({
       query: (params) => ({
-        url: "/student/content/lesson",
-        method: "GET",
+        url: '/student/content/lesson',
+        method: 'GET',
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Lessons"],
+      providesTags: ['Lessons'],
     }),
-    getStudentLastVisitedUnitAndLesson: builder.query<
-      LastVisitedData, void
-      >({
+    getStudentLastVisitedUnitAndLesson: builder.query<LastVisitedData, void>({
       query: () => ({
-        url: "/student/lesson/last-visited",
-        method: "GET",
+        url: '/student/lesson/last-visited',
+        method: 'GET',
       }),
-      providesTags: ["LastVisitedUnitAndLesson"]
+      providesTags: ['LastVisitedUnitAndLesson'],
     }),
     updateStudentLastVisitedData: builder.mutation<void, LastVisitedBody>({
       query: ({ ...body }) => ({
-        url: "/student/lesson/last-visited",
-        method: "PATCH",
+        url: '/student/lesson/last-visited',
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["LastVisitedUnitAndLesson"]
+      invalidatesTags: ['LastVisitedUnitAndLesson'],
     }),
   }),
 
   overrideExisting: false,
-});
+})
 
 export const {
   useGetLessonContentStudentQuery,
@@ -73,4 +69,4 @@ export const {
   useGetStudentLastVisitedUnitAndLessonQuery,
   // -------------mutation-----------
   useUpdateStudentLastVisitedDataMutation,
-} = extendedApi;
+} = extendedApi

@@ -1,2 +1,2 @@
-export * from "./CustomBreadcrumbs";
-export * from "./types";
+export * from './CustomBreadcrumbs'
+export * from './types'

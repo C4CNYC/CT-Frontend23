@@ -1,9 +1,6 @@
-import { type FC, ReactNode, useState } from "react";
+import { type FC, ReactNode, useState } from 'react'
 
-import { SlArrowDown } from "@react-icons/all-files/sl/SlArrowDown";
-import { SlArrowUp } from "@react-icons/all-files/sl/SlArrowUp";
-
-import Diversity1Icon from "@mui/icons-material/Diversity1";
+import Diversity1Icon from '@mui/icons-material/Diversity1'
 import {
   Box,
   Button,
@@ -12,26 +9,28 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
-} from "@mui/material";
+} from '@mui/material'
+import { SlArrowDown } from '@react-icons/all-files/sl/SlArrowDown'
+import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
 
-import { Image } from "@components";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Image } from '@/components'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface MenuHugDialogProps {
-  children: ReactNode | ReactNode[];
+  children: ReactNode | ReactNode[]
 }
 
 const MenuHugDialog: FC<MenuHugDialogProps> = ({ children }) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [isShown, setIsShown] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
+  const [isShown, setIsShown] = useState<boolean>(false)
   const openDialog = (): void => {
-    setOpen(true);
-  };
-  const translate = useTranslate();
+    setOpen(true)
+  }
+  const translate = useTranslate()
 
   const closeDialog = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
@@ -41,55 +40,58 @@ const MenuHugDialog: FC<MenuHugDialogProps> = ({ children }) => {
         open={open}
         onClose={closeDialog}
         PaperProps={DIALOG_PROPS}
-        scroll="body"
+        scroll='body'
       >
-        <DialogTitle variant="h4">BIG, BIIGGGGGGG HUGGG!!!</DialogTitle>
+        <DialogTitle variant='h4'>BIG, BIIGGGGGGG HUGGG!!!</DialogTitle>
 
         <DialogContent>
-          <Image src={"/assets/code-panel/hug.png"} alt="code-panel" />
+          <Image
+            src={'/assets/code-panel/hug.png'}
+            alt='code-panel'
+          />
 
-          <Typography variant="h5" sx={{ py: 1 }}>
-            {translate("you_are_loved")}
+          <Typography
+            variant='h5'
+            sx={{ py: 1 }}
+          >
+            {translate('you_are_loved')}
           </Typography>
 
           <Collapse in={isShown}>
-            <Typography variant="subtitle1">
-              {translate("go_and_be_the_best")}
-            </Typography>
+            <Typography variant='subtitle1'>{translate('go_and_be_the_best')}</Typography>
           </Collapse>
 
           <Box
             sx={SEE_MORE_BOX_STYLES}
             onClick={() => {
-              setIsShown(!isShown);
+              setIsShown(!isShown)
             }}
           >
-            <Typography variant="subtitle1" sx={{ mt: 1 }}>
-              {translate("actions_see_more")}
+            <Typography
+              variant='subtitle1'
+              sx={{ mt: 1 }}
+            >
+              {translate('actions_see_more')}
             </Typography>
 
-            {isShown ? (
-              <SlArrowUp style={ARROW_STYLES} />
-            ) : (
-              <SlArrowDown style={ARROW_STYLES} />
-            )}
+            {isShown ? <SlArrowUp style={ARROW_STYLES} /> : <SlArrowDown style={ARROW_STYLES} />}
           </Box>
 
           <Box sx={NOT_SURE_BOX_STYLES}>
             <Button
-              color="secondary"
-              variant="outlined"
+              color='secondary'
+              variant='outlined'
               onClick={() => {
-                setOpen(false);
+                setOpen(false)
               }}
             >
-              {translate("i_not_sure")}
+              {translate('i_not_sure')}
             </Button>
 
             <Button
-              variant="contained"
+              variant='contained'
               onClick={() => {
-                setOpen(false);
+                setOpen(false)
               }}
               sx={DIVERSITY_BTN_STYLES}
             >
@@ -99,35 +101,35 @@ const MenuHugDialog: FC<MenuHugDialogProps> = ({ children }) => {
         </DialogContent>
       </Dialog>
     </>
-  );
-};
+  )
+}
 
 const ARROW_STYLES = {
-  marginBottom: "-10px",
-};
+  marginBottom: '-10px',
+}
 
 const SEE_MORE_BOX_STYLES = {
-  display: "flex",
-  alignItems: "center",
+  display: 'flex',
+  alignItems: 'center',
   gap: 1,
-  "&:hover": { cursor: "pointer" },
-};
+  '&:hover': { cursor: 'pointer' },
+}
 
 const NOT_SURE_BOX_STYLES = {
-  width: "100%",
-  display: "flex",
-  justifyContent: "space-around",
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-around',
   py: 4,
-};
+}
 
 const DIALOG_PROPS = {
   sx: {
-    maxWidth: "400px",
+    maxWidth: '400px',
   },
-};
+}
 
 const DIVERSITY_BTN_STYLES = {
-  minWidth: "115px",
-};
+  minWidth: '115px',
+}
 
-export default MenuHugDialog;
+export default MenuHugDialog

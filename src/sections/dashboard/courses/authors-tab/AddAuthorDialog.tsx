@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import CloseIcon from "@mui/icons-material/Close";
-import { Box, Dialog, DialogTitle, IconButton } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Dialog, DialogTitle, IconButton } from '@mui/material'
 
-import { IAuthor } from "src/redux/services/interfaces/author.interface";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { IAuthor } from '@/redux/services/interfaces/author.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
-import AuthorForm from "./AuthorForm";
+import AuthorForm from './AuthorForm'
 
 interface IAddAuthorDialogProps {
-  children: React.ReactElement;
-  courseId: string;
-  defaultValues?: IAuthor;
+  children: React.ReactElement
+  courseId: string
+  defaultValues?: IAuthor
 }
 
 export default function AddAuthorDialog({
@@ -19,19 +19,22 @@ export default function AddAuthorDialog({
   courseId,
   defaultValues,
 }: IAddAuthorDialogProps): React.ReactElement {
-  const [open, setOpen] = useState<boolean>(false);
-  const translate = useTranslate();
+  const [open, setOpen] = useState<boolean>(false)
+  const translate = useTranslate()
 
   const handleOpenDialog = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const handleCloseDialog = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
-      <Box sx={{ display: "flex" }} onClick={handleOpenDialog}>
+      <Box
+        sx={{ display: 'flex' }}
+        onClick={handleOpenDialog}
+      >
         {children}
       </Box>
       <Dialog
@@ -39,16 +42,21 @@ export default function AddAuthorDialog({
         onClose={handleCloseDialog}
         PaperProps={{
           sx: {
-            height: "800px",
-            width: { xs: "330px", sm: "350px", md: "450px" },
+            height: '800px',
+            width: { xs: '330px', sm: '350px', md: '450px' },
           },
         }}
       >
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <DialogTitle variant="h5">
-            {translate("actions_create_authur")}
-          </DialogTitle>
-          <IconButton onClick={handleCloseDialog} sx={{ mr: 2 }}>
+        <Box
+          display='flex'
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <DialogTitle variant='h5'>{translate('actions_create_authur')}</DialogTitle>
+          <IconButton
+            onClick={handleCloseDialog}
+            sx={{ mr: 2 }}
+          >
             <CloseIcon />
           </IconButton>
         </Box>
@@ -60,5 +68,5 @@ export default function AddAuthorDialog({
         />
       </Dialog>
     </>
-  );
+  )
 }

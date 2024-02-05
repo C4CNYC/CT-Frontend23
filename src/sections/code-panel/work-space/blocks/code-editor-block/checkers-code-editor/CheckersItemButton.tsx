@@ -1,58 +1,54 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
-import { useAtom } from "jotai";
+import { IconButton, ListItem } from '@mui/material'
+import { useAtom } from 'jotai'
 
-import { IconButton, ListItem } from "@mui/material";
+import { Iconify } from '@/components/iconify'
 
-import { Iconify } from "src/components/iconify";
-
-import CheckersItemText from "./CheckersItemText";
-import { checkersAnimationAtom } from "./checkers-animation-atom";
+import { checkersAnimationAtom } from './checkers-animation-atom'
+import CheckersItemText from './CheckersItemText'
 
 interface Props {
-  active: boolean;
-  name: string;
+  active: boolean
+  name: string
 }
 
-export default function CheckersItemButton({
-  active,
-  name,
-}: Props): React.ReactElement {
-  const [{ openText }, setAnimation] = useAtom(checkersAnimationAtom);
+export default function CheckersItemButton({ active, name }: Props): React.ReactElement {
+  const [{ openText }, setAnimation] = useAtom(checkersAnimationAtom)
   useEffect(() => {
     if (!active) {
       setAnimation((prev) => ({
         ...prev,
         activateCompeated: true,
-      }));
+      }))
     }
-  }, [active]);
+  }, [active])
   return (
     <ListItem
-      sx={{ pr: "21px", height: "40px" }}
+      sx={{ pr: '21px', height: '40px' }}
       secondaryAction={
         <IconButton
           onClick={() => {
             setAnimation((prev) => ({
               ...prev,
               openText: !openText,
-            }));
+            }))
           }}
           sx={{
-            padding: "3px",
-            position: "relative",
+            padding: '3px',
+            position: 'relative',
           }}
-          edge="end"
+          edge='end'
         >
           {active ? (
             <Iconify
-              sx={{ "& path": { fill: "#000000" } }}
-              icon="file-icons:test-generic"
+              sx={{ '& path': { fill: '#000000' } }}
+              icon='file-icons:test-generic'
             />
           ) : (
             <Iconify
-              sx={{ "& path": { fill: "#75CF6D" } }}
-              icon="icon-park-solid:success"
+              sx={{ '& path': { fill: '#75CF6D' } }}
+              icon='icon-park-solid:success'
             />
           )}
         </IconButton>
@@ -60,5 +56,5 @@ export default function CheckersItemButton({
     >
       <CheckersItemText text={name} />
     </ListItem>
-  );
+  )
 }

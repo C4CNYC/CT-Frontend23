@@ -1,6 +1,4 @@
-import { type Theme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import { type Theme } from '@mui/material/styles'
 
 export default function Popover(theme: Theme): unknown {
   return {
@@ -12,5 +10,5 @@ export default function Popover(theme: Theme): unknown {
         },
       },
     },
-  };
+  }
 }

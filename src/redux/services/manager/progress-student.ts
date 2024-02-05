@@ -1,20 +1,16 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import { IProgress } from "src/redux/interfaces/progress.interface";
+import { IProgress } from '@/redux/interfaces/progress.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getMyProgressByCourse: builder.query<
-      IProgress & BaseResponseInterface,
-      { id: string }
-    >({
+    getMyProgressByCourse: builder.query<IProgress & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/course/${id}/progress`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Progress"],
+      providesTags: ['Progress'],
     }),
     completeLesson: builder.mutation<
       string,
@@ -22,17 +18,17 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id, ...body }) => ({
         url: `/student/progress/complete-chalange`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Progress"],
+      invalidatesTags: ['Progress'],
     }),
   }),
   overrideExisting: true,
-});
+})
 
 export const {
   useGetMyProgressByCourseQuery,
   // -------------mutation-----------
   useCompleteLessonMutation,
-} = extendedApi;
+} = extendedApi

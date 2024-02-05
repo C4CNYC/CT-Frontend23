@@ -1,21 +1,12 @@
-import {
-  Avatar,
-  Button,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Tooltip,
-} from "@mui/material";
+import { Avatar, Button, ListItem, ListItemAvatar, ListItemText, Tooltip } from '@mui/material'
 
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import { IUser } from "src/redux/services/interfaces/user.interface";
-
-// ----------------------------------------------------------------------
+import { IUser } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 interface Props {
-  invited: boolean;
-  addHandler: () => void;
-  person: IUser & BaseResponseInterface;
+  invited: boolean
+  addHandler: () => void
+  person: IUser & BaseResponseInterface
 }
 
 export default function UserItem({
@@ -27,7 +18,10 @@ export default function UserItem({
     <>
       <ListItem disableGutters>
         <ListItemAvatar>
-          <Avatar alt={person.first_name} src="/assets/images/avatar_2.jpg" />
+          <Avatar
+            alt={person.first_name}
+            src='/assets/images/avatar_2.jpg'
+          />
         </ListItemAvatar>
 
         <ListItemText
@@ -37,20 +31,20 @@ export default function UserItem({
               <span>{person.email}</span>
             </Tooltip>
           }
-          primaryTypographyProps={{ noWrap: true, typography: "subtitle2" }}
+          primaryTypographyProps={{ noWrap: true, typography: 'subtitle2' }}
           secondaryTypographyProps={{ noWrap: true }}
           sx={{ flexGrow: 1, pr: 1 }}
         />
 
         <Button
           disabled={invited}
-          size="small"
-          variant="outlined"
+          size='small'
+          variant='outlined'
           onClick={addHandler}
         >
-          {invited ? "Invited" : "Add"}
+          {invited ? 'Invited' : 'Add'}
         </Button>
       </ListItem>
     </>
-  );
+  )
 }

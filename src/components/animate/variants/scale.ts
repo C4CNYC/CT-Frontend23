@@ -1,15 +1,13 @@
 // @types
-import { VariantsType } from "../types";
-//
-import { varTranEnter, varTranExit } from "./transition";
+import { VariantsType } from '../types'
 
-// ----------------------------------------------------------------------
+import { varTranEnter, varTranExit } from './transition'
 
 export const varScale = (props?: VariantsType): Record<string, any> => {
-  const durationIn = props?.durationIn;
-  const durationOut = props?.durationOut;
-  const easeIn = props?.easeIn;
-  const easeOut = props?.easeOut;
+  const durationIn = props?.durationIn
+  const durationOut = props?.durationOut
+  const easeIn = props?.easeIn
+  const easeOut = props?.easeOut
 
   return {
     // IN
@@ -57,5 +55,5 @@ export const varScale = (props?: VariantsType): Record<string, any> => {
         transition: varTranEnter({ durationIn, easeIn }),
       },
     },
-  };
-};
+  }
+}

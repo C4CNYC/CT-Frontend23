@@ -1,49 +1,41 @@
-// next
-import Head from "next/head";
-import NextLink from "next/link";
+import { Button, Typography } from '@mui/material'
+import { m } from 'framer-motion'
+import Head from 'next/head'
+import NextLink from 'next/link'
 
 // assets
-import ForbiddenIllustration from "@assets/illustrations/ForbiddenIllustration";
-import { m } from "framer-motion";
-
-// @mui
-import { Button, Typography } from "@mui/material";
-
-// components
-import { MotionContainer, varBounce } from "@components";
+import ForbiddenIllustration from '@/assets/illustrations/ForbiddenIllustration'
+import { MotionContainer, varBounce } from '@/components'
 // layouts
-import CompactLayout from "@layouts/compact";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import CompactLayout from '@/layouts/compact'
+import { useTranslate } from '@/utils/translateHelper'
 
-// ----------------------------------------------------------------------
-
-Page403.getLayout = (page: React.ReactElement) => (
-  <CompactLayout>{page}</CompactLayout>
-);
-
-// ----------------------------------------------------------------------
+Page403.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>
 
 export default function Page403(): React.ReactElement {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
     <>
       <Head>
-        <title> {translate("forbidden")} </title>
+        <title> {translate('forbidden')} </title>
       </Head>
 
       <MotionContainer>
         <m.div variants={varBounce().in}>
-          <Typography variant="h3" paragraph>
-            {translate("no_permission")}
+          <Typography
+            variant='h3'
+            paragraph
+          >
+            {translate('no_permission')}
           </Typography>
         </m.div>
 
         <m.div variants={varBounce().in}>
-          <Typography sx={{ color: "text.secondary" }}>
-            {translate("page_restricted_access")}
+          <Typography sx={{ color: 'text.secondary' }}>
+            {translate('page_restricted_access')}
             <br />
-            {translate("refer_to_administrator")}
+            {translate('refer_to_administrator')}
           </Typography>
         </m.div>
 
@@ -51,10 +43,15 @@ export default function Page403(): React.ReactElement {
           <ForbiddenIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
         </m.div>
 
-        <Button component={NextLink} href="/" size="large" variant="contained">
-          {translate("go_to_home")}
+        <Button
+          component={NextLink}
+          href='/'
+          size='large'
+          variant='contained'
+        >
+          {translate('go_to_home')}
         </Button>
       </MotionContainer>
     </>
-  );
+  )
 }

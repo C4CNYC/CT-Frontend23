@@ -1,25 +1,27 @@
-import { type FC, memo } from "react";
-import type { Socket } from "socket.io-client";
-import CodeMirror from "@uiw/react-codemirror";
+import { type FC, memo } from 'react'
 
-import LoadingCodeEditor from "./components/loading-code-editor";
-import FileModal from "./components/file-modal";
-import FileSwitcher from "./components/file-switcher";
-import StatusLabel, { RoomStatus } from "./components/status-label";
+import CodeMirror from '@uiw/react-codemirror'
+import type { Socket } from 'socket.io-client'
 
-import { type UseCodeEditorCollabProps, useCodeEditorCollab } from "./hook";
-import { EditorMode } from "./hook/constants";
-import { useFileManager } from "./hook/file-manager";
-import { useStyles } from "./styles";
-import { voidFunction } from "@utils";
+import { voidFunction } from '@/utils'
 
-type ReducedFields = "activeFile" |
-  "onDeleteFile" |
-  "setActiveFile" |
-  "onResetFileManager" |
-  "socket" |
-  "setLocalActiveFile" |
-  "defaultFileName"
+import FileModal from './components/file-modal'
+import FileSwitcher from './components/file-switcher'
+import LoadingCodeEditor from './components/loading-code-editor'
+import StatusLabel, { RoomStatus } from './components/status-label'
+import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
+import { EditorMode } from './hook/constants'
+import { useFileManager } from './hook/file-manager'
+import { useStyles } from './styles'
+
+type ReducedFields =
+  | 'activeFile'
+  | 'onDeleteFile'
+  | 'setActiveFile'
+  | 'onResetFileManager'
+  | 'socket'
+  | 'setLocalActiveFile'
+  | 'defaultFileName'
 
 interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFields> {
   className?: string
@@ -39,11 +41,11 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   roomId,
   socket,
   isMultipleExtensionFiles = false,
-  defaultFileName = "index.html",
+  defaultFileName = 'index.html',
   onChangeCode = voidFunction,
   ...otherProps
 }) => {
-  const styles = useStyles();
+  const styles = useStyles()
 
   const {
     activeFile,
@@ -61,34 +63,27 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     socket,
     roomId,
     mode,
-  });
+  })
 
-  const {
-    editorRef,
-    isLoading,
-    extensions,
-    doc,
-    key,
-    onCreateEditor,
-    roomStatus
-  } = useCodeEditorCollab({
-    ...otherProps,
-    ...collabProps,
-    activeFile,
-    mode,
-    socket,
-    roomId,
-    defaultFileName,
-  });
+  const { editorRef, isLoading, extensions, doc, key, onCreateEditor, roomStatus } =
+    useCodeEditorCollab({
+      ...otherProps,
+      ...collabProps,
+      activeFile,
+      mode,
+      socket,
+      roomId,
+      defaultFileName,
+    })
 
-  const isReadOnly = _isReadOnly || (roomStatus === RoomStatus.Inactive);
+  const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
   return (
     <div
       className={`${styles.wrapper} code-editor-wrapper`}
       ref={editorRef}
     >
-      {withFileManager &&
+      {withFileManager && (
         <>
           <FileModal
             isOpen={isOpen}
@@ -109,7 +104,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             fileList={addedFileList}
           />
         </>
-      }
+      )}
 
       <StatusLabel status={roomStatus} />
 
@@ -119,9 +114,9 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         onCreateEditor={onCreateEditor}
         key={key}
         className={`flex-1 overflow-scroll text-left ${className}`}
-        height="100%"
+        height='100%'
         basicSetup={false}
-        theme="dark"
+        theme='dark'
         extensions={extensions}
         readOnly={isReadOnly}
         value={doc}
@@ -131,4 +126,4 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   )
 }
 
-export default memo(CodeEditorCollab);
+export default memo(CodeEditorCollab)

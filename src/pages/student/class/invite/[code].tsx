@@ -1,17 +1,17 @@
-import Head from "next/head";
+import { Button } from '@mui/material'
+import { Container } from '@mui/system'
+import Head from 'next/head'
 
-import { Container } from "@mui/system";
-import { useSettingsContext } from "@components";
-import JoinLinkModal from "src/components/join-link-modal";
-import { Button } from "@mui/material";
-import { StudentDashboardLayout } from "@layouts/dashboard";
+import { useSettingsContext } from '@/components'
+import JoinLinkModal from '@/components/join-link-modal'
+import { StudentDashboardLayout } from '@/layouts/dashboard'
 
 InviteModal.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
-);
+)
 
 export default function InviteModal() {
-  const { themeStretch } = useSettingsContext();
+  const { themeStretch } = useSettingsContext()
 
   return (
     <>
@@ -19,7 +19,7 @@ export default function InviteModal() {
         <title>Invite | CodeTribe</title>
       </Head>
       <Container
-        maxWidth={themeStretch ? false : "lg"}
+        maxWidth={themeStretch ? false : 'lg'}
         disableGutters
       >
         <JoinLinkModal>
@@ -27,5 +27,5 @@ export default function InviteModal() {
         </JoinLinkModal>
       </Container>
     </>
-  );
+  )
 }

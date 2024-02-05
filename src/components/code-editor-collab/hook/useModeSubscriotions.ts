@@ -1,16 +1,12 @@
-import type { Socket } from "socket.io-client";
-import pDebounce from "p-debounce";
-import {
-  type MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef
-} from "react";
+import { type MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { EditorMode } from "./constants";
-import { RoomStatus } from "../components/status-label";
-import { SubscribedEvents } from "./utils/socket";
+import pDebounce from 'p-debounce'
+import type { Socket } from 'socket.io-client'
+
+import { RoomStatus } from '../components/status-label'
+
+import { EditorMode } from './constants'
+import { SubscribedEvents } from './utils/socket'
 
 interface UseModeSubscriptionsProps {
   roomId: string
@@ -23,7 +19,7 @@ interface UseModeSubscriptionsProps {
   onChange?: (doc: any) => void
 }
 
-const CODE_CHANGE_DELAY = 700;
+const CODE_CHANGE_DELAY = 700
 
 export const useModeSubscriptions = ({
   mode,
@@ -33,89 +29,86 @@ export const useModeSubscriptions = ({
   runInitWatcher,
   runInitSubOwner,
   initializeBlockedRef,
-  onChange
+  onChange,
 }: UseModeSubscriptionsProps) => {
-  const runInitWatcherRef = useRef(runInitWatcher);
-  const runInitSubOwnerRef = useRef(runInitSubOwner);
+  const runInitWatcherRef = useRef(runInitWatcher)
+  const runInitSubOwnerRef = useRef(runInitSubOwner)
 
-  const delayedOnChange = useCallback(pDebounce((doc) => {
-    onChange?.(doc);
-  }, CODE_CHANGE_DELAY), [onChange]);
+  const delayedOnChange = useCallback(
+    pDebounce((doc) => {
+      onChange?.(doc)
+    }, CODE_CHANGE_DELAY),
+    [onChange]
+  )
 
   useEffect(() => {
-    runInitWatcherRef.current = runInitWatcher;
-  }, [runInitWatcher]);
+    runInitWatcherRef.current = runInitWatcher
+  }, [runInitWatcher])
 
   useEffect(() => {
-    runInitSubOwnerRef.current = runInitSubOwner;
-  }, [runInitWatcher]);
+    runInitSubOwnerRef.current = runInitSubOwner
+  }, [runInitWatcher])
 
   const modeSockets = useMemo(() => {
-    const existResponseEvent = `${SubscribedEvents.RoomExistResponse}${roomId}`;
-    const deleteResponseEvent = `${SubscribedEvents.RoomDeleteResponse}${roomId}`;
-    const docUpdatedEvent = `${SubscribedEvents.DocUpdated}${roomId}`;
+    const existResponseEvent = `${SubscribedEvents.RoomExistResponse}${roomId}`
+    const deleteResponseEvent = `${SubscribedEvents.RoomDeleteResponse}${roomId}`
+    const docUpdatedEvent = `${SubscribedEvents.DocUpdated}${roomId}`
 
     return {
       subscribe: {
         [EditorMode.Watcher]: {
           [RoomStatus.Inactive]: () => {
             socket?.on(existResponseEvent, () => {
-              initializeBlockedRef.current = false;
-              runInitWatcherRef.current();
-            });
+              initializeBlockedRef.current = false
+              runInitWatcherRef.current()
+            })
           },
           [RoomStatus.Active]: () => {
             socket?.on(deleteResponseEvent, () => {
-              initializeBlockedRef.current = false;
-              runInitWatcherRef.current();
-            });
-          }
+              initializeBlockedRef.current = false
+              runInitWatcherRef.current()
+            })
+          },
         },
         [EditorMode.SubOwner]: {
           [RoomStatus.Inactive]: () => {
             socket?.on(existResponseEvent, () => {
-              initializeBlockedRef.current = false;
+              initializeBlockedRef.current = false
               runInitSubOwnerRef.current(true)
-            });
+            })
           },
           [RoomStatus.Active]: () => {
             socket?.on(deleteResponseEvent, () => {
-              initializeBlockedRef.current = false;
-              runInitSubOwnerRef.current(true);
-            });
+              initializeBlockedRef.current = false
+              runInitSubOwnerRef.current(true)
+            })
             socket?.on(docUpdatedEvent, delayedOnChange)
-          }
+          },
         },
         [EditorMode.Owner]: {
           [RoomStatus.Active]: () => {
             socket?.on(docUpdatedEvent, delayedOnChange)
           },
-          [RoomStatus.Inactive]: null
-        }
+          [RoomStatus.Inactive]: null,
+        },
       },
       unsuscribe: {
         [RoomStatus.Inactive]: () => {
-          socket?.off(existResponseEvent);
+          socket?.off(existResponseEvent)
         },
         [RoomStatus.Active]: () => {
-          socket?.off(deleteResponseEvent);
-          socket?.off(docUpdatedEvent);
-        }
-      }
+          socket?.off(deleteResponseEvent)
+          socket?.off(docUpdatedEvent)
+        },
+      },
     }
-  }, [
-    roomId,
-    socket,
-    runInitSubOwnerRef,
-    runInitWatcherRef,
-    delayedOnChange
-  ]);
+  }, [roomId, socket, runInitSubOwnerRef, runInitWatcherRef, delayedOnChange])
 
   useEffect(() => {
-    modeSockets.subscribe[mode][roomStatus]?.();
+    modeSockets.subscribe[mode][roomStatus]?.()
 
     return () => {
-      modeSockets.unsuscribe[roomStatus]();
+      modeSockets.unsuscribe[roomStatus]()
     }
   }, [mode, roomStatus, modeSockets])
 }

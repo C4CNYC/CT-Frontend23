@@ -1,19 +1,18 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { Collapse } from "@mui/material";
+import { Collapse } from '@mui/material'
+import { useRouter } from 'next/router'
 
-import useActiveLink from "src/lib/hooks/useActiveLink";
+import useActiveLink from '@/hooks/useActiveLink'
 
-import { NavListProps } from "../types";
-import NavItem from "./NavItem";
+import { NavListProps } from '../types'
 
-// ----------------------------------------------------------------------
+import NavItem from './NavItem'
 
 interface NavListRootProps {
-  data: NavListProps;
-  depth: number;
-  hasChild: boolean;
+  data: NavListProps
+  depth: number
+  hasChild: boolean
 }
 
 export default function NavList({
@@ -21,25 +20,25 @@ export default function NavList({
   depth,
   hasChild,
 }: NavListRootProps): React.ReactElement | null {
-  const { pathname } = useRouter();
+  const { pathname } = useRouter()
 
-  const { active, isExternalLink } = useActiveLink(data.path);
+  const { active, isExternalLink } = useActiveLink(data.path)
 
-  const [open, setOpen] = useState(active);
+  const [open, setOpen] = useState(active)
 
   useEffect(() => {
     if (!active) {
-      handleClose();
+      handleClose()
     }
-  }, [pathname]);
+  }, [pathname])
 
   const handleToggle = (): void => {
-    setOpen(!open);
-  };
+    setOpen(!open)
+  }
 
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
@@ -53,25 +52,26 @@ export default function NavList({
       />
 
       {hasChild && (
-        <Collapse in={open} unmountOnExit>
-          <NavSubList data={data.children} depth={depth} />
+        <Collapse
+          in={open}
+          unmountOnExit
+        >
+          <NavSubList
+            data={data.children}
+            depth={depth}
+          />
         </Collapse>
       )}
     </>
-  );
+  )
 }
-
-// ----------------------------------------------------------------------
 
 interface NavListSubProps {
-  data: NavListProps[];
-  depth: number;
+  data: NavListProps[]
+  depth: number
 }
 
-function NavSubList({
-  data,
-  depth,
-}: NavListSubProps): React.ReactElement | null {
+function NavSubList({ data, depth }: NavListSubProps): React.ReactElement | null {
   return (
     <>
       {data.map((list) => (
@@ -83,5 +83,5 @@ function NavSubList({
         />
       ))}
     </>
-  );
+  )
 }

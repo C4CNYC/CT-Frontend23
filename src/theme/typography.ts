@@ -1,13 +1,11 @@
-import { Barlow, Public_Sans } from "next/font/google";
-
-// ----------------------------------------------------------------------
+import { Barlow, Public_Sans } from 'next/font/google'
 
 export function remToPx(value: string): number {
-  return Math.round(parseFloat(value) * 16);
+  return Math.round(parseFloat(value) * 16)
 }
 
 export function pxToRem(value: number): string {
-  return `${value / 16}rem`;
+  return `${value / 16}rem`
 }
 
 export function responsiveFontSizes({
@@ -15,38 +13,36 @@ export function responsiveFontSizes({
   md,
   lg,
 }: {
-  sm: number;
-  md: number;
-  lg: number;
+  sm: number
+  md: number
+  lg: number
 }): Record<string, Record<string, string>> {
   return {
-    "@media (min-width:600px)": {
+    '@media (min-width:600px)': {
       fontSize: pxToRem(sm),
     },
-    "@media (min-width:900px)": {
+    '@media (min-width:900px)': {
       fontSize: pxToRem(md),
     },
-    "@media (min-width:1200px)": {
+    '@media (min-width:1200px)': {
       fontSize: pxToRem(lg),
     },
-  };
+  }
 }
 
 export const primaryFont = Public_Sans({
-  weight: ["400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
+  weight: ['400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['Helvetica', 'Arial', 'sans-serif'],
+})
 
 export const secondaryFont = Barlow({
-  weight: ["900"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
-// ----------------------------------------------------------------------
+  weight: ['900'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['Helvetica', 'Arial', 'sans-serif'],
+})
 
 // LEARN MORE
 // https://nextjs.org/docs/basic-features/font-optimization#google-fonts
@@ -118,12 +114,12 @@ export const typography = {
     fontWeight: 700,
     lineHeight: 1.5,
     fontSize: pxToRem(12),
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   button: {
     fontWeight: 700,
     lineHeight: 24 / 14,
     fontSize: pxToRem(14),
-    textTransform: "capitalize",
+    textTransform: 'capitalize',
   },
-} as const;
+} as const

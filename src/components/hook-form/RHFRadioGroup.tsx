@@ -1,7 +1,4 @@
 // form
-import { Controller, useFormContext } from "react-hook-form";
-
-// @mui
 import {
   FormControl,
   FormControlLabel,
@@ -10,17 +7,16 @@ import {
   Radio,
   RadioGroup,
   RadioGroupProps,
-} from "@mui/material";
-
-// ----------------------------------------------------------------------
+} from '@mui/material'
+import { Controller, useFormContext } from 'react-hook-form'
 
 type Props = RadioGroupProps & {
-  name: string;
-  options: Array<{ label: string; value: any }>;
-  label?: string;
-  spacing?: number;
-  helperText?: React.ReactNode;
-};
+  name: string
+  options: Array<{ label: string; value: any }>
+  label?: string
+  spacing?: number
+  helperText?: React.ReactNode
+}
 
 export function RHFRadioGroup({
   row,
@@ -31,21 +27,21 @@ export function RHFRadioGroup({
   helperText,
   ...other
 }: Props): React.ReactElement | null {
-  const { control } = useFormContext();
+  const { control } = useFormContext()
 
-  const labelledby = label ? `${name}-${label}` : "";
+  const labelledby = label ? `${name}-${label}` : ''
 
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <FormControl component="fieldset">
+        <FormControl component='fieldset'>
           {label && (
             <FormLabel
-              component="legend"
+              component='legend'
               id={labelledby}
-              sx={{ typography: "body2" }}
+              sx={{ typography: 'body2' }}
             >
               {label}
             </FormLabel>
@@ -64,12 +60,12 @@ export function RHFRadioGroup({
                 control={<Radio />}
                 label={option.label}
                 sx={{
-                  "&:not(:last-of-type)": {
+                  '&:not(:last-of-type)': {
                     mb: spacing ?? 0,
                   },
                   ...(row && {
                     mr: 0,
-                    "&:not(:last-of-type)": {
+                    '&:not(:last-of-type)': {
                       mr: spacing ?? 2,
                     },
                   }),
@@ -79,12 +75,15 @@ export function RHFRadioGroup({
           </RadioGroup>
 
           {(!!error ?? helperText) && (
-            <FormHelperText error={!!error} sx={{ mx: 0 }}>
+            <FormHelperText
+              error={!!error}
+              sx={{ mx: 0 }}
+            >
               {error ? error?.message : helperText}
             </FormHelperText>
           )}
         </FormControl>
       )}
     />
-  );
+  )
 }

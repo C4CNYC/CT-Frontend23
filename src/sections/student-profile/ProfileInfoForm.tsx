@@ -1,29 +1,23 @@
-import { useCallback } from "react";
+import { useCallback } from 'react'
 
-import { countries } from "@assets/data";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { MuiColorInput } from "mui-color-input";
-import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
-import { useSnackbar } from "notistack";
-import { Controller, useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Card, Grid, Stack } from '@mui/material'
+import { MuiColorInput } from 'mui-color-input'
+import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
+import { useSnackbar } from 'notistack'
+import { Controller, useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { LoadingButton } from "@mui/lab";
-import { Card, Grid, Stack } from "@mui/material";
-
-import {
-  FormProvider,
-  RHFSelect,
-  RHFTextField,
-  RHFUploadAvatar,
-} from "@components";
-import { IUser } from "src/redux/interfaces/auth.interface";
-import { APIError } from "src/redux/interfaces/custom-error.interface";
+import { countries } from '@/assets/data'
+import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '@/components'
+import { IUser } from '@/redux/interfaces/auth.interface'
+import { APIError } from '@/redux/interfaces/custom-error.interface'
 import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
-} from "src/redux/services/auth";
-import { useTranslate } from "src/lib/utils/translateHelper";
+} from '@/redux/services/auth'
+import { useTranslate } from '@/utils/translateHelper'
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),
@@ -32,22 +26,22 @@ const UpdateUserSchema = Yup.object().shape({
   phone: Yup.string(),
   postcode: Yup.string(),
   cover: Yup.string(),
-});
+})
 
 interface FormValuesProps {
-  firstName: string;
-  lastName: string;
-  address: string;
-  about: string;
-  phone: string;
-  postcode: string;
-  country: string;
-  cover: string;
-  photoURL: File | null;
+  firstName: string
+  lastName: string
+  address: string
+  about: string
+  phone: string
+  postcode: string
+  country: string
+  cover: string
+  photoURL: File | null
 }
 
 interface IProfileInfoFormProps {
-  data: IUser;
+  data: IUser
 }
 
 export default function ProfileInfoForm({
@@ -63,28 +57,28 @@ export default function ProfileInfoForm({
       phone,
       country,
     },
-  } = data;
-  const cover = !data.cover ? "#5be49b" : data.cover;
-  const { enqueueSnackbar } = useSnackbar();
-  const [updateStudent, { isLoading }] = useUpdateStudentProfileMutation();
-  const [updateStudentAvatar] = useUdpateStudentProfileAvatarMutation();
+  } = data
+  const cover = !data.cover ? '#5be49b' : data.cover
+  const { enqueueSnackbar } = useSnackbar()
+  const [updateStudent, { isLoading }] = useUpdateStudentProfileMutation()
+  const [updateStudentAvatar] = useUdpateStudentProfileAvatarMutation()
   const defaultValues = {
-    username: username ?? "",
-    firstName: firstName ?? "",
-    lastName: lastName ?? "",
-    about: about ?? "",
-    phone: phone ?? "",
-    postcode: postcode ?? "",
-    country: country ?? "",
+    username: username ?? '',
+    firstName: firstName ?? '',
+    lastName: lastName ?? '',
+    about: about ?? '',
+    phone: phone ?? '',
+    postcode: postcode ?? '',
+    country: country ?? '',
     cover,
-  };
+  }
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
     defaultValues,
-  });
-  const translate = useTranslate();
+  })
+  const translate = useTranslate()
 
-  const { setValue, handleSubmit, control } = methods;
+  const { setValue, handleSubmit, control } = methods
   const onSubmit = async (formData: FormValuesProps): Promise<void> => {
     try {
       await updateStudent({
@@ -95,74 +89,76 @@ export default function ProfileInfoForm({
         post_code: formData.postcode,
         country: formData.country,
         cover: formData.cover,
-      }).unwrap();
+      }).unwrap()
       if (formData.photoURL) {
-        const file = new FormData();
-        file.append("file", formData.photoURL);
-        updateStudentAvatar({ file }).unwrap();
+        const file = new FormData()
+        file.append('file', formData.photoURL)
+        updateStudentAvatar({ file }).unwrap()
       }
-      enqueueSnackbar(translate("messages_update_success"));
+      enqueueSnackbar(translate('messages_update_success'))
     } catch (error: any) {
-      const typedError = error as APIError;
+      const typedError = error as APIError
       enqueueSnackbar(typedError.data.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-  };
+  }
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
+      const file = acceptedFiles[0]
 
       const newFile = Object.assign(file, {
         preview: URL.createObjectURL(file),
-      });
+      })
 
       if (file) {
-        setValue("photoURL", newFile, { shouldValidate: true });
+        setValue('photoURL', newFile, { shouldValidate: true })
       }
     },
     [setValue]
-  );
+  )
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
+    <FormProvider
+      methods={methods}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Grid
+        container
+        spacing={3}
+      >
         <Grid
           item
           sx={{
             flexGrow: 1,
           }}
         >
-          <Card sx={{ p: 3, display: "flex", flexDirection: "column" }}>
+          <Card sx={{ p: 3, display: 'flex', flexDirection: 'column' }}>
             <Stack
-              direction="row"
+              direction='row'
               sx={{
-                justifyContent: "space-between",
-                flexDirection: { xs: "column", sm: "column", md: "row" },
+                justifyContent: 'space-between',
+                flexDirection: { xs: 'column', sm: 'column', md: 'row' },
               }}
             >
               <Stack gap={3}>
                 <RHFUploadAvatar
-                  name="photoURL"
+                  name='photoURL'
                   maxSize={200000}
                   onDrop={handleDrop}
                 />
                 <Controller
                   control={control}
-                  name="cover"
+                  name='cover'
                   render={({ field, fieldState }) => (
                     <MuiColorInput
                       {...field}
                       value={field.value}
-                      helperText={
-                        fieldState.invalid
-                          ? translate("messages_invalid_color")
-                          : ""
-                      }
+                      helperText={fieldState.invalid ? translate('messages_invalid_color') : ''}
                       error={fieldState.invalid}
                       isAlphaHidden
-                      format="hex"
+                      format='hex'
                     />
                   )}
                 />
@@ -176,14 +172,24 @@ export default function ProfileInfoForm({
                 }}
               >
                 <RHFTextField
-                  name="username"
-                  label={translate("username")}
+                  name='username'
+                  label={translate('username')}
                   disabled
                 />
-                <RHFTextField name="firstName" label={translate("name")} />
-                <RHFTextField name="lastName" label={translate("last_name")} />
-                <RHFSelect native name="country" label={translate("country")}>
-                  <option value="" />
+                <RHFTextField
+                  name='firstName'
+                  label={translate('name')}
+                />
+                <RHFTextField
+                  name='lastName'
+                  label={translate('last_name')}
+                />
+                <RHFSelect
+                  native
+                  name='country'
+                  label={translate('country')}
+                >
+                  <option value='' />
                   {countries.map((country) => (
                     <option
                       key={country.code}
@@ -197,43 +203,39 @@ export default function ProfileInfoForm({
             </Stack>
             <Stack sx={{ gap: 3, pt: 3 }}>
               <RHFTextField
-                name="postcode"
-                label={translate("profile_postcode")}
+                name='postcode'
+                label={translate('profile_postcode')}
               />
               <Controller
-                name="phone"
+                name='phone'
                 rules={{ validate: matchIsValidTel }}
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={
-                      fieldState.invalid
-                        ? translate("messages_invalid_phone")
-                        : ""
-                    }
+                    helperText={fieldState.invalid ? translate('messages_invalid_phone') : ''}
                     error={fieldState.invalid}
-                    placeholder={translate("mobile_number")}
+                    placeholder={translate('mobile_number')}
                   />
                 )}
               />
               <RHFTextField
-                name="about"
-                label={translate("about")}
+                name='about'
+                label={translate('about')}
                 multiline
                 rows={5}
               />
             </Stack>
             <LoadingButton
-              type="submit"
-              variant="contained"
+              type='submit'
+              variant='contained'
               loading={isLoading}
-              sx={{ alignSelf: "flex-end", mt: 5 }}
+              sx={{ alignSelf: 'flex-end', mt: 5 }}
             >
-              {translate("actions_save")}
+              {translate('actions_save')}
             </LoadingButton>
           </Card>
         </Grid>
       </Grid>
     </FormProvider>
-  );
+  )
 }

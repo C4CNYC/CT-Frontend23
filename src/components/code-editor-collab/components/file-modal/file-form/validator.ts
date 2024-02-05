@@ -1,10 +1,10 @@
-import { Extensions } from "src/components/code-editor-collab/hook/constants";
-import type { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
-import { getFileExtension } from "src/lib/utils/getFileExtension";
+import { Extensions } from '@/components/code-editor-collab/hook/constants'
+import type { File } from '@/components/code-editor-collab/hook/utils/collab/requests'
+import { getFileExtension } from '@/utils/getFileExtension'
 
-const validationList: string[] = [Extensions.Html, Extensions.Css, Extensions.Js];
-const EMPTY_ERROR = "Cannot be empty";
-const FILE_ERROR = `File should be with ${validationList.join(', ')} extension.`;
+const validationList: string[] = [Extensions.Html, Extensions.Css, Extensions.Js]
+const EMPTY_ERROR = 'Cannot be empty'
+const FILE_ERROR = `File should be with ${validationList.join(', ')} extension.`
 const FILE_EXIST_ERROR = 'File is already exist'
 
 interface ValidateProps {
@@ -19,28 +19,27 @@ const isExtensionExist = (fileList: File[], extension: string) =>
 export const validate = ({
   fileName,
   fileList,
-  isMultipleExtensionFiles
+  isMultipleExtensionFiles,
 }: ValidateProps): string | null => {
-  if (fileName.trim() === "") {
-    return EMPTY_ERROR;
+  if (fileName.trim() === '') {
+    return EMPTY_ERROR
   }
 
   const isExist = fileList.some(({ name }) => name === fileName.trim())
   if (isExist) {
-    return FILE_EXIST_ERROR;
+    return FILE_EXIST_ERROR
   }
 
-  const extension = getFileExtension(fileName);
-  const isExtensionValid = extension !== null &&
-    validationList.includes(extension);
+  const extension = getFileExtension(fileName)
+  const isExtensionValid = extension !== null && validationList.includes(extension)
 
   if (!isExtensionValid) {
-    return FILE_ERROR;
+    return FILE_ERROR
   }
 
   if (!isMultipleExtensionFiles && isExtensionExist(fileList, extension)) {
     return `"${extension[0].toUpperCase()}${extension.slice(1)}" file is already exist`
   }
 
-  return null;
+  return null
 }

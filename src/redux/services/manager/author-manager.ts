@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
-import { IAuthor, IAuthorSearchParams } from "../interfaces/author.interface";
+import { IAuthor, IAuthorSearchParams } from '../interfaces/author.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,22 +11,22 @@ const extendedApi = managerApi.injectEndpoints({
       IAuthorSearchParams
     >({
       query: (params) => ({
-        url: "/manager/author",
-        method: "GET",
+        url: '/manager/author',
+        method: 'GET',
         params,
       }),
-      providesTags: ["Author"],
+      providesTags: ['Author'],
     }),
     updateAuthor: builder.mutation<
       IAuthor & BaseResponseInterface,
-      Omit<IAuthor, "avatar" | "email">
+      Omit<IAuthor, 'avatar' | 'email'>
     >({
       query: ({ id, ...body }) => ({
         url: `/manager/author/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Author" }],
+      invalidatesTags: [{ type: 'Author' }],
     }),
     updateAuthorCover: builder.mutation<
       IAuthor & BaseResponseInterface,
@@ -34,57 +34,48 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id, file }) => ({
         url: `/manager/author/${id}/cover`,
-        method: "PATCH",
+        method: 'PATCH',
         body: file,
       }),
-      invalidatesTags: [{ type: "Author" }],
+      invalidatesTags: [{ type: 'Author' }],
     }),
     createAuthor: builder.mutation<
       IAuthor & BaseResponseInterface,
-      { course_id: string } & Omit<IAuthor, "avatar" | "id">
+      { course_id: string } & Omit<IAuthor, 'avatar' | 'id'>
     >({
       query: ({ ...body }) => ({
-        url: "/manager/author",
-        method: "POST",
+        url: '/manager/author',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Author" }],
+      invalidatesTags: [{ type: 'Author' }],
     }),
-    deleteAuthor: builder.mutation<
-      IAuthor & BaseResponseInterface,
-      { id: string }
-    >({
+    deleteAuthor: builder.mutation<IAuthor & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/manager/author/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Author" }],
+      invalidatesTags: [{ type: 'Author' }],
     }),
-    addAuthorToCourse: builder.mutation<
-      void,
-      { id: string; course_id: string }
-    >({
+    addAuthorToCourse: builder.mutation<void, { id: string; course_id: string }>({
       query: ({ id, ...body }) => ({
         url: `/manager/author/${id}/course`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Author" }],
+      invalidatesTags: [{ type: 'Author' }],
     }),
-    removeAuthorFromCourse: builder.mutation<
-      void,
-      { id: string; course_id: string }
-    >({
+    removeAuthorFromCourse: builder.mutation<void, { id: string; course_id: string }>({
       query: ({ id, ...body }) => ({
         url: `/manager/author/${id}/course`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: [{ type: "Author" }],
+      invalidatesTags: [{ type: 'Author' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetAuthorsQuery,
@@ -95,4 +86,4 @@ export const {
   useRemoveAuthorFromCourseMutation,
   useUpdateAuthorCoverMutation,
   useUpdateAuthorMutation,
-} = extendedApi;
+} = extendedApi

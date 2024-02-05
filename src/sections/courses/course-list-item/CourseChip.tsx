@@ -1,8 +1,8 @@
-import { Chip } from "@mui/material";
+import { Chip } from '@mui/material'
 
 interface Props {
-  text: string;
-  sx?: Record<string, unknown>;
+  text: string
+  sx?: Record<string, unknown>
 }
 
 export default function CourseChip({ text, sx }: Props): React.ReactElement {
@@ -10,13 +10,13 @@ export default function CourseChip({ text, sx }: Props): React.ReactElement {
     <Chip
       label={text}
       sx={{
-        background: "#919EAB52",
-        color: "#364954",
+        background: '#919EAB52',
+        color: '#364954',
         fontWeight: 700,
-        textTransform: "uppercase",
-        p: "0 5px",
+        textTransform: 'uppercase',
+        p: '0 5px',
         ...sx,
       }}
     />
-  );
+  )
 }

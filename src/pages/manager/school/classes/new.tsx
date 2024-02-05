@@ -1,22 +1,17 @@
-import Head from "next/head";
+import { Container } from '@mui/material'
+import Head from 'next/head'
 
-import { Container } from "@mui/material";
-
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
-import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import StudentNewEditForm from "@sections/dashboard/student/StudentNewEditForm";
-
-// ----------------------------------------------------------------------
+import { CustomBreadcrumbs, useSettingsContext } from '@/components'
+import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import StudentNewEditForm from '@/sections/dashboard/student/StudentNewEditForm'
 
 UserCreatePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
-);
-
-// ----------------------------------------------------------------------
+)
 
 export default function UserCreatePage(): React.ReactElement {
-  const { themeStretch } = useSettingsContext();
+  const { themeStretch } = useSettingsContext()
 
   return (
     <>
@@ -24,23 +19,23 @@ export default function UserCreatePage(): React.ReactElement {
         <title> Student: Create a new student </title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Create a new student"
+          heading='Create a new student'
           links={[
             {
-              name: "School",
+              name: 'School',
               href: MANAGER_PATH_DASHBOARD.school.general,
             },
             {
-              name: "Students",
+              name: 'Students',
               href: MANAGER_PATH_DASHBOARD.school.students,
             },
-            { name: "New student" },
+            { name: 'New student' },
           ]}
         />
         <StudentNewEditForm />
       </Container>
     </>
-  );
+  )
 }

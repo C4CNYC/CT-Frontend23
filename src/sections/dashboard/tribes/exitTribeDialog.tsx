@@ -1,57 +1,47 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Card,
-  Dialog,
-  DialogContent,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { LoadingButton } from '@mui/lab'
+import { Box, Button, Card, Dialog, DialogContent, Grid, Typography } from '@mui/material'
 
-import { useSnackbar } from "@components";
-import { APIError } from "src/redux/interfaces/custom-error.interface";
+import { useSnackbar } from '@/components'
+import { APIError } from '@/redux/interfaces/custom-error.interface'
 
 interface IExitTribeDialogProps {
-  children: React.ReactElement;
+  children: React.ReactElement
 }
 
-export default function ExitTribeDialog({
-  children,
-}: IExitTribeDialogProps): React.ReactElement {
-  const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
+export default function ExitTribeDialog({ children }: IExitTribeDialogProps): React.ReactElement {
+  const [open, setOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
 
   const openDialog = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const closeDialog = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const onSubmit = async (): Promise<void> => {
-    setLoading(true);
+    setLoading(true)
     try {
       // add user adding logic
-      enqueueSnackbar("You left the tribe");
+      enqueueSnackbar('You left the tribe')
     } catch (error: any) {
-      const typedError = error as APIError;
+      const typedError = error as APIError
       enqueueSnackbar(typedError.data.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-    setLoading(false);
-    closeDialog();
-  };
+    setLoading(false)
+    closeDialog()
+  }
   return (
     <>
       <Box
         onClick={() => {
-          openDialog();
+          openDialog()
         }}
       >
         {children}
@@ -59,32 +49,42 @@ export default function ExitTribeDialog({
       <Dialog
         open={open}
         onClose={closeDialog}
-        PaperProps={{ sx: { width: "350px" } }}
+        PaperProps={{ sx: { width: '350px' } }}
       >
         <DialogContent sx={{ p: 0 }}>
           <Typography
-            variant="h5"
-            sx={{ pb: 1, pt: 2, px: 2, textAlign: "center" }}
+            variant='h5'
+            sx={{ pb: 1, pt: 2, px: 2, textAlign: 'center' }}
           >
             Are you sure you <br /> want to leave tribe?
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12}>
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid
+              item
+              xs={12}
+              md={12}
+            >
               <Card sx={{ p: 3 }}>
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
+                    display: 'flex',
+                    justifyContent: 'center',
                     gap: 2,
                     mt: 2,
                   }}
                 >
-                  <Button color="error" onClick={closeDialog}>
+                  <Button
+                    color='error'
+                    onClick={closeDialog}
+                  >
                     Cancel
                   </Button>
                   <LoadingButton
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     loading={loading}
                     onClick={onSubmit}
                   >
@@ -97,5 +97,5 @@ export default function ExitTribeDialog({
         </DialogContent>
       </Dialog>
     </>
-  );
+  )
 }

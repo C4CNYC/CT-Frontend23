@@ -1,51 +1,51 @@
-import Head from "next/head";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Box, Container, Tab, Tabs } from "@mui/material";
+import { Box, Container, Tab, Tabs } from '@mui/material'
+import Head from 'next/head'
 
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
-import { StudentDashboardLayout } from "@layouts/dashboard/";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import TribesFillter from "@sections/dashboard/tribes/fillter";
-import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
-import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
-import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
-import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { CustomBreadcrumbs, useSettingsContext } from '@/components'
+import { StudentDashboardLayout } from '@/layouts/dashboard/'
+import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-student'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import TribesFillter from '@/sections/dashboard/tribes/fillter'
+import SkeletonTribes from '@/sections/dashboard/tribes/skeletonTribes'
+import TribeItem from '@/sections/dashboard/tribes/tiribe-card/TribeItem'
+import TribesCounter from '@/sections/dashboard/tribes/tribesCounter'
+import { useTranslate } from '@/utils/translateHelper'
 
 enum TabType {
-  Active = "active",
-  Pending = "pending",
+  Active = 'active',
+  Pending = 'pending',
 }
 
 Tribes.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
-);
+)
 
 export default function Tribes(): React.ReactElement {
-  const { themeStretch } = useSettingsContext();
-  const [currentTab, setCurrentTab] = useState(TabType.Active);
-  const translate = useTranslate();
+  const { themeStretch } = useSettingsContext()
+  const [currentTab, setCurrentTab] = useState(TabType.Active)
+  const translate = useTranslate()
 
-  const { data, isLoading } = useGetStudentClassesQuery({});
+  const { data, isLoading } = useGetStudentClassesQuery({})
 
-  if (isLoading) return <SkeletonTribes />;
+  if (isLoading) return <SkeletonTribes />
 
   return (
     <>
       <Head>
-        <title>{translate("sidebar_menu_tribes")} | CodeTribe</title>
+        <title>{translate('sidebar_menu_tribes')} | CodeTribe</title>
       </Head>
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading=""
+          heading=''
           links={[
             {
-              name: translate("home"),
+              name: translate('home'),
               href: STUDENT_PATH_DASHBOARD.class.root,
             },
             {
-              name: translate("sidebar_menu_tribes"),
+              name: translate('sidebar_menu_tribes'),
               href: STUDENT_PATH_DASHBOARD.tribes.root,
             },
           ]}
@@ -53,33 +53,33 @@ export default function Tribes(): React.ReactElement {
         <Container disableGutters>
           <Box
             sx={{
-              display: "flex",
+              display: 'flex',
               justifyContent: {
-                xs: "flex-start",
-                sm: "space-between",
-                md: "space-between",
+                xs: 'flex-start',
+                sm: 'space-between',
+                md: 'space-between',
               },
-              alignItems: "baseline",
+              alignItems: 'baseline',
               flexWrap: {
-                xs: "wrap-reverse",
-                sm: "wrap-reverse",
-                md: "nowrap",
+                xs: 'wrap-reverse',
+                sm: 'wrap-reverse',
+                md: 'nowrap',
               },
-              mt: { xs: "-20px", sm: "20px", md: 0 },
+              mt: { xs: '-20px', sm: '20px', md: 0 },
               gap: { xs: 2, sm: 2, md: 0 },
             }}
           >
             <Tabs
               value={currentTab}
               onChange={(event, newValue) => {
-                setCurrentTab(newValue);
+                setCurrentTab(newValue)
               }}
             >
               <Tab
                 value={TabType.Active}
-                label={translate("tribes_my")}
+                label={translate('tribes_my')}
                 icon={<TribesCounter count={data?.data.length ?? 0} />}
-                iconPosition="end"
+                iconPosition='end'
               />
               {/* <Tab
                 value={TabType.Pending}
@@ -92,20 +92,23 @@ export default function Tribes(): React.ReactElement {
           <TribesFillter />
           <Box
             gap={3}
-            display="grid"
+            display='grid'
             gridTemplateColumns={{
-              xs: "repeat(1, 1fr)",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
+              xs: 'repeat(1, 1fr)',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
             }}
             mt={3}
           >
             {data?.data.map((tribe) => (
-              <TribeItem key={tribe.id} tribe={tribe} />
+              <TribeItem
+                key={tribe.id}
+                tribe={tribe}
+              />
             ))}
           </Box>
         </Container>
       </Container>
     </>
-  );
+  )
 }

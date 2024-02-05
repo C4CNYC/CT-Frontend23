@@ -34,25 +34,25 @@ export const BASIC_SETUP = {
 // - change code
 
 export enum EditorMode {
-  Owner = "owner",
-  Watcher = "watcher",
-  SubOwner = "subOwner"
+  Owner = 'owner',
+  Watcher = 'watcher',
+  SubOwner = 'subOwner',
 }
 
 export enum Extensions {
-  Css = "css",
-  Html = "html",
-  Js = "js"
+  Css = 'css',
+  Html = 'html',
+  Js = 'js',
 }
 
-export const DEFAULT_FILE ={
-  id:  "index.html",
-  name: "index.html"
-};
-export const MIN_FILE_LIST_LENGTH = 1;
+export const DEFAULT_FILE = {
+  id: 'index.html',
+  name: 'index.html',
+}
+export const MIN_FILE_LIST_LENGTH = 1
 
 export const getEmptyFileManagement = () => ({
   activeFile: DEFAULT_FILE,
   files: [DEFAULT_FILE],
-  filesInLayout: [DEFAULT_FILE]
+  filesInLayout: [DEFAULT_FILE],
 })

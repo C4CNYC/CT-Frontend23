@@ -1,46 +1,40 @@
-// next
-import NextLink from "next/link";
+import { AppBar, Box, BoxProps, Link, Toolbar } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import NextLink from 'next/link'
 
-// @mui
-import { AppBar, Box, BoxProps, Link, Toolbar } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Logo } from '@/components/logo'
+import { bgBlur } from '@/utils'
 
-// components
-import { Logo } from "src/components/logo";
-// utils
-import { bgBlur } from "@utils";
-
-// config
-import { HEADER } from "../../config";
-// routes
-import { PATH_PAGE } from "../../routes/paths";
-
-// ----------------------------------------------------------------------
+import { PATH_PAGE } from '../../routes/paths'
+import { HEADER_SIZES } from '../../theme/consts'
 
 interface Props {
-  isOffset: boolean;
+  isOffset: boolean
 }
 
 export default function Header({ isOffset }: Props): React.ReactElement | null {
-  const theme = useTheme();
+  const theme = useTheme()
 
   return (
-    <AppBar color="transparent" sx={{ boxShadow: 0 }}>
+    <AppBar
+      color='transparent'
+      sx={{ boxShadow: 0 }}
+    >
       <Toolbar
         sx={{
-          justifyContent: "space-between",
+          justifyContent: 'space-between',
           height: {
-            xs: HEADER.H_MOBILE,
-            md: HEADER.H_MAIN_DESKTOP,
+            xs: HEADER_SIZES.H_MOBILE,
+            md: HEADER_SIZES.H_MAIN_DESKTOP,
           },
-          transition: theme.transitions.create(["height", "background-color"], {
+          transition: theme.transitions.create(['height', 'background-color'], {
             easing: theme.transitions.easing.easeInOut,
             duration: theme.transitions.duration.shorter,
           }),
           ...(isOffset && {
             ...bgBlur({ color: theme.palette.background.default }),
             height: {
-              md: HEADER.H_MAIN_DESKTOP - 16,
+              md: HEADER_SIZES.H_MAIN_DESKTOP - 16,
             },
           }),
         }}
@@ -50,8 +44,8 @@ export default function Header({ isOffset }: Props): React.ReactElement | null {
         <Link
           component={NextLink}
           href={PATH_PAGE.page404}
-          variant="subtitle2"
-          color="inherit"
+          variant='subtitle2'
+          color='inherit'
         >
           Need Help?
         </Link>
@@ -59,10 +53,8 @@ export default function Header({ isOffset }: Props): React.ReactElement | null {
 
       {isOffset && <Shadow />}
     </AppBar>
-  );
+  )
 }
-
-// ----------------------------------------------------------------------
 
 function Shadow({ sx, ...other }: BoxProps): React.ReactElement {
   return (
@@ -73,14 +65,14 @@ function Shadow({ sx, ...other }: BoxProps): React.ReactElement {
         bottom: 0,
         height: 24,
         zIndex: -1,
-        m: "auto",
-        borderRadius: "50%",
-        position: "absolute",
-        width: "calc(100% - 48px)",
+        m: 'auto',
+        borderRadius: '50%',
+        position: 'absolute',
+        width: 'calc(100% - 48px)',
         boxShadow: (theme) => theme.customShadows.z8,
         ...sx,
       }}
       {...other}
     />
-  );
+  )
 }

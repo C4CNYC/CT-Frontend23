@@ -1,23 +1,25 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import FilterModules from "./filter"
-import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from "@components"
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks"
-import DashboardLayout from "@layouts/dashboard"
-import { Box, Button, Container } from "@mui/material"
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths"
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths"
-import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain"
-import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog"
-import ModuleCard from "@sections/dashboard/modules/ModuleCard"
+import { Box, Button, Container } from '@mui/material'
+import Head from 'next/head'
+
+import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
+import DashboardLayout from '@/layouts/dashboard'
+import { IModulesSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
+import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
+import ModuleCard from '@/sections/dashboard/modules/ModuleCard'
+
 // import { getCountTakingElment } from "src/lib/utils/countTakingElments";
+import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
+import { useTranslate } from '@/utils/translateHelper'
+
+import FilterModules from './filter'
 import ModuleOrganizing from "@sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing"
 // import { getCountTakingElment } from "src/utils/countTakingElments";
-import SkeletonList, { DefaultSkeletonItem } from "@sections/dashboard/skeleton/skeletonList"
-import Head from "next/head"
-import { useTranslate } from "src/lib/utils/translateHelper"
-import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface"
-import { useGetModulesQuery } from "src/redux/services/manager/modules-manager"
 
+ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function ModulesListPage(): React.ReactElement | string {
@@ -25,63 +27,77 @@ export default function ModulesListPage(): React.ReactElement | string {
   const translate = useTranslate()
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
-      name: "",
-      course_id: "",
+      name: '',
+      course_id: '',
     },
     FilterMode.global
   )
   const { data, isLoading, isFetching } = useGetModulesQuery(filters)
 
   if (isLoading) {
-    return <SkeletonList filter={2} count={DEFAULT_TAKE_PER_PAGE} />
+    return (
+      <SkeletonList
+        filter={2}
+        count={DEFAULT_TAKE_PER_PAGE}
+      />
+    )
   }
   return (
     <>
       <Head>
-        <title> {translate("modules")} | CodeTribe</title>
+        <title> {translate('modules')} | CodeTribe</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading=""
+          heading=''
           links={[
             {
-              name: translate("home"),
+              name: translate('home'),
               href: STUDENT_PATH_DASHBOARD.class.root,
             },
             {
-              name: translate("modules"),
+              name: translate('modules'),
               href: MANAGER_PATH_DASHBOARD.modules.root,
             },
           ]}
           action={
             <CreateModuleDialog>
-              <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-                {translate("modules_create_module")}
+              <Button
+                variant='contained'
+                startIcon={<Iconify icon='eva:plus-fill' />}
+              >
+                {translate('modules_create_module')}
               </Button>
             </CreateModuleDialog>
           }
         />
-        <FilterModules filters={filters} setFilter={setFilter} />
+        <FilterModules
+          filters={filters}
+          setFilter={setFilter}
+        />
         <Box
           gap={2}
-          display="grid"
+          display='grid'
           gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
+            xs: 'repeat(1, 1fr)',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)',
           }}
         >
           <SimpleInfiniteList
             hasNextPage={data?.meta.hasNextPage ?? false}
             onLoadMore={() => {
               if (data?.meta.take !== Number(filters?.take)) return
-              setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
+              setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
             }}
             loading={isLoading ?? isFetching}
           >
             {data?.data.map((module, index) => (
-              <ModuleCard key={index} module={module} />
+              <ModuleCard
+                key={index}
+                module={module}
+              />
             ))}
             {isFetching
               ? Array(3)

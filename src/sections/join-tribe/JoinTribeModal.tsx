@@ -1,48 +1,51 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Box, Dialog } from "@mui/material";
+import { Box, Dialog } from '@mui/material'
 
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import { IClass } from "src/redux/interfaces/class.interface";
+import { IClass } from '@/redux/interfaces/class.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import JoinTribeContent from "./JoinTribeContent";
-import JoinTribeHeader from "./JoinTribeHeader";
-import JoinTribeLogin from "./join-tribe-login";
-import JoinTribeRegister from "./join-tribe-register.tsx";
+import JoinTribeLogin from './join-tribe-login'
+import JoinTribeRegister from './join-tribe-register.tsx'
+import JoinTribeContent from './JoinTribeContent'
+import JoinTribeHeader from './JoinTribeHeader'
 
 interface IJoinTribeModal {
-  classInfo: IClass & BaseResponseInterface;
-  isSignIn?: boolean;
+  classInfo: IClass & BaseResponseInterface
+  isSignIn?: boolean
 }
 
 export default function JoinTribeModal({
   classInfo,
   isSignIn,
 }: IJoinTribeModal): React.ReactElement {
-  const [isLogin, setIsLogin] = useState(true);
-  const [modalOpen, setModalOpen] = useState(true);
+  const [isLogin, setIsLogin] = useState(true)
+  const [modalOpen, setModalOpen] = useState(true)
 
   const handleCloseModal = (): void => {
-    setModalOpen(false);
-  };
+    setModalOpen(false)
+  }
 
   const handleChangeAuthorization = (): void => {
-    setIsLogin(!isLogin);
-  };
+    setIsLogin(!isLogin)
+  }
 
   return (
     <Dialog
       open={modalOpen}
       fullWidth
-      maxWidth="xs"
+      maxWidth='xs'
       sx={{
-        "& .MuiDialog-paper": {
-          borderRadius: "18px",
+        '& .MuiDialog-paper': {
+          borderRadius: '18px',
         },
       }}
     >
       <JoinTribeHeader classInfo={classInfo} />
-      <Box py={3} px={2}>
+      <Box
+        py={3}
+        px={2}
+      >
         {isSignIn ? (
           <JoinTribeContent
             classId={classInfo.id}
@@ -54,11 +57,9 @@ export default function JoinTribeModal({
             handleChangeAuthorization={handleChangeAuthorization}
           />
         ) : (
-          <JoinTribeRegister
-            handleChangeAuthorization={handleChangeAuthorization}
-          />
+          <JoinTribeRegister handleChangeAuthorization={handleChangeAuthorization} />
         )}
       </Box>
     </Dialog>
-  );
+  )
 }

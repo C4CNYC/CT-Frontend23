@@ -1,1 +1,1 @@
-export { default as ClassMentorsAutocomplete } from "./ClassMentorsAutocomplete";
+export { default as ClassMentorsAutocomplete } from './ClassMentorsAutocomplete'

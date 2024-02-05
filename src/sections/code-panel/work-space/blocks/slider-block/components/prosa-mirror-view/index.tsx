@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react'
 
-import { FileExtension } from "@remirror/extension-file";
-import { ReactComponentExtension } from "@remirror/extension-react-component";
-import { TableExtension } from "@remirror/extension-react-tables";
-import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
-import jsx from "refractor/lang/jsx.js";
-import typescript from "refractor/lang/typescript.js";
+import { FileExtension } from '@remirror/extension-file'
+import { ReactComponentExtension } from '@remirror/extension-react-component'
+import { TableExtension } from '@remirror/extension-react-tables'
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react'
+import jsx from 'refractor/lang/jsx.js'
+import typescript from 'refractor/lang/typescript.js'
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -35,10 +35,10 @@ import {
   TextHighlightExtension,
   UnderlineExtension,
   WhitespaceExtension,
-} from "remirror/extensions";
-import "remirror/styles/all.css";
+} from 'remirror/extensions'
+import 'remirror/styles/all.css'
 
-import { isJson, voidFunction } from "@utils";
+import { isJson, voidFunction } from '@/utils'
 
 type Extensions =
   | HeadingExtension
@@ -71,15 +71,13 @@ type Extensions =
   | BulletListExtension
   | OrderedListExtension
   | TaskListExtension
-  | EmojiExtension;
+  | EmojiExtension
 
 interface Props {
-  multimediaValue: string;
+  multimediaValue: string
 }
 
-export default function ProsaMirrorView({
-  multimediaValue,
-}: Props): React.ReactElement {
+export default function ProsaMirrorView({ multimediaValue }: Props): React.ReactElement {
   const extensions = (): Extensions[] => [
     new HeadingExtension(),
     new BoldExtension({}),
@@ -88,7 +86,7 @@ export default function ProsaMirrorView({
     new ImageExtension({ enableResizing: false }),
     new BlockquoteExtension(),
     new CodeBlockExtension({
-      defaultLanguage: "js",
+      defaultLanguage: 'js',
       supportedLanguages: [typescript, jsx],
     }),
     new CodeExtension(),
@@ -103,7 +101,7 @@ export default function ProsaMirrorView({
     new FileExtension(),
     new CalloutExtension(),
     new LinkExtension({ autoLink: true }),
-    new FontSizeExtension({ defaultSize: "16", unit: "px" }),
+    new FontSizeExtension({ defaultSize: '16', unit: 'px' }),
     new StrikeExtension(),
     new TextHighlightExtension(),
     new TextCaseExtension(),
@@ -113,13 +111,13 @@ export default function ProsaMirrorView({
     new BulletListExtension(),
     new OrderedListExtension(),
     new TaskListExtension(),
-  ];
+  ]
 
   const { manager, state } = useRemirror({
     extensions: extensions as any,
-    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : "",
-    stringHandler: "html",
-  });
+    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : '',
+    stringHandler: 'html',
+  })
 
   return (
     <ThemeProvider>
@@ -171,9 +169,9 @@ export default function ProsaMirrorView({
         manager={manager}
         state={state}
         autoFocus
-        autoRender="end"
+        autoRender='end'
         onChange={voidFunction}
       ></Remirror>
     </ThemeProvider>
-  );
+  )
 }

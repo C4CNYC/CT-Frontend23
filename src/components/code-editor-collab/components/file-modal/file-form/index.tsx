@@ -1,12 +1,13 @@
-import { type FC, useState, useEffect, useRef, KeyboardEvent } from "react";
+import { type FC, useState, useEffect, useRef, KeyboardEvent } from 'react'
 
-import { Button, TextField, CircularProgress } from "@mui/material";
+import { Button, TextField, CircularProgress } from '@mui/material'
 
-import ConfirmModalWrapper from "../confirm-wrapper-modal";
-import type { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
+import type { File } from '@/components/code-editor-collab/hook/utils/collab/requests'
 
-import { validate } from "./validator"
-import { styles } from "./styles"
+import ConfirmModalWrapper from '../confirm-wrapper-modal'
+
+import { styles } from './styles'
+import { validate } from './validator'
 
 interface FileFormProps {
   isOpen: boolean
@@ -17,7 +18,7 @@ interface FileFormProps {
   isMultipleExtensionFiles: boolean
 }
 
-const ENTER_KEY = "Enter";
+const ENTER_KEY = 'Enter'
 
 const FileForm: FC<FileFormProps> = ({
   isOpen,
@@ -25,89 +26,89 @@ const FileForm: FC<FileFormProps> = ({
   onSubmit,
   defaultValue,
   fileList,
-  isMultipleExtensionFiles
+  isMultipleExtensionFiles,
 }) => {
-  const textFieldRef = useRef<HTMLDivElement | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState("");
+  const textFieldRef = useRef<HTMLDivElement | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [value, setValue] = useState('')
 
   useEffect(() => {
-    setValue(defaultValue ?? "");
-  }, [defaultValue]);
+    setValue(defaultValue ?? '')
+  }, [defaultValue])
 
   const _onClose = () => {
-    onClose();
-    setValue("");
-    setError(null);
+    onClose()
+    setValue('')
+    setError(null)
   }
 
   const onAdd = async () => {
     if (isLoading) {
-      return;
+      return
     }
 
     const error = validate({
       fileName: value,
       fileList,
-      isMultipleExtensionFiles
-    });
+      isMultipleExtensionFiles,
+    })
 
-    setError(error);
+    setError(error)
 
     if (error != null) {
-      return;
+      return
     }
 
     try {
-      setIsLoading(true);
-      await onSubmit(value);
+      setIsLoading(true)
+      await onSubmit(value)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
 
-    _onClose();
+    _onClose()
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ENTER_KEY) {
-      onAdd();
+      onAdd()
     }
   }
 
   useEffect(() => {
     if (isOpen) {
-      textFieldRef.current?.querySelector('input')?.focus();
+      textFieldRef.current?.querySelector('input')?.focus()
     }
-  }, [isOpen]);
+  }, [isOpen])
 
   return (
     <ConfirmModalWrapper
       isOpen={isOpen}
       onClose={onClose}
-      title="Add file"
+      title='Add file'
     >
       <TextField
         ref={textFieldRef}
-        variant="outlined"
+        variant='outlined'
         error={error != null}
-        label="File name"
+        label='File name'
         sx={styles.INPUT}
         value={value}
         onKeyDown={onKeyDown}
         onChange={({ target: { value } }) => setValue(value)}
-        helperText={error != null ? error : ""}
+        helperText={error != null ? error : ''}
       />
 
       <Button
         onClick={onAdd}
         sx={styles.ADD_BUTTON}
-        variant="contained"
+        variant='contained'
       >
-        {isLoading ? <CircularProgress size={20} /> : "Add file"}
+        {isLoading ? <CircularProgress size={20} /> : 'Add file'}
       </Button>
     </ConfirmModalWrapper>
   )
 }
 
-export default FileForm;
+export default FileForm

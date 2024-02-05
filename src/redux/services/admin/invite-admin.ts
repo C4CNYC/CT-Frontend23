@@ -1,36 +1,28 @@
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { adminApi } from ".";
-import {
-  ISendInvite,
-  ISubmitInvite,
-} from "../interfaces/organization.interface";
+import { ISendInvite, ISubmitInvite } from '../interfaces/organization.interface'
+
+import { adminApi } from '.'
 
 const extendedApi = adminApi.injectEndpoints({
   endpoints: (builder) => ({
-    inviteSubmit: builder.mutation<
-      ISubmitInvite & BaseResponseInterface,
-      ISubmitInvite
-    >({
+    inviteSubmit: builder.mutation<ISubmitInvite & BaseResponseInterface, ISubmitInvite>({
       query: ({ ...body }) => ({
-        url: "/org/user/submitInvite",
-        method: "POST",
+        url: '/org/user/submitInvite',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Organization" }],
+      invalidatesTags: [{ type: 'Organization' }],
     }),
-    sendInvite: builder.mutation<
-      ISendInvite & BaseResponseInterface,
-      ISendInvite
-    >({
+    sendInvite: builder.mutation<ISendInvite & BaseResponseInterface, ISendInvite>({
       query: ({ ...body }) => ({
-        url: "/org/user/invite",
-        method: "POST",
+        url: '/org/user/invite',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Teachers" }],
+      invalidatesTags: [{ type: 'Teachers' }],
     }),
   }),
-});
+})
 
-export const { useInviteSubmitMutation, useSendInviteMutation } = extendedApi;
+export const { useInviteSubmitMutation, useSendInviteMutation } = extendedApi

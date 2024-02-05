@@ -1,1 +1,1 @@
-export * from "./SearchNotFound";
+export * from './SearchNotFound'

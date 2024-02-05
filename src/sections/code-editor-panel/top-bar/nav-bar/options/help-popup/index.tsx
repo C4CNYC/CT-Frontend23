@@ -1,67 +1,56 @@
 // node modules
-import { type FC, type SetStateAction, useState } from "react";
+import { type FC, type SetStateAction, useState } from 'react'
 
-// @mui
-import { Divider, IconButton, MenuItem } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/system";
+import { Divider, IconButton, MenuItem } from '@mui/material'
+import Typography from '@mui/material/Typography'
+import { Box } from '@mui/system'
 
-// components
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Iconify,
-  MenuPopover,
-} from "@components";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Accordion, AccordionDetails, AccordionSummary, Iconify, MenuPopover } from '@/components'
+import { useTranslate } from '@/utils/translateHelper'
 
-import HelpQuestionModal from "./modals/HelpQuestion";
-import Solution from "./options/solution";
-import Tips from "./options/tips";
-import Unstack from "./options/unstack-dialogs/Unstuck";
+import HelpQuestionModal from './modals/HelpQuestion'
+import Solution from './options/solution'
+import Tips from './options/tips'
+import Unstack from './options/unstack-dialogs/Unstuck'
 
 const MENU_POPOVER_STYLES = {
   width: 350,
   p: 0,
-  mr: "30px",
-};
+  mr: '30px',
+}
 
 const MENU_ITEM_STYLES = {
-  pl: "22px!important",
+  pl: '22px!important',
   height: 52,
-};
+}
 
 const ICONIFY_STYLES = {
-  width: "30px!important",
-  height: "30px!important",
-};
+  width: '30px!important',
+  height: '30px!important',
+}
 
 const HelpPopup: FC = () => {
-  const [expanded, setExpanded] = useState<string | false>();
-  const [openPopover, setOpenPopover] = useState(null);
-  const translate = useTranslate();
+  const [expanded, setExpanded] = useState<string | false>()
+  const [openPopover, setOpenPopover] = useState(null)
+  const translate = useTranslate()
 
-  const handleChange =
-    (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
+  const handleChange = (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
+    setExpanded(newExpanded ? panel : false)
+  }
 
   // check better solution for event type
-  const handleOpenPopover = (
-    event: React.SyntheticEvent<SetStateAction<any>>
-  ): void => {
-    setOpenPopover(event.currentTarget);
-  };
+  const handleOpenPopover = (event: React.SyntheticEvent<SetStateAction<any>>): void => {
+    setOpenPopover(event.currentTarget)
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
 
   return (
     <Box>
       <IconButton onClick={handleOpenPopover}>
-        <Iconify icon="clarity:help-line" />
+        <Iconify icon='clarity:help-line' />
       </IconButton>
       <MenuPopover
         open={openPopover}
@@ -69,12 +58,19 @@ const HelpPopup: FC = () => {
         sx={MENU_POPOVER_STYLES}
       >
         <Accordion
-          expanded={expanded === "panel1"}
-          onChange={handleChange("panel1")}
+          expanded={expanded === 'panel1'}
+          onChange={handleChange('panel1')}
         >
-          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Iconify width="27px" mr="15px" icon="icons8:idea" />
-            <Typography variant="h6">{translate("tips")}</Typography>
+          <AccordionSummary
+            aria-controls='panel1d-content'
+            id='panel1d-header'
+          >
+            <Iconify
+              width='27px'
+              mr='15px'
+              icon='icons8:idea'
+            />
+            <Typography variant='h6'>{translate('tips')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Tips />
@@ -82,16 +78,19 @@ const HelpPopup: FC = () => {
         </Accordion>
         <Divider />
         <Accordion
-          expanded={expanded === "panel2"}
-          onChange={handleChange("panel2")}
+          expanded={expanded === 'panel2'}
+          onChange={handleChange('panel2')}
         >
-          <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+          <AccordionSummary
+            aria-controls='panel2d-content'
+            id='panel2d-header'
+          >
             <Iconify
-              width="27px"
-              mr="15px"
-              icon="fluent:square-hint-sparkles-16-regular"
+              width='27px'
+              mr='15px'
+              icon='fluent:square-hint-sparkles-16-regular'
             />
-            <Typography variant="h6">{translate("solutions")}</Typography>
+            <Typography variant='h6'>{translate('solutions')}</Typography>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: 0 }}>
             <Solution />
@@ -99,12 +98,19 @@ const HelpPopup: FC = () => {
         </Accordion>
         <Divider />
         <Accordion
-          expanded={expanded === "panel3"}
-          onChange={handleChange("panel3")}
+          expanded={expanded === 'panel3'}
+          onChange={handleChange('panel3')}
         >
-          <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-            <Iconify width="27px" mr="15px" icon="ion:help-buoy-outline" />
-            <Typography variant="h6">{translate("get_unstuck")}</Typography>
+          <AccordionSummary
+            aria-controls='panel3d-content'
+            id='panel3d-header'
+          >
+            <Iconify
+              width='27px'
+              mr='15px'
+              icon='ion:help-buoy-outline'
+            />
+            <Typography variant='h6'>{translate('get_unstuck')}</Typography>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: 0 }}>
             <Unstack />
@@ -113,13 +119,16 @@ const HelpPopup: FC = () => {
         <Divider />
         <HelpQuestionModal>
           <MenuItem sx={MENU_ITEM_STYLES}>
-            <Iconify sx={ICONIFY_STYLES} icon="mdi:chat-outline" />
-            <Typography variant="h6">{translate("i_need_help")}</Typography>
+            <Iconify
+              sx={ICONIFY_STYLES}
+              icon='mdi:chat-outline'
+            />
+            <Typography variant='h6'>{translate('i_need_help')}</Typography>
           </MenuItem>
         </HelpQuestionModal>
       </MenuPopover>
     </Box>
-  );
-};
+  )
+}
 
-export default HelpPopup;
+export default HelpPopup

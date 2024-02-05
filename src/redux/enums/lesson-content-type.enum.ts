@@ -1,4 +1,4 @@
 export enum LessonContentType {
-  Editable = "editable",
-  Code = "code",
+  Editable = 'editable',
+  Code = 'code',
 }

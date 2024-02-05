@@ -1,60 +1,58 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Button, Stack, Typography } from '@mui/material'
+import { useSnackbar } from 'notistack'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { Button, Stack, Typography } from "@mui/material";
+import { useAuthContext } from '@/auth/useAuthContext'
+import { FormProvider } from '@/components'
+import { Role } from '@/redux/services/enums/role.enum'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { FormProvider } from "@components";
-import { useAuthContext } from "src/auth/useAuthContext";
-import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import EmailStep from "./email-step";
-import PasswordStep from "./password-step";
+import EmailStep from './email-step'
+import PasswordStep from './password-step'
 
 interface FormValuesProps {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
+  email: string
+  firstName: string
+  lastName: string
+  password: string
 }
 
 interface IJoinTribeRegisterProps {
-  handleChangeAuthorization: () => void;
+  handleChangeAuthorization: () => void
 }
 
 export default function JoinTribeRegister({
   handleChangeAuthorization,
 }: IJoinTribeRegisterProps): React.ReactElement {
-  const { register, login } = useAuthContext();
-  const { enqueueSnackbar } = useSnackbar();
-  const [currentStep, setCurrentStep] = useState(0);
-  const translate = useTranslate();
+  const { register, login } = useAuthContext()
+  const { enqueueSnackbar } = useSnackbar()
+  const [currentStep, setCurrentStep] = useState(0)
+  const translate = useTranslate()
 
   const CreateRegisterSchema = Yup.object().shape({
     email: Yup.string()
-      .required(translate("required_email"))
-      .email(translate("must_be_valid_email")),
-    firstName: Yup.string().required(translate("enter_name")),
-    lastName: Yup.string().required(translate("enter_surname")),
-    password: Yup.string()
-      .min(8, translate("required_password_length")),
-  });
+      .required(translate('required_email'))
+      .email(translate('must_be_valid_email')),
+    firstName: Yup.string().required(translate('enter_name')),
+    lastName: Yup.string().required(translate('enter_surname')),
+    password: Yup.string().min(8, translate('required_password_length')),
+  })
 
   const nextStep = (): void => {
-    setCurrentStep(currentStep + 1);
-  };
+    setCurrentStep(currentStep + 1)
+  }
   const prevStep = (): void => {
-    setCurrentStep(currentStep - 1);
-  };
+    setCurrentStep(currentStep - 1)
+  }
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateRegisterSchema),
-    mode: "all",
-  });
+    mode: 'all',
+  })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -64,32 +62,33 @@ export default function JoinTribeRegister({
         firstName: data.firstName,
         lastName: data.lastName,
         role: Role.Student,
-      });
-      await login(data.email, data.password, "codetribe");
-      enqueueSnackbar(translate("register_successfully"));
+      })
+      await login(data.email, data.password, 'codetribe')
+      enqueueSnackbar(translate('register_successfully'))
     } catch (error: any) {
-      methods.setError("root", {
+      methods.setError('root', {
         ...error,
         message: error.message,
-      });
-      enqueueSnackbar(error.message, { variant: "error" });
+      })
+      enqueueSnackbar(error.message, { variant: 'error' })
     }
-  };
+  }
 
   return (
-    <Stack alignItems="center" position="relative">
-      <Typography variant="h4">{translate("home_join_tribe")}</Typography>
-      <Typography variant="body1">
-        {translate("tribes_sign_up_to_join")}
-      </Typography>
-      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+    <Stack
+      alignItems='center'
+      position='relative'
+    >
+      <Typography variant='h4'>{translate('home_join_tribe')}</Typography>
+      <Typography variant='body1'>{translate('tribes_sign_up_to_join')}</Typography>
+      <FormProvider
+        methods={methods}
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
         {currentStep === 0 && (
           <EmailStep
             nextStep={nextStep}
-            isValid={
-              !methods.formState.errors.email &&
-              methods.formState.dirtyFields.email
-            }
+            isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
           />
         )}
         {currentStep === 1 && (
@@ -103,19 +102,19 @@ export default function JoinTribeRegister({
         onClick={handleChangeAuthorization}
         sx={{
           mt: 4,
-          color: "inherit",
-          display: "flex",
+          color: 'inherit',
+          display: 'flex',
           gap: 1,
-          alignItems: "center",
+          alignItems: 'center',
           p: 0,
-          "&:hover": {
-            background: "none",
+          '&:hover': {
+            background: 'none',
           },
         }}
       >
-        <Typography variant="body1">{translate("login_been_here")}</Typography>|
-        <Typography variant="subtitle1">{translate("login")}</Typography>
+        <Typography variant='body1'>{translate('login_been_here')}</Typography>|
+        <Typography variant='subtitle1'>{translate('login')}</Typography>
       </Button>
     </Stack>
-  );
+  )
 }

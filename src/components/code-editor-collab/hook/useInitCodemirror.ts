@@ -1,26 +1,25 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState } from 'react'
 
-import { css } from "@codemirror/lang-css"
-import { html } from "@codemirror/lang-html"
-import { javascript } from "@codemirror/lang-javascript"
-import { /* LanguageSupport,  */ indentUnit } from "@codemirror/language"
-import { Compartment, Extension, StateEffect } from "@codemirror/state"
-import { EditorView } from "@codemirror/view"
-import { basicSetup } from "@uiw/codemirror-extensions-basic-setup"
-import { dracula } from "@uiw/codemirror-theme-dracula"
-import type { Socket } from "socket.io-client"
+import { css } from '@codemirror/lang-css'
+import { html } from '@codemirror/lang-html'
+import { javascript } from '@codemirror/lang-javascript'
+import { /* LanguageSupport,  */ indentUnit } from '@codemirror/language'
+import { Compartment, Extension, StateEffect } from '@codemirror/state'
+import { EditorView } from '@codemirror/view'
+import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
+import { dracula } from '@uiw/codemirror-theme-dracula'
+import type { Socket } from 'socket.io-client'
 // import { langs } from "@uiw/codemirror-extensions-langs";
 
-import { getFileExtension } from "src/lib/utils/getFileExtension"
+import { useAuthContext } from '@/auth/useAuthContext'
+import { getFileExtension } from '@/utils/getFileExtension'
 
-import { useAuthContext } from "../../../auth/useAuthContext"
-
-import { BASIC_SETUP, Extensions } from "./constants"
-import { commentsExtension } from "./utils/collab/comments"
-import { contextMenuExtension } from "./utils/collab/context-menu"
-import { type Cursor, cursorExtension } from "./utils/collab/cursors"
-import { peerExtension } from "./utils/collab/peer-extension"
-import { File, getDocument } from "./utils/collab/requests"
+import { BASIC_SETUP, Extensions } from './constants'
+import { commentsExtension } from './utils/collab/comments'
+import { contextMenuExtension } from './utils/collab/context-menu'
+import { type Cursor, cursorExtension } from './utils/collab/cursors'
+import { peerExtension } from './utils/collab/peer-extension'
+import { File, getDocument } from './utils/collab/requests'
 
 const langMap = {
   [Extensions.Css]: () => css(),
@@ -63,7 +62,7 @@ export const useInitCodemirror = ({
   preloadedCode,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0)
-  const [doc, setDoc] = useState("")
+  const [doc, setDoc] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
   const { user } = useAuthContext()
@@ -83,7 +82,7 @@ export const useInitCodemirror = ({
       })
 
       setExtensions([
-        indentUnit.of("\t"),
+        indentUnit.of('\t'),
         basicSetup(BASIC_SETUP),
         ...language(fileName),
         dracula,

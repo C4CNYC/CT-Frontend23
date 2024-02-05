@@ -1,24 +1,24 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export interface CounterState {
-  schoolId: string;
+  schoolId: string
 }
 
 const initialState: CounterState = {
-  schoolId: "",
-};
+  schoolId: '',
+}
 
 export const managerSlice = createSlice({
-  name: "global",
+  name: 'global',
   initialState,
   reducers: {
     setSchool: (state, action: PayloadAction<string>) => {
-      state.schoolId = action.payload;
+      state.schoolId = action.payload
     },
   },
-});
+})
 
-export const { setSchool } = managerSlice.actions;
+export const { setSchool } = managerSlice.actions
 
-export default managerSlice.reducer;
+export default managerSlice.reducer

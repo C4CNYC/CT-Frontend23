@@ -1,5 +1,4 @@
-import Head from "next/head";
-import { useState } from "react";
+import { useState } from 'react'
 
 import {
   Box,
@@ -9,34 +8,28 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
-} from "@mui/material";
+} from '@mui/material'
+import Head from 'next/head'
 
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
-import { StudentDashboardLayout } from "@layouts/dashboard";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import RoleBasedGuard from "src/auth/RoleBasedGuard";
-
-// ----------------------------------------------------------------------
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
+import { CustomBreadcrumbs, useSettingsContext } from '@/components'
+import { StudentDashboardLayout } from '@/layouts/dashboard'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 PermissionDeniedPage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
-);
-
-// ----------------------------------------------------------------------
+)
 
 export default function PermissionDeniedPage(): React.ReactElement {
-  const { themeStretch } = useSettingsContext();
+  const { themeStretch } = useSettingsContext()
 
-  const [role, setRole] = useState("admin");
+  const [role, setRole] = useState('admin')
 
-  const handleChangeRole = (
-    event: React.MouseEvent<HTMLElement>,
-    newRole: string | null
-  ): void => {
+  const handleChangeRole = (event: React.MouseEvent<HTMLElement>, newRole: string | null): void => {
     if (newRole !== null) {
-      setRole(newRole);
+      setRole(newRole)
     }
-  };
+  }
 
   return (
     <>
@@ -44,16 +37,16 @@ export default function PermissionDeniedPage(): React.ReactElement {
         <title> Permission Denied </title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Permission Denied"
+          heading='Permission Denied'
           links={[
             {
-              name: "Dashboard",
+              name: 'Dashboard',
               href: STUDENT_PATH_DASHBOARD.root,
             },
             {
-              name: "Permission Denied",
+              name: 'Permission Denied',
             },
           ]}
         />
@@ -62,31 +55,44 @@ export default function PermissionDeniedPage(): React.ReactElement {
           exclusive
           value={role}
           onChange={handleChangeRole}
-          color="primary"
+          color='primary'
           sx={{ mb: 5 }}
         >
-          <ToggleButton value="admin" aria-label="admin role">
+          <ToggleButton
+            value='admin'
+            aria-label='admin role'
+          >
             isAdmin
           </ToggleButton>
 
-          <ToggleButton value="user" aria-label="user role">
+          <ToggleButton
+            value='user'
+            aria-label='user role'
+          >
             isUser
           </ToggleButton>
         </ToggleButtonGroup>
 
-        <RoleBasedGuard hasContent roles={[role]}>
-          <Box gap={3} display="grid" gridTemplateColumns="repeat(2, 1fr)">
+        <RoleBasedGuard
+          hasContent
+          roles={[role]}
+        >
+          <Box
+            gap={3}
+            display='grid'
+            gridTemplateColumns='repeat(2, 1fr)'
+          >
             {[...Array(8)].map((_, index) => (
               <Card key={index}>
                 <CardHeader
                   title={`Card ${index + 1}`}
-                  subheader="Proin viverra ligula"
+                  subheader='Proin viverra ligula'
                 />
 
-                <Typography sx={{ p: 3, color: "text.secondary" }}>
-                  Aliquam lorem ante, dapibus in, viverra quis, feugiat a,
-                  tellus. In enim justo, rhoncus ut, imperdiet a, venenatis
-                  vitae, justo. Vestibulum fringilla pede sit amet augue.
+                <Typography sx={{ p: 3, color: 'text.secondary' }}>
+                  Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. In enim justo,
+                  rhoncus ut, imperdiet a, venenatis vitae, justo. Vestibulum fringilla pede sit
+                  amet augue.
                 </Typography>
               </Card>
             ))}
@@ -94,5 +100,5 @@ export default function PermissionDeniedPage(): React.ReactElement {
         </RoleBasedGuard>
       </Container>
     </>
-  );
+  )
 }

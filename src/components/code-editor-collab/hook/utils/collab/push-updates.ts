@@ -1,15 +1,16 @@
-import { sendableUpdates } from "@codemirror/collab";
-import type { Socket } from "socket.io-client";
+import { sendableUpdates } from '@codemirror/collab'
+import type { Socket } from 'socket.io-client'
 
-import { EmitSocketEvents, SubscribedEvents } from "../socket";
-import { File } from "./requests";
+import { EmitSocketEvents, SubscribedEvents } from '../socket'
+
+import { File } from './requests'
 
 interface PushUpdatesProps {
-  socket: Socket;
-  roomId: string;
-  version: number;
-  updates: ReturnType<typeof sendableUpdates>;
-  fileName: File;
+  socket: Socket
+  roomId: string
+  version: number
+  updates: ReturnType<typeof sendableUpdates>
+  fileName: File
 }
 
 export const pushUpdates = ({
@@ -28,10 +29,10 @@ export const pushUpdates = ({
         ...other,
       })),
       fileName,
-    });
-    console.log("pushUpdates", updates, fileName);
+    })
+    console.log('pushUpdates', updates, fileName)
     socket.once(SubscribedEvents.PushResponse, function (status: boolean) {
-      resolve(status);
-    });
-  });
-};
+      resolve(status)
+    })
+  })
+}

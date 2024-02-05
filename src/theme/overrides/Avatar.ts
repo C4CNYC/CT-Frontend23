@@ -1,6 +1,4 @@
-import { type Theme, alpha } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import { type Theme, alpha } from '@mui/material/styles'
 
 export default function Avatar(theme: Theme): unknown {
   return {
@@ -18,12 +16,12 @@ export default function Avatar(theme: Theme): unknown {
       },
       styleOverrides: {
         root: {
-          justifyContent: "flex-end",
+          justifyContent: 'flex-end',
         },
         avatar: {
           fontSize: 16,
           fontWeight: theme.typography.fontWeightMedium,
-          "&:first-of-type": {
+          '&:first-of-type': {
             fontSize: 12,
             color: theme.palette.primary.main,
             backgroundColor: theme.palette.primary.lighter,
@@ -31,5 +29,5 @@ export default function Avatar(theme: Theme): unknown {
         },
       },
     },
-  };
+  }
 }

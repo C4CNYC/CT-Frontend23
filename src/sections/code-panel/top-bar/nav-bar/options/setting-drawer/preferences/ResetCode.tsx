@@ -1,22 +1,29 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material'
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from '@/components/iconify'
 
-import BasePreference from "./BasePreference";
+import BasePreference from './BasePreference'
 
 interface IResetCode {
-  onReset: () => void;
+  onReset: () => void
 }
 
 const ResetCode = ({ onReset }: IResetCode): React.ReactElement => {
   return (
-    <BasePreference title="reset code">
-      <Button onClick={onReset} fullWidth variant="contained">
-        <Iconify mr="7px" icon="carbon:reset" />
+    <BasePreference title='reset code'>
+      <Button
+        onClick={onReset}
+        fullWidth
+        variant='contained'
+      >
+        <Iconify
+          mr='7px'
+          icon='carbon:reset'
+        />
         Reset Lesson
       </Button>
     </BasePreference>
-  );
-};
+  )
+}
 
-export default ResetCode;
+export default ResetCode

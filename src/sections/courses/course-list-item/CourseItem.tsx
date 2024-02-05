@@ -1,127 +1,120 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { SlArrowDown } from "@react-icons/all-files/sl/SlArrowDown";
-import { SlArrowUp } from "@react-icons/all-files/sl/SlArrowUp";
+import { Box, Button, Collapse, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { SlArrowDown } from '@react-icons/all-files/sl/SlArrowDown'
+import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
+import { useRouter } from 'next/router'
 
-import {
-  Box,
-  Button,
-  Collapse,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { ICourseElement } from '@/redux/interfaces/content.interface'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { ICourseElement } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import CourseAvatar from "./CourseAvarar";
-import CourseButtons from "./CourseButtons";
-import CourseChip from "./CourseChip";
-import CourseHeader from "./CourseHeader";
-import CourseInfo from "./CourseInfo";
-import CourseStatistics from "./CourseStatistics";
+import CourseAvatar from './CourseAvarar'
+import CourseButtons from './CourseButtons'
+import CourseChip from './CourseChip'
+import CourseHeader from './CourseHeader'
+import CourseInfo from './CourseInfo'
+import CourseStatistics from './CourseStatistics'
 
 interface Props {
-  course: ICourseElement;
+  course: ICourseElement
 }
 
-const MAX_DESCRIPTION_LENGTH = 250;
+const MAX_DESCRIPTION_LENGTH = 250
 
 export default function CoursesItem({ course }: Props): React.ReactElement {
-  const { push } = useRouter();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [open, setOpen] = useState(false);
-  const translate = useTranslate();
+  const { push } = useRouter()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [open, setOpen] = useState(false)
+  const translate = useTranslate()
 
   const redirect = (): void => {
-    push(`${STUDENT_PATH_DASHBOARD.courses.course(course.id)}`);
-  };
+    push(`${STUDENT_PATH_DASHBOARD.courses.course(course.id)}`)
+  }
   return (
     <Stack
       sx={{
-        background: "#ECF4FF",
-        borderRadius: "25px",
+        background: '#ECF4FF',
+        borderRadius: '25px',
         p: {
-          xs: "20px 20px 20px 20px",
-          sm: "30px 20px 20px 20px",
-          md: "30px 55px 37px 40px",
+          xs: '20px 20px 20px 20px',
+          sm: '30px 20px 20px 20px',
+          md: '30px 55px 37px 40px',
         },
       }}
     >
       <CourseHeader progress={course.progress} />
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
+          display: 'flex',
+          justifyContent: 'space-between',
         }}
       >
         <Box
           sx={{
-            width: "100%",
-            maxWidth: { xs: "none", sm: "none", md: "600px" },
+            width: '100%',
+            maxWidth: { xs: 'none', sm: 'none', md: '600px' },
           }}
         >
           <Typography
-            variant="h4"
-            sx={{ textTransform: "uppercase", pb: "10px" }}
+            variant='h4'
+            sx={{ textTransform: 'uppercase', pb: '10px' }}
           >
             {course.name}
           </Typography>
-          <Typography variant="body2" sx={{ pb: !open ? 1 : 0 }}>
+          <Typography
+            variant='body2'
+            sx={{ pb: !open ? 1 : 0 }}
+          >
             {course.description.length > MAX_DESCRIPTION_LENGTH && !open
               ? `${course.description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
               : course.description}
           </Typography>
           <Collapse in={open}>
             <Stack
-              direction="row"
+              direction='row'
               sx={{
-                gap: "15px",
-                flexWrap: "wrap",
-                mt: "25px",
+                gap: '15px',
+                flexWrap: 'wrap',
+                mt: '25px',
                 mb: {
-                  xs: "10px",
-                  sm: "15px",
-                  md: "15px",
+                  xs: '10px',
+                  sm: '15px',
+                  md: '15px',
                 },
               }}
             >
-              {["HTML", "CSS", "BASICS", "AUTO-CHECKED"].map((el) => (
-                <CourseChip text={el} key={el} />
+              {['HTML', 'CSS', 'BASICS', 'AUTO-CHECKED'].map((el) => (
+                <CourseChip
+                  text={el}
+                  key={el}
+                />
               ))}
             </Stack>
             <CourseStatistics
-              likesCount={
-                course.initial_likes + parseInt(course.likes_count ?? "0")
-              }
+              likesCount={course.initial_likes + parseInt(course.likes_count ?? '0')}
               enrolledCount={course.initial_enrolled}
               starsCount={course.initial_stars}
             />
           </Collapse>
           <Button
             sx={{
-              fontSize: "1rem",
-              color: "#364954",
-              "&:hover": {
-                background: "none",
+              fontSize: '1rem',
+              color: '#364954',
+              '&:hover': {
+                background: 'none',
               },
             }}
             onClick={() => {
-              setOpen(!open);
+              setOpen(!open)
             }}
           >
-            {open
-              ? translate("actions_show_less")
-              : translate("actions_see_more")}
+            {open ? translate('actions_show_less') : translate('actions_see_more')}
             {open ? (
-              <SlArrowUp style={{ marginLeft: "10px" }} />
+              <SlArrowUp style={{ marginLeft: '10px' }} />
             ) : (
-              <SlArrowDown style={{ marginLeft: "10px" }} />
+              <SlArrowDown style={{ marginLeft: '10px' }} />
             )}
           </Button>
           <CourseButtons
@@ -130,7 +123,11 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
             courseId={course.id}
           />
           {isMobile && (
-            <Stack alignItems="center" mb={3} mt={1}>
+            <Stack
+              alignItems='center'
+              mb={3}
+              mt={1}
+            >
               <CourseAvatar course={course} />
             </Stack>
           )}
@@ -139,5 +136,5 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         {!isMobile && <CourseAvatar course={course} />}
       </Box>
     </Stack>
-  );
+  )
 }

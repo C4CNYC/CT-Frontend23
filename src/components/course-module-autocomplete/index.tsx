@@ -1,1 +1,1 @@
-export { default as CourseModuleAutocomplete } from "./CourseModuleAutocomplete";
+export { default as CourseModuleAutocomplete } from './CourseModuleAutocomplete'

@@ -1,61 +1,61 @@
-import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo } from 'react'
 
-import { useSnackbar } from "notistack";
+import { Button } from '@mui/material'
+import { useTheme } from '@mui/system'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 
-import { Button } from "@mui/material";
-import { useTheme } from "@mui/system";
+import { Iconify } from '@/components/iconify'
+import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { Iconify } from "src/components/iconify";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
-import { useTranslate } from "src/lib/utils/translateHelper";
-
-import { getLetsCodeBtnSx } from "./constants";
+import { getLetsCodeBtnSx } from './constants'
 
 interface ILetsCodeBtnProps {
-  isMini?: boolean;
+  isMini?: boolean
 }
 
 export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
-  const translate = useTranslate();
-  const { push, query } = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
-  const theme = useTheme();
-  const letsCodeBtnSx = useMemo(
-    () => getLetsCodeBtnSx(theme, isMini),
-    [theme, isMini]
-  );
+  const translate = useTranslate()
+  const { push, query } = useRouter()
+  const { enqueueSnackbar } = useSnackbar()
+  const theme = useTheme()
+  const letsCodeBtnSx = useMemo(() => getLetsCodeBtnSx(theme, isMini), [theme, isMini])
 
   const { data: assigments } = useGetAssignmentListStudentQuery(
     { class_id: query.id as string },
     { skip: !query.id }
-  );
+  )
 
   return (
     <Button
       onClick={() => {
         // Now go to first quest
         if (!assigments?.data[0]) {
-          enqueueSnackbar("No lesson to code", { variant: "warning" });
+          enqueueSnackbar('No lesson to code', { variant: 'warning' })
         } else {
-          push(
-            STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-              assigments?.data[0].courseid
-            )
-          );
+          push(STUDENT_PATH_DASHBOARD.codePanel.workSpace(assigments?.data[0].courseid))
         }
       }}
-      variant="contained"
+      variant='contained'
       sx={letsCodeBtnSx}
     >
-      {!isMini ? `👩‍💻 ${translate("sidebar_menu_code_btn")}` : ""}
+      {!isMini ? `👩‍💻 ${translate('sidebar_menu_code_btn')}` : ''}
 
       {isMini ? (
-        <Iconify icon="mingcute:code-fill" width={25} height={25} />
+        <Iconify
+          icon='mingcute:code-fill'
+          width={25}
+          height={25}
+        />
       ) : (
-        <Iconify icon="octicon:chevron-right-12" width={25} height={25} />
+        <Iconify
+          icon='octicon:chevron-right-12'
+          width={25}
+          height={25}
+        />
       )}
     </Button>
-  );
+  )
 }

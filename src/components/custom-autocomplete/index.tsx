@@ -1,36 +1,32 @@
-import { useState } from "react";
-
-import SchoolFiltersSkeleton from "@sections/schools/school-filter-skeleton";
+import { useState } from 'react'
 
 import Autocomplete, {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
-} from "@mui/material/Autocomplete";
-import Button from "@mui/material/Button";
-import InputAdornment from "@mui/material/InputAdornment";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
+} from '@mui/material/Autocomplete'
+import Button from '@mui/material/Button'
+import InputAdornment from '@mui/material/InputAdornment'
+import Stack from '@mui/material/Stack'
+import TextField from '@mui/material/TextField'
 
-import { Iconify } from "src/components/iconify";
-import { useFilters } from "@hooks";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import {
-  ClassSearchParams,
-  IClass,
-} from "src/redux/interfaces/class.interface";
-import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
-import { RootState, useSelector } from "src/redux/store";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { Iconify } from '@/components/iconify'
+import { useFilters } from '@/hooks'
+import { ClassSearchParams, IClass } from '@/redux/interfaces/class.interface'
+import { useGetClassesQuery } from '@/redux/services/manager/classes-manager'
+import { RootState, useSelector } from '@/redux/store'
+import SchoolFiltersSkeleton from '@/sections/schools/school-filter-skeleton'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
-  filterName: string;
-  onResetFilter: VoidFunction;
-  onFilterName: (name: string) => void;
-  onFilterClass: (classId: string) => void;
-  disableClassFilter?: boolean;
+  filterName: string
+  onResetFilter: VoidFunction
+  onFilterName: (name: string) => void
+  onFilterClass: (classId: string) => void
+  disableClassFilter?: boolean
 }
 
-type ClassType = IClass & BaseResponseInterface;
+type ClassType = IClass & BaseResponseInterface
 
 export function CustomAutocomplete({
   filterName,
@@ -39,19 +35,16 @@ export function CustomAutocomplete({
   onResetFilter,
   disableClassFilter,
 }: Props): React.ReactElement | null {
-  const [value, setValue] = useState<ClassType | null>(null);
-  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+  const [value, setValue] = useState<ClassType | null>(null)
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId)
   const {
     filters,
     setFilter,
     resetFilters: resetClassFilter,
-  } = useFilters<ClassSearchParams>({ name: "" });
+  } = useFilters<ClassSearchParams>({ name: '' })
 
-  const translate = useTranslate();
-  const { data: clases } = useGetClassesQuery(
-    { schoolId, ...filters },
-    { skip: !schoolId }
-  );
+  const translate = useTranslate()
+  const { data: clases } = useGetClassesQuery({ schoolId, ...filters }, { skip: !schoolId })
 
   const onChange = (
     event: React.SyntheticEvent<any>,
@@ -59,36 +52,39 @@ export function CustomAutocomplete({
     reason: AutocompleteChangeReason,
     details?: AutocompleteChangeDetails<ClassType>
   ): void => {
-    onFilterClass(details?.option.id as string);
-    setValue(newValue);
-    resetClassFilter();
-  };
+    onFilterClass(details?.option.id as string)
+    setValue(newValue)
+    resetClassFilter()
+  }
 
   const onReset = (): void => {
-    onResetFilter();
-    resetClassFilter();
-    setValue(null);
-  };
+    onResetFilter()
+    resetClassFilter()
+    setValue(null)
+  }
 
   if (!clases?.data) {
-    return <SchoolFiltersSkeleton />;
+    return <SchoolFiltersSkeleton />
   }
 
   return (
     <Stack
-      display="flex"
-      flexDirection="row"
-      justifyContent="space-between"
-      padding="24px 20px"
+      display='flex'
+      flexDirection='row'
+      justifyContent='space-between'
+      padding='24px 20px'
     >
       {!disableClassFilter && (
         <Autocomplete<ClassType>
           options={clases.data || []}
           renderInput={(params) => (
-            <TextField {...params} label={translate("class")} />
+            <TextField
+              {...params}
+              label={translate('class')}
+            />
           )}
           onInputChange={(e, value) => {
-            setFilter("name", value);
+            setFilter('name', value)
           }}
           onChange={onChange}
           value={value}
@@ -99,15 +95,18 @@ export function CustomAutocomplete({
 
       <TextField
         fullWidth
-        placeholder={translate("actions_search")}
+        placeholder={translate('actions_search')}
         value={filterName}
         onChange={(e: any) => {
-          onFilterName(e.target.value);
+          onFilterName(e.target.value)
         }}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
+            <InputAdornment position='start'>
+              <Iconify
+                icon='eva:search-fill'
+                sx={{ color: 'text.disabled' }}
+              />
             </InputAdornment>
           ),
         }}
@@ -115,13 +114,13 @@ export function CustomAutocomplete({
       />
 
       <Button
-        color="error"
+        color='error'
         sx={{ flexShrink: 0, marginLeft: 2, px: 2 }}
         onClick={onReset}
-        startIcon={<Iconify icon="eva:trash-2-outline" />}
+        startIcon={<Iconify icon='eva:trash-2-outline' />}
       >
-        {translate("actions_clear")}
+        {translate('actions_clear')}
       </Button>
     </Stack>
-  );
+  )
 }

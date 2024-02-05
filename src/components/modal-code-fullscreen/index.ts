@@ -1,1 +1,1 @@
-export * from "./ModalCodeFullscreen";
+export * from './ModalCodeFullscreen'

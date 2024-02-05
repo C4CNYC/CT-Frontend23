@@ -1,22 +1,20 @@
-import { type Theme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import { type Theme } from '@mui/material/styles'
 
 export default function Table(theme: Theme): unknown {
   return {
     MuiTableContainer: {
       styleOverrides: {
         root: {
-          position: "relative",
+          position: 'relative',
         },
       },
     },
     MuiTableRow: {
       styleOverrides: {
         root: {
-          "&.Mui-selected": {
+          '&.Mui-selected': {
             backgroundColor: theme.palette.action.selected,
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.action.hover,
             },
           },
@@ -26,7 +24,7 @@ export default function Table(theme: Theme): unknown {
     MuiTableCell: {
       styleOverrides: {
         root: {
-          borderBottom: "none",
+          borderBottom: 'none',
         },
         head: {
           color: theme.palette.text.secondary,
@@ -44,16 +42,16 @@ export default function Table(theme: Theme): unknown {
     MuiTablePagination: {
       defaultProps: {
         backIconButtonProps: {
-          size: "small",
+          size: 'small',
         },
         nextIconButtonProps: {
-          size: "small",
+          size: 'small',
         },
         SelectProps: {
           MenuProps: {
             MenuListProps: {
               sx: {
-                "& .MuiMenuItem-root": {
+                '& .MuiMenuItem-root': {
                   ...theme.typography.body2,
                 },
               },
@@ -73,11 +71,11 @@ export default function Table(theme: Theme): unknown {
           marginRight: theme.spacing(1),
         },
         select: {
-          "&:focus": {
+          '&:focus': {
             borderRadius: theme.shape.borderRadius,
           },
         },
       },
     },
-  };
+  }
 }

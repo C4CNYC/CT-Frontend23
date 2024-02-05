@@ -1,3 +1,3 @@
-export { default } from "./DashboardLayout";
-export * from "./SchoolDashboardLayout";
-export * from "./StudentDashboardLayout";
+export { default } from './DashboardLayout'
+export * from './SchoolDashboardLayout'
+export * from './StudentDashboardLayout'

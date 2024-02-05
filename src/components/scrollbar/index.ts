@@ -1,2 +1,2 @@
-export * from "./Scrollbar";
-export * from "./types";
+export * from './Scrollbar'
+export * from './types'

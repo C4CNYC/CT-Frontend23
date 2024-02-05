@@ -1,3 +1,3 @@
-export * from "./TextMaxLine";
-export * from "./types";
-export * from "./useTypography";
+export * from './TextMaxLine'
+export * from './types'
+export * from './useTypography'

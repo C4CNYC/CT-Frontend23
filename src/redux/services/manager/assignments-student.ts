@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
 import {
   IAssignmentFull,
   IAssignmentReduced,
   IAssignmetsSearchParams,
-} from "../../interfaces/assignment.interface";
+} from '../../interfaces/assignment.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,49 +16,49 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ assignmentId, ...params }) => ({
         url: `/student/assignment/${assignmentId}`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
-      providesTags: ["Assignment"],
+      providesTags: ['Assignment'],
     }),
     getAssignmentListStudent: builder.query<
       BaseListResponseInterface<IAssignmentReduced & BaseResponseInterface>,
       { class_id: string }
     >({
       query: ({ ...params }) => ({
-        url: "/student/assignment",
-        method: "GET",
+        url: '/student/assignment',
+        method: 'GET',
         params,
       }),
-      providesTags: ["Assignments"],
+      providesTags: ['Assignments'],
     }),
     pinAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
+        assignmentId: string
       }
     >({
       query: ({ assignmentId }) => ({
         url: `/student/assignment/${assignmentId}/pin`,
-        method: "PATCH",
+        method: 'PATCH',
       }),
-      invalidatesTags: ["Assignments", "Assignment"],
+      invalidatesTags: ['Assignments', 'Assignment'],
     }),
     unpinAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
+        assignmentId: string
       }
     >({
       query: ({ assignmentId }) => ({
         url: `/student/assignment/${assignmentId}/unpin`,
-        method: "PATCH",
+        method: 'PATCH',
       }),
-      invalidatesTags: ["Assignments", "Assignment"],
+      invalidatesTags: ['Assignments', 'Assignment'],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetAssignmentListStudentQuery,
@@ -66,4 +66,4 @@ export const {
   // -------------mutation-----------
   usePinAssignmentMutation,
   useUnpinAssignmentMutation,
-} = extendedApi;
+} = extendedApi

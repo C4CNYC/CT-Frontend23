@@ -1,8 +1,8 @@
-import type { Socket } from "socket.io-client";
-import { Text } from "@codemirror/state"
-import { type Update } from "@codemirror/collab";
+import { type Update } from '@codemirror/collab'
+import { Text } from '@codemirror/state'
+import type { Socket } from 'socket.io-client'
 
-import { EmitSocketEvents, SubscribedEvents } from "../socket";
+import { EmitSocketEvents, SubscribedEvents } from '../socket'
 
 interface GetDocumentProps {
   socket?: Socket
@@ -14,8 +14,8 @@ interface GetDocumentProps {
 }
 
 interface GetDocumentReturn {
-  version: number,
-  doc: Text,
+  version: number
+  doc: Text
   cursorName: string
   updates: Update[]
   docInfo: Record<string, string>
@@ -38,17 +38,13 @@ interface CreateFile {
   roomId: string
 }
 
-export const createFile = async ({
-  socket,
-  fileName,
-  roomId
-}: CreateFile): Promise<File> => {
+export const createFile = async ({ socket, fileName, roomId }: CreateFile): Promise<File> => {
   return await new Promise((res, rej) => {
-    socket.emit(EmitSocketEvents.CreateFile, { roomId, fileName });
+    socket.emit(EmitSocketEvents.CreateFile, { roomId, fileName })
 
     socket.once(`${SubscribedEvents.CreateFileResponse}${roomId}`, (file: File | null) => {
       if (file != null) {
-        res(file);
+        res(file)
       } else {
         rej()
       }
@@ -57,20 +53,20 @@ export const createFile = async ({
 }
 export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileInfo> => {
   return await new Promise((resolve) => {
-    socket.emit(EmitSocketEvents.GetFileInfo, roomId, socket.id);
+    socket.emit(EmitSocketEvents.GetFileInfo, roomId, socket.id)
 
     socket.once(SubscribedEvents.GetFileInfoResponse + socket.id, (info: FileInfo) => {
-      resolve(info);
+      resolve(info)
     })
   })
 }
 
 export const isRoomExist = async (roomId: string, socket: Socket): Promise<boolean> => {
   return await new Promise((resolve) => {
-    socket.emit("isRoomExist", roomId, socket.id);
+    socket.emit('isRoomExist', roomId, socket.id)
 
-    socket.once("isRoomExistResponse" + roomId + socket.id, (isExist: boolean) => {
-      resolve(isExist);
+    socket.once('isRoomExistResponse' + roomId + socket.id, (isExist: boolean) => {
+      resolve(isExist)
     })
   })
 }
@@ -79,28 +75,27 @@ export const getDocument = async ({
   socket,
   ...other
 }: GetDocumentProps): Promise<GetDocumentReturn> => {
-  return await new Promise(function(resolve) {
-    console.log("getDocument", other);
+  return await new Promise(function (resolve) {
+    console.log('getDocument', other)
 
     if (!socket) {
       console.error('TODO getDocument not implemented without sockets')
       resolve({
         doc: Text.of([]),
         // ...other
-      } as any);
+      } as any)
     } else {
-      socket.emit(EmitSocketEvents.GetDoc, other);
+      socket.emit(EmitSocketEvents.GetDoc, other)
 
       socket.once(SubscribedEvents.GetDocResponse, ({ doc, ...other }) => {
-        console.log("getDocumentResponse", Text.of(doc.split("\n")))
+        console.log('getDocumentResponse', Text.of(doc.split('\n')))
         resolve({
-          doc: Text.of(doc.split("\n")),
-          ...other
-        });
-      });
+          doc: Text.of(doc.split('\n')),
+          ...other,
+        })
+      })
     }
-
-  });
+  })
 }
 
 interface GetCodeInfo {
@@ -108,15 +103,12 @@ interface GetCodeInfo {
   roomId: string
 }
 
-export const getCodeInfo = async ({
-  socket,
-  roomId
-}: GetCodeInfo): Promise<any> => {
-  return await new Promise(function(resolve) {
-    socket.emit("getCode", roomId);
+export const getCodeInfo = async ({ socket, roomId }: GetCodeInfo): Promise<any> => {
+  return await new Promise(function (resolve) {
+    socket.emit('getCode', roomId)
 
-    socket.once("getCodeResponse" + roomId, (data) => {
-      resolve(data);
-    });
-  });
+    socket.once('getCodeResponse' + roomId, (data) => {
+      resolve(data)
+    })
+  })
 }

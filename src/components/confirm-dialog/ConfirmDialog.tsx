@@ -1,18 +1,8 @@
-// @mui
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 
-import { useTranslate } from "src/lib/utils/translateHelper";
+import { useTranslate } from '@/utils/translateHelper'
 
-//
-import { ConfirmDialogProps } from "./types";
-
-// ----------------------------------------------------------------------
+import { ConfirmDialogProps } from './types'
 
 export function ConfirmDialog({
   title,
@@ -22,23 +12,31 @@ export function ConfirmDialog({
   onClose,
   ...other
 }: ConfirmDialogProps): React.ReactElement | null {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
-    <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>
+    <Dialog
+      fullWidth
+      maxWidth='xs'
+      open={open}
+      onClose={onClose}
+      {...other}
+    >
       <DialogTitle sx={{ pb: 2 }}>{title}</DialogTitle>
 
-      {content && (
-        <DialogContent sx={{ typography: "body2" }}> {content} </DialogContent>
-      )}
+      {content && <DialogContent sx={{ typography: 'body2' }}> {content} </DialogContent>}
 
       <DialogActions>
         {action}
 
-        <Button variant="outlined" color="inherit" onClick={onClose}>
-          {translate("actions_cancel")}
+        <Button
+          variant='outlined'
+          color='inherit'
+          onClick={onClose}
+        >
+          {translate('actions_cancel')}
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

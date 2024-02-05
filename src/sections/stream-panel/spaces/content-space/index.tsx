@@ -1,9 +1,9 @@
-import { memo } from "react";
+import { memo } from 'react'
 
-import { Box } from "@mui/system";
+import { Box } from '@mui/system'
 
 const ContentSpace = (): React.ReactElement | null => {
-  return <Box> content space </Box>;
-};
+  return <Box> content space </Box>
+}
 
-export default memo(ContentSpace);
+export default memo(ContentSpace)

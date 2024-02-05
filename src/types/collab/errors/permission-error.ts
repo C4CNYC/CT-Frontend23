@@ -1,5 +1,5 @@
-import { SocketError } from "./socket-error";
+import { SocketError } from './socket-error'
 
 export interface PermissionError extends SocketError {
-  error: "PERMISSION_ERROR";
+  error: 'PERMISSION_ERROR'
 }

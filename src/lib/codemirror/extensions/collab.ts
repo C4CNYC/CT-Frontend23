@@ -4,13 +4,12 @@ import {
   getSyncedVersion,
   receiveUpdates,
   sendableUpdates,
-} from "@codemirror/collab";
-import { ChangeSet, Extension, StateEffect, Text } from "@codemirror/state";
-import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
-import { error } from "console";
-import type { Socket } from "socket.io-client";
+} from '@codemirror/collab'
+import { ChangeSet, Extension, StateEffect, Text } from '@codemirror/state'
+import { EditorView, ViewPlugin, ViewUpdate } from '@codemirror/view'
+import type { Socket } from 'socket.io-client'
 
-import { addCursor, removeCursor } from "./cursors";
+import { addCursor, removeCursor } from './cursors'
 
 async function pushUpdates(
   socket: Socket,
@@ -24,30 +23,30 @@ async function pushUpdates(
     clientID: u.clientID,
     changes: u.changes.toJSON(),
     effects: u.effects,
-  }));
+  }))
 
   return await new Promise(function (resolve, reject) {
     socket
       .timeout(timeout)
       .emit(
-        "pushUpdates",
+        'pushUpdates',
         roomId,
         version,
         JSON.stringify(updates),
         (err: unknown, status: boolean | unknown, updates: Update[]) => {
-          console.log("pushUpdates", updates);
+          console.log('pushUpdates', updates)
           if (err) {
-            reject(err);
-            return;
+            reject(err)
+            return
           }
-          if (typeof status !== "boolean") {
-            reject(new Error("No permission to access this document"));
-            return;
+          if (typeof status !== 'boolean') {
+            reject(new Error('No permission to access this document'))
+            return
           }
-          resolve({ status, updates });
+          resolve({ status, updates })
         }
-      );
-  });
+      )
+  })
 }
 
 async function pullUpdates(
@@ -59,22 +58,22 @@ async function pullUpdates(
   return await new Promise(function (resolve, reject) {
     socket
       .timeout(timeout)
-      .emit("pullUpdates", roomId, version, (err: unknown, updates: string) => {
-        console.log("pullUpdates", updates);
+      .emit('pullUpdates', roomId, version, (err: unknown, updates: string) => {
+        console.log('pullUpdates', updates)
         if (err) {
-          reject(err);
-          return;
+          reject(err)
+          return
         }
         try {
-          resolve(JSON.parse(updates));
+          resolve(JSON.parse(updates))
         } catch (e: any) {
-          reject(new Error("No permission to access this document"));
+          reject(new Error('No permission to access this document'))
         }
-      });
+      })
   }).then((updates: any) =>
     updates.map((u: any) => {
       if (u.effects?.[0]) {
-        const effects: Array<StateEffect<any>> = [];
+        const effects: Array<StateEffect<any>> = []
 
         u.effects.forEach((effect: StateEffect<any>) => {
           if (effect.value?.id && effect.value?.from !== undefined) {
@@ -82,29 +81,29 @@ async function pullUpdates(
               id: effect.value.id,
               from: effect.value.from,
               to: effect.value.to,
-            };
+            }
 
-            effects.push(addCursor.of(cursor));
+            effects.push(addCursor.of(cursor))
           } else if (effect.value?.id) {
             // We don't want to remove the cursor on disconnect
             // const cursorId = effect.value.id;
             // effects.push(removeCursor.of(cursorId));
           }
-        });
+        })
 
         return {
           changes: ChangeSet.fromJSON(u.changes),
           clientID: u.clientID,
           effects,
-        };
+        }
       }
 
       return {
         changes: ChangeSet.fromJSON(u.changes),
         clientID: u.clientID,
-      };
+      }
     })
-  );
+  )
 }
 
 export async function getDocument(
@@ -115,25 +114,21 @@ export async function getDocument(
   return await new Promise(function (resolve, reject) {
     socket
       .timeout(timeout)
-      .emit(
-        "getDocument",
-        roomId,
-        (error: unknown, version: number | unknown, doc: string) => {
-          if (error) {
-            reject(error);
-            return;
-          }
-          if (typeof version !== "number") {
-            reject(new Error("No permission to access this document"));
-            return;
-          }
-          resolve({
-            version,
-            doc: Text.of(doc?.length ? doc.split("\n") : [""]),
-          });
+      .emit('getDocument', roomId, (error: unknown, version: number | unknown, doc: string) => {
+        if (error) {
+          reject(error)
+          return
         }
-      );
-  });
+        if (typeof version !== 'number') {
+          reject(new Error('No permission to access this document'))
+          return
+        }
+        resolve({
+          version,
+          doc: Text.of(doc?.length ? doc.split('\n') : ['']),
+        })
+      })
+  })
 }
 
 export const peerExtension = (
@@ -147,75 +142,70 @@ export const peerExtension = (
     clientID: id,
     sharedEffects: (tr) => {
       const effects = tr.effects.filter((e) => {
-        return e.is(addCursor) || e.is(removeCursor);
-      });
+        return e.is(addCursor) || e.is(removeCursor)
+      })
 
-      return effects;
+      return effects
     },
-  });
+  })
 
   const plugin = ViewPlugin.fromClass(
     class {
-      private pushing = false;
-      private done = false;
+      private pushing = false
+      private done = false
 
       constructor(private readonly view: EditorView) {
-        void this.pull();
+        void this.pull()
 
-        socket.on("connect", this.onConnect.bind(this));
-        socket.on("codeUpdated", this.onCodeUpdated.bind(this));
+        socket.on('connect', this.onConnect.bind(this))
+        socket.on('codeUpdated', this.onCodeUpdated.bind(this))
       }
 
       async onConnect() {
-        await this.pull();
-        await this.push();
+        await this.pull()
+        await this.push()
       }
 
       async onCodeUpdated(socketId: string, _version: number, _doc: string) {
         if (socketId !== socket.id) {
-          await this.pull();
+          await this.pull()
         }
       }
 
       update(update: ViewUpdate): void {
-        if (update.docChanged || update.transactions.length) void this.push();
+        if (update.docChanged || update.transactions.length) void this.push()
       }
 
       async push(): Promise<void> {
-        const updates = sendableUpdates(this.view.state);
-        if (this.pushing || !updates.length) return;
-        this.pushing = true;
-        const version = getSyncedVersion(this.view.state);
+        const updates = sendableUpdates(this.view.state)
+        if (this.pushing || !updates.length) return
+        this.pushing = true
+        const version = getSyncedVersion(this.view.state)
         try {
-          const { updates: pushedUpdates } = await pushUpdates(
-            socket,
-            roomId,
-            version,
-            updates
-          );
-          this.view.dispatch(receiveUpdates(this.view.state, pushedUpdates));
+          const { updates: pushedUpdates } = await pushUpdates(socket, roomId, version, updates)
+          this.view.dispatch(receiveUpdates(this.view.state, pushedUpdates))
 
-          this.pushing = false;
+          this.pushing = false
           // Check if we can send any updates after successful pull
           if (sendableUpdates(this.view.state).length) {
-            await this.push();
+            await this.push()
           }
         } catch (e: any) {
           // The push failed - we don't try again. It will automatically push again when the connection is restored
-          this.pushing = false;
+          this.pushing = false
         }
       }
 
       async pull(): Promise<void> {
         // We don't pull repeatedly - this is handled by the codeUpdated listener
-        const version = getSyncedVersion(this.view.state);
+        const version = getSyncedVersion(this.view.state)
         try {
-          const updates = await pullUpdates(socket, roomId, version);
-          this.view.dispatch(receiveUpdates(this.view.state, updates));
+          const updates = await pullUpdates(socket, roomId, version)
+          this.view.dispatch(receiveUpdates(this.view.state, updates))
 
           // Check if we can send any updates after successful pull
           if (sendableUpdates(this.view.state).length) {
-            await this.push();
+            await this.push()
           }
         } catch (e: any) {
           // The pull failed - we don't try again. It will automatically pull again when the connection is restored
@@ -223,12 +213,12 @@ export const peerExtension = (
       }
 
       destroy(): void {
-        this.done = true;
-        socket.off("connect", this.onConnect);
-        socket.off("codeUpdated", this.onCodeUpdated);
+        this.done = true
+        socket.off('connect', this.onConnect)
+        socket.off('codeUpdated', this.onCodeUpdated)
       }
     }
-  );
+  )
 
-  return [collabPlugin, plugin];
-};
+  return [collabPlugin, plugin]
+}

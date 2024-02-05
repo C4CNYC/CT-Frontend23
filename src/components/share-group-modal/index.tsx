@@ -1,10 +1,4 @@
-import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
-
-import { useSnackbar } from "notistack";
-import { AiOutlineArrowRight } from "@react-icons/all-files/ai/AiOutlineArrowRight";
-import { MdOutlineMail } from "@react-icons/all-files/md/MdOutlineMail";
-import { SiGoogleclassroom } from "@react-icons/all-files/si/SiGoogleclassroom";
+import { useEffect, useMemo, useState } from 'react'
 
 import {
   Box,
@@ -18,21 +12,27 @@ import {
   RadioGroup,
   Typography,
   useTheme,
-} from "@mui/material";
-import { Stack } from "@mui/system";
+} from '@mui/material'
+import { Stack } from '@mui/system'
+import { AiOutlineArrowRight } from '@react-icons/all-files/ai/AiOutlineArrowRight'
+import { MdOutlineMail } from '@react-icons/all-files/md/MdOutlineMail'
+import { SiGoogleclassroom } from '@react-icons/all-files/si/SiGoogleclassroom'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 
-import { useCopyToClipboard } from "@hooks";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import RoleBasedGuard from "src/auth/RoleBasedGuard";
-import { IClass } from "src/redux/interfaces/class.interface";
-import { Role } from "src/redux/services/enums/role.enum";
-import { useUpdateClassesSettingsMutation } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
+import { useCopyToClipboard } from '@/hooks'
+import { IClass } from '@/redux/interfaces/class.interface'
+import { Role } from '@/redux/services/enums/role.enum'
+import { useUpdateClassesSettingsMutation } from '@/redux/services/manager/classes-manager'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
-import ClassroomModal from "../classroom-modal";
-import EmailAddressModal from "../email-address-domain";
-import { Iconify } from "../iconify";
+import ClassroomModal from '../classroom-modal'
+import EmailAddressModal from '../email-address-domain'
+import { Iconify } from '../iconify'
+
 import {
   CLASS_ROOM_BTN_SX,
   COPY_BIG,
@@ -48,76 +48,71 @@ import {
   getCopySx,
   getSubtitleFooterSx,
   getSubtitleSx,
-} from "./constansts";
+} from './constansts'
 
 interface IShareGroupModalProps {
-  children: React.ReactElement;
-  schoolClass: IClass & BaseResponseInterface;
+  children: React.ReactElement
+  schoolClass: IClass & BaseResponseInterface
 }
 
 export default function ShareGroupModal({
   children,
   schoolClass,
 }: IShareGroupModalProps): React.ReactElement {
-  const theme = useTheme();
-  const isLight = theme.palette.mode === "light";
-  const { query } = useRouter();
-  const { copy } = useCopyToClipboard();
-  const { enqueueSnackbar } = useSnackbar();
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(
-    schoolClass.setting.request_join_enable ? "true" : "false"
-  );
-  const translate = useTranslate();
-  const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation();
+  const theme = useTheme()
+  const isLight = theme.palette.mode === 'light'
+  const { query } = useRouter()
+  const { copy } = useCopyToClipboard()
+  const { enqueueSnackbar } = useSnackbar()
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState(schoolClass.setting.request_join_enable ? 'true' : 'false')
+  const translate = useTranslate()
+  const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation()
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
+    setValue((event.target as HTMLInputElement).value)
+  }
 
   const onCopy = (textToCopy: string) => {
     if (textToCopy) {
-      copy(textToCopy);
-      enqueueSnackbar(translate("messages_copied"));
+      copy(textToCopy)
+      enqueueSnackbar(translate('messages_copied'))
     }
-  };
+  }
 
   const updateClassJoin = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       await updateClass({
         schoolId: query.schoolId as string,
         classId: query.id as string,
-        request_join_enable: (e.target as HTMLInputElement).value === "true",
-      }).unwrap();
-      enqueueSnackbar(translate("messages_changes_updated"));
+        request_join_enable: (e.target as HTMLInputElement).value === 'true',
+      }).unwrap()
+      enqueueSnackbar(translate('messages_changes_updated'))
     } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: "error" });
+      enqueueSnackbar(error.message, { variant: 'error' })
     }
-  };
+  }
 
   const shareLink = `${
     window.location.origin
-  }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting.share_token)}`;
+  }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting.share_token)}`
 
   useEffect(() => {
     if (query.onBoarding) {
-      handleOpen();
+      handleOpen()
     }
-  }, []);
+  }, [])
 
-  const subtitleSx = useMemo(() => getSubtitleSx(isLight), [isLight]);
-  const copySx = useMemo(() => getCopySx(isLight, theme), [isLight, theme]);
-  const subtitleFooterSx = useMemo(
-    () => getSubtitleFooterSx(isLight),
-    [isLight]
-  );
+  const subtitleSx = useMemo(() => getSubtitleSx(isLight), [isLight])
+  const copySx = useMemo(() => getCopySx(isLight, theme), [isLight, theme])
+  const subtitleFooterSx = useMemo(() => getSubtitleFooterSx(isLight), [isLight])
 
   return (
     <>
@@ -126,87 +121,128 @@ export default function ShareGroupModal({
         open={open}
         onClose={handleClose}
         fullWidth
-        maxWidth="xs"
-        scroll="body"
+        maxWidth='xs'
+        scroll='body'
       >
         <Box sx={HEADER_SX}>
-          <Box display="flex" justifyContent="end" alignItems="center">
-            <IconButton onClick={handleClose} sx={{ color: "white" }}>
-              <Iconify icon="jam:close-rectangle-f" width={24} height={24} />
+          <Box
+            display='flex'
+            justifyContent='end'
+            alignItems='center'
+          >
+            <IconButton
+              onClick={handleClose}
+              sx={{ color: 'white' }}
+            >
+              <Iconify
+                icon='jam:close-rectangle-f'
+                width={24}
+                height={24}
+              />
             </IconButton>
           </Box>
-          <Typography sx={HEADER_TITLE_SX} variant="h3">
+          <Typography
+            sx={HEADER_TITLE_SX}
+            variant='h3'
+          >
             {schoolClass?.name}
           </Typography>
         </Box>
         <Box sx={{ p: { xs: 1, sm: 3 } }}>
           <Box>
             <Typography
-              fontSize="20px"
-              color={isLight ? "#292929" : ""}
-              variant="h4"
-              textAlign="center"
+              fontSize='20px'
+              color={isLight ? '#292929' : ''}
+              variant='h4'
+              textAlign='center'
             >
-              {translate("share_group")}
+              {translate('share_group')}
             </Typography>
-            <Typography sx={subtitleSx} variant="body2">
-              {translate("share_send_link")}
+            <Typography
+              sx={subtitleSx}
+              variant='body2'
+            >
+              {translate('share_send_link')}
             </Typography>
           </Box>
           <Box sx={copySx}>
-            <Box display="flex" alignItems="center" width="100%">
+            <Box
+              display='flex'
+              alignItems='center'
+              width='100%'
+            >
               <Button sx={COPY_BTN_SX}>
-                <Iconify icon="basil:copy-outline" width={18} height={18} />
+                <Iconify
+                  icon='basil:copy-outline'
+                  width={18}
+                  height={18}
+                />
               </Button>
-              <Box ml="10px">
-                <Typography>{translate("share_invite_link")}</Typography>
-                <Typography noWrap sx={LINK_TEXT_SX}>
+              <Box ml='10px'>
+                <Typography>{translate('share_invite_link')}</Typography>
+                <Typography
+                  noWrap
+                  sx={LINK_TEXT_SX}
+                >
                   {shareLink}
                 </Typography>
               </Box>
             </Box>
             <Button
-              variant="contained"
+              variant='contained'
               onClick={() => {
-                onCopy(shareLink);
+                onCopy(shareLink)
               }}
               sx={COPY_BIG}
             >
-              {translate("actions_copy")}
+              {translate('actions_copy')}
             </Button>
           </Box>
-          <RoleBasedGuard
-            roles={[Role.Manager, Role.Editor, Role.Owner, Role.Admin]}
-          >
-            <Stack mt="20px" ml="15px" gap="20px">
+          <RoleBasedGuard roles={[Role.Manager, Role.Editor, Role.Owner, Role.Admin]}>
+            <Stack
+              mt='20px'
+              ml='15px'
+              gap='20px'
+            >
               <FormControl>
                 <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
+                  aria-labelledby='demo-controlled-radio-buttons-group'
+                  name='controlled-radio-buttons-group'
                   value={value}
                   onChange={(e) => {
-                    updateClassJoin(e);
-                    handleChange(e);
+                    updateClassJoin(e)
+                    handleChange(e)
                   }}
                   sx={RADIO_GROUP_SX}
                 >
                   <FormControlLabel
-                    value="true"
+                    value='true'
                     sx={FORM_CONTROL_SX}
-                    control={<Radio disabled={isLoading} sx={RADIO_SX} />}
+                    control={
+                      <Radio
+                        disabled={isLoading}
+                        sx={RADIO_SX}
+                      />
+                    }
                     label={
-                      <Typography color={isLight ? "#292929" : ""} variant="h6">
-                        {translate("share_can_join")}
+                      <Typography
+                        color={isLight ? '#292929' : ''}
+                        variant='h6'
+                      >
+                        {translate('share_can_join')}
                       </Typography>
                     }
                   />
                   <FormControlLabel
-                    value="false"
+                    value='false'
                     disabled={isLoading}
                     control={<Radio sx={RADIO_SX} />}
                     label={
-                      <Typography color={isLight ? "#292929" : ""} variant="h6">
-                        {translate("share_only_people_approve")}
+                      <Typography
+                        color={isLight ? '#292929' : ''}
+                        variant='h6'
+                      >
+                        {translate('share_only_people_approve')}
                       </Typography>
                     }
                   />
@@ -214,35 +250,50 @@ export default function ShareGroupModal({
               </FormControl>
             </Stack>
             <Divider
-              variant="middle"
-              orientation="horizontal"
+              variant='middle'
+              orientation='horizontal'
               sx={DIVIDER_SX}
             />
-            <Box ml="15px" mt="28px" mb="28px">
-              <Typography variant="h6" sx={subtitleFooterSx}>
-                {translate("share_other_ways_to_add")}
+            <Box
+              ml='15px'
+              mt='28px'
+              mb='28px'
+            >
+              <Typography
+                variant='h6'
+                sx={subtitleFooterSx}
+              >
+                {translate('share_other_ways_to_add')}
               </Typography>
-              <ClassroomModal schoolId={schoolClass?.school?.id ?? ""}>
-                <Button fullWidth sx={CLASS_ROOM_BTN_SX}>
-                  <Box display="flex" alignItems="center">
+              <ClassroomModal schoolId={schoolClass?.school?.id ?? ''}>
+                <Button
+                  fullWidth
+                  sx={CLASS_ROOM_BTN_SX}
+                >
+                  <Box
+                    display='flex'
+                    alignItems='center'
+                  >
                     <SiGoogleclassroom size={24} />
-                    <Typography ml={2}>
-                      {translate("share_google_classroom")}
-                    </Typography>
+                    <Typography ml={2}>{translate('share_google_classroom')}</Typography>
                   </Box>
                   <AiOutlineArrowRight />
                 </Button>
               </ClassroomModal>
               <EmailAddressModal
-                schoolId={schoolClass?.school?.id ?? ""}
+                schoolId={schoolClass?.school?.id ?? ''}
                 classId={schoolClass?.id}
               >
-                <Button fullWidth sx={EMAIL_BTN_SX}>
-                  <Box display="flex" alignItems="center">
+                <Button
+                  fullWidth
+                  sx={EMAIL_BTN_SX}
+                >
+                  <Box
+                    display='flex'
+                    alignItems='center'
+                  >
                     <MdOutlineMail size={24} />
-                    <Typography ml={2}>
-                      {translate("share_email_address")}
-                    </Typography>
+                    <Typography ml={2}>{translate('share_email_address')}</Typography>
                   </Box>
                   <AiOutlineArrowRight />
                 </Button>
@@ -252,5 +303,5 @@ export default function ShareGroupModal({
         </Box>
       </Dialog>
     </>
-  );
+  )
 }

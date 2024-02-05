@@ -1,30 +1,30 @@
-import { type CSSProperties, type FC, type ReactNode } from "react";
+import { type CSSProperties, type FC, type ReactNode } from 'react'
 
 // import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import Draggable from "react-draggable";
-import { IoChatboxEllipsesOutline } from "@react-icons/all-files/io5/IoChatboxEllipsesOutline";
-import { useDispatch } from "react-redux";
 
-import CloseIcon from "@mui/icons-material/Close";
-import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
-import { SxProps, Theme } from "@mui/system";
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material'
+import { SxProps, Theme } from '@mui/system'
+import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEllipsesOutline'
+import Draggable from 'react-draggable'
+import { useDispatch } from 'react-redux'
 
-import { setChatVisible } from "src/redux/slices/chat-handler";
-import { useSelector } from "src/redux/store";
+import { setChatVisible } from '@/redux/slices/chat-handler'
+import { useSelector } from '@/redux/store'
 
 interface IChatPopup {
-  chatComponent: ReactNode;
+  chatComponent: ReactNode
 }
 
 const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const dispatch = useDispatch();
-  const isChatVisible = useSelector((state) => state.chatHandler.isChatVisible);
+  const theme = useTheme()
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const dispatch = useDispatch()
+  const isChatVisible = useSelector((state) => state.chatHandler.isChatVisible)
 
   const getContent = () => {
     if (!isChatVisible) {
-      return;
+      return
     }
 
     if (isDesktop) {
@@ -33,7 +33,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
           <div style={DRAGGABLE_STYLES}>
             <IconButton
               onClick={() => {
-                dispatch(setChatVisible(false));
+                dispatch(setChatVisible(false))
               }}
               sx={ICON_BUTTON_STYLES}
             >
@@ -43,23 +43,21 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
             {chatComponent}
           </div>
         </Draggable>
-      );
+      )
     }
 
-    return <Box sx={() => ({ ...getBoxStyles(theme) })}>{chatComponent}</Box>;
-  };
+    return <Box sx={() => ({ ...getBoxStyles(theme) })}>{chatComponent}</Box>
+  }
 
   return (
     <>
       <IconButton
         sx={{
-          display: isDesktop ? "inline-flex" : "none",
-          background: isChatVisible
-            ? "#c5d6e3"
-            : theme.palette.background.default,
+          display: isDesktop ? 'inline-flex' : 'none',
+          background: isChatVisible ? '#c5d6e3' : theme.palette.background.default,
         }}
         onClick={() => {
-          dispatch(setChatVisible(!isChatVisible));
+          dispatch(setChatVisible(!isChatVisible))
         }}
       >
         <IoChatboxEllipsesOutline size={20} />
@@ -67,36 +65,36 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
 
       {getContent()}
     </>
-  );
-};
+  )
+}
 
 const getBoxStyles = (theme: Theme): SxProps => ({
-  position: "absolute",
+  position: 'absolute',
   top: 0,
   left: 0,
   right: 0,
   bottom: 0,
-  height: "100vh",
-  width: "100vw",
+  height: '100vh',
+  width: '100vw',
   zIndex: 5000,
   background: theme.palette.background.default,
-});
+})
 
 const ICON_BUTTON_STYLES = {
-  alignSelf: "flex-end",
-  p: "2px",
-  mb: "2px",
-};
+  alignSelf: 'flex-end',
+  p: '2px',
+  mb: '2px',
+}
 
 const DRAGGABLE_STYLES: CSSProperties = {
-  position: "absolute",
-  height: "500px",
-  width: "350px",
+  position: 'absolute',
+  height: '500px',
+  width: '350px',
   right: 20,
   bottom: 20,
   zIndex: 5000,
-  display: "flex",
-  flexDirection: "column",
-};
+  display: 'flex',
+  flexDirection: 'column',
+}
 
-export default ChatPopup;
+export default ChatPopup

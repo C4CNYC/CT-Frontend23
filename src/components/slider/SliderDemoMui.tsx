@@ -1,60 +1,63 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react'
 
-import { m } from "framer-motion";
-import Carousel from "react-slick";
+import { Card, CardProps, Link, Stack } from '@mui/material'
+import { alpha, styled, useTheme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import { m } from 'framer-motion'
+import Carousel from 'react-slick'
 
-import { Card, CardProps, Link, Stack } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { alpha, styled, useTheme } from "@mui/material/styles";
+import { Image, MotionContainer, varFade } from '@/components'
 
-import { Image, MotionContainer, varFade } from "@components";
-
-import CarouselArrows from "./CarouselArrows";
-import CarouselDots from "./CarouselDots";
+import CarouselArrows from './CarouselArrows'
+import CarouselDots from './CarouselDots'
 
 interface CarouselItemProps {
-  item: ItemProps;
-  isActive?: boolean;
+  item: ItemProps
+  isActive?: boolean
 }
 
-const StyledOverlay = styled("div")(({ theme }) => ({
+const StyledOverlay = styled('div')(({ theme }) => ({
   top: 0,
   left: 0,
   right: 0,
   bottom: 0,
   zIndex: 8,
-  position: "absolute",
+  position: 'absolute',
   backgroundColor: alpha(theme.palette.grey[900], 0.64),
-}));
+}))
 
-function CarouselItem({
-  item,
-  isActive,
-}: CarouselItemProps) {
-  const { image, title, description } = item;
+function CarouselItem({ item, isActive }: CarouselItemProps) {
+  const { image, title, description } = item
 
   return (
-    <MotionContainer action animate={isActive} sx={{ position: "relative" }}>
+    <MotionContainer
+      action
+      animate={isActive}
+      sx={{ position: 'relative' }}
+    >
       <Stack
         spacing={1}
         sx={{
           p: 3,
           width: 1,
-          bottom: "30px",
+          bottom: '30px',
           zIndex: 9,
-          textAlign: "left",
-          position: "absolute",
-          color: "common.white",
+          textAlign: 'left',
+          position: 'absolute',
+          color: 'common.white',
         }}
       >
         <m.div variants={varFade().inRight}>
-          <Link color="inherit" underline="none">
-            <Typography variant="h5">{title}</Typography>
+          <Link
+            color='inherit'
+            underline='none'
+          >
+            <Typography variant='h5'>{title}</Typography>
           </Link>
         </m.div>
 
         <m.div variants={varFade().inRight}>
-          <Typography variant="body2">{description}</Typography>
+          <Typography variant='body2'>{description}</Typography>
         </m.div>
       </Stack>
 
@@ -68,27 +71,24 @@ function CarouselItem({
         }}
       />
     </MotionContainer>
-  );
+  )
 }
 
 interface ItemProps {
-  id: string;
-  image: string;
-  title: string;
-  description: string;
+  id: string
+  image: string
+  title: string
+  description: string
 }
 
-
 interface Props extends CardProps {
-  list: ItemProps[];
+  list: ItemProps[]
 }
 
 export function SliderDemoMui({ list, ...other }: Props): React.ReactElement {
-  const theme = useTheme();
-  const [currentIndex, setCurrentIndex] = useState(
-    theme.direction === "rtl" ? list.length - 1 : 0
-  );
-  const carouselRef = useRef<Carousel>(null);
+  const theme = useTheme()
+  const [currentIndex, setCurrentIndex] = useState(theme.direction === 'rtl' ? list.length - 1 : 0)
+  const carouselRef = useRef<Carousel>(null)
   const carouselSettings = {
     speed: 900,
     dots: true,
@@ -96,29 +96,31 @@ export function SliderDemoMui({ list, ...other }: Props): React.ReactElement {
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    rtl: Boolean(theme.direction === "rtl"),
+    rtl: Boolean(theme.direction === 'rtl'),
     beforeChange: (current: number, next: number) => {
-      setCurrentIndex(next);
+      setCurrentIndex(next)
     },
     ...CarouselDots({
       sx: {
         bottom: 20,
         right: 20,
-        position: "absolute",
+        position: 'absolute',
       },
     }),
-  };
+  }
   const handlePrev = (): void => {
-    carouselRef.current?.slickPrev();
-  };
+    carouselRef.current?.slickPrev()
+  }
   const handleNext = (): void => {
-    carouselRef.current?.slickNext();
-  };
-
+    carouselRef.current?.slickNext()
+  }
 
   return (
     <Card {...other}>
-      <Carousel ref={carouselRef} {...carouselSettings}>
+      <Carousel
+        ref={carouselRef}
+        {...carouselSettings}
+      >
         {list.map((app, index) => (
           <CarouselItem
             key={app.id}
@@ -131,8 +133,8 @@ export function SliderDemoMui({ list, ...other }: Props): React.ReactElement {
       <CarouselArrows
         onNext={handleNext}
         onPrevious={handlePrev}
-        sx={{ top: 8, right: 8, position: "absolute", color: "common.white" }}
+        sx={{ top: 8, right: 8, position: 'absolute', color: 'common.white' }}
       />
     </Card>
-  );
+  )
 }

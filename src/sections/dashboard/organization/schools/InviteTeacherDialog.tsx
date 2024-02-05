@@ -1,6 +1,4 @@
-import React from "react";
-
-import { useSnackbar } from "notistack";
+import React from 'react'
 
 import {
   Button,
@@ -12,27 +10,26 @@ import {
   List,
   Stack,
   TextField,
-} from "@mui/material";
+} from '@mui/material'
+import { useSnackbar } from 'notistack'
 
-import { Scrollbar } from "@components";
-import { useFilters } from "@hooks";
+import { Scrollbar } from '@/components'
+import { useFilters } from '@/hooks'
 import {
   useCreateOrgMemberMutation,
   useGetOrgMembersQuery,
-} from "src/redux/services/admin/members-admin";
-import { useAddTeacherMutation } from "src/redux/services/admin/school-amdin";
-import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/lib/utils/translateHelper";
+} from '@/redux/services/admin/members-admin'
+import { useAddTeacherMutation } from '@/redux/services/admin/school-amdin'
+import { Role } from '@/redux/services/enums/role.enum'
+import { useTranslate } from '@/utils/translateHelper'
 
-import UserItem from "./UserItem";
-
-// ----------------------------------------------------------------------
+import UserItem from './UserItem'
 
 interface Props extends DialogProps {
-  teachersIds: string[];
-  schoolId: string;
-  inviteEmail: string;
-  onClose: VoidFunction;
+  teachersIds: string[]
+  schoolId: string
+  inviteEmail: string
+  onClose: VoidFunction
 }
 
 export default function InviteTeacherDialog({
@@ -43,68 +40,72 @@ export default function InviteTeacherDialog({
   onClose,
   ...other
 }: Props): React.ReactElement | null {
-  const [addTeacher] = useAddTeacherMutation();
-  const [createUser] = useCreateOrgMemberMutation();
-  const { enqueueSnackbar } = useSnackbar();
-  const { filters, setFilter } = useFilters({ email: "" });
-  const { data: members } = useGetOrgMembersQuery(
-    { ...filters },
-    { skip: !filters.email }
-  );
-  const translate = useTranslate();
+  const [addTeacher] = useAddTeacherMutation()
+  const [createUser] = useCreateOrgMemberMutation()
+  const { enqueueSnackbar } = useSnackbar()
+  const { filters, setFilter } = useFilters({ email: '' })
+  const { data: members } = useGetOrgMembersQuery({ ...filters }, { skip: !filters.email })
+  const translate = useTranslate()
 
-  const addUserToSchool = async (
-    userId: string,
-    schoolId: string
-  ): Promise<void> => {
+  const addUserToSchool = async (userId: string, schoolId: string): Promise<void> => {
     try {
-      await addTeacher({ user_id: userId, schoolId }).unwrap();
-      enqueueSnackbar(translate("schools_teacher_added_act"));
+      await addTeacher({ user_id: userId, schoolId }).unwrap()
+      enqueueSnackbar(translate('schools_teacher_added_act'))
     } catch (e: any) {
-      enqueueSnackbar(e.data.message, { variant: "error" });
+      enqueueSnackbar(e.data.message, { variant: 'error' })
     }
-  };
+  }
 
   const onSendInvite = async (): Promise<void> => {
     try {
       const user = await createUser({
-        id: "",
+        id: '',
         email: filters.email,
         role: Role.Manager,
-        first_name: "",
-        last_name: "",
-      }).unwrap();
-      enqueueSnackbar(translate("messages_invite_sent"));
-      await addUserToSchool(user.id, schoolId);
-      setFilter("email", "");
-      onClose();
+        first_name: '',
+        last_name: '',
+      }).unwrap()
+      enqueueSnackbar(translate('messages_invite_sent'))
+      await addUserToSchool(user.id, schoolId)
+      setFilter('email', '')
+      onClose()
     } catch (e: any) {
-      enqueueSnackbar(e.data.message, { variant: "error" });
+      enqueueSnackbar(e.data.message, { variant: 'error' })
     }
-  };
+  }
 
   return (
-    <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>
-      <DialogTitle> {translate("invite")} </DialogTitle>
-      <DialogContent sx={{ overflow: "unset" }}>
+    <Dialog
+      fullWidth
+      maxWidth='xs'
+      open={open}
+      onClose={onClose}
+      {...other}
+    >
+      <DialogTitle> {translate('invite')} </DialogTitle>
+      <DialogContent sx={{ overflow: 'unset' }}>
         <>
-          <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
+          <Stack
+            direction='row'
+            spacing={1}
+            sx={{ mb: 3 }}
+          >
             <TextField
               fullWidth
-              size="small"
+              size='small'
               value={filters.email}
-              placeholder={translate("email")}
+              placeholder={translate('email')}
               onChange={(e: any) => {
-                setFilter("email", e.target.value);
+                setFilter('email', e.target.value)
               }}
             />
             <Button
-              sx={{ width: "150px" }}
-              variant="contained"
+              sx={{ width: '150px' }}
+              variant='contained'
               disabled={!!members?.data.length || !filters.email}
               onClick={onSendInvite}
             >
-              {translate("members_send_invite")}
+              {translate('members_send_invite')}
             </Button>
           </Stack>
 
@@ -114,7 +115,7 @@ export default function InviteTeacherDialog({
                 {members.data.map((person) => (
                   <UserItem
                     addHandler={async () => {
-                      await addUserToSchool(person.id, schoolId);
+                      await addUserToSchool(person.id, schoolId)
                     }}
                     invited={teachersIds.includes(person.id)}
                     key={person.id}
@@ -127,13 +128,17 @@ export default function InviteTeacherDialog({
         </>
       </DialogContent>
 
-      <DialogActions sx={{ justifyContent: "space-end" }}>
+      <DialogActions sx={{ justifyContent: 'space-end' }}>
         {onClose && (
-          <Button variant="outlined" color="inherit" onClick={onClose}>
-            {translate("actions_close")}
+          <Button
+            variant='outlined'
+            color='inherit'
+            onClick={onClose}
+          >
+            {translate('actions_close')}
           </Button>
         )}
       </DialogActions>
     </Dialog>
-  );
+  )
 }

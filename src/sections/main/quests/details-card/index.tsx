@@ -1,21 +1,17 @@
-import { Card, Stack } from "@mui/material";
+import { Stack } from '@mui/material'
 
-import ProfileCover from "@sections/student-profile/ProfileCover";
-import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import { IClass } from "src/redux/interfaces/class.interface";
+import { IClass } from '@/redux/interfaces/class.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import AboutTribe from "./AboutTribe";
-import GeneralInfo from "./GeneralInfo";
+import AboutTribe from './AboutTribe'
+import GeneralInfo from './GeneralInfo'
 
 interface IDetailsTabProps {
-  classData: IClass & BaseResponseInterface;
-  activeTab: boolean;
+  classData: IClass & BaseResponseInterface
+  activeTab: boolean
 }
 
-export default function DetailsTab({
-  classData,
-  activeTab,
-}: IDetailsTabProps): React.ReactElement {
+export default function DetailsTab({ classData, activeTab }: IDetailsTabProps): React.ReactElement {
   return (
     <>
       {/* <Card
@@ -34,13 +30,13 @@ export default function DetailsTab({
       <Stack gap={2}>
         <GeneralInfo activeTab={activeTab} />
         <AboutTribe
-          description={classData.description ?? ""}
-          city={classData?.school?.city ?? ""}
-          country={classData?.school?.country ?? ""}
+          description={classData.description ?? ''}
+          city={classData?.school?.city ?? ''}
+          country={classData?.school?.country ?? ''}
           createdAt={classData.createdAt}
-          schoolName={classData?.school?.name ?? ""}
+          schoolName={classData?.school?.name ?? ''}
         />
       </Stack>
     </>
-  );
+  )
 }

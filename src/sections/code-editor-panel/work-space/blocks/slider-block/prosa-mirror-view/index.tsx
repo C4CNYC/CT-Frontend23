@@ -1,9 +1,15 @@
-import { type FC } from "react";
+import { type FC } from 'react'
 
-import { FileExtension } from "@remirror/extension-file";
-import { Remirror, ThemeProvider, useRemirror, ReactComponentExtension, TableExtension } from "@remirror/react";
-import jsx from "refractor/lang/jsx.js";
-import typescript from "refractor/lang/typescript.js";
+import { FileExtension } from '@remirror/extension-file'
+import {
+  Remirror,
+  ThemeProvider,
+  useRemirror,
+  ReactComponentExtension,
+  TableExtension,
+} from '@remirror/react'
+import jsx from 'refractor/lang/jsx.js'
+import typescript from 'refractor/lang/typescript.js'
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -33,10 +39,10 @@ import {
   TextHighlightExtension,
   UnderlineExtension,
   WhitespaceExtension,
-} from "remirror/extensions";
-import "remirror/styles/all.css";
+} from 'remirror/extensions'
+import 'remirror/styles/all.css'
 
-import { isJson, voidFunction } from "@utils";
+import { isJson, voidFunction } from '@/utils'
 
 type Extensions =
   | HeadingExtension
@@ -69,10 +75,10 @@ type Extensions =
   | BulletListExtension
   | OrderedListExtension
   | TaskListExtension
-  | EmojiExtension;
+  | EmojiExtension
 
 interface ProsaMirrorViewProps {
-  multimediaValue: string;
+  multimediaValue: string
 }
 
 const extensions = (): Extensions[] => [
@@ -83,7 +89,7 @@ const extensions = (): Extensions[] => [
   new ImageExtension({ enableResizing: false }),
   new BlockquoteExtension(),
   new CodeBlockExtension({
-    defaultLanguage: "js",
+    defaultLanguage: 'js',
     supportedLanguages: [typescript, jsx],
   }),
   new CodeExtension(),
@@ -98,7 +104,7 @@ const extensions = (): Extensions[] => [
   new FileExtension(),
   new CalloutExtension(),
   new LinkExtension({ autoLink: true }),
-  new FontSizeExtension({ defaultSize: "16", unit: "px" }),
+  new FontSizeExtension({ defaultSize: '16', unit: 'px' }),
   new StrikeExtension(),
   new TextHighlightExtension(),
   new TextCaseExtension(),
@@ -108,33 +114,29 @@ const extensions = (): Extensions[] => [
   new BulletListExtension(),
   new OrderedListExtension(),
   new TaskListExtension(),
-];
+]
 
-const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({
-  multimediaValue,
-}) => {
+const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({ multimediaValue }) => {
   const { manager, state } = useRemirror({
     extensions: extensions as any, // @ToDo,
-    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : "",
-    stringHandler: "html",
-  });
+    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : '',
+    stringHandler: 'html',
+  })
 
   return (
     <ThemeProvider>
-      <style>
-        {STYLES}
-      </style>
+      <style>{STYLES}</style>
 
       <Remirror
         editable={false}
         manager={manager}
         state={state}
         autoFocus
-        autoRender="end"
+        autoRender='end'
         onChange={voidFunction}
       ></Remirror>
     </ThemeProvider>
-  );
+  )
 }
 
 const STYLES = `
@@ -179,4 +181,4 @@ const STYLES = `
 
 `
 
-export default ProsaMirrorView;
+export default ProsaMirrorView
