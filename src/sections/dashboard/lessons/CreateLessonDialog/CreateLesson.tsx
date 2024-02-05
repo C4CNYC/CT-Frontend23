@@ -8,13 +8,15 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField } from '@/components'
+import { FormProvider, RHFCode, RHFSelect, RHFSwitch, RHFTextField } from "@/components";
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { ModalCodeFullscreen } from "@/components/modal-code-fullscreen";
+import { javascript } from "@codemirror/lang-javascript";
 
 interface FormValuesProps {
   name: string
@@ -153,6 +155,18 @@ export default function CreateLesson({
                       {translate('lessons_exercise')}
                     </option>
                   </RHFSelect>
+                  <Box>
+                    <ModalCodeFullscreen
+                      title={translate('integrations_head_links_plh')}
+                      name='head'
+                    />
+                    <RHFCode
+                      placeholder={translate('integrations_head_links_plh')}
+                      name='head'
+                      height='180px'
+                      extensions={[javascript({ jsx: true })]}
+                    />
+                  </Box>
 
                   <RHFSwitch
                     name='active'
