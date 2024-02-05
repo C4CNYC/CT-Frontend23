@@ -15,19 +15,14 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Iconify, MenuPopover } from "@components";
-import {
-  GREEN_DOT_SX,
-  getLessonItemPaperSx,
-} from "@sections/dashboard/lessons/LessonStep/constants";
-import { BaseResponseInterface } from "@utils";
+// import { BaseResponseInterface } from "@utils";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "@/utils/translateHelper";
+import { GREEN_DOT_SX, getLessonItemPaperSx } from "../../lessons/LessonStep/constants";
+import { Iconify, MenuPopover } from "@/components";
 
 // import Preferences from "./Modals/Preferences";
-// import Validation from "./Modals/Validation";
-// import { GREEN_DOT_SX, getLessonItemPaperSx } from "./constants";
 
 interface Props {
   //   step: ILessonContent & BaseResponseInterface;
@@ -49,7 +44,6 @@ export default function ModuleLessonItem({
 }: Props): React.ReactElement {
   const router = useRouter();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const [hasValidation, setHasValidation] = useState<boolean>(false);
   const translate = useTranslate();
 
   const handleOpenPopover = async (
@@ -155,16 +149,8 @@ export default function ModuleLessonItem({
               >
                 <Iconify icon="material-symbols:content-copy-outline" />
               </IconButton>
-              {/* <Validation
-                stepId={step.id}
-                stepTitle={step.title}
-                setHasValidation={setHasValidation}
-              >
-                <IconButton>
-                  <Iconify icon="fluent-mdl2:completed" />
-                </IconButton>
-              </Validation>
-              <Preferences
+
+              {/* <Preferences
                 defaultValues={{ ...step }}
                 contentId={step.id}
                 lessonId={lessonId}
@@ -172,7 +158,7 @@ export default function ModuleLessonItem({
                 <IconButton>
                   <Iconify icon="ep:setting" />
                 </IconButton>
-              </Preferences> */}
+              </Preferences>  */}
             </Stack>
           </Stack>
 

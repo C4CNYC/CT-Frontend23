@@ -16,7 +16,7 @@ import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton
 import { useTranslate } from '@/utils/translateHelper'
 
 import FilterModules from './filter'
-import ModuleOrganizing from "@sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing"
+import ModuleOrganizing from '@/sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing'
 // import { getCountTakingElment } from "src/utils/countTakingElments";
 
 ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>

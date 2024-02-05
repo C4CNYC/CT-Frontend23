@@ -11,28 +11,18 @@ import { useSelector } from "react-redux";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
-import SkeletonList from "@sections/dashboard/lessons/LessonStep/Modals/SkeletonList";
-import { BaseResponseInterface } from "@utils";
-import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import {
-  useCreateLessonContentMutation,
-  useGetLessonContentQuery,
-  useRemoveLessonContentMutation,
-  useUpdateLessonContentMutation,
-} from "src/redux/services/manager/lesson-content-manager";
+// import SkeletonList from "@sections/dashboard/lessons/LessonStep/Modals/SkeletonList";
+// import { BaseResponseInterface } from "@utils";
 import { useGetLessonQuery } from "src/redux/services/manager/lessons-manager";
 import { useGetModuleWithLessonsQuery } from "src/redux/services/manager/modules-student";
 import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
 import { getLessonsBoard } from "src/redux/slices/module-organizing";
 import { RootState, useDispatch } from "src/redux/store";
-import { getOrder } from "src/utils/getTaskOrder";
-import { useTranslate } from "src/utils/translateHelper";
 
 import ModuleLessonItem from "./ModuleLessonItem";
+import { useTranslate } from "@/utils/translateHelper";
 
 // import CreateLessonDialog from "../CreateLessonDialog/CreateLessonDialog";
-// import LessonListItem from "./LesonListItem";
-// import CreateDemonContent from "./Modals/CreateLessonContent";
 // import SkeletonList from "./Modals/SkeletonList";
 
 interface Props {
@@ -47,21 +37,12 @@ export default function ModuleLessonList({
   const router = useRouter();
   const translate = useTranslate();
 
-  // const [updateLessonContent] = useUpdateLessonContentMutation();
-  // const [createLessonContent, { isLoading: createLessonLoading }] =
-  //   useCreateLessonContentMutation();
-  // const [removeLessonContent] = useRemoveLessonContentMutation();
-
   const { data: module, isLoading: isLoadingModule } =
     useGetModuleWithLessonsQuery({ id: moduleId }, { skip: !moduleId });
-  //   const { data, isLoading } = useGetLessonContentQuery(
-  //     { moduleId },
-  //     { skip: !moduleId }
-  //   );
 
   const { board1 } = useSelector((state: RootState) => state.moduleLesson);
 
-  console.log("board", board1);
+  console.log("board", board1 );
 
   useEffect(() => {
     if (!module) return;
@@ -206,7 +187,6 @@ export default function ModuleLessonList({
               {board1.columns.contents?.cardIds.map((el, i) => (
                 <ModuleLessonItem
                   onRemove={onRemove}
-                  //   onDublicate={onDublicate}
                   title={board1.cards[el].name}
                   //   lessonId={lessonId}
                   key={i}
