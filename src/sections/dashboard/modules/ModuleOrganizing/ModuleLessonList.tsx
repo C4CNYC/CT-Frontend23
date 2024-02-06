@@ -69,7 +69,6 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
 
-  // ------------------------------------------
   const [lessons, setLessons] = useState<ILesson[]>([])
 
   const { data, isLoading, isFetching } = useGetLessonsQuery({ module_id: moduleId })
@@ -99,14 +98,10 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
     [lessons]
   )
 
-  // ------------------------------------------
-
   const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
     { id: moduleId },
     { skip: !moduleId }
   )
-
-  console.log('lessons', lessons)
 
   useEffect(() => {
     if (!module) return

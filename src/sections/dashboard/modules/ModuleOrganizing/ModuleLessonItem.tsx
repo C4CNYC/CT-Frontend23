@@ -15,9 +15,6 @@ import {
   Typography,
 } from "@mui/material";
 
-// import { BaseResponseInterface } from "@utils";
-import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
-import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { useTranslate } from "@/utils/translateHelper";
 import { GREEN_DOT_SX, getLessonItemPaperSx } from "../../lessons/LessonStep/constants";
 import { Iconify, MenuPopover } from "@/components";
@@ -83,30 +80,30 @@ export default function ModuleLessonItem({
           elevation={8}
           sx={{ ...getLessonItemPaperSx(chooseBorderColor) }}
         >
-          {router.query.stepId === step && <Box sx={GREEN_DOT_SX}></Box>}
+          {router.query.lessonId === step && <Box sx={GREEN_DOT_SX}></Box>}
 
-          <IconButton sx={{ mr: "5px" }} {...provided.dragHandleProps}>
-            <RxDragHandleDots2 size="24px" />
+          <IconButton sx={{ mr: '5px' }} {...provided.dragHandleProps}>
+            <RxDragHandleDots2 size='24px' />
           </IconButton>
-          <Stack sx={{ width: "100%", alignItems: "flex-end" }}>
+          <Stack sx={{ width: '100%', alignItems: 'flex-end' }}>
             <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="flex-start"
-              sx={{ width: "100%" }}
+              direction='row'
+              justifyContent='space-between'
+              alignItems='flex-start'
+              sx={{ width: '100%' }}
             >
               <Box
                 sx={{
-                  width: "100%",
-                  maxWidth: "160px",
+                  width: '100%',
+                  maxWidth: '160px',
                 }}
               >
                 <Typography
-                  variant="subtitle1"
+                  variant='subtitle1'
                   sx={{
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
                     mb: 0,
                   }}
                   gutterBottom
@@ -115,31 +112,31 @@ export default function ModuleLessonItem({
                 </Typography>
                 <Typography
                   sx={{
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
                   }}
                   noWrap
-                  variant="body2"
+                  variant='body2'
                 >
                   {title}
                 </Typography>
               </Box>
               <IconButton
                 onClick={(e) => {
-                  e.stopPropagation();
-                  handleOpenPopover(e);
+                  e.stopPropagation()
+                  handleOpenPopover(e)
                 }}
               >
-                <BsThreeDotsVertical size="20px" />
+                <BsThreeDotsVertical size='20px' />
               </IconButton>
             </Stack>
 
             <Stack
-              direction="row"
+              direction='row'
               gap={1}
               onClick={(e) => {
-                e.stopPropagation();
+                e.stopPropagation()
               }}
             >
               <IconButton
@@ -147,7 +144,7 @@ export default function ModuleLessonItem({
               //   onDublicate(step);
               // }}
               >
-                <Iconify icon="material-symbols:content-copy-outline" />
+                <Iconify icon='material-symbols:content-copy-outline' />
               </IconButton>
 
               {/* <Preferences
@@ -166,23 +163,23 @@ export default function ModuleLessonItem({
             open={openPopover}
             onClose={handleClosePopover}
             onClick={(e) => {
-              e.stopPropagation();
+              e.stopPropagation()
             }}
-            arrow="left-top"
+            arrow='left-top'
             sx={{ width: 160 }}
           >
             <MenuItem
               onClick={() => {
                 // onRemove();
-                handleClosePopover();
+                handleClosePopover()
               }}
             >
-              <Iconify icon="eva:trash-2-outline" />
-              {translate("actions_remove")}
+              <Iconify icon='eva:trash-2-outline' />
+              {translate('actions_remove')}
             </MenuItem>
           </MenuPopover>
         </Paper>
       )}
     </Draggable>
-  );
+  )
 }
