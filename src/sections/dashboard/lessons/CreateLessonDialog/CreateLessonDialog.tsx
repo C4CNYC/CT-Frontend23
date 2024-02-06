@@ -9,9 +9,10 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { javascript } from '@codemirror/lang-javascript';
 import * as Yup from 'yup'
 
-import { FormProvider, RHFCode, RHFSelect, RHFSwitch, RHFTextField, useSnackbar } from "@/components";
+import { FormProvider, RHFCode, RHFSelect, RHFSwitch, RHFTextField, useSnackbar } from '@/components'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
@@ -23,14 +24,14 @@ import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTa
 
 import SkillsTab from './SkillsTab'
 import TipsTab from './TipsTab'
-import { javascript } from "@codemirror/lang-javascript";
 
 interface FormValuesProps {
   name: string
   description: string
   active: boolean
   tips: string
-  independent: boolean
+  independent: boolean,
+  head:string,
   type: 'practical' | 'exercise' | 'quiz'
 }
 

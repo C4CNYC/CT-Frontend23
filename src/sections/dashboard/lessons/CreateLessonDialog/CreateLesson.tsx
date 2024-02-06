@@ -6,17 +6,19 @@ import { Box, Button, Card, Dialog, DialogContent, DialogTitle, Grid } from '@mu
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
+import { javascript } from '@codemirror/lang-javascript'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFCode, RHFSelect, RHFSwitch, RHFTextField } from "@/components";
+import { FormProvider, RHFCode, RHFSelect, RHFSwitch, RHFTextField } from '@/components'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { ModalCodeFullscreen } from "@/components/modal-code-fullscreen";
-import { javascript } from "@codemirror/lang-javascript";
+import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
+
+
 
 interface FormValuesProps {
   name: string
