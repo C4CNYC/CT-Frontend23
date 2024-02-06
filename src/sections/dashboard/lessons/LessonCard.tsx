@@ -187,7 +187,7 @@ export default function LessonCard({ lesson, index }: Props): React.ReactElement
             description: lesson.description,
             active: lesson.active,
             tips: '',
-            head:lesson?.head || '',
+            head: lesson?.head || '',
             independent: lesson.independent,
             type: lesson.type,
           }}

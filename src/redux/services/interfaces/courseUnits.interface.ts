@@ -21,8 +21,8 @@ export interface ILesson {
   data: []
   active: boolean
   name: string
-  description: string,
-  head?:string,
+  description: string
+  head?: string
   tips: string[] | []
   meta: Record<string, Record<string, any>>
   independent: boolean

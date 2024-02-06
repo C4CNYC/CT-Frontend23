@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
+import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, DialogActions, Stack, Tab, Tabs } from '@mui/material'
@@ -9,10 +10,16 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { javascript } from '@codemirror/lang-javascript';
 import * as Yup from 'yup'
 
-import { FormProvider, RHFCode, RHFSelect, RHFSwitch, RHFTextField, useSnackbar } from '@/components'
+import {
+  FormProvider,
+  RHFCode,
+  RHFSelect,
+  RHFSwitch,
+  RHFTextField,
+  useSnackbar,
+} from '@/components'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
@@ -30,8 +37,8 @@ interface FormValuesProps {
   description: string
   active: boolean
   tips: string
-  independent: boolean,
-  head:string,
+  independent: boolean
+  head: string
   type: 'practical' | 'exercise' | 'quiz'
 }
 
@@ -111,8 +118,7 @@ export default function CreateLessonDialog({
       })
     }
 
-      handleClose()
-
+    handleClose()
   }
 
   const deleteTip = async (tips: string[]): Promise<void> => {

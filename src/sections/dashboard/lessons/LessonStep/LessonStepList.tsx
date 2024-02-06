@@ -177,7 +177,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
             description: lesson?.description as string,
             active: lesson?.active as boolean,
             tips: '',
-            head:lesson?.head || '',
+            head: lesson?.head || '',
             independent: lesson?.independent ?? false,
             type: lesson?.type ?? 'practical',
           }}
