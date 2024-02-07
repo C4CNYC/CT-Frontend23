@@ -18,42 +18,43 @@ import {
 import { useTranslate } from "@/utils/translateHelper";
 import { GREEN_DOT_SX, getLessonItemPaperSx } from "../../lessons/LessonStep/constants";
 import { Iconify, MenuPopover } from "@/components";
+import Preferences from '../../lessons/LessonStep/Modals/Preferences'
 
 // import Preferences from "./Modals/Preferences";
 
 interface Props {
   //   step: ILessonContent & BaseResponseInterface;
-  step: string;
-  index: number;
-  onRemove: (id: string) => void;
-  title: string;
+  step: string
+  index: number
+  onRemove: (id: string) => void
+  title: string
+  description?: string
 }
 
-const BRIEFING = "#0198ED";
-const CUSTOM = "#364954";
-const CHALANGES = "#FBDD3F";
+const BRIEFING = '#0198ED'
+const CUSTOM = '#364954'
+const CHALANGES = '#FBDD3F'
 
 export default function ModuleLessonItem({
   //   onRemove,
   title,
+  description = '-',
   step,
   index,
 }: Props): React.ReactElement {
-  const router = useRouter();
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+  const router = useRouter()
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const translate = useTranslate()
 
-  const handleOpenPopover = async (
-    event: React.MouseEvent<HTMLElement>
-  ): Promise<void> => {
-    event.preventDefault();
-    event.stopPropagation();
-    setOpenPopover(event.currentTarget);
-  };
+  const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
+    event.preventDefault()
+    event.stopPropagation()
+    setOpenPopover(event.currentTarget)
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
 
   const selectStep = (): void => {
     router.push(
@@ -63,12 +64,12 @@ export default function ModuleLessonItem({
       })}`,
       undefined,
       { shallow: true }
-    );
-  };
+    )
+  }
 
   const chooseBorderColor = (): string => {
-    return CUSTOM;
-  };
+    return CUSTOM
+  }
 
   return (
     <Draggable draggableId={step} index={index}>
@@ -119,7 +120,7 @@ export default function ModuleLessonItem({
                   noWrap
                   variant='body2'
                 >
-                  {title}
+                  {description}
                 </Typography>
               </Box>
               <IconButton
@@ -139,23 +140,23 @@ export default function ModuleLessonItem({
                 e.stopPropagation()
               }}
             >
-              <IconButton
-              // onClick={() => {
-              //   onDublicate(step);
-              // }}
+              {/* <IconButton
+                onClick={() => {
+                  onDublicate(step)
+                }}
               >
                 <Iconify icon='material-symbols:content-copy-outline' />
-              </IconButton>
+              </IconButton> */}
 
               {/* <Preferences
                 defaultValues={{ ...step }}
                 contentId={step.id}
                 lessonId={lessonId}
-              >
-                <IconButton>
-                  <Iconify icon="ep:setting" />
-                </IconButton>
-              </Preferences>  */}
+              > */}
+              <IconButton>
+                <Iconify icon='ep:setting' />
+              </IconButton>
+              {/* </Preferences>  */}
             </Stack>
           </Stack>
 

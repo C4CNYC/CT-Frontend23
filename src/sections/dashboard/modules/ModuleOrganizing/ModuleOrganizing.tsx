@@ -1,21 +1,19 @@
-import { useRouter } from "next/router";
-// import { useEffect } from "react";
+import { useRouter } from 'next/router'
 
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 
-import { Box, Dialog } from "@mui/material";
+import { Box, Dialog } from '@mui/material'
 
-import LessonDetails from "./LessonDetails";
-import ModuleLessonList from "./ModuleLessonList";
-import LessonTopBar from "../../lessons/LessonStep/lesson-top-bar/LessonTopBar";
-import { ResizerUi } from "@/components";
-import { NoSelectedStep } from "../../lessons/LessonStep/NoSelectedStep";
-
+import LessonDetails from './LessonDetails'
+import ModuleLessonList from './ModuleLessonList'
+import LessonTopBar from '../../lessons/LessonStep/lesson-top-bar/LessonTopBar'
+import { ResizerUi } from '@/components'
+import { NoSelectedStep } from '../../lessons/LessonStep/NoSelectedStep'
 
 export default function ModuleOrganizing(): React.ReactElement {
-  const router = useRouter();
-  const { lessonId, moduleId } = router.query;
-  const handle = useFullScreenHandle();
+  const router = useRouter()
+  const { lessonId, moduleId } = router.query
+  const handle = useFullScreenHandle()
 
   return (
     <>
@@ -33,16 +31,10 @@ export default function ModuleOrganizing(): React.ReactElement {
         fullScreen
       >
         <FullScreen handle={handle}>
-          <LessonTopBar /> 
-          
+          <LessonTopBar />
 
           <Box>
-            <ResizerUi
-              split="vertical"
-              minSize={300}
-              maxSize={750}
-              defaultSize={"400px" }
-            >
+            <ResizerUi split='vertical' minSize={300} maxSize={750} defaultSize={'400px'}>
               <ModuleLessonList moduleId={moduleId as string} />
               {lessonId ? <LessonDetails /> : <NoSelectedStep />}
             </ResizerUi>
@@ -50,5 +42,5 @@ export default function ModuleOrganizing(): React.ReactElement {
         </FullScreen>
       </Dialog>
     </>
-  );
+  )
 }

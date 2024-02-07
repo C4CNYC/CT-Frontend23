@@ -7,7 +7,7 @@ import * as _ from 'lodash-es'
 import { useSnackbar } from 'notistack'
 
 import { LoadingButton } from '@mui/lab'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 
 import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
 import { useGetModuleWithLessonsQuery } from 'src/redux/services/manager/modules-student'
@@ -18,6 +18,8 @@ import { useState } from 'react'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
 import SkeletonList from '../../lessons/LessonStep/Modals/SkeletonList'
+import CreateModuleDialog from '../CreateModuleDialog'
+import { IModule } from '@/redux/interfaces/content.interface'
 
 function parseSort(sort?: number) {
   return sort ?? 0
@@ -70,10 +72,26 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
   const translate = useTranslate()
 
   const [lessons, setLessons] = useState<ILesson[]>([])
+  const [module1, setModule] = useState<IModule>()
+
+  console.log('module', module1)
 
   const { data, isLoading, isFetching } = useGetLessonsQuery({ module_id: moduleId })
 
+  const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
+    { id: moduleId },
+    { skip: !moduleId }
+  )
+
   const [updateModuleLesson] = useUpdateModuleLessonMutation()
+
+  const getDurationString = (obj: Record<string, number>) => {
+    let str = ''
+    for (const [key, value] of Object.entries(obj)) {
+      str += `${value} ${key} `
+    }
+    return str
+  }
 
   const onDragEnd = useCallback(
     (result: DropResult): void => {
@@ -98,14 +116,10 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
     [lessons]
   )
 
-  const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
-    { id: moduleId },
-    { skip: !moduleId }
-  )
-
   useEffect(() => {
-    if (!module) return
+    // if (!module) return
     setLessons(data?.data ?? [])
+    setModule(module)
   }, [module, data])
 
   const onRemove = async (id: string): Promise<void> => {
@@ -130,6 +144,41 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
         <Typography variant='subtitle1' sx={{ pl: 1, fontWeight: 500, fontSize: '1.1rem' }}>
           {module?.name}
         </Typography>
+
+        <CreateModuleDialog
+          isEdit
+          id={module?.id}
+          defaultValues={{
+            name: module?.name,
+            description: module?.description as string,
+            active: module?.active as boolean,
+            tips: '',
+            duration: module?.duration ? getDurationString(module.duration) : '',
+            teacher_slides: module?.teacher_slides as string,
+            teacher_forum: module?.teacher_forum as string,
+            lesson_plans: module?.lesson_plans as string,
+            initial_likes: module?.initial_likes as number,
+            initial_stars: module?.initial_stars as number,
+            initial_enrolled: module?.initial_enrolled as number,
+          }}
+          moduleTips={module?.tips}
+        >
+          <Button
+            variant='outlined'
+            sx={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              p: 1.5,
+              fontWeight: 500,
+              fontSize: '1rem',
+              whiteSpace: 'nowrap',
+              gap: 1,
+            }}
+          >
+            <FiSettings size='20px' />
+            Module Settings
+          </Button>
+        </CreateModuleDialog>
 
         <LoadingButton
           loading={isLoadingModule}
@@ -168,6 +217,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
                   key={index}
                   step={lesson.id}
                   index={index}
+                  description={lesson.description}
                 />
               ))}
               {provided.placeholder}
@@ -179,6 +229,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
     </Box>
   )
 }
+
 function updateModuleLesson(arg0: { id: any; lesson_id: string; sort: any }) {
   throw new Error('Function not implemented.')
 }
