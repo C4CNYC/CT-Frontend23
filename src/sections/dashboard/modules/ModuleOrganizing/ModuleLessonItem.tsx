@@ -18,30 +18,20 @@ import {
 import { useTranslate } from "@/utils/translateHelper";
 import { GREEN_DOT_SX, getLessonItemPaperSx } from "../../lessons/LessonStep/constants";
 import { Iconify, MenuPopover } from "@/components";
-import Preferences from '../../lessons/LessonStep/Modals/Preferences'
-
-// import Preferences from "./Modals/Preferences";
+import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDialog'
+import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 
 interface Props {
-  //   step: ILessonContent & BaseResponseInterface;
-  step: string
   index: number
   onRemove: (id: string) => void
-  title: string
-  description?: string
+  lesson: ILesson
 }
 
 const BRIEFING = '#0198ED'
 const CUSTOM = '#364954'
 const CHALANGES = '#FBDD3F'
 
-export default function ModuleLessonItem({
-  //   onRemove,
-  title,
-  description = '-',
-  step,
-  index,
-}: Props): React.ReactElement {
+export default function ModuleLessonItem({ onRemove, index, lesson }: Props): React.ReactElement {
   const router = useRouter()
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
@@ -60,7 +50,7 @@ export default function ModuleLessonItem({
     router.push(
       `${router.pathname}?${new URLSearchParams({
         ...router.query,
-        lessonId: step,
+        lessonId: lesson.id,
       })}`,
       undefined,
       { shallow: true }
@@ -72,7 +62,7 @@ export default function ModuleLessonItem({
   }
 
   return (
-    <Draggable draggableId={step} index={index}>
+    <Draggable draggableId={lesson.id} index={index ?? 0}>
       {(provided) => (
         <Paper
           {...provided.draggableProps}
@@ -81,7 +71,7 @@ export default function ModuleLessonItem({
           elevation={8}
           sx={{ ...getLessonItemPaperSx(chooseBorderColor) }}
         >
-          {router.query.lessonId === step && <Box sx={GREEN_DOT_SX}></Box>}
+          {router.query.lessonId === lesson.id && <Box sx={GREEN_DOT_SX}></Box>}
 
           <IconButton sx={{ mr: '5px' }} {...provided.dragHandleProps}>
             <RxDragHandleDots2 size='24px' />
@@ -109,7 +99,7 @@ export default function ModuleLessonItem({
                   }}
                   gutterBottom
                 >
-                  {_.toUpper(title)}
+                  {_.toUpper(lesson.name)}
                 </Typography>
                 <Typography
                   sx={{
@@ -120,7 +110,7 @@ export default function ModuleLessonItem({
                   noWrap
                   variant='body2'
                 >
-                  {description}
+                  {lesson.description ?? '-'}
                 </Typography>
               </Box>
               <IconButton
@@ -140,23 +130,23 @@ export default function ModuleLessonItem({
                 e.stopPropagation()
               }}
             >
-              {/* <IconButton
-                onClick={() => {
-                  onDublicate(step)
+              <CreateLessonDialog
+                isEdit
+                id={lesson.id}
+                defaultValues={{
+                  name: lesson.name,
+                  description: lesson.description,
+                  active: lesson.active,
+                  tips: '',
+                  independent: lesson.independent,
+                  type: lesson.type,
                 }}
+                lessonTips={lesson.tips}
               >
-                <Iconify icon='material-symbols:content-copy-outline' />
-              </IconButton> */}
-
-              {/* <Preferences
-                defaultValues={{ ...step }}
-                contentId={step.id}
-                lessonId={lessonId}
-              > */}
-              <IconButton>
-                <Iconify icon='ep:setting' />
-              </IconButton>
-              {/* </Preferences>  */}
+                <IconButton>
+                  <Iconify icon='ep:setting' />
+                </IconButton>
+              </CreateLessonDialog>
             </Stack>
           </Stack>
 
@@ -171,7 +161,7 @@ export default function ModuleLessonItem({
           >
             <MenuItem
               onClick={() => {
-                // onRemove();
+                onRemove(lesson.id)
                 handleClosePopover()
               }}
             >

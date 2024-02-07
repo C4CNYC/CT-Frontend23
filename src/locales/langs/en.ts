@@ -214,6 +214,8 @@ const en = {
   regex: 'Regex',
   private: 'Private',
   open_catalog: 'Open Catalog',
+  sequence: 'Sequence',
+  rearrange: 'Rearrange',
 
   // avatar upload
   avatar__upload_text: 'Upload photo',
@@ -267,6 +269,7 @@ const en = {
   messages_course_complete: 'Course successfully completed',
   messages_chalage_comleted: 'Challange successfully completed',
   messages_course_doesnt_exist: "Course doesn't exist",
+  messages_lesson_removed: 'Lesson removed from the module',
 
   // Validation messages
   required_skill_name: 'Skill name is required',
@@ -513,6 +516,11 @@ const en = {
   modules_teacher_forum_link: 'Teacher forum link',
   modules_lesson_plans_link: 'Lesson plans link',
   modules_completed: '{{percentage}}% Complete',
+  modules_settings: 'Module Settings',
+  modules_add_lesson: 'Add Lesson',
+  modules_view_lesson: 'View Lesson',
+  modules_add_lesson_slide_link: 'Add/Edit Lesson Slides',
+  modules_pls_select_lesson: 'PLS SELECT LESSON',
 
   // Lessons page
   lessons: 'Lessons',
@@ -527,6 +535,9 @@ const en = {
   lessons_practical: 'Practical',
   lessons_exercise: 'Exercise',
   lessons_inependent_lesson: 'Independent lesson',
+  lessons_settings: 'Lesson Settings',
+  lessons_starter_code: 'Starter Code',
+  lessons_starter_code_from_previous: 'Copy from the previous lesson',
 
   // Integrations page
   integrations: 'Integrations',

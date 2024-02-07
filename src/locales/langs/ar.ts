@@ -215,6 +215,8 @@ const ar = {
   regex: 'التعبير العادي',
   private: 'خاص',
   open_catalog: 'افتح الكتالوج',
+  sequence: 'تسلسل',
+  rearrange: 'إعادة ترتيب',
 
   // avatar upload
   avatar__upload_text: 'حمل الصورة',
@@ -268,6 +270,7 @@ const ar = {
   messages_course_complete: 'تم إكمال الدورة بنجاح',
   messages_chalage_comleted: 'تم إكمال التحدي بنجاح',
   messages_course_doesnt_exist: 'الدورة غير موجودة',
+  messages_lesson_removed: 'تمت إزالة الدرس من الوحدة النمطية',
 
   // Validation messages
   required_skill_name: 'اسم المهارة مطلوب',
@@ -515,6 +518,11 @@ const ar = {
   modules_teacher_forum_link: 'رابط منتدى المعلم',
   modules_lesson_plans_link: 'رابط خطط الدروس',
   modules_completed: '{{percentage}}% مكتمل',
+  modules_settings: 'إعدادات الوحدة',
+  modules_add_lesson: 'أضف الدرس',
+  modules_view_lesson: 'عرض الدرس',
+  modules_add_lesson_slide_link: 'إضافة/تحرير شرائح الدرس',
+  modules_pls_select_lesson: 'الرجاء اختيار الدرس',
 
   // Lessons page
   lessons: 'دروس',
@@ -529,6 +537,9 @@ const ar = {
   lessons_practical: 'عملي',
   lessons_exercise: 'يمارس',
   lessons_inependent_lesson: 'درس مستقل',
+  lessons_settings: 'إعدادات الدرس',
+  lessons_starter_code: 'كود البداية',
+  lessons_starter_code_from_previous: 'نسخ من الدرس السابق',
 
   // Integrations page
   integrations: 'التكامل',

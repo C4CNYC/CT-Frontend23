@@ -10,6 +10,7 @@ import { useDeleteModuleMutation } from '@/redux/services/manager/modules-manage
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { CgArrowsExchangeV } from '@react-icons/all-files/cg/CgArrowsExchangeV'
 
 export default function ModuleCard({ module }: any): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
@@ -17,18 +18,16 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
   const [loading, setLoading] = useState(false)
   const translate = useTranslate()
 
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const [deleteModule] = useDeleteModuleMutation();
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const [deleteModule] = useDeleteModuleMutation()
 
-  const router = useRouter();
+  const router = useRouter()
 
   const openContentCreationTool = (): void => {
-    router.push(
-      `${router.pathname}?${new URLSearchParams({ moduleId: module.id })}`,
-      undefined,
-      { shallow: true }
-    );
-  };
+    router.push(`${router.pathname}?${new URLSearchParams({ moduleId: module.id })}`, undefined, {
+      shallow: true,
+    })
+  }
 
   const onDelete = async (): Promise<void> => {
     setLoading(true)
@@ -87,15 +86,8 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           },
         }}
       >
-        <Stack
-          direction='row'
-          alignItems='center'
-          sx={{ top: 8, right: 8, position: 'absolute' }}
-        >
-          <IconButton
-            color={openPopover ? 'inherit' : 'default'}
-            onClick={handleOpenPopover}
-          >
+        <Stack direction='row' alignItems='center' sx={{ top: 8, right: 8, position: 'absolute' }}>
+          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
             <Iconify icon='eva:more-vertical-fill' />
           </IconButton>
         </Stack>
@@ -120,10 +112,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           sx={{ width: 40, height: 40, mt: 4 }}
         />
 
-        <TextMaxLine
-          variant='h6'
-          sx={{ mt: 1, mb: 0.5 }}
-        >
+        <TextMaxLine variant='h6' sx={{ mt: 1, mb: 0.5 }}>
           {module.name}
         </TextMaxLine>
 
@@ -133,10 +122,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           spacing={0.75}
           sx={{ typography: 'caption', color: 'text.disabled' }}
         >
-          <Typography
-            variant='caption'
-            noWrap
-          >
+          <Typography variant='caption' noWrap>
             {module.description}
           </Typography>
           <Box
@@ -181,7 +167,8 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
         </CreateModuleDialog>
 
         <MenuItem onClick={() => openContentCreationTool()}>
-          rearenge lesson
+          <CgArrowsExchangeV />
+          {translate('rearrange')}
         </MenuItem>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
@@ -204,12 +191,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
         title={translate('actions_delete')}
         content={translate('messages_delete_question')}
         action={
-          <LoadingButton
-            variant='contained'
-            color='error'
-            onClick={onDelete}
-            loading={loading}
-          >
+          <LoadingButton variant='contained' color='error' onClick={onDelete} loading={loading}>
             {translate('actions_delete')}
           </LoadingButton>
         }

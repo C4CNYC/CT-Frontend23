@@ -7,13 +7,32 @@ import { Box, Dialog } from '@mui/material'
 import LessonDetails from './LessonDetails'
 import ModuleLessonList from './ModuleLessonList'
 import LessonTopBar from '../../lessons/LessonStep/lesson-top-bar/LessonTopBar'
-import { ResizerUi } from '@/components'
-import { NoSelectedStep } from '../../lessons/LessonStep/NoSelectedStep'
+import { NoSelectedLesson } from './NoSelectedLesson'
+import { useAtom } from 'jotai'
+import { lessonViewAtom } from '../../lessons/LessonStep/lesson-atoms/lesson-view-atom'
+import { useEffect } from 'react'
 
 export default function ModuleOrganizing(): React.ReactElement {
   const router = useRouter()
   const { lessonId, moduleId } = router.query
+  const [, setLessonView] = useAtom(lessonViewAtom)
   const handle = useFullScreenHandle()
+
+  useEffect(() => {
+    setLessonView((prev) => ({
+      ...prev,
+      isFullScreenView: handle.active,
+      unitId: router.query.unit_id as string,
+    }))
+  }, [handle.active])
+
+  useEffect(() => {
+    setLessonView((prev) => ({
+      ...prev,
+      fullScreenOpen: handle.enter,
+      fullScreenClose: handle.exit,
+    }))
+  }, [])
 
   return (
     <>
@@ -33,11 +52,9 @@ export default function ModuleOrganizing(): React.ReactElement {
         <FullScreen handle={handle}>
           <LessonTopBar />
 
-          <Box>
-            <ResizerUi split='vertical' minSize={300} maxSize={750} defaultSize={'400px'}>
-              <ModuleLessonList moduleId={moduleId as string} />
-              {lessonId ? <LessonDetails /> : <NoSelectedStep />}
-            </ResizerUi>
+          <Box sx={{ display: 'flex', gap: 2, p: 2 }}>
+            <ModuleLessonList moduleId={moduleId as string} />
+            {lessonId ? <LessonDetails /> : <NoSelectedLesson />}
           </Box>
         </FullScreen>
       </Dialog>

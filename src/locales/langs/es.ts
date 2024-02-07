@@ -211,6 +211,8 @@ const es = {
   regex: 'Regex',
   private: 'Privado',
   open_catalog: 'Abrir catálogo',
+  sequence: 'Secuencia',
+  rearrange: 'Reorganizar',
 
   // avatar upload
   avatar__upload_text: 'Subir foto',
@@ -264,6 +266,7 @@ const es = {
   messages_course_complete: 'Curso realizado con éxito',
   messages_chalage_comleted: 'Desafío completado con éxito',
   messages_course_doesnt_exist: 'El curso no existe',
+  messages_lesson_removed: 'Lección eliminada del módulo',
 
   // Validation messages
   required_skill_name: 'El nombre de la habilidad es obligatorio',
@@ -511,6 +514,11 @@ const es = {
   modules_teacher_forum_link: 'Enlace al foro de profesores',
   modules_lesson_plans_link: 'Enlace a los planes de estudio',
   modules_completed: '{{porcentaje}}% Completo',
+  modules_settings: 'Configuración del módulo',
+  modules_add_lesson: 'Agregar lección',
+  modules_view_lesson: 'Ver lección',
+  modules_add_lesson_slide_link: 'Agregar/editar diapositivas de lecciones',
+  modules_pls_select_lesson: 'POR FAVOR SELECCIONE LA LECCIÓN',
 
   // Lessons page
   lessons: 'Lecciones',
@@ -525,6 +533,9 @@ const es = {
   lessons_practical: 'Práctico',
   lessons_exercise: 'Ejercicio',
   lessons_inependent_lesson: 'Lección independiente',
+  lessons_settings: 'Configuración de la lección',
+  lessons_starter_code: 'Código de inicio',
+  lessons_starter_code_from_previous: 'Copiar de la lección anterior',
 
   // Integrations page
   integrations: 'Integraciones',

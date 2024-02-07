@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
@@ -7,7 +7,7 @@ import * as _ from 'lodash-es'
 import { useSnackbar } from 'notistack'
 
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography, useTheme } from '@mui/material'
 
 import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
 import { useGetModuleWithLessonsQuery } from 'src/redux/services/manager/modules-student'
@@ -16,10 +16,13 @@ import ModuleLessonItem from './ModuleLessonItem'
 import { useTranslate } from '@/utils/translateHelper'
 import { useState } from 'react'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
-import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
+import {
+  useRemoveLessonFromModuleMutation,
+  useUpdateModuleLessonMutation,
+} from '@/redux/services/manager/modules-manager'
 import SkeletonList from '../../lessons/LessonStep/Modals/SkeletonList'
 import CreateModuleDialog from '../CreateModuleDialog'
-import { IModule } from '@/redux/interfaces/content.interface'
+import { LESSON_LIST_BLOCK_SX, getAddLessonBtnSx, getModuleBtnSx } from './constants'
 
 function parseSort(sort?: number) {
   return sort ?? 0
@@ -70,11 +73,12 @@ interface Props {
 export default function ModuleLessonList({ moduleId }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
+  const theme = useTheme()
+
+  const moduleBtnSx = useMemo(() => getModuleBtnSx(theme), [theme])
+  const addLessonBtnSx = useMemo(() => getAddLessonBtnSx(theme), [theme])
 
   const [lessons, setLessons] = useState<ILesson[]>([])
-  const [module1, setModule] = useState<IModule>()
-
-  console.log('module', module1)
 
   const { data, isLoading, isFetching } = useGetLessonsQuery({ module_id: moduleId })
 
@@ -84,6 +88,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
   )
 
   const [updateModuleLesson] = useUpdateModuleLessonMutation()
+  const [removeModuleLesson] = useRemoveLessonFromModuleMutation()
 
   const getDurationString = (obj: Record<string, number>) => {
     let str = ''
@@ -117,29 +122,25 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
   )
 
   useEffect(() => {
-    // if (!module) return
     setLessons(data?.data ?? [])
-    setModule(module)
   }, [module, data])
 
   const onRemove = async (id: string): Promise<void> => {
-    //   try {
-    //     await removeLessonContent({
-    //       lessonId,
-    //       id,
-    //     }).unwrap();
-    //     enqueueSnackbar(translate("step_removed"));
-    //   } catch (e: any) {
-    //     enqueueSnackbar(translate("step_cant_removed"), {
-    //       variant: "error",
-    //     });
-    //   }
+    try {
+      await removeModuleLesson({
+        lesson_id: id,
+        id: module?.id as string,
+      }).unwrap()
+      enqueueSnackbar(translate('messages_lesson_removed'))
+    } catch (e: any) {
+      enqueueSnackbar(translate('messages_error'), {
+        variant: 'error',
+      })
+    }
   }
 
-  if (isLoading) return <SkeletonList />
-
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={LESSON_LIST_BLOCK_SX}>
       <Stack sx={{ gap: 2 }}>
         <Typography variant='subtitle1' sx={{ pl: 1, fontWeight: 500, fontSize: '1.1rem' }}>
           {module?.name}
@@ -149,34 +150,23 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           isEdit
           id={module?.id}
           defaultValues={{
-            name: module?.name,
-            description: module?.description as string,
+            name: module?.name ?? '-',
+            description: module?.description ?? '-',
             active: module?.active as boolean,
             tips: '',
             duration: module?.duration ? getDurationString(module.duration) : '',
-            teacher_slides: module?.teacher_slides as string,
-            teacher_forum: module?.teacher_forum as string,
-            lesson_plans: module?.lesson_plans as string,
-            initial_likes: module?.initial_likes as number,
-            initial_stars: module?.initial_stars as number,
-            initial_enrolled: module?.initial_enrolled as number,
+            teacher_slides: module?.teacher_slides ?? '-',
+            teacher_forum: module?.teacher_forum ?? '-',
+            lesson_plans: module?.lesson_plans ?? '-',
+            initial_likes: module?.initial_likes ?? 5,
+            initial_stars: module?.initial_stars ?? 10,
+            initial_enrolled: module?.initial_enrolled ?? 15,
           }}
           moduleTips={module?.tips}
         >
-          <Button
-            variant='outlined'
-            sx={{
-              width: '100%',
-              justifyContent: 'flex-start',
-              p: 1.5,
-              fontWeight: 500,
-              fontSize: '1rem',
-              whiteSpace: 'nowrap',
-              gap: 1,
-            }}
-          >
+          <Button variant='outlined' sx={moduleBtnSx}>
             <FiSettings size='20px' />
-            Module Settings
+            {translate('modules_settings').toUpperCase()}
           </Button>
         </CreateModuleDialog>
 
@@ -184,52 +174,37 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           loading={isLoadingModule}
           variant='outlined'
           fullWidth
-          sx={{
-            mb: 1,
-            p: 2,
-            gap: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+          sx={addLessonBtnSx}
           //   onClick={() => createNewContent()}
           disabled={isLoadingModule}
         >
           <ImPlus size='22px' />
-          <Typography variant='subtitle1'>Add Lesson</Typography>
+          <Typography variant='subtitle1'>{translate('modules_add_lesson')}</Typography>
         </LoadingButton>
       </Stack>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='contents'>
-          {(provided) => (
-            <Stack
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              direction='column'
-              spacing={1}
-              sx={{ py: 1 }}
-            >
-              {lessons.map((lesson, index) => (
-                <ModuleLessonItem
-                  onRemove={onRemove}
-                  title={lesson.name}
-                  key={index}
-                  step={lesson.id}
-                  index={index}
-                  description={lesson.description}
-                />
-              ))}
-              {provided.placeholder}
-            </Stack>
-          )}
-        </Droppable>
-      </DragDropContext>
-      <Stack direction='column' spacing={3} sx={{ p: 2 }}></Stack>
+      {isLoading ? (
+        <SkeletonList />
+      ) : (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId='lessons'>
+            {(provided) => (
+              <Stack
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                direction='column'
+                spacing={1}
+                sx={{ py: 1 }}
+              >
+                {lessons.map((lesson, index) => (
+                  <ModuleLessonItem onRemove={onRemove} key={index} lesson={lesson} index={index} />
+                ))}
+                {provided.placeholder}
+              </Stack>
+            )}
+          </Droppable>
+        </DragDropContext>
+      )}
     </Box>
   )
-}
-
-function updateModuleLesson(arg0: { id: any; lesson_id: string; sort: any }) {
-  throw new Error('Function not implemented.')
 }
