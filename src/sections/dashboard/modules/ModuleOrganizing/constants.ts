@@ -34,6 +34,19 @@ export const getAddLessonBtnSx = (theme: Theme): SxProps => ({
   bgcolor: theme.palette.background.default,
 })
 
+export const LESSON_NAME_SX = {
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  mb: 0,
+}
+
+export const LESSON_DESCRIPTION_SX = {
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+}
+
 export const NO_SELECTED_BOX_SX = {
   display: 'flex',
   flex: 3,

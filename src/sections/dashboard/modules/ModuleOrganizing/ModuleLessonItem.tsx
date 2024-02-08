@@ -20,6 +20,7 @@ import { GREEN_DOT_SX, getLessonItemPaperSx } from "../../lessons/LessonStep/con
 import { Iconify, MenuPopover } from "@/components";
 import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDialog'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
+import { LESSON_DESCRIPTION_SX, LESSON_NAME_SX } from './constants'
 
 interface Props {
   index: number
@@ -89,27 +90,10 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                   maxWidth: '160px',
                 }}
               >
-                <Typography
-                  variant='subtitle1'
-                  sx={{
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    mb: 0,
-                  }}
-                  gutterBottom
-                >
+                <Typography variant='subtitle1' sx={LESSON_NAME_SX} gutterBottom>
                   {_.toUpper(lesson.name)}
                 </Typography>
-                <Typography
-                  sx={{
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                  }}
-                  noWrap
-                  variant='body2'
-                >
+                <Typography sx={LESSON_DESCRIPTION_SX} noWrap variant='body2'>
                   {lesson.description ?? '-'}
                 </Typography>
               </Box>
