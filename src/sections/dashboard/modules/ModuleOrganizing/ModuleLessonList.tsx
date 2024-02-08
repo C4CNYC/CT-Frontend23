@@ -1,28 +1,27 @@
 import { useCallback, useEffect, useMemo } from 'react'
+import { useState } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
-import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
-import { ImPlus } from '@react-icons/all-files/im/ImPlus'
-import * as _ from 'lodash-es'
-import { useSnackbar } from 'notistack'
-
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, Stack, Typography, useTheme } from '@mui/material'
+import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
+import { ImPlus } from '@react-icons/all-files/im/ImPlus'
+import { useSnackbar } from 'notistack'
 
-import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
-import { useGetModuleWithLessonsQuery } from 'src/redux/services/manager/modules-student'
-
-import ModuleLessonItem from './ModuleLessonItem'
-import { useTranslate } from '@/utils/translateHelper'
-import { useState } from 'react'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useRemoveLessonFromModuleMutation,
   useUpdateModuleLessonMutation,
 } from '@/redux/services/manager/modules-manager'
+import { useTranslate } from '@/utils/translateHelper'
+import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
+import { useGetModuleWithLessonsQuery } from 'src/redux/services/manager/modules-student'
+
 import SkeletonList from '../../lessons/LessonStep/Modals/SkeletonList'
 import CreateModuleDialog from '../CreateModuleDialog'
+
 import { LESSON_LIST_BLOCK_SX, getAddLessonBtnSx, getModuleBtnSx } from './constants'
+import ModuleLessonItem from './ModuleLessonItem'
 
 function parseSort(sort?: number) {
   return sort ?? 0
@@ -142,7 +141,10 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
   return (
     <Box sx={LESSON_LIST_BLOCK_SX}>
       <Stack sx={{ gap: 2 }}>
-        <Typography variant='subtitle1' sx={{ pl: 1, fontWeight: 500, fontSize: '1.1rem' }}>
+        <Typography
+          variant='subtitle1'
+          sx={{ pl: 1, fontWeight: 500, fontSize: '1.1rem' }}
+        >
           {module?.name}
         </Typography>
 
@@ -164,7 +166,10 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           }}
           moduleTips={module?.tips}
         >
-          <Button variant='outlined' sx={moduleBtnSx}>
+          <Button
+            variant='outlined'
+            sx={moduleBtnSx}
+          >
             <FiSettings size='20px' />
             {translate('modules_settings').toUpperCase()}
           </Button>
@@ -197,7 +202,12 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
                 sx={{ py: 1 }}
               >
                 {lessons.map((lesson, index) => (
-                  <ModuleLessonItem onRemove={onRemove} key={index} lesson={lesson} index={index} />
+                  <ModuleLessonItem
+                    onRemove={onRemove}
+                    key={index}
+                    lesson={lesson}
+                    index={index}
+                  />
                 ))}
                 {provided.placeholder}
               </Stack>

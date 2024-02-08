@@ -1,16 +1,16 @@
-import { useRouter } from 'next/router'
-
-import { FullScreen, useFullScreenHandle } from 'react-full-screen'
+import { useEffect } from 'react'
 
 import { Box, Dialog } from '@mui/material'
+import { useAtom } from 'jotai'
+import { useRouter } from 'next/router'
+import { FullScreen, useFullScreenHandle } from 'react-full-screen'
+
+import { lessonViewAtom } from '../../lessons/LessonStep/lesson-atoms/lesson-view-atom'
+import LessonTopBar from '../../lessons/LessonStep/lesson-top-bar/LessonTopBar'
 
 import LessonDetails from './LessonDetails'
 import ModuleLessonList from './ModuleLessonList'
-import LessonTopBar from '../../lessons/LessonStep/lesson-top-bar/LessonTopBar'
 import { NoSelectedLesson } from './NoSelectedLesson'
-import { useAtom } from 'jotai'
-import { lessonViewAtom } from '../../lessons/LessonStep/lesson-atoms/lesson-view-atom'
-import { useEffect } from 'react'
 
 export default function ModuleOrganizing(): React.ReactElement {
   const router = useRouter()
@@ -24,7 +24,7 @@ export default function ModuleOrganizing(): React.ReactElement {
       isFullScreenView: handle.active,
       unitId: router.query.unit_id as string,
     }))
-  }, [handle.active])
+  }, [handle.active, router.query.unit_id, setLessonView])
 
   useEffect(() => {
     setLessonView((prev) => ({

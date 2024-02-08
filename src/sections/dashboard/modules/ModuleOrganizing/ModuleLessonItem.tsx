@@ -1,25 +1,19 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Draggable } from "@hello-pangea/dnd";
-import { BsThreeDotsVertical } from "@react-icons/all-files/bs/BsThreeDotsVertical";
-import { RxDragHandleDots2 } from "@react-icons/all-files/rx/RxDragHandleDots2";
-import * as _ from "lodash-es";
+import { Draggable } from '@hello-pangea/dnd'
+import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
+import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
+import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
+import * as _ from 'lodash-es'
+import { useRouter } from 'next/router'
 
-import {
-  Box,
-  IconButton,
-  MenuItem,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-
-import { useTranslate } from "@/utils/translateHelper";
-import { GREEN_DOT_SX, getLessonItemPaperSx } from "../../lessons/LessonStep/constants";
-import { Iconify, MenuPopover } from "@/components";
-import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDialog'
+import { Iconify, MenuPopover } from '@/components'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
+import { useTranslate } from '@/utils/translateHelper'
+
+import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDialog'
+import { GREEN_DOT_SX, getLessonItemPaperSx } from '../../lessons/LessonStep/constants'
+
 import { LESSON_DESCRIPTION_SX, LESSON_NAME_SX } from './constants'
 
 interface Props {
@@ -63,7 +57,10 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
   }
 
   return (
-    <Draggable draggableId={lesson.id} index={index ?? 0}>
+    <Draggable
+      draggableId={lesson.id}
+      index={index ?? 0}
+    >
       {(provided) => (
         <Paper
           {...provided.draggableProps}
@@ -74,7 +71,10 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
         >
           {router.query.lessonId === lesson.id && <Box sx={GREEN_DOT_SX}></Box>}
 
-          <IconButton sx={{ mr: '5px' }} {...provided.dragHandleProps}>
+          <IconButton
+            sx={{ mr: '5px' }}
+            {...provided.dragHandleProps}
+          >
             <RxDragHandleDots2 size='24px' />
           </IconButton>
           <Stack sx={{ width: '100%', alignItems: 'flex-end' }}>
@@ -90,10 +90,18 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                   maxWidth: '160px',
                 }}
               >
-                <Typography variant='subtitle1' sx={LESSON_NAME_SX} gutterBottom>
+                <Typography
+                  variant='subtitle1'
+                  sx={LESSON_NAME_SX}
+                  gutterBottom
+                >
                   {_.toUpper(lesson.name)}
                 </Typography>
-                <Typography sx={LESSON_DESCRIPTION_SX} noWrap variant='body2'>
+                <Typography
+                  sx={LESSON_DESCRIPTION_SX}
+                  noWrap
+                  variant='body2'
+                >
                   {lesson.description ?? '-'}
                 </Typography>
               </Box>

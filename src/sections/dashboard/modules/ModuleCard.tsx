@@ -1,16 +1,16 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import { CgArrowsExchangeV } from '@react-icons/all-files/cg/CgArrowsExchangeV'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { useDeleteModuleMutation } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import { useTranslate } from '@/utils/translateHelper'
-import { CgArrowsExchangeV } from '@react-icons/all-files/cg/CgArrowsExchangeV'
 
 export default function ModuleCard({ module }: any): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
@@ -86,8 +86,15 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           },
         }}
       >
-        <Stack direction='row' alignItems='center' sx={{ top: 8, right: 8, position: 'absolute' }}>
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+        <Stack
+          direction='row'
+          alignItems='center'
+          sx={{ top: 8, right: 8, position: 'absolute' }}
+        >
+          <IconButton
+            color={openPopover ? 'inherit' : 'default'}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon='eva:more-vertical-fill' />
           </IconButton>
         </Stack>
@@ -112,7 +119,10 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           sx={{ width: 40, height: 40, mt: 4 }}
         />
 
-        <TextMaxLine variant='h6' sx={{ mt: 1, mb: 0.5 }}>
+        <TextMaxLine
+          variant='h6'
+          sx={{ mt: 1, mb: 0.5 }}
+        >
           {module.name}
         </TextMaxLine>
 
@@ -122,7 +132,10 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           spacing={0.75}
           sx={{ typography: 'caption', color: 'text.disabled' }}
         >
-          <Typography variant='caption' noWrap>
+          <Typography
+            variant='caption'
+            noWrap
+          >
             {module.description}
           </Typography>
           <Box
@@ -191,7 +204,12 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
         title={translate('actions_delete')}
         content={translate('messages_delete_question')}
         action={
-          <LoadingButton variant='contained' color='error' onClick={onDelete} loading={loading}>
+          <LoadingButton
+            variant='contained'
+            color='error'
+            onClick={onDelete}
+            loading={loading}
+          >
             {translate('actions_delete')}
           </LoadingButton>
         }

@@ -1,6 +1,8 @@
-import { useTranslate } from '@/utils/translateHelper'
 import { Box, Typography } from '@mui/material'
 import Image from 'next/image'
+
+import { useTranslate } from '@/utils/translateHelper'
+
 import { NO_SELECTED_BOX_SX } from './constants'
 
 export const NoSelectedLesson = (): React.ReactElement => {

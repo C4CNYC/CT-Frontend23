@@ -1,14 +1,17 @@
-import { useRouter } from "next/router";
+import { useMemo } from 'react'
 
 import { Box, Button, Divider, Link, Skeleton, Typography, useTheme } from '@mui/material'
-
-import { useGetLessonQuery } from 'src/redux/services/manager/lessons-manager'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
-import { useTranslate } from '@/utils/translateHelper'
 import { RiShareBoxFill } from '@react-icons/all-files/ri/RiShareBoxFill'
 import NextLink from 'next/link'
-import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDialog'
+import { useRouter } from 'next/router'
+
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { useTranslate } from '@/utils/translateHelper'
+import { useGetLessonQuery } from 'src/redux/services/manager/lessons-manager'
+
+import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDialog'
+
 import {
   ADD_SLIDE_LINK_SX,
   DETAILS_LINK_WRAPPER,
@@ -17,7 +20,6 @@ import {
   VIEW_LESSON_LINK_SX,
   getLessonSettingsBtnSx,
 } from './constants'
-import { useMemo } from 'react'
 
 export default function LessonDetails(): React.ReactElement {
   const { lessonId } = useRouter().query
@@ -35,8 +37,14 @@ export default function LessonDetails(): React.ReactElement {
   if (isLoading || isFetching) {
     return (
       <Box sx={LESSON_DETAILS_WRAPPER}>
-        <Skeleton variant='rectangular' sx={LESSON_DETAILS_BLOCK_SX}></Skeleton>
-        <Skeleton variant='rectangular' sx={LESSON_DETAILS_BLOCK_SX}></Skeleton>
+        <Skeleton
+          variant='rectangular'
+          sx={LESSON_DETAILS_BLOCK_SX}
+        ></Skeleton>
+        <Skeleton
+          variant='rectangular'
+          sx={LESSON_DETAILS_BLOCK_SX}
+        ></Skeleton>
       </Box>
     )
   }
@@ -59,14 +67,21 @@ export default function LessonDetails(): React.ReactElement {
               }}
               lessonTips={lesson.tips}
             >
-              <Button variant='outlined' color='inherit' sx={lessonSettingsBtnSx}>
+              <Button
+                variant='outlined'
+                color='inherit'
+                sx={lessonSettingsBtnSx}
+              >
                 {translate('lessons_settings')}
                 <FiSettings size='20px' />
               </Button>
             </CreateLessonDialog>
           ) : null}
         </Box>
-        <Typography variant='h4' sx={(theme) => ({ color: theme.palette.text.disabled })}>
+        <Typography
+          variant='h4'
+          sx={(theme) => ({ color: theme.palette.text.disabled })}
+        >
           {lesson?.name}
         </Typography>
 
