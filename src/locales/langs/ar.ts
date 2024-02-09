@@ -103,6 +103,7 @@ const ar = {
   actions_pause: 'يوقف',
   actions_resume: 'سيرة ذاتية',
   actions_start: 'يبدأ',
+  actions_leave: 'يترك',
 
   // general locales
   chat: 'دردشة',
@@ -630,6 +631,8 @@ const ar = {
   tribes_join_class: 'انضم إلى الفصل',
   tribes_enter_join_code: 'أدخل رمز الانضمام الخاص بك للعثور على الفصل الدراسي الخاص بك',
   tribes_code_example: 'مثال: atVID13',
+  tribes_want_leave: 'هل أنت متأكد من \n أنك تريد مغادرة القبيلة؟',
+  tribes_you_left_tribe: 'لقد تركت القبيلة',
 
   // Create class page
   class_create: 'إنشاء فصل دراسي',
