@@ -68,6 +68,7 @@ export default function CreateClass(): React.ReactElement {
   });
 
   const onSubmit = async (data: FormValueProps) => {
+    console.log(schoolId, choosenColor)
     try {
       if (schoolId && choosenColor) {
         const classInfo = await createClassByManager({

@@ -123,7 +123,7 @@ export const useCodePanel = (): UseCodePanelReturn => {
         )
         .reverse()
         .find((lesson) =>
-          lesson.contents.find((content) =>
+          lesson?.contents?.find((content) =>
             content.progress?.find(
               (progress) => progress.progress_meta?.body.length > 0
             )

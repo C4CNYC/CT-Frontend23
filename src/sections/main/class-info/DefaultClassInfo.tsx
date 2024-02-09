@@ -44,6 +44,7 @@ import {
   SHARE_TOKEN_BTN_SX,
   getClassInfoWrapperSx,
 } from "./constants";
+import LiveChat from "./liveChat"
 
 interface IDefaultClassInfoProps {
   classData: IClass & BaseResponseInterface;
@@ -161,6 +162,7 @@ export default function DefaultClassInfo({
                   maxHeight: "20px",
                 }}
               >
+                <LiveChat />
                 <Link
                   sx={MEMBERS_LINK_SX}
                   href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.id}`}
