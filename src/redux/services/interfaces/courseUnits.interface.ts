@@ -133,7 +133,7 @@ export interface ILessonCreate {
 
 export interface IModulesSearchParams extends BaseSearchInterface {
   name?: string
-  course_id?: string,
+  course_id?: string
 }
 
 export interface ILessonSearchParams extends BaseSearchInterface {
