@@ -245,7 +245,7 @@ export default function AddQuest(): React.ReactElement {
               {!isLoading && (
                 <DetailsStep
                   methods={methods}
-                  initialValue={JSON.parse(assignment?.description)?.doc}
+                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
                   coursesData={{
                     data: coursesData.data?.data,
                     isLoading: coursesData.isLoading,

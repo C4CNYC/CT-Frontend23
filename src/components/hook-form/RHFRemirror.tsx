@@ -22,7 +22,7 @@ export const MenuBtn = styled(Button)({
 interface RHFRemirrorProps {
   name: string
   helperText?: React.ReactNode
-  initialValue: InitialDescriptionValueType
+  initialValue?: InitialDescriptionValueType
 }
 
 export function RHFRemirror({
