@@ -27,6 +27,20 @@ export interface IUser {
   account?: null
 }
 
+export interface IUserCreate {
+  id?: string
+  email: string
+  first_name: string
+  last_name: string
+  verified?: boolean
+  active?: boolean
+  role: Role
+  avatar?: string
+  cover?: string
+  socials?: ISocials[]
+  account?: null
+}
+
 export interface StudentSearchParams extends BaseSearchInterface {
   schoolId?: string
   name?: string
@@ -74,7 +88,7 @@ export interface IStudentSearchParams extends BaseSearchInterface {
   role?: string
 }
 
-export interface CreateUserRequest extends IUser {}
+export interface CreateUserRequest extends IUserCreate {}
 
 export interface UpdateUserRequest extends Omit<IUser, 'email'> {
   user_id: string
