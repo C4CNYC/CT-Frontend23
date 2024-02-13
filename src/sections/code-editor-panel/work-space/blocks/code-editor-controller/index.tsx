@@ -7,6 +7,7 @@ import { voidFunction } from "@utils";
 import { createSocket, waitConnectSocket } from "src/components/code-editor-collab/hook/utils/socket";
 import { useAuthContext } from "../../../../../auth/useAuthContext";
 import { randomBytes } from "crypto";
+import { CodeEditor } from "src/components/real-time-editor/editor";
 
 interface CodeEditorControllerProps {
   onChange?: (value: Record<string, string>) => void
@@ -43,6 +44,11 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
   }
 
   return (
+    // <CodeEditor
+    //   code={room.code}
+    //   onChangeCode={onChange}
+    //   preloadedCode={room.preloadedCode}
+    // />
     <CodeEditorCollab
       roomId={room.roomId}
       cursorText={room.cursorText}

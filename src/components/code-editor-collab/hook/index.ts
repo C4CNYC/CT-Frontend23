@@ -85,6 +85,7 @@ export const useCodeEditorCollab = ({
     cursorText,
     defaultFileName,
     preloadedCode,
+    editorRef
   })
 
   const runInitSubOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {

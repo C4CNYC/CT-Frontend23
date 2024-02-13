@@ -121,7 +121,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         theme="dark"
         extensions={extensions}
         readOnly={isReadOnly}
-        value={doc}
+        // value={doc}
       />
     </div>
   )

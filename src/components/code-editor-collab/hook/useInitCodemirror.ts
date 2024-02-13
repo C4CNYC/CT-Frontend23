@@ -1,12 +1,11 @@
 import { Socket } from "socket.io-client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { dracula } from "thememirror";
 import { LanguageSupport, indentUnit } from "@codemirror/language";
-import { Compartment, Extension, StateEffect } from "@codemirror/state";
+import { Compartment, EditorState, Extension, StateEffect } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
-
 import { getFileExtension } from "src/utils/getFileExtension";
 
 import { type Cursor, cursorExtension } from "./utils/collab/cursors";
@@ -16,6 +15,7 @@ import { File, getDocument } from "./utils/collab/requests";
 import { peerExtension } from "./utils/collab/peer-extension";
 import { BASIC_SETUP, Extensions } from "./constants";
 import { useAuthContext } from "../../../auth/useAuthContext";
+import { initListeners } from "src/components/real-time-editor/listeners";
 
 const langMap = {
   [Extensions.Css]: () => langs.css(),
@@ -39,6 +39,8 @@ interface UseBaseInit {
   cursorText: string
   defaultFileName: string
   preloadedCode?: string
+  editorRef?: any
+  editorView?: any
 }
 
 export interface UseBaseInitReturn {
@@ -58,6 +60,8 @@ export const useInitCodemirror = ({
   cursorText,
   defaultFileName,
   preloadedCode,
+  editorRef,
+  editorView
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0);
   const [doc, setDoc] = useState("");
@@ -68,7 +72,6 @@ export const useInitCodemirror = ({
   const baseInit = useCallback(async (fileName: File) => {
     const lineWrap = new Compartment();
     const addCursor = StateEffect.define<Cursor>();
-
     const { version, doc, cursorName, docInfo } = await getDocument({
       roomId,
       fileName,
@@ -80,9 +83,9 @@ export const useInitCodemirror = ({
 
     setExtensions([
       indentUnit.of("\t"),
+      dracula,
       basicSetup(BASIC_SETUP),
       ...language(fileName),
-      dracula,
       lineWrap.of(EditorView.lineWrapping),
       peerExtension({
         socket,
@@ -109,6 +112,84 @@ export const useInitCodemirror = ({
     setDoc(doc.toString());
     setKey((prev) => ++prev);
     setIsLoading(false);
+
+    const startState = EditorState.create({
+      doc,
+      extensions: [
+        indentUnit.of("\t"),
+        dracula,
+        basicSetup(BASIC_SETUP),
+        ...language(fileName),
+        lineWrap.of(EditorView.lineWrapping),
+        peerExtension({
+          socket,
+          roomId,
+          startVersion: version,
+          fileName,
+          addCursor
+        }),
+        cursorExtension({
+          cursorId: cursorName,
+          tooltipText: cursorText,
+          withTooltip,
+          addCursor,
+          userId: user?.id,
+        }),
+        contextMenuExtension({
+          userId: user?.id,
+        }),
+        commentsExtension({
+          userId: user?.id,
+        }),
+      ]
+    })
+    setExtensions([
+      indentUnit.of("\t"),
+      dracula,
+      basicSetup(BASIC_SETUP),
+      ...language(fileName),
+      lineWrap.of(EditorView.lineWrapping),
+      peerExtension({
+        socket,
+        roomId,
+        startVersion: version,
+        fileName,
+        addCursor
+      }),
+      cursorExtension({
+        cursorId: cursorName,
+        tooltipText: cursorText,
+        withTooltip,
+        addCursor,
+        userId: user?.id,
+      }),
+      contextMenuExtension({
+        userId: user?.id,
+      }),
+      commentsExtension({
+        userId: user?.id,
+      }),
+    ]);
+    let view: EditorView;
+    setTimeout(() => {
+      view = new EditorView({ state: startState, parent: editorRef.current });
+      if (!doc?.toString()) {
+        view?.dispatch({
+          changes: {
+            from: doc.length,
+            insert: preloadedCode,
+          },
+        });
+      }
+      initListeners(
+        view,
+        editorRef,
+        {
+          preloadedCode: preloadedCode || '',
+        },
+        lineWrap
+      );
+    }, 500);
   }, [
     roomId,
     cursorText,
