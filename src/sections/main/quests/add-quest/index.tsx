@@ -242,13 +242,16 @@ export default function AddQuest(): React.ReactElement {
               value={value}
               index={0}
             >
-              <DetailsStep
-                methods={methods}
-                coursesData={{
-                  data: coursesData.data?.data,
-                  isLoading: coursesData.isLoading,
-                }}
-              />
+              {!isLoading && (
+                <DetailsStep
+                  methods={methods}
+                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                  coursesData={{
+                    data: coursesData.data?.data,
+                    isLoading: coursesData.isLoading,
+                  }}
+                />
+              )}
             </CustomTabPanel>
             <CustomTabPanel
               value={value}
