@@ -42,7 +42,7 @@ export interface IModule {
   active?: boolean
   key: any
   avatar: string | null
-  duration: string | null
+  duration: Record<string, number>
   name: string
   type: string
   progress?: number
@@ -52,6 +52,10 @@ export interface IModule {
   initial_enrolled: number
   initial_likes: number
   initial_stars: number
+  tips?: string[]
+  teacher_slides?: string
+  lesson_plans?: string
+  teacher_forum?: string
 }
 
 export interface IModuleContent {

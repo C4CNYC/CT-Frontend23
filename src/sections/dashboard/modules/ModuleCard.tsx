@@ -2,7 +2,9 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import { CgArrowsExchangeV } from '@react-icons/all-files/cg/CgArrowsExchangeV'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { useDeleteModuleMutation } from '@/redux/services/manager/modules-manager'
@@ -18,6 +20,14 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [deleteModule] = useDeleteModuleMutation()
+
+  const router = useRouter()
+
+  const openContentCreationTool = (): void => {
+    router.push(`${router.pathname}?${new URLSearchParams({ moduleId: module.id })}`, undefined, {
+      shallow: true,
+    })
+  }
 
   const onDelete = async (): Promise<void> => {
     setLoading(true)
@@ -168,6 +178,11 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             {translate('actions_edit')}
           </MenuItem>
         </CreateModuleDialog>
+
+        <MenuItem onClick={() => openContentCreationTool()}>
+          <CgArrowsExchangeV />
+          {translate('rearrange')}
+        </MenuItem>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
