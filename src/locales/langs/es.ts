@@ -99,6 +99,7 @@ const es = {
   actions_pause: 'Pausa',
   actions_resume: 'Currículum',
   actions_start: 'Inicio',
+  actions_leave: 'Dejar',
 
   // general locales
   chat: 'Chat',
@@ -626,6 +627,8 @@ const es = {
   tribes_join_class: 'Unirse a la clase',
   tribes_enter_join_code: 'Introduzca su código de inscripción para encontrar su clase',
   tribes_code_example: 'Ejemplo: atVID13',
+  tribes_want_leave: '¿Estás seguro de que \n quieres salir de la tribu?',
+  tribes_you_left_tribe: 'Dejaste la tribu',
 
   // Create class page
   class_create: 'Crear una clase',
