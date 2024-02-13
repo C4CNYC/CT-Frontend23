@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, Card, Dialog, DialogContent, DialogTitle, Grid } from '@mui/material'
@@ -8,7 +9,8 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField } from '@/components'
+import { FormProvider, RHFCode, RHFSelect, RHFSwitch, RHFTextField } from '@/components'
+import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
@@ -153,6 +155,18 @@ export default function CreateLesson({
                       {translate('lessons_exercise')}
                     </option>
                   </RHFSelect>
+                  <Box>
+                    <ModalCodeFullscreen
+                      title={translate('integrations_head_links_plh')}
+                      name='head'
+                    />
+                    <RHFCode
+                      placeholder={translate('integrations_head_links_plh')}
+                      name='head'
+                      height='180px'
+                      extensions={[javascript({ jsx: true })]}
+                    />
+                  </Box>
 
                   <RHFSwitch
                     name='active'
