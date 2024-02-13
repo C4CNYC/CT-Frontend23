@@ -26,6 +26,7 @@ import { CodePanelContext } from '@/sections/code-panel/context/CodePanel.contex
 import TopPanel from '@/sections/code-panel/top-bar'
 import WorkSpace, { SupportedLang } from '@/sections/code-panel/work-space'
 import { useTranslate } from '@/utils/translateHelper'
+import { CodePanelChat } from '@/sections/chat'
 
 // import { CodePanelChat } from "@sections/chat";
 
@@ -152,13 +153,10 @@ export default function Index(): React.ReactElement {
               onChangeLanguage,
             }}
           >
-            <Box
-              bgcolor='white'
-              sx={{ position: 'relative', overflow: 'hidden' }}
-            >
+            <Box bgcolor='white' sx={{ position: 'relative', overflow: 'hidden' }}>
               <TopPanel
-                // chatComponent={<CodePanelChat />}
-                chatComponent={null}
+                chatComponent={<CodePanelChat />}
+                // chatComponent={null}
               />
               <WorkSpace />
               <BottomBar />

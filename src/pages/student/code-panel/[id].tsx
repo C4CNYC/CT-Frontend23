@@ -19,6 +19,7 @@ import { ILessonUserStatus } from '@/types'
 import generateId from '@/utils/generate-id'
 
 import SignUpDialog from './sign-up-dialog'
+import { CodePanelChat } from '@/sections/chat'
 
 interface LessonUserResponseType {
   id: string
@@ -193,7 +194,7 @@ export default function CodePanelPage(): ReactElement | null {
 
             <Box sx={boxProps}>
               <TopPanel
-                chatComponent={null}
+                chatComponent={<CodePanelChat />}
                 onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
                 isFullScreenView={handle.active}
               />

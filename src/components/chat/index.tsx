@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import {
-  Avatar,
   ConversationHeader,
   ConversationList,
   ExpansionPanel,
   MainContainer,
 } from '@chatscope/chat-ui-kit-react'
 // import { Firestore } from "firebase/firestore";
-import { IconButton, keyframes, styled, useMediaQuery, useTheme } from '@mui/material'
+import { Avatar, IconButton, keyframes, styled, useMediaQuery, useTheme } from '@mui/material'
 import { useAtom } from 'jotai'
 import * as _ from 'lodash-es'
 import { useSelector } from 'react-redux'
@@ -25,6 +24,7 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { chatAtom } from './atoms/chat.atom'
 import { Messages } from './messages'
 import { User, UsersItem } from './users-item'
+import { useAuthContext } from '@/auth/useAuthContext'
 
 interface IChat {
   users: Array<IFriend & BaseResponseInterface>
@@ -78,13 +78,18 @@ export const Chat = ({
   const [isTeachersOpen] = useState<boolean>(false)
   const [{ message: helpMsg, sent }, updateAtom] = useAtom(helpMsgAtom)
 
+  console.log('user', user)
+  const { user: contextUser } = useAuthContext()
+
+  console.log('contextUser', contextUser)
+
   useEffect(() => {
-    if (!user) return
+    if (!contextUser) return
     setMessages([])
-    getMessages(user.id, (messages, db) => {
+    getMessages(contextUser.id, (messages, db) => {
       setMessages(messages)
     })
-  }, [user])
+  }, [contextUser])
 
   type OnSendCallback = (reciverId: string, messageContent: string) => (db: any) => void
   const onSendCallback: OnSendCallback = (reciverId, messageContent) => (db) => {
@@ -123,10 +128,11 @@ export const Chat = ({
       style={{
         borderRadius: '10px',
         flexDirection: 'column',
+        background: '#f0f0f0',
       }}
     >
       <ConversationHeader>
-        {user && !isDesktop ? (
+        {contextUser && !isDesktop ? (
           <ConversationHeader.Back
             onClick={() => {
               updateChat((prev) => ({ ...prev, user: null }))
@@ -134,29 +140,29 @@ export const Chat = ({
           />
         ) : null}
 
-        {user ? (
+        {contextUser ? (
           <Avatar
             src={
-              user.avatar ?? 'https://tilomitra.com/wp-content/uploads/2014/08/avatar-cartoon.png'
+              contextUser.student_profile.avatar ??
+              'https://tilomitra.com/wp-content/uploads/2014/08/avatar-cartoon.png'
             }
           />
         ) : null}
         <ConversationHeader.Content
           userName={
-            user ? `${_.capitalize(user?.first_name)} ${_.capitalize(user?.last_name)}` : 'Chat'
+            contextUser
+              ? `${_.capitalize(user?.first_name)} ${_.capitalize(user?.last_name)}`
+              : 'Chat'
           }
         />
         <ConversationHeader.Actions>
-          {user && isDesktop ? (
+          {contextUser && isDesktop ? (
             <IconButton
               onClick={() => {
                 updateChat((prev) => ({ ...prev, user: null }))
               }}
             >
-              <Iconify
-                color='#6ea9d7'
-                icon='ph:users-fill'
-              />
+              <Iconify color='#6ea9d7' icon='ph:users-fill' />
             </IconButton>
           ) : null}
           {!isDesktop ? (
@@ -165,12 +171,7 @@ export const Chat = ({
                 setChatVisible(false)
               }}
             >
-              <Iconify
-                width='30px'
-                height='30px'
-                color='#6ea9d7'
-                icon='ic:round-close'
-              />
+              <Iconify width='30px' height='30px' color='#6ea9d7' icon='ic:round-close' />
             </IconButton>
           ) : null}
         </ConversationHeader.Actions>
@@ -192,10 +193,7 @@ export const Chat = ({
         />
       ) : (
         <>
-          <StylesExpansionPanel
-            title='Teachers'
-            open={isTeachersOpen}
-          >
+          <StylesExpansionPanel title='Teachers' open={isTeachersOpen}>
             <ConversationList
               style={{
                 width: '100%',
