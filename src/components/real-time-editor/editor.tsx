@@ -100,14 +100,7 @@ export const CodeEditor = ({
     }, 500);
 
     return () => {
-      removeListeners(
-        view,
-        editor,
-        {
-          preloadedCode,
-        },
-        lineWrap
-      );
+      removeListeners();
       view?.destroy();
     };
   }, []);

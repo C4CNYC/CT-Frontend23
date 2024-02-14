@@ -44,6 +44,16 @@ export const SHARE_BUTTON_SX = {
   },
 };
 
+export const CHAT_BUTTON_SX = {
+  display: "flex",
+  alignItems: "center",
+  color: "#fff",
+  ml: 2,
+  "&:hover": {
+    background: "none",
+  },
+};
+
 export const POPOVER_EDIT_BTN_SX = {
   gap: 1,
   width: "100%",

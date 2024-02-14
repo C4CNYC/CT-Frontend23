@@ -24,6 +24,15 @@ interface ISetting {
   preloadedCode: string;
 }
 
+let onReset: any;
+let onUpdateLine: any;
+let onUpdateFont: any;
+let onUpdateColor: any;
+let onSymbol: any;
+let onMoveCursor: any;
+let onUndoRedo: any;
+let onCopy: any;
+
 // #TODO better to make config and render
 // add and remove from one config
 
@@ -33,60 +42,48 @@ export function initListeners(
   setting: ISetting,
   lineWrap: Compartment
 ) {
-  window.addEventListener(RESET_LESSON_EVENT, () => {
+  onReset = () => {
     resetCodemirror(view, setting?.preloadedCode);
-  });
-  window.addEventListener(UPDATE_LINE_WRAP, (e: any) => {
+  }
+  onUpdateLine = (e: any) => {
     updateLineWrap(view, lineWrap, e.detail.wrap);
-  });
-  window.addEventListener(UPDATE_FONT_SIZE, (e: any) => {
+  }
+  onUpdateFont = (e: any) => {
     updateFontSizeCodemirror(editor, e.detail.size);
-  });
-  window.addEventListener(UPDATE_COLORS, (e: any) => {
+  }
+  onUpdateColor = (e: any) => {
     updateColorsCodemirror(editor, e.detail);
-  });
-  window.addEventListener(PASTE_SYMBOL_EVENT, (e: any) => {
+  }
+  onSymbol = (e: any) => {
     pasteSymbol(view, e.detail);
-  });
-  window.addEventListener(MOVE_CURSOR_EVENT, (e: any) => {
+  }
+  onMoveCursor = (e: any) => {
     moveCursor(view, e.detail.left);
-  });
-  window.addEventListener(UNDO_REDO_EVENT, (e: any) => {
+  }
+  onUndoRedo = (e: any) => {
     undoRedo(view, e.detail.type);
-  });
-  window.addEventListener(COPY_PASTE_EVENT, (e: any) => {
+  }
+  onCopy = (e: any) => {
     copyPaste(view, e.detail.type);
-  });
+  }
+
+  window.addEventListener(RESET_LESSON_EVENT, onReset);
+  window.addEventListener(UPDATE_LINE_WRAP, onUpdateLine);
+  window.addEventListener(UPDATE_FONT_SIZE, onUpdateFont);
+  window.addEventListener(UPDATE_COLORS, onUpdateColor);
+  window.addEventListener(PASTE_SYMBOL_EVENT, onSymbol);
+  window.addEventListener(MOVE_CURSOR_EVENT, onMoveCursor);
+  window.addEventListener(UNDO_REDO_EVENT, onUndoRedo);
+  window.addEventListener(COPY_PASTE_EVENT, onCopy);
 }
 
-export function removeListeners(
-  view: EditorView,
-  editor: MutableRefObject<any>,
-  setting: ISetting,
-  lineWrap: Compartment
-) {
-  window.removeEventListener(RESET_LESSON_EVENT, () => {
-    resetCodemirror(view, setting?.preloadedCode);
-  });
-  window.removeEventListener(UPDATE_LINE_WRAP, (e: any) => {
-    updateLineWrap(view, lineWrap, e.detail.wrap);
-  });
-  window.removeEventListener(UPDATE_FONT_SIZE, (e: any) => {
-    updateFontSizeCodemirror(editor, e.detail.size);
-  });
-  window.removeEventListener(UPDATE_COLORS, (e: any) => {
-    updateColorsCodemirror(editor, e.detail);
-  });
-  window.removeEventListener(PASTE_SYMBOL_EVENT, (e: any) => {
-    pasteSymbol(view, e.detail.symbol);
-  });
-  window.removeEventListener(MOVE_CURSOR_EVENT, (e: any) => {
-    moveCursor(view, e.detail.left);
-  });
-  window.removeEventListener(UNDO_REDO_EVENT, (e: any) => {
-    undoRedo(view, e.detail.type);
-  });
-  window.removeEventListener(COPY_PASTE_EVENT, (e: any) => {
-    copyPaste(view, e.detail.type);
-  });
+export function removeListeners() {
+  window.removeEventListener(RESET_LESSON_EVENT, onReset);
+  window.removeEventListener(UPDATE_LINE_WRAP, onUpdateLine);
+  window.removeEventListener(UPDATE_FONT_SIZE, onUpdateFont);
+  window.removeEventListener(UPDATE_COLORS, onUpdateColor);
+  window.removeEventListener(PASTE_SYMBOL_EVENT, onSymbol);
+  window.removeEventListener(MOVE_CURSOR_EVENT, onMoveCursor);
+  window.removeEventListener(UNDO_REDO_EVENT, onUndoRedo);
+  window.removeEventListener(COPY_PASTE_EVENT, onCopy);
 }
