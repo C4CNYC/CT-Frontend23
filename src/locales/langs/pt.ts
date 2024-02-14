@@ -99,6 +99,7 @@ const pt = {
   actions_pause: 'Pausa',
   actions_resume: 'Retomar',
   actions_start: 'Começar',
+  actions_leave: 'Deixar',
 
   // general locales
   chat: 'Bater papo',
@@ -211,6 +212,8 @@ const pt = {
   regex: 'Regex',
   private: 'Privada',
   open_catalog: 'Abrir Catálogo',
+  sequence: 'Seqüência',
+  rearrange: 'Reorganizar',
 
   // avatar upload
   avatar__upload_text: 'Carregue a foto',
@@ -264,6 +267,7 @@ const pt = {
   messages_course_complete: 'Curso concluído com sucesso',
   messages_chalage_comleted: 'Desafio concluído com sucesso',
   messages_course_doesnt_exist: 'O curso não existe',
+  messages_lesson_removed: 'Lição removida do módulo',
 
   // Validation messages
   required_skill_name: 'O nome da habilidade é necessário',
@@ -511,6 +515,11 @@ const pt = {
   modules_teacher_forum_link: 'Link do fórum de professores',
   modules_lesson_plans_link: 'Link para planos de aula',
   modules_completed: '{{percentage}}% Completa',
+  modules_settings: 'Configurações do módulo',
+  modules_add_lesson: 'Adicionar lição',
+  modules_view_lesson: 'Ver lição',
+  modules_add_lesson_slide_link: 'Adicionar/editar slides de aula',
+  modules_pls_select_lesson: 'POR FAVOR, SELECIONE A LIÇÃO',
 
   // Lessons page
   lessons: 'Lições',
@@ -525,6 +534,9 @@ const pt = {
   lessons_practical: 'Prática',
   lessons_exercise: 'Exercício',
   lessons_inependent_lesson: 'Lição independente',
+  lessons_settings: 'Configurações de aula',
+  lessons_starter_code: 'Código inicial',
+  lessons_starter_code_from_previous: 'Copiar da lição anterior',
 
   // Integrations page
   integrations: 'Integrações',
@@ -627,6 +639,8 @@ const pt = {
   tribes_join_class: 'Junte -se aula',
   tribes_enter_join_code: 'Digite seu código de junção para encontrar sua classe',
   tribes_code_example: 'Exemplo: atVID13',
+  tribes_want_leave: 'Tem certeza que \n deseja sair da tribo?',
+  tribes_you_left_tribe: 'Você deixou a tribo',
 
   // Create class page
   class_create: 'Criar uma classe',

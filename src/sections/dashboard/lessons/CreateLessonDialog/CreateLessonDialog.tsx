@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
+import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, DialogActions, Stack, Tab, Tabs } from '@mui/material'
@@ -11,7 +12,14 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, useSnackbar } from '@/components'
+import {
+  FormProvider,
+  RHFCode,
+  RHFSelect,
+  RHFSwitch,
+  RHFTextField,
+  useSnackbar,
+} from '@/components'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
@@ -30,6 +38,7 @@ interface FormValuesProps {
   active: boolean
   tips: string
   independent: boolean
+  head: string
   type: 'practical' | 'exercise' | 'quiz'
 }
 
@@ -108,9 +117,8 @@ export default function CreateLessonDialog({
         variant: 'error',
       })
     }
-    if (!isEdit) {
-      handleClose()
-    }
+
+    handleClose()
   }
 
   const deleteTip = async (tips: string[]): Promise<void> => {
@@ -202,7 +210,12 @@ export default function CreateLessonDialog({
                   placeholder={translate('actions_enter_tip')}
                   label={translate('actions_add_tip')}
                 />
-
+                <RHFCode
+                  placeholder={translate('integrations_head_links_plh')}
+                  name='head'
+                  height='180px'
+                  extensions={[javascript({ jsx: true })]}
+                />
                 <RHFSelect
                   native
                   name='type'
@@ -221,11 +234,11 @@ export default function CreateLessonDialog({
                     {translate('lessons_exercise')}
                   </option>
                 </RHFSelect>
-
                 <RHFSwitch
                   name='active'
                   label={translate('lessons_active')}
                 />
+
                 <RHFSwitch
                   name='independent'
                   label={translate('lessons_inependent_lesson')}
@@ -332,7 +345,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
             px: { xs: 2, sm: 3 },
             pt: 2,
             width: { xs: '320px', sm: '370px' },
-            height: '320px',
+            height: 'auto',
           }}
         >
           {children}

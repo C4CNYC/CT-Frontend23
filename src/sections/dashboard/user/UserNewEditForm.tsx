@@ -124,7 +124,6 @@ export default function UserNewEditForm({
         push(MANAGER_PATH_DASHBOARD.organization.members)
       } else {
         const user = await createUser({
-          id: '',
           ...data,
         }).unwrap()
         if (photoURL) {
