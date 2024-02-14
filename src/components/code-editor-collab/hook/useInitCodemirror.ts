@@ -80,70 +80,12 @@ export const useInitCodemirror = ({
       defaultFileName,
       preloadedCode,
     });
-
-    setExtensions([
-      indentUnit.of("\t"),
-      dracula,
-      basicSetup(BASIC_SETUP),
-      ...language(fileName),
-      lineWrap.of(EditorView.lineWrapping),
-      peerExtension({
-        socket,
-        roomId,
-        startVersion: version,
-        fileName,
-        addCursor
-      }),
-      cursorExtension({
-        cursorId: cursorName,
-        tooltipText: cursorText,
-        withTooltip,
-        addCursor,
-        userId: user?.id,
-      }),
-      contextMenuExtension({
-        userId: user?.id,
-      }),
-      commentsExtension({
-        userId: user?.id,
-      }),
-    ]);
     onChange?.(docInfo)
     setDoc(doc.toString());
     setKey((prev) => ++prev);
     setIsLoading(false);
 
-    const startState = EditorState.create({
-      doc,
-      extensions: [
-        indentUnit.of("\t"),
-        dracula,
-        basicSetup(BASIC_SETUP),
-        ...language(fileName),
-        lineWrap.of(EditorView.lineWrapping),
-        peerExtension({
-          socket,
-          roomId,
-          startVersion: version,
-          fileName,
-          addCursor
-        }),
-        cursorExtension({
-          cursorId: cursorName,
-          tooltipText: cursorText,
-          withTooltip,
-          addCursor,
-          userId: user?.id,
-        }),
-        contextMenuExtension({
-          userId: user?.id,
-        }),
-        commentsExtension({
-          userId: user?.id,
-        }),
-      ]
-    })
-    setExtensions([
+    const asd = [
       indentUnit.of("\t"),
       dracula,
       basicSetup(BASIC_SETUP),
@@ -169,27 +111,33 @@ export const useInitCodemirror = ({
       commentsExtension({
         userId: user?.id,
       }),
-    ]);
+    ]
+
+    const startState = EditorState.create({
+      doc,
+      extensions: asd
+    })
+
+    setExtensions(asd);
+
     let view: EditorView;
-    setTimeout(() => {
-      view = new EditorView({ state: startState, parent: editorRef.current });
-      if (!doc?.toString()) {
-        view?.dispatch({
-          changes: {
-            from: doc.length,
-            insert: preloadedCode,
-          },
-        });
-      }
-      initListeners(
-        view,
-        editorRef,
-        {
-          preloadedCode: preloadedCode || '',
+    view = new EditorView({ state: startState, parent: editorRef.current });
+    if (!doc?.toString()) {
+      view?.dispatch({
+        changes: {
+          from: doc.length,
+          insert: preloadedCode,
         },
-        lineWrap
-      );
-    }, 500);
+      });
+    }
+    initListeners(
+      view,
+      editorRef,
+      {
+        preloadedCode: preloadedCode || '',
+      },
+      lineWrap
+    );
   }, [
     roomId,
     cursorText,
