@@ -1,8 +1,37 @@
-.vscode
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# IDEA
+.idea/
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
 .env.local
-.idea
-node_modules
-.next
-next-env.d.ts
-yarn-error.log
-package-lock.json
+
+# vercel
+.vercel
+
+# editors
+.vscode
