@@ -10,7 +10,7 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import ModuleCard from '@/sections/dashboard/modules/ModuleCard'
-// import { getCountTakingElment } from "src/lib/utils/countTakingElments";
+import ModuleOrganizing from '@/sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -106,6 +106,7 @@ export default function ModulesListPage(): React.ReactElement | string {
               : null}
           </SimpleInfiniteList>
         </Box>
+        <ModuleOrganizing />
       </Container>
     </>
   )

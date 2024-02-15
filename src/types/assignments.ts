@@ -63,3 +63,9 @@ export interface IAssignmentsState {
     columns: Record<string, IAssignmentsColumn>
   }
 }
+
+export interface InitialDescriptionValueType {
+  type: string
+  content?: InitialDescriptionValueType[]
+  text?: string
+}
