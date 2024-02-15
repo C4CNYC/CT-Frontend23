@@ -126,6 +126,7 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                 isEdit
                 id={lesson.id}
                 defaultValues={{
+                  head: lesson.head ?? '',
                   name: lesson.name,
                   description: lesson.description,
                   active: lesson.active,
