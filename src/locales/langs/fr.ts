@@ -99,6 +99,7 @@ const fr = {
   actions_pause: 'Pause',
   actions_resume: 'reprendre',
   actions_start: 'Commencer',
+  actions_leave: 'Partir',
 
   // general locales
   chat: 'Chat',
@@ -211,6 +212,8 @@ const fr = {
   regex: 'Expression régulière',
   private: 'Privé',
   open_catalog: 'Ouvrir le catalogue',
+  sequence: 'Séquence',
+  rearrange: 'Réarranger',
 
   // avatar upload
   avatar__upload_text: 'Envoyer la photo',
@@ -264,6 +267,7 @@ const fr = {
   messages_course_complete: 'Cours terminé avec succès',
   messages_chalage_comleted: 'Défi réussi',
   messages_course_doesnt_exist: "Le cours n'existe pas",
+  messages_lesson_removed: 'Leçon supprimée du module',
 
   // Validation messages
   required_skill_name: 'Le nom de la compétence est requis',
@@ -512,6 +516,11 @@ const fr = {
   modules_teacher_forum_link: 'Lien du forum des enseignants',
   modules_lesson_plans_link: 'Lien vers les plans de cours',
   modules_completed: '{{percentage}}% terminé',
+  modules_settings: 'Paramètres des modules',
+  modules_add_lesson: 'Ajouter une leçon',
+  modules_view_lesson: 'Voir la leçon',
+  modules_add_lesson_slide_link: 'Ajouter/Modifier des diapositives de cours',
+  modules_pls_select_lesson: 'SVP SÉLECTIONNER LA LEÇON',
 
   // Lessons page
   lessons: 'Cours',
@@ -526,6 +535,9 @@ const fr = {
   lessons_practical: 'Pratique',
   lessons_exercise: 'Exercice',
   lessons_inependent_lesson: 'Leçon indépendante',
+  lessons_settings: 'Paramètres de la leçon',
+  lessons_starter_code: 'Code de démarrage',
+  lessons_starter_code_from_previous: 'Copie de la leçon précédente',
 
   // Integrations page
   integrations: 'Intégrations',
@@ -628,6 +640,8 @@ const fr = {
   tribes_join_class: 'Rejoindre la classe',
   tribes_enter_join_code: "Entrez votre code d'inscription pour trouver votre classe",
   tribes_code_example: 'Exemple: atVID13',
+  tribes_want_leave: 'Etes-vous sûr de \n vouloir quitter la tribu?',
+  tribes_you_left_tribe: 'Tu as quitté la tribu',
 
   // Create class page
   class_create: 'Créer une classe',

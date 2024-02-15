@@ -5,6 +5,7 @@ import { Box, Button, Card, Dialog, DialogContent, Grid, Typography } from '@mui
 
 import { useSnackbar } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IExitTribeDialogProps {
   children: React.ReactElement
@@ -13,6 +14,8 @@ interface IExitTribeDialogProps {
 export default function ExitTribeDialog({ children }: IExitTribeDialogProps): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
+
+  const translate = useTranslate()
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -27,7 +30,7 @@ export default function ExitTribeDialog({ children }: IExitTribeDialogProps): Re
     setLoading(true)
     try {
       // add user adding logic
-      enqueueSnackbar('You left the tribe')
+      enqueueSnackbar(translate('tribes_you_left_tribe'))
     } catch (error: any) {
       const typedError = error as APIError
       enqueueSnackbar(typedError.data.message, {
@@ -40,7 +43,9 @@ export default function ExitTribeDialog({ children }: IExitTribeDialogProps): Re
   return (
     <>
       <Box
-        onClick={() => {
+        onClick={(event) => {
+          event.stopPropagation()
+          event.preventDefault()
           openDialog()
         }}
       >
@@ -56,7 +61,7 @@ export default function ExitTribeDialog({ children }: IExitTribeDialogProps): Re
             variant='h5'
             sx={{ pb: 1, pt: 2, px: 2, textAlign: 'center' }}
           >
-            Are you sure you <br /> want to leave tribe?
+            {translate('tribes_want_leave')}
           </Typography>
           <Grid
             container
@@ -78,17 +83,25 @@ export default function ExitTribeDialog({ children }: IExitTribeDialogProps): Re
                 >
                   <Button
                     color='error'
-                    onClick={closeDialog}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      event.preventDefault()
+                      closeDialog()
+                    }}
                   >
-                    Cancel
+                    {translate('actions_cancel')}
                   </Button>
                   <LoadingButton
                     type='submit'
                     variant='contained'
                     loading={loading}
-                    onClick={onSubmit}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      event.preventDefault()
+                      onSubmit()
+                    }}
                   >
-                    Leave
+                    {translate('actions_leave')}
                   </LoadingButton>
                 </Box>
               </Card>

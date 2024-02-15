@@ -9,6 +9,8 @@ import { EditorComponent, Remirror, useCommands, useRemirror } from '@remirror/r
 import { Controller, useController, useFormContext } from 'react-hook-form'
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions'
 
+import { InitialDescriptionValueType } from '@/types'
+
 export const MenuBtn = styled(Button)({
   color: '#43D4DD',
   whiteSpace: 'nowrap',
@@ -20,9 +22,14 @@ export const MenuBtn = styled(Button)({
 interface RHFRemirrorProps {
   name: string
   helperText?: React.ReactNode
+  initialValue?: InitialDescriptionValueType
 }
 
-export function RHFRemirror({ name, helperText }: RHFRemirrorProps): React.ReactElement {
+export function RHFRemirror({
+  name,
+  helperText,
+  initialValue,
+}: RHFRemirrorProps): React.ReactElement {
   const theme = useTheme()
   const { control } = useFormContext()
   const { field } = useController({
@@ -32,7 +39,7 @@ export function RHFRemirror({ name, helperText }: RHFRemirrorProps): React.React
 
   const { manager, state, setState } = useRemirror({
     extensions: () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()] as any,
-    content: field.value.doc ?? '',
+    content: field.value.doc ?? initialValue,
     stringHandler: 'html',
   })
 

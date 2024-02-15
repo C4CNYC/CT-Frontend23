@@ -7,6 +7,7 @@ import { RHFSelect, RHFTextField } from '@/components'
 import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
+import { InitialDescriptionValueType } from '@/types'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -15,12 +16,14 @@ import { AVATAR_SX, INPUT_TEXT_SX, inputNameStyles, selectStyle } from './consta
 export default function DetailsStep({
   coursesData,
   methods,
+  initialValue,
 }: {
   coursesData: {
     data: Array<ICourse & BaseResponseInterface> | undefined
     isLoading: boolean
   }
   methods: UseFormReturn<any>
+  initialValue: InitialDescriptionValueType
 }): React.ReactElement {
   const theme = useTheme()
   const { data, isLoading } = coursesData
@@ -227,7 +230,10 @@ export default function DetailsStep({
         >
           {translate('quest_description')}
         </Typography>
-        <RHFRemirror name='description' />
+        <RHFRemirror
+          initialValue={initialValue}
+          name='description'
+        />
       </FormGroup>
     </Stack>
   )
