@@ -14,12 +14,12 @@ import { LessonUserContext } from '@/context/lesson-context'
 import { SocketContext } from '@/context/socket-context'
 import { useCodePanel } from '@/hooks/useCodePanel'
 import { useSelector } from '@/redux/store'
+import { CodePanelChat } from '@/sections/chat'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-editor-panel/skeleton'
 import { ILessonUserStatus } from '@/types'
 import generateId from '@/utils/generate-id'
 
 import SignUpDialog from './sign-up-dialog'
-import { CodePanelChat } from '@/sections/chat'
 
 interface LessonUserResponseType {
   id: string

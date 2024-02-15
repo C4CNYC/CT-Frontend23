@@ -1,16 +1,36 @@
+import { useContext, useMemo, useState } from 'react'
+
 import { Card, Stack } from '@mui/material'
-import ChatNav from './chatNav'
-import ChatMessageList from './chatMessageList'
-import ChatMessageInput from './chatMessageInput'
+
+import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
+import { CodePanelContext } from '@/sections/code-panel/context/CodePanel.context'
+
 import ChatHeaderDetail from './chatHeaderDetail'
+import ChatMessageInput from './chatMessageInput'
+import ChatMessageList from './chatMessageList'
+import ChatNav from './chatNav'
 
 export const Chat = (): React.ReactElement => {
+  const { publicPage } = useContext(CodePanelContext)
+
+  const { data, isLoading } = useGetFriendsStudentContentQuery({ take: 20 }, { skip: publicPage })
+  const [selectedChat, setSelectedChat] = useState<string>('')
+
+  const handleSelectChat = (id: string): void => {
+    setSelectedChat(id)
+  }
+
+  const selectedFriend = useMemo(
+    () => data?.data.find((friend) => friend.id === selectedChat),
+    [data, selectedChat]
+  )
+
   const renderNav = (
     <ChatNav
-    //   contacts={contacts}
-    //   conversations={conversations}
-    //   loading={conversationsLoading}
-    //   selectedConversationId={selectedConversationId}
+      selectChat={handleSelectChat}
+      selectedConversation={selectedChat}
+      isLoading={isLoading}
+      friends={data?.data}
     />
   )
 
@@ -21,12 +41,11 @@ export const Chat = (): React.ReactElement => {
       flexShrink={0}
       sx={{ pr: 1, pl: 2.5, py: 1, minHeight: 72 }}
     >
-      <ChatHeaderDetail />
-      {/* {selectedConversationId ? (
-        <>{details && <ChatHeaderDetail participants={participants} />}</>
-      ) : (
-        <ChatHeaderCompose contacts={contacts} onAddRecipients={handleAddRecipients} />
-      )} */}
+      <ChatHeaderDetail
+        name={selectedFriend?.first_name}
+        avatar={selectedFriend?.avatar}
+        status={selectedFriend?.active}
+      />
     </Stack>
   )
 
@@ -42,10 +61,7 @@ export const Chat = (): React.ReactElement => {
 
       <ChatMessageInput
       // recipients={recipients}
-      // onAddRecipients={handleAddRecipients}
-      // //
-      // selectedConversationId={selectedConversationId}
-      // disabled={!recipients.length && !selectedConversationId}
+      // selectedConversation={selectedChat}
       />
     </Stack>
   )
@@ -78,8 +94,6 @@ export const Chat = (): React.ReactElement => {
           }}
         >
           {renderMessages}
-
-          {/* {details && <ChatRoom conversation={conversation} participants={participants} />} */}
         </Stack>
       </Stack>
     </Stack>

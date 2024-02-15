@@ -1,31 +1,15 @@
-import { formatDistanceToNowStrict } from 'date-fns'
-
-import Box from '@mui/material/Box'
-import Stack from '@mui/material/Stack'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
+import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-
-import { PiArrowBendUpLeftLight } from '@react-icons/all-files/pi/PiArrowBendUpLeftLight'
 import { FaRegSmile } from '@react-icons/all-files/fa/FaRegSmile'
 import { HiTrash } from '@react-icons/all-files/hi2/HiTrash'
-// import { useMockedUser } from 'src/hooks/use-mocked-user'
-
-import { useGetMessage } from './hooks'
+import { PiArrowBendUpLeftLight } from '@react-icons/all-files/pi/PiArrowBendUpLeftLight'
+import { formatDistanceToNowStrict } from 'date-fns'
 
 // ----------------------------------------------------------------------
 
 export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
-  //   const { user } = useMockedUser()
-
-  //   const { me, senderDetails, hasImage } = useGetMessage({
-  //     message,
-  //     participants,
-  //     currentUserId: `${user?.id}`,
-  //   })
-
-  //   const { firstName, avatarUrl } = senderDetails
-
   //   const { body, createdAt } = message
 
   const renderInfo = (
@@ -41,7 +25,7 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
       }}
     >
       {!isMe && `firstName`} &nbsp;
-      {formatDistanceToNowStrict(new Date(), {
+      {formatDistanceToNowStrict(new Date(2024, 1, 14), {
         addSuffix: true,
       })}
     </Typography>
@@ -60,30 +44,9 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
           color: 'grey.800',
           bgcolor: 'primary.lighter',
         }),
-        // ...(hasImage && {
-        //   p: 0,
-        //   bgcolor: 'transparent',
-        // }),
       }}
     >
-      {/* {hasImage ? (
-        <Box
-          component='img'
-          alt='attachment'
-          src={body}
-          onClick={() => onOpenLightbox(body)}
-          sx={{
-            minHeight: 220,
-            borderRadius: 1.5,
-            cursor: 'pointer',
-            '&:hover': {
-              opacity: 0.9,
-            },
-          }}
-        />
-      ) : ( */}
       {'message body'}
-      {/* )} */}
     </Stack>
   )
 
@@ -108,19 +71,23 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
       }}
     >
       <IconButton size='small'>
-        <PiArrowBendUpLeftLight />
+        <PiArrowBendUpLeftLight size={14} />
       </IconButton>
       <IconButton size='small'>
-        <FaRegSmile />
+        <FaRegSmile size={14} />
       </IconButton>
       <IconButton size='small'>
-        <HiTrash />
+        <HiTrash size={14} />
       </IconButton>
     </Stack>
   )
 
   return (
-    <Stack direction='row' justifyContent={isMe ? 'flex-end' : 'unset'} sx={{ mb: 5 }}>
+    <Stack
+      direction='row'
+      justifyContent={isMe ? 'flex-end' : 'unset'}
+      sx={{ mb: 5 }}
+    >
       {!isMe && (
         <Avatar
           alt={'firstName'}

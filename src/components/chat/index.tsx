@@ -12,6 +12,7 @@ import { useAtom } from 'jotai'
 import * as _ from 'lodash-es'
 import { useSelector } from 'react-redux'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { Iconify } from '@/components/iconify'
 // import { useAuthContext } from "src/auth/useAuthContext";
 import { IFriend } from '@/redux/interfaces/friends.interface'
@@ -24,7 +25,6 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { chatAtom } from './atoms/chat.atom'
 import { Messages } from './messages'
 import { User, UsersItem } from './users-item'
-import { useAuthContext } from '@/auth/useAuthContext'
 
 interface IChat {
   users: Array<IFriend & BaseResponseInterface>
@@ -162,7 +162,10 @@ export const Chat = ({
                 updateChat((prev) => ({ ...prev, user: null }))
               }}
             >
-              <Iconify color='#6ea9d7' icon='ph:users-fill' />
+              <Iconify
+                color='#6ea9d7'
+                icon='ph:users-fill'
+              />
             </IconButton>
           ) : null}
           {!isDesktop ? (
@@ -171,7 +174,12 @@ export const Chat = ({
                 setChatVisible(false)
               }}
             >
-              <Iconify width='30px' height='30px' color='#6ea9d7' icon='ic:round-close' />
+              <Iconify
+                width='30px'
+                height='30px'
+                color='#6ea9d7'
+                icon='ic:round-close'
+              />
             </IconButton>
           ) : null}
         </ConversationHeader.Actions>
@@ -193,7 +201,10 @@ export const Chat = ({
         />
       ) : (
         <>
-          <StylesExpansionPanel title='Teachers' open={isTeachersOpen}>
+          <StylesExpansionPanel
+            title='Teachers'
+            open={isTeachersOpen}
+          >
             <ConversationList
               style={{
                 width: '100%',

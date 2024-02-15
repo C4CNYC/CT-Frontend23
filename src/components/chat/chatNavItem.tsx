@@ -1,99 +1,44 @@
-import PropTypes from 'prop-types'
-import { useCallback } from 'react'
+import { Badge } from '@mui/material'
+import Avatar from '@mui/material/Avatar'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 import { formatDistanceToNowStrict } from 'date-fns'
 
-import Box from '@mui/material/Box'
-import Stack from '@mui/material/Stack'
-// import Badge from '@mui/material/Badge'
-import Avatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
-import AvatarGroup from '@mui/material/AvatarGroup'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemButton from '@mui/material/ListItemButton'
-
-// import { useRouter } from 'src/routes/hooks'
-
-// import { useResponsive } from 'src/hooks/use-responsive'
-// import { useMockedUser } from 'src/hooks/use-mocked-user'
-
-// import { clickConversation } from 'src/api/chat'
-
-import { useGetNavItem } from './hooks'
-import { useResponsive } from '@/hooks'
-import { useRouter } from 'next/router'
-import { Badge } from '@mui/material'
+import { IFriend } from '@/redux/interfaces/friends.interface'
 
 // ----------------------------------------------------------------------
 
-export default function ChatNavItem({ collapse }: { collapse: boolean }) {
-  //   const { user } = useMockedUser()
+interface IChatNavItem {
+  collapse: boolean
+  friend: IFriend
+  selectChat: (id: string) => void
+  selected: string
+}
 
-  const mdUp = useResponsive('up', 'md')
-
-  const router = useRouter()
-
-  //   const { group, displayName, displayText, participants, lastActivity, hasOnlineInGroup } =
-  //     useGetNavItem({
-  //       conversation,
-  //       currentUserId: `${user?.id}`,
-  //     })
-
-  //   const singleParticipant = participants[0]
-
-  //   const { name, avatarUrl, status } = singleParticipant
-
-  //   const handleClickConversation = useCallback(async () => {
-  //     try {
-  //       if (!mdUp) {
-  //         onCloseMobile()
-  //       }
-
-  //         await clickConversation(conversation.id)
-
-  //         router.push(`${paths.dashboard.chat}?id=${conversation.id}`)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }, [conversation.id, mdUp, onCloseMobile, router])
-
-  const renderGroup = (
-    <Badge
-      variant='dot'
-      color='primary'
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      sx={{
-        '& .MuiBadge-badge': {
-          right: 6,
-          bottom: 6,
-        },
-      }}
-    >
-      <AvatarGroup variant='circular' sx={{ width: 48, height: 48 }}>
-        {Array(5, 5, 5, 5, 5).map((participant) => (
-          <Avatar
-            //   key={participant.id}
-            //   alt={participant.name}
-            src='https://devnest.s3.amazonaws.com/tenant_f072bcf3-5957-4f04-97da-f8e4c4c53439/students/1d549244-d686-40f9-8e23-15f6efcb1a08/avatar_1704981148061_.png'
-          />
-        ))}
-      </AvatarGroup>
-    </Badge>
-  )
+export default function ChatNavItem({ collapse, friend, selectChat, selected }: IChatNavItem) {
+  // const handleClickConversation = useCallback(async () => {
+  //   try {
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }, [friend.id])
 
   const renderSingle = (
     <Badge
       variant='dot'
-      color='primary'
+      color={friend.active ? 'primary' : 'default'}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       sx={{
         '& .MuiBadge-badge': {
           right: 6,
-          bottom: 6,
+          bottom: 5,
         },
       }}
     >
       <Avatar
-        src='https://devnest.s3.amazonaws.com/tenant_f072bcf3-5957-4f04-97da-f8e4c4c53439/students/1d549244-d686-40f9-8e23-15f6efcb1a08/avatar_1704981148061_.png'
+        src={friend.avatar}
         sx={{ width: 48, height: 48 }}
       />
     </Badge>
@@ -102,13 +47,13 @@ export default function ChatNavItem({ collapse }: { collapse: boolean }) {
   return (
     <ListItemButton
       disableGutters
-      //   onClick={handleClickConversation}
+      onClick={() => selectChat(friend.id)}
       sx={{
         py: 1.5,
         px: 2.5,
-        // ...(selected && {
-        //   bgcolor: 'action.selected',
-        // }),
+        ...(selected === friend.id && {
+          bgcolor: 'action.selected',
+        }),
       }}
     >
       <Badge
@@ -122,19 +67,19 @@ export default function ChatNavItem({ collapse }: { collapse: boolean }) {
           },
         }}
       >
-        {renderGroup && renderSingle}
+        {renderSingle}
       </Badge>
 
       {!collapse && (
         <>
           <ListItemText
             sx={{ ml: 2 }}
-            primary={'chat'}
+            primary={friend.first_name}
             primaryTypographyProps={{
               noWrap: true,
               variant: 'subtitle2',
             }}
-            secondary={'secondery'}
+            secondary={'sent message'}
             secondaryTypographyProps={{
               noWrap: true,
               component: 'span',
@@ -143,7 +88,10 @@ export default function ChatNavItem({ collapse }: { collapse: boolean }) {
             }}
           />
 
-          <Stack alignItems='flex-end' sx={{ ml: 2, height: 44 }}>
+          <Stack
+            alignItems='flex-end'
+            sx={{ ml: 2, height: 44 }}
+          >
             <Typography
               noWrap
               variant='body2'
@@ -154,21 +102,21 @@ export default function ChatNavItem({ collapse }: { collapse: boolean }) {
                 color: 'text.disabled',
               }}
             >
-              {formatDistanceToNowStrict(new Date(), {
+              {formatDistanceToNowStrict(new Date(2024, 1, 14), {
                 addSuffix: false,
               })}
             </Typography>
 
-            {/* {!!conversation.unreadCount && ( */}
-            <Box
-              sx={{
-                width: 8,
-                height: 8,
-                bgcolor: 'info.main',
-                borderRadius: '50%',
-              }}
-            />
-            {/* )} */}
+            {/* {!!conversation.unreadCount && (
+              <Box
+                sx={{
+                  width: 8,
+                  height: 8,
+                  bgcolor: 'info.main',
+                  borderRadius: '50%',
+                }}
+              />
+            )} */}
           </Stack>
         </>
       )}

@@ -1,37 +1,48 @@
 import { useState, useEffect, useCallback } from 'react'
 
-import Box from '@mui/material/Box'
-import Stack from '@mui/material/Stack'
-import Drawer from '@mui/material/Drawer'
+import {
+  Box,
+  ClickAwayListener,
+  Drawer,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+} from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
-
-import { useCollapseNav } from './hooks'
-import { useRouter } from 'next/router'
-import { useResponsive } from '@/hooks'
-import ChatNavItem from './chatNavItem'
-import { Scrollbar } from '../scrollbar'
+import { CiSearch } from '@react-icons/all-files/ci/CiSearch'
+import { FaUserGroup } from '@react-icons/all-files/fa6/FaUserGroup'
 import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
 import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
-import { BsPersonFillAdd } from '@react-icons/all-files/bs/BsPersonFillAdd'
-import { FaUserGroup } from '@react-icons/all-files/fa6/FaUserGroup'
-import { CiSearch } from '@react-icons/all-files/ci/CiSearch'
+
+import { useResponsive } from '@/hooks'
+import { IFriend } from '@/redux/interfaces/friends.interface'
+
+import { Scrollbar } from '../scrollbar'
 
 import ChatNavAccount from './chatNavAccount'
-
-// ----------------------------------------------------------------------
+import ChatNavItem from './chatNavItem'
+import { ChatNavItemSkeleton } from './chatSkeleton'
+import useCollapseNav from './hooks/use-collapse-nav'
 
 const NAV_WIDTH = 320
 
 const NAV_COLLAPSE_WIDTH = 96
 
-export default function ChatNav({}) {
-  const theme = useTheme()
+interface IChatNav {
+  selectChat: (id: string) => void
+  selectedConversation: string
+  isLoading: boolean
+  friends: IFriend[] | undefined
+}
 
-  const router = useRouter()
+export default function ChatNav({
+  selectChat,
+  selectedConversation,
+  isLoading,
+  friends,
+}: IChatNav) {
+  const theme = useTheme()
 
   const mdUp = useResponsive('up', 'md')
 
@@ -64,29 +75,11 @@ export default function ChatNav({}) {
     }
   }, [mdUp, onCloseMobile, onCollapseDesktop])
 
-  const handleClickCompose = useCallback(() => {
-    if (!mdUp) {
-      onCloseMobile()
-    }
-    // router.push(paths.dashboard.chat)
-  }, [mdUp, onCloseMobile, router])
-
   const handleSearchContacts = useCallback((inputValue: string) => {
     setSearchContacts((prevState) => ({
       ...prevState,
       query: inputValue,
     }))
-
-    // if (inputValue) {
-    //   const results = contacts.filter((contact) =>
-    //     contact.name.toLowerCase().includes(inputValue)
-    //   )
-
-    //   setSearchContacts((prevState) => ({
-    //     ...prevState,
-    //     results,
-    //   }))
-    // }
   }, [])
 
   const handleClickAwaySearch = useCallback(() => {
@@ -95,15 +88,6 @@ export default function ChatNav({}) {
       results: [],
     })
   }, [])
-
-  //   const handleClickResult = useCallback(
-  //     (result) => {
-  //       handleClickAwaySearch()
-
-  //       router.push(`${paths.dashboard.chat}?id=${result.id}`)
-  //     },
-  //     [handleClickAwaySearch, router]
-  //   )
 
   const renderToggleBtn = (
     <IconButton
@@ -115,7 +99,7 @@ export default function ChatNav({}) {
         width: 32,
         height: 32,
         position: 'absolute',
-        borderRadius: `0 12px 12px 0`,
+        borderRadius: '0 12px 12px 0',
         bgcolor: theme.palette.primary.main,
         boxShadow: theme.customShadows.primary,
         color: theme.palette.primary.contrastText,
@@ -128,35 +112,28 @@ export default function ChatNav({}) {
     </IconButton>
   )
 
-  //   const renderSkeleton = (
-  //     <>
-  //       {[...Array(12)].map((_, index) => (
-  //         <ChatNavItemSkeleton key={index} />
-  //       ))}
-  //     </>
-  //   )
-
-  const renderList = (
+  const renderSkeleton = (
     <>
-      {Array(5, 5, 5, 5).map((item, index) => (
-        <ChatNavItem
-          key={index}
-          collapse={collapseDesktop}
-          //   conversation={conversations.byId[index]}
-          //   selected={true}
-          //   onCloseMobile={onCloseMobile}
-        />
+      {[...Array(12)].map((_, index) => (
+        <ChatNavItemSkeleton key={index} />
       ))}
     </>
   )
 
-  //   const renderListResults = (
-  //     <ChatNavSearchResults
-  //       query={searchContacts.query}
-  //       results={searchContacts.results}
-  //         onClickResult={handleClickResult}
-  //     />
-  //   )
+  const renderList = (
+    <>
+      {friends?.map((friend, index) => (
+        <ChatNavItem
+          key={index}
+          collapse={collapseDesktop}
+          friend={friend}
+          selectChat={selectChat}
+          selected={selectedConversation}
+          //   conversation={conversations.byId[index]}
+        />
+      ))}
+    </>
+  )
 
   const renderSearchInput = (
     <ClickAwayListener onClickAway={handleClickAwaySearch}>
@@ -179,7 +156,12 @@ export default function ChatNav({}) {
 
   const renderContent = (
     <>
-      <Stack direction='row' alignItems='center' justifyContent='center' sx={{ p: 2.5, pb: 0 }}>
+      <Stack
+        direction='row'
+        alignItems='center'
+        justifyContent='center'
+        sx={{ p: 2.5, pb: 0 }}
+      >
         {!collapseDesktop && (
           <>
             <ChatNavAccount />
@@ -190,22 +172,13 @@ export default function ChatNav({}) {
         <IconButton onClick={handleToggleNav}>
           {collapseDesktop ? <IoIosArrowForward /> : <IoIosArrowBack />}
         </IconButton>
-
-        {!collapseDesktop && (
-          <IconButton onClick={handleClickCompose}>
-            <BsPersonFillAdd />
-          </IconButton>
-        )}
       </Stack>
 
       <Box sx={{ p: 2.5, pt: 0 }}>{!collapseDesktop && renderSearchInput}</Box>
 
       <Scrollbar sx={{ pb: 1 }}>
-        {/* {searchContacts.query && renderListResults} */}
+        {isLoading && renderSkeleton}
 
-        {/* {loading && renderSkeleton} */}
-
-        {/* {!searchContacts.query && !!conversations.allIds.length && renderList} */}
         {renderList}
       </Scrollbar>
     </>

@@ -18,6 +18,7 @@ import {
   useGetPublicLessonQuery,
 } from '@/redux/services/public-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { CodePanelChat } from '@/sections/chat'
 import SkeletonCodePanel from '@/sections/code-editor-panel/skeleton'
 import { getNextLessonId } from '@/sections/code-editor-panel/utils/navigation'
 import { globalCodePanelAtom } from '@/sections/code-panel/atoms/global-code-panel.atom'
@@ -26,7 +27,6 @@ import { CodePanelContext } from '@/sections/code-panel/context/CodePanel.contex
 import TopPanel from '@/sections/code-panel/top-bar'
 import WorkSpace, { SupportedLang } from '@/sections/code-panel/work-space'
 import { useTranslate } from '@/utils/translateHelper'
-import { CodePanelChat } from '@/sections/chat'
 
 // import { CodePanelChat } from "@sections/chat";
 
@@ -153,7 +153,10 @@ export default function Index(): React.ReactElement {
               onChangeLanguage,
             }}
           >
-            <Box bgcolor='white' sx={{ position: 'relative', overflow: 'hidden' }}>
+            <Box
+              bgcolor='white'
+              sx={{ position: 'relative', overflow: 'hidden' }}
+            >
               <TopPanel
                 chatComponent={<CodePanelChat />}
                 // chatComponent={null}
