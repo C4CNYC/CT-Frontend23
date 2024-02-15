@@ -18,6 +18,7 @@ import {
   CHECKERS_ANIMATION,
   INDICATORS_WRAPPER_SX,
   M_DIV_STYLE,
+  OPEN_BOX_SX,
   OPEN_BTN_WRAPPER_SX,
   OPEN_HANDLER_ANIMATION,
   getIndicatorSx,
@@ -74,34 +75,36 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
     <>
       <CheckersCompleated />
 
-      <AnimatePresence>
-        <m.div
-          initial={false}
-          animate={isVisible ? 'closed' : 'open'}
-          variants={OPEN_HANDLER_ANIMATION}
-        >
-          <Box sx={OPEN_BTN_WRAPPER_SX}>
-            <Box
-              sx={BOX_SX}
-              onClick={handleCollaps}
-            >
-              <CheckerIcon
-                width={14}
-                height={15}
-                color={handleIconColor(checkers)}
-              />
-            </Box>
-            <Box sx={INDICATORS_WRAPPER_SX}>
-              {checkers.map((checker, i) => (
-                <Box
-                  key={i}
-                  sx={{ ...getIndicatorSx(checker.valid) }}
+      <Box sx={OPEN_BOX_SX}>
+        <AnimatePresence>
+          <m.div
+            initial='visible'
+            animate={isVisible ? 'closed' : 'open'}
+            variants={OPEN_HANDLER_ANIMATION}
+          >
+            <Box sx={OPEN_BTN_WRAPPER_SX}>
+              <Box
+                sx={BOX_SX}
+                onClick={handleCollaps}
+              >
+                <CheckerIcon
+                  width={14}
+                  height={15}
+                  color={handleIconColor(checkers)}
                 />
-              ))}
+              </Box>
+              <Box sx={INDICATORS_WRAPPER_SX}>
+                {checkers.map((checker, i) => (
+                  <Box
+                    key={i}
+                    sx={{ ...getIndicatorSx(checker.valid) }}
+                  />
+                ))}
+              </Box>
             </Box>
-          </Box>
-        </m.div>
-      </AnimatePresence>
+          </m.div>
+        </AnimatePresence>
+      </Box>
       <Stack sx={stackSx}>
         <AnimatePresence>
           <m.div
