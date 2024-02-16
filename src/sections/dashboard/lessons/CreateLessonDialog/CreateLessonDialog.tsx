@@ -38,7 +38,7 @@ interface FormValuesProps {
   active: boolean
   tips: string
   independent: boolean
-  head: string
+  head?: string
   type: 'practical' | 'exercise' | 'quiz'
 }
 

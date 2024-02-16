@@ -1,6 +1,11 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import type { EditorMode } from '@/components/code-editor-collab/hook/constants'
+// import type { EditorMode } from '@/sections/code-editor-panel/code-editor-collab/hook/constants'
+enum EditorMode {
+  Owner = 'owner',
+  Watcher = 'watcher',
+  SubOwner = 'subOwner',
+}
 
 export interface CodeEditorControllerRoom {
   roomId: string
