@@ -1,45 +1,48 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Box } from "@mui/material";
+import { Box } from '@mui/material'
 
-import { useSettingsContext } from "@components";
-import { useResponsive } from "@hooks";
+import { useSettingsContext } from '@/components/settings'
+import { useResponsive } from '@/hooks/useResponsive'
 
-import AuthGuard from "../../auth/AuthGuard";
-import Main from "./Main";
-import Header from "./header";
-import NavHorizontal from "./nav/NavHorizontal";
-import NavMini from "./nav/NavMini";
-import NavVertical from "./nav/NavVertical";
+import AuthGuard from '../../auth/AuthGuard'
+
+import Header from './header'
+import Main from './Main'
+import NavHorizontal from './nav/NavHorizontal'
+import NavMini from './nav/NavMini'
+import NavVertical from './nav/NavVertical'
 
 interface IStudentDashboardLayoutProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode
 }
 
 export function StudentDashboardLayout({
   children,
 }: IStudentDashboardLayoutProps): React.ReactElement | null {
-  const { themeLayout } = useSettingsContext();
+  const { themeLayout } = useSettingsContext()
 
-  const isDesktop = useResponsive("up", "lg");
+  const isDesktop = useResponsive('up', 'md')
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const isNavHorizontal = themeLayout === "horizontal";
-
-  const isNavMini = themeLayout === "mini";
+  const isNavHorizontal = themeLayout === 'horizontal'
+  const isNavMini = themeLayout === 'mini'
 
   const handleOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const renderNavVertical = (
-    <NavVertical openNav={open} onCloseNav={handleClose} />
-  );
+    <NavVertical
+      openNav={open}
+      onCloseNav={handleClose}
+    />
+  )
 
   const renderContent = (): React.ReactElement => {
     if (isNavHorizontal) {
@@ -51,7 +54,7 @@ export function StudentDashboardLayout({
 
           <Main>{children}</Main>
         </>
-      );
+      )
     }
 
     if (isNavMini) {
@@ -61,8 +64,8 @@ export function StudentDashboardLayout({
 
           <Box
             sx={{
-              display: { lg: "flex" },
-              minHeight: { lg: 1 },
+              display: { md: 'flex' },
+              minHeight: { md: 1 },
             }}
           >
             {isDesktop ? <NavMini /> : renderNavVertical}
@@ -70,7 +73,7 @@ export function StudentDashboardLayout({
             <Main>{children}</Main>
           </Box>
         </>
-      );
+      )
     }
 
     return (
@@ -79,8 +82,8 @@ export function StudentDashboardLayout({
 
         <Box
           sx={{
-            display: { lg: "flex" },
-            minHeight: { lg: 1 },
+            display: { md: 'flex' },
+            minHeight: { md: 1 },
           }}
         >
           {renderNavVertical}
@@ -88,8 +91,8 @@ export function StudentDashboardLayout({
           <Main>{children}</Main>
         </Box>
       </>
-    );
-  };
+    )
+  }
 
-  return <AuthGuard> {renderContent()} </AuthGuard>;
+  return <AuthGuard> {renderContent()} </AuthGuard>
 }

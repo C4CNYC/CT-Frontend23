@@ -1,20 +1,17 @@
-import { BaseResponseInterface } from "@utils";
-import { IChallanges } from "src/redux/interfaces/challenges.interface";
+import { IChallanges } from '@/redux/interfaces/challenges.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getChallanges: builder.query<
-      IChallanges & BaseResponseInterface,
-      { id: string }
-    >({
+    getChallanges: builder.query<IChallanges & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/course/${id}/content`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Challenges"],
+      providesTags: ['Challenges'],
     }),
   }),
-});
-export const { useGetChallangesQuery } = extendedApi;
+})
+export const { useGetChallangesQuery } = extendedApi

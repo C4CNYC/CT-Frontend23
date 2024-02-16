@@ -1,112 +1,114 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from 'react'
 
-import { MdArrowBackIosNew } from "react-icons/md";
-import { StepWizardChildProps } from "react-step-wizard";
+import { LoadingButton } from '@mui/lab'
+import { IconButton, InputAdornment, Link, Stack, Typography, useTheme } from '@mui/material'
+import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
+import NextLink from 'next/link'
+import { StepWizardChildProps } from 'react-step-wizard'
 
-import { LoadingButton } from "@mui/lab";
-import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
+import { Iconify, RHFTextField } from '@/components'
+import { PATH_AUTH } from '@/routes/paths'
+import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
+import { useTranslate } from '@/utils/translateHelper'
 
-import { Iconify, RHFTextField } from "@components";
-import { styledRegisterInput } from "@sections/on-boarding-register/styles";
-import { useTranslate } from "src/utils/translateHelper";
+import { RESER_PASS_SX, TYPO_CONT_SX, getButtonSx } from './constants'
 
 interface Props {
-  isSubmiting: boolean;
-  isError: string;
+  isSubmiting: boolean
+  isError: string
 }
 
 export default function SingInPassword({
   previousStep,
   nextStep,
+  isActive,
   isSubmiting,
   isError,
   currentStep,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [isDisabledBtn, setIsDisabletBtn] = useState<boolean>(true);
-  const translate = useTranslate();
+  const theme = useTheme()
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [isDisabledBtn, setIsDisabletBtn] = useState<boolean>(true)
+  const translate = useTranslate()
 
   if (isError) {
     if (nextStep) {
-      nextStep();
+      nextStep()
     }
   }
 
   useEffect(() => {
     if (currentStep === 2) {
-      setIsDisabletBtn(false);
+      setIsDisabletBtn(false)
     }
-  }, [currentStep]);
+  }, [currentStep])
+
+  const buttonSx = useMemo(() => getButtonSx(theme), [theme])
 
   return (
     <>
       <IconButton
         onClick={() => {
           if (previousStep) {
-            previousStep();
+            previousStep()
           }
         }}
-        sx={{ ml: "-30px", mt: "-30px" }}
+        sx={{ ml: '-30px', mt: '-30px' }}
       >
         <MdArrowBackIosNew />
       </IconButton>
       <Stack
-        direction="row"
-        sx={{
-          alignItems: "center",
-          ml: { xs: 3, sm: 3, md: 0 },
-          mt: 1,
-          mb: 4,
-        }}
+        direction='row'
+        sx={TYPO_CONT_SX}
       >
-        <Typography variant="h3">{translate("login_with_email")}</Typography>
-        <Typography variant="h2" sx={{ ml: 1 }}>
+        <Typography variant='h3'>{translate('login_with_email')}</Typography>
+        <Typography
+          variant='h2'
+          sx={{ ml: 1 }}
+        >
           ✉️
         </Typography>
       </Stack>
 
       <Stack sx={{ mt: 2 }}>
         <RHFTextField
-          name="password"
-          label={translate("password")}
-          type={showPassword ? "text" : "password"}
+          name='password'
+          label={translate('password')}
+          type={showPassword ? 'text' : 'password'}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          inputRef={(input) => input && isActive && input.focus()}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
+              <InputAdornment position='end'>
                 <IconButton
                   onClick={() => {
-                    setShowPassword(!showPassword);
+                    setShowPassword(!showPassword)
                   }}
-                  edge="end"
-                  sx={{ color: "#02D3D7" }}
+                  edge='end'
+                  sx={{ color: '#02D3D7' }}
                 >
-                  <Iconify
-                    icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
-                  />
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
+        <Link
+          component={NextLink}
+          href={PATH_AUTH.resetPassword}
+          sx={RESER_PASS_SX}
+        >
+          {translate('login_reset_password')}
+        </Link>
         <LoadingButton
-          type="submit"
+          type='submit'
           disabled={isDisabledBtn}
           loading={isSubmiting}
-          sx={(theme) => ({
-            background: "#43D4DD33",
-            color: "#43D4DD",
-            fontSize: "1.5rem",
-            mt: 4,
-            mb: 2,
-            "&:hover": {
-              background: theme.palette.mode === "light" ? "" : "#fff",
-            },
-          })}
+          sx={buttonSx}
         >
-          {translate("login_lets_go")}
+          {translate('login_lets_go')}
         </LoadingButton>
       </Stack>
     </>
-  );
+  )
 }

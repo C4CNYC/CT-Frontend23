@@ -1,72 +1,74 @@
-import { useRouter } from "next/router";
+import { AppBar, IconButton, Stack, Toolbar, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { useRouter } from 'next/router'
 
-import { AppBar, IconButton, Stack, Toolbar, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Iconify } from '@/components/iconify'
+import { Logo } from '@/components/logo'
+import { useSettingsContext } from '@/components/settings'
+import ThemeSwitcher from '@/components/theme-switcher'
+import { useOffSetTop } from '@/hooks/useOffSetTop'
+import { useResponsive } from '@/hooks/useResponsive'
+import { useSelector } from '@/redux/store'
+import { bgBlur } from '@/utils/cssStyles'
 
-import { Iconify, Logo, useSettingsContext } from "@components";
-import { useOffSetTop, useResponsive } from "@hooks";
-import { bgBlur } from "@utils";
-import ThemeSwitcher from "src/components/theme-switcher";
-import { useSelector } from "src/redux/store";
+import { HEADER_SIZES, NAV_SIZES } from '../../../theme/consts'
 
-import { HEADER, NAV } from "../../../config-global";
-import AccountPopover from "./AccountPopover";
-import LanguagePopover from "./LanguagePopover";
-import NavAccount from "./SchoolAccount";
-
-// ----------------------------------------------------------------------
+import AccountPopover from './AccountPopover'
+import LanguagePopover from './LanguagePopover'
+import NavAccount from './SchoolAccount'
 
 interface Props {
-  onOpenNav?: VoidFunction;
+  onOpenNav?: VoidFunction
 }
 
-export default function Header({
-  onOpenNav,
-}: Props): React.ReactElement | null {
-  const theme = useTheme();
-  const router = useRouter();
-  const user = useSelector((state) => state.global.user);
+export default function Header({ onOpenNav }: Props): React.ReactElement | null {
+  const theme = useTheme()
+  const router = useRouter()
+  const user = useSelector((state) => state.global.user)
 
-  const { themeLayout } = useSettingsContext();
+  const { themeLayout } = useSettingsContext()
 
-  const isNavHorizontal = themeLayout === "horizontal";
+  const isNavHorizontal = themeLayout === 'horizontal'
 
-  const isNavMini = themeLayout === "mini";
+  const isNavMini = themeLayout === 'mini'
 
-  const isDesktop = useResponsive("up", "lg");
+  const isDesktop = useResponsive('up', 'md')
 
-  const isSchoolSection = router.pathname.includes("dashboard/school");
+  const isSchoolSection = router.pathname.includes('dashboard/school')
 
-  const isOffset = useOffSetTop(HEADER.H_DASHBOARD_DESKTOP) && !isNavHorizontal;
+  const isOffset = useOffSetTop(HEADER_SIZES.H_DASHBOARD_DESKTOP) && !isNavHorizontal
 
   const renderContent = (
     <>
       {isDesktop && isNavHorizontal && <Logo sx={{ mr: 2.5 }} />}
 
       {!isDesktop && (
-        <IconButton onClick={onOpenNav} sx={{ mr: 1, color: "text.primary" }}>
-          <Iconify icon="eva:menu-2-fill" />
+        <IconButton
+          onClick={onOpenNav}
+          sx={{ mr: 1, color: 'text.primary' }}
+        >
+          <Iconify icon='eva:menu-2-fill' />
         </IconButton>
       )}
 
       {isSchoolSection ? <NavAccount /> : null}
       <Typography
-        variant="h4"
+        variant='h4'
         sx={{
-          color: "rgba(54, 73, 84, 1)",
-          display: "flex",
+          color: 'rgba(54, 73, 84, 1)',
+          display: 'flex',
           gap: 2,
-          alignItems: "center",
+          alignItems: 'center',
         }}
       >
-        Hey {user?.first_name ? user.first_name : "Friend"}
-        <Typography variant="h3">👋</Typography>
+        Hey {user?.first_name ? user.first_name : 'Friend'}
+        <Typography variant='h3'>👋</Typography>
       </Typography>
       <Stack
         flexGrow={1}
-        direction="row"
-        alignItems="center"
-        justifyContent="flex-end"
+        direction='row'
+        alignItems='center'
+        justifyContent='flex-end'
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
         <ThemeSwitcher />
@@ -75,34 +77,34 @@ export default function Header({
         <AccountPopover />
       </Stack>
     </>
-  );
+  )
 
   return (
     <AppBar
       sx={{
-        boxShadow: "none",
-        height: HEADER.H_MOBILE,
+        boxShadow: 'none',
+        height: HEADER_SIZES.H_MOBILE,
         zIndex: theme.zIndex.appBar + 1,
         ...bgBlur({
           color: theme.palette.background.default,
         }),
-        transition: theme.transitions.create(["height"], {
+        transition: theme.transitions.create(['height'], {
           duration: theme.transitions.duration.shorter,
         }),
         ...(isDesktop && {
-          width: `calc(100% - ${NAV.W_DASHBOARD + 1}px)`,
-          height: HEADER.H_DASHBOARD_DESKTOP,
+          width: `calc(100% - ${NAV_SIZES.W_DASHBOARD + 1}px)`,
+          height: HEADER_SIZES.H_DASHBOARD_DESKTOP,
           ...(isOffset && {
-            height: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
+            height: HEADER_SIZES.H_DASHBOARD_DESKTOP_OFFSET,
           }),
           ...(isNavHorizontal && {
             width: 1,
-            bgcolor: "background.default",
-            height: HEADER.H_DASHBOARD_DESKTOP_OFFSET,
+            bgcolor: 'background.default',
+            height: HEADER_SIZES.H_DASHBOARD_DESKTOP_OFFSET,
             borderBottom: `dashed 1px ${theme.palette.divider}`,
           }),
           ...(isNavMini && {
-            width: `calc(100% - ${NAV.W_DASHBOARD_MINI + 1}px)`,
+            width: `calc(100% - ${NAV_SIZES.W_DASHBOARD_MINI + 1}px)`,
           }),
         }),
       }}
@@ -110,11 +112,11 @@ export default function Header({
       <Toolbar
         sx={{
           height: 1,
-          px: { lg: 5 },
+          px: { md: 5 },
         }}
       >
         {renderContent}
       </Toolbar>
     </AppBar>
-  );
+  )
 }

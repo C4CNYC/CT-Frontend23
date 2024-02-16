@@ -1,31 +1,29 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi } from '@reduxjs/toolkit/query/react'
 
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   ICourseContent,
   ICourseElement,
   ICourseSearchParams,
   ILesson,
   ILessonContent,
-} from "src/redux/interfaces/content.interface";
-import { IGallery } from "src/redux/interfaces/gallary.interface";
+} from '@/redux/interfaces/content.interface'
+import { IGallery } from '@/redux/interfaces/gallary.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { baseQueryWrapper } from "./helpers/base_query_wrapper";
+import { baseQueryWrapper } from './helpers/base_query_wrapper'
 
 export const studentPublicApi = createApi({
-  reducerPath: "api/public",
-  baseQuery: baseQueryWrapper(
-    `${process.env.NEXT_PUBLIC_API_URL}/student/public`
-  ),
+  reducerPath: 'api/public',
+  baseQuery: baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/student/public`),
   tagTypes: [
-    "CoursePublic",
-    "LessonPublic",
-    "LessonPublicContent",
-    "CoursePublicContent",
-    "Projects",
+    'CoursePublic',
+    'LessonPublic',
+    'LessonPublicContent',
+    'CoursePublicContent',
+    'Projects',
   ],
   endpoints: () => ({}),
-});
+})
 
 const extendedApi = studentPublicApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -34,20 +32,17 @@ const extendedApi = studentPublicApi.injectEndpoints({
       ICourseSearchParams
     >({
       query: () => ({
-        url: "/course",
-        method: "GET",
+        url: '/course',
+        method: 'GET',
       }),
-      providesTags: ["CoursePublic"],
+      providesTags: ['CoursePublic'],
     }),
-    getPublicCourseContent: builder.query<
-      ICourseContent & BaseResponseInterface,
-      { id: string }
-    >({
+    getPublicCourseContent: builder.query<ICourseContent & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/course/${id}/content`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["CoursePublicContent"],
+      providesTags: ['CoursePublicContent'],
     }),
     getPublicLesson: builder.query<
       ILesson & BaseResponseInterface,
@@ -55,9 +50,9 @@ const extendedApi = studentPublicApi.injectEndpoints({
     >({
       query: ({ id, lesson_id: lessonId }) => ({
         url: `/course/${id}/lesson/${lessonId}`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["LessonPublic"],
+      providesTags: ['LessonPublic'],
     }),
     getPublicLessonContent: builder.query<
       Array<ILessonContent & BaseResponseInterface>,
@@ -65,22 +60,19 @@ const extendedApi = studentPublicApi.injectEndpoints({
     >({
       query: ({ id, lesson_id: lessonId }) => ({
         url: `/course/${id}/${lessonId}/content`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["LessonPublicContent"],
+      providesTags: ['LessonPublicContent'],
     }),
-    getPublicProject: builder.query<
-      IGallery & BaseResponseInterface,
-      { id: string }
-    >({
+    getPublicProject: builder.query<IGallery & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/project/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Projects"],
+      providesTags: ['Projects'],
     }),
   }),
-});
+})
 
 export const {
   useGetPublicCourseContentQuery,
@@ -89,4 +81,4 @@ export const {
   useGetPublicLessonContentQuery,
   // ------  projects  ---------
   useGetPublicProjectQuery,
-} = extendedApi;
+} = extendedApi

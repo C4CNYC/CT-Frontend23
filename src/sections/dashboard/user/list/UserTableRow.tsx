@@ -1,9 +1,6 @@
-import NextLink from "next/link";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { SOCIAL_ICONS } from "@assets/data";
-
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab'
 import {
   Avatar,
   Box,
@@ -16,29 +13,23 @@ import {
   TableRow,
   Tooltip,
   Typography,
-} from "@mui/material";
+} from '@mui/material'
+import NextLink from 'next/link'
 
-import {
-  ConfirmDialog,
-  Iconify,
-  Label,
-  MenuPopover,
-  RoleSelector,
-} from "@components";
-import { BaseResponseInterface } from "@utils";
-import { Role } from "src/redux/services/enums/role.enum";
-import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
-import { useTranslate } from "src/utils/translateHelper";
-
-// ----------------------------------------------------------------------
+import { SOCIAL_ICONS } from '@/assets/data'
+import { ConfirmDialog, Iconify, Label, MenuPopover, RoleSelector } from '@/components'
+import { Role } from '@/redux/services/enums/role.enum'
+import { IStudent, IUser } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
-  row: (IUser | IStudent) & BaseResponseInterface;
-  selected: boolean;
-  loading?: boolean;
-  onEditRow: VoidFunction;
-  onSelectRow: VoidFunction;
-  onDeleteRow: VoidFunction;
+  row: (IUser | IStudent) & BaseResponseInterface
+  selected: boolean
+  loading?: boolean
+  onEditRow: VoidFunction
+  onSelectRow: VoidFunction
+  onDeleteRow: VoidFunction
 }
 
 export default function UserTableRow({
@@ -60,89 +51,108 @@ export default function UserTableRow({
     id,
     socials,
     account,
-  } = row;
-  const [openConfirm, setOpenConfirm] = useState(false);
+  } = row
+  const [openConfirm, setOpenConfirm] = useState(false)
 
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const translate = useTranslate()
 
   const handleOpenConfirm = (): void => {
-    setOpenConfirm(true);
-  };
+    setOpenConfirm(true)
+  }
 
   const handleCloseConfirm = (): void => {
-    setOpenConfirm(false);
-  };
+    setOpenConfirm(false)
+  }
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    setOpenPopover(event.currentTarget);
-  };
+    setOpenPopover(event.currentTarget)
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
   return (
     <>
-      <TableRow hover selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox checked={selected} onClick={onSelectRow} />
+      <TableRow
+        hover
+        selected={selected}
+      >
+        <TableCell padding='checkbox'>
+          <Checkbox
+            checked={selected}
+            onClick={onSelectRow}
+          />
         </TableCell>
         <TableCell>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={firstName} src={avatar ?? account?.avatar} />
+          <Stack
+            direction='row'
+            alignItems='center'
+            spacing={2}
+          >
+            <Avatar
+              alt={firstName}
+              src={avatar ?? account?.avatar}
+            />
           </Stack>
         </TableCell>
 
-        <TableCell align="left">{email || account?.email}</TableCell>
+        <TableCell align='left'>{email || account?.email}</TableCell>
 
-        <TableCell align="left">
-          {firstName &&
-            firstName?.charAt(0).toUpperCase() + firstName?.slice(1)}
+        <TableCell align='left'>
+          {firstName && firstName?.charAt(0).toUpperCase() + firstName?.slice(1)}
         </TableCell>
 
-        <TableCell align="left">
+        <TableCell align='left'>
           {lastName && lastName?.charAt(0).toUpperCase() + lastName?.slice(1)}
         </TableCell>
 
         {role ? (
-          <TableCell align="left" sx={{ textTransform: "capitalize" }}>
-            <RoleSelector userId={id} role={role as Role} email={email} />
+          <TableCell
+            align='left'
+            sx={{ textTransform: 'capitalize' }}
+          >
+            <RoleSelector
+              userId={id}
+              role={role as Role}
+              email={email}
+            />
           </TableCell>
         ) : null}
 
         {!role ? (
-          <TableCell align="left">
+          <TableCell align='left'>
             <Stack
-              direction="row"
-              sx={{ maxWidth: "145px", flexWrap: "wrap", gap: 1 }}
+              direction='row'
+              sx={{ maxWidth: '145px', flexWrap: 'wrap', gap: 1 }}
             >
               {socials?.map((link) => (
                 <Tooltip
                   key={link.link}
-                  title={<Typography variant="body2">{link.link}</Typography>}
+                  title={<Typography variant='body2'>{link.link}</Typography>}
                 >
                   <Box
                     key={link.name}
                     sx={{
-                      alignItems: "center",
+                      alignItems: 'center',
                     }}
                   >
                     <Link
                       sx={{
-                        color: "#fff",
-                        "> svg": {
-                          width: "20px",
-                          height: "20px",
+                        color: '#fff',
+                        '> svg': {
+                          width: '20px',
+                          height: '20px',
                         },
-                        "&:hover": {
-                          cursor: "pointer",
+                        '&:hover': {
+                          cursor: 'pointer',
                         },
                       }}
                       component={NextLink}
                       href={link.link}
-                      variant="body2"
-                      color="text.primary"
-                      target="_blank"
+                      variant='body2'
+                      color='text.primary'
+                      target='_blank'
                     >
                       {SOCIAL_ICONS[link.type]}
                     </Link>
@@ -153,33 +163,33 @@ export default function UserTableRow({
           </TableCell>
         ) : null}
 
-        <TableCell align="center">
+        <TableCell align='center'>
           <Iconify
-            icon={verified ? "eva:checkmark-circle-fill" : "eva:clock-outline"}
+            icon={verified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
             sx={{
               width: 20,
               height: 20,
-              color: !verified ? "warning.main" : "success.main",
+              color: !verified ? 'warning.main' : 'success.main',
             }}
           />
         </TableCell>
 
-        <TableCell align="left">
+        <TableCell align='left'>
           <Label
-            variant="soft"
-            color={active ? "success" : "warning"}
-            sx={{ textTransform: "capitalize" }}
+            variant='soft'
+            color={active ? 'success' : 'warning'}
+            sx={{ textTransform: 'capitalize' }}
           >
-            {active ? translate("active") : translate("not_active")}
+            {active ? translate('active') : translate('not_active')}
           </Label>
         </TableCell>
 
-        <TableCell align="right">
+        <TableCell align='right'>
           <IconButton
-            color={openPopover ? "inherit" : "default"}
+            color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
           >
-            <Iconify icon="eva:more-vertical-fill" />
+            <Iconify icon='eva:more-vertical-fill' />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -187,47 +197,47 @@ export default function UserTableRow({
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow="right-top"
+        arrow='right-top'
         sx={{ width: 140 }}
       >
         <MenuItem
           onClick={() => {
-            handleOpenConfirm();
-            handleClosePopover();
+            handleOpenConfirm()
+            handleClosePopover()
           }}
-          sx={{ color: "error.main" }}
+          sx={{ color: 'error.main' }}
         >
-          <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_delete")}
+          <Iconify icon='eva:trash-2-outline' />
+          {translate('actions_delete')}
         </MenuItem>
 
         <MenuItem
           onClick={() => {
-            onEditRow();
-            handleClosePopover();
+            onEditRow()
+            handleClosePopover()
           }}
         >
-          <Iconify icon="eva:edit-fill" />
-          {translate("actions_edit")}
+          <Iconify icon='eva:edit-fill' />
+          {translate('actions_edit')}
         </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
-        content={translate("messages_delete_question")}
+        title={translate('actions_delete')}
+        content={translate('messages_delete_question')}
         action={
           <LoadingButton
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             onClick={onDeleteRow}
             loading={loading}
           >
-            {translate("actions_delete")}
+            {translate('actions_delete')}
           </LoadingButton>
         }
       />
     </>
-  );
+  )
 }

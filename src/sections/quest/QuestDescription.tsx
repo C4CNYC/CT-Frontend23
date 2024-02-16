@@ -1,29 +1,24 @@
-import { EditorComponent, Remirror, useRemirror } from "@remirror/react";
-import {
-  BoldExtension,
-  ItalicExtension,
-  UnderlineExtension,
-} from "remirror/extensions";
-
-import { Box } from "@mui/material";
+import { Box } from '@mui/material'
+import { useTheme } from '@mui/system'
+import { EditorComponent, Remirror, useRemirror } from '@remirror/react'
+import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions'
 
 interface Props {
-  description: string;
+  description: string
 }
 
 export default function QuestDescription({ description }: Props) {
   const { manager } = useRemirror({
-    extensions: () => [
-      new BoldExtension(),
-      new ItalicExtension(),
-      new UnderlineExtension(),
-    ],
-    stringHandler: "html",
-  });
+    extensions: () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()] as any,
+    stringHandler: 'html',
+  })
+  const theme = useTheme()
+
   return (
     <>
       <style>{`.remirror-editor-wrapper { padding: ; }
         .remirror-theme .ProseMirror{
+          background-color: ${theme.palette.background.default};
         }
         .ProseMirror:focus {
           outline: none!important;
@@ -34,16 +29,16 @@ export default function QuestDescription({ description }: Props) {
       `}</style>
 
       <Box sx={{ pb: 3, pt: 2 }}>
-        <div className="remirror-theme">
+        <div className='remirror-theme'>
           <Remirror
             manager={manager}
             editable={false}
-            initialContent={description ? JSON.parse(description).doc : ""}
+            initialContent={description ? JSON.parse(description).doc : ''}
           >
             <EditorComponent />
           </Remirror>
         </div>
       </Box>
     </>
-  );
+  )
 }

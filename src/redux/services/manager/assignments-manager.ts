@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { managerApi } from ".";
 import {
   IAssignmentCreate,
   IAssignmentFull,
   IAssignmentUpdate,
-} from "../../interfaces/assignment.interface";
+} from '../../interfaces/assignment.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,9 +16,9 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, assignmentId }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Assignments", "Assignment"],
+      providesTags: ['Assignments', 'Assignment'],
     }),
     getAssignmentList: builder.query<
       Array<IAssignmentFull & BaseResponseInterface>,
@@ -26,200 +26,197 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId }) => ({
         url: `/manager/school/${schoolId}/assignment`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Assignments", "Assignment"],
+      providesTags: ['Assignments', 'Assignment'],
     }),
     createAssignment: builder.mutation<
       IAssignmentFull & BaseResponseInterface,
       {
-        schoolId: string;
+        schoolId: string
       } & IAssignmentCreate
     >({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Assignments"],
+      invalidatesTags: ['Assignments'],
     }),
     updateAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
+        assignmentId: string
+        schoolId: string
       } & IAssignmentUpdate
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Assignments", "Assignment"],
+      invalidatesTags: ['Assignments', 'Assignment'],
     }),
     updateLessonAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        lesson_id: string;
+        assignmentId: string
+        schoolId: string
+        lesson_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/lesson`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     updateTaskAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        task_id: string;
+        assignmentId: string
+        schoolId: string
+        task_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/task`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     updateClassAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        class_id: string;
+        assignmentId: string
+        schoolId: string
+        class_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/class`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     removeClassAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        class_id: string;
+        assignmentId: string
+        schoolId: string
+        class_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/class`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     udpateStudentAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        student_id: string;
+        assignmentId: string
+        schoolId: string
+        student_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/student`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     removeStudentAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        student_id: string;
+        assignmentId: string
+        schoolId: string
+        student_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/class`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     updateCourseAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        course_id: string;
+        assignmentId: string
+        schoolId: string
+        course_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/course`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     removeCourseAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        course_id: string;
+        assignmentId: string
+        schoolId: string
+        course_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/course`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     updateSkillAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        skill_id: string;
+        assignmentId: string
+        schoolId: string
+        skill_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/skill`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
     removeSkillAssignment: builder.mutation<
       void,
       {
-        assignmentId: string;
-        schoolId: string;
-        skill_id: string;
+        assignmentId: string
+        schoolId: string
+        skill_id: string
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}/skill`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: ["Assignment"],
+      invalidatesTags: ['Assignment'],
     }),
-    deleteAssignment: builder.mutation<
-      void,
-      { schoolId: string; assignmentId: string }
-    >({
+    deleteAssignment: builder.mutation<void, { schoolId: string; assignmentId: string }>({
       query: ({ schoolId, assignmentId }) => ({
         url: `/manager/school/${schoolId}/assignment/${assignmentId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Assignments"],
+      invalidatesTags: ['Assignments'],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetAssignmentListQuery,
@@ -238,4 +235,4 @@ export const {
   useRemoveSkillAssignmentMutation,
   useDeleteAssignmentMutation,
   useUpdateAssignmentMutation,
-} = extendedApi;
+} = extendedApi

@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   ClassSearchParams,
   IAddCourseToClass,
   IClass,
   IRemoveCourseFromClass,
-} from "src/redux/interfaces/class.interface";
+} from '@/redux/interfaces/class.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
-import { ClassRequest } from "../interfaces/school.interface";
+import { ClassRequest } from '../interfaces/school.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,33 +18,27 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, ...params }) => ({
         url: `/manager/school/${schoolId}/class`,
-        method: "GET",
+        method: 'GET',
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Classes"],
+      providesTags: ['Classes'],
     }),
-    createClasses: builder.mutation<
-      IClass & BaseResponseInterface,
-      Omit<ClassRequest, "classId">
-    >({
+    createClasses: builder.mutation<IClass & BaseResponseInterface, Omit<ClassRequest, 'classId'>>({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/class`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Classes", "ClassesStudent"],
+      invalidatesTags: ['Classes', 'ClassesStudent'],
     }),
-    updateClasses: builder.mutation<
-      IClass & BaseResponseInterface,
-      ClassRequest
-    >({
+    updateClasses: builder.mutation<IClass & BaseResponseInterface, ClassRequest>({
       query: ({ schoolId, classId, ...body }) => ({
         url: `/manager/school/${schoolId}/class/${classId}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Classes"],
+      invalidatesTags: ['Classes'],
     }),
     updateClassesAvatar: builder.mutation<
       void,
@@ -52,20 +46,17 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, classId, file }) => ({
         url: `/manager/school/${schoolId}/class/${classId}/avatar`,
-        method: "PATCH",
+        method: 'PATCH',
         body: file,
       }),
-      invalidatesTags: ["Classes"],
+      invalidatesTags: ['Classes'],
     }),
-    deleteClasses: builder.mutation<
-      void,
-      { schoolId: string; classId: string }
-    >({
+    deleteClasses: builder.mutation<void, { schoolId: string; classId: string }>({
       query: ({ schoolId, classId }) => ({
         url: `/manager/school/${schoolId}/class/${classId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Classes"],
+      invalidatesTags: ['Classes'],
     }),
     updateClassesSettings: builder.mutation<
       void,
@@ -73,30 +64,30 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, classId, ...body }) => ({
         url: `/manager/school/${schoolId}/class/${classId}/setting`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Courses", "Classes"],
+      invalidatesTags: ['Courses', 'Classes'],
     }),
     addCourseToClass: builder.mutation<void, IAddCourseToClass>({
       query: ({ id, ...body }) => ({
         url: `/manager/school/{schoolId}/class/${id}/course`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Courses", "Classes", "CoursesManager"],
+      invalidatesTags: ['Courses', 'Classes', 'CoursesManager'],
     }),
     removeCourseFromClass: builder.mutation<void, IRemoveCourseFromClass>({
       query: ({ id, ...body }) => ({
         url: `/manager/school/{schoolId}/class/${id}/course`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: ["Courses", "Classes", "CoursesManager"],
+      invalidatesTags: ['Courses', 'Classes', 'CoursesManager'],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetClassesQuery,
@@ -108,4 +99,4 @@ export const {
   useUpdateClassesMutation,
   useCreateClassesMutation,
   useUpdateClassesAvatarMutation,
-} = extendedApi;
+} = extendedApi

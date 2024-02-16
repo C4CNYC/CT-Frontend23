@@ -1,10 +1,7 @@
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
-import {
-  IGallery,
-  IGallerySearchParams,
-} from "src/redux/interfaces/gallary.interface";
+import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,60 +10,51 @@ const extendedApi = managerApi.injectEndpoints({
       IGallerySearchParams
     >({
       query: (params) => ({
-        url: "/student/project",
-        method: "GET",
+        url: '/student/project',
+        method: 'GET',
         params,
       }),
-      providesTags: ["Projects"],
+      providesTags: ['Projects'],
     }),
-    getProjectById: builder.query<
-      IGallery & BaseResponseInterface,
-      { id: string }
-    >({
+    getProjectById: builder.query<IGallery & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/project/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Projects"],
+      providesTags: ['Projects'],
     }),
     postProject: builder.mutation<IGallery, IGallery>({
       query: ({ ...body }) => ({
-        url: "/student/project",
-        method: "POST",
+        url: '/student/project',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Projects" }],
+      invalidatesTags: [{ type: 'Projects' }],
     }),
-    updateProject: builder.mutation<
-      IGallery & BaseResponseInterface,
-      { id: string }
-    >({
+    updateProject: builder.mutation<IGallery & BaseResponseInterface, { id: string }>({
       query: ({ id, ...body }) => ({
         url: `/student/project/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Projects" }],
+      invalidatesTags: [{ type: 'Projects' }],
     }),
-    updateProjectCover: builder.mutation<
-      IGallery,
-      { id: string; file: FormData }
-    >({
+    updateProjectCover: builder.mutation<IGallery, { id: string; file: FormData }>({
       query: ({ id, file }) => ({
         url: `/student/project/${id}/cover`,
-        method: "PATCH",
+        method: 'PATCH',
         body: file,
       }),
     }),
     removeProject: builder.mutation<IGallery, { id: string }>({
       query: ({ id }) => ({
         url: `/student/project/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Projects" }],
+      invalidatesTags: [{ type: 'Projects' }],
     }),
   }),
-});
+})
 
 export const {
   useGetProjectByIdQuery,
@@ -76,4 +64,4 @@ export const {
   useRemoveProjectMutation,
   useUpdateProjectCoverMutation,
   usePostProjectMutation,
-} = extendedApi;
+} = extendedApi

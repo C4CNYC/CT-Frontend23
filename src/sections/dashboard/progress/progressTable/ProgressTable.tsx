@@ -1,15 +1,4 @@
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
-
-import { format } from "date-fns";
-import _ from "lodash";
-import { HiOutlineLightBulb, HiOutlineSquares2X2 } from "react-icons/hi2";
-import { LuPencil } from "react-icons/lu";
-import {
-  MdOutlineAutoMode,
-  MdOutlineHome,
-  MdOutlineQuiz,
-} from "react-icons/md";
-import { TbPuzzle } from "react-icons/tb";
+import React, { ReactNode, useEffect, useMemo, useState } from 'react'
 
 import {
   Checkbox,
@@ -24,59 +13,77 @@ import {
   TableSortLabel,
   Tooltip,
   Typography,
-} from "@mui/material";
+} from '@mui/material'
+import { HiOutlineLightBulb } from '@react-icons/all-files/hi2/HiOutlineLightBulb'
+import { HiOutlineSquares2X2 } from '@react-icons/all-files/hi2/HiOutlineSquares2X2'
+import { LuPencil } from '@react-icons/all-files/lu/LuPencil'
+import { MdOutlineAutoMode } from '@react-icons/all-files/md/MdOutlineAutoMode'
+import { MdOutlineHome } from '@react-icons/all-files/md/MdOutlineHome'
+import { MdOutlineQuiz } from '@react-icons/all-files/md/MdOutlineQuiz'
+import { TbPuzzle } from '@react-icons/all-files/tb/TbPuzzle'
+import { format } from 'date-fns'
+import * as _ from 'lodash-es'
 
-import { TablePaginationCustom } from "@components";
-import { SetFilterType } from "@hooks";
-import { BaseSearchInterface } from "@utils";
+import { TablePaginationCustom } from '@/components'
+import { SetFilterType } from '@/hooks'
 import {
   IClassProgress,
   IClassProgressCourse,
   IClassProgressLesson,
   IClassProgressModule,
-} from "src/redux/interfaces/class.interface";
-import { RootState, useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+} from '@/redux/interfaces/class.interface'
+import { RootState, useSelector } from '@/redux/store'
+import { BaseSearchInterface } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IProgressTable {
   filters: BaseSearchInterface & {
-    courseId: string;
-    moduleId: string;
-    lessonId: string;
-  };
-  setFilter: SetFilterType;
-  data: IClassProgress[];
+    courseId: string
+    moduleId: string
+    lessonId: string
+  }
+  setFilter: SetFilterType
+  data: IClassProgress[]
   viewBy: {
-    main: "course" | "quest";
-    user: "username" | "name";
-  };
-  levelName: "lesson" | "module" | "course";
+    main: 'course' | 'quest'
+    user: 'username' | 'name'
+  }
+  levelName: 'lesson' | 'module' | 'course'
 }
 
-type DataType =
-  | IClassProgressCourse[]
-  | IClassProgressModule[]
-  | IClassProgressLesson[];
+type DataType = IClassProgressCourse[] | IClassProgressModule[] | IClassProgressLesson[]
 
 const defaultIconProps = {
   size: 14,
   style: {
     marginLeft: 2,
   },
-};
+}
 
 const AutoGradedIcon = () => (
-  <MdOutlineAutoMode color="#75CF6D" {...defaultIconProps} />
-);
+  <MdOutlineAutoMode
+    color='#75CF6D'
+    {...defaultIconProps}
+  />
+)
 const ManualGradedIcon = () => (
-  <LuPencil color="#5b8aee" {...defaultIconProps} />
-);
+  <LuPencil
+    color='#5b8aee'
+    {...defaultIconProps}
+  />
+)
 const CoreCurriculumIcon = () => (
-  <MdOutlineHome color="#0198ED" {...defaultIconProps} />
-);
+  <MdOutlineHome
+    color='#0198ED'
+    {...defaultIconProps}
+  />
+)
 const SchoolCurriculumIcon = () => (
-  <HiOutlineSquares2X2 color="green" {...defaultIconProps} />
-);
+  <HiOutlineSquares2X2
+    color='green'
+    {...defaultIconProps}
+  />
+)
 
 export default function ProgressTable({
   data,
@@ -85,73 +92,64 @@ export default function ProgressTable({
   viewBy,
   levelName,
 }: IProgressTable): React.ReactElement {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
-  const lastNameOnly = useSelector(
-    (state: RootState) => state.schoolSettings.last_name_only
-  );
+  const lastNameOnly = useSelector((state: RootState) => state.schoolSettings.last_name_only)
 
-  const [orderedData, setOrderedData] = useState(data ?? []);
-  const [selectedCourseIdx, setSelectedCourseIdx] = useState<number>(0);
-  const [selectedModuleIdx, setSelectedModuleIdx] = useState<number>(0);
-  const courses = useMemo(
-    () => _.uniqBy(orderedData?.[0]?.courses, "id"),
-    [orderedData]
-  );
-  const [selectedData, setSelectedData] = useState<DataType>([]);
-  const [orderBy, setOrderBy] = useState<string>("");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [orderedData, setOrderedData] = useState(data ?? [])
+  const [selectedCourseIdx, setSelectedCourseIdx] = useState<number>(0)
+  const [selectedModuleIdx, setSelectedModuleIdx] = useState<number>(0)
+  const courses = useMemo(() => _.uniqBy(orderedData?.[0]?.courses, 'id'), [orderedData])
+  const [selectedData, setSelectedData] = useState<DataType>([])
+  const [orderBy, setOrderBy] = useState<string>('')
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
 
   useEffect(() => {
-    setOrderedData(data ?? []);
-  }, [data]);
+    setOrderedData(data ?? [])
+  }, [data])
 
   useEffect(() => {
-    const { courseId, moduleId } = filters;
-    if (!courses.length) return;
+    const { courseId, moduleId } = filters
+    if (!courses.length) return
     if (courseId.length)
-      setSelectedCourseIdx(
-        courses.findIndex((course) => course.id === courseId)!
-      );
+      setSelectedCourseIdx(courses.findIndex((course) => course.id === courseId)!)
     if (courseId.length && moduleId.length)
       setSelectedModuleIdx(
         courses
           .find((course) => course.id === courseId)!
           .modules.findIndex((module) => module.id === moduleId)
-      );
-    if (!courseId.length && !moduleId.length) setSelectedData(courses);
+      )
+    if (!courseId.length && !moduleId.length) setSelectedData(courses)
     else if (courseId.length && !moduleId.length)
-      setSelectedData(
-        courses.find((course) => course.id === courseId)!.modules
-      );
+      setSelectedData(courses.find((course) => course.id === courseId)!.modules)
     else
       setSelectedData(
         courses
           .find((course) => course.id === courseId)!
           .modules.find((module) => module.id === moduleId)!.lessons
-      );
-  }, [filters, courses]);
+      )
+  }, [filters, courses])
 
   useEffect(() => {
-    const newData = _.cloneDeep(data);
+    const newData = _.cloneDeep(data)
     newData?.sort((a, b) => {
       // @ts-ignore
-      const valueA = _.at(a, orderBy);
+      const valueA = _.at(a, orderBy)
       // @ts-ignore
-      const valueB = _.at(b, orderBy);
-      if (valueA < valueB) return sortDirection === "asc" ? -1 : 1;
-      if (valueA > valueB) return sortDirection === "asc" ? 1 : -1;
-      return 0;
-    });
-    setOrderedData(newData);
-  }, [orderBy, sortDirection, data]);
+      const valueB = _.at(b, orderBy)
+      if (valueA < valueB) return sortDirection === 'asc' ? -1 : 1
+      if (valueA > valueB) return sortDirection === 'asc' ? 1 : -1
+      return 0
+    })
+    setOrderedData(newData)
+  }, [orderBy, sortDirection, data])
 
   const onSelectGroup = (id: string) => {
-    if (!filters.courseId.length) setFilter("courseId", id);
-    else if (!filters.moduleId.length) setFilter("moduleId", id);
-    else if (filters.lessonId === id) setFilter("lessonId", "");
-    else setFilter("lessonId", id);
-  };
+    if (!filters.courseId.length) setFilter('courseId', id)
+    else if (!filters.moduleId.length) setFilter('moduleId', id)
+    else if (filters.lessonId === id) setFilter('lessonId', '')
+    else setFilter('lessonId', id)
+  }
 
   return (
     <>
@@ -159,44 +157,44 @@ export default function ProgressTable({
         <Table>
           <TableHead>
             <TableRow>
-              {viewBy.user === "name" && (
+              {viewBy?.user === 'name' && (
                 <>
                   <TableHeadSort
-                    id="first_name"
+                    id='first_name'
                     sortDirection={sortDirection}
                     setSortDirection={setSortDirection}
                     orderBy={orderBy}
                     setOrderBy={setOrderBy}
                   >
-                    {translate("first_name")}
+                    {translate('first_name')}
                   </TableHeadSort>
                   <TableHeadSort
-                    id="last_name"
+                    id='last_name'
                     sortDirection={sortDirection}
                     setSortDirection={setSortDirection}
                     orderBy={orderBy}
                     setOrderBy={setOrderBy}
                   >
-                    {translate("last_name")}
+                    {translate('last_name')}
                   </TableHeadSort>
                 </>
               )}
-              {viewBy.user === "username" && (
+              {viewBy?.user === 'username' && (
                 <TableHeadSort
-                  id="username"
+                  id='username'
                   sortDirection={sortDirection}
                   setSortDirection={setSortDirection}
                   orderBy={orderBy}
                   setOrderBy={setOrderBy}
                 >
-                  {translate("username")}
+                  {translate('username')}
                 </TableHeadSort>
               )}
               {selectedData.map((item, idx) =>
-                "description" in item ? (
+                'description' in item ? (
                   <TableHeadItem
                     id={
-                      levelName === "course"
+                      levelName === 'course'
                         ? `courses[${idx}].progress`
                         : `courses[${selectedCourseIdx}].modules[${idx}].progress`
                     }
@@ -208,61 +206,48 @@ export default function ProgressTable({
                     name={item.name}
                     description={
                       <>
-                        <Typography variant="body2">
+                        <Typography variant='body2'>
                           {levelName.toUpperCase()} <br />
-                          {translate("project")}{" "}
-                          {"content_id" in item
+                          {translate('project')}{' '}
+                          {'content_id' in item
                             ? item.content_id
-                            : `${courses[selectedCourseIdx]?.content_id}.${
-                                idx + 1
-                              }`}
+                            : `${courses[selectedCourseIdx]?.content_id}.${idx + 1}`}
                         </Typography>
-                        <Typography variant="h6">{item.name}</Typography>
-                        <Typography variant="body2">
+                        <Typography variant='h6'>{item.name}</Typography>
+                        <Typography variant='body2'>
                           <div
                             style={{
-                              display: "-webkit-box",
-                              WebkitBoxOrient: "vertical",
+                              display: '-webkit-box',
+                              WebkitBoxOrient: 'vertical',
                               WebkitLineClamp: 6,
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
                             }}
                           >
                             {item?.description}
                           </div>
-                          {"due_date" in item && (
+                          {'due_date' in item && (
                             <>
                               <br />
-                              {translate("due")}:{" "}
-                              {format(new Date(item?.due_date), "dd LLL, yyyy")}
+                              {translate('due')}: {format(new Date(item?.due_date), 'dd LLL, yyyy')}
                             </>
                           )}
                           <br />
-                          {item.autoGraded
-                            ? "Auto-graded"
-                            : "Manual graded"} |{" "}
-                          {item.core ? "Core Curriculum" : "School Curriculum"}
+                          {item.autoGraded ? 'Auto-graded' : 'Manual graded'} |{' '}
+                          {item.core ? 'Core Curriculum' : 'School Curriculum'}
                         </Typography>
                       </>
                     }
                     type={
                       <>
-                        {levelName}{" "}
-                        {item.autoGraded ? (
-                          <AutoGradedIcon />
-                        ) : (
-                          <ManualGradedIcon />
-                        )}{" "}
-                        {item.core ? (
-                          <CoreCurriculumIcon />
-                        ) : (
-                          <SchoolCurriculumIcon />
-                        )}
+                        {levelName} {item.autoGraded ? <AutoGradedIcon /> : <ManualGradedIcon />}{' '}
+                        {item.core ? <CoreCurriculumIcon /> : <SchoolCurriculumIcon />}
                       </>
                     }
                   />
                 ) : (
                   <TableHeadLesson
+                    key={item.id}
                     id={`courses[${selectedCourseIdx}].modules[${selectedModuleIdx}].lessons[${idx}].progress`}
                     sortDirection={sortDirection}
                     setSortDirection={setSortDirection}
@@ -282,30 +267,30 @@ export default function ProgressTable({
           <TableBody>
             {orderedData
               ?.slice(((filters.page ?? 1) - 1) * 20, (filters.page ?? 0) * 20)
-              ?.map((el) => (
-                <TableRow>
-                  {viewBy.user === "username" && (
-                    <TableCell size="small">{el.username}</TableCell>
+              ?.map((el, index) => (
+                <TableRow key={`row-${index}`}>
+                  {viewBy?.user === 'username' && (
+                    <TableCell size='small'>{el?.username}</TableCell>
                   )}
-                  {viewBy.user === "name" && (
+                  {viewBy?.user === 'name' && (
                     <>
-                      <TableCell size="small">{el.first_name}</TableCell>
-                      <TableCell size="small">
+                      <TableCell size='small'>{el?.first_name}</TableCell>
+                      <TableCell size='small'>
                         {!lastNameOnly
-                          ? `${el.last_name.substring(0, 1)}`
-                          : el.last_name}
+                          ? `${el?.last_name ? el?.last_name?.substring(0, 1) : ''}`
+                          : el?.last_name}
                       </TableCell>
                     </>
                   )}
-                  {(levelName === "course"
+                  {(levelName === 'course'
                     ? el.courses
-                    : levelName === "module"
-                    ? el.courses.find((c) => c.id === filters.courseId)!.modules
-                    : el.courses
-                        .find((c) => c.id === filters.courseId)!
-                        .modules.find((m) => m.id === filters.moduleId)!.lessons
+                    : levelName === 'module'
+                      ? el.courses.find((c) => c.id === filters.courseId)!.modules
+                      : el.courses
+                          .find((c) => c.id === filters.courseId)!
+                          .modules.find((m) => m.id === filters.moduleId)!.lessons
                   ).map((item) =>
-                    "slides" in item ? (
+                    'slides' in item ? (
                       <TableItemLesson
                         key={item.id}
                         collapsed={item.id !== filters.lessonId}
@@ -321,8 +306,8 @@ export default function ProgressTable({
                         key={item.id}
                         studentName={`${el.first_name} ${
                           !lastNameOnly
-                            ? `${el.last_name.substring(0, 1)}`
-                            : el.last_name
+                            ? `${el?.last_name ? el?.last_name?.substring(0, 1) : ''}`
+                            : el?.last_name
                         }`}
                         type={levelName}
                         name={item.name}
@@ -342,11 +327,11 @@ export default function ProgressTable({
         rowsPerPage={20}
         rowsPerPageOptions={[]}
         onPageChange={(e: any, page: number) => {
-          setFilter("page", page + 1);
+          setFilter('page', page + 1)
         }}
       />
     </>
-  );
+  )
 }
 
 const TableHeadSort = ({
@@ -357,35 +342,38 @@ const TableHeadSort = ({
   orderBy,
   setOrderBy,
 }: {
-  id: string;
-  children: ReactNode;
-  sortDirection: "asc" | "desc";
-  setSortDirection: (direction: "asc" | "desc") => void;
-  orderBy: string;
-  setOrderBy: (direction: string) => void;
+  id: string
+  children: ReactNode
+  sortDirection: 'asc' | 'desc'
+  setSortDirection: (direction: 'asc' | 'desc') => void
+  orderBy: string
+  setOrderBy: (direction: string) => void
 }) => {
   const changeSortDirection = () => {
-    const isAsc = orderBy === id && sortDirection === "asc";
-    setSortDirection(isAsc ? "desc" : "asc");
-    setOrderBy(id);
-  };
+    const isAsc = orderBy === id && sortDirection === 'asc'
+    setSortDirection(isAsc ? 'desc' : 'asc')
+    setOrderBy(id)
+  }
 
   return (
-    <TableCell size="small" sortDirection={sortDirection}>
+    <TableCell
+      size='small'
+      sortDirection={sortDirection}
+    >
       <TableSortLabel
         active={orderBy === id}
-        direction={orderBy === id ? sortDirection : "asc"}
+        direction={orderBy === id ? sortDirection : 'asc'}
         onClick={changeSortDirection}
         sx={{
           // @ts-ignore
-          textWrap: "nowrap",
+          textWrap: 'nowrap',
         }}
       >
         {children}
       </TableSortLabel>
     </TableCell>
-  );
-};
+  )
+}
 
 const TableHeadItem = ({
   name,
@@ -397,50 +385,53 @@ const TableHeadItem = ({
   setOrderBy,
   id,
 }: {
-  name: ReactNode;
-  description: ReactNode;
-  type: ReactNode;
-  id: string;
-  sortDirection: "asc" | "desc";
-  setSortDirection: (direction: "asc" | "desc") => void;
-  orderBy: string;
-  setOrderBy: (direction: string) => void;
+  name: ReactNode
+  description: ReactNode
+  type: ReactNode
+  id: string
+  sortDirection: 'asc' | 'desc'
+  setSortDirection: (direction: 'asc' | 'desc') => void
+  orderBy: string
+  setOrderBy: (direction: string) => void
 }) => {
   const changeSortDirection = () => {
-    const isAsc = orderBy === id && sortDirection === "asc";
-    setSortDirection(isAsc ? "desc" : "asc");
-    setOrderBy(id);
-  };
+    const isAsc = orderBy === id && sortDirection === 'asc'
+    setSortDirection(isAsc ? 'desc' : 'asc')
+    setOrderBy(id)
+  }
 
   return (
     <TableCell
-      size="small"
+      size='small'
       sx={{ maxWidth: 150 }}
       sortDirection={sortDirection}
     >
       <TableSortLabel
         active={orderBy === id}
-        direction={orderBy === id ? sortDirection : "asc"}
+        direction={orderBy === id ? sortDirection : 'asc'}
         onClick={changeSortDirection}
         sx={{
           maxWidth: 150,
         }}
       >
-        <Tooltip title={description} placement="top">
+        <Tooltip
+          title={description}
+          placement='top'
+        >
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              color: "#212B36",
-              overflow: "hidden",
+              display: 'flex',
+              flexDirection: 'column',
+              color: '#212B36',
+              overflow: 'hidden',
             }}
           >
             <span
               style={{
                 fontSize: 10,
-                lineHeight: "4px",
+                lineHeight: '4px',
                 marginTop: 2,
-                textTransform: "uppercase",
+                textTransform: 'uppercase',
               }}
             >
               {type}
@@ -448,9 +439,9 @@ const TableHeadItem = ({
             <span
               style={{
                 // @ts-ignore
-                textWrap: "nowrap",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
+                textWrap: 'nowrap',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
               }}
             >
               {name}
@@ -459,8 +450,8 @@ const TableHeadItem = ({
         </Tooltip>
       </TableSortLabel>
     </TableCell>
-  );
-};
+  )
+}
 
 const TableHeadLesson = ({
   collapsed = true,
@@ -473,58 +464,48 @@ const TableHeadLesson = ({
   setOrderBy,
   id,
 }: {
-  collapsed?: boolean;
-  type: string;
-  name: string;
-  description: string;
-  id: string;
-  sortDirection: "asc" | "desc";
-  setSortDirection: (direction: "asc" | "desc") => void;
-  orderBy: string;
-  setOrderBy: (direction: string) => void;
+  collapsed?: boolean
+  type: string
+  name: string
+  description: string
+  id: string
+  sortDirection: 'asc' | 'desc'
+  setSortDirection: (direction: 'asc' | 'desc') => void
+  orderBy: string
+  setOrderBy: (direction: string) => void
 }) => {
   const Icon =
-    type === "practical"
-      ? TbPuzzle
-      : type === "exercise"
-      ? HiOutlineLightBulb
-      : MdOutlineQuiz;
+    type === 'practical' ? TbPuzzle : type === 'exercise' ? HiOutlineLightBulb : MdOutlineQuiz
   const IconContainer = () => (
     <div
       style={{
-        display: "flex",
+        display: 'flex',
         backgroundColor:
-          type === "practical"
-            ? "#0198ED"
-            : type === "exercise"
-            ? "#155275"
-            : "#FBDD3F",
-        color:
-          type === "practical"
-            ? "#FFF"
-            : type === "exercise"
-            ? "#FFB960"
-            : "#AE5EB7",
+          type === 'practical' ? '#0198ED' : type === 'exercise' ? '#155275' : '#FBDD3F',
+        color: type === 'practical' ? '#FFF' : type === 'exercise' ? '#FFB960' : '#AE5EB7',
         width: 22,
         height: 22,
         lineHeight: 0,
         borderRadius: 50,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
-      <Icon size="14" style={{ alignSelf: "center" }} />
+      <Icon
+        size='14'
+        style={{ alignSelf: 'center' }}
+      />
     </div>
-  );
+  )
   const changeSortDirection = () => {
-    const isAsc = orderBy === id && sortDirection === "asc";
-    setSortDirection(isAsc ? "desc" : "asc");
-    setOrderBy(id);
-  };
+    const isAsc = orderBy === id && sortDirection === 'asc'
+    setSortDirection(isAsc ? 'desc' : 'asc')
+    setOrderBy(id)
+  }
 
   return (
     <TableCell
-      size="small"
+      size='small'
       sx={
         !collapsed
           ? {
@@ -536,32 +517,32 @@ const TableHeadLesson = ({
     >
       <TableSortLabel
         active={orderBy === id}
-        direction={orderBy === id ? sortDirection : "asc"}
+        direction={orderBy === id ? sortDirection : 'asc'}
         onClick={changeSortDirection}
       >
         <Tooltip
           title={
-            <Typography variant="body2">
+            <Typography variant='body2'>
               {name} - {description}
             </Typography>
           }
-          placement="top"
+          placement='top'
         >
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
               // @ts-ignore
-              textWrap: "nowrap",
+              textWrap: 'nowrap',
             }}
           >
             {collapsed ? (
               <div
                 style={{
                   // @ts-ignore
-                  textWrap: "nowrap",
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
+                  textWrap: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
                 }}
               >
                 <IconContainer />
@@ -570,25 +551,28 @@ const TableHeadLesson = ({
             ) : (
               <div
                 style={{
-                  padding: "6px 16px",
-                  backgroundColor: "beige",
+                  padding: '6px 16px',
+                  backgroundColor: 'beige',
                   borderTopLeftRadius: 20,
                   borderTopRightRadius: 20,
                   // @ts-ignore
-                  textWrap: "nowrap",
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
+                  textWrap: 'nowrap',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
                 }}
               >
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "row",
+                    display: 'flex',
+                    flexDirection: 'row',
                     gap: 6,
                   }}
                 >
-                  <Icon size="14" style={{ alignSelf: "center" }} />
-                  <Typography variant="body2">Practical</Typography>
+                  <Icon
+                    size='14'
+                    style={{ alignSelf: 'center' }}
+                  />
+                  <Typography variant='body2'>Practical</Typography>
                 </div>
                 {name} {description}
               </div>
@@ -597,8 +581,8 @@ const TableHeadLesson = ({
         </Tooltip>
       </TableSortLabel>
     </TableCell>
-  );
-};
+  )
+}
 
 const TableItemProgress = ({
   studentName,
@@ -608,38 +592,36 @@ const TableItemProgress = ({
   hasNextLink = true,
   onClick,
 }: {
-  studentName: string;
-  type: string;
-  name: string;
-  progress: number;
-  hasNextLink?: boolean;
-  onClick: () => void;
+  studentName: string
+  type: string
+  name: string
+  progress: number
+  hasNextLink?: boolean
+  onClick: () => void
 }) => {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
-    <TableCell size="small">
+    <TableCell size='small'>
       <Tooltip
-        placement="top"
+        placement='top'
         title={
           <div>
-            {translate("student")}: {studentName}
+            {translate('student')}: {studentName}
             <br />
             {type}: {name}
             <br />
-            {translate("progress")}:{" "}
-            {hasNextLink
-              ? `${Math.floor(progress)}%`
-              : `${progress ? "done" : "not done"}`}
+            {translate('progress')}:{' '}
+            {hasNextLink ? `${Math.floor(progress)}%` : `${progress ? 'done' : 'not done'}`}
           </div>
         }
       >
         <div onClick={onClick}>
           {hasNextLink ? (
             <LinearProgress
-              variant="determinate"
+              variant='determinate'
               value={progress}
-              sx={{ height: "16px", width: "100%" }}
+              sx={{ height: '16px', width: '100%' }}
             />
           ) : (
             <Checkbox checked={!!progress} />
@@ -647,8 +629,8 @@ const TableItemProgress = ({
         </div>
       </Tooltip>
     </TableCell>
-  );
-};
+  )
+}
 
 const TableItemLesson = ({
   collapsed = true,
@@ -656,21 +638,21 @@ const TableItemLesson = ({
   items = [],
   onClick,
 }: {
-  collapsed?: boolean;
-  progress: number;
+  collapsed?: boolean
+  progress: number
   items: {
-    name: string;
-    status: "done" | "not done" | "in progress";
-  }[];
-  onClick: () => void;
+    name: string
+    status: 'done' | 'not done' | 'in progress'
+  }[]
+  onClick: () => void
 }) => {
   return (
     <TableCell
-      size="small"
+      size='small'
       sx={
         !collapsed
           ? {
-              backgroundColor: "beige",
+              backgroundColor: 'beige',
             }
           : {}
       }
@@ -678,36 +660,34 @@ const TableItemLesson = ({
       <div onClick={onClick}>
         {collapsed ? (
           <Tooltip
-            title={
-              <Typography variant="body2">{Math.floor(progress)}%</Typography>
-            }
-            placement="top"
+            title={<Typography variant='body2'>{Math.floor(progress)}%</Typography>}
+            placement='top'
           >
             <LinearProgress
-              variant="determinate"
+              variant='determinate'
               value={progress}
-              sx={{ height: "16px", width: "100%" }}
+              sx={{ height: '16px', width: '100%' }}
             />
           </Tooltip>
         ) : (
           <div
             style={{
-              display: "flex",
-              flexWrap: "nowrap",
+              display: 'flex',
+              flexWrap: 'nowrap',
               gap: 6,
             }}
           >
             {items.map((item) => (
               <Tooltip
                 key={`table-lesson-item-${item.name}`}
-                title={<Typography variant="body2">{item.name}</Typography>}
-                placement="top"
+                title={<Typography variant='body2'>{item.name}</Typography>}
+                placement='top'
               >
                 <LinearProgress
-                  variant="determinate"
-                  color={item.status === "in progress" ? "warning" : "primary"}
-                  value={item.status === "not done" ? 0 : 100}
-                  sx={{ height: "16px", width: "16px" }}
+                  variant='determinate'
+                  color={item.status === 'in progress' ? 'warning' : 'primary'}
+                  value={item.status === 'not done' ? 0 : 100}
+                  sx={{ height: '16px', width: '16px' }}
                 />
               </Tooltip>
             ))}
@@ -715,5 +695,5 @@ const TableItemLesson = ({
         )}
       </div>
     </TableCell>
-  );
-};
+  )
+}

@@ -1,46 +1,44 @@
-import { useState, useCallback } from 'react';
-// @mui
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
-import { CardProps } from '@mui/material/Card';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
-// utils
-import { fDateTime } from 'src/utils/formatTime';
-import { fData } from 'src/utils/formatNumber';
-// types
-import { IFileManager } from 'src/@types/file';
-// components
-import { Iconify } from 'src/components/iconify';
-import CustomPopover, { usePopover } from 'src/components/custom-popover';
-import { ConfirmDialog, Image, TextMaxLine, useSnackbar } from "@components";
-import * as React from "react";
-import FileManagerNewFolderDialog from "./file-manager-new-folder-dialog";
-import { useUpdateMediaMutation, useUpdateMediaPathMutation } from "../../redux/services/manager/media-manager";
-import { IMediaUpdate } from "../../redux/services/interfaces/media.interface";
-import _ from "lodash";
-import FileManagerMoveFolderDialog from "./file-manager-move-folder";
-import { SelectChangeEvent } from "@mui/material";
-import { useProfileQuery } from "../../redux/services/auth";
-import { BiCopy } from "react-icons/bi";
-import { useCopyToClipboard } from "@hooks";
+import { useState, useCallback } from 'react'
+import React from 'react'
 
-// ----------------------------------------------------------------------
+import { SelectChangeEvent } from '@mui/material'
+import Avatar from '@mui/material/Avatar'
+import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import { CardProps } from '@mui/material/Card'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import MenuItem from '@mui/material/MenuItem'
+import Paper from '@mui/material/Paper'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import { BiCopy } from '@react-icons/all-files/bi/BiCopy'
+import * as _ from 'lodash-es'
+
+import { ConfirmDialog, Image, TextMaxLine, useSnackbar } from '@/components'
+import CustomPopover, { usePopover } from '@/components/custom-popover'
+import { Iconify } from '@/components/iconify'
+import { useCopyToClipboard } from '@/hooks'
+import { fData } from '@/utils/formatNumber'
+import { fDateTime } from '@/utils/formatTime'
+
+import { useProfileQuery } from '../../redux/services/auth'
+import { IMediaUpdate } from '../../redux/services/interfaces/media.interface'
+import { useUpdateMediaMutation } from '../../redux/services/manager/media-manager'
+import { IFileManager } from '../../types/file'
+
+import FileManagerMoveFolderDialog from './file-manager-move-folder'
+import FileManagerNewFolderDialog from './file-manager-new-folder-dialog'
 
 interface Props extends CardProps {
-  file: IFileManager;
-  selected?: boolean;
-  onSelect?: VoidFunction;
-  onDelete: () => Promise<void>;
-  insertImage: any;
+  file: IFileManager
+  selected?: boolean
+  onSelect?: VoidFunction
+  onDelete: () => Promise<void>
+  insertImage: any
   handleClose: VoidFunction
-  paths: string[];
+  paths: string[]
 }
 
 export default function FileManagerFileItem({
@@ -54,28 +52,28 @@ export default function FileManagerFileItem({
   paths,
   ...other
 }: Props) {
-  const { copy } = useCopyToClipboard();
-  const { enqueueSnackbar } = useSnackbar();
+  const { copy } = useCopyToClipboard()
+  const { enqueueSnackbar } = useSnackbar()
 
-  const [checkbox, setCheckbox] = useState<boolean>();
+  const [checkbox, setCheckbox] = useState<boolean>()
   const [confirm, setConfirm] = useState<boolean>(false)
-  const [fileName, setFileName] = useState(file.name);
-  const [filePath, setFilePath] = useState(file.path.replace(/^\//, ''));
-  const [editItem, setEditItem] = useState<boolean>(false);
-  const [moveFile, setMoveFile] = useState<boolean>(false);
+  const [fileName, setFileName] = useState(file.name)
+  const [filePath, setFilePath] = useState(file.path.replace(/^\//, ''))
+  const [editItem, setEditItem] = useState<boolean>(false)
+  const [moveFile, setMoveFile] = useState<boolean>(false)
 
-  const popover = usePopover();
+  const popover = usePopover()
 
-  const { data: user } = useProfileQuery();
+  const { data: user } = useProfileQuery()
 
-  const [updateMedia] = useUpdateMediaMutation();
+  const [updateMedia] = useUpdateMediaMutation()
 
   const handleChangeFileName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setFileName(event.target.value);
-  }, []);
+    setFileName(event.target.value)
+  }, [])
   const handleChangeFilePath = useCallback((event: SelectChangeEvent) => {
-    setFilePath(event.target.value);
-  }, []);
+    setFilePath(event.target.value)
+  }, [])
 
   const renderIcon = (
     <Image
@@ -83,24 +81,31 @@ export default function FileManagerFileItem({
       alt={file.name}
       sx={{ height: 200, width: 200, mb: 1.5 }}
       onClick={() => {
-        insertImage({ src: file.url });
-        handleClose();
+        insertImage({ src: file.url })
+        handleClose()
       }}
     />
-  );
+  )
 
   const renderAction = (
-    <Stack direction="row" alignItems="center" sx={{ top: 8, right: 8, position: 'absolute', backgroundColor: '#FFF', borderRadius: 10, }}>
-      <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
-        <Iconify icon="eva:more-vertical-fill" />
+    <Stack
+      direction='row'
+      alignItems='center'
+      sx={{ top: 8, right: 8, position: 'absolute', backgroundColor: '#FFF', borderRadius: 10 }}
+    >
+      <IconButton
+        color={popover.open ? 'inherit' : 'default'}
+        onClick={popover.onOpen}
+      >
+        <Iconify icon='eva:more-vertical-fill' />
       </IconButton>
     </Stack>
-  );
+  )
 
   const renderText = (
     <>
       <TextMaxLine
-        variant="subtitle2"
+        variant='subtitle2'
         sx={{ width: 1, mt: 1, mb: 1 }}
       >
         {file.name}
@@ -120,7 +125,7 @@ export default function FileManagerFileItem({
         }}
         onClick={() => {
           copy(file.url)
-          enqueueSnackbar('Copied to clipboard');
+          enqueueSnackbar('Copied to clipboard')
         }}
       >
         <div
@@ -129,17 +134,19 @@ export default function FileManagerFileItem({
             textOverflow: 'ellipsis',
             // @ts-ignore
             textWrap: 'nowrap',
-            maxWidth: 234
+            maxWidth: 234,
           }}
         >
-          <span style={{ maxWidth: 250 }}>{filePath}/{file.name}</span>
+          <span style={{ maxWidth: 250 }}>
+            {filePath}/{file.name}
+          </span>
         </div>
         <BiCopy />
       </div>
 
       <Stack
-        direction="row"
-        alignItems="center"
+        direction='row'
+        alignItems='center'
         sx={{
           maxWidth: 0.99,
           whiteSpace: 'nowrap',
@@ -150,7 +157,7 @@ export default function FileManagerFileItem({
         {fData(file.size)}
 
         <Box
-          component="span"
+          component='span'
           sx={{
             mx: 0.75,
             width: 2,
@@ -160,12 +167,16 @@ export default function FileManagerFileItem({
             bgcolor: 'currentColor',
           }}
         />
-        <Typography noWrap component="span" variant="caption">
+        <Typography
+          noWrap
+          component='span'
+          variant='caption'
+        >
           {fDateTime(file.dateModified)}
         </Typography>
       </Stack>
     </>
-  );
+  )
 
   const renderAvatar = (
     <AvatarGroup
@@ -182,17 +193,21 @@ export default function FileManagerFileItem({
       }}
     >
       {file.shared?.map((person) => (
-        <Avatar key={person.id} alt={person.name} src={person.avatar} />
+        <Avatar
+          key={person.id}
+          alt={person.name}
+          src={person.avatar}
+        />
       ))}
     </AvatarGroup>
-  );
+  )
 
   return (
     <>
       <Stack
         component={Paper}
-        variant="outlined"
-        alignItems="flex-start"
+        variant='outlined'
+        alignItems='flex-start'
         sx={{
           p: 2.5,
           borderRadius: 2,
@@ -207,7 +222,10 @@ export default function FileManagerFileItem({
         }}
         {...other}
       >
-        <Box onMouseEnter={() => setCheckbox(true)} onMouseLeave={() => setCheckbox(false)}>
+        <Box
+          onMouseEnter={() => setCheckbox(true)}
+          onMouseLeave={() => setCheckbox(false)}
+        >
           {renderIcon}
         </Box>
 
@@ -221,53 +239,57 @@ export default function FileManagerFileItem({
       <CustomPopover
         open={popover.open}
         onClose={popover.onClose}
-        arrow="right-top"
+        arrow='right-top'
         sx={{ width: 180 }}
       >
-
         <MenuItem
           onClick={() => {
-            setEditItem(true);
-            popover.onClose();
+            setEditItem(true)
+            popover.onClose()
           }}
         >
-          <Iconify icon="mdi:pencil-outline"/>
+          <Iconify icon='mdi:pencil-outline' />
           Rename
         </MenuItem>
 
         <MenuItem
           onClick={() => {
-            setMoveFile(true);
-            popover.onClose();
+            setMoveFile(true)
+            popover.onClose()
           }}
         >
-          <Iconify icon="mdi:arrow-all"/>
+          <Iconify icon='mdi:arrow-all' />
           Move
         </MenuItem>
 
-        {file?.userId && user?.id === file?.userId && <MenuItem
-          onClick={async () => {
-            await updateMedia({
-              ..._.pick(file, ['id', 'size', 'type', 'url', 'active', 'name']) as Omit<IMediaUpdate, 'acl'>,
-              acl: file.acl === "public" ? "private" : "public",
-            });
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="mdi:eye-outline"/>
-          Make it {file.acl === "public" ? "private" : "public"}
-        </MenuItem>}
+        {file?.userId && user?.id === file?.userId && (
+          <MenuItem
+            onClick={async () => {
+              await updateMedia({
+                ...(_.pick(file, ['id', 'size', 'type', 'url', 'active', 'name']) as Omit<
+                  IMediaUpdate,
+                  'acl'
+                >),
+                acl: file.acl === 'public' ? 'private' : 'public',
+              })
+              popover.onClose()
+            }}
+          >
+            <Iconify icon='mdi:eye-outline' />
+            Make it {file.acl === 'public' ? 'private' : 'public'}
+          </MenuItem>
+        )}
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem
           onClick={() => {
-            setConfirm(true);
-            popover.onClose();
+            setConfirm(true)
+            popover.onClose()
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon="solar:trash-bin-trash-bold" />
+          <Iconify icon='solar:trash-bin-trash-bold' />
           Delete
         </MenuItem>
       </CustomPopover>
@@ -275,13 +297,16 @@ export default function FileManagerFileItem({
       <FileManagerNewFolderDialog
         open={editItem}
         onClose={() => setEditItem(false)}
-        title="Edit Item"
+        title='Edit Item'
         onUpdate={async () => {
-          setEditItem(false);
+          setEditItem(false)
           await updateMedia({
-            ..._.pick(file, ['id', 'size', 'type', 'url', 'active', 'acl']) as Omit<IMediaUpdate, 'name'>,
+            ...(_.pick(file, ['id', 'size', 'type', 'url', 'active', 'acl']) as Omit<
+              IMediaUpdate,
+              'name'
+            >),
             name: (file.path + '/' + fileName).replace(/^\//, ''),
-          });
+          })
         }}
         folderName={fileName}
         onChangeFolderName={handleChangeFileName}
@@ -291,11 +316,14 @@ export default function FileManagerFileItem({
         open={moveFile}
         onClose={() => setMoveFile(false)}
         onUpdate={async () => {
-          setEditItem(false);
+          setEditItem(false)
           await updateMedia({
-            ..._.pick(file, ['id', 'size', 'type', 'url', 'active', 'acl']) as Omit<IMediaUpdate, 'name'>,
+            ...(_.pick(file, ['id', 'size', 'type', 'url', 'active', 'acl']) as Omit<
+              IMediaUpdate,
+              'name'
+            >),
             name: (filePath + file.name).replace(/^\//, ''),
-          });
+          })
         }}
         actualPath={file.path.replace(/^\//, '')}
         folderPath={filePath}
@@ -307,16 +335,20 @@ export default function FileManagerFileItem({
       <ConfirmDialog
         open={confirm}
         onClose={() => setConfirm(false)}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title='Delete'
+        content='Are you sure want to delete?'
         action={
-          <Button variant="contained" color="error" onClick={() => {
-            onDelete().then(() => setConfirm(false))
-          }}>
+          <Button
+            variant='contained'
+            color='error'
+            onClick={() => {
+              onDelete().then(() => setConfirm(false))
+            }}
+          >
             Delete
           </Button>
         }
       />
     </>
-  );
+  )
 }

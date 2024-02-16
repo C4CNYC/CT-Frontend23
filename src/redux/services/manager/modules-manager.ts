@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
 import {
   IAddLessonToModule,
   IModule,
@@ -9,7 +7,10 @@ import {
   IModuleDelete,
   IModulesSearchParams,
   IRemoveLessonFromModule,
-} from "../interfaces/courseUnits.interface";
+  IUpdateModuleLesson,
+} from '../interfaces/courseUnits.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,83 +19,86 @@ const extendedApi = managerApi.injectEndpoints({
       IModulesSearchParams
     >({
       query: (params) => ({
-        url: "/manager/module",
-        method: "GET",
+        url: '/manager/module',
+        method: 'GET',
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Modules"],
+      providesTags: ['Modules'],
     }),
     updateModule: builder.mutation<
       IModule & BaseResponseInterface,
-      { id: string, tips: string[] | [], duration: string }
+      { id: string; tips: string[] | []; duration: string }
     >({
       query: ({ id, ...body }) => ({
         url: `/manager/module/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Modules" }],
+      invalidatesTags: [{ type: 'Modules' }],
     }),
     updateModuleAvatar: builder.mutation<
       IModule & BaseResponseInterface,
-      { id: string, file: FormData }
+      { id: string; file: FormData }
     >({
       query: ({ id, file }) => ({
         url: `/manager/module/${id}/avatar`,
-        method: "PATCH",
+        method: 'PATCH',
         body: file,
       }),
-      invalidatesTags: [{ type: "Modules" }],
+      invalidatesTags: [{ type: 'Modules' }],
     }),
-    createModule: builder.mutation<
-      IModuleCreate & BaseResponseInterface,
-      IModuleCreate
-    >({
+    createModule: builder.mutation<IModuleCreate & BaseResponseInterface, IModuleCreate>({
       query: ({ ...body }) => ({
-        url: "/manager/module",
-        method: "POST",
+        url: '/manager/module',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Modules" }],
+      invalidatesTags: [{ type: 'Modules' }],
     }),
-    deleteModule: builder.mutation<
-      IModuleDelete & BaseResponseInterface,
-      IModuleDelete
-    >({
+    deleteModule: builder.mutation<IModuleDelete & BaseResponseInterface, IModuleDelete>({
       query: ({ id }) => ({
         url: `/manager/module/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Modules" }],
+      invalidatesTags: [{ type: 'Modules' }],
     }),
     addLessonToModule: builder.mutation<void, IAddLessonToModule>({
       query: ({ id, ...body }) => ({
         url: `/manager/module/${id}/lesson`,
-        method: "PATCH",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Lessons" }],
+      invalidatesTags: [{ type: 'Lessons' }],
     }),
     removeLessonFromModule: builder.mutation<void, IRemoveLessonFromModule>({
       query: ({ id, ...body }) => ({
         url: `/manager/module/${id}/lesson`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: [{ type: "Lessons" }],
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    updateModuleLesson: builder.mutation<void, IUpdateModuleLesson>({
+      query: ({ id, ...body }) => ({
+        url: `/manager/module/${id}/lesson`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetModulesQuery,
   // -------------mutation-----------
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
+  useUpdateModuleLessonMutation,
   useCreateModuleMutation,
   useDeleteModuleMutation,
   useUpdateModuleMutation,
   useUpdateModuleAvatarMutation,
-} = extendedApi;
+} = extendedApi

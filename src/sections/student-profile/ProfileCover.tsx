@@ -1,48 +1,43 @@
-import { Box, Stack, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Stack, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-import { CustomAvatar } from "@components";
-import { getLinearGradient } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
+import { CustomAvatar } from '@/components'
+import { getLinearGradient } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
-const StyledInfo = styled("div")(({ theme }) => ({
+const StyledInfo = styled('div')(({ theme }) => ({
   left: 0,
   right: 0,
   zIndex: 15,
-  position: "absolute",
+  position: 'absolute',
   marginTop: theme.spacing(5),
-  [theme.breakpoints.up("md")]: {
-    right: "auto",
-    display: "flex",
-    alignItems: "center",
+  [theme.breakpoints.up('md')]: {
+    right: 'auto',
+    display: 'flex',
+    alignItems: 'center',
     left: theme.spacing(3),
     bottom: theme.spacing(3),
   },
-}));
+}))
 
 interface IProfileCoverProps {
-  name: string;
-  lastName?: string;
-  cover?: string;
-  avatar?: string;
+  name: string
+  lastName?: string
+  cover?: string
+  avatar?: string
 }
-export default function ProfileCover({
-  name,
-  lastName,
-  cover,
-  avatar,
-}: IProfileCoverProps) {
+export default function ProfileCover({ name, lastName, cover, avatar }: IProfileCoverProps) {
   if (!cover) {
-    cover = "#5be49b";
+    cover = '#5be49b'
   }
 
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
     <Stack
       sx={{
         background: getLinearGradient(cover),
-        height: "100%",
+        height: '100%',
       }}
     >
       <StyledInfo>
@@ -51,10 +46,10 @@ export default function ProfileCover({
           alt={name}
           name={name}
           sx={{
-            mx: "auto",
+            mx: 'auto',
             borderWidth: 2,
-            borderStyle: "solid",
-            borderColor: "common.white",
+            borderStyle: 'solid',
+            borderColor: 'common.white',
             width: { xs: 80, md: 128 },
             height: { xs: 80, md: 128 },
             fontSize: { xs: 32, md: 64 },
@@ -65,17 +60,17 @@ export default function ProfileCover({
           sx={{
             ml: { md: 3 },
             mt: { xs: 1, md: 0 },
-            color: "common.white",
-            textAlign: { xs: "center", md: "left" },
+            color: 'common.white',
+            textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          <Typography variant="h4">
+          <Typography variant='h4'>
             {name}&nbsp;{lastName}
           </Typography>
 
-          <Typography sx={{ opacity: 0.72 }}>{translate("class")}</Typography>
+          <Typography sx={{ opacity: 0.72 }}>{translate('class')}</Typography>
         </Box>
       </StyledInfo>
     </Stack>
-  );
+  )
 }

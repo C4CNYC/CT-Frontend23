@@ -1,19 +1,19 @@
-import { useMediaQuery, useTheme } from "@mui/material";
+import { useMediaQuery, useTheme } from '@mui/material'
 
-import { BaseResponseInterface } from "@utils";
-import { ILesson } from "src/redux/interfaces/content.interface";
+import { ILesson } from '@/redux/interfaces/content.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import RoadItem from "./RoadItem";
-import RoadItemMobile from "./RoadItemMobile";
+import RoadItem from './RoadItem'
+import RoadItemMobile from './RoadItemMobile'
 
 interface StoryRoadProps {
-  lessons: Array<ILesson & BaseResponseInterface>;
-  lastActiveIndex: number;
+  lessons: Array<ILesson & BaseResponseInterface>
+  lastActiveIndex: number
 }
 
 const StoryRoad = ({ lessons, lastActiveIndex }: StoryRoadProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down(660));
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down(660))
 
   return (
     <>
@@ -30,6 +30,7 @@ const StoryRoad = ({ lessons, lastActiveIndex }: StoryRoadProps) => {
               name={l.name}
               description={l.description}
               lessonId={l.id}
+              type={l.type}
             />
           ))
         : lessons.map((l, i) => (
@@ -45,10 +46,11 @@ const StoryRoad = ({ lessons, lastActiveIndex }: StoryRoadProps) => {
               name={l.name}
               description={l.description}
               lessonId={l.id}
+              type={l.type}
             />
           ))}
     </>
-  );
-};
+  )
+}
 
-export default StoryRoad;
+export default StoryRoad

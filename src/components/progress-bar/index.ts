@@ -1,2 +1,2 @@
-export * from "./ProgressBar";
-export * from "./styles";
+export * from './ProgressBar'
+export * from './styles'

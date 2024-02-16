@@ -1,59 +1,50 @@
-// @mui
-import { ListItemButton, ListItemIcon, Popover } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { ListItemButton, ListItemIcon, Popover } from '@mui/material'
+import { alpha, styled } from '@mui/material/styles'
 
-// utils
-import { bgBlur } from "@utils";
+import { bgBlur } from '@/utils'
 
-// config
-import { ICON, NAV } from "../../../config-global";
-//
-import { NavItemProps } from "../types";
+import { ICON_SIZES, NAV_SIZES } from '../../../theme/consts'
+import { NavItemProps } from '../types'
 
-// ----------------------------------------------------------------------
-
-type StyledItemProps = Omit<NavItemProps, "item">;
+type StyledItemProps = Omit<NavItemProps, 'item'>
 
 export const StyledItem = styled(ListItemButton, {
-  shouldForwardProp: (prop) => prop !== "active" && prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'active' && prop !== 'open',
 })<StyledItemProps>(({ active, disabled, open, depth, theme }) => {
-  const isLight = theme.palette.mode === "light";
+  const isLight = theme.palette.mode === 'light'
 
-  const subItem = depth !== 1;
+  const subItem = depth !== 1
 
   const activeStyle = {
     color: theme.palette.primary.main,
-    backgroundColor: alpha(
-      theme.palette.primary.main,
-      theme.palette.action.selectedOpacity
-    ),
+    backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
     ...(!isLight && {
       color: theme.palette.primary.light,
     }),
-  };
+  }
 
   const activeSubStyle = {
     color: theme.palette.text.primary,
-    backgroundColor: "transparent",
-  };
+    backgroundColor: 'transparent',
+  }
 
   const hoverStyle = {
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.action.hover,
-  };
+  }
 
   return {
     flexShrink: 0,
-    display: "inline-flex",
-    textTransform: "capitalize",
+    display: 'inline-flex',
+    textTransform: 'capitalize',
     padding: theme.spacing(0, 0.75),
     color: theme.palette.text.secondary,
     borderRadius: theme.shape.borderRadius,
-    height: NAV.H_DASHBOARD_ITEM_HORIZONTAL,
-    "&:hover": hoverStyle,
+    height: NAV_SIZES.H_DASHBOARD_ITEM_HORIZONTAL,
+    '&:hover': hoverStyle,
     // Sub item
     ...(subItem && {
-      width: "100%",
+      width: '100%',
       margin: 0,
       paddingRight: 0,
       paddingLeft: theme.spacing(1),
@@ -61,7 +52,7 @@ export const StyledItem = styled(ListItemButton, {
     // Active item
     ...(active && {
       ...activeStyle,
-      "&:hover": {
+      '&:hover': {
         ...activeStyle,
       },
     }),
@@ -69,7 +60,7 @@ export const StyledItem = styled(ListItemButton, {
     ...(subItem &&
       active && {
         ...activeSubStyle,
-        "&:hover": {
+        '&:hover': {
           ...activeSubStyle,
         },
       }),
@@ -77,33 +68,29 @@ export const StyledItem = styled(ListItemButton, {
     ...(open && !active && hoverStyle),
     // Disabled
     ...(disabled && {
-      "&.Mui-disabled": {
+      '&.Mui-disabled': {
         opacity: 0.64,
       },
     }),
-  };
-});
-
-// ----------------------------------------------------------------------
+  }
+})
 
 export const StyledIcon = styled(ListItemIcon)({
   marginRight: 8,
   flexShrink: 0,
-  width: ICON.NAV_ITEM_HORIZONTAL,
-  height: ICON.NAV_ITEM_HORIZONTAL,
-});
-
-// ----------------------------------------------------------------------
+  width: ICON_SIZES.NAV_ITEM_HORIZONTAL,
+  height: ICON_SIZES.NAV_ITEM_HORIZONTAL,
+})
 
 export const StyledPopover = styled(Popover)(({ theme }) => ({
-  pointerEvents: "none",
-  "& .MuiPopover-paper": {
+  pointerEvents: 'none',
+  '& .MuiPopover-paper': {
     width: 160,
-    pointerEvents: "auto",
+    pointerEvents: 'auto',
     padding: theme.spacing(1),
     marginTop: theme.spacing(0.5),
     boxShadow: theme.customShadows.dropdown,
     borderRadius: Number(theme.shape.borderRadius) * 1.5,
     ...bgBlur({ color: theme.palette.background.default }),
   },
-}));
+}))

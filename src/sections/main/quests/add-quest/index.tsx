@@ -1,13 +1,7 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { format } from "date-fns";
-import { useForm } from "react-hook-form";
-import { IoSettingsOutline } from "react-icons/io5";
-import { TbListDetails } from "react-icons/tb";
-
-import LoadingButton from "@mui/lab/LoadingButton";
+import { yupResolver } from '@hookform/resolvers/yup'
+import LoadingButton from '@mui/lab/LoadingButton'
 import {
   Box,
   Button,
@@ -18,108 +12,108 @@ import {
   Tooltip,
   Typography,
   useTheme,
-} from "@mui/material";
+} from '@mui/material'
+import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
+import { TbListDetails } from '@react-icons/all-files/tb/TbListDetails'
+import { format } from 'date-fns'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import { animals, colors, uniqueNamesGenerator } from 'unique-names-generator'
 
-import { FormProvider, useSnackbar } from "@components";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import CustomTabPanel, {
-  customTabProps,
-} from "src/components/custom-tab-panel";
-import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { ISkill } from "src/redux/interfaces/content.interface";
+import { FormProvider, useSnackbar } from '@/components'
+import CustomTabPanel, { customTabProps } from '@/components/custom-tab-panel'
+import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
+import { ISkill } from '@/redux/interfaces/content.interface'
 import {
   useCreateAssignmentMutation,
   useGetAssignmentQuery,
   useUpdateAssignmentMutation,
   useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
-} from "src/redux/services/manager/assignments-manager";
-import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
+} from '@/redux/services/manager/assignments-manager'
+import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@/utils/translateHelper'
 
-import DetailsStep from "./DetailsStep";
-import SettingsStep from "./SettingsStep";
 import {
   CONTAINER_INNER_SX,
   DATE_FORMAT,
   DATE_PARSER,
   DAYS_TO_CLOSE,
   DAYS_TO_END,
-  RANDOM_NAME,
   TABS_SX,
   TOOLTIP_TEXT,
   mainContainerStyles,
-} from "./constants";
-import { CreateQuestSchema } from "./helpers/create-quest.schema";
-import { FormQuestProps } from "./helpers/quest.interface";
+} from './constants'
+import DetailsStep from './DetailsStep'
+import { CreateQuestSchema } from './helpers/create-quest.schema'
+import { FormQuestProps } from './helpers/quest.interface'
+import SettingsStep from './SettingsStep'
 
 export default function AddQuest(): React.ReactElement {
-  const theme = useTheme();
-  const { enqueueSnackbar } = useSnackbar();
-  const { query, push } = useRouter();
-  const translate = useTranslate();
+  const theme = useTheme()
+  const { enqueueSnackbar } = useSnackbar()
+  const { query, push, reload } = useRouter()
+  const translate = useTranslate()
+  const [assignmentsSkillsId, setAssignmentsSkillsId] = useState<ISkill[]>()
+  const [value, setValue] = useState(0)
+  const RANDOM_NAME = uniqueNamesGenerator({
+    dictionaries: [colors, animals],
+    separator: ' ',
+    length: 2,
+    style: 'capital',
+  })
 
-  const [assignmentsSkillsId, setAssignmentsSkillsId] = useState<ISkill[]>();
-  const [value, setValue] = useState(0);
-
-  const { data: assignment, isLoading: isAssignmentLoading } =
-    useGetAssignmentQuery(
-      {
-        schoolId: query.schoolId as string,
-        assignmentId: query.assignmentId as string,
-      },
-      { skip: !query.assignmentId || !query.schoolId }
-    );
-  const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
-  const [updateAssignment, { isLoading: isUpdating }] =
-    useUpdateAssignmentMutation();
+  const { data: assignment, isLoading: isAssignmentLoading } = useGetAssignmentQuery(
+    {
+      schoolId: query.schoolId as string,
+      assignmentId: query.assignmentId as string,
+    },
+    { skip: !query.assignmentId || !query.schoolId }
+  )
+  const [createAssignment, { isLoading }] = useCreateAssignmentMutation()
+  const [updateAssignment, { isLoading: isUpdating }] = useUpdateAssignmentMutation()
   const [addCourseToAssignment, { isLoading: isAddingToClass }] =
-    useUpdateCourseAssignmentMutation();
-  const [addAssignmentToClass] = useUpdateClassAssignmentMutation();
+    useUpdateCourseAssignmentMutation()
+  const [addAssignmentToClass] = useUpdateClassAssignmentMutation()
 
-  const coursesData = useManagerGetCourseQuery({});
+  const coursesData = useManagerGetCourseQuery({})
 
   useEffect(() => {
     if (assignment) {
       methods.reset({
         name: assignment?.name,
-        description: JSON.parse(assignment?.description ?? "{}"),
+        description: JSON.parse(assignment?.description ?? '{}'),
         type: assignment?.type ?? AssignmentTypes.COURSE,
         course: assignment?.course?.id,
         startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
         dueDate: format(DATE_PARSER(assignment?.end_date), DATE_FORMAT),
         closeDate: format(DATE_PARSER(assignment?.close_date), DATE_FORMAT),
         active: assignment?.active,
-      });
+      })
     }
-  }, [isAssignmentLoading]);
+  }, [isAssignmentLoading])
 
   useEffect(() => {
     if (coursesData?.data?.data[0]?.id && !methods.getValues().course) {
-      methods.setValue("course", coursesData.data?.data[0]?.id);
+      methods.setValue('course', coursesData.data?.data[0]?.id)
     }
-  }, [coursesData]);
+  }, [coursesData])
 
   const methods = useForm<FormQuestProps>({
     resolver: yupResolver(CreateQuestSchema),
-    mode: "all",
+    mode: 'all',
     defaultValues: {
       name: assignment?.name ?? RANDOM_NAME,
-      description: JSON.parse(assignment?.description ?? "{}"),
+      description: JSON.parse(assignment?.description ?? '{}'),
       type: assignment?.type ?? AssignmentTypes.COURSE,
       course: assignment?.course?.id ?? coursesData.data?.data[0]?.id,
       startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
-      dueDate: format(
-        DATE_PARSER(assignment?.end_date, DAYS_TO_END),
-        DATE_FORMAT
-      ),
-      closeDate: format(
-        DATE_PARSER(assignment?.close_date, DAYS_TO_CLOSE),
-        DATE_FORMAT
-      ),
+      dueDate: format(DATE_PARSER(assignment?.end_date, DAYS_TO_END), DATE_FORMAT),
+      closeDate: format(DATE_PARSER(assignment?.close_date, DAYS_TO_CLOSE), DATE_FORMAT),
       active: assignment?.active ?? true,
     },
-  });
+  })
 
   const onSubmit = async (formData: FormQuestProps) => {
     if (assignment) {
@@ -133,18 +127,18 @@ export default function AddQuest(): React.ReactElement {
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
-        }).unwrap();
-        enqueueSnackbar(translate("assignments_updated_successfuly"));
+        }).unwrap()
+        enqueueSnackbar(translate('assignments_updated_successfuly'))
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
             assignmentId: assignment.id,
           })
-        );
+        )
       } catch (error: any) {
         enqueueSnackbar(error.data.message, {
-          variant: "error",
-        });
+          variant: 'error',
+        })
       }
     } else {
       try {
@@ -159,40 +153,40 @@ export default function AddQuest(): React.ReactElement {
           active: Boolean(formData.active),
           skill_tags: assignmentsSkillsId?.map((el) => el.id) ?? [],
           classes: [query.id as string],
-        }).unwrap();
+        }).unwrap()
         await addAssignmentToClass({
           assignmentId: newAssignment.id,
           schoolId: query.schoolId as string,
           class_id: query.id as string,
-        }).unwrap();
+        }).unwrap()
         await addCourseToAssignment({
           assignmentId: newAssignment.id,
           schoolId: query.schoolId as string,
           course_id: formData.course,
-        });
+        })
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
             assignmentId: newAssignment.id,
-            ...(query.onBoarding ? { onBoarding: "on-boarding" } : {}),
+            ...(query.onBoarding ? { onBoarding: 'on-boarding' } : {}),
           })
-        );
-        enqueueSnackbar(translate("assignments_created_successfuly"));
+        )
+        enqueueSnackbar(translate('assignments_created_successfuly'))
       } catch (error: any) {
         enqueueSnackbar(error.data.message, {
-          variant: "error",
-        });
+          variant: 'error',
+        })
       }
     }
-  };
+  }
 
   if (isAssignmentLoading && query.assignmentId) {
     return (
       <Skeleton
-        variant="rounded"
-        sx={{ height: "988px", maxWidth: "1152px", borderRadius: 4 }}
+        variant='rounded'
+        sx={{ height: '988px', maxWidth: '1152px', borderRadius: 4 }}
       />
-    );
+    )
   }
 
   return (
@@ -200,22 +194,21 @@ export default function AddQuest(): React.ReactElement {
       <Stack sx={mainContainerStyles(theme)}>
         <Stack sx={CONTAINER_INNER_SX}>
           <Stack>
-            <Typography variant="h2">
-              {translate("actions_add_quest")}
-            </Typography>
-            <Tooltip
-              title={<Typography variant="body2">{TOOLTIP_TEXT}</Typography>}
-            >
+            <Typography variant='h2'>{translate('actions_add_quest')}</Typography>
+            <Tooltip title={<Typography variant='body2'>{TOOLTIP_TEXT}</Typography>}>
               <Typography
-                variant="caption"
-                sx={{ textDecoration: "underline" }}
+                variant='caption'
+                sx={{ textDecoration: 'underline' }}
               >
-                {translate("quest_whats_quest")}
+                {translate('quest_whats_quest')}
               </Typography>
             </Tooltip>
           </Stack>
-          <Typography variant="subtitle2" textAlign="left">
-            {translate("quest_type")}
+          <Typography
+            variant='subtitle2'
+            textAlign='left'
+          >
+            {translate('quest_type')}
           </Typography>
         </Stack>
         <Box sx={{ px: { xs: 1, sm: 3, md: 5, lg: 12 } }}>
@@ -225,68 +218,82 @@ export default function AddQuest(): React.ReactElement {
           >
             <Tabs
               onChange={(_: any, newValue: number) => {
-                setValue(newValue);
+                setValue(newValue)
               }}
               value={value}
               scrollButtons={false}
               sx={TABS_SX}
             >
               <Tab
-                label={translate("details")}
+                label={translate('details')}
                 icon={<TbListDetails size={20} />}
-                sx={{ fontSize: "1.1rem" }}
+                sx={{ fontSize: '1.1rem' }}
                 {...customTabProps(0)}
               />
               <Tab
-                label={translate("settings")}
+                label={translate('settings')}
                 icon={<IoSettingsOutline size={20} />}
-                sx={{ fontSize: "1.1rem" }}
+                sx={{ fontSize: '1.1rem' }}
                 {...customTabProps(0)}
               />
             </Tabs>
 
-            <CustomTabPanel value={value} index={0}>
-              <DetailsStep
-                coursesData={{
-                  data: coursesData.data?.data,
-                  isLoading: coursesData.isLoading,
-                }}
-              />
+            <CustomTabPanel
+              value={value}
+              index={0}
+            >
+              {!isLoading && (
+                <DetailsStep
+                  methods={methods}
+                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                  coursesData={{
+                    data: coursesData.data?.data,
+                    isLoading: coursesData.isLoading,
+                  }}
+                />
+              )}
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel
+              value={value}
+              index={1}
+            >
               <SettingsStep
                 control={methods.control}
                 setAssignmentsSkillsId={(s: ISkill[]) => {
-                  setAssignmentsSkillsId(s);
+                  setAssignmentsSkillsId(s)
                 }}
                 assignmentsSkillsId={assignmentsSkillsId}
                 existedSkills={assignment?.skill_tags ?? []}
               />
             </CustomTabPanel>
-            <Stack mt={3} gap={3} flexDirection="row" justifyContent="flex-end">
+            <Stack
+              mt={3}
+              gap={3}
+              flexDirection='row'
+              justifyContent='flex-end'
+            >
               <Button
                 onClick={() => {
-                  push(STUDENT_PATH_DASHBOARD.class.id(query.id as string));
+                  push(STUDENT_PATH_DASHBOARD.class.id(query.id as string))
                 }}
-                variant="soft"
-                color="error"
+                size='large'
+                variant='soft'
+                color='error'
               >
-                {translate("actions_cancel")}
+                {translate('actions_cancel')}
               </Button>
               <LoadingButton
-                type="submit"
-                color="success"
-                variant="contained"
+                type='submit'
+                color='secondary'
+                variant='contained'
                 loading={isLoading || isUpdating || isAddingToClass}
               >
-                {assignment
-                  ? translate("actions_update")
-                  : translate("actions_launch")}
+                {assignment ? translate('actions_update') : translate('actions_launch')}
               </LoadingButton>
             </Stack>
           </FormProvider>
         </Box>
       </Stack>
     </>
-  );
+  )
 }

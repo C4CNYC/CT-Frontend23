@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
-import {
-  IFriend,
-  IFriendsSearchParams,
-} from "src/redux/interfaces/friends.interface";
+import { IFriend, IFriendsSearchParams } from '@/redux/interfaces/friends.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,26 +10,26 @@ const extendedApi = managerApi.injectEndpoints({
       IFriendsSearchParams
     >({
       query: (params) => ({
-        url: "/student/classmates",
-        method: "GET",
+        url: '/student/classmates',
+        method: 'GET',
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Friends"],
+      providesTags: ['Friends'],
     }),
     getFriend: builder.query<IFriend & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/classmates/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Friends"],
+      providesTags: ['Friends'],
     }),
   }),
-});
+})
 
 export const {
   useGetFriendsStudentContentQuery,
   useGetFriendQuery,
   // -------------mutation-----------
-} = extendedApi;
+} = extendedApi

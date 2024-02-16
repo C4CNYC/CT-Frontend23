@@ -1,7 +1,8 @@
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
-import { ISkill, ISkillSearch } from "../interfaces/skill.interface";
+import { ISkill, ISkillSearch } from '../interfaces/skill.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,19 +11,19 @@ const extendedApi = managerApi.injectEndpoints({
       ISkillSearch
     >({
       query: (params) => ({
-        url: "/manager/skill",
-        method: "GET",
+        url: '/manager/skill',
+        method: 'GET',
         params,
       }),
-      providesTags: ["Skills"],
+      providesTags: ['Skills'],
     }),
     createSkill: builder.mutation<ISkill, ISkill>({
       query: ({ ...body }) => ({
-        url: "/manager/skill",
-        method: "POST",
+        url: '/manager/skill',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Skills" }],
+      invalidatesTags: [{ type: 'Skills' }],
     }),
     updateSkill: builder.mutation<
       ISkill & BaseResponseInterface,
@@ -30,25 +31,25 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id, ...body }) => ({
         url: `/manager/skill/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Skills" }],
+      invalidatesTags: [{ type: 'Skills' }],
     }),
     removeSkill: builder.mutation<ISkill, { id: string }>({
       query: ({ id }) => ({
         url: `/manager/skill/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Skills" }],
+      invalidatesTags: [{ type: 'Skills' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetSkillQuery,
   useCreateSkillMutation,
   useRemoveSkillMutation,
   useUpdateSkillMutation,
-} = extendedApi;
+} = extendedApi

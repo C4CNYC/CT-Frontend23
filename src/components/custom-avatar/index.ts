@@ -1,3 +1,3 @@
-export * from "./CustomAvatar";
-export * from "./CustomAvatarGroup";
-export * from "./types";
+export * from './CustomAvatar'
+export * from './CustomAvatarGroup'
+export * from './types'

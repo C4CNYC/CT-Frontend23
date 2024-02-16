@@ -1,6 +1,5 @@
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
 import {
   IMedia,
   IMediaCreate,
@@ -8,7 +7,9 @@ import {
   IMediaPathUpdate,
   IMediaSearchParams,
   IMediaUpdate,
-} from "../interfaces/media.interface";
+} from '../interfaces/media.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,74 +18,77 @@ const extendedApi = managerApi.injectEndpoints({
       IMediaSearchParams
     >({
       query: (params) => ({
-        url: "/manager/media",
-        method: "GET",
+        url: '/manager/media',
+        method: 'GET',
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Media"],
+      providesTags: ['Media'],
     }),
     getMedia: builder.query<IMedia & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/manager/media/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Media"],
+      providesTags: ['Media'],
     }),
-    updateMedia: builder.mutation<
-      IMedia & BaseResponseInterface,
-      IMediaUpdate
-    >({
+    updateMedia: builder.mutation<IMedia & BaseResponseInterface, IMediaUpdate>({
       query: ({ id, ...body }) => ({
         url: `/manager/media/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Media" }],
+      invalidatesTags: [{ type: 'Media' }],
     }),
-    updateMediaPath: builder.mutation<
-      IMedia & BaseResponseInterface,
-      IMediaPathUpdate
-    >({
+    updateMediaPath: builder.mutation<IMedia & BaseResponseInterface, IMediaPathUpdate>({
       query: (body) => ({
         url: `/manager/media/path`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Media" }],
+      invalidatesTags: [{ type: 'Media' }],
     }),
-    createMedia: builder.mutation<
-      IMediaCreate & BaseResponseInterface,
-      IMediaCreate
-    >({
+    createMedia: builder.mutation<IMediaCreate & BaseResponseInterface, IMediaCreate>({
       query: ({ ...body }) => ({
-        url: "/manager/media",
-        method: "POST",
+        url: '/manager/media',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Media" }],
+      invalidatesTags: [{ type: 'Media' }],
     }),
-    deleteMedia: builder.mutation<
-      IMediaDelete & BaseResponseInterface,
-      IMediaDelete
-    >({
+    deleteMedia: builder.mutation<IMediaDelete & BaseResponseInterface, IMediaDelete>({
       query: ({ id }) => ({
         url: `/manager/media/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Media" }],
+      invalidatesTags: [{ type: 'Media' }],
+    }),
+    uploadMediaFile: builder.mutation<
+      any,
+      {
+        file: FormData
+      }
+    >({
+      query: ({ file }) => ({
+        url: '/manager/media/upload',
+        method: 'POST',
+        body: file,
+      }),
+      invalidatesTags: [{ type: 'Media' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetAllMediaQuery,
   useGetMediaQuery,
+
   // -------------mutation-----------
   useCreateMediaMutation,
   useUpdateMediaPathMutation,
   useUpdateMediaMutation,
   useDeleteMediaMutation,
-} = extendedApi;
+  useUploadMediaFileMutation,
+} = extendedApi

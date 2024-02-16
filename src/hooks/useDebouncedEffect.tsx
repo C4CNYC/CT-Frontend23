@@ -1,17 +1,13 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
-export const useDebouncedEffect = (
-  effect: VoidFunction,
-  deps: any,
-  delay: number
-) => {
+export const useDebouncedEffect = (effect: VoidFunction, deps: any, delay: number) => {
   useEffect(() => {
     const handler = setTimeout(() => {
-      effect();
-    }, delay);
+      effect()
+    }, delay)
 
     return () => {
-      clearTimeout(handler);
-    };
-  }, [...(deps || []), delay]);
-};
+      clearTimeout(handler)
+    }
+  }, [...(deps || []), delay])
+}

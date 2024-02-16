@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { managerApi } from ".";
-import {
-  ILessonContent,
-  ILessonContentUpdate,
-} from "../interfaces/courseUnits.interface";
+import { ILessonContent, ILessonContentUpdate } from '../interfaces/courseUnits.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,9 +12,9 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ lessonId }) => ({
         url: `/manager/lesson/${lessonId}/content`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["LessonsContent"],
+      providesTags: ['LessonsContent'],
       transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
         res.sort((a, b) => a.meta.order - b.meta.order),
     }),
@@ -27,25 +24,22 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ lessonId, id }) => ({
         url: `/manager/lesson/${lessonId}/content/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["LessonContentItem"],
+      providesTags: ['LessonContentItem'],
       keepUnusedDataFor: 0,
     }),
 
     createLessonContent: builder.mutation<
       ILessonContent,
-      { lessonId: string } & Omit<
-        ILessonContentUpdate,
-        "body" | "type" | "cover"
-      >
+      { lessonId: string } & Omit<ILessonContentUpdate, 'body' | 'type' | 'cover'>
     >({
       query: ({ lessonId, ...body }) => ({
         url: `/manager/lesson/${lessonId}/content`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "LessonsContent" }],
+      invalidatesTags: [{ type: 'LessonsContent' }],
     }),
     updateLessonContent: builder.mutation<
       ILessonContent,
@@ -53,25 +47,22 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ lessonId, id, ...body }) => ({
         url: `/manager/lesson/${lessonId}/content/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "LessonsContent" }],
+      invalidatesTags: [{ type: 'LessonsContent' }],
     }),
 
-    removeLessonContent: builder.mutation<
-      ILessonContent,
-      { lessonId: string; id: string }
-    >({
+    removeLessonContent: builder.mutation<ILessonContent, { lessonId: string; id: string }>({
       query: ({ lessonId, id }) => ({
         url: `/manager/lesson/${lessonId}/content/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "LessonsContent" }],
+      invalidatesTags: [{ type: 'LessonsContent' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetLessonContentQuery,
@@ -80,4 +71,4 @@ export const {
   useUpdateLessonContentMutation,
   useCreateLessonContentMutation,
   useRemoveLessonContentMutation,
-} = extendedApi;
+} = extendedApi

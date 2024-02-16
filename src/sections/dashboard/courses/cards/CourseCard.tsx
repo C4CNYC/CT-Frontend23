@@ -1,177 +1,168 @@
-import Link from "next/link";
-import { useState } from "react";
+import { useState } from 'react'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { LoadingButton } from '@mui/lab'
+import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import Link from 'next/link'
 
-import {
-  ConfirmDialog,
-  Iconify,
-  Image,
-  Label,
-  MenuPopover,
-  useSnackbar,
-} from "@components";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
-import { BaseResponseInterface } from "@utils";
-import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
-
-import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
-import * as Yup from "yup";
+import { ConfirmDialog, Iconify, Image, Label, MenuPopover, useSnackbar } from '@/components'
+import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
+import { useDeleteCourseMutation } from '@/redux/services/manager/courses-manager'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface ICourseCardProps {
-  course: ICourse & BaseResponseInterface;
+  course: ICourse & BaseResponseInterface
 }
 
-export default function CourseCard({
-  course,
-}: ICourseCardProps): React.ReactElement | null {
-  const { name, level, price, description, active, cover } = course;
-  const { enqueueSnackbar } = useSnackbar();
-  const [openConfirm, setOpenConfirm] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [deleteCourse] = useDeleteCourseMutation();
-  const translate = useTranslate();
+export default function CourseCard({ course }: ICourseCardProps): React.ReactElement | null {
+  const { name, level, price, description, active, cover } = course
+  const { enqueueSnackbar } = useSnackbar()
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [deleteCourse] = useDeleteCourseMutation()
+  const translate = useTranslate()
 
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const handleOpenConfirm = (): void => {
-    setOpenConfirm(true);
-  };
+    setOpenConfirm(true)
+  }
 
   const handleCloseConfirm = (): void => {
-    setOpenConfirm(false);
-  };
+    setOpenConfirm(false)
+  }
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    event.stopPropagation();
-    event.preventDefault();
-    setOpenPopover(event.currentTarget);
-  };
+    event.stopPropagation()
+    event.preventDefault()
+    setOpenPopover(event.currentTarget)
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
 
   const onDelete = async (): Promise<void> => {
-    setLoading(true);
+    setLoading(true)
     try {
-      await deleteCourse({ id: course.id }).unwrap();
-      setLoading(false);
-      setOpenConfirm(false);
-      enqueueSnackbar(translate("courses_delete_msg"));
+      await deleteCourse({ id: course.id }).unwrap()
+      setLoading(false)
+      setOpenConfirm(false)
+      enqueueSnackbar(translate('courses_delete_msg'))
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-  };
+  }
 
   return (
     <>
       <Card
         sx={{
-          textAlign: "center",
+          textAlign: 'center',
           pb: 2,
-          textDecoration: "none",
-          border: "1px solid transparent",
-          "&:hover": {
-            borderColor: "grey.400",
+          textDecoration: 'none',
+          border: '1px solid transparent',
+          '&:hover': {
+            borderColor: 'grey.400',
             borderWidth: 1,
-            borderStyle: "solid",
+            borderStyle: 'solid',
           },
         }}
         component={Link}
         href={`${MANAGER_PATH_DASHBOARD.modules.root}?course_id=${course.id}`}
       >
         <Stack
-          direction="row"
-          alignItems="center"
-          sx={{ zIndex: 2, top: 8, right: 8, position: "absolute" }}
+          direction='row'
+          alignItems='center'
+          sx={{ zIndex: 2, top: 8, right: 8, position: 'absolute' }}
         >
           <IconButton
-            color={openPopover ? "inherit" : "default"}
+            color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
           >
-            <Iconify icon="eva:more-vertical-fill" />
+            <Iconify icon='eva:more-vertical-fill' />
           </IconButton>
         </Stack>
 
         <Box
           sx={{
-            position: "relative",
-            borderBottom: "1px solid rgba(145, 158, 171, 0.24)",
+            position: 'relative',
+            borderBottom: '1px solid rgba(145, 158, 171, 0.24)',
           }}
         >
           <Image
-            src={cover ?? "/assets/icons/files/ic_folder.svg"}
+            src={cover ?? '/assets/icons/files/ic_folder.svg'}
             alt={cover}
-            ratio="16/9"
-            style={{ objectFit: "contain", padding: 10 }}
+            ratio='16/9'
+            style={{ objectFit: 'contain', padding: 10 }}
           />
         </Box>
 
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: 'relative' }}>
           <Label
-            variant="soft"
-            color={active ? "success" : "error"}
+            variant='soft'
+            color={active ? 'success' : 'error'}
             sx={{
-              textTransform: "uppercase",
-              mr: "auto",
-              position: "absolute",
+              textTransform: 'uppercase',
+              mr: 'auto',
+              position: 'absolute',
               top: 10,
               right: 10,
             }}
           >
-            {active ? translate("active") : translate("not_active")}
+            {active ? translate('active') : translate('not_active')}
           </Label>
-          <Typography variant="subtitle1" sx={{ pt: 6, mb: 0.5 }}>
+          <Typography
+            variant='subtitle1'
+            sx={{ pt: 6, mb: 0.5 }}
+          >
             {name}
           </Typography>
 
           <Typography
             noWrap
-            textAlign="center"
-            variant="body2"
-            sx={{ color: "text.secondary", px: 3 }}
+            textAlign='center'
+            variant='body2'
+            sx={{ color: 'text.secondary', px: 3 }}
           >
             {description}
           </Typography>
         </Box>
 
-        <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ pt: 3 }}>
+        <Box
+          display='grid'
+          gridTemplateColumns='repeat(2, 1fr)'
+          sx={{ pt: 3 }}
+        >
           <div>
             <Typography
-              variant="caption"
-              component="div"
-              sx={{ mb: 0.75, color: "text.disabled" }}
+              variant='caption'
+              component='div'
+              sx={{ mb: 0.75, color: 'text.disabled' }}
             >
-              {translate("level")}
+              {translate('level')}
             </Typography>
-            <Typography variant="subtitle1" textTransform="capitalize">
+            <Typography
+              variant='subtitle1'
+              textTransform='capitalize'
+            >
               {level}
             </Typography>
           </div>
 
           <div>
             <Typography
-              variant="caption"
-              component="div"
-              sx={{ mb: 0.75, color: "text.disabled" }}
+              variant='caption'
+              component='div'
+              sx={{ mb: 0.75, color: 'text.disabled' }}
             >
-              {translate("price")}
+              {translate('price')}
             </Typography>
-            <Typography variant="subtitle1">
-              {+price.substring(1) === 0 ? "free" : price}
+            <Typography variant='subtitle1'>
+              {+price.substring(1) === 0 ? 'free' : price}
             </Typography>
           </div>
         </Box>
@@ -179,7 +170,7 @@ export default function CourseCard({
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow="right-top"
+        arrow='right-top'
         sx={{ width: 160 }}
       >
         <CreateCourseDialog
@@ -187,7 +178,7 @@ export default function CourseCard({
           id={course.id}
           defaultValues={{
             name: course.name,
-            content_id: course.content_id === course.name ? "" : course.content_id,
+            content_id: course.content_id === course.name ? '' : course.content_id,
             level: course.level,
             price: course.price.substring(1),
             description: course.description,
@@ -200,39 +191,39 @@ export default function CourseCard({
           }}
         >
           <MenuItem>
-            <Iconify icon="eva:edit-fill" />
-            {translate("actions_edit")}
+            <Iconify icon='eva:edit-fill' />
+            {translate('actions_edit')}
           </MenuItem>
         </CreateCourseDialog>
-        <Divider sx={{ borderStyle: "dashed" }} />
+        <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem
           onClick={() => {
-            handleOpenConfirm();
-            handleClosePopover();
+            handleOpenConfirm()
+            handleClosePopover()
           }}
-          sx={{ color: "error.main" }}
+          sx={{ color: 'error.main' }}
         >
-          <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_delete")}
+          <Iconify icon='eva:trash-2-outline' />
+          {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
-        content={translate("messages_delete_question")}
+        title={translate('actions_delete')}
+        content={translate('messages_delete_question')}
         action={
           <LoadingButton
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             onClick={onDelete}
             loading={loading}
           >
-            {translate("actions_delete")}
+            {translate('actions_delete')}
           </LoadingButton>
         }
       />
     </>
-  );
+  )
 }

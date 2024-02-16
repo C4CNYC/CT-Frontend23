@@ -1,33 +1,31 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-// @mui
-import { MenuItem, Stack } from "@mui/material";
+import { MenuItem, Stack } from '@mui/material'
 
-// components
-import { IconButtonAnimate, Image, MenuPopover } from "@components";
+import { IconButtonAnimate } from '@/components/animate'
+import { Image } from '@/components/image'
+import { MenuPopover } from '@/components/menu-popover'
 
 // locales
-import { useLocales } from "../../../locales";
-
-// ----------------------------------------------------------------------
+import { useLocales } from '../../../locales'
 
 export default function LanguagePopover(): React.ReactElement {
-  const { allLangs, currentLang, onChangeLang } = useLocales();
+  const { allLangs, currentLang, onChangeLang } = useLocales()
 
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    setOpenPopover(event.currentTarget);
-  };
+    setOpenPopover(event.currentTarget)
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
 
   const handleChangeLang = (newLang: string): void => {
-    onChangeLang(newLang);
-    handleClosePopover();
-  };
+    onChangeLang(newLang)
+    handleClosePopover()
+  }
 
   return (
     <>
@@ -37,7 +35,7 @@ export default function LanguagePopover(): React.ReactElement {
           width: 40,
           height: 40,
           ...(openPopover && {
-            bgcolor: "action.selected",
+            bgcolor: 'action.selected',
           }),
         }}
       >
@@ -59,7 +57,7 @@ export default function LanguagePopover(): React.ReactElement {
               key={option.value}
               selected={option.value === currentLang.value}
               onClick={() => {
-                handleChangeLang(option.value);
+                handleChangeLang(option.value)
               }}
             >
               <Image
@@ -75,5 +73,5 @@ export default function LanguagePopover(): React.ReactElement {
         </Stack>
       </MenuPopover>
     </>
-  );
+  )
 }

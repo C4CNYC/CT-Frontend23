@@ -1,7 +1,7 @@
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
-import { IGoals } from "src/redux/interfaces/goals.interface";
+import { IGoals } from '@/redux/interfaces/goals.interface'
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,39 +10,36 @@ const extendedApi = managerApi.injectEndpoints({
       { title?: string }
     >({
       query: () => ({
-        url: "/student/goal",
-        method: "GET",
+        url: '/student/goal',
+        method: 'GET',
       }),
-      providesTags: ["Goal"],
+      providesTags: ['Goal'],
     }),
     postGoal: builder.mutation<IGoals, IGoals>({
       query: ({ ...body }) => ({
-        url: "/student/goal",
-        method: "POST",
+        url: '/student/goal',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Goal" }],
+      invalidatesTags: [{ type: 'Goal' }],
     }),
-    updateGoal: builder.mutation<
-      IGoals & BaseResponseInterface,
-      { id: string }
-    >({
+    updateGoal: builder.mutation<IGoals & BaseResponseInterface, { id: string }>({
       query: ({ id, ...body }) => ({
         url: `/student/goal/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Goal" }],
+      invalidatesTags: [{ type: 'Goal' }],
     }),
     removeGoal: builder.mutation<IGoals, { id: string }>({
       query: ({ id }) => ({
         url: `/student/goal/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Goal" }],
+      invalidatesTags: [{ type: 'Goal' }],
     }),
   }),
-});
+})
 
 export const {
   useGetGoalsQuery,
@@ -50,4 +47,4 @@ export const {
   usePostGoalMutation,
   useUpdateGoalMutation,
   useRemoveGoalMutation,
-} = extendedApi;
+} = extendedApi

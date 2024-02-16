@@ -1,6 +1,7 @@
-[build]
-  command = "npm run build-netlify"
-  publish = ".next"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+[functions]
+included_files = [
+  "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/router-context*",
+  "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/amp-context*",
+  "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/head-manager-context*",
+  "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/html-context*",
+]

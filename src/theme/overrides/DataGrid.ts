@@ -1,6 +1,4 @@
-import { Theme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import { Theme } from '@mui/material/styles'
 
 export default function DataGrid(theme: Theme): unknown {
   return {
@@ -8,8 +6,8 @@ export default function DataGrid(theme: Theme): unknown {
       styleOverrides: {
         root: {
           borderRadius: 0,
-          border: "1px solid transparent",
-          "& .MuiTablePagination-root": {
+          border: '1px solid transparent',
+          '& .MuiTablePagination-root': {
             borderTop: 0,
           },
         },
@@ -22,10 +20,10 @@ export default function DataGrid(theme: Theme): unknown {
         toolbarContainer: {
           padding: theme.spacing(2),
           backgroundColor: theme.palette.background.neutral,
-          "& .MuiButton-root": {
+          '& .MuiButton-root': {
             marginRight: theme.spacing(1.5),
             color: theme.palette.text.primary,
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.action.hover,
             },
           },
@@ -34,32 +32,32 @@ export default function DataGrid(theme: Theme): unknown {
           boxShadow: theme.customShadows.dropdown,
         },
         menu: {
-          "& .MuiPaper-root": {
+          '& .MuiPaper-root': {
             boxShadow: theme.customShadows.dropdown,
           },
-          "& .MuiMenuItem-root": {
+          '& .MuiMenuItem-root': {
             ...theme.typography.body2,
-            "& .MuiListItemIcon-root": {
-              minWidth: "auto",
+            '& .MuiListItemIcon-root': {
+              minWidth: 'auto',
             },
           },
         },
         panelFooter: {
           padding: theme.spacing(2),
-          justifyContent: "flex-end",
+          justifyContent: 'flex-end',
           borderTop: `1px solid ${theme.palette.divider}`,
-          "& .MuiButton-root": {
-            "&:first-of-type": {
+          '& .MuiButton-root': {
+            '&:first-of-type': {
               marginRight: theme.spacing(1.5),
               color: theme.palette.text.primary,
-              "&:hover": {
+              '&:hover': {
                 backgroundColor: theme.palette.action.hover,
               },
             },
-            "&:last-of-type": {
+            '&:last-of-type': {
               color: theme.palette.common.white,
               backgroundColor: theme.palette.primary.main,
-              "&:hover": {
+              '&:hover': {
                 backgroundColor: theme.palette.primary.dark,
               },
             },
@@ -67,26 +65,26 @@ export default function DataGrid(theme: Theme): unknown {
         },
         filterForm: {
           padding: theme.spacing(1.5, 0),
-          "& .MuiFormControl-root": {
+          '& .MuiFormControl-root': {
             margin: theme.spacing(0, 0.5),
           },
-          "& .MuiInput-root": {
+          '& .MuiInput-root': {
             marginTop: theme.spacing(3),
-            "&::before, &::after": {
-              display: "none",
+            '&::before, &::after': {
+              display: 'none',
             },
-            "& .MuiNativeSelect-select, .MuiInput-input": {
+            '& .MuiNativeSelect-select, .MuiInput-input': {
               ...theme.typography.body2,
               padding: theme.spacing(0.75, 1),
               borderRadius: theme.shape.borderRadius,
               backgroundColor: theme.palette.background.neutral,
             },
-            "& .MuiSvgIcon-root": {
+            '& .MuiSvgIcon-root': {
               right: 4,
             },
           },
         },
       },
     },
-  };
+  }
 }

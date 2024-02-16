@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
 import {
   Box,
@@ -12,17 +11,18 @@ import {
   Select,
   SelectChangeEvent,
   Typography,
-} from "@mui/material";
+} from '@mui/material'
+import { useRouter } from 'next/router'
 
-import { ISchool } from "src/redux/services/interfaces/school.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { ISchool } from '@/redux/services/interfaces/school.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IChooseShoolModalProps {
-  openDialog: boolean;
-  setOpenDialog: (open: boolean) => void;
-  schoolId: string;
-  setSchoolId: (id: string) => void;
-  schools?: ISchool[];
+  openDialog: boolean
+  setOpenDialog: (open: boolean) => void
+  schoolId: string
+  setSchoolId: (id: string) => void
+  schools?: ISchool[]
 }
 
 export default function ChooseShoolModal({
@@ -32,46 +32,65 @@ export default function ChooseShoolModal({
   setSchoolId,
   schools,
 }: IChooseShoolModalProps): React.ReactElement {
-  const { back } = useRouter();
+  const { back } = useRouter()
   const handleChange = (event: SelectChangeEvent) => {
-    setSchoolId(event.target.value);
-  };
-  const translate = useTranslate();
+    setSchoolId(event.target.value)
+  }
+  const translate = useTranslate()
 
   useEffect(() => {
     if (schools) {
-      setSchoolId(schools[0].id);
+      setSchoolId(schools[0].id)
     }
-  }, []);
+  }, [])
 
   return (
-    <Dialog open={openDialog} maxWidth="xs">
-      <DialogTitle textAlign="center">{translate("class_create")}</DialogTitle>
+    <Dialog
+      open={openDialog}
+      maxWidth='xs'
+    >
+      <DialogTitle textAlign='center'>{translate('class_create')}</DialogTitle>
       <DialogContent>
-        <Divider flexItem sx={{ mb: 2 }}>
-          <Typography variant="h1" sx={{ mt: -2 }}>
+        <Divider
+          flexItem
+          sx={{ mb: 2 }}
+        >
+          <Typography
+            variant='h1'
+            sx={{ mt: -2 }}
+          >
             🏫
           </Typography>
         </Divider>
-        <Typography variant="body1" textAlign="center" maxWidth="300px">
-          {translate("class_create_modal_info")}
+        <Typography
+          variant='body1'
+          textAlign='center'
+          maxWidth='300px'
+        >
+          {translate('class_create_modal_info')}
         </Typography>
 
         <Box sx={{ px: 2 }}>
-          <Typography variant="h6" sx={{ ml: 1, mt: 3 }}>
-            {translate("class_choose_school")}
+          <Typography
+            variant='h6'
+            sx={{ ml: 1, mt: 3 }}
+          >
+            {translate('class_choose_school')}
           </Typography>
           <Select
             native
-            name="schoolId"
+            name='schoolId'
             value={schoolId}
             onChange={handleChange}
-            sx={{ width: "100%", mt: 1, mb: 6 }}
+            sx={{ width: '100%', mt: 1, mb: 6 }}
           >
             {schools ? (
               <>
                 {schools.map((el) => (
-                  <option key={el.id} value={el.id}>
+                  <option
+                    key={el.id}
+                    value={el.id}
+                  >
                     {el.name}
                   </option>
                 ))}
@@ -82,24 +101,24 @@ export default function ChooseShoolModal({
       </DialogContent>
       <DialogActions>
         <Button
-          variant="soft"
-          color="error"
+          variant='soft'
+          color='error'
           onClick={() => {
-            back();
+            back()
           }}
         >
-          {translate("actions_cancel")}
+          {translate('actions_cancel')}
         </Button>
         <Button
           onClick={() => {
-            setOpenDialog(false);
+            setOpenDialog(false)
           }}
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
         >
-          {translate("actions_next")}
+          {translate('actions_next')}
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

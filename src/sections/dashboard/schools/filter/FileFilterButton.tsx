@@ -1,11 +1,8 @@
-// @mui
-import { Box, Button, ButtonProps } from "@mui/material";
-
-// ----------------------------------------------------------------------
+import { Box, Button, ButtonProps } from '@mui/material'
 
 interface Props extends ButtonProps {
-  children?: React.ReactNode;
-  isSelected: boolean;
+  children?: React.ReactNode
+  isSelected: boolean
 }
 
 export default function FileFilterButton({
@@ -15,16 +12,16 @@ export default function FileFilterButton({
 }: Props): React.ReactElement | null {
   return (
     <Button
-      variant="soft"
-      color="inherit"
+      variant='soft'
+      color='inherit'
       sx={{
-        textTransform: "unset",
-        color: "text.secondary",
-        width: { xs: 1, md: "auto" },
-        justifyContent: "flex-start",
-        fontWeight: "fontWeightMedium",
+        textTransform: 'unset',
+        color: 'text.secondary',
+        width: { xs: 1, md: 'auto' },
+        justifyContent: 'flex-start',
+        fontWeight: 'fontWeightMedium',
         ...(isSelected && {
-          color: "text.primary",
+          color: 'text.primary',
         }),
       }}
       {...other}
@@ -33,5 +30,5 @@ export default function FileFilterButton({
 
       <Box sx={{ flexGrow: 1 }} />
     </Button>
-  );
+  )
 }

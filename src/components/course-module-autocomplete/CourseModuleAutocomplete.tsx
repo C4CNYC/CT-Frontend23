@@ -1,8 +1,4 @@
-import * as React from "react";
-
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
+import { useMemo } from 'react'
 
 import {
   Autocomplete,
@@ -14,49 +10,51 @@ import {
   Skeleton,
   TextField,
   Typography,
-  alpha,
-} from "@mui/material";
+  useTheme,
+} from '@mui/material'
+import match from 'autosuggest-highlight/match'
+import parse from 'autosuggest-highlight/parse'
+import { useSnackbar } from 'notistack'
 
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
-import { useFilters } from "@hooks";
-import { BaseResponseInterface, voidFunction } from "@utils";
-import { IModule } from "src/redux/services/interfaces/courseUnits.interface";
+import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
+import { useFilters } from '@/hooks'
+import { IModule } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useAddModuleToCourseMutation,
   useRemoveModuleFromCourseMutation,
-} from "src/redux/services/manager/courses-manager";
-import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
-import { useTranslate } from "src/utils/translateHelper";
+} from '@/redux/services/manager/courses-manager'
+import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
+import { BaseResponseInterface, voidFunction } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
-type ModuleType = IModule & BaseResponseInterface;
+import { BOX_SX, getItemWrapperSx } from './constants'
+
+type ModuleType = IModule & BaseResponseInterface
 
 interface Props {
-  id: string;
+  id: string
 }
 
-export default function CourseModuleAutocomplete({
-  id,
-}: Props): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
+export default function CourseModuleAutocomplete({ id }: Props): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar()
+  const theme = useTheme()
+  const itemWrapperSx = useMemo(() => getItemWrapperSx(theme), [theme])
 
-  const { filters, setFilter } = useFilters({ name: "", take: 50 });
-  const translate = useTranslate();
-  const [addModule] = useAddModuleToCourseMutation();
-  const [removeModule] = useRemoveModuleFromCourseMutation();
-  const { data: addedLessons } = useGetModulesQuery(
-    { course_id: id, take: 50 },
-    { skip: !id }
-  );
-  const { data: lessons } = useGetModulesQuery({ ...filters }, { skip: !id });
+  const { filters, setFilter } = useFilters({ name: '', take: 50 })
+  const translate = useTranslate()
+  const [addModule] = useAddModuleToCourseMutation()
+  const [removeModule] = useRemoveModuleFromCourseMutation()
+  const { data: addedModules } = useGetModulesQuery({ course_id: id, take: 50 }, { skip: !id })
+  const { data: modules } = useGetModulesQuery({ ...filters }, { skip: !id })
 
-  if (!lessons?.data || !addedLessons?.data) {
+  if (!modules?.data || !addedModules?.data) {
     return (
       <Skeleton
-        animation="wave"
-        variant="rounded"
-        sx={{ width: "100%", height: "56px" }}
+        animation='wave'
+        variant='rounded'
+        sx={{ width: '100%', height: '56px' }}
       />
-    );
+    )
   }
 
   const onChange = async (
@@ -69,45 +67,48 @@ export default function CourseModuleAutocomplete({
       const payload = {
         id,
         unit_id: details?.option.id as string,
-      };
+      }
       switch (reason) {
-        case "selectOption": {
-          await addModule(payload).unwrap();
+        case 'selectOption': {
+          await addModule(payload).unwrap()
           enqueueSnackbar(
-            translate("courses_added_to_module", {
-              name: details?.option.name ?? "",
+            translate('courses_added_to_module', {
+              name: details?.option.name ?? '',
             })
-          );
-          return;
+          )
+          return
         }
-        case "removeOption": {
-          await removeModule(payload).unwrap();
+        case 'removeOption': {
+          await removeModule(payload).unwrap()
           enqueueSnackbar(
-            translate("courses_removed_from_module", {
-              name: details?.option.name ?? "",
+            translate('courses_removed_from_module', {
+              name: details?.option.name ?? '',
             })
-          );
+          )
         }
       }
     } catch {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-  };
+  }
 
   return (
     <Autocomplete<ModuleType, true>
       multiple
-      id="add-user-input"
-      value={addedLessons.data}
+      id='add-user-input'
+      value={addedModules.data}
       onChange={onChange}
-      options={lessons.data}
+      options={modules.data}
       popupIcon={null}
       onLoadStart={voidFunction}
       noOptionsText={
-        <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
+        <SearchNotFound
+          sx={{ p: '20px 0' }}
+          query={filters.name}
+        />
       }
       onInputChange={(event, value) => {
-        setFilter("email", value);
+        setFilter('email', value)
       }}
       getOptionLabel={(option) => option.name}
       renderTags={(tagValue, getTagProps): React.ReactElement[] =>
@@ -116,7 +117,7 @@ export default function CourseModuleAutocomplete({
             avatar={
               <CustomAvatar
                 alt={option.name}
-                src="/assets/icons/files/ic_file.svg"
+                src='/assets/icons/files/ic_file.svg'
               />
             }
             label={option.name}
@@ -125,76 +126,64 @@ export default function CourseModuleAutocomplete({
           />
         ))
       }
-      style={{ width: "100%" }}
+      style={{ width: '100%' }}
       renderInput={(params) => (
-        <TextField {...params} placeholder={translate("lessons")} />
+        <TextField
+          {...params}
+          placeholder={translate('modules')}
+        />
       )}
       renderOption={(props, recipient, { inputValue }) => {
-        const { id, name } = recipient;
-        const matches = match(name, inputValue);
-        const parts = parse(name, matches);
+        const { id, name } = recipient
+        const matches = match(name, inputValue)
+        const parts = parse(name, matches)
 
-        const selected = addedLessons.data.find((c) => c.id === id);
+        const selected = addedModules.data.find((c) => c.id === id)
 
         return (
           <Box
-            component="li"
+            component='li'
             sx={{
-              p: "12px !important",
-              pointerEvents: selected ? "none" : "auto",
+              p: '12px !important',
+              pointerEvents: selected ? 'none' : 'auto',
             }}
             {...props}
           >
-            <Box
-              sx={{
-                mr: 1.5,
-                width: 32,
-                height: 32,
-                overflow: "hidden",
-                borderRadius: "50%",
-                position: "relative",
-              }}
-            >
-              <Avatar alt={id} src="/assets/icons/files/ic_file.svg" />
+            <Box sx={BOX_SX}>
+              <Avatar
+                alt={id}
+                src='/assets/icons/files/ic_file.svg'
+              />
 
               <Box
                 sx={{
-                  top: 0,
-                  opacity: 0,
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  position: "absolute",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
-                  transition: (theme) =>
-                    theme.transitions.create("opacity", {
-                      easing: theme.transitions.easing.easeInOut,
-                      duration: theme.transitions.duration.shorter,
-                    }),
+                  ...itemWrapperSx,
+                  transition: theme.transitions.create('opacity', {
+                    easing: theme.transitions.easing.easeInOut,
+                    duration: theme.transitions.duration.shorter,
+                  }),
                   ...(selected && {
                     opacity: 1,
-                    color: "primary.main",
+                    color: 'primary.main',
                   }),
                 }}
               >
-                <Iconify icon="eva:checkmark-fill" />
+                <Iconify icon='eva:checkmark-fill' />
               </Box>
             </Box>
 
             {parts.map((part, index) => (
               <Typography
                 key={index}
-                variant="subtitle2"
-                color={part.highlight ? "primary" : "textPrimary"}
+                variant='subtitle2'
+                color={part.highlight ? 'primary' : 'textPrimary'}
               >
                 {part.text}
               </Typography>
             ))}
           </Box>
-        );
+        )
       }}
     />
-  );
+  )
 }

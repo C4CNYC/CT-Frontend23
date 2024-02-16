@@ -1,34 +1,27 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { adminApi } from ".";
-import {
-  ISettings,
-  OrganizationResponce,
-} from "../interfaces/organization.interface";
+import { ISettings, OrganizationResponce } from '../interfaces/organization.interface'
+
+import { adminApi } from '.'
 
 const extendedApi = adminApi.injectEndpoints({
   endpoints: (builder) => ({
-    updateOrgSettings: builder.mutation<
-      ISettings & BaseResponseInterface,
-      ISettings
-    >({
+    updateOrgSettings: builder.mutation<ISettings & BaseResponseInterface, ISettings>({
       query: ({ ...body }) => ({
-        url: "/org/setting/",
-        method: "PATCH",
+        url: '/org/setting/',
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "OrganizationSettings" }],
+      invalidatesTags: [{ type: 'OrganizationSettings' }],
     }),
     getOrgSettings: builder.query<ISettings & OrganizationResponce, void>({
       query: () => ({
-        url: "/org/setting/",
-        method: "GET",
+        url: '/org/setting/',
+        method: 'GET',
       }),
-      providesTags: ["OrganizationSettings"],
+      providesTags: ['OrganizationSettings'],
     }),
   }),
-});
+})
 
-export const { useGetOrgSettingsQuery, useUpdateOrgSettingsMutation } =
-  extendedApi;
+export const { useGetOrgSettingsQuery, useUpdateOrgSettingsMutation } = extendedApi

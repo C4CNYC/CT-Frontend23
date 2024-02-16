@@ -1,45 +1,43 @@
-import React from "react";
+import React from 'react'
 
-import { Box } from "@mui/material";
+import { Box } from '@mui/material'
 
-import { useGetSchoolSettingsQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useGetSchoolSettingsQuery } from '@/redux/services/manager/schools-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
-import SettingsForm from "./SettingsForm";
-import SkeletonSettingsTab from "./SkeletonSettingsTab";
+import SettingsForm from './SettingsForm'
+import SkeletonSettingsTab from './SkeletonSettingsTab'
 
 interface Props {
-  schoolId: string;
+  schoolId: string
 }
 
-export default function SchoolSettingTab({
-  schoolId,
-}: Props): React.ReactElement | null {
-  const { data, isLoading } = useGetSchoolSettingsQuery(
-    { schoolId },
-    { skip: !schoolId }
-  );
+export default function SchoolSettingTab({ schoolId }: Props): React.ReactElement | null {
+  const { data, isLoading } = useGetSchoolSettingsQuery({ schoolId }, { skip: !schoolId })
 
-  const translate = useTranslate();
+  const translate = useTranslate()
 
-  if (isLoading) return <SkeletonSettingsTab />;
+  if (isLoading) return <SkeletonSettingsTab />
 
-  if (!data) return <>{translate("messages_no_data")}</>;
+  if (!data) return <>{translate('messages_no_data')}</>
 
   return (
     <>
       <Box
         sx={{
-          backgroundColor: "transparent !important",
+          backgroundColor: 'transparent !important',
           mb: 3,
           height: 420,
-          position: "relative",
+          position: 'relative',
         }}
       >
         {isLoading ? null : (
-          <SettingsForm settings={data} schoolId={schoolId} />
+          <SettingsForm
+            settings={data}
+            schoolId={schoolId}
+          />
         )}
       </Box>
     </>
-  );
+  )
 }

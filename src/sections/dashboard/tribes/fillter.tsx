@@ -1,43 +1,37 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import SearchIcon from "@mui/icons-material/Search";
-import {
-  Box,
-  Button,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import SearchIcon from '@mui/icons-material/Search'
+import { Box, Button, InputAdornment, TextField, Typography } from '@mui/material'
 
-import { MenuPopover } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { MenuPopover } from '@/components'
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function TribesFillter(): React.ReactElement {
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const translate = useTranslate()
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    setOpenPopover(event.currentTarget);
-  };
+    setOpenPopover(event.currentTarget)
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
   return (
     <Box
       sx={{
         mt: {
-          xs: "25px",
-          sm: "25px",
-          md: "45px",
+          xs: '25px',
+          sm: '25px',
+          md: '45px',
         },
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         flexWrap: {
-          xs: "wrap",
-          sm: "wrap",
-          md: "nowrap",
+          xs: 'wrap',
+          sm: 'wrap',
+          md: 'nowrap',
         },
         gap: {
           xs: 2,
@@ -47,13 +41,13 @@ export default function TribesFillter(): React.ReactElement {
       }}
     >
       <TextField
-        placeholder={translate("tribes_search")}
-        type="text"
-        id="search"
-        sx={{ "& .MuiInputBase-root": { height: "40px" } }}
+        placeholder={translate('tribes_search')}
+        type='text'
+        id='search'
+        sx={{ '& .MuiInputBase-root': { height: '40px' } }}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
+            <InputAdornment position='start'>
               <SearchIcon />
             </InputAdornment>
           ),
@@ -62,10 +56,10 @@ export default function TribesFillter(): React.ReactElement {
       <Box>
         <Button
           onClick={handleOpenPopover}
-          sx={{ color: "#212B36", ml: "30px" }}
+          sx={{ color: '#212B36', ml: '30px' }}
           endIcon={<KeyboardArrowDownIcon />}
         >
-          {translate("actions_sort_by")}
+          {translate('actions_sort_by')}
         </Button>
         <MenuPopover
           open={openPopover}
@@ -73,12 +67,12 @@ export default function TribesFillter(): React.ReactElement {
           sx={{
             width: 200,
             p: 2,
-            background: { xs: "#fff", sm: "#fff" },
+            background: { xs: '#fff', sm: '#fff' },
           }}
         >
           <Typography>Popover option</Typography>
         </MenuPopover>
       </Box>
     </Box>
-  );
+  )
 }

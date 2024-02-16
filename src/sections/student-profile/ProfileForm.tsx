@@ -1,143 +1,138 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from 'react'
 
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Box, Card, Grid, Stack, Typography } from '@mui/material'
+import { useSnackbar } from 'notistack'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-
-import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
-import { BaseResponseInterface, fData } from "@utils";
-import { IUser } from "src/redux/interfaces/auth.interface";
-import { APIError } from "src/redux/interfaces/custom-error.interface";
-import {
-  useUdpateProfileAvatarMutation,
-  useUpdateProfileMutation,
-} from "src/redux/services/auth";
+import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
+import { IUser } from '@/redux/interfaces/auth.interface'
+import { APIError } from '@/redux/interfaces/custom-error.interface'
+import { useUdpateProfileAvatarMutation, useUpdateProfileMutation } from '@/redux/services/auth'
+import { BaseResponseInterface, fData } from '@/utils'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
-  photoURL: File & { preview: string };
+  photoURL: File & { preview: string }
 }
 
 interface Props {
-  isEdit?: boolean;
-  currentUser?: IUser & BaseResponseInterface;
+  isEdit?: boolean
+  currentUser?: IUser & BaseResponseInterface
 }
 
-export default function ProfileForm({
-  isEdit,
-  currentUser,
-}: Props): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
-  const [updateProfileAvatar] = useUdpateProfileAvatarMutation();
-  const [updateUser] = useUpdateProfileMutation();
+export default function ProfileForm({ isEdit, currentUser }: Props): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar()
+  const [updateProfileAvatar] = useUdpateProfileAvatarMutation()
+  const [updateUser] = useUpdateProfileMutation()
   const NewUserSchema = Yup.object().shape({
-    first_name: Yup.string().required("Name is required"),
-    last_name: Yup.string().required("Surename is required"),
-    email: Yup.string()
-      .required("Email is required")
-      .email("Email must be a valid email address"),
-  });
+    first_name: Yup.string().required('Name is required'),
+    last_name: Yup.string().required('Surename is required'),
+    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+  })
   const defaultValues = useMemo(
     () => ({
-      first_name: currentUser?.first_name ?? "",
-      last_name: currentUser?.last_name ?? "",
-      email: currentUser?.email ?? "",
+      first_name: currentUser?.first_name ?? '',
+      last_name: currentUser?.last_name ?? '',
+      email: currentUser?.email ?? '',
     }),
     [currentUser]
-  );
+  )
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(NewUserSchema),
     defaultValues,
-  });
+  })
   const {
     reset,
     setValue,
     handleSubmit,
     formState: { isSubmitting },
-  } = methods;
+  } = methods
   useEffect(() => {
     if (isEdit && currentUser) {
-      reset(defaultValues);
+      reset(defaultValues)
     }
     if (!isEdit) {
-      reset(defaultValues);
+      reset(defaultValues)
     }
-  }, [isEdit, currentUser]);
+  }, [isEdit, currentUser])
 
-  const updateAvatar = async (
-    id: string,
-    photoURL?: File
-  ): Promise<unknown> => {
-    if (!id ?? !photoURL) return;
+  const updateAvatar = async (id: string, photoURL?: File): Promise<unknown> => {
+    if (!id ?? !photoURL) return
 
-    const file = new FormData();
-    file.append("file", photoURL);
+    const file = new FormData()
+    file.append('file', photoURL)
 
     await updateProfileAvatar({
       file,
-    }).unwrap();
-  };
+    }).unwrap()
+  }
 
-  const onSubmit = async ({
-    photoURL,
-    ...data
-  }: FormValuesProps): Promise<void> => {
+  const onSubmit = async ({ photoURL, ...data }: FormValuesProps): Promise<void> => {
     try {
       if (currentUser?.id) {
-        const { email, ...body } = data;
+        const { email, ...body } = data
         await updateUser({
           ...body,
-        }).unwrap();
-        enqueueSnackbar("Update success!");
-        if (!photoURL) return;
-        await updateAvatar(currentUser?.id, photoURL);
+        }).unwrap()
+        enqueueSnackbar('Update success!')
+        if (!photoURL) return
+        await updateAvatar(currentUser?.id, photoURL)
       }
-    } catch (error) {
-      const typedError = error as APIError;
+    } catch (error: any) {
+      const typedError = error as APIError
       enqueueSnackbar(typedError?.data?.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-  };
+  }
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
+      const file = acceptedFiles[0]
 
       const newFile = Object.assign(file, {
         preview: URL.createObjectURL(file),
-      });
+      })
 
       if (file) {
-        setValue("photoURL", newFile, { shouldValidate: true });
+        setValue('photoURL', newFile, { shouldValidate: true })
       }
     },
     [setValue]
-  );
+  )
 
   return (
     <>
-      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
+      <FormProvider
+        methods={methods}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Grid
+          container
+          spacing={3}
+        >
+          <Grid
+            item
+            xs={12}
+            md={4}
+          >
             <Card sx={{ pt: 10, pb: 5, px: 3 }}>
               <Box sx={{ mb: 5 }}>
                 <RHFUploadAvatar
-                  name="photoURL"
+                  name='photoURL'
                   maxSize={3145728}
                   onDrop={handleDrop}
                   helperText={
                     <Typography
-                      variant="caption"
+                      variant='caption'
                       sx={{
                         mt: 2,
-                        mx: "auto",
-                        display: "block",
-                        textAlign: "center",
-                        color: "text.secondary",
+                        mx: 'auto',
+                        display: 'block',
+                        textAlign: 'center',
+                        color: 'text.secondary',
                       }}
                     >
                       Allowed *.jpeg, *.jpg, *.png, *.gif
@@ -149,30 +144,43 @@ export default function ProfileForm({
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={8}>
+          <Grid
+            item
+            xs={12}
+            md={8}
+          >
             <Card sx={{ p: 3 }}>
               <Box
                 rowGap={3}
                 columnGap={2}
-                display="grid"
+                display='grid'
                 gridTemplateColumns={{
-                  xs: "repeat(1, 1fr)",
-                  sm: "repeat(2, 1fr)",
+                  xs: 'repeat(1, 1fr)',
+                  sm: 'repeat(2, 1fr)',
                 }}
               >
-                <RHFTextField name="first_name" label="First Name" />
-                <RHFTextField name="last_name" label="Last Name" />
+                <RHFTextField
+                  name='first_name'
+                  label='First Name'
+                />
+                <RHFTextField
+                  name='last_name'
+                  label='Last Name'
+                />
                 <RHFTextField
                   disabled={!isEdit}
-                  name="email"
-                  label="Email Address"
+                  name='email'
+                  label='Email Address'
                 />
               </Box>
 
-              <Stack alignItems="flex-end" sx={{ mb: { xs: 5, sm: 0 }, mt: 4 }}>
+              <Stack
+                alignItems='flex-end'
+                sx={{ mb: { xs: 5, sm: 0 }, mt: 4 }}
+              >
                 <LoadingButton
-                  type="submit"
-                  variant="contained"
+                  type='submit'
+                  variant='contained'
                   loading={isSubmitting}
                 >
                   Save Changes
@@ -183,5 +191,5 @@ export default function ProfileForm({
         </Grid>
       </FormProvider>
     </>
-  );
+  )
 }

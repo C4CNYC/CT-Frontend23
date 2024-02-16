@@ -1,18 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react'
 
 export const useDebounceCallback = (delay = 0, cleaning = true) => {
-  const ref = useRef<number | null>(null);
+  const ref = useRef<number | null>(null)
 
   useEffect(() => {
     if (cleaning) {
       return () => {
-        if (ref.current) clearTimeout(ref.current);
-      };
+        if (ref.current) clearTimeout(ref.current)
+      }
     }
-  }, [cleaning]);
+  }, [cleaning])
 
   return (callback: () => void) => {
-    if (ref.current) clearTimeout(ref.current);
-    ref.current = window.setTimeout(callback, delay);
-  };
-};
+    if (ref.current) clearTimeout(ref.current)
+    ref.current = window.setTimeout(callback, delay)
+  }
+}

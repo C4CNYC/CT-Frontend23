@@ -1,13 +1,14 @@
-import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
-import { TbFileCertificate } from "react-icons/tb";
+import { Box, Typography } from '@mui/material'
+import { AiFillStar } from '@react-icons/all-files/ai/AiFillStar'
+import { AiOutlineHeart } from '@react-icons/all-files/ai/AiOutlineHeart'
+import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 
-import { Box, Typography } from "@mui/material";
-import { convertNumber } from "@utils";
+import { convertNumber } from '@/utils'
 
 interface ICourseStatistics {
-  likesCount: number;
-  starsCount: number;
-  enrolledCount: number;
+  likesCount: number
+  starsCount: number
+  enrolledCount: number
 }
 
 export default function CourseStatistics({
@@ -18,49 +19,58 @@ export default function CourseStatistics({
   return (
     <Box
       sx={{
-        display: "flex",
-        gap: "20px",
+        display: 'flex',
+        gap: '20px',
         py: 2,
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          alignItems: "flex-end",
+          display: 'flex',
+          alignItems: 'flex-end',
         }}
       >
-        <TbFileCertificate size="30px" color="#43D4DD" />
+        <TbFileCertificate
+          size='30px'
+          color='#43D4DD'
+        />
         <Typography
-          variant="body1"
+          variant='body1'
           sx={{
-            ml: "10px",
+            ml: '10px',
           }}
         >
           {convertNumber(enrolledCount)}
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-        <AiOutlineHeart size="30px" color="#EE467A" />
+      <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <AiOutlineHeart
+          size='30px'
+          color='#EE467A'
+        />
         <Typography
-          variant="body1"
+          variant='body1'
           sx={{
-            ml: "10px",
+            ml: '10px',
           }}
         >
           {convertNumber(likesCount)}
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-        <AiFillStar size="30px" color="#FBDD3F" />
+      <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <AiFillStar
+          size='30px'
+          color='#FBDD3F'
+        />
         <Typography
-          variant="body1"
+          variant='body1'
           sx={{
-            ml: "10px",
+            ml: '10px',
           }}
         >
           {convertNumber(starsCount)}
         </Typography>
       </Box>
     </Box>
-  );
+  )
 }

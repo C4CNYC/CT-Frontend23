@@ -1,48 +1,55 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from 'react'
 
-import Login from "@pages/auth/signIn";
+import { useRouter } from 'next/router'
 
-import { LoadingScreen } from "@components";
+// import Login from "@pages/auth/signIn";
 
-import { useAuthContext } from "./useAuthContext";
+import { LoadingScreen } from '@/components'
 
-// ----------------------------------------------------------------------
+import { useAuthContext } from './useAuthContext'
 
 interface AuthGuardProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
-export default function AuthGuard({
-  children,
-}: AuthGuardProps): React.ReactElement | null {
-  const { isAuthenticated, isInitialized } = useAuthContext();
+/*
+TODO: This is no-bueno because it's importing a nextjs page. Functionality disabled for now, meaning no redirect after login.
+ */
+export default function AuthGuard({ children }: AuthGuardProps): React.ReactElement | null {
+  const { isAuthenticated, isInitialized } = useAuthContext()
 
-  const { pathname, push } = useRouter();
+  const { pathname, push } = useRouter()
 
-  const [requestedLocation, setRequestedLocation] = useState<string | null>(
-    null
-  );
+  // const [requestedLocation, setRequestedLocation] = useState<string | null>(
+  //   null
+  // );
+  //
+  // useEffect(() => {
+  //   if (requestedLocation && pathname !== requestedLocation) {
+  //     push(requestedLocation);
+  //   }
+  //   if (isAuthenticated) {
+  //     setRequestedLocation(null);
+  //   }
+  // }, [isAuthenticated, pathname, push, requestedLocation]);
 
   useEffect(() => {
-    if (requestedLocation && pathname !== requestedLocation) {
-      push(requestedLocation);
+    if (isInitialized && !isAuthenticated) {
+      push('/auth/signIn')
     }
-    if (isAuthenticated) {
-      setRequestedLocation(null);
-    }
-  }, [isAuthenticated, pathname, push, requestedLocation]);
+  }, [isAuthenticated, isInitialized])
 
   if (!isInitialized) {
-    return <LoadingScreen />;
+    return <LoadingScreen />
   }
 
   if (!isAuthenticated) {
-    if (pathname !== requestedLocation) {
-      setRequestedLocation(pathname);
-    }
-    return <Login />;
+    return null
+    // if (pathname !== requestedLocation) {
+    //   setRequestedLocation(pathname);
+    // }
+    // return <Login />;
   }
 
-  return <> {children} </>;
+  return <> {children} </>
 }

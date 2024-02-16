@@ -1,16 +1,16 @@
-import { BaseResponseInterface } from "@utils";
-import { ISocials } from "src/redux/interfaces/socials.interface";
+import { ISocials } from '@/redux/interfaces/socials.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { managerApi } from ".";
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getSocials: builder.query<ISocials[], { studentId: string }>({
       query: ({ studentId }) => ({
         url: `/student/${studentId}/social`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Socials"],
+      providesTags: ['Socials'],
     }),
     postSocial: builder.mutation<
       ISocials,
@@ -18,37 +18,34 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ studentId, ...body }) => ({
         url: `/student/${studentId}/social`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Socials"],
+      invalidatesTags: ['Socials'],
     }),
     updateSocials: builder.mutation<
       ISocials & BaseResponseInterface,
       {
-        studentId: string;
-        socialId: string;
+        studentId: string
+        socialId: string
       }
     >({
       query: ({ studentId, socialId, ...body }) => ({
         url: `/student/${studentId}/social/${socialId}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["Socials"],
+      invalidatesTags: ['Socials'],
     }),
-    removeSocials: builder.mutation<
-      ISocials,
-      { studentId: string; socialId: string }
-    >({
+    removeSocials: builder.mutation<ISocials, { studentId: string; socialId: string }>({
       query: ({ studentId, socialId }) => ({
         url: `/student/${studentId}/social/${socialId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Socials"],
+      invalidatesTags: ['Socials'],
     }),
   }),
-});
+})
 
 export const {
   useGetSocialsQuery,
@@ -56,4 +53,4 @@ export const {
   usePostSocialMutation,
   useUpdateSocialsMutation,
   useRemoveSocialsMutation,
-} = extendedApi;
+} = extendedApi

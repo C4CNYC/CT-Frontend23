@@ -1,23 +1,30 @@
-import { useRouter } from "next/router";
+import { IconButton, Stack, Typography } from '@mui/material'
+import { MdOutlineArrowBackIosNew } from '@react-icons/all-files/md/MdOutlineArrowBackIosNew'
+import { useRouter } from 'next/router'
 
-import { MdOutlineArrowBackIosNew } from "react-icons/md";
-import { TbShare2 } from "react-icons/tb";
+// import { TbShare2 } from "react-icons/tb"; // Hide share link
 
-import { Button, IconButton, Stack, Typography } from "@mui/material";
-
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from '@/utils/translateHelper'
 
 export default function QuestHeader(): React.ReactElement {
-  const { back } = useRouter();
-  const translate = useTranslate();
+  const { back } = useRouter()
+  const translate = useTranslate()
 
   return (
-    <Stack direction="row" sx={{ justifyContent: "space-between" }}>
-      <IconButton edge="start" onClick={back}>
+    <Stack
+      direction='row'
+      sx={{ justifyContent: 'space-between' }}
+    >
+      <IconButton
+        edge='start'
+        onClick={back}
+      >
         <MdOutlineArrowBackIosNew size={30} />
       </IconButton>
-      <Stack sx={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
-        <Button
+      <Stack sx={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
+        {/* Hide share link */}
+
+        {/* <Button
           variant="text"
           disableRipple
           sx={{
@@ -33,9 +40,9 @@ export default function QuestHeader(): React.ReactElement {
           <Typography variant="button" sx={{ ml: 0.5 }}>
             {translate("actions_share")}
           </Typography>
-        </Button>
-        <Typography variant="button">{translate("quest_type")}</Typography>
+        </Button> */}
+        <Typography variant='button'>{translate('quest_type')}</Typography>
       </Stack>
     </Stack>
-  );
+  )
 }

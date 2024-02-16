@@ -1,1 +1,1 @@
-export * from "./LoaderDeleyContent";
+export * from './LoaderDeleyContent'

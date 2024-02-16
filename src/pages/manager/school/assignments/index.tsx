@@ -1,8 +1,6 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab'
 import {
   Card,
   Container,
@@ -16,7 +14,9 @@ import {
   TableContainer,
   Tabs,
   Tooltip,
-} from "@mui/material";
+} from '@mui/material'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import {
   ConfirmDialog,
@@ -34,49 +34,49 @@ import {
   useSettingsContext,
   useSnackbar,
   useTable,
-} from "@components";
-import { SchoolDashboardLayout } from "@layouts/dashboard";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import AssignmentsTableRow from "@sections/dashboard/assigments/AssignmentsTableRow";
-import AssignmentsTableToolbar from "@sections/dashboard/assigments/AssignmentsTableToolbar";
-import { fTimestamp } from "@utils";
-import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { Publish, Status } from "src/redux/enums/assignments.enum";
-import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
+} from '@/components'
+import { SchoolDashboardLayout } from '@/layouts/dashboard'
+import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
+import { Publish, Status } from '@/redux/enums/assignments.enum'
+import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
 import {
   useDeleteAssignmentMutation,
   useGetAssignmentListQuery,
-} from "src/redux/services/manager/assignments-manager";
-import { useTranslate } from "src/utils/translateHelper";
+} from '@/redux/services/manager/assignments-manager'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import AssignmentsTableRow from '@/sections/dashboard/assigments/AssignmentsTableRow'
+import AssignmentsTableToolbar from '@/sections/dashboard/assigments/AssignmentsTableToolbar'
+import { fTimestamp } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
-import FilterAssignments from "./filter";
+import FilterAssignments from './filter'
 
 const TABLE_HEAD = [
   {
-    id: "name",
-    label: "assignments_name_and_notes",
-    align: "left",
+    id: 'name',
+    label: 'assignments_name_and_notes',
+    align: 'left',
   },
-  { id: "type", label: "type", align: "left" },
-  { id: "status", label: "status", align: "left" },
-  { id: "starts", label: "starts_at", align: "left", width: 140 },
-  { id: "due", label: "due", align: "left", width: 140 },
-  { id: "publish", label: "published", align: "left" },
-  { id: "" },
-];
+  { id: 'type', label: 'type', align: 'left' },
+  { id: 'status', label: 'status', align: 'left' },
+  { id: 'starts', label: 'starts_at', align: 'left', width: 140 },
+  { id: 'due', label: 'due', align: 'left', width: 140 },
+  { id: 'publish', label: 'published', align: 'left' },
+  { id: '' },
+]
 
 AsssignmentsListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
-);
+)
 
 export default function AsssignmentsListPage() {
-  const translate = useTranslate();
-  const TYPE_OPTIONS = ["all", ...Object.values(AssignmentTypes)];
+  const translate = useTranslate()
+  const TYPE_OPTIONS = ['all', ...Object.values(AssignmentTypes)]
 
-  const { query } = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
-  const { themeStretch } = useSettingsContext();
+  const { query } = useRouter()
+  const { enqueueSnackbar } = useSnackbar()
+  const { themeStretch } = useSettingsContext()
   const {
     dense,
     page,
@@ -94,26 +94,25 @@ export default function AsssignmentsListPage() {
     onChangeDense,
     onChangePage,
     onChangeRowsPerPage,
-  } = useTable({ defaultOrderBy: "createDate" });
-  const [filterName, setFilterName] = useState("");
-  const [tableData, setTableData] = useState<IAssignmentFull[] | undefined>();
-  const [openConfirm, setOpenConfirm] = useState(false);
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [filterType, setFilterType] = useState("all");
-  const [filterEndDate, setFilterEndDate] = useState<Date | null>(null);
-  const [filterStartDate, setFilterStartDate] = useState<Date | null>(null);
+  } = useTable({ defaultOrderBy: 'createDate' })
+  const [filterName, setFilterName] = useState('')
+  const [tableData, setTableData] = useState<IAssignmentFull[] | undefined>()
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [filterStatus, setFilterStatus] = useState('all')
+  const [filterType, setFilterType] = useState('all')
+  const [filterEndDate, setFilterEndDate] = useState<Date | null>(null)
+  const [filterStartDate, setFilterStartDate] = useState<Date | null>(null)
   const { data, isLoading, isFetching } = useGetAssignmentListQuery(
     { schoolId: query.schoolId as string },
     { skip: !query.schoolId, refetchOnMountOrArgChange: true }
-  );
-  const [deleteAssignmet, { isLoading: isDeleting }] =
-    useDeleteAssignmentMutation();
+  )
+  const [deleteAssignmet, { isLoading: isDeleting }] = useDeleteAssignmentMutation()
 
   useEffect(() => {
     if (data) {
-      setTableData(data);
+      setTableData(data)
     }
-  }, [isLoading, isFetching]);
+  }, [isLoading, isFetching])
 
   const dataFiltered = applyFilter({
     inputData: tableData ?? [],
@@ -123,187 +122,181 @@ export default function AsssignmentsListPage() {
     filterStatus,
     filterStartDate,
     filterEndDate,
-  });
+  })
 
-  const dataInPage = dataFiltered.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
+  const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
-  const denseHeight = dense ? 56 : 76;
+  const denseHeight = dense ? 56 : 76
 
   const isFiltered =
-    filterStatus !== "all" ||
-    filterName !== "" ||
-    filterType !== "all" ||
-    (!!filterStartDate && !!filterEndDate);
+    filterStatus !== 'all' ||
+    filterName !== '' ||
+    filterType !== 'all' ||
+    (!!filterStartDate && !!filterEndDate)
 
   const isNotFound =
     (!dataFiltered.length && !!filterName) ||
     (!dataFiltered.length && !!filterStatus) ||
     (!dataFiltered.length && !!filterType) ||
     (!dataFiltered.length && !!filterEndDate) ||
-    (!dataFiltered.length && !!filterStartDate);
+    (!dataFiltered.length && !!filterStartDate)
 
   const getLengthByStatus = (status: Status | Publish) => {
     if (Object.values(Status).includes(status as unknown as Status)) {
-      return tableData?.filter((item) => item.status === status)?.length;
+      return tableData?.filter((item) => item.status === status)?.length
     } else {
-      return tableData?.filter((item) => item.active)?.length;
+      return tableData?.filter((item) => item.active)?.length
     }
-  };
+  }
   const TABS = [
     {
-      value: "all",
-      label: "all",
-      color: "info",
+      value: 'all',
+      label: 'all',
+      color: 'info',
       count: tableData?.length,
     },
     {
       value: Status.open,
-      label: "open",
-      color: "success",
+      label: 'open',
+      color: 'success',
       count: getLengthByStatus(Status.open),
     },
     {
       value: Status.ending,
-      label: "ending_soon",
-      color: "warning",
+      label: 'ending_soon',
+      color: 'warning',
       count: getLengthByStatus(Status.ending),
     },
     {
       value: Status.overdue,
-      label: "overdue",
-      color: "error",
+      label: 'overdue',
+      color: 'error',
       count: getLengthByStatus(Status.overdue),
     },
     {
       value: Status.closed,
-      label: "closed",
-      color: "default",
+      label: 'closed',
+      color: 'default',
       count: getLengthByStatus(Status.closed),
     },
     {
       value: Publish.published,
-      label: "published",
-      color: "info",
+      label: 'published',
+      color: 'info',
       count: getLengthByStatus(Publish.published),
     },
     {
       value: Publish.draft,
-      label: "draft",
-      color: "default",
+      label: 'draft',
+      color: 'default',
       count: getLengthByStatus(Publish.draft),
     },
-  ] as const;
+  ] as const
 
   const handleOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
+    setOpenConfirm(true)
+  }
 
   const handleCloseConfirm = () => {
-    setOpenConfirm(false);
-  };
+    setOpenConfirm(false)
+  }
 
-  const handleFilterStatus = (
-    event: React.SyntheticEvent<Element, Event>,
-    newValue: string
-  ) => {
-    setPage(0);
-    setFilterStatus(newValue);
-  };
+  const handleFilterStatus = (event: React.SyntheticEvent<Element, Event>, newValue: string) => {
+    setPage(0)
+    setFilterStatus(newValue)
+  }
 
   const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPage(0);
-    setFilterName(event.target.value);
-  };
+    setPage(0)
+    setFilterName(event.target.value)
+  }
 
   const handleFilterService = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPage(0);
-    setFilterType(event.target.value);
-  };
+    setPage(0)
+    setFilterType(event.target.value)
+  }
 
   const handleDeleteAssignment = async (assignmentId: string) => {
     try {
       await deleteAssignmet({
         schoolId: query.schoolId as string,
         assignmentId,
-      }).unwrap();
-      enqueueSnackbar(translate("assignments_delete_msg"));
-    } catch (error) {
-      enqueueSnackbar(error.message, { variant: "error" });
+      }).unwrap()
+      enqueueSnackbar(translate('assignments_delete_msg'))
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: 'error' })
     }
-  };
+  }
 
   const handleDeleteRow = (id: string) => {
-    const deleteRow = tableData?.filter((row) => row.id !== id);
-    setSelected([]);
-    setTableData(deleteRow);
-    handleDeleteAssignment(id);
+    const deleteRow = tableData?.filter((row) => row.id !== id)
+    setSelected([])
+    setTableData(deleteRow)
+    handleDeleteAssignment(id)
     if (page > 0) {
       if (dataInPage.length < 2) {
-        setPage(page - 1);
+        setPage(page - 1)
       }
     }
-  };
+  }
 
   const handleDeleteRows = (selectedRows: string[]) => {
     for (let i = 0; i < selected.length; i++) {
-      handleDeleteAssignment(selected[i]);
+      handleDeleteAssignment(selected[i])
     }
-    const deleteRows = tableData?.filter(
-      (row) => !selectedRows.includes(row.id)
-    );
-    setSelected([]);
-    setTableData(deleteRows);
+    const deleteRows = tableData?.filter((row) => !selectedRows.includes(row.id))
+    setSelected([])
+    setTableData(deleteRows)
 
     if (page > 0) {
       if (selectedRows.length === dataInPage.length) {
-        setPage(page - 1);
+        setPage(page - 1)
       } else if (selectedRows.length === dataFiltered.length) {
-        setPage(0);
+        setPage(0)
       } else if (selectedRows.length > dataInPage.length) {
         if (tableData?.length) {
-          const newPage =
-            Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) -
-            1;
-          setPage(newPage);
+          const newPage = Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) - 1
+          setPage(newPage)
         }
       }
     }
-  };
+  }
 
   const handleResetFilter = () => {
-    setFilterName("");
-    setFilterStatus("all");
-    setFilterType("all");
-    setFilterEndDate(null);
-    setFilterStartDate(null);
-  };
+    setFilterName('')
+    setFilterStatus('all')
+    setFilterType('all')
+    setFilterEndDate(null)
+    setFilterStartDate(null)
+  }
 
   return (
     <>
       <Head>
-        <title> {translate("assignments")} | CodeTribe</title>
+        <title> {translate('assignments')} | CodeTribe</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading=""
+          heading=''
           links={[
             {
-              name: translate("home"),
+              name: translate('home'),
               href: STUDENT_PATH_DASHBOARD.class.root,
             },
             {
-              name: translate("assignments"),
+              name: translate('assignments'),
               href: MANAGER_PATH_DASHBOARD.school.assignments,
             },
           ]}
         />
         <FilterAssignments />
         {isLoading ? (
-          <Skeleton variant="rounded" width="100%" height="647px" />
+          <Skeleton
+            variant='rounded'
+            width='100%'
+            height='647px'
+          />
         ) : (
           <Card>
             <Tabs
@@ -311,17 +304,20 @@ export default function AsssignmentsListPage() {
               onChange={handleFilterStatus}
               sx={{
                 px: 2,
-                bgcolor: "background.neutral",
+                bgcolor: 'background.neutral',
               }}
             >
               {TABS.map((tab) => (
                 <Tab
-                  iconPosition="end"
+                  iconPosition='end'
                   key={tab.value}
                   value={tab.value}
                   label={translate(tab.label)}
                   icon={
-                    <Label color={tab.color} sx={{ mr: 1 }}>
+                    <Label
+                      color={tab.color}
+                      sx={{ mr: 1 }}
+                    >
                       {tab.count}
                     </Label>
                   }
@@ -342,29 +338,29 @@ export default function AsssignmentsListPage() {
               filterStartDate={filterStartDate}
               onFilterService={handleFilterService}
               onFilterStartDate={(newValue) => {
-                setFilterStartDate(newValue);
+                setFilterStartDate(newValue)
               }}
               onFilterEndDate={(newValue) => {
-                setFilterEndDate(newValue);
+                setFilterEndDate(newValue)
               }}
             />
 
-            <TableContainer sx={{ position: "relative", overflow: "unset" }}>
+            <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
               <TableSelectedAction
                 dense={dense}
                 numSelected={selected.length}
                 rowCount={tableData?.length ?? 0}
                 onSelectAllRows={(checked) => {
-                  onSelectAllRows(
-                    checked,
-                    tableData ? tableData.map((row) => row.id) : []
-                  );
+                  onSelectAllRows(checked, tableData ? tableData.map((row) => row.id) : [])
                 }}
                 action={
-                  <Stack direction="row">
-                    <Tooltip title={translate("actions_delete")}>
-                      <IconButton color="error" onClick={handleOpenConfirm}>
-                        <Iconify icon="eva:trash-2-outline" />
+                  <Stack direction='row'>
+                    <Tooltip title={translate('actions_delete')}>
+                      <IconButton
+                        color='error'
+                        onClick={handleOpenConfirm}
+                      >
+                        <Iconify icon='eva:trash-2-outline' />
                       </IconButton>
                     </Tooltip>
                   </Stack>
@@ -372,7 +368,10 @@ export default function AsssignmentsListPage() {
               />
 
               <Scrollbar>
-                <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
+                <Table
+                  size={dense ? 'small' : 'medium'}
+                  sx={{ minWidth: 800 }}
+                >
                   <TableHeadCustom
                     order={order}
                     orderBy={orderBy}
@@ -381,29 +380,23 @@ export default function AsssignmentsListPage() {
                     numSelected={selected.length}
                     onSort={onSort}
                     onSelectAllRows={(checked) => {
-                      onSelectAllRows(
-                        checked,
-                        tableData ? tableData.map((row) => row.id) : []
-                      );
+                      onSelectAllRows(checked, tableData ? tableData.map((row) => row.id) : [])
                     }}
                   />
 
                   <TableBody>
                     {dataFiltered
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                       .map((row) => (
                         <AssignmentsTableRow
                           key={row.id}
                           row={row}
                           selected={selected.includes(row.id)}
                           onSelectRow={() => {
-                            onSelectRow(row.id);
+                            onSelectRow(row.id)
                           }}
                           onDeleteRow={() => {
-                            handleDeleteRow(row.id);
+                            handleDeleteRow(row.id)
                           }}
                         />
                       ))}
@@ -411,11 +404,7 @@ export default function AsssignmentsListPage() {
                     {!isNotFound ? (
                       <TableEmptyRows
                         height={denseHeight}
-                        emptyRows={emptyRows(
-                          page,
-                          rowsPerPage,
-                          tableData?.length ?? 0
-                        )}
+                        emptyRows={emptyRows(page, rowsPerPage, tableData?.length ?? 0)}
                       />
                     ) : null}
 
@@ -441,10 +430,10 @@ export default function AsssignmentsListPage() {
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
+        title={translate('actions_delete')}
         content={
           <>
-            {translate("members_delete_dialog_content", {
+            {translate('members_delete_dialog_content', {
               items: selected.length,
             })}
           </>
@@ -452,19 +441,19 @@ export default function AsssignmentsListPage() {
         action={
           <LoadingButton
             loading={isDeleting}
-            variant="contained"
-            color="error"
+            variant='contained'
+            color='error'
             onClick={() => {
-              handleDeleteRows(selected);
-              handleCloseConfirm();
+              handleDeleteRows(selected)
+              handleCloseConfirm()
             }}
           >
-            {translate("actions_delete")}
+            {translate('actions_delete')}
           </LoadingButton>
         }
       />
     </>
-  );
+  )
 }
 
 function applyFilter({
@@ -476,41 +465,41 @@ function applyFilter({
   filterStartDate,
   filterEndDate,
 }: {
-  inputData: IAssignmentFull[];
-  comparator: (a: any, b: any) => number;
-  filterName: string;
-  filterStatus: string;
-  filterType: string;
-  filterStartDate: Date | null;
-  filterEndDate: Date | null;
+  inputData: IAssignmentFull[]
+  comparator: (a: any, b: any) => number
+  filterName: string
+  filterStatus: string
+  filterType: string
+  filterStartDate: Date | null
+  filterEndDate: Date | null
 }) {
-  const stabilizedThis = inputData.map((el, index) => [el, index] as const);
+  const stabilizedThis = inputData.map((el, index) => [el, index] as const)
 
   stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
+    const order = comparator(a[0], b[0])
+    if (order !== 0) return order
+    return a[1] - b[1]
+  })
 
-  inputData = stabilizedThis.map((el) => el[0]);
+  inputData = stabilizedThis.map((el) => el[0])
 
   if (filterName) {
     inputData = inputData.filter((assignment) =>
       assignment.name.toLowerCase().includes(filterName.toLowerCase())
-    );
+    )
   }
-  if (filterType !== "all") {
-    inputData = inputData.filter((assignment) => assignment?.course);
+  if (filterType !== 'all') {
+    inputData = inputData.filter((assignment) => assignment?.course)
   }
 
-  if (filterStatus !== "all") {
+  if (filterStatus !== 'all') {
     inputData = inputData.filter((assignment) => {
       if (Object.values(Status).includes(filterStatus as unknown as Status)) {
-        return assignment.status === filterStatus;
+        return assignment.status === filterStatus
       } else {
-        return assignment.active;
+        return assignment.active
       }
-    });
+    })
   }
 
   if (filterStartDate && filterEndDate) {
@@ -518,8 +507,8 @@ function applyFilter({
       (assignment) =>
         fTimestamp(assignment.start_date) >= fTimestamp(filterStartDate) &&
         fTimestamp(assignment.end_date) <= fTimestamp(filterEndDate)
-    );
+    )
   }
 
-  return inputData;
+  return inputData
 }

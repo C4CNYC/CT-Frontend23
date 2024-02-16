@@ -1,40 +1,43 @@
-import * as React from "react";
+import React from 'react'
 
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
+import { useSnackbar } from 'notistack'
+import { useForm } from 'react-hook-form'
 
-import { FormProvider } from "@components";
+import { FormProvider } from '@/components'
 
-import AddClassInput from "./AddClassInput";
+import AddClassInput from './AddClassInput'
 
 interface FormValuesProps {
-  code1: string;
+  code1: string
 }
 
 export default function AddClassForm(): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
 
   const defaultValues = {
-    code1: "",
-  };
+    code1: '',
+  }
 
   const methods = useForm({
-    mode: "onChange",
+    mode: 'onChange',
     // resolver: yupResolver(VerifyCodeSchema),
     defaultValues,
-  });
+  })
 
-  const { handleSubmit } = methods;
+  const { handleSubmit } = methods
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      enqueueSnackbar("Verify success!");
+      enqueueSnackbar('Verify success!')
     } catch (error: any) {}
-  };
+  }
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+    <FormProvider
+      methods={methods}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <AddClassInput />
     </FormProvider>
-  );
+  )
 }

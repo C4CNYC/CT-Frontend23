@@ -1,19 +1,13 @@
-// @mui
-import { TableCell, TableRow } from "@mui/material";
-
-// ----------------------------------------------------------------------
+import { TableCell, TableRow } from '@mui/material'
 
 interface Props {
-  height?: number;
-  emptyRows: number;
+  height?: number
+  emptyRows: number
 }
 
-export function TableEmptyRows({
-  emptyRows,
-  height,
-}: Props): React.ReactElement | null {
+export function TableEmptyRows({ emptyRows, height }: Props): React.ReactElement | null {
   if (!emptyRows) {
-    return null;
+    return null
   }
 
   return (
@@ -26,5 +20,5 @@ export function TableEmptyRows({
     >
       <TableCell colSpan={9} />
     </TableRow>
-  );
+  )
 }

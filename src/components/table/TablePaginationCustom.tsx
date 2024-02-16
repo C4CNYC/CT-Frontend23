@@ -1,4 +1,3 @@
-// @mui
 import {
   Box,
   FormControlLabel,
@@ -6,19 +5,17 @@ import {
   SxProps,
   TablePagination,
   TablePaginationProps,
-} from "@mui/material";
-import { Theme } from "@mui/material/styles";
+} from '@mui/material'
+import { Theme } from '@mui/material/styles'
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from '@/utils/translateHelper'
 
 //
 
-// ----------------------------------------------------------------------
-
 interface Props {
-  dense?: boolean;
-  onChangeDense?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  sx?: SxProps<Theme>;
+  dense?: boolean
+  onChangeDense?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  sx?: SxProps<Theme>
 }
 
 export function TablePaginationCustom({
@@ -28,30 +25,35 @@ export function TablePaginationCustom({
   sx,
   ...other
 }: Props & TablePaginationProps): React.ReactElement | null {
-  const translate = useTranslate();
+  const translate = useTranslate()
 
   return (
-    <Box sx={{ position: "relative", ...sx }}>
+    <Box sx={{ position: 'relative', ...sx }}>
       <TablePagination
         rowsPerPageOptions={rowsPerPageOptions}
-        component="div"
+        component='div'
         {...other}
       />
 
       {onChangeDense && (
         <FormControlLabel
-          label={translate("dense")}
-          control={<Switch checked={dense} onChange={onChangeDense} />}
+          label={translate('dense')}
+          control={
+            <Switch
+              checked={dense}
+              onChange={onChangeDense}
+            />
+          }
           sx={{
             pl: 2,
             py: 1.5,
             top: 0,
             position: {
-              sm: "absolute",
+              sm: 'absolute',
             },
           }}
         />
       )}
     </Box>
-  );
+  )
 }

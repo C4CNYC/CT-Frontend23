@@ -1,31 +1,23 @@
-import { FileRejection } from "react-dropzone";
+import { Box, Paper, Typography } from '@mui/material'
+import { alpha } from '@mui/material/styles'
+import { FileRejection } from 'react-dropzone'
 
-// @mui
-import { Box, Paper, Typography } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { fData } from '@/utils'
 
-// utils
-import { fData } from "@utils";
-
-//
-import { fileData } from "../../file-thumbnail";
-
-// ----------------------------------------------------------------------
+import { fileData } from '../../file-thumbnail'
 
 interface Props {
-  fileRejections: FileRejection[];
+  fileRejections: FileRejection[]
 }
 
-export default function RejectionFiles({
-  fileRejections,
-}: Props): React.ReactElement | null {
+export default function RejectionFiles({ fileRejections }: Props): React.ReactElement | null {
   if (!fileRejections.length) {
-    return null;
+    return null
   }
 
   return (
     <Paper
-      variant="outlined"
+      variant='outlined'
       sx={{
         py: 1,
         px: 2,
@@ -35,26 +27,32 @@ export default function RejectionFiles({
       }}
     >
       {fileRejections.map(({ file, errors }) => {
-        const { path, size } = fileData(file);
+        const { path, size } = fileData(file)
 
         return (
-          <Box key={path} sx={{ my: 1 }}>
-            <Typography variant="subtitle2" noWrap>
-              {path} - {size ? fData(size) : ""}
+          <Box
+            key={path}
+            sx={{ my: 1 }}
+          >
+            <Typography
+              variant='subtitle2'
+              noWrap
+            >
+              {path} - {size ? fData(size) : ''}
             </Typography>
 
             {errors.map((error) => (
               <Box
                 key={error.code}
-                component="span"
-                sx={{ typography: "caption" }}
+                component='span'
+                sx={{ typography: 'caption' }}
               >
                 - {error.message}
               </Box>
             ))}
           </Box>
-        );
+        )
       })}
     </Paper>
-  );
+  )
 }

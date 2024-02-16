@@ -1,57 +1,53 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
-import { useSnackbar } from "notistack";
-import { Controller, useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Box, Card, Grid, Stack, Typography } from '@mui/material'
+import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
+import { useSnackbar } from 'notistack'
+import { Controller, useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-
-import { FormProvider, RHFTextField } from "@components";
-import { useUpdateSchoolContactsMutation } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
-
-import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
+import { FormProvider, RHFTextField } from '@/components'
+import { SchoolContacts } from '@/redux/services/interfaces/school.interface'
+import { useUpdateSchoolContactsMutation } from '@/redux/services/manager/schools-manager'
+import { useTranslate } from '@/utils/translateHelper'
 
 const UpdateUserSchema = Yup.object().shape({
-  email: Yup.string().email("Email must be a valid email address"),
-  name: Yup.string().required("Name is required"),
-  phone: Yup.string().required("Phone is required"),
-  technical_email: Yup.string().email("Email must be a valid email address"),
-  technical_name: Yup.string().required("Technical name is required"),
-  technical_phone: Yup.string().required("Technical phone is required"),
-  billing_email: Yup.string().email(
-    "Billing email must be a valid email address"
-  ),
-  billing_name: Yup.string().required("Billing name is required"),
-  billing_phone: Yup.string().required("Billing phone is required"),
-});
+  email: Yup.string().email('Email must be a valid email address'),
+  name: Yup.string().required('Name is required'),
+  phone: Yup.string().required('Phone is required'),
+  technical_email: Yup.string().email('Email must be a valid email address'),
+  technical_name: Yup.string().required('Technical name is required'),
+  technical_phone: Yup.string().required('Technical phone is required'),
+  billing_email: Yup.string().email('Billing email must be a valid email address'),
+  billing_name: Yup.string().required('Billing name is required'),
+  billing_phone: Yup.string().required('Billing phone is required'),
+})
 
 interface FormValuesProps {
-  schoolId: string;
-  email: string;
-  name: string;
-  phone: string;
-  technical_email: string;
-  technical_name: string;
-  technical_phone: string;
-  billing_email: string;
-  billing_name: string;
-  billing_phone: string;
+  schoolId: string
+  email: string
+  name: string
+  phone: string
+  technical_email: string
+  technical_name: string
+  technical_phone: string
+  billing_email: string
+  billing_name: string
+  billing_phone: string
 }
 
 interface ContactsFormProps {
-  contacts?: SchoolContacts;
-  schoolId: string;
+  contacts?: SchoolContacts
+  schoolId: string
 }
 
 export default function ContactsForm({
   contacts,
   schoolId,
 }: ContactsFormProps): React.ReactElement | null {
-  const [updateContacts, { isLoading }] = useUpdateSchoolContactsMutation();
-  const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
+  const [updateContacts, { isLoading }] = useUpdateSchoolContactsMutation()
+  const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
 
   const defaultValues = {
     schoolId,
@@ -64,13 +60,13 @@ export default function ContactsForm({
     billing_email: contacts?.billing_email,
     billing_name: contacts?.billing_name,
     billing_phone: contacts?.billing_phone,
-  };
+  }
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
     defaultValues,
-  });
-  const { handleSubmit } = methods;
+  })
+  const { handleSubmit } = methods
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -85,153 +81,175 @@ export default function ContactsForm({
         billing_email: data.billing_email,
         billing_name: data.billing_name,
         billing_phone: data.billing_phone,
-      }).unwrap();
-      enqueueSnackbar(translate("messages_update_success"));
+      }).unwrap()
+      enqueueSnackbar(translate('messages_update_success'))
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-  };
+  }
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
+    <FormProvider
+      methods={methods}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Grid
+        container
+        spacing={3}
+      >
+        <Grid
+          item
+          xs={12}
+        >
           <Card sx={{ p: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              {translate("contacts")}
+            <Typography
+              variant='h6'
+              sx={{ mb: 2 }}
+            >
+              {translate('contacts')}
             </Typography>
 
             <Box
               rowGap={2}
               columnGap={2}
-              display="grid"
+              display='grid'
               gridTemplateColumns={{
-                xs: "repeat(1, 1fr)",
-                sm: "repeat(3, 1fr)",
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(3, 1fr)',
               }}
               gridTemplateRows={{
-                xs: "repeat(4, 1fr)",
-                sm: "repeat(2, 1fr)",
+                xs: 'repeat(4, 1fr)',
+                sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="name" label={translate("name")} />
-
-              <RHFTextField name="email" label={translate("email_address")} />
-
-              <Controller
-                name="phone"
-                rules={{ validate: matchIsValidTel }}
-                render={({ field, fieldState }) => (
-                  <MuiTelInput
-                    {...field}
-                    helperText={
-                      fieldState.invalid
-                        ? translate("messages_invalid_phone")
-                        : ""
-                    }
-                    error={fieldState.invalid}
-                    placeholder={translate("mobile_number")}
-                  />
-                )}
+              <RHFTextField
+                name='name'
+                label={translate('name')}
               />
-            </Box>
-
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              {translate("contacts_tab_technical_contacts")}
-            </Typography>
-
-            <Box
-              rowGap={2}
-              columnGap={2}
-              display="grid"
-              gridTemplateColumns={{
-                xs: "repeat(1, 1fr)",
-                sm: "repeat(3, 1fr)",
-              }}
-              gridTemplateRows={{
-                xs: "repeat(4, 1fr)",
-                sm: "repeat(2, 1fr)",
-              }}
-            >
-              <RHFTextField name="technical_name" label={translate("name")} />
 
               <RHFTextField
-                name="technical_email"
-                label={translate("email_address")}
+                name='email'
+                label={translate('email_address')}
               />
 
               <Controller
-                name="technical_phone"
+                name='phone'
                 rules={{ validate: matchIsValidTel }}
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={
-                      fieldState.invalid
-                        ? translate("messages_invalid_phone")
-                        : ""
-                    }
+                    helperText={fieldState.invalid ? translate('messages_invalid_phone') : ''}
                     error={fieldState.invalid}
-                    placeholder={translate("mobile_number")}
+                    placeholder={translate('mobile_number')}
                   />
                 )}
               />
             </Box>
 
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              {translate("contacts_tab_buling_contacts")}
+            <Typography
+              variant='h6'
+              sx={{ mb: 2 }}
+            >
+              {translate('contacts_tab_technical_contacts')}
             </Typography>
 
             <Box
               rowGap={2}
               columnGap={2}
-              display="grid"
+              display='grid'
               gridTemplateColumns={{
-                xs: "repeat(1, 1fr)",
-                sm: "repeat(3, 1fr)",
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(3, 1fr)',
               }}
               gridTemplateRows={{
-                xs: "repeat(4, 1fr)",
-                sm: "repeat(2, 1fr)",
+                xs: 'repeat(4, 1fr)',
+                sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="billing_name" label={translate("name")} />
+              <RHFTextField
+                name='technical_name'
+                label={translate('name')}
+              />
 
               <RHFTextField
-                name="billing_email"
-                label={translate("email_address")}
+                name='technical_email'
+                label={translate('email_address')}
               />
 
               <Controller
-                name="billing_phone"
+                name='technical_phone'
                 rules={{ validate: matchIsValidTel }}
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={
-                      fieldState.invalid
-                        ? translate("messages_invalid_phone")
-                        : ""
-                    }
+                    helperText={fieldState.invalid ? translate('messages_invalid_phone') : ''}
                     error={fieldState.invalid}
-                    placeholder={translate("mobile_number")}
+                    placeholder={translate('mobile_number')}
                   />
                 )}
               />
             </Box>
 
-            <Stack spacing={3} alignItems="flex-end" sx={{ mb: 10 }}>
+            <Typography
+              variant='h6'
+              sx={{ mb: 2 }}
+            >
+              {translate('contacts_tab_buling_contacts')}
+            </Typography>
+
+            <Box
+              rowGap={2}
+              columnGap={2}
+              display='grid'
+              gridTemplateColumns={{
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(3, 1fr)',
+              }}
+              gridTemplateRows={{
+                xs: 'repeat(4, 1fr)',
+                sm: 'repeat(2, 1fr)',
+              }}
+            >
+              <RHFTextField
+                name='billing_name'
+                label={translate('name')}
+              />
+
+              <RHFTextField
+                name='billing_email'
+                label={translate('email_address')}
+              />
+
+              <Controller
+                name='billing_phone'
+                rules={{ validate: matchIsValidTel }}
+                render={({ field, fieldState }) => (
+                  <MuiTelInput
+                    {...field}
+                    helperText={fieldState.invalid ? translate('messages_invalid_phone') : ''}
+                    error={fieldState.invalid}
+                    placeholder={translate('mobile_number')}
+                  />
+                )}
+              />
+            </Box>
+
+            <Stack
+              spacing={3}
+              alignItems='flex-end'
+              sx={{ mb: 10 }}
+            >
               <LoadingButton
-                type="submit"
-                variant="contained"
+                type='submit'
+                variant='contained'
                 loading={isLoading}
               >
-                {translate("actions_save_changes")}
+                {translate('actions_save_changes')}
               </LoadingButton>
             </Stack>
           </Card>
         </Grid>
       </Grid>
     </FormProvider>
-  );
+  )
 }

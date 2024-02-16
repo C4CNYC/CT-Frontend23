@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { managerApi } from ".";
-import { ILessonContent } from "../interfaces/courseUnits.interface";
-import { ILessonContentValidation } from "../interfaces/lessonContentValidation.interface";
+import { ILessonContent } from '../interfaces/courseUnits.interface'
+import { ILessonContentValidation } from '../interfaces/lessonContentValidation.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,9 +13,9 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id }) => ({
         url: `/manager/content/${id}/validation`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["LessonsContentValidation"],
+      providesTags: ['LessonsContentValidation'],
     }),
     createLessonContentValidationManager: builder.mutation<
       ILessonContent,
@@ -23,10 +23,10 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id, ...body }) => ({
         url: `/manager/content/${id}/validation`,
-        method: "POST",
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "LessonsContentValidation" }],
+      invalidatesTags: [{ type: 'LessonsContentValidation' }],
     }),
     updateLessonContentValidationManager: builder.mutation<
       ILessonContentValidation,
@@ -34,10 +34,10 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ contentId, id, ...body }) => ({
         url: `/manager/content/${contentId}/validation/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "LessonsContentValidation" }],
+      invalidatesTags: [{ type: 'LessonsContentValidation' }],
     }),
     removeLessonContentValiationManager: builder.mutation<
       ILessonContentValidation,
@@ -45,13 +45,13 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ contentId, id }) => ({
         url: `/manager/content/${contentId}/validation/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "LessonsContentValidation" }],
+      invalidatesTags: [{ type: 'LessonsContentValidation' }],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetLessonContentValidationsManagerQuery,
@@ -59,4 +59,4 @@ export const {
   useCreateLessonContentValidationManagerMutation,
   useRemoveLessonContentValiationManagerMutation,
   useUpdateLessonContentValidationManagerMutation,
-} = extendedApi;
+} = extendedApi

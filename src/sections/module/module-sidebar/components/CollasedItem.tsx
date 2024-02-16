@@ -1,37 +1,43 @@
-import { memo, useState } from "react";
+import { memo, useState } from 'react'
 
-import { ImMinus, ImPlus } from "react-icons/im";
-
-import { Box, Collapse, Stack, Typography } from "@mui/material";
+import { Box, Collapse, Stack, Typography } from '@mui/material'
+import { ImMinus } from '@react-icons/all-files/im/ImMinus'
+import { ImPlus } from '@react-icons/all-files/im/ImPlus'
 
 interface CollapsedItemProps {
-  title: string;
-  children: React.ReactElement;
+  title: string
+  children: React.ReactElement
 }
 
 const CollapsedItem = ({ title, children }: CollapsedItemProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const handleOpen = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   return (
-    <Box onClick={handleOpen} sx={{ "& :hover": { cursor: "pointer" } }}>
+    <Box
+      onClick={handleOpen}
+      sx={{ '& :hover': { cursor: 'pointer' } }}
+    >
       <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
+        direction='row'
+        justifyContent='space-between'
+        alignItems='center'
         mb={1}
       >
-        <Typography variant="h6" sx={{ userSelect: "none" }}>
+        <Typography
+          variant='h6'
+          sx={{ userSelect: 'none' }}
+        >
           {title}
         </Typography>
         {!isOpen ? <ImPlus /> : <ImMinus />}
       </Stack>
       <Collapse in={isOpen}>{children}</Collapse>
     </Box>
-  );
-};
+  )
+}
 
-export default memo(CollapsedItem);
+export default memo(CollapsedItem)

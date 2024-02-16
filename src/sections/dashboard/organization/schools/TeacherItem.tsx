@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 import {
   Avatar,
@@ -8,66 +8,67 @@ import {
   ListItemText,
   MenuItem,
   Tooltip,
-} from "@mui/material";
+} from '@mui/material'
 
-import { Iconify, MenuPopover } from "@components";
-import { BaseResponseInterface } from "@utils";
-import { IUser } from "src/redux/services/interfaces/user.interface";
-
-// ----------------------------------------------------------------------
+import { Iconify, MenuPopover } from '@/components'
+import { IUser } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 interface Props {
-  person: IUser & BaseResponseInterface;
-  handleDeleteTeacher: () => void;
+  person: IUser & BaseResponseInterface
+  handleDeleteTeacher: () => void
 }
 
 export default function TeacherItem({
   person,
   handleDeleteTeacher,
 }: Props): React.ReactElement | null {
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    setOpenPopover(event.currentTarget);
-  };
+    setOpenPopover(event.currentTarget)
+  }
 
   const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
+    setOpenPopover(null)
+  }
 
   return (
     <>
       <ListItem disableGutters>
         <ListItemAvatar>
-          <Avatar alt={person.first_name} src="/assets/images/avatar_2.jpg" />
+          <Avatar
+            alt={person.first_name}
+            src='/assets/images/avatar_2.jpg'
+          />
         </ListItemAvatar>
 
         <ListItemText
-          primary={`${person.first_name ?? ""} ${person.last_name ?? ""}`}
+          primary={`${person.first_name ?? ''} ${person.last_name ?? ''}`}
           secondary={
             <Tooltip title={person.email}>
               <span>{person.email}</span>
             </Tooltip>
           }
-          primaryTypographyProps={{ noWrap: true, typography: "subtitle2" }}
+          primaryTypographyProps={{ noWrap: true, typography: 'subtitle2' }}
           secondaryTypographyProps={{ noWrap: true }}
           sx={{ flexGrow: 1, pr: 1 }}
         />
 
         <Button
-          size="small"
-          color="inherit"
-          endIcon={<Iconify icon="eva:chevron-down-fill" />}
+          size='small'
+          color='inherit'
+          endIcon={<Iconify icon='eva:chevron-down-fill' />}
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,
-            textTransform: "unset",
-            fontWeight: "fontWeightMedium",
-            "& .MuiButton-endIcon": {
+            textTransform: 'unset',
+            fontWeight: 'fontWeightMedium',
+            '& .MuiButton-endIcon': {
               ml: 0,
             },
             ...(openPopover && {
-              bgcolor: "action.selected",
+              bgcolor: 'action.selected',
             }),
           }}
         ></Button>
@@ -81,16 +82,16 @@ export default function TeacherItem({
         <>
           <MenuItem
             onClick={() => {
-              handleDeleteTeacher();
-              handleClosePopover();
+              handleDeleteTeacher()
+              handleClosePopover()
             }}
-            sx={{ color: "error.main" }}
+            sx={{ color: 'error.main' }}
           >
-            <Iconify icon="eva:trash-2-outline" />
+            <Iconify icon='eva:trash-2-outline' />
             Remove
           </MenuItem>
         </>
       </MenuPopover>
     </>
-  );
+  )
 }

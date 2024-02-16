@@ -1,9 +1,4 @@
-import Link from "next/link";
-import * as React from "react";
-
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
+import React from 'react'
 
 import {
   Autocomplete,
@@ -15,47 +10,45 @@ import {
   TextField,
   Typography,
   alpha,
-} from "@mui/material";
+} from '@mui/material'
+import match from 'autosuggest-highlight/match'
+import parse from 'autosuggest-highlight/parse'
+import Link from 'next/link'
+import { useSnackbar } from 'notistack'
 
-import { Iconify, SearchNotFound } from "@components";
-import { useFilters } from "@hooks";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { BaseResponseInterface, voidFunction } from "@utils";
-import { IIntegration } from "src/redux/services/interfaces/integration.interface";
-import { useGetIntegrationsListQuery } from "src/redux/services/manager/integration-manager";
+import { Iconify, SearchNotFound } from '@/components'
+import { useFilters } from '@/hooks'
+import { IIntegration } from '@/redux/services/interfaces/integration.interface'
+import { useGetIntegrationsListQuery } from '@/redux/services/manager/integration-manager'
 import {
   useAddIntegrationMutation,
   useGetLessonIntegrationsQuery,
   useRemoveIntegrationMutation,
-} from "src/redux/services/manager/lessons-manager";
-import { useTranslate } from "src/utils/translateHelper";
+} from '@/redux/services/manager/lessons-manager'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { BaseResponseInterface, voidFunction } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 
-export function IntegrationsTab({
-  contentId,
-}: {
-  contentId: string;
-}): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
+export function IntegrationsTab({ contentId }: { contentId: string }): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar()
 
-  const { filters, setFilter } = useFilters({ name: "", take: 50 });
-  const translate = useTranslate();
-  const [addIntegration, { isLoading: addLoading }] =
-    useAddIntegrationMutation();
-  const [removeIntegration, { isLoading: removeLoading }] =
-    useRemoveIntegrationMutation();
+  const { filters, setFilter } = useFilters({ name: '', take: 50 })
+  const translate = useTranslate()
+  const [addIntegration, { isLoading: addLoading }] = useAddIntegrationMutation()
+  const [removeIntegration, { isLoading: removeLoading }] = useRemoveIntegrationMutation()
   const { data, isFetching } = useGetLessonIntegrationsQuery({
     id: contentId,
-  });
-  const { data: integrations } = useGetIntegrationsListQuery(filters);
+  })
+  const { data: integrations } = useGetIntegrationsListQuery(filters)
 
   if (!integrations?.data || !data) {
     return (
       <Skeleton
-        animation="wave"
-        variant="rounded"
-        sx={{ width: "100%", height: "56px" }}
+        animation='wave'
+        variant='rounded'
+        sx={{ width: '100%', height: '56px' }}
       />
-    );
+    )
   }
 
   const onChange = async (
@@ -67,46 +60,44 @@ export function IntegrationsTab({
     try {
       const payload = {
         lessonId: contentId,
-        integration_id: details?.option.id ?? "",
-      };
+        integration_id: details?.option.id ?? '',
+      }
       switch (reason) {
-        case "selectOption": {
-          await addIntegration(payload).unwrap();
+        case 'selectOption': {
+          await addIntegration(payload).unwrap()
           enqueueSnackbar(
-            translate("messages_sth_added", {
-              name: details?.option.name ?? "",
+            translate('messages_sth_added', {
+              name: details?.option.name ?? '',
             })
-          );
-          return;
+          )
+          return
         }
-        case "removeOption": {
-          await removeIntegration(payload).unwrap();
+        case 'removeOption': {
+          await removeIntegration(payload).unwrap()
           enqueueSnackbar(
-            translate("messages_sth_removed", {
-              name: details?.option.name ?? "",
+            translate('messages_sth_removed', {
+              name: details?.option.name ?? '',
             })
-          );
+          )
           // eslint-disable-next-line no-useless-return
-          return;
+          return
         }
       }
     } catch {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-  };
+  }
 
   if (!integrations.data.length) {
     return (
       <Box>
-        <Typography>{translate("integrations_empty")}</Typography>
+        <Typography>{translate('integrations_empty')}</Typography>
         <Typography>
-          {translate("integrations_lets_create")}{" "}
-          <Link href={MANAGER_PATH_DASHBOARD.apps.root}>
-            {translate("here")}
-          </Link>
+          {translate('integrations_lets_create')}{' '}
+          <Link href={MANAGER_PATH_DASHBOARD.apps.root}>{translate('here')}</Link>
         </Typography>
       </Box>
-    );
+    )
   }
 
   return (
@@ -119,10 +110,13 @@ export function IntegrationsTab({
       popupIcon={null}
       onLoadStart={voidFunction}
       noOptionsText={
-        <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
+        <SearchNotFound
+          sx={{ p: '20px 0' }}
+          query={filters.name}
+        />
       }
       onInputChange={(event, value) => {
-        setFilter("name", value);
+        setFilter('name', value)
       }}
       getOptionLabel={(option) => option.name}
       renderTags={(tagValue, getTagProps): React.ReactElement[] =>
@@ -134,23 +128,26 @@ export function IntegrationsTab({
           />
         ))
       }
-      style={{ width: "100%" }}
+      style={{ width: '100%' }}
       renderInput={(params) => (
-        <TextField {...params} placeholder={translate("integrations")} />
+        <TextField
+          {...params}
+          placeholder={translate('integrations')}
+        />
       )}
       renderOption={(props, recipient, { inputValue }) => {
-        const { name } = recipient;
-        const matches = match(name, inputValue);
-        const parts = parse(name, matches);
+        const { name } = recipient
+        const matches = match(name, inputValue)
+        const parts = parse(name, matches)
 
-        const selected = data.find((c) => c.name === name);
+        const selected = data.find((c) => c.name === name)
 
         return (
           <Box
-            component="li"
+            component='li'
             sx={{
-              p: "12px !important",
-              pointerEvents: selected ? "none" : "auto",
+              p: '12px !important',
+              pointerEvents: selected ? 'none' : 'auto',
             }}
             {...props}
           >
@@ -159,36 +156,36 @@ export function IntegrationsTab({
                 mr: 1.5,
                 width: 32,
                 height: 32,
-                overflow: "hidden",
-                borderRadius: "50%",
-                position: "relative",
+                overflow: 'hidden',
+                borderRadius: '50%',
+                position: 'relative',
               }}
             >
               <Box
                 sx={{
                   top: 0,
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  position: "absolute",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  position: 'absolute',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
                   transition: (theme) =>
-                    theme.transitions.create("opacity", {
+                    theme.transitions.create('opacity', {
                       easing: theme.transitions.easing.easeInOut,
                       duration: theme.transitions.duration.shorter,
                     }),
                   ...{
-                    color: "primary.main",
+                    color: 'primary.main',
                   },
                 }}
               >
                 <Iconify
                   icon={
                     selected
-                      ? "material-symbols:check-box-outline-rounded"
-                      : "material-symbols:check-box-outline-blank"
+                      ? 'material-symbols:check-box-outline-rounded'
+                      : 'material-symbols:check-box-outline-blank'
                   }
                 />
               </Box>
@@ -197,15 +194,15 @@ export function IntegrationsTab({
             {parts.map((part, index) => (
               <Typography
                 key={index}
-                variant="subtitle2"
-                color={part.highlight ? "primary" : "textPrimary"}
+                variant='subtitle2'
+                color={part.highlight ? 'primary' : 'textPrimary'}
               >
                 {part.text}
               </Typography>
             ))}
           </Box>
-        );
+        )
       }}
     />
-  );
+  )
 }

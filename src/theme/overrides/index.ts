@@ -1,48 +1,45 @@
-import { Components, type Theme } from "@mui/material/styles";
+import { Components, type Theme } from '@mui/material/styles'
 
-//
-import Accordion from "./Accordion";
-import Alert from "./Alert";
-import Autocomplete from "./Autocomplete";
-import Avatar from "./Avatar";
-import Backdrop from "./Backdrop";
-import Badge from "./Badge";
-import Breadcrumbs from "./Breadcrumbs";
-import Button from "./Button";
-import ButtonGroup from "./ButtonGroup";
-import Card from "./Card";
-import Checkbox from "./Checkbox";
-import Chip from "./Chip";
-import ControlLabel from "./ControlLabel";
-import DataGrid from "./DataGrid";
-import Dialog from "./Dialog";
-import Drawer from "./Drawer";
-import Fab from "./Fab";
-import Input from "./Input";
-import Link from "./Link";
-import Lists from "./List";
-import LoadingButton from "./LoadingButton";
-import Menu from "./Menu";
-import Pagination from "./Pagination";
-import Paper from "./Paper";
-import Popover from "./Popover";
-import Progress from "./Progress";
-import Radio from "./Radio";
-import Rating from "./Rating";
-import Select from "./Select";
-import Skeleton from "./Skeleton";
-import Slider from "./Slider";
-import Stepper from "./Stepper";
-import SvgIcon from "./SvgIcon";
-import Switch from "./Switch";
-import Table from "./Table";
-import Tabs from "./Tabs";
-import Timeline from "./Timeline";
-import ToggleButton from "./ToggleButton";
-import Tooltip from "./Tooltip";
-import Typography from "./Typography";
-
-// ----------------------------------------------------------------------
+import Accordion from './Accordion'
+import Alert from './Alert'
+import Autocomplete from './Autocomplete'
+import Avatar from './Avatar'
+import Backdrop from './Backdrop'
+import Badge from './Badge'
+import Breadcrumbs from './Breadcrumbs'
+import Button from './Button'
+import ButtonGroup from './ButtonGroup'
+import Card from './Card'
+import Checkbox from './Checkbox'
+import Chip from './Chip'
+import ControlLabel from './ControlLabel'
+import DataGrid from './DataGrid'
+import Dialog from './Dialog'
+import Drawer from './Drawer'
+import Fab from './Fab'
+import Input from './Input'
+import Link from './Link'
+import Lists from './List'
+import LoadingButton from './LoadingButton'
+import Menu from './Menu'
+import Pagination from './Pagination'
+import Paper from './Paper'
+import Popover from './Popover'
+import Progress from './Progress'
+import Radio from './Radio'
+import Rating from './Rating'
+import Select from './Select'
+import Skeleton from './Skeleton'
+import Slider from './Slider'
+import Stepper from './Stepper'
+import SvgIcon from './SvgIcon'
+import Switch from './Switch'
+import Table from './Table'
+import Tabs from './Tabs'
+import Timeline from './Timeline'
+import ToggleButton from './ToggleButton'
+import Tooltip from './Tooltip'
+import Typography from './Typography'
 
 export function ComponentsOverrides(theme: Theme): Components<Theme> {
   return Object.assign(
@@ -86,5 +83,5 @@ export function ComponentsOverrides(theme: Theme): Components<Theme> {
     ControlLabel(theme),
     ToggleButton(theme),
     LoadingButton(theme)
-  );
+  )
 }

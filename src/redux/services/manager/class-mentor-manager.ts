@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
-import { IStudent } from "../interfaces/user.interface";
+import { IStudent } from '../interfaces/user.interface'
+
+import { managerApi } from '.'
 
 const extendetApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,38 +12,32 @@ const extendetApi = managerApi.injectEndpoints({
     >({
       query: ({ schoolId, classId }) => ({
         url: `/manager/school/${schoolId}/class/${classId}/mentor`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["Mentors"],
+      providesTags: ['Mentors'],
     }),
-    updateMentor: builder.mutation<
-      void,
-      { schoolId: string; classId: string; userId: string }
-    >({
+    updateMentor: builder.mutation<void, { schoolId: string; classId: string; userId: string }>({
       query: ({ schoolId, classId, userId }) => ({
         url: `/manager/school/${schoolId}/class/${classId}/mentor`,
-        method: "PATCH",
+        method: 'PATCH',
         body: { user_id: userId },
       }),
-      invalidatesTags: ["Mentors"],
+      invalidatesTags: ['Mentors'],
     }),
-    deleteMentor: builder.mutation<
-      void,
-      { schoolId: string; classId: string; userId: string }
-    >({
+    deleteMentor: builder.mutation<void, { schoolId: string; classId: string; userId: string }>({
       query: ({ schoolId, classId, userId }) => ({
         url: `/manager/school/${schoolId}/class/${classId}/mentor`,
-        method: "DELETE",
+        method: 'DELETE',
         body: { user_id: userId },
       }),
-      invalidatesTags: ["Mentors"],
+      invalidatesTags: ['Mentors'],
     }),
   }),
   overrideExisting: false,
-});
+})
 export const {
   useGetMentorsQuery,
   // -------------mutation-----------
   useUpdateMentorMutation,
   useDeleteMentorMutation,
-} = extendetApi;
+} = extendetApi

@@ -1,18 +1,18 @@
-import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react'
 
-import useActiveLink from "src/hooks/useActiveLink";
+import { useRouter } from 'next/router'
 
-import { NavListProps } from "../types";
-import NavItem from "./NavItem";
-import { StyledPopover } from "./styles";
+import useActiveLink from '@/hooks/useActiveLink'
 
-// ----------------------------------------------------------------------
+import { NavListProps } from '../types'
+
+import NavItem from './NavItem'
+import { StyledPopover } from './styles'
 
 interface NavListRootProps {
-  data: NavListProps;
-  depth: number;
-  hasChild: boolean;
+  data: NavListProps
+  depth: number
+  hasChild: boolean
 }
 
 export default function NavList({
@@ -20,47 +20,47 @@ export default function NavList({
   depth,
   hasChild,
 }: NavListRootProps): React.ReactElement | null {
-  const navRef = useRef(null);
+  const navRef = useRef(null)
 
-  const { pathname } = useRouter();
+  const { pathname } = useRouter()
 
-  const { active, isExternalLink } = useActiveLink(data.path);
+  const { active, isExternalLink } = useActiveLink(data.path)
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (open) {
-      handleClose();
+      handleClose()
     }
-  }, [pathname]);
+  }, [pathname])
 
   useEffect(() => {
-    const appBarEl = Array.from(document.querySelectorAll(".MuiAppBar-root"));
+    const appBarEl = Array.from(document.querySelectorAll('.MuiAppBar-root'))
 
     // Reset styles when hover
     const styles = (): void => {
-      document.body.style.overflow = "";
-      document.body.style.padding = "";
+      document.body.style.overflow = ''
+      document.body.style.padding = ''
       // Apply for Window
       appBarEl.forEach((elem: any) => {
-        elem.style.padding = "";
-      });
-    };
+        elem.style.padding = ''
+      })
+    }
 
     if (open) {
-      styles();
+      styles()
     } else {
-      styles();
+      styles()
     }
-  }, [open]);
+  }, [open])
 
   const handleOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
@@ -81,37 +81,35 @@ export default function NavList({
           anchorEl={navRef.current}
           anchorOrigin={
             depth === 1
-              ? { vertical: "bottom", horizontal: "left" }
-              : { vertical: "center", horizontal: "right" }
+              ? { vertical: 'bottom', horizontal: 'left' }
+              : { vertical: 'center', horizontal: 'right' }
           }
           transformOrigin={
             depth === 1
-              ? { vertical: "top", horizontal: "left" }
-              : { vertical: "center", horizontal: "left" }
+              ? { vertical: 'top', horizontal: 'left' }
+              : { vertical: 'center', horizontal: 'left' }
           }
           PaperProps={{
             onMouseEnter: handleOpen,
             onMouseLeave: handleClose,
           }}
         >
-          <NavSubList data={data.children} depth={depth} />
+          <NavSubList
+            data={data.children}
+            depth={depth}
+          />
         </StyledPopover>
       )}
     </>
-  );
+  )
 }
-
-// ----------------------------------------------------------------------
 
 interface NavListSubProps {
-  data: NavListProps[];
-  depth: number;
+  data: NavListProps[]
+  depth: number
 }
 
-function NavSubList({
-  data,
-  depth,
-}: NavListSubProps): React.ReactElement | null {
+function NavSubList({ data, depth }: NavListSubProps): React.ReactElement | null {
   return (
     <>
       {data.map((list) => (
@@ -123,5 +121,5 @@ function NavSubList({
         />
       ))}
     </>
-  );
+  )
 }

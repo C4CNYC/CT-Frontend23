@@ -1,50 +1,54 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+
+    "composite": false,
+    "inlineSources": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "strictNullChecks": true,
+
     "target": "es5",
     "lib": [
-      "es6",
-      "dom"
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    "strict": true,
-    "noEmit": true,
     "allowJs": true,
-    "jsx": "preserve",
-    "module": "esnext",
-    "incremental": true,
     "skipLibCheck": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "useUnknownInCatchVariables": false,
-    "allowSyntheticDefaultImports": true,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
     "paths": {
-      "@components": ["src/components"],
-      "@pages/*": ["src/pages/*"],
-      "@hooks": ["src/hooks"],
-      "@types": ["src/@types"],
-      "@sections/*": ["src/sections/*"],
-      "@routes/*": ["src/routes/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@assets/*": ["src/assets/*"],
-      "@theme/*": ["src/theme/*"],
-      "@utils": ["src/utils"],
-      "src": ["src"]
-    }
+      "@root/*": ["./*"],
+      "@/*": ["./src/*"]
+    },
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "exclude": [
-    "next-env.d.ts",
-    "node_modules",
-    "editor.tsx"
-  ],
   "include": [
-    "**/*.ts",
-    "**/*.tsx", "src/components/real-time-code-editor/editor.jsx",
+    "next-env.d.ts",
+    "global.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "_ref",
+    "**/_ref",
+    "**/*.stories.tsx",
   ]
 }

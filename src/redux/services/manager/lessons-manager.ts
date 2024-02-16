@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { managerApi } from ".";
 import {
   ILesson,
   ILessonCreate,
   ILessonDelete,
   ILessonSearchParams,
   ILessonUpdate,
-} from "../interfaces/courseUnits.interface";
-import { IIntegration } from "../interfaces/integration.interface";
+} from '../interfaces/courseUnits.interface'
+import { IIntegration } from '../interfaces/integration.interface'
+
+import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,52 +18,43 @@ const extendedApi = managerApi.injectEndpoints({
       ILessonSearchParams
     >({
       query: (params) => ({
-        url: "/manager/lesson",
-        method: "GET",
+        url: '/manager/lesson',
+        method: 'GET',
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Lessons"],
+      providesTags: ['Lessons'],
     }),
     getLesson: builder.query<ILesson & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
-        method: "GET",
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Lessons"],
+      providesTags: ['Lessons'],
     }),
-    updateLesson: builder.mutation<
-      ILesson & BaseResponseInterface,
-      ILessonUpdate
-    >({
+    updateLesson: builder.mutation<ILesson & BaseResponseInterface, ILessonUpdate>({
       query: ({ id, ...body }) => ({
         url: `/manager/lesson/${id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: "Lessons" }],
+      invalidatesTags: [{ type: 'Lessons' }],
     }),
-    createLesson: builder.mutation<
-      ILessonCreate & BaseResponseInterface,
-      ILessonCreate
-    >({
+    createLesson: builder.mutation<ILessonCreate & BaseResponseInterface, ILessonCreate>({
       query: ({ ...body }) => ({
-        url: "/manager/lesson",
-        method: "POST",
+        url: '/manager/lesson',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: "Lessons" }],
+      invalidatesTags: [{ type: 'Lessons' }],
     }),
-    deleteLesson: builder.mutation<
-      ILessonDelete & BaseResponseInterface,
-      ILessonDelete
-    >({
+    deleteLesson: builder.mutation<ILessonDelete & BaseResponseInterface, ILessonDelete>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: "Lessons" }],
+      invalidatesTags: [{ type: 'Lessons' }],
     }),
     getLessonIntegrations: builder.query<
       Array<IIntegration & BaseResponseInterface>,
@@ -71,36 +62,30 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}/integration`,
-        method: "GET",
+        method: 'GET',
       }),
-      providesTags: ["ContentIntegration"],
+      providesTags: ['ContentIntegration'],
       keepUnusedDataFor: 0,
     }),
-    addIntegration: builder.mutation<
-      void,
-      { lessonId: string; integration_id: string }
-    >({
+    addIntegration: builder.mutation<void, { lessonId: string; integration_id: string }>({
       query: ({ lessonId, ...body }) => ({
         url: `/manager/lesson/${lessonId}/integration`,
-        method: "PATCH",
+        method: 'PATCH',
         body,
       }),
-      invalidatesTags: ["ContentIntegration"],
+      invalidatesTags: ['ContentIntegration'],
     }),
-    removeIntegration: builder.mutation<
-      void,
-      { lessonId: string; integration_id: string }
-    >({
+    removeIntegration: builder.mutation<void, { lessonId: string; integration_id: string }>({
       query: ({ lessonId, ...body }) => ({
         url: `/manager/lesson/${lessonId}/integration`,
-        method: "DELETE",
+        method: 'DELETE',
         body,
       }),
-      invalidatesTags: ["ContentIntegration"],
+      invalidatesTags: ['ContentIntegration'],
     }),
   }),
   overrideExisting: false,
-});
+})
 
 export const {
   useGetLessonsQuery,
@@ -112,4 +97,4 @@ export const {
   useDeleteLessonMutation,
   useAddIntegrationMutation,
   useRemoveIntegrationMutation,
-} = extendedApi;
+} = extendedApi

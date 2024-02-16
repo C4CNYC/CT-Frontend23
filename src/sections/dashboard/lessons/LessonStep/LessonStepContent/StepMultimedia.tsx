@@ -1,34 +1,39 @@
-import { useContext, useState } from "react";
+import { useContext, useState } from 'react'
 
-import { Box } from "@mui/material";
+import { Box } from '@mui/material'
 
-import { MyEditor, ResizerUi } from "@components";
+import { ResizerUi } from '@/components'
+import { MyEditor } from '@/components/remirror-editor/MyEditor'
+import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { LessonContentContext } from "./LessonContent.context";
-import { BaseResponseInterface } from "@utils";
-import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
+import { LessonContentContext } from './LessonContent.context'
 
 interface Props {
-  content: string;
-  onSubmit: (value: string) => void;
-  data: (ILessonContent & BaseResponseInterface);
-  lessonId: string;
+  content: string
+  onSubmit: (value: string) => void
+  data: ILessonContent & BaseResponseInterface
+  lessonId: string
 }
 
 export default function StepMultimedia({
   onSubmit,
   content,
   data,
-  lessonId
+  lessonId,
 }: Props): React.ReactElement {
-  const { locked } = useContext(LessonContentContext);
-  const [value, setValue] = useState<string>("");
+  const { locked } = useContext(LessonContentContext)
+  const [value, setValue] = useState<string>('')
 
   return (
-    <ResizerUi split="vertical" primary="first" defaultSize={800}>
+    <ResizerUi
+      split='vertical'
+      primary='first'
+      defaultSize={800}
+    >
       <MyEditor
         onSubmit={() => {
-          onSubmit(JSON.stringify(value));
+          onSubmit(JSON.stringify(value))
         }}
         multimediaValue={content}
         setMultimediaValue={setValue}
@@ -46,5 +51,5 @@ export default function StepMultimedia({
         />
       </Box>
     </ResizerUi>
-  );
+  )
 }

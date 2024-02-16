@@ -1,45 +1,41 @@
-import { memo } from "react";
+import { memo } from 'react'
 
-import { Stack } from "@mui/material";
+import { Stack } from '@mui/material'
 
-import { hideScrollbarY } from "@utils";
+import { hideScrollbarY } from '@/utils/cssStyles'
 
-import { NavListProps, NavSectionProps } from "../types";
-import NavList from "./NavList";
+import { NavListProps, NavSectionProps } from '../types'
 
-// ----------------------------------------------------------------------
+import NavList from './NavList'
 
-function NavSectionHorizontal({
-  data,
-  sx,
-  ...other
-}: NavSectionProps): React.ReactElement | null {
+function NavSectionHorizontal({ data, sx, ...other }: NavSectionProps): React.ReactElement | null {
   return (
     <>
       <Stack
-        direction="row"
+        direction='row'
         spacing={1}
         sx={{
-          mx: "auto",
+          mx: 'auto',
           ...hideScrollbarY,
           ...sx,
         }}
         {...other}
       >
         {data.map((group) => (
-          <Items key={group.subheader} items={group.items} />
+          <Items
+            key={group.subheader}
+            items={group.items}
+          />
         ))}
       </Stack>
     </>
-  );
+  )
 }
 
-export default memo(NavSectionHorizontal);
-
-// ----------------------------------------------------------------------
+export default memo(NavSectionHorizontal)
 
 interface ItemsProps {
-  items: NavListProps[];
+  items: NavListProps[]
 }
 
 function Items({ items }: ItemsProps): React.ReactElement | null {
@@ -54,5 +50,5 @@ function Items({ items }: ItemsProps): React.ReactElement | null {
         />
       ))}
     </>
-  );
+  )
 }

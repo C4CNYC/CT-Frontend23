@@ -1,33 +1,28 @@
-import { useMemo } from "react";
+import { useMemo } from 'react'
 
-// @mui
-import { CssBaseline } from "@mui/material";
+import { CssBaseline } from '@mui/material'
 import {
   Components,
   ThemeProvider as MUIThemeProvider,
   ThemeOptions,
   createTheme,
-} from "@mui/material/styles";
+} from '@mui/material/styles'
 
-// components
-import { useSettingsContext } from "@components";
+import { useSettingsContext } from '@/components/settings'
 
-//
-import { customShadows } from "./customShadows";
-import { GlobalStyles } from "./globalStyles";
-import { ComponentsOverrides } from "./overrides";
-import { palette } from "./palette";
-import { shadows } from "./shadows";
-import { typography } from "./typography";
-
-// ----------------------------------------------------------------------
+import { customShadows } from './customShadows'
+import { GlobalStyles } from './globalStyles'
+import { ComponentsOverrides } from './overrides'
+import { palette } from './palette'
+import { shadows } from './shadows'
+import { typography } from './typography'
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export function ThemeProvider({ children }: Props): React.ReactElement | null {
-  const { themeMode, themeDirection } = useSettingsContext();
+  const { themeMode, themeDirection } = useSettingsContext()
 
   const themeOptions: ThemeOptions = useMemo(
     () => ({
@@ -39,11 +34,11 @@ export function ThemeProvider({ children }: Props): React.ReactElement | null {
       customShadows: customShadows(themeMode),
     }),
     [themeDirection, themeMode]
-  );
+  )
 
-  const theme = createTheme(themeOptions);
+  const theme = createTheme(themeOptions)
 
-  theme.components = ComponentsOverrides(theme) as Components;
+  theme.components = ComponentsOverrides(theme) as Components
 
   return (
     <MUIThemeProvider theme={theme}>
@@ -51,5 +46,5 @@ export function ThemeProvider({ children }: Props): React.ReactElement | null {
       <GlobalStyles />
       {children}
     </MUIThemeProvider>
-  );
+  )
 }

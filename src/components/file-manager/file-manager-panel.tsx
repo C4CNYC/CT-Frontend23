@@ -1,19 +1,16 @@
-// @mui
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Stack, { StackProps } from '@mui/material/Stack';
-// components
-import { Iconify } from 'src/components/iconify';
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Stack, { StackProps } from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 
-// ----------------------------------------------------------------------
+import { Iconify } from '@/components/iconify'
 
 interface Props extends StackProps {
-  title: string;
-  subTitle?: string;
-  onOpen?: VoidFunction;
-  collapse?: boolean;
-  onCollapse?: VoidFunction;
+  title: string
+  subTitle?: string
+  onOpen?: VoidFunction
+  collapse?: boolean
+  onCollapse?: VoidFunction
 }
 
 export default function FileManagerPanel({
@@ -26,15 +23,25 @@ export default function FileManagerPanel({
   ...other
 }: Props) {
   return (
-    <Stack direction="row" alignItems="center" sx={{ mb: 3, ...sx }} {...other}>
+    <Stack
+      direction='row'
+      alignItems='center'
+      sx={{ mb: 3, ...sx }}
+      {...other}
+    >
       <Stack flexGrow={1}>
-        <Stack direction="row" alignItems="center" spacing={1} flexGrow={1}>
-          <Typography variant="h6"> {title} </Typography>
+        <Stack
+          direction='row'
+          alignItems='center'
+          spacing={1}
+          flexGrow={1}
+        >
+          <Typography variant='h6'> {title} </Typography>
 
           {onOpen && (
             <IconButton
-              size="small"
-              color="primary"
+              size='small'
+              color='primary'
               onClick={onOpen}
               sx={{
                 width: 24,
@@ -46,7 +53,7 @@ export default function FileManagerPanel({
                 },
               }}
             >
-              <Iconify icon="mingcute:add-line" />
+              <Iconify icon='mingcute:add-line' />
             </IconButton>
           )}
         </Stack>
@@ -60,5 +67,5 @@ export default function FileManagerPanel({
         </IconButton>
       )}
     </Stack>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { Table, TableBody, TableContainer } from "@mui/material";
+import { Table, TableBody, TableContainer } from '@mui/material'
 
 import {
   Scrollbar,
@@ -8,62 +8,65 @@ import {
   TablePaginationCustom,
   emptyRows,
   useTable,
-} from "@components";
-import { useFilters } from "@hooks";
-import { ClassSearchParams } from "src/redux/interfaces/class.interface";
-import { useGetSchoolListQuery } from "src/redux/services/admin/school-amdin";
+} from '@/components'
+import { useFilters } from '@/hooks'
+import { ClassSearchParams } from '@/redux/interfaces/class.interface'
+import { useGetSchoolListQuery } from '@/redux/services/admin/school-amdin'
 
-import SchoolTableRow from "./SchoolTableRow";
-import SchoolTableToolbar from "./SchoolTableToolbar";
-import SkeletonSchoolRow from "./SkeletonSchoolRow";
+import SchoolTableRow from './SchoolTableRow'
+import SchoolTableToolbar from './SchoolTableToolbar'
+import SkeletonSchoolRow from './SkeletonSchoolRow'
 
 const TABLE_HEAD = [
   {
-    id: "cover",
-    label: "cover",
-    align: "left",
+    id: 'cover',
+    label: 'cover',
+    align: 'left',
   },
-  { id: "name", label: "name", align: "left" },
+  { id: 'name', label: 'name', align: 'left' },
   {
-    id: "country",
-    label: "country",
-    align: "center",
+    id: 'country',
+    label: 'country',
+    align: 'center',
   },
-  { id: "city", label: "city", align: "left" },
+  { id: 'city', label: 'city', align: 'left' },
   {
-    id: "phone",
-    label: "phone",
-    align: "left",
+    id: 'phone',
+    label: 'phone',
+    align: 'left',
   },
   {
-    id: "active",
-    label: "schools_table_active",
-    align: "left",
+    id: 'active',
+    label: 'schools_table_active',
+    align: 'left',
   },
-  { id: "edit", label: "", align: "left" },
-];
+  { id: 'edit', label: '', align: 'left' },
+]
 
 export default function SchoolTable(): React.ReactElement {
-  const { dense, page, rowsPerPage, onChangeDense } = useTable();
+  const { dense, page, rowsPerPage, onChangeDense } = useTable()
   const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
-    name: "",
-  });
+    name: '',
+  })
   const { data, isLoading } = useGetSchoolListQuery({
     ...filters,
-  });
+  })
 
   return (
     <>
       <SchoolTableToolbar
-        filterName={filters.name ?? ""}
+        filterName={filters.name ?? ''}
         onFilterName={(e: any) => {
-          setFilter("name", e.target.value);
+          setFilter('name', e.target.value)
         }}
         onResetFilter={resetFilters}
       />
-      <TableContainer sx={{ position: "relative", overflow: "unset" }}>
+      <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
         <Scrollbar>
-          <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
+          <Table
+            size={dense ? 'small' : 'medium'}
+            sx={{ minWidth: 800 }}
+          >
             <TableHeadCustom headLabel={TABLE_HEAD} />
 
             <TableBody>
@@ -72,7 +75,10 @@ export default function SchoolTable(): React.ReactElement {
                     .fill(null)
                     .map((el, i) => <SkeletonSchoolRow key={i} />)
                 : data?.data.map((row) => (
-                    <SchoolTableRow key={row.id} row={row} />
+                    <SchoolTableRow
+                      key={row.id}
+                      row={row}
+                    />
                   ))}
 
               <TableEmptyRows
@@ -90,14 +96,14 @@ export default function SchoolTable(): React.ReactElement {
         page={data?.meta.page ? data?.meta.page - 1 : 0}
         rowsPerPage={data?.meta.take ?? 0}
         onPageChange={(e: any, page: number) => {
-          setFilter("page", page + 1);
+          setFilter('page', page + 1)
         }}
         onRowsPerPageChange={(e: any) => {
-          setFilter("take", e.target.value);
+          setFilter('take', e.target.value)
         }}
         dense={dense}
         onChangeDense={onChangeDense}
       />
     </>
-  );
+  )
 }

@@ -1,57 +1,52 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Card,
-  Dialog,
-  DialogContent,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { LoadingButton } from '@mui/lab'
+import { Box, Button, Card, Dialog, DialogContent, Grid, Typography } from '@mui/material'
 
-import { useSnackbar } from "@components";
-import { APIError } from "src/redux/interfaces/custom-error.interface";
+import { useSnackbar } from '@/components'
+import { APIError } from '@/redux/interfaces/custom-error.interface'
+import { useTranslate } from '@/utils/translateHelper'
 
 interface IExitTribeDialogProps {
-  children: React.ReactElement;
+  children: React.ReactElement
 }
 
-export default function ExitTribeDialog({
-  children,
-}: IExitTribeDialogProps): React.ReactElement {
-  const [open, setOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
+export default function ExitTribeDialog({ children }: IExitTribeDialogProps): React.ReactElement {
+  const [open, setOpen] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
 
-  const { enqueueSnackbar } = useSnackbar();
+  const translate = useTranslate()
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const openDialog = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const closeDialog = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const onSubmit = async (): Promise<void> => {
-    setLoading(true);
+    setLoading(true)
     try {
       // add user adding logic
-      enqueueSnackbar("You left the tribe");
-    } catch (error) {
-      const typedError = error as APIError;
+      enqueueSnackbar(translate('tribes_you_left_tribe'))
+    } catch (error: any) {
+      const typedError = error as APIError
       enqueueSnackbar(typedError.data.message, {
-        variant: "error",
-      });
+        variant: 'error',
+      })
     }
-    setLoading(false);
-    closeDialog();
-  };
+    setLoading(false)
+    closeDialog()
+  }
   return (
     <>
       <Box
-        onClick={() => {
-          openDialog();
+        onClick={(event) => {
+          event.stopPropagation()
+          event.preventDefault()
+          openDialog()
         }}
       >
         {children}
@@ -59,36 +54,54 @@ export default function ExitTribeDialog({
       <Dialog
         open={open}
         onClose={closeDialog}
-        PaperProps={{ sx: { width: "350px" } }}
+        PaperProps={{ sx: { width: '350px' } }}
       >
         <DialogContent sx={{ p: 0 }}>
           <Typography
-            variant="h5"
-            sx={{ pb: 1, pt: 2, px: 2, textAlign: "center" }}
+            variant='h5'
+            sx={{ pb: 1, pt: 2, px: 2, textAlign: 'center' }}
           >
-            Are you sure you <br /> want to leave tribe?
+            {translate('tribes_want_leave')}
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12}>
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid
+              item
+              xs={12}
+              md={12}
+            >
               <Card sx={{ p: 3 }}>
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
+                    display: 'flex',
+                    justifyContent: 'center',
                     gap: 2,
                     mt: 2,
                   }}
                 >
-                  <Button color="error" onClick={closeDialog}>
-                    Cancel
+                  <Button
+                    color='error'
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      event.preventDefault()
+                      closeDialog()
+                    }}
+                  >
+                    {translate('actions_cancel')}
                   </Button>
                   <LoadingButton
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     loading={loading}
-                    onClick={onSubmit}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      event.preventDefault()
+                      onSubmit()
+                    }}
                   >
-                    Leave
+                    {translate('actions_leave')}
                   </LoadingButton>
                 </Box>
               </Card>
@@ -97,5 +110,5 @@ export default function ExitTribeDialog({
         </DialogContent>
       </Dialog>
     </>
-  );
+  )
 }

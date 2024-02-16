@@ -1,6 +1,6 @@
 export interface ISocials {
-  name: string;
-  type: string;
-  link: string;
-  id?: string;
+  name: string
+  type: string
+  link: string
+  id?: string
 }

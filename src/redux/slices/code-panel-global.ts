@@ -1,64 +1,78 @@
-import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 export interface IGlobalCodePanel {
-  slideIndex: number;
-  solutionCode: string;
-  nextStepAble: boolean;
-  lessonId: string;
-  unitId: string;
-  courseId: string;
-  isInstructionsHidden: boolean;
-  isBrowserHidden: boolean;
-  isCodePreviewVisible: boolean
+  slideIndex: number
+  solutionCode: string
+  nextStepAble: boolean
+  lessonId: string
+  unitId: string
+  courseId: string
+  code: string
+  isInstructionsHidden: boolean
+  isBrowserHidden: boolean
+  isRealtimeCodeEnabled: boolean
 }
 
 const initialState: IGlobalCodePanel = {
   slideIndex: 0,
-  solutionCode: "",
-  lessonId: "",
-  unitId: "",
-  courseId: "",
+  solutionCode: '',
+  lessonId: '',
+  unitId: '',
+  courseId: '',
   nextStepAble: true,
+  code: '',
   isInstructionsHidden: false,
   isBrowserHidden: false,
-  isCodePreviewVisible: false,
-};
+  isRealtimeCodeEnabled: true,
+}
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
 
 export const codePanelSlice = createSlice({
-  name: "code-panel-global",
+  name: 'code-panel-global',
   initialState,
   reducers: {
-    setSlideIndex: (state, { payload }: PayloadAction<PickedStoreItem<"slideIndex">>): void => {
+    setSlideIndex: (state, { payload }: PayloadAction<PickedStoreItem<'slideIndex'>>): void => {
       state.slideIndex = payload
     },
-    setSolutionCode: (state, { payload }: PayloadAction<PickedStoreItem<"solutionCode">>): void => {
+    setSolutionCode: (state, { payload }: PayloadAction<PickedStoreItem<'solutionCode'>>): void => {
       state.solutionCode = payload
     },
-    setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<"nextStepAble">>): void => {
+    setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<'nextStepAble'>>): void => {
       state.nextStepAble = payload
     },
-    setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<"unitId">>): void => {
+    setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<'unitId'>>): void => {
       state.unitId = payload
     },
-    setCourseId: (state, { payload }: PayloadAction<PickedStoreItem<"courseId">>): void => {
+    setCourseId: (state, { payload }: PayloadAction<PickedStoreItem<'courseId'>>): void => {
       state.courseId = payload
     },
-    setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<"lessonId">>): void => {
+    setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<'lessonId'>>): void => {
       state.lessonId = payload
     },
-    toggleInstrations: (state, { payload }: PayloadAction<PickedStoreItem<"isInstructionsHidden">>): void => {
+    toggleInstrations: (
+      state,
+      { payload }: PayloadAction<PickedStoreItem<'isInstructionsHidden'>>
+    ): void => {
       state.isInstructionsHidden = payload
     },
-    toggleBrowser: (state, { payload }: PayloadAction<PickedStoreItem<"isBrowserHidden">>): void => {
+    toggleBrowser: (
+      state,
+      { payload }: PayloadAction<PickedStoreItem<'isBrowserHidden'>>
+    ): void => {
       state.isBrowserHidden = payload
     },
-    toggleCodePreview: (state, { payload }: PayloadAction<PickedStoreItem<'isCodePreviewVisible'>>) => {
-      state.isCodePreviewVisible = payload;
-    }
+    toggleRealtimeCodeEnabled: (
+      state,
+      { payload }: PayloadAction<PickedStoreItem<'isRealtimeCodeEnabled'>>
+    ) => {
+      state.isRealtimeCodeEnabled = payload
+    },
+    setCode: (state, action: PayloadAction<string>) => {
+      state.code = action.payload
+    },
   },
-});
+})
 
 export const {
   setSlideIndex,
@@ -69,7 +83,8 @@ export const {
   setLessonId,
   toggleInstrations,
   toggleBrowser,
-  toggleCodePreview
-} = codePanelSlice.actions;
+  toggleRealtimeCodeEnabled,
+  setCode,
+} = codePanelSlice.actions
 
-export default codePanelSlice.reducer;
+export default codePanelSlice.reducer
