@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, Dialog, IconButton, Skeleton, Typography } from '@mui/material'
-import { useGoogleLogin } from '@react-oauth/google'
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
 import {
@@ -16,7 +16,6 @@ import { useSnackbar } from '../snackbar'
 
 import { GoogleBtn } from './GoogleBtn'
 import { GoogleClassesList } from './GoogleClassesList'
-
 interface IClassroomModal {
   children: React.ReactElement
   schoolId: string
@@ -99,16 +98,8 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
             />
           </IconButton>
         </Box>
-        <Box
-          ml='30px'
-          mb='30px'
-          mr='30px'
-        >
-          <Box
-            display='flex'
-            alignItems='center'
-            ml='-20px'
-          >
+        <Box ml='30px' mb='30px' mr='30px'>
+          <Box display='flex' alignItems='center' ml='-20px'>
             <Button
               sx={{
                 color: 'inherit',
@@ -129,23 +120,12 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
                 }}
               />
             </Button>
-            <Typography
-              variant='h4'
-              ml='-10px'
-            >
+            <Typography variant='h4' ml='-10px'>
               {translate('share_google_classroom')}
             </Typography>
           </Box>
-          <Box
-            mt='32px'
-            mb='32px'
-          >
-            {isFetching ? (
-              <Skeleton
-                variant='rounded'
-                height='56px'
-              />
-            ) : null}
+          <Box mt='32px' mb='32px'>
+            {isFetching ? <Skeleton variant='rounded' height='56px' /> : null}
             {!token ? (
               <GoogleBtn
                 onClick={() => {
@@ -154,10 +134,7 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
               />
             ) : null}
             {data?.length && !isFetching ? (
-              <GoogleClassesList
-                classes={data ?? []}
-                onSelectClass={setClassId}
-              />
+              <GoogleClassesList classes={data ?? []} onSelectClass={setClassId} />
             ) : null}
           </Box>
           <LoadingButton
