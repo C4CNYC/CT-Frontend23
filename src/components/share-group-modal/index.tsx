@@ -17,6 +17,7 @@ import { Stack } from '@mui/system'
 import { AiOutlineArrowRight } from '@react-icons/all-files/ai/AiOutlineArrowRight'
 import { MdOutlineMail } from '@react-icons/all-files/md/MdOutlineMail'
 import { SiGoogleclassroom } from '@react-icons/all-files/si/SiGoogleclassroom'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
@@ -265,21 +266,25 @@ export default function ShareGroupModal({
               >
                 {translate('share_other_ways_to_add')}
               </Typography>
-              <ClassroomModal schoolId={schoolClass?.school?.id ?? ''}>
-                <Button
-                  fullWidth
-                  sx={CLASS_ROOM_BTN_SX}
-                >
-                  <Box
-                    display='flex'
-                    alignItems='center'
+              <GoogleOAuthProvider
+                clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}
+              >
+                <ClassroomModal schoolId={schoolClass?.school?.id ?? ''}>
+                  <Button
+                    fullWidth
+                    sx={CLASS_ROOM_BTN_SX}
                   >
-                    <SiGoogleclassroom size={24} />
-                    <Typography ml={2}>{translate('share_google_classroom')}</Typography>
-                  </Box>
-                  <AiOutlineArrowRight />
-                </Button>
-              </ClassroomModal>
+                    <Box
+                      display='flex'
+                      alignItems='center'
+                    >
+                      <SiGoogleclassroom size={24} />
+                      <Typography ml={2}>{translate('share_google_classroom')}</Typography>
+                    </Box>
+                    <AiOutlineArrowRight />
+                  </Button>
+                </ClassroomModal>
+              </GoogleOAuthProvider>
               <EmailAddressModal
                 schoolId={schoolClass?.school?.id ?? ''}
                 classId={schoolClass?.id}

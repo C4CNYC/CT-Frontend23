@@ -16,7 +16,6 @@ import { useSnackbar } from '../snackbar'
 
 import { GoogleBtn } from './GoogleBtn'
 import { GoogleClassesList } from './GoogleClassesList'
-
 interface IClassroomModal {
   children: React.ReactElement
   schoolId: string
