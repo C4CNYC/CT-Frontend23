@@ -60,7 +60,7 @@
     "date-fns": "^2.29.3",
     "emoji-picker-react": "^4.4.9",
     "framer-motion": "^7.6.12",
-    "generate-password": "^1.7.0",
+    "generate-password-browser": "^1.1.0",
     "hamburger-react": "^2.5.0",
     "html2canvas": "^1.4.1",
     "i18next": "^22.0.6",
