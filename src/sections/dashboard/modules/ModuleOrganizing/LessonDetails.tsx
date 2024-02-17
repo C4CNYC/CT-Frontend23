@@ -61,6 +61,7 @@ export default function LessonDetails(): React.ReactElement {
                 name: lesson?.name,
                 description: lesson?.description,
                 active: lesson?.active,
+                head: lesson?.head || '',
                 tips: '',
                 independent: lesson?.independent,
                 type: lesson?.type,

@@ -85,6 +85,7 @@ export default function AddQuest(): React.ReactElement {
         name: assignment?.name,
         description: JSON.parse(assignment?.description ?? '{}'),
         type: assignment?.type ?? AssignmentTypes.COURSE,
+        module: assignment?.courseUnit?.id,
         course: assignment?.course?.id,
         startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
         dueDate: format(DATE_PARSER(assignment?.end_date), DATE_FORMAT),
@@ -127,6 +128,17 @@ export default function AddQuest(): React.ReactElement {
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
+          courseUnitId: formData.module,
+        }).unwrap()
+        await addAssignmentToClass({
+          assignmentId: assignment.id,
+          schoolId: query.schoolId as string,
+          class_id: query.id as string,
+        }).unwrap()
+        await addCourseToAssignment({
+          assignmentId: assignment.id,
+          schoolId: query.schoolId as string,
+          course_id: formData.course,
         }).unwrap()
         enqueueSnackbar(translate('assignments_updated_successfuly'))
         push(
@@ -150,6 +162,7 @@ export default function AddQuest(): React.ReactElement {
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,
+          courseUnitId: formData.module,
           active: Boolean(formData.active),
           skill_tags: assignmentsSkillsId?.map((el) => el.id) ?? [],
           classes: [query.id as string],

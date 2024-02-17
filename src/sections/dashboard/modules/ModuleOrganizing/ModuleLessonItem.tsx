@@ -130,6 +130,7 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                   description: lesson.description,
                   active: lesson.active,
                   tips: '',
+                  head: lesson?.head || '',
                   independent: lesson.independent,
                   type: lesson.type,
                 }}
