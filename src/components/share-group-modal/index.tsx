@@ -17,6 +17,7 @@ import { Stack } from '@mui/system'
 import { AiOutlineArrowRight } from '@react-icons/all-files/ai/AiOutlineArrowRight'
 import { MdOutlineMail } from '@react-icons/all-files/md/MdOutlineMail'
 import { SiGoogleclassroom } from '@react-icons/all-files/si/SiGoogleclassroom'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
@@ -49,7 +50,6 @@ import {
   getSubtitleFooterSx,
   getSubtitleSx,
 } from './constansts'
-import { GoogleOAuthProvider } from '@react-oauth/google'
 
 interface IShareGroupModalProps {
   children: React.ReactElement
@@ -118,14 +118,34 @@ export default function ShareGroupModal({
   return (
     <>
       <Stack onClick={handleOpen}>{children}</Stack>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth='xs' scroll='body'>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth='xs'
+        scroll='body'
+      >
         <Box sx={HEADER_SX}>
-          <Box display='flex' justifyContent='end' alignItems='center'>
-            <IconButton onClick={handleClose} sx={{ color: 'white' }}>
-              <Iconify icon='jam:close-rectangle-f' width={24} height={24} />
+          <Box
+            display='flex'
+            justifyContent='end'
+            alignItems='center'
+          >
+            <IconButton
+              onClick={handleClose}
+              sx={{ color: 'white' }}
+            >
+              <Iconify
+                icon='jam:close-rectangle-f'
+                width={24}
+                height={24}
+              />
             </IconButton>
           </Box>
-          <Typography sx={HEADER_TITLE_SX} variant='h3'>
+          <Typography
+            sx={HEADER_TITLE_SX}
+            variant='h3'
+          >
             {schoolClass?.name}
           </Typography>
         </Box>
@@ -139,18 +159,32 @@ export default function ShareGroupModal({
             >
               {translate('share_group')}
             </Typography>
-            <Typography sx={subtitleSx} variant='body2'>
+            <Typography
+              sx={subtitleSx}
+              variant='body2'
+            >
               {translate('share_send_link')}
             </Typography>
           </Box>
           <Box sx={copySx}>
-            <Box display='flex' alignItems='center' width='100%'>
+            <Box
+              display='flex'
+              alignItems='center'
+              width='100%'
+            >
               <Button sx={COPY_BTN_SX}>
-                <Iconify icon='basil:copy-outline' width={18} height={18} />
+                <Iconify
+                  icon='basil:copy-outline'
+                  width={18}
+                  height={18}
+                />
               </Button>
               <Box ml='10px'>
                 <Typography>{translate('share_invite_link')}</Typography>
-                <Typography noWrap sx={LINK_TEXT_SX}>
+                <Typography
+                  noWrap
+                  sx={LINK_TEXT_SX}
+                >
                   {shareLink}
                 </Typography>
               </Box>
@@ -166,7 +200,11 @@ export default function ShareGroupModal({
             </Button>
           </Box>
           <RoleBasedGuard roles={[Role.Manager, Role.Editor, Role.Owner, Role.Admin]}>
-            <Stack mt='20px' ml='15px' gap='20px'>
+            <Stack
+              mt='20px'
+              ml='15px'
+              gap='20px'
+            >
               <FormControl>
                 <RadioGroup
                   aria-labelledby='demo-controlled-radio-buttons-group'
@@ -181,9 +219,17 @@ export default function ShareGroupModal({
                   <FormControlLabel
                     value='true'
                     sx={FORM_CONTROL_SX}
-                    control={<Radio disabled={isLoading} sx={RADIO_SX} />}
+                    control={
+                      <Radio
+                        disabled={isLoading}
+                        sx={RADIO_SX}
+                      />
+                    }
                     label={
-                      <Typography color={isLight ? '#292929' : ''} variant='h6'>
+                      <Typography
+                        color={isLight ? '#292929' : ''}
+                        variant='h6'
+                      >
                         {translate('share_can_join')}
                       </Typography>
                     }
@@ -193,7 +239,10 @@ export default function ShareGroupModal({
                     disabled={isLoading}
                     control={<Radio sx={RADIO_SX} />}
                     label={
-                      <Typography color={isLight ? '#292929' : ''} variant='h6'>
+                      <Typography
+                        color={isLight ? '#292929' : ''}
+                        variant='h6'
+                      >
                         {translate('share_only_people_approve')}
                       </Typography>
                     }
@@ -201,17 +250,34 @@ export default function ShareGroupModal({
                 </RadioGroup>
               </FormControl>
             </Stack>
-            <Divider variant='middle' orientation='horizontal' sx={DIVIDER_SX} />
-            <Box ml='15px' mt='28px' mb='28px'>
-              <Typography variant='h6' sx={subtitleFooterSx}>
+            <Divider
+              variant='middle'
+              orientation='horizontal'
+              sx={DIVIDER_SX}
+            />
+            <Box
+              ml='15px'
+              mt='28px'
+              mb='28px'
+            >
+              <Typography
+                variant='h6'
+                sx={subtitleFooterSx}
+              >
                 {translate('share_other_ways_to_add')}
               </Typography>
               <GoogleOAuthProvider
                 clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}
               >
                 <ClassroomModal schoolId={schoolClass?.school?.id ?? ''}>
-                  <Button fullWidth sx={CLASS_ROOM_BTN_SX}>
-                    <Box display='flex' alignItems='center'>
+                  <Button
+                    fullWidth
+                    sx={CLASS_ROOM_BTN_SX}
+                  >
+                    <Box
+                      display='flex'
+                      alignItems='center'
+                    >
                       <SiGoogleclassroom size={24} />
                       <Typography ml={2}>{translate('share_google_classroom')}</Typography>
                     </Box>
@@ -219,9 +285,18 @@ export default function ShareGroupModal({
                   </Button>
                 </ClassroomModal>
               </GoogleOAuthProvider>
-              <EmailAddressModal schoolId={schoolClass?.school?.id ?? ''} classId={schoolClass?.id}>
-                <Button fullWidth sx={EMAIL_BTN_SX}>
-                  <Box display='flex' alignItems='center'>
+              <EmailAddressModal
+                schoolId={schoolClass?.school?.id ?? ''}
+                classId={schoolClass?.id}
+              >
+                <Button
+                  fullWidth
+                  sx={EMAIL_BTN_SX}
+                >
+                  <Box
+                    display='flex'
+                    alignItems='center'
+                  >
                     <MdOutlineMail size={24} />
                     <Typography ml={2}>{translate('share_email_address')}</Typography>
                   </Box>
