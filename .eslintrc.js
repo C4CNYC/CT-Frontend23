@@ -43,11 +43,12 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
     'react/no-unescaped-entities': ['off'],
     'react/display-name': ['off'],
-
+    'no-console': 2,
     'no-restricted-imports': [
       'error',
       { paths: ['react-code-blocks', '@uiw/codemirror-extensions-langs'] },
     ],
+    'react-hooks/exhaustive-deps': 0,
 
     // "@typescript-eslint/space-before-function-paren": 0,
     // "@typescript-eslint/strict-boolean-expressions": 0,

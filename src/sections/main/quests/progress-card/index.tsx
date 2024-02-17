@@ -153,7 +153,6 @@ export default function ProgressCard({ activeTab }: IProgressCardProps): React.R
               exclusive
               onChange={(_, value) => {
                 if (value === 'previous') {
-                  console.log(selectedIdx, activeData)
                   setFilter(
                     filters.moduleId.length ? 'moduleId' : 'courseId',
                     activeData[selectedIdx - 1].id

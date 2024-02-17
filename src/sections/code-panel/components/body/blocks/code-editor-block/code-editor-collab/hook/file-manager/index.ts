@@ -52,7 +52,7 @@ export const useFileManager = ({
 
   const onAddFile = async (fileName: string): Promise<void> => {
     if (!socket) {
-      console.error('TODO onAddFile not implemented without sockets')
+      // console.error('TODO onAddFile not implemented without sockets')
       return
     }
     const file = await createFile({ roomId, fileName, socket })

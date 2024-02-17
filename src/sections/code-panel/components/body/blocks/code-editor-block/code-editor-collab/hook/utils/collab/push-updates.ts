@@ -30,7 +30,6 @@ export const pushUpdates = ({
       })),
       fileName,
     })
-    console.log('pushUpdates', updates, fileName)
     socket.once(SubscribedEvents.PushResponse, function (status: boolean) {
       resolve(status)
     })
