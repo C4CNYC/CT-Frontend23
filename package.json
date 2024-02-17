@@ -11,8 +11,15 @@
     "export": "yarn build && next export -o _static",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "clear": "rm -rf .next .swc _static node_modules"
+    "clear": "rm -rf .next .swc _static node_modules",
+    "postinstall": "husky install"
   },
+
+"husky": {
+  "hooks": {
+     "pre-commit": "echo ”[Husky] pre-commit”"
+  }
+},
   "private": true,
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.10.1",
