@@ -18,7 +18,6 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({ onChange = voidFu
 
   const [isConnected, setIsConnected] = useState(false)
   const room = useSelector((state) => state.codeEditorController.room)
-  console.log('roomId:', room?.roomId)
 
   // const socket = useMemo(() => createSocket(user?.id || generateId(20)), [user]);
   const socket = useSocket()

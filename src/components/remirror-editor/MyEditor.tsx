@@ -55,7 +55,7 @@ function Editor({
           await new Promise<ImageAttributes>((resolve, reject) => {
             completed += 1
             // @TODO S3 upload tmp disabled, needs to be moved to server side
-            console.error('S3 upload tmp disabled, needs to be moved to server side')
+            // console.error('S3 upload tmp disabled, needs to be moved to server side')
             alert('S3 upload tmp disabled, needs to be moved to server side')
             // uploadToS3(file, {
             //   endpoint: {

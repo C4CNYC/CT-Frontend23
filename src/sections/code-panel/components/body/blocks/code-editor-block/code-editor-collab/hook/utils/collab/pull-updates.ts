@@ -29,7 +29,6 @@ export const pullUpdates = ({
       fileName,
       socketId: socket.id,
     })
-    console.log('pullUpdates', `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`)
     socket.once(
       `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`,
       function (updates: Update[]) {

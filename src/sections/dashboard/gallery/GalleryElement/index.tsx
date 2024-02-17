@@ -157,6 +157,7 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
               backgroundSize: 'contain !important',
             },
           }}
+          alt=''
         />
         <Stack
           direction='column'
