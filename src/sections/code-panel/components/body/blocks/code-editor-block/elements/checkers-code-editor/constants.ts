@@ -6,7 +6,7 @@ export const CHECKERS_ANIMATION = {
     opacity: 1,
   },
   closed: {
-    width: '0px',
+    width: 0,
   },
 }
 
@@ -55,10 +55,14 @@ export const M_DIV_STYLE = {
   overflow: 'hidden',
 }
 
-export const OPEN_BTN_WRAPPER_SX = {
+export const OPEN_BOX_SX = {
   position: 'absolute',
+  zIndex: 300,
   top: 130,
   right: 0,
+}
+
+export const OPEN_BTN_WRAPPER_SX = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'end',

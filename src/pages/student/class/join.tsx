@@ -120,6 +120,7 @@ export default function JoinClass(): React.ReactElement {
             <Image
               sx={{ maxWidth: '350px', width: '100%', height: '100%' }}
               src='/assets/join-class/join-tiger.svg'
+              alt='join-tiger'
             />
           </Stack>
         </Stack>
