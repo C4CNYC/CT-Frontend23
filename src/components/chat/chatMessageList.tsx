@@ -1,7 +1,8 @@
 import Box from '@mui/material/Box'
 
+import { Scrollbar } from '../scrollbar'
+
 import ChatMessageItem from './chatMessageItem'
-import { Scrollbar } from '../../scrollbar'
 
 // ----------------------------------------------------------------------
 

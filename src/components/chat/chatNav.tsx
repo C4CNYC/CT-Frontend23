@@ -18,11 +18,12 @@ import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
 import { useResponsive } from '@/hooks'
 import { IFriend } from '@/redux/interfaces/friends.interface'
 
+import { Scrollbar } from '../scrollbar'
+
 import ChatNavAccount from './chatNavAccount'
 import ChatNavItem from './chatNavItem'
 import { ChatNavItemSkeleton } from './chatSkeleton'
 import useCollapseNav from './hooks/use-collapse-nav'
-import { Scrollbar } from '../../scrollbar'
 
 const NAV_WIDTH = 320
 

@@ -3,7 +3,8 @@ import { useContext, useMemo, useState } from 'react'
 import { Card, Stack } from '@mui/material'
 
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
-import { CodePanelContext } from '../../../sections/_ref/code-panel/context/CodePanel.context'
+
+import { CodePanelContext } from '../../sections/_ref/code-panel/context/CodePanel.context'
 
 import ChatHeaderDetail from './chatHeaderDetail'
 import ChatMessageInput from './chatMessageInput'

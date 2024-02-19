@@ -1,6 +1,6 @@
 // import { Firestore } from "firebase/firestore";
 
-import { Chat } from '../../../components/_ref/chat/chat'
+import { Chat } from '../../../components/chat/chat'
 
 const CodePanelChat = (): React.ReactElement => {
   // const { sendMessage, getMessages } = useFirebaseChat();
