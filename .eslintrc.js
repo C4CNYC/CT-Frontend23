@@ -34,7 +34,6 @@ module.exports = {
       {
         jsxSingleQuote: true,
         singleAttributePerLine: true,
-        endOfLine: 'auto',
       },
       {
         usePrettierrc: true,
