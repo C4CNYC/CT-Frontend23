@@ -2,6 +2,7 @@ import { Box, Button } from '@mui/material'
 import { Container } from '@mui/system'
 import Head from 'next/head'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
@@ -23,16 +24,16 @@ CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
-  const role = localStorage.getItem('role')
+  const { user } = useAuthContext()
   const { filters, setFilter } = useFilters<ICourseSearchParams>(
     {
       name: '',
       school_id: '',
-      catalog: Boolean(role === Role.Owner),
+      catalog: Boolean(user?.role === Role.Owner),
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useManagerGetCourseQuery(filters)
+  const { data, isLoading, isFetching } = useManagerGetCourseQuery(filters, { skip: !user?.role })
 
   if (isLoading) {
     return (

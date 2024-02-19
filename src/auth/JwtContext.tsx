@@ -112,7 +112,6 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
           window.location.pathname = '/permission-denied'
         }
         reduxDispatch(setUser(data))
-        localStorage.setItem('role', data.role)
         dispatch({
           type: Types.INITIAL,
           payload: {
