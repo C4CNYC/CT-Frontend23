@@ -1,20 +1,16 @@
-import { useContext, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Card, Stack } from '@mui/material'
 
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
-
-import { CodePanelContext } from '../../sections/_ref/code-panel/context/CodePanel.context'
 
 import ChatHeaderDetail from './chatHeaderDetail'
 import ChatMessageInput from './chatMessageInput'
 import ChatMessageList from './chatMessageList'
 import ChatNav from './chatNav'
 
-export const Chat = (): React.ReactElement => {
-  const { publicPage } = useContext(CodePanelContext)
-
-  const { data, isLoading } = useGetFriendsStudentContentQuery({ take: 20 }, { skip: publicPage })
+const Chat = (): React.ReactElement => {
+  const { data, isLoading } = useGetFriendsStudentContentQuery({ take: 20 })
   const [selectedChat, setSelectedChat] = useState<string>('')
 
   const handleSelectChat = (id: string): void => {
@@ -100,3 +96,5 @@ export const Chat = (): React.ReactElement => {
     </Stack>
   )
 }
+
+export default Chat
