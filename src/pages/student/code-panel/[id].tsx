@@ -12,7 +12,6 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { LessonUserContext } from '@/context/lesson-context'
 import { SocketContext } from '@/context/socket-context'
 import { useSelector } from '@/redux/store'
-// import { CodePanelChat } from '@/sections/chat'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { useCodePanel } from '@/sections/code-panel/lib/hooks/useCodePanel'
 import { ILessonUserStatus } from '@/types'
@@ -205,7 +204,7 @@ export default function CodePanelPage(): ReactElement | null {
               }}
             >
               <CodePanelHeader
-                chatComponent={<CodePanelChat />}
+                chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
                 onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
                 isFullScreenView={handle.active}
               />
