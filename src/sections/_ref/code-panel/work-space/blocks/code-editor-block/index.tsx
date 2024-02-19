@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 
 import { AuthUserType } from '../../../../../../auth/types'
-import CodeEditorCollab from '../../../../../../sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
+import CodeEditorCollab from '../../../../../../components/code-editor-collab'
 import { IValidation } from '../../../../../../redux/interfaces/content.interface'
 import { BaseResponseInterface } from '../../../../../../utils/baseResponse.interface'
 import { mapValidations } from '../../../../../../utils/validationMaping'

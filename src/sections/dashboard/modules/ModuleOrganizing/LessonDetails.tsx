@@ -58,10 +58,10 @@ export default function LessonDetails(): React.ReactElement {
               isEdit
               id={lesson?.id}
               defaultValues={{
-                head: lesson?.head ?? '',
                 name: lesson?.name,
                 description: lesson?.description,
                 active: lesson?.active,
+                head: lesson?.head || '',
                 tips: '',
                 independent: lesson?.independent,
                 type: lesson?.type,

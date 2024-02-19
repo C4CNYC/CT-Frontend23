@@ -5,6 +5,12 @@ import { Box } from '@mui/system'
 import { useAtom } from 'jotai'
 
 import { Iconify } from '../../../../../../../components/iconify'
+import {
+  resetLessonEvent,
+  updateColorsEvent,
+  updateFontSize,
+  updateLineWrap,
+} from '../../../../../../../components/real-time-editor'
 import { globalCodePanelAtom } from '../../../../atoms/global-code-panel.atom'
 import { startTour } from '../../../../code-panel-tour/tour-atom'
 
@@ -13,12 +19,6 @@ import EditorFontSize from './preferences/EditorFontSize'
 import EditorWordWrap from './preferences/EditorWordWrap'
 import IntroTour from './preferences/IntroTour'
 import ResetCode from './preferences/ResetCode'
-import {
-  resetLessonEvent,
-  updateColorsEvent,
-  updateFontSize,
-  updateLineWrap,
-} from '@root/src/sections/code-panel/lib/events'
 
 const SettingDrawer = (): React.ReactElement => {
   const [openDrawer, setDrawer] = useState<boolean>(false)
