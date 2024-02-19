@@ -13,6 +13,7 @@ export interface FormQuestProps {
   closeDate: string
   active: boolean
   skill_tags?: ISkill[]
+  module?: string
 }
 
 export interface IAddQuest {

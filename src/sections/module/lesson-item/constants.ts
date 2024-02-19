@@ -110,6 +110,13 @@ export const DIALOG_TITLE_WRAPPER_SX = {
   justifyContent: 'space-between',
 }
 
+export const DIALOG_TITLE_SX = {
+  pl: 3,
+  pb: 2,
+  pt: 3,
+  mr: 3,
+}
+
 export const CLOSE_DIALOG_ICON_SX = {
   position: 'absolute',
   top: 12,
@@ -126,4 +133,9 @@ export const DIALOG_SUBTITLE_SX = {
   display: 'flex',
   alignItems: 'center',
   gap: 2,
+}
+
+export const PAPER_PROPS_SX = {
+  py: 4,
+  px: { sm: 1, md: 3 },
 }
