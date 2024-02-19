@@ -121,7 +121,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         extensions={extensions}
         readOnly={isReadOnly}
         value={doc}
-        onChange={onChangeCode}
+        onChange={otherProps.onChange as any}
       />
     </div>
   )

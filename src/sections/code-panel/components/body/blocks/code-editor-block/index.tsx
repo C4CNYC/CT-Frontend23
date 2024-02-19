@@ -55,7 +55,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const [typing, setTyping] = useState<boolean | null>(null)
   const room = useSelector((state) => state.codeEditorController.room)
   const timer = useRef<NodeJS.Timeout>()
-  const preloadedCodeRef = useRef(preloadedCode)
   const codeRef = useRef(code)
 
   const typingListener = (deley: number, firstLoad: boolean): void => {
@@ -91,12 +90,12 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       setRoom({
         roomId: user?.id as string,
         cursorText: user?.first_name as string,
-        preloadedCode: preloadedCodeRef.current,
+        preloadedCode: preloadedCode,
         code: codeRef.current,
         mode: EditorMode.Owner,
       })
     )
-  }, [user, dispatch])
+  }, [user, dispatch, preloadedCode])
 
   useEffect(() => {
     onResetRoom()

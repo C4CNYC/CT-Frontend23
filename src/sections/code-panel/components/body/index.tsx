@@ -1,4 +1,4 @@
-import { type FC, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -50,6 +50,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   const [document, setDocument] = useState<CodeDocument | null>(null)
+  const [firstMount, setFirstMount] = useState<boolean>(true)
 
   const onChangeCode = (doc: Record<string, string>) => {
     try {
@@ -77,8 +78,17 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           })
         }
       }, 30000) // 30 seconds
+      if (firstMount) {
+        setDocument({
+          htmlBody: [data[slideIndex]?.preload_body],
+        })
+        setFirstMount(false)
+      } else {
+        setDocument({
+          htmlBody: doc.htmlBody || [doc],
+        } as CodeDocument)
+      }
 
-      setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? ''))
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -93,6 +103,13 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const openPreview = () => {
     dispatch(toggleBrowser(false))
   }
+
+  useEffect(() => {
+    setFirstMount(true)
+    setDocument({
+      htmlBody: [data[slideIndex]?.preload_body],
+    })
+  }, [data[slideIndex]?.preload_body])
 
   if (isDesktop) {
     return (

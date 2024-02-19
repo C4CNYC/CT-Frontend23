@@ -46,6 +46,10 @@ export const useMemoizedProps = ({
   }, [onResetFileManager])
 
   useEffect(() => {
+    preloadedCodeRef.current = preloadedCode
+  }, [preloadedCode])
+
+  useEffect(() => {
     onChangeRef.current = onChange
   }, [onChange])
 

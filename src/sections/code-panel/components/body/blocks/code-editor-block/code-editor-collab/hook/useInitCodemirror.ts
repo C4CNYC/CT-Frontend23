@@ -116,11 +116,16 @@ export const useInitCodemirror = ({
         }),
       ])
       onChange?.(docInfo)
-      setDoc(doc.toString())
+      if (!doc.toString()) {
+        setDoc(preloadedCode as string)
+      } else {
+        setDoc(doc.toString())
+      }
+
       setKey((prev) => ++prev)
       setIsLoading(false)
     },
-    [roomId, cursorText, withTooltip, socket, onChange, defaultFileName]
+    [roomId, cursorText, withTooltip, socket, onChange, defaultFileName, preloadedCode]
   )
 
   return {
