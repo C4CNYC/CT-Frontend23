@@ -34,7 +34,6 @@ async function pushUpdates(
         version,
         JSON.stringify(updates),
         (err: unknown, status: boolean | unknown, updates: Update[]) => {
-          console.log('pushUpdates', updates)
           if (err) {
             reject(err)
             return
@@ -59,7 +58,6 @@ async function pullUpdates(
     socket
       .timeout(timeout)
       .emit('pullUpdates', roomId, version, (err: unknown, updates: string) => {
-        console.log('pullUpdates', updates)
         if (err) {
           reject(err)
           return

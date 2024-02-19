@@ -1,8 +1,7 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 import { Box } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { type Theme } from '@mui/system'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -12,67 +11,66 @@ import { Socket, io } from 'socket.io-client'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { LessonUserContext } from '@/context/lesson-context'
 import { SocketContext } from '@/context/socket-context'
-import { useCodePanel } from '@/hooks/useCodePanel'
 import { useSelector } from '@/redux/store'
-import { CodePanelChat } from '@/sections/chat'
-import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-editor-panel/skeleton'
+// import { CodePanelChat } from '@/sections/chat'
+import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
+import { useCodePanel } from '@/sections/code-panel/lib/hooks/useCodePanel'
 import { ILessonUserStatus } from '@/types'
 import generateId from '@/utils/generate-id'
 
-import SignUpDialog from './sign-up-dialog'
+const CodePanelChat = dynamic(async () => await import('../../../sections/_ref/chat'))
+
+const CodePanelSignUpDialog = dynamic(
+  async () => await import('@/sections/code-panel/components/sign-up-dialog'),
+  {
+    ssr: false,
+  }
+)
+
+const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
+  ssr: false,
+})
+
+const CodePanelTour = dynamic(async () => await import('@/sections/code-panel/components/tour'), {
+  ssr: false,
+})
+
+const CodePanelHeader = dynamic(
+  async () => await import('@/sections/code-panel/components/header'),
+  {
+    loading: () => <CPTopBarSkeleton />,
+  }
+)
+
+const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
+
+// const ChatPopup = dynamic(
+//   async () => await import('@/sections/code-editor-panel/top-bar/nav-bar/options/chat-popup')
+// )
+
+const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/components/footer'))
+
+const LessonsManager = dynamic(
+  async () => await import('@/sections/code-panel/components/lesson-manager')
+)
 
 interface LessonUserResponseType {
   id: string
   status: string
 }
 
-const WorkSpace = dynamic(async () => await import('@/sections/code-editor-panel/work-space'), {
-  ssr: false,
-})
-
-const Tour = dynamic(async () => await import('@/sections/code-editor-panel/code-panel-tour'), {
-  ssr: false,
-})
-
-const TopPanel = dynamic(async () => await import('@/sections/code-editor-panel/top-bar'), {
-  loading: () => <CPTopBarSkeleton />,
-})
-
-const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
-
-const ChatPopup = dynamic(
-  async () => await import('@/sections/code-editor-panel/top-bar/nav-bar/options/chat-popup')
-)
-
-const BottomBar = dynamic(async () => await import('@/sections/code-editor-panel/bottom-bar'))
-
-const LessonsManager = dynamic(
-  async () => await import('@/sections/code-editor-panel/bottom-bar/lesson-manager')
-)
-
-const CONFETTI_GRAVITY = 0.25
-const MAX_NUMBER_OF_PIECES = 500
-const MIN_NUMBER_OF_PIECES = 0
-const getBoxProps = (theme: Theme) => ({
-  bgcolor: theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
-  position: 'relative',
-  overflow: 'hidden',
-})
-
 export default function CodePanelPage(): ReactElement | null {
   const {
     handle,
     isLoadingComplete,
-    confetti,
+    showConfetti,
     onConfettiComplete,
     workSpaceProps,
     bottomBarProps,
-    isDesktop,
     lessonManagerProps,
   } = useCodePanel()
 
   const theme = useTheme()
-  const boxProps = useMemo(() => getBoxProps(theme), [theme])
   const { user } = useAuthContext()
   const [usersStatus, setUsersStatus] = useState<ILessonUserStatus[]>([])
 
@@ -80,6 +78,12 @@ export default function CodePanelPage(): ReactElement | null {
   const lessonId = router.query.lessonId
   const [socket, setSocket] = useState<Socket>()
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const [showTour, setShowTour] = useState(false)
+
+  useEffect(() => {
+    const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
+    if (!hasSeenTour) setShowTour(true)
+  }, [])
 
   useEffect(() => {
     let socket: Socket | undefined
@@ -188,34 +192,43 @@ export default function CodePanelPage(): ReactElement | null {
           </Head>
 
           <FullScreen handle={handle}>
-            <Tour />
+            {showTour && <CodePanelTour />}
 
-            <SignUpDialog isSigned={!!workSpaceProps.user} />
+            {!workSpaceProps.user && <CodePanelSignUpDialog />}
 
-            <Box sx={boxProps}>
-              <TopPanel
+            <Box
+              sx={{
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              <CodePanelHeader
                 chatComponent={<CodePanelChat />}
                 onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
                 isFullScreenView={handle.active}
               />
 
-              <WorkSpace {...workSpaceProps} />
+              <CodePanelBody {...workSpaceProps} />
 
-              <BottomBar
+              <CodePanelFooter
                 {...bottomBarProps}
                 lessonManagerComponent={<LessonsManager {...lessonManagerProps} />}
               />
             </Box>
 
-            {!isDesktop ? <ChatPopup chatComponent={null} /> : null}
+            {/*{!isDesktop ? <ChatPopup chatComponent={null} /> : null}*/}
           </FullScreen>
 
-          <Confetti
-            numberOfPieces={confetti ? MAX_NUMBER_OF_PIECES : MIN_NUMBER_OF_PIECES}
-            recycle={false}
-            gravity={CONFETTI_GRAVITY}
-            onConfettiComplete={onConfettiComplete}
-          />
+          {showConfetti && (
+            <Confetti
+              numberOfPieces={500}
+              recycle={false}
+              gravity={0.25}
+              onConfettiComplete={onConfettiComplete}
+            />
+          )}
         </Box>
       </LessonUserContext.Provider>
     </SocketContext.Provider>
