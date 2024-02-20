@@ -27,6 +27,7 @@ interface ICodeEditorBlock {
   onChangeCode: (code: Record<string, string>) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
+  isFetching?: boolean
 }
 
 const icon = (
@@ -47,6 +48,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   code,
   onChangeCode,
   preloadedCode,
+  isFetching = false,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
@@ -120,7 +122,10 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         <Checkers checkers={mapValidations(code ?? '', validations)} />
       )}
 
-      <CodeEditorController onChange={onChangeCode} />
+      <CodeEditorController
+        isFetching={isFetching}
+        onChange={onChangeCode}
+      />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>
         <Collapse

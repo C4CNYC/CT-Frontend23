@@ -140,6 +140,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
           onChangeCode={onChangeCode}
+          isFetching={isFetching}
         />
 
         {!isBrowserHidden ? (
@@ -182,6 +183,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         user={user}
         preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
         validations={data[slideIndex]?.validations}
+        isFetching={isFetching}
       />
 
       <ViewBlock {...{ code: document, language }} />

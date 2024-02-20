@@ -11,6 +11,7 @@ export interface MemoizedProps {
   setActiveFile: (fileName: File) => void
   onResetFileManager: (info?: FileInfo) => void
   defaultFileName: string
+  isFetching?: boolean
 }
 
 interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {

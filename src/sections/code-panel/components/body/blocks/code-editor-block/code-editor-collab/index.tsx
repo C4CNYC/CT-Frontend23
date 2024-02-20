@@ -109,7 +109,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
       <StatusLabel status={roomStatus} />
 
-      {isLoading && <LoadingCodeEditor />}
+      {isLoading || (otherProps.isFetching && <LoadingCodeEditor />)}
 
       <CodeMirror
         onCreateEditor={onCreateEditor}
