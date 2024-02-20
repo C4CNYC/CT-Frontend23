@@ -111,7 +111,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
       {isLoading && <LoadingCodeEditor />}
 
-      <CodeMirror
+      {/* <CodeMirror
         onCreateEditor={onCreateEditor}
         key={key}
         className={className}
@@ -122,7 +122,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         readOnly={isReadOnly}
         value={doc}
         onChange={onChangeCode}
-      />
+      /> */}
     </div>
   )
 }
