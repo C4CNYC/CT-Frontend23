@@ -15,7 +15,7 @@ interface GetDocumentProps {
 
 interface GetDocumentReturn {
   version: number
-  doc: Text
+  doc?: Text | null
   cursorName: string
   updates: Update[]
   docInfo: Record<string, string>
@@ -79,7 +79,8 @@ export const getDocument = async ({
     if (!socket) {
       // console.error('TODO getDocument not implemented without sockets')
       resolve({
-        doc: Text.of([]),
+        // doc: Text.of([]),
+        doc: null,
         // ...other
       } as any)
     } else {
@@ -87,7 +88,7 @@ export const getDocument = async ({
 
       socket.once(SubscribedEvents.GetDocResponse, ({ doc, ...other }) => {
         resolve({
-          doc: Text.of(doc.split('\n')),
+          doc: doc?.length > 0 ? Text.of(doc.split('\n')) : null,
           ...other,
         })
       })
