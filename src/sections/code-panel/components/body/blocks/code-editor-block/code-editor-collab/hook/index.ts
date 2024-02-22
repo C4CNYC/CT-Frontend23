@@ -1,18 +1,19 @@
 import { type RefObject, useEffect, useState, useRef, useCallback, useMemo } from 'react'
 
-import { type Extension } from '@codemirror/state'
+import type { Extension } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import type { Socket } from 'socket.io-client'
 
 import { RESET_LESSON_EVENT } from 'src/sections/code-panel/lib/events'
 
-import { EditorMode } from '../../constants'
 import { RoomStatus } from '../components/status-label'
 
+import { EditorMode } from './constants'
+import { type File, getFileInfo, isRoomExist } from './requests'
+import { type UseCommentsPropsReturn, useComments } from './useComments'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
 import { useModeSubscriptions } from './useModeSubscriotions'
-import { type File, getFileInfo, isRoomExist } from './utils/collab/requests'
 import { unsubscribeSocket, EmitSocketEvents } from './utils/socket'
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
@@ -31,6 +32,7 @@ interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' |
   doc: string
   onCreateEditor: (view: EditorView) => void
   roomStatus: RoomStatus
+  commentProps: Omit<UseCommentsPropsReturn, 'commentEffectRef' | 'onCommentIconClick'>
 }
 
 export const useCodeEditorCollab = ({
@@ -72,6 +74,14 @@ export const useCodeEditorCollab = ({
     editorView.current?.destroy()
   }, [])
 
+  const { commentEffectRef, onCommentIconClick, ...commentProps } = useComments({
+    editorView,
+    socket,
+    cursorText,
+    roomId,
+    activeFile: activeFile.id,
+  })
+
   const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
     socket,
     withTooltip,
@@ -80,6 +90,8 @@ export const useCodeEditorCollab = ({
     cursorText,
     defaultFileName,
     preloadedCode,
+    commentEffectRef,
+    onCommentIconClick,
   })
 
   const runInitSubOwner = useCallback(
@@ -248,6 +260,7 @@ export const useCodeEditorCollab = ({
     editorRef,
     onCreateEditor,
     roomStatus,
+    commentProps,
     ...codeMirrorProps,
   }
 }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-import { File, type FileInfo } from './utils/collab/requests'
+import type { File, FileInfo } from './requests'
 
 export interface MemoizedProps {
   code?: string

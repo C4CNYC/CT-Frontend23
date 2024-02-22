@@ -2,8 +2,8 @@ import { useMemo, useEffect, useRef } from 'react'
 
 import type { Socket } from 'socket.io-client'
 
-import { EditorMode } from '../../../constants'
-import { File } from '../utils/collab/requests'
+import { EditorMode } from '../constants'
+import type { File } from '../requests'
 import { SubscribedEvents } from '../utils/socket'
 
 interface UseModeSubscriotionsProps {

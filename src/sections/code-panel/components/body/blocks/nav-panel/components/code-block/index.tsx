@@ -18,8 +18,8 @@ import {
   createSocket,
   waitConnectSocket,
 } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
-import { EditorMode } from '@/sections/code-panel/components/body/blocks/code-editor-block/constants'
 import { voidFunction, type BaseResponseInterface } from '@/utils'
+import { EditorMode } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
 
 import { getRandomIndex } from '../../hook/utils'
 

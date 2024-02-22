@@ -29,8 +29,31 @@ export enum EmitSocketEvents {
   AddedFileListUpdated = 'addedFileListUpdated',
 }
 
+export enum SubscribedCommentsEvents {
+  CreateChatResponse = 'createChatResponse',
+  UpdateChatResponse = 'updateChatResponse',
+  RemoveCommentGroupResponse = 'removeCommentGroupResponse',
+  AddCommentToGroupResponse = 'addCommentToGroupResponse',
+  GetCommentResponse = 'getCommentResponse',
+  CommentGroupRemovedResponse = 'commentGroupRemovedResponse',
+  UpdateCommentGroupPositionResponse = 'updateCommentGroupPositionResponse',
+  RemoveCommentFromGroupResponse = 'removeCommentFromGroupResponse',
+  CommentGroupUpdated = 'commentGroupUpdated',
+}
+
+export enum EmitCommentsEvents {
+  CreateChat = 'createChat',
+  UpdateChat = 'udpateChat',
+  RemoveCommentGroup = 'removeCommentGroup',
+  UpdateCommentGroupPosition = 'updateCommentGroupPosition',
+  AddCommentToGroup = 'addCommentToGroup',
+  GetComments = 'getComments',
+  RemoveCommentFromGroup = 'removeCommentFromGroup',
+}
+
 export const unsubscribeSocket = (socket?: Socket): void => {
   if (!socket) return
+
   _.values(SubscribedEvents).forEach((event) => {
     socket?.off(event)
   })

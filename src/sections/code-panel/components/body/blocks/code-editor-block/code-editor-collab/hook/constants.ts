@@ -45,10 +45,13 @@ export enum Extensions {
   Js = 'js',
 }
 
+export const COMMENT_TYPE = 'comment'
+
 export const DEFAULT_FILE = {
   id: 'index.html',
   name: 'index.html',
 }
+
 export const MIN_FILE_LIST_LENGTH = 1
 
 export const getEmptyFileManagement = () => ({

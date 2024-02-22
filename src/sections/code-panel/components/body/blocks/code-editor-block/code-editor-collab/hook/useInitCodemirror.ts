@@ -1,38 +1,24 @@
-import { useCallback, useState } from 'react'
+import { type MutableRefObject, useCallback, useState } from 'react'
 
-import { css } from '@codemirror/lang-css'
-import { html } from '@codemirror/lang-html'
-import { javascript } from '@codemirror/lang-javascript'
-import { /* LanguageSupport,  */ indentUnit } from '@codemirror/language'
+import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
-import type { Socket } from 'socket.io-client'
-// import { langs } from "@uiw/codemirror-extensions-langs";
+import { StateEffectType } from '@uiw/react-codemirror'
+import { Socket } from 'socket.io-client'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { getFileExtension } from '@/utils/getFileExtension'
 
-import { BASIC_SETUP, Extensions } from '../../constants'
-
-import { commentsExtension } from './utils/collab/comments'
-import { contextMenuExtension } from './utils/collab/context-menu'
-import { type Cursor, cursorExtension } from './utils/collab/cursors'
-import { peerExtension } from './utils/collab/peer-extension'
-import { File, getDocument } from './utils/collab/requests'
-
-const langMap = {
-  [Extensions.Css]: () => css(),
-  [Extensions.Html]: () => html(),
-  [Extensions.Js]: () => javascript(),
-}
-
-const language = ({ name }: File): any[] => {
-  const extension = getFileExtension(name)
-
-  return extension != null ? [langMap[extension as keyof typeof langMap]()] : []
-}
+import { BASIC_SETUP } from './constants'
+import { commentExtenstion } from './extensions/comments'
+import type { CommentEffect } from './extensions/comments/types'
+import { cursorExtension } from './extensions/cursors'
+import type { Cursor } from './extensions/cursors/types'
+import { peerExtension } from './extensions/peer'
+import { type File, getDocument } from './requests'
+import type { CommentPopupProps } from './useComments'
+import { language } from './utils'
 
 interface UseBaseInit {
   socket?: Socket
@@ -42,6 +28,8 @@ interface UseBaseInit {
   cursorText: string
   defaultFileName: string
   preloadedCode?: string
+  commentEffectRef: MutableRefObject<StateEffectType<CommentEffect> | null>
+  onCommentIconClick: (props: CommentPopupProps | null) => void
 }
 
 export interface UseBaseInitReturn {
@@ -61,6 +49,8 @@ export const useInitCodemirror = ({
   cursorText,
   defaultFileName,
   preloadedCode,
+  commentEffectRef,
+  onCommentIconClick,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0)
   const [doc, setDoc] = useState('')
@@ -72,8 +62,9 @@ export const useInitCodemirror = ({
     async (fileName: File) => {
       const lineWrap = new Compartment()
       const addCursor = StateEffect.define<Cursor>()
+      commentEffectRef.current = StateEffect.define<CommentEffect>()
 
-      const { version, doc, cursorName, docInfo } = await getDocument({
+      const { version, doc, cursorName, docInfo, updates } = await getDocument({
         roomId,
         fileName,
         socket,
@@ -97,6 +88,7 @@ export const useInitCodemirror = ({
                 startVersion: version,
                 fileName,
                 addCursor,
+                commentEffect: commentEffectRef.current,
               }),
               cursorExtension({
                 cursorId: cursorName,
@@ -105,15 +97,15 @@ export const useInitCodemirror = ({
                 addCursor,
                 userId: user?.id,
               }),
+              commentExtenstion({
+                updates,
+                fileId: fileName.id,
+                roomId,
+                socket,
+                onCommentIconClick,
+              }),
             ]
           : []),
-
-        contextMenuExtension({
-          userId: user?.id,
-        }),
-        commentsExtension({
-          userId: user?.id,
-        }),
       ])
       onChange?.(docInfo)
       setDoc(doc.toString())
