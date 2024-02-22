@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { useSocket } from '@/hooks'
 import { setCode, toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { setTab } from '@/redux/slices/mobile-tab-manager'
@@ -25,6 +26,7 @@ import { CodeDocument } from './blocks/view-block/browser-view'
 
 let previousLength: number | null = null
 let checkValueTimeout: any | null = null
+let saveToLocalStorageTimeout: any | null = null
 
 const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
@@ -44,6 +46,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
 
@@ -51,11 +54,18 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
   const [document, setDocument] = useState<CodeDocument | null>(null)
 
+  const { user: authUser } = useAuthContext()
+
   const onChangeCode = (doc: Record<string, string>) => {
     try {
       if (checkValueTimeout) {
         // Clear the previous timeout if the value changes
         clearTimeout(checkValueTimeout)
+      }
+
+      if (saveToLocalStorageTimeout) {
+        // Clear the previous timeout if the value changes
+        clearTimeout(saveToLocalStorageTimeout)
       }
 
       previousLength = doc?.htmlBody?.length // Store the current value
@@ -77,6 +87,12 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           })
         }
       }, 30000) // 30 seconds
+
+      saveToLocalStorageTimeout = setTimeout(() => {
+        if (user && lessonId) {
+          localStorage.setItem(`user_lesson_code_${user.id}_${lessonId}`, JSON.stringify(doc))
+        }
+      }, 500)
 
       setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? ''))
@@ -138,6 +154,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         <NavPanel
           wrapperListenerRef={wrapperRef}
           cursorName={user?.first_name}
+          lessonId={lessonId}
         />
       </Stack>
     )

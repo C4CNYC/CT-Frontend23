@@ -3,18 +3,18 @@ import { useCallback, useState } from 'react'
 import { css } from '@codemirror/lang-css'
 import { html } from '@codemirror/lang-html'
 import { javascript } from '@codemirror/lang-javascript'
-import { /* LanguageSupport,  */ indentUnit } from '@codemirror/language'
+import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
 import type { Socket } from 'socket.io-client'
-// import { langs } from "@uiw/codemirror-extensions-langs";
 
-import { useAuthContext } from '@/auth/useAuthContext'
+// import { langs } from "@uiw/codemirror-extensions-langs";
+import { AuthUserType } from '@/auth/types'
 import { getFileExtension } from '@/utils/getFileExtension'
 
-import { BASIC_SETUP, Extensions } from '../../constants'
+import { BASIC_SETUP, EditorMode, Extensions } from '../../constants'
 
 import { commentsExtension } from './utils/collab/comments'
 import { contextMenuExtension } from './utils/collab/context-menu'
@@ -39,6 +39,9 @@ interface UseBaseInit {
   withTooltip: boolean
   onChange?: (code: Record<string, string>) => void
   roomId: string
+  lessonId?: string
+  mode: EditorMode
+  user: AuthUserType
   cursorText: string
   defaultFileName: string
   preloadedCode?: string
@@ -58,6 +61,9 @@ export const useInitCodemirror = ({
   withTooltip,
   onChange,
   roomId,
+  lessonId,
+  mode,
+  user,
   cursorText,
   defaultFileName,
   preloadedCode,
@@ -66,7 +72,6 @@ export const useInitCodemirror = ({
   const [doc, setDoc] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
-  const { user } = useAuthContext()
 
   const baseInit = useCallback(
     async (fileName: File) => {
@@ -116,7 +121,31 @@ export const useInitCodemirror = ({
         }),
       ])
       onChange?.(docInfo)
-      setDoc(doc.toString())
+
+      let docStr = ''
+      const docStrFromStreaming = doc?.toString()
+      if (docStrFromStreaming) {
+        docStr = docStrFromStreaming
+      }
+
+      if (mode === EditorMode.Owner) {
+        if (user && lessonId) {
+          const val = localStorage.getItem(`user_lesson_code_${user.id}_${lessonId}`)
+          if (val) {
+            try {
+              const docFromLocalStorage = JSON.parse(val) as Record<string, string>
+              const strFromLocalStorage = (
+                docFromLocalStorage?.htmlBody as unknown as string[]
+              )?.join('')
+              if (strFromLocalStorage) {
+                docStr = strFromLocalStorage
+              }
+            } catch (e) {}
+          }
+        }
+      }
+
+      setDoc(docStr)
       setKey((prev) => ++prev)
       setIsLoading(false)
     },

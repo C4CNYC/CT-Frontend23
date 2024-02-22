@@ -36,11 +36,12 @@ import {
 interface NavPanelProps {
   cursorName?: string
   wrapperListenerRef: RefObject<HTMLDivElement | null>
+  lessonId?: string
 }
 
 const LOADER_SIZE = 20
 
-const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
+const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId }) => {
   const {
     drawerRef,
     isOpen,
@@ -213,6 +214,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
                       data={user}
                       cursorName={cursorName}
                       onChangeUserStatus={onChangeUserStatus}
+                      lessonId={lessonId}
                     />
                   </SortableItem>
                 )
