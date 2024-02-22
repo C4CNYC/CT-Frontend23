@@ -41,7 +41,7 @@ interface UseBaseInit {
   roomId: string
   lessonId?: string
   mode: EditorMode
-  user: AuthUserType
+  user?: AuthUserType
   cursorText: string
   defaultFileName: string
   preloadedCode?: string
