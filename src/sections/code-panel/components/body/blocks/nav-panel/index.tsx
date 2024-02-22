@@ -59,6 +59,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   } = useNavPanel(wrapperListenerRef)
 
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
   const router = useRouter()
   const socket = useSocket()
@@ -67,8 +68,8 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   const roomId = room?.roomId ?? ''
 
   const drawerSx = useMemo(() => {
-    return getDrawerSx(isOpen, isRealtimeCodeEnabled)
-  }, [isOpen, isRealtimeCodeEnabled])
+    return getDrawerSx(isOpen, isRealtimeCodeHidden)
+  }, [isOpen, isRealtimeCodeHidden])
 
   const stackCodeBoxSx = useMemo(() => {
     return getStackCodeBoxSx(draggableConfig?.height, isOpen)
