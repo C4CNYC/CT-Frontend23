@@ -41,7 +41,7 @@ export default function JoinTribeContent({
         cleanJoinTribeStorage()
       }
     } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: 'error' })
+      enqueueSnackbar(error.data.message || 'Something went wrong', { variant: 'error' })
     }
   }
 
