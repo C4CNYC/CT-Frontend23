@@ -27,6 +27,7 @@ interface ICodeEditorBlock {
   onChangeCode: (code: Record<string, string>) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
+  isFetching?: boolean
 }
 
 const icon = (
@@ -47,6 +48,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   code,
   onChangeCode,
   preloadedCode,
+  isFetching = false,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
@@ -56,7 +58,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const room = useSelector((state) => state.codeEditorController.room)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const timer = useRef<NodeJS.Timeout>()
-  const preloadedCodeRef = useRef(preloadedCode)
   const codeRef = useRef(code)
 
   const typingListener = (deley: number, firstLoad: boolean): void => {
@@ -94,13 +95,13 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
           // roomId: user?.id as string,
           roomId: `${user?.id as string}_${lessonId as string}`,
           cursorText: user?.first_name as string,
-          preloadedCode: preloadedCodeRef.current,
+          preloadedCode,
           code: codeRef.current,
           mode: EditorMode.Owner,
         })
       )
     }
-  }, [user, lessonId, dispatch])
+  }, [user, lessonId, dispatch, preloadedCode])
 
   useEffect(() => {
     onResetRoom()
@@ -128,6 +129,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       <CodeEditorController
         onChange={onChangeCode}
         user={user}
+        isFetching={isFetching}
       />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>

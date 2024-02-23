@@ -12,9 +12,14 @@ import { voidFunction } from '@/utils'
 interface CodeEditorControllerProps {
   onChange?: (value: Record<string, string>) => void
   user?: AuthUserType
+  isFetching?: boolean
 }
 
-const CodeEditorController: FC<CodeEditorControllerProps> = ({ onChange = voidFunction, user }) => {
+const CodeEditorController: FC<CodeEditorControllerProps> = ({
+  onChange = voidFunction,
+  user,
+  isFetching = false,
+}) => {
   // const { user } = useAuthContext()
 
   const [isConnected, setIsConnected] = useState(false)
@@ -60,6 +65,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({ onChange = voidFu
       mode={room.mode}
       socket={socket}
       user={user}
+      isFetching={isFetching}
     />
   )
 }

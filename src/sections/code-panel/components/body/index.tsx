@@ -1,4 +1,4 @@
-import { type FC, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -53,6 +53,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   const [document, setDocument] = useState<CodeDocument | null>(null)
+  const [firstMount, setFirstMount] = useState<boolean>(true)
 
   const { user: authUser } = useAuthContext()
 
@@ -88,13 +89,22 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         }
       }, 30000) // 30 seconds
 
+      if (firstMount) {
+        setDocument({
+          htmlBody: lastLessonCode ? [lastLessonCode] : [data[slideIndex]?.preload_body],
+        })
+        setFirstMount(false)
+      } else {
+        setDocument({
+          htmlBody: doc.htmlBody || [doc],
+        } as CodeDocument)
+      }
+
       saveToLocalStorageTimeout = setTimeout(() => {
         if (user && lessonId) {
           localStorage.setItem(`user_lesson_code_${user.id}_${lessonId}`, JSON.stringify(doc))
         }
       }, 500)
-
-      setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? ''))
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -109,6 +119,13 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const openPreview = () => {
     dispatch(toggleBrowser(false))
   }
+
+  useEffect(() => {
+    setFirstMount(true)
+    setDocument({
+      htmlBody: lastLessonCode ? [lastLessonCode] : [data[slideIndex]?.preload_body],
+    })
+  }, [data[slideIndex]?.preload_body])
 
   if (isDesktop) {
     return (
@@ -139,6 +156,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
           onChangeCode={onChangeCode}
+          isFetching={isFetching}
         />
 
         {!isBrowserHidden ? (
@@ -182,6 +200,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         user={user}
         preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
         validations={data[slideIndex]?.validations}
+        isFetching={isFetching}
       />
 
       <ViewBlock {...{ code: document, language }} />

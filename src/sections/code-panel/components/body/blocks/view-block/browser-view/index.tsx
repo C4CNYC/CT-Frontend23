@@ -3,7 +3,7 @@ import { type FC, useEffect, useState } from 'react'
 import SkeletonViewBlock from '../skeleton-view-box'
 
 export interface CodeDocument {
-  htmlBody?: string[]
+  htmlBody?: string[] | Record<any, any>
   cssBody?: string[]
   jsBody?: string[]
 }
