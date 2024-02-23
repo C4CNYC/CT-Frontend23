@@ -11,6 +11,7 @@ export interface IGlobalCodePanel {
   isInstructionsHidden: boolean
   isBrowserHidden: boolean
   isRealtimeCodeEnabled: boolean
+  isRealtimeCodeHidden: boolean
 }
 
 const initialState: IGlobalCodePanel = {
@@ -24,6 +25,7 @@ const initialState: IGlobalCodePanel = {
   isInstructionsHidden: false,
   isBrowserHidden: false,
   isRealtimeCodeEnabled: true,
+  isRealtimeCodeHidden: true,
 }
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
@@ -68,6 +70,12 @@ export const codePanelSlice = createSlice({
     ) => {
       state.isRealtimeCodeEnabled = payload
     },
+    toggleRealtimeCodeHidden: (
+      state,
+      { payload }: PayloadAction<PickedStoreItem<'isRealtimeCodeHidden'>>
+    ) => {
+      state.isRealtimeCodeHidden = payload
+    },
     setCode: (state, action: PayloadAction<string>) => {
       state.code = action.payload
     },
@@ -84,6 +92,7 @@ export const {
   toggleInstrations,
   toggleBrowser,
   toggleRealtimeCodeEnabled,
+  toggleRealtimeCodeHidden,
   setCode,
 } = codePanelSlice.actions
 

@@ -34,7 +34,6 @@ export const useStyles = (theme: Theme) => ({
     position: 'absolute',
     top: '0px',
     left: 0,
-    background: '#7d8799',
     padding: '3px 10px',
     borderTopLeftRadius: '0',
     borderBottomLeftRadius: '0',

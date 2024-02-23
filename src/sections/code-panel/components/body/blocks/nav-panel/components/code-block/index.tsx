@@ -34,6 +34,7 @@ interface CodeBlockProps {
   listeners?: SyntheticListenerMap
   data: IFriend & BaseResponseInterface
   cursorName?: string
+  lessonId?: string
   onChangeUserStatus?: (status: string) => void
 }
 
@@ -43,13 +44,13 @@ const CodeBlock: FC<CodeBlockProps> = ({
   listeners,
   data,
   cursorName,
+  lessonId,
   onChangeUserStatus = voidFunction,
 }) => {
   const dispatch = useDispatch()
   const [isConnected, setIsConnected] = useState(false)
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive)
   const route = useRouter()
-  const lesson = route.query.lesson
   // const socket = useSocket();
 
   const { boxSx, headerSx, socket } = useMemo(() => {
@@ -72,7 +73,8 @@ const CodeBlock: FC<CodeBlockProps> = ({
 
     dispatch(
       setRoom({
-        roomId: data.id,
+        // roomId: data.id,
+        roomId: `${data.id as string}_${lessonId as string}`,
         cursorText: data.first_name,
         mode: EditorMode.SubOwner,
       })
@@ -173,7 +175,8 @@ const CodeBlock: FC<CodeBlockProps> = ({
 
       {isConnected && (
         <CodeEditorCollab
-          roomId={data.id}
+          // roomId={data.id}
+          roomId={`${data.id as string}_${lessonId as string}`}
           mode={EditorMode.Watcher}
           withFileManager={false}
           cursorText={cursorName}

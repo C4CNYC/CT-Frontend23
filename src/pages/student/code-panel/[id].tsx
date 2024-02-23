@@ -17,6 +17,8 @@ import { useCodePanel } from '@/sections/code-panel/lib/hooks/useCodePanel'
 import { ILessonUserStatus } from '@/types'
 import generateId from '@/utils/generate-id'
 
+const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'))
+
 const CodePanelSignUpDialog = dynamic(
   async () => await import('@/sections/code-panel/components/sign-up-dialog'),
   {
@@ -202,7 +204,7 @@ export default function CodePanelPage(): ReactElement | null {
               }}
             >
               <CodePanelHeader
-                chatComponent={null}
+                chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
                 onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
                 isFullScreenView={handle.active}
               />

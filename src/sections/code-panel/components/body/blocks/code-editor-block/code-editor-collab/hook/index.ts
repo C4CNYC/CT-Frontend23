@@ -4,6 +4,8 @@ import type { Extension } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import type { Socket } from 'socket.io-client'
 
+import { AuthUserType } from '@/auth/types'
+import { useSelector } from '@/redux/store'
 import { RESET_LESSON_EVENT } from 'src/sections/code-panel/lib/events'
 
 import { RoomStatus } from '../components/status-label'
@@ -14,11 +16,12 @@ import { type UseCommentsPropsReturn, useComments } from './useComments'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
 import { useModeSubscriptions } from './useModeSubscriotions'
-import { unsubscribeSocket, EmitSocketEvents } from './utils/socket'
+import { unsubscribeSocket } from './utils/socket'
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
   mode?: EditorMode
+  user?: AuthUserType
   activeFile: File
   socket?: Socket
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
@@ -41,6 +44,7 @@ export const useCodeEditorCollab = ({
   activeFile,
   socket,
   onRoomStatusChanged,
+  user,
   ...propsToMemoize
 }: UseCodeEditorCollabProps): UseCodeEditorCollabReturn => {
   const modeRef = useRef(mode)
@@ -50,6 +54,7 @@ export const useCodeEditorCollab = ({
   const editorView = useRef<EditorView | null>(null)
   const editorRef = useRef<HTMLDivElement | null>(null)
   const [roomStatus, setRoomStatus] = useState(RoomStatus.Active)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
   const {
     cursorText,
@@ -66,9 +71,9 @@ export const useCodeEditorCollab = ({
   }
 
   const clearSocketData = useCallback((): void => {
-    if (initRoomDataRef.current.mode === EditorMode.Owner) {
-      socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId)
-    }
+    // if (initRoomDataRef.current.mode === EditorMode.Owner) {
+    //   socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId)
+    // }
 
     unsubscribeSocket(socket)
     editorView.current?.destroy()
@@ -87,6 +92,9 @@ export const useCodeEditorCollab = ({
     withTooltip,
     onChange,
     roomId,
+    lessonId,
+    mode,
+    user,
     cursorText,
     defaultFileName,
     preloadedCode,

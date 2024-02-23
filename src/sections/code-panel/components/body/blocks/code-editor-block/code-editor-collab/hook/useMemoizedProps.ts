@@ -11,6 +11,7 @@ export interface MemoizedProps {
   setActiveFile: (fileName: File) => void
   onResetFileManager: (info?: FileInfo) => void
   defaultFileName: string
+  isFetching?: boolean
 }
 
 interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {
@@ -44,6 +45,10 @@ export const useMemoizedProps = ({
   useEffect(() => {
     onResetFileManagerRef.current = onResetFileManager
   }, [onResetFileManager])
+
+  useEffect(() => {
+    preloadedCodeRef.current = preloadedCode
+  }, [preloadedCode])
 
   useEffect(() => {
     onChangeRef.current = onChange

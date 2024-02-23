@@ -8,9 +8,9 @@ import { dracula } from '@uiw/codemirror-theme-dracula'
 import { StateEffectType } from '@uiw/react-codemirror'
 import { Socket } from 'socket.io-client'
 
-import { useAuthContext } from '@/auth/useAuthContext'
+import { AuthUserType } from '@root/src/auth/types'
 
-import { BASIC_SETUP } from './constants'
+import { BASIC_SETUP, EditorMode } from './constants'
 import { commentExtenstion } from './extensions/comments'
 import type { CommentEffect } from './extensions/comments/types'
 import { cursorExtension } from './extensions/cursors'
@@ -25,6 +25,9 @@ interface UseBaseInit {
   withTooltip: boolean
   onChange?: (code: Record<string, string>) => void
   roomId: string
+  lessonId?: string
+  mode: EditorMode
+  user?: AuthUserType
   cursorText: string
   defaultFileName: string
   preloadedCode?: string
@@ -46,6 +49,9 @@ export const useInitCodemirror = ({
   withTooltip,
   onChange,
   roomId,
+  lessonId,
+  mode,
+  user,
   cursorText,
   defaultFileName,
   preloadedCode,
@@ -56,7 +62,6 @@ export const useInitCodemirror = ({
   const [doc, setDoc] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
-  const { user } = useAuthContext()
 
   const baseInit = useCallback(
     async (fileName: File) => {
@@ -108,11 +113,39 @@ export const useInitCodemirror = ({
           : []),
       ])
       onChange?.(docInfo)
-      setDoc(doc.toString())
+
+      let docStr = ''
+      const docStrFromStreaming = doc?.toString()
+      if (docStrFromStreaming) {
+        docStr = docStrFromStreaming
+      }
+
+      if (mode === EditorMode.Owner) {
+        if (user && lessonId) {
+          const val = localStorage.getItem(`user_lesson_code_${user.id}_${lessonId}`)
+          if (val) {
+            try {
+              const docFromLocalStorage = JSON.parse(val) as Record<string, string>
+              const strFromLocalStorage = (
+                docFromLocalStorage?.htmlBody as unknown as string[]
+              )?.join('')
+              if (strFromLocalStorage) {
+                docStr = strFromLocalStorage
+              }
+            } catch (e) {}
+          }
+        }
+      }
+      if (!docStr) {
+        setDoc(preloadedCode as string)
+      } else {
+        setDoc(docStr)
+      }
+
       setKey((prev) => ++prev)
       setIsLoading(false)
     },
-    [roomId, cursorText, withTooltip, socket, onChange, defaultFileName]
+    [roomId, cursorText, withTooltip, socket, onChange, defaultFileName, preloadedCode]
   )
 
   return {

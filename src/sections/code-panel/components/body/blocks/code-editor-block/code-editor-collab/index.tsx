@@ -136,7 +136,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
       <StatusLabel status={roomStatus} />
 
-      {isLoading && <LoadingCodeEditor />}
+      {isLoading || (otherProps.isFetching && <LoadingCodeEditor />)}
 
       <CodeMirror
         onContextMenu={onContextMenu}
@@ -149,7 +149,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         extensions={extensions}
         readOnly={isReadOnly}
         value={doc}
-        onChange={onChangeCode}
+        onChange={otherProps.onChange as any}
       />
 
       <CommentPopup

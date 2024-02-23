@@ -4,7 +4,7 @@ import { Avatar, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mu
 import { useDispatch } from 'react-redux'
 
 import PersonIcon from '@/assets/icons/PersonIcon'
-import { toggleRealtimeCodeEnabled } from '@/redux/slices/code-panel-global'
+import { toggleRealtimeCodeHidden } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 
 import CustomSwitch from './custom-switch'
@@ -23,13 +23,13 @@ const GroupHeader: FC = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
   const tribe = useSelector((state) => state.codePanel.class)
   const dispatch = useDispatch()
-  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
   if (!isDesktop) {
     return null
   }
 
   const onChange = () => {
-    dispatch(toggleRealtimeCodeEnabled(!isRealtimeCodeEnabled))
+    dispatch(toggleRealtimeCodeHidden(!isRealtimeCodeHidden))
   }
 
   const groupTitle =
@@ -77,7 +77,7 @@ const GroupHeader: FC = () => {
       />
 
       <CustomSwitch
-        isActive={isRealtimeCodeEnabled}
+        isActive={!isRealtimeCodeHidden}
         onChange={onChange}
       />
     </Stack>
