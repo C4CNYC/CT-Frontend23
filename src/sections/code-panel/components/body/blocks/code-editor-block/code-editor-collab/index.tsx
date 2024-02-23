@@ -1,17 +1,19 @@
 import { type FC, memo } from 'react'
 
+import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
-import type { Socket } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 
 import { voidFunction } from '@/utils'
 
-import { EditorMode } from '../constants'
-
+import AddComment from './components/add-comment'
+import CommentPopup from './components/comment-popup'
 import FileModal from './components/file-modal'
 import FileSwitcher from './components/file-switcher'
 import LoadingCodeEditor from './components/loading-code-editor'
 import StatusLabel, { RoomStatus } from './components/status-label'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
+import { EditorMode } from './hook/constants'
 import { useFileManager } from './hook/file-manager'
 import { useStyles } from './styles'
 
@@ -43,7 +45,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   socket,
   isMultipleExtensionFiles = false,
   defaultFileName = 'index.html',
-  onChangeCode = voidFunction,
+  onChangeCode: _onChangeCode = voidFunction,
   ...otherProps
 }) => {
   const styles = useStyles()
@@ -66,18 +68,43 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     mode,
   })
 
-  const { editorRef, isLoading, extensions, doc, key, onCreateEditor, roomStatus } =
-    useCodeEditorCollab({
-      ...otherProps,
-      ...collabProps,
-      activeFile,
-      mode,
-      socket,
-      roomId,
-      defaultFileName,
-    })
+  const {
+    editorRef,
+    isLoading,
+    extensions,
+    doc,
+    key,
+    onCreateEditor,
+    roomStatus,
+    commentProps: {
+      onContextMenu,
+      isAddCommentDisabled,
+      isAddCommentOpen,
+      position,
+      setIsAddCommentOpen,
+      onAddComment,
+      isCommentPopupOpen,
+      commentPopupProps,
+      onCloseCommentPopup,
+      onRemoveComment,
+      onRemoveCommentGroup,
+      updateCommentWidgetPosition,
+    },
+  } = useCodeEditorCollab({
+    ...otherProps,
+    ...collabProps,
+    activeFile,
+    mode,
+    socket,
+    roomId,
+    defaultFileName,
+  })
 
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
+  const onChangeCode = (value: string) => {
+    _onChangeCode(value)
+    void updateCommentWidgetPosition()
+  }
 
   return (
     <div
@@ -112,6 +139,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       {isLoading || (otherProps.isFetching && <LoadingCodeEditor />)}
 
       <CodeMirror
+        onContextMenu={onContextMenu}
         onCreateEditor={onCreateEditor}
         key={key}
         className={className}
@@ -121,8 +149,34 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         extensions={extensions}
         readOnly={isReadOnly}
         value={doc}
-        onChange={otherProps.onChange as any}
+        onChange={onChangeCode}
       />
+
+      <CommentPopup
+        {...commentPopupProps}
+        isOpen={isCommentPopupOpen}
+        onClose={onCloseCommentPopup}
+        onRemoveComment={onRemoveComment}
+        onRemoveCommentGroup={onRemoveCommentGroup}
+        activeFile={activeFile}
+      />
+
+      <Popover
+        classes={{ root: styles.popover }}
+        anchorReference='anchorPosition'
+        open={isAddCommentOpen}
+        anchorPosition={position}
+      >
+        <ClickAwayListener onClickAway={() => setIsAddCommentOpen(false)}>
+          <Box>
+            <AddComment
+              isDisabled={isAddCommentDisabled}
+              onAddComment={onAddComment}
+              onClose={() => setIsAddCommentOpen(false)}
+            />
+          </Box>
+        </ClickAwayListener>
+      </Popover>
     </div>
   )
 }

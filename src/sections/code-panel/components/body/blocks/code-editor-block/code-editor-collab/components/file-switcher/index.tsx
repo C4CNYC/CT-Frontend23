@@ -2,7 +2,7 @@ import { type FC } from 'react'
 
 import { Stack, Tabs, Tab } from '@mui/material'
 
-import { type File } from '../../hook/utils/collab/requests'
+import type { File } from '../../hook/requests'
 import DevIcon from '../dev-icon'
 
 import { styles } from './styles'

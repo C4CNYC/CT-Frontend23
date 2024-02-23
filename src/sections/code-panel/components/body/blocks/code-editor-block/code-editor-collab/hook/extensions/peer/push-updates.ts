@@ -1,9 +1,8 @@
 import { sendableUpdates } from '@codemirror/collab'
-import type { Socket } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 
-import { EmitSocketEvents, SubscribedEvents } from '../socket'
-
-import { File } from './requests'
+import type { File } from '../../requests'
+import { EmitSocketEvents, SubscribedEvents } from '../../utils/socket'
 
 interface PushUpdatesProps {
   socket: Socket

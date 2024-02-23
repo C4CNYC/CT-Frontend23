@@ -14,8 +14,8 @@ import { mapValidations } from '@/utils/validationMaping'
 
 import BaseBlock from '../base-block'
 
+import { EditorMode } from './code-editor-collab/hook/constants'
 import CodeEditorController from './code-editor-controller'
-import { EditorMode } from './constants'
 import Checkers from './elements/checkers-code-editor'
 import { CodingSymbols, CodingTools } from './elements/coding-controls'
 import MumuSpeedDial from './elements/mumu-speed-deal'

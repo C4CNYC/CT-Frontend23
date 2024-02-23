@@ -3,12 +3,12 @@ import { StateEffectType } from '@codemirror/state'
 import { EditorView, ViewPlugin, ViewUpdate } from '@codemirror/view'
 import { Socket } from 'socket.io-client'
 
-import { EmitSocketEvents } from '../socket'
+import type { File } from '../../requests'
+import { EmitSocketEvents } from '../../utils/socket'
+import type { Cursor } from '../cursors/types'
 
-import { Cursor } from './cursors'
 import { pullUpdates } from './pull-updates'
 import { pushUpdates } from './push-updates'
-import { File } from './requests'
 
 interface PeerExtensionProps {
   socket: Socket
@@ -16,6 +16,7 @@ interface PeerExtensionProps {
   startVersion: number
   fileName: File
   addCursor: StateEffectType<Cursor>
+  commentEffect: StateEffectType<any>
 }
 
 export const peerExtension = ({
@@ -24,6 +25,7 @@ export const peerExtension = ({
   startVersion,
   fileName,
   addCursor,
+  commentEffect,
 }: PeerExtensionProps) => {
   const plugin = ViewPlugin.fromClass(
     class {
@@ -70,6 +72,7 @@ export const peerExtension = ({
             version,
             fileName,
             addCursor,
+            commentEffect,
           })
 
           const newUpdates = receiveUpdates(this.view.state, updates)
@@ -87,7 +90,7 @@ export const peerExtension = ({
   return [
     collab({
       startVersion,
-      sharedEffects: (tr) => tr.effects.filter((e) => e.is(addCursor)),
+      sharedEffects: (tr) => tr.effects.filter((e) => e.is(addCursor) || e.is(commentEffect)),
     }),
     plugin,
   ]

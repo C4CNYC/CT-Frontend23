@@ -7,8 +7,8 @@ import {
   DEFAULT_FILE,
   MIN_FILE_LIST_LENGTH,
   getEmptyFileManagement,
-} from '../../../constants'
-import { type FileInfo, type File, createFile } from '../utils/collab/requests'
+} from '../constants'
+import { type FileInfo, type File, createFile } from '../requests'
 import { EmitSocketEvents } from '../utils/socket'
 
 import { useModeSubscriptions } from './useModeSubscriptions'
@@ -52,7 +52,7 @@ export const useFileManager = ({
 
   const onAddFile = async (fileName: string): Promise<void> => {
     if (!socket) {
-      // console.error('TODO onAddFile not implemented without sockets')
+      // console.error("TODO onAddFile not implemented without sockets")
       return
     }
     const file = await createFile({ roomId, fileName, socket })

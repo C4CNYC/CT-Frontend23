@@ -1,42 +1,8 @@
 import { type Update } from '@codemirror/collab'
 import { Text } from '@codemirror/state'
-import type { Socket } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 
-import { EmitSocketEvents, SubscribedEvents } from '../socket'
-
-interface GetDocumentProps {
-  socket?: Socket
-  roomId: string
-  cursorName: string
-  fileName: File
-  preloadedCode?: string
-  defaultFileName: string
-}
-
-interface GetDocumentReturn {
-  version: number
-  doc?: Text | null
-  cursorName: string
-  updates: Update[]
-  docInfo: Record<string, string>
-}
-
-export interface File {
-  id: string
-  name: string
-}
-
-export interface FileInfo {
-  activeFile: File
-  files: File[]
-  filesInLayout: File[]
-}
-
-interface CreateFile {
-  socket: Socket
-  fileName: string
-  roomId: string
-}
+import { EmitSocketEvents, SubscribedEvents } from '../utils/socket'
 
 export const createFile = async ({ socket, fileName, roomId }: CreateFile): Promise<File> => {
   return await new Promise((res, rej) => {
@@ -77,7 +43,7 @@ export const getDocument = async ({
 }: GetDocumentProps): Promise<GetDocumentReturn> => {
   return await new Promise(function (resolve) {
     if (!socket) {
-      // console.error('TODO getDocument not implemented without sockets')
+      // console.error("TODO getDocument not implemented without sockets")
       resolve({
         // doc: Text.of([]),
         doc: null,
@@ -109,4 +75,38 @@ export const getCodeInfo = async ({ socket, roomId }: GetCodeInfo): Promise<any>
       resolve(data)
     })
   })
+}
+
+interface GetDocumentProps {
+  socket?: Socket
+  roomId: string
+  cursorName: string
+  fileName: File
+  preloadedCode?: string
+  defaultFileName: string
+}
+
+interface GetDocumentReturn {
+  version: number
+  doc: Text
+  cursorName: string
+  updates: Update[]
+  docInfo: Record<string, string>
+}
+
+export interface File {
+  id: string
+  name: string
+}
+
+export interface FileInfo {
+  activeFile: File
+  files: File[]
+  filesInLayout: File[]
+}
+
+interface CreateFile {
+  socket: Socket
+  fileName: string
+  roomId: string
 }

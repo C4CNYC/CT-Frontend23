@@ -1,11 +1,11 @@
 import { type MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import pDebounce from 'p-debounce'
-import type { Socket } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 
-import { EditorMode } from '../../constants'
 import { RoomStatus } from '../components/status-label'
 
+import { EditorMode } from './constants'
 import { SubscribedEvents } from './utils/socket'
 
 interface UseModeSubscriptionsProps {

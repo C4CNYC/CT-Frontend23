@@ -2,7 +2,7 @@ import { type FC, useState, useEffect, useRef, KeyboardEvent } from 'react'
 
 import { Button, TextField, CircularProgress } from '@mui/material'
 
-import type { File } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/collab/requests'
+import type { File } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/requests'
 
 import ConfirmModalWrapper from '../confirm-wrapper-modal'
 
