@@ -56,6 +56,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
   const [typing, setTyping] = useState<boolean | null>(null)
   const room = useSelector((state) => state.codeEditorController.room)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const timer = useRef<NodeJS.Timeout>()
   const codeRef = useRef(code)
 
@@ -88,16 +89,19 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [codingSymbols])
 
   const onResetRoom = useCallback(() => {
-    dispatch(
-      setRoom({
-        roomId: user?.id as string,
-        cursorText: user?.first_name as string,
-        preloadedCode: preloadedCode,
-        code: codeRef.current,
-        mode: EditorMode.Owner,
-      })
-    )
-  }, [user, dispatch, preloadedCode])
+    if (user && lessonId) {
+      dispatch(
+        setRoom({
+          // roomId: user?.id as string,
+          roomId: `${user?.id as string}_${lessonId as string}`,
+          cursorText: user?.first_name as string,
+          preloadedCode,
+          code: codeRef.current,
+          mode: EditorMode.Owner,
+        })
+      )
+    }
+  }, [user, lessonId, dispatch, preloadedCode])
 
   useEffect(() => {
     onResetRoom()
@@ -123,8 +127,9 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )}
 
       <CodeEditorController
-        isFetching={isFetching}
         onChange={onChangeCode}
+        user={user}
+        isFetching={isFetching}
       />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>

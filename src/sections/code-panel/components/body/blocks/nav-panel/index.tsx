@@ -36,11 +36,12 @@ import {
 interface NavPanelProps {
   cursorName?: string
   wrapperListenerRef: RefObject<HTMLDivElement | null>
+  lessonId?: string
 }
 
 const LOADER_SIZE = 20
 
-const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
+const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId }) => {
   const {
     drawerRef,
     isOpen,
@@ -59,6 +60,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   } = useNavPanel(wrapperListenerRef)
 
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
   const router = useRouter()
   const socket = useSocket()
@@ -67,8 +69,8 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   const roomId = room?.roomId ?? ''
 
   const drawerSx = useMemo(() => {
-    return getDrawerSx(isOpen, isRealtimeCodeEnabled)
-  }, [isOpen, isRealtimeCodeEnabled])
+    return getDrawerSx(isOpen, isRealtimeCodeHidden)
+  }, [isOpen, isRealtimeCodeHidden])
 
   const stackCodeBoxSx = useMemo(() => {
     return getStackCodeBoxSx(draggableConfig?.height, isOpen)
@@ -212,6 +214,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
                       data={user}
                       cursorName={cursorName}
                       onChangeUserStatus={onChangeUserStatus}
+                      lessonId={lessonId}
                     />
                   </SortableItem>
                 )

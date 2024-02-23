@@ -4,7 +4,6 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
-    background: '#7d7e80',
     borderBottom: '2px solid #abb2bf',
     pl: 6,
   },

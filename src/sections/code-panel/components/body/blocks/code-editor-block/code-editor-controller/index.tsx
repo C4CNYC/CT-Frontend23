@@ -2,7 +2,7 @@ import { type FC, memo, useState, useEffect } from 'react'
 
 import { Socket } from 'socket.io-client'
 
-import { useAuthContext } from '@/auth/useAuthContext'
+import { AuthUserType } from '@/auth/types'
 import { useSocket } from '@/hooks/useSocket'
 import { useSelector } from '@/redux/store'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
@@ -11,14 +11,16 @@ import { voidFunction } from '@/utils'
 
 interface CodeEditorControllerProps {
   onChange?: (value: Record<string, string>) => void
+  user?: AuthUserType
   isFetching?: boolean
 }
 
 const CodeEditorController: FC<CodeEditorControllerProps> = ({
   onChange = voidFunction,
+  user,
   isFetching = false,
 }) => {
-  const { user } = useAuthContext()
+  // const { user } = useAuthContext()
 
   const [isConnected, setIsConnected] = useState(false)
   const room = useSelector((state) => state.codeEditorController.room)
@@ -62,6 +64,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
       code={room.code}
       mode={room.mode}
       socket={socket}
+      user={user}
       isFetching={isFetching}
     />
   )

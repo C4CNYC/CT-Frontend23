@@ -57,7 +57,7 @@ export const STACK_SX = {
   maxHeight: `calc(100% - ${HEADER_HEIGHT}px - ${DIVIDER_HEIGHT * 2}px)`,
 }
 
-export const getDrawerSx = (isOpen: boolean, isRealtimeCodeEnabled: boolean): SxProps => {
+export const getDrawerSx = (isOpen: boolean, isRealtimeCodeHidden: boolean): SxProps => {
   return {
     zIndex: 1200,
     width: 60,
@@ -67,7 +67,7 @@ export const getDrawerSx = (isOpen: boolean, isRealtimeCodeEnabled: boolean): Sx
     top: '50%',
     transform: 'translateY(-50%)',
     transition: 'margin-right .3s',
-    marginRight: isRealtimeCodeEnabled ? 0 : '-70px',
+    marginRight: !isRealtimeCodeHidden ? 0 : '-70px',
     '& .MuiDrawer-paper': {
       paddingBottom: '167px',
       transition: 'right .5s',
