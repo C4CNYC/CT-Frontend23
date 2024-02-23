@@ -149,7 +149,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         extensions={extensions}
         readOnly={isReadOnly}
         value={doc}
-        onChange={otherProps.onChange as any}
+        onChange={onChangeCode}
       />
 
       <CommentPopup
