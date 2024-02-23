@@ -24,7 +24,7 @@ import Title from './elements/title'
 interface ICodeEditorBlock {
   user: AuthUserType | null
   code: string
-  onChangeCode: (code: Record<string, string>) => void
+  onChangeStreamingDocInfo: (doc: Record<string, string>) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
   isFetching?: boolean
@@ -46,7 +46,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   user,
   validations,
   code,
-  onChangeCode,
+  onChangeStreamingDocInfo,
   preloadedCode,
   isFetching = false,
 }) => {
@@ -127,7 +127,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )}
 
       <CodeEditorController
-        onChange={onChangeCode}
+        onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
         isFetching={isFetching}
       />

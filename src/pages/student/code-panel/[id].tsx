@@ -12,6 +12,7 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { LessonUserContext } from '@/context/lesson-context'
 import { SocketContext } from '@/context/socket-context'
 import { useSelector } from '@/redux/store'
+import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { useCodePanel } from '@/sections/code-panel/lib/hooks/useCodePanel'
 import { ILessonUserStatus } from '@/types'
@@ -26,9 +27,9 @@ const CodePanelSignUpDialog = dynamic(
   }
 )
 
-const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
-  ssr: false,
-})
+// const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
+//   ssr: false,
+// })
 
 const CodePanelTour = dynamic(async () => await import('@/sections/code-panel/components/tour'), {
   ssr: false,
@@ -216,8 +217,6 @@ export default function CodePanelPage(): ReactElement | null {
                 lessonManagerComponent={<LessonsManager {...lessonManagerProps} />}
               />
             </Box>
-
-            {/*{!isDesktop ? <ChatPopup chatComponent={null} /> : null}*/}
           </FullScreen>
 
           {showConfetti && (

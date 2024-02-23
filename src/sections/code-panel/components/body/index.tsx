@@ -1,4 +1,4 @@
-import { type FC, useEffect, useRef, useState } from 'react'
+import { type FC, useRef, useState } from 'react'
 
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 
-import { useAuthContext } from '@/auth/useAuthContext'
 import { useSocket } from '@/hooks'
 import { setCode, toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { setTab } from '@/redux/slices/mobile-tab-manager'
@@ -26,7 +25,6 @@ import { CodeDocument } from './blocks/view-block/browser-view'
 
 let previousLength: number | null = null
 let checkValueTimeout: any | null = null
-let saveToLocalStorageTimeout: any | null = null
 
 const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
@@ -53,20 +51,12 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   const [document, setDocument] = useState<CodeDocument | null>(null)
-  const [firstMount, setFirstMount] = useState<boolean>(true)
 
-  const { user: authUser } = useAuthContext()
-
-  const onChangeCode = (doc: Record<string, string>) => {
+  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
       if (checkValueTimeout) {
         // Clear the previous timeout if the value changes
         clearTimeout(checkValueTimeout)
-      }
-
-      if (saveToLocalStorageTimeout) {
-        // Clear the previous timeout if the value changes
-        clearTimeout(saveToLocalStorageTimeout)
       }
 
       previousLength = doc?.htmlBody?.length // Store the current value
@@ -89,22 +79,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         }
       }, 30000) // 30 seconds
 
-      if (firstMount) {
-        setDocument({
-          htmlBody: lastLessonCode ? [lastLessonCode] : [data[slideIndex]?.preload_body],
-        })
-        setFirstMount(false)
-      } else {
-        setDocument({
-          htmlBody: doc.htmlBody || [doc],
-        } as CodeDocument)
-      }
-
-      saveToLocalStorageTimeout = setTimeout(() => {
-        if (user && lessonId) {
-          localStorage.setItem(`user_lesson_code_${user.id}_${lessonId}`, JSON.stringify(doc))
-        }
-      }, 500)
+      setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? ''))
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -119,13 +94,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const openPreview = () => {
     dispatch(toggleBrowser(false))
   }
-
-  useEffect(() => {
-    setFirstMount(true)
-    setDocument({
-      htmlBody: lastLessonCode ? [lastLessonCode] : [data[slideIndex]?.preload_body],
-    })
-  }, [data[slideIndex]?.preload_body])
 
   if (isDesktop) {
     return (
@@ -155,7 +123,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           validations={data[slideIndex]?.validations || ''}
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
-          onChangeCode={onChangeCode}
+          onChangeStreamingDocInfo={onChangeStreamingDocInfo}
           isFetching={isFetching}
         />
 
@@ -196,7 +164,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
       <CodeEditorBlock
         code={document?.htmlBody?.join('') ?? ''}
-        onChangeCode={onChangeCode}
+        onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
         preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
         validations={data[slideIndex]?.validations}

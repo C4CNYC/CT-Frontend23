@@ -1,7 +1,7 @@
 import { type MutableRefObject, useCallback, useState } from 'react'
 
 import { indentUnit } from '@codemirror/language'
-import { Compartment, Extension, StateEffect } from '@codemirror/state'
+import { Compartment, Extension, StateEffect, Text } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
@@ -23,7 +23,7 @@ import { language } from './utils'
 interface UseBaseInit {
   socket?: Socket
   withTooltip: boolean
-  onChange?: (code: Record<string, string>) => void
+  onChangeStreamingDocInfo?: (code: Record<string, string>) => void
   roomId: string
   lessonId?: string
   mode: EditorMode
@@ -37,7 +37,7 @@ interface UseBaseInit {
 
 export interface UseBaseInitReturn {
   key: number
-  doc: string
+  streamingDoc?: Text
   isLoading: boolean
   extensions?: Extension[]
   baseInit: (fileName: File) => Promise<void>
@@ -47,7 +47,7 @@ export interface UseBaseInitReturn {
 export const useInitCodemirror = ({
   socket,
   withTooltip,
-  onChange,
+  onChangeStreamingDocInfo,
   roomId,
   lessonId,
   mode,
@@ -59,7 +59,7 @@ export const useInitCodemirror = ({
   onCommentIconClick,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0)
-  const [doc, setDoc] = useState('')
+  const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [isLoading, setIsLoading] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
 
@@ -112,46 +112,27 @@ export const useInitCodemirror = ({
             ]
           : []),
       ])
-      onChange?.(docInfo)
-
-      let docStr = ''
-      const docStrFromStreaming = doc?.toString()
-      if (docStrFromStreaming) {
-        docStr = docStrFromStreaming
-      }
-
-      if (mode === EditorMode.Owner) {
-        if (user && lessonId) {
-          const val = localStorage.getItem(`user_lesson_code_${user.id}_${lessonId}`)
-          if (val) {
-            try {
-              const docFromLocalStorage = JSON.parse(val) as Record<string, string>
-              const strFromLocalStorage = (
-                docFromLocalStorage?.htmlBody as unknown as string[]
-              )?.join('')
-              if (strFromLocalStorage) {
-                docStr = strFromLocalStorage
-              }
-            } catch (e) {}
-          }
-        }
-      }
-      if (!docStr) {
-        setDoc(preloadedCode as string)
-      } else {
-        setDoc(docStr)
-      }
+      onChangeStreamingDocInfo?.(docInfo)
+      setStreamingDoc(doc)
 
       setKey((prev) => ++prev)
       setIsLoading(false)
     },
-    [roomId, cursorText, withTooltip, socket, onChange, defaultFileName, preloadedCode]
+    [
+      roomId,
+      cursorText,
+      withTooltip,
+      socket,
+      onChangeStreamingDocInfo,
+      defaultFileName,
+      preloadedCode,
+    ]
   )
 
   return {
     key,
     extensions,
-    doc,
+    streamingDoc,
     isLoading,
     baseInit,
     setIsLoading,

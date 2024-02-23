@@ -43,18 +43,16 @@ export const getDocument = async ({
 }: GetDocumentProps): Promise<GetDocumentReturn> => {
   return await new Promise(function (resolve) {
     if (!socket) {
-      // console.error("TODO getDocument not implemented without sockets")
+      alert('TODO getDocument not implemented without sockets')
       resolve({
-        // doc: Text.of([]),
-        doc: null,
-        // ...other
+        doc: Text.of(['']),
+        ...other,
       } as any)
     } else {
       socket.emit(EmitSocketEvents.GetDoc, other)
-
       socket.once(SubscribedEvents.GetDocResponse, ({ doc, ...other }) => {
         resolve({
-          doc: doc?.length > 0 ? Text.of(doc.split('\n')) : null,
+          doc: doc?.length > 0 ? Text.of(doc.split('\n')) : Text.of(['']),
           ...other,
         })
       })

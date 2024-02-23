@@ -1,6 +1,7 @@
 import { type RefObject, useEffect, useState, useRef, useCallback, useMemo } from 'react'
 
 import type { Extension } from '@codemirror/state'
+import type { Text } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import type { Socket } from 'socket.io-client'
 
@@ -16,7 +17,7 @@ import { type UseCommentsPropsReturn, useComments } from './useComments'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
 import { useModeSubscriptions } from './useModeSubscriotions'
-import { unsubscribeSocket } from './utils/socket'
+import { EmitSocketEvents, unsubscribeSocket } from './utils/socket'
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
@@ -32,7 +33,7 @@ interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' |
   editorRef: RefObject<HTMLDivElement>
   isLoading: boolean
   key: number
-  doc: string
+  streamingDoc?: Text
   onCreateEditor: (view: EditorView) => void
   roomStatus: RoomStatus
   commentProps: Omit<UseCommentsPropsReturn, 'commentEffectRef' | 'onCommentIconClick'>
@@ -59,7 +60,7 @@ export const useCodeEditorCollab = ({
   const {
     cursorText,
     withTooltip,
-    onChange,
+    onChangeStreamingDocInfo,
     setActiveFile,
     onResetFileManager,
     defaultFileName,
@@ -71,9 +72,9 @@ export const useCodeEditorCollab = ({
   }
 
   const clearSocketData = useCallback((): void => {
-    // if (initRoomDataRef.current.mode === EditorMode.Owner) {
-    //   socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId)
-    // }
+    if (initRoomDataRef.current.mode === EditorMode.Owner) {
+      socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId)
+    }
 
     unsubscribeSocket(socket)
     editorView.current?.destroy()
@@ -90,7 +91,7 @@ export const useCodeEditorCollab = ({
   const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
     socket,
     withTooltip,
-    onChange,
+    onChangeStreamingDocInfo,
     roomId,
     lessonId,
     mode,
@@ -228,7 +229,7 @@ export const useCodeEditorCollab = ({
     runInitWatcher,
     mode,
     socket,
-    onChange,
+    onChangeStreamingDocInfo,
   })
 
   useEffect(() => {

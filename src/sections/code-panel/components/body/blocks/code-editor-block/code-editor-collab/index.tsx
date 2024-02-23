@@ -1,4 +1,4 @@
-import { type FC, memo } from 'react'
+import { type FC, memo, useMemo } from 'react'
 
 import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
@@ -33,8 +33,10 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   socket?: Socket
   isMultipleExtensionFiles?: boolean
   defaultFileName?: string
-  onChangeCode?: (value: string) => void
+  onChangeCodemirrorValue?: (value: string) => void
 }
+
+const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
@@ -45,10 +47,37 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   socket,
   isMultipleExtensionFiles = false,
   defaultFileName = 'index.html',
-  onChangeCode: _onChangeCode = voidFunction,
-  ...otherProps
+  preloadedCode,
+  onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
+  onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
+  ...collabProps
 }) => {
   const styles = useStyles()
+
+  const localstorageCode = useMemo(() => {
+    if (mode === EditorMode.Owner) {
+      const json = localStorage.getItem(getLocalStorageRoomKey(roomId))
+      if (json) {
+        try {
+          const docInfo = JSON.parse(json) as Record<string, string>
+          const code = (docInfo?.htmlBody as unknown as string[])?.join('')
+          if (code) {
+            return code
+          }
+        } catch (e) {}
+      }
+    }
+  }, [mode, roomId])
+
+  const onChangeCodemirrorValue = (value: string) => {
+    onChangeCodemirrorValueFromProps(value)
+    void updateCommentWidgetPosition()
+  }
+  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
+    onChangeStreamingDocInfoFromProps?.(doc)
+
+    localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
+  }
 
   const {
     activeFile,
@@ -61,7 +90,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     addedFileList,
     onDeleteFileWithEvents,
     onChangeFileWithEvents,
-    ...collabProps
+    ...collabPropsFromFileManager
   } = useFileManager({
     socket,
     roomId,
@@ -72,7 +101,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     editorRef,
     isLoading,
     extensions,
-    doc,
+    streamingDoc,
     key,
     onCreateEditor,
     roomStatus,
@@ -91,8 +120,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       updateCommentWidgetPosition,
     },
   } = useCodeEditorCollab({
-    ...otherProps,
     ...collabProps,
+    ...collabPropsFromFileManager,
+    onChangeStreamingDocInfo,
+    preloadedCode: localstorageCode ?? preloadedCode,
     activeFile,
     mode,
     socket,
@@ -101,10 +132,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   })
 
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
-  const onChangeCode = (value: string) => {
-    _onChangeCode(value)
-    void updateCommentWidgetPosition()
-  }
 
   return (
     <div
@@ -136,47 +163,51 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
       <StatusLabel status={roomStatus} />
 
-      {isLoading || (otherProps.isFetching && <LoadingCodeEditor />)}
+      {isLoading || collabProps.isFetching || !streamingDoc ? (
+        <LoadingCodeEditor />
+      ) : (
+        <>
+          <CodeMirror
+            onContextMenu={onContextMenu}
+            onCreateEditor={onCreateEditor}
+            key={key}
+            className={className}
+            height='100%'
+            basicSetup={false}
+            theme='dark'
+            extensions={extensions}
+            readOnly={isReadOnly}
+            value={streamingDoc.toString()}
+            onChange={onChangeCodemirrorValue}
+          />
 
-      <CodeMirror
-        onContextMenu={onContextMenu}
-        onCreateEditor={onCreateEditor}
-        key={key}
-        className={className}
-        height='100%'
-        basicSetup={false}
-        theme='dark'
-        extensions={extensions}
-        readOnly={isReadOnly}
-        value={doc}
-        onChange={onChangeCode}
-      />
+          <CommentPopup
+            {...commentPopupProps}
+            isOpen={isCommentPopupOpen}
+            onClose={onCloseCommentPopup}
+            onRemoveComment={onRemoveComment}
+            onRemoveCommentGroup={onRemoveCommentGroup}
+            activeFile={activeFile}
+          />
 
-      <CommentPopup
-        {...commentPopupProps}
-        isOpen={isCommentPopupOpen}
-        onClose={onCloseCommentPopup}
-        onRemoveComment={onRemoveComment}
-        onRemoveCommentGroup={onRemoveCommentGroup}
-        activeFile={activeFile}
-      />
-
-      <Popover
-        classes={{ root: styles.popover }}
-        anchorReference='anchorPosition'
-        open={isAddCommentOpen}
-        anchorPosition={position}
-      >
-        <ClickAwayListener onClickAway={() => setIsAddCommentOpen(false)}>
-          <Box>
-            <AddComment
-              isDisabled={isAddCommentDisabled}
-              onAddComment={onAddComment}
-              onClose={() => setIsAddCommentOpen(false)}
-            />
-          </Box>
-        </ClickAwayListener>
-      </Popover>
+          <Popover
+            classes={{ root: styles.popover }}
+            anchorReference='anchorPosition'
+            open={isAddCommentOpen}
+            anchorPosition={position}
+          >
+            <ClickAwayListener onClickAway={() => setIsAddCommentOpen(false)}>
+              <Box>
+                <AddComment
+                  isDisabled={isAddCommentDisabled}
+                  onAddComment={onAddComment}
+                  onClose={() => setIsAddCommentOpen(false)}
+                />
+              </Box>
+            </ClickAwayListener>
+          </Popover>
+        </>
+      )}
     </div>
   )
 }
