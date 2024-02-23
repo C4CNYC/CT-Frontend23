@@ -103,7 +103,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
     }
   }, [socket])
 
-  const onChangeCode = (value: string) => {
+  const onChangeCodemirrorValue = (value: string) => {
     if (checkValueTimeout) {
       // Clear the previous timeout if the value changes
       clearTimeout(checkValueTimeout)
@@ -182,7 +182,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
           cursorText={cursorName}
           onRoomStatusChanged={setEditorStatus}
           socket={socket}
-          onChangeCode={onChangeCode}
+          onChangeCodemirrorValue={onChangeCodemirrorValue}
         />
       )}
     </Box>

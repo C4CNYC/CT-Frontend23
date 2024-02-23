@@ -10,13 +10,13 @@ import { waitConnectSocket } from '@/sections/code-panel/components/body/blocks/
 import { voidFunction } from '@/utils'
 
 interface CodeEditorControllerProps {
-  onChange?: (value: Record<string, string>) => void
+  onChangeStreamingDocInfo?: (value: Record<string, string>) => void
   user?: AuthUserType
   isFetching?: boolean
 }
 
 const CodeEditorController: FC<CodeEditorControllerProps> = ({
-  onChange = voidFunction,
+  onChangeStreamingDocInfo = voidFunction,
   user,
   isFetching = false,
 }) => {
@@ -60,7 +60,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
       roomId={room.roomId}
       cursorText={room.cursorText}
       preloadedCode={room.preloadedCode}
-      onChange={onChange}
+      onChangeStreamingDocInfo={onChangeStreamingDocInfo}
       code={room.code}
       mode={room.mode}
       socket={socket}
