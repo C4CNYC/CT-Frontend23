@@ -1,17 +1,12 @@
 import { type FC, useMemo, useState } from 'react'
 
-import {
-  Chip,
-  SpeedDial,
-  SpeedDialAction,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { Chip, SpeedDial, SpeedDialAction, Typography, useTheme } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import { Box } from '@mui/system'
 import { GiSave } from '@react-icons/all-files/gi/GiSave'
 
+import useIsDesktop from '@/hooks/useIsDesktop'
+import { useSelector } from '@/redux/store'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -25,16 +20,16 @@ import {
 } from './constants'
 
 export interface MenuProps {
-  code: string
   language: SupportedLang
   publicPage?: boolean
 }
 
-const Menu: FC<MenuProps> = ({ code, language, publicPage }) => {
+const Menu: FC<MenuProps> = ({ language, publicPage }) => {
   const classes = tooltipRewrite()
+  const code = useSelector((state) => state.codePanelGlobal.code)
 
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const [speedDial, setSpeedDial] = useState(false)
   const openSpeedDial = () => {
     setSpeedDial(true)

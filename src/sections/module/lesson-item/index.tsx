@@ -144,18 +144,13 @@ export default function LessonItem({
         {!locked ? (
           <Link
             component={NextLink}
-            href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-              courseId as string
-            )}?unitId=${unitId}&lessonId=${lesson.id}`}
+            href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+              courseId: courseId as string,
+              unitId,
+              lessonId: lesson.id,
+            })}
             underline='none'
             sx={START_LINK_SX}
-            // onClick={() => {
-            //   updateCodePanelAtom({
-            //     courseId: courseId as string,
-            //     unitId,
-            //     lessonId: lesson.id,
-            //   })
-            // }}
           >
             <Typography variant='h5'> {translate('actions_start')} </Typography>
             <Box sx={LINK_BTN_SX}>
@@ -184,9 +179,11 @@ export default function LessonItem({
             <LessonDialog
               open={open}
               closeDialog={closeDialog}
-              link={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-                courseId as string
-              )}?unitId=${unitId}&lessonId=${lesson.id}`}
+              link={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                courseId: courseId as string,
+                unitId,
+                lessonId: lesson.id,
+              })}
             />
           </>
         )}

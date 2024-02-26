@@ -1,16 +1,17 @@
 import { SetStateAction, useEffect, useState } from 'react'
 
-import { IconButton, Typography, useMediaQuery } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
 import { Box, Stack, useTheme } from '@mui/system'
 import { useTimer } from 'react-timer-hook'
 
 import { Iconify, MenuPopover } from '@/components'
+import useIsDesktop from '@/hooks/useIsDesktop'
 
 import { TimerInput } from '../input'
 
 const TimerPopup = (): React.ReactElement => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
+  const isDesktop = useIsDesktop()
   const [isTimerInitial, setIsTimerInitial] = useState<boolean>(true)
   const [inputSeconds, setInputSeconds] = useState<number>(0)
   const [isTimerEnding, setIsTimerEnding] = useState<boolean>(false)

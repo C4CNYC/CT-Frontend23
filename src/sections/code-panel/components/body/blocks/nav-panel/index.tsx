@@ -6,10 +6,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
-import { useRouter } from 'next/router'
 
 import { SimpleInfiniteList } from '@/components'
-import { useLessonStatus, useSocket } from '@/hooks'
 import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { useSelector, RootState } from '@/redux/store'
 import { ILessonUserStatus } from '@/types'
@@ -62,9 +60,8 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
-  const router = useRouter()
-  const socket = useSocket()
-  const usersStatus = useLessonStatus()
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const usersStatus = useSelector((state) => state.codePanelGlobal.usersStatus)
   const room = useSelector((state: RootState) => state.codeEditorController.room)
   const roomId = room?.roomId ?? ''
 
@@ -99,7 +96,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
     try {
       // if (socket && socket.connected && router.query.lessonId) {
       socket?.emit('changeStatusInLesson', {
-        lesson: router.query.lessonId,
+        lesson: lessonId,
         user: roomId,
         status,
       })

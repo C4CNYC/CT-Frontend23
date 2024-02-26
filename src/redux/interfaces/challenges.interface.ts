@@ -7,12 +7,12 @@ export type Unit = IModule &
     lessons: Array<ILesson & BaseResponseInterface>
   }
 
-export interface IChallanges {
+export interface IChallenges {
   name?: string
   description: string
   units: Unit[]
 }
 
-export interface IChallangesSearchParams extends BaseSearchInterface {
+export interface IChallengesSearchParams extends BaseSearchInterface {
   id: string
 }

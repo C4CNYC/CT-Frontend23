@@ -21,7 +21,7 @@ import {
 import { Stack } from '@mui/system'
 import { useRouter } from 'next/router'
 
-import { useGetChallangesQuery } from '@/redux/services/manager/challenges-student'
+import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
 
 interface Props {
   children: React.ReactElement
@@ -30,7 +30,7 @@ export default function ChallengesDialog({ children }: Props): React.ReactElemen
   const router = useRouter()
   const courseId = router.query.id as string
   const [openDialog, setOpenDialog] = useState(false)
-  const { data, isLoading, isFetching } = useGetChallangesQuery(
+  const { data, isLoading, isFetching } = useGetCourseContentQuery(
     { id: courseId },
     { skip: !courseId }
   )
