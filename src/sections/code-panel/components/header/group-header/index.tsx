@@ -1,6 +1,6 @@
 import { type FC } from 'react'
 
-import { Avatar, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Avatar, Box, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useDispatch } from 'react-redux'
 
 import PersonIcon from '@/assets/icons/PersonIcon'
@@ -8,6 +8,7 @@ import { toggleRealtimeCodeHidden } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 
 import CustomSwitch from './custom-switch'
+import FocusOverlay from './FocusOverlay'
 import {
   AVATAR_STYLES,
   GROUP_TITLE_STYLES,
@@ -24,9 +25,9 @@ const GroupHeader: FC = () => {
   const tribe = useSelector((state) => state.codePanel.class)
   const dispatch = useDispatch()
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
-  if (!isDesktop) {
-    return null
-  }
+
+  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
+  const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   const onChange = () => {
     dispatch(toggleRealtimeCodeHidden(!isRealtimeCodeHidden))
@@ -39,42 +40,52 @@ const GroupHeader: FC = () => {
       ''
     )
 
+  if (!isDesktop) {
+    return null
+  }
+
   return (
     <Stack
       sx={STACK_STYLES}
       direction='row'
     >
-      <Avatar
-        alt='avatar'
-        src={tribe?.avatar ?? ''}
-        sx={AVATAR_STYLES}
-      >
-        🤖
-      </Avatar>
-
-      <Stack sx={STACK_GROUP_STYLES}>
-        <Typography
-          variant='caption'
-          sx={GROUP_TITLE_STYLES}
-        >
-          GROUP
-        </Typography>
-
-        <Tooltip title={groupTitle}>
-          <Typography
-            variant='subtitle2'
-            sx={TRIBE_NAME_STYLES}
+      {isBrowserHidden && isInstructionsHidden ? (
+        <FocusOverlay />
+      ) : (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar
+            alt='avatar'
+            src={tribe?.avatar ?? ''}
+            sx={AVATAR_STYLES}
           >
-            {tribe?.name}
-          </Typography>
-        </Tooltip>
-      </Stack>
+            🤖
+          </Avatar>
 
-      <PersonIcon
-        display='flex'
-        justifyContent='center'
-        alignItems='center'
-      />
+          <Stack sx={STACK_GROUP_STYLES}>
+            <Typography
+              variant='caption'
+              sx={GROUP_TITLE_STYLES}
+            >
+              GROUP
+            </Typography>
+
+            <Tooltip title={groupTitle}>
+              <Typography
+                variant='subtitle2'
+                sx={TRIBE_NAME_STYLES}
+              >
+                {tribe?.name}
+              </Typography>
+            </Tooltip>
+          </Stack>
+
+          <PersonIcon
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+          />
+        </Box>
+      )}
 
       <CustomSwitch
         isActive={!isRealtimeCodeHidden}
