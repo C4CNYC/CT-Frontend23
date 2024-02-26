@@ -1,15 +1,12 @@
 import { type FC, useRef, useState } from 'react'
 
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { Stack, type StackProps } from '@mui/system'
+import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
 import { TiDocumentText } from '@react-icons/all-files/ti/TiDocumentText'
-import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 
-import { useSocket } from '@/hooks'
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { setCode, toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'
@@ -30,16 +27,14 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
   onSubmitChallenge,
   onSubmitLesson,
-  data,
+  lessonContents,
   user,
   language,
-  isFetching = false,
+  isFetchingLessonContent = false,
   lastLessonCode,
 }) => {
-  const theme = useTheme()
-  const socket = useSocket()
-  const router = useRouter()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
@@ -60,9 +55,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       }
 
       previousLength = doc?.htmlBody?.length // Store the current value
-      if (router.query.lessonId && user) {
+      if (lessonId && user) {
         socket?.emit('changeStatusInLesson', {
-          lesson: router.query.lessonId,
+          lesson: lessonId,
           user: user?.id,
           status: 'active',
         })
@@ -72,7 +67,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       checkValueTimeout = setTimeout(() => {
         if (doc?.htmlBody?.length === previousLength) {
           socket?.emit('changeStatusInLesson', {
-            lesson: router.query.lessonId,
+            lesson: lessonId,
             user: user?.id,
             status: 'idle',
           })
@@ -99,15 +94,18 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
     return (
       <Stack
         ref={wrapperRef}
-        {...STACK_PROPS}
+        px={1}
+        gap={1}
+        direction='row'
+        alignItems='stretch'
       >
         {!isInstructionsHidden ? (
           <SliderBlock
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
-            data={data}
+            data={lessonContents}
             integrations={lesson?.integrations ?? []}
-            isFetching={isFetching}
+            isFetching={isFetchingLessonContent}
             code={document?.htmlBody?.join('') ?? ''}
           />
         ) : (
@@ -119,16 +117,16 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         )}
 
         <CodeEditorBlock
-          preloadedCode={(lastLessonCode ?? data[slideIndex]?.preload_body) || ''}
-          validations={data[slideIndex]?.validations || ''}
+          preloadedCode={(lastLessonCode ?? lessonContents[slideIndex]?.preload_body) || ''}
+          validations={lessonContents[slideIndex]?.validations || ''}
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
           onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-          isFetching={isFetching}
+          isFetching={isFetchingLessonContent}
         />
 
         {!isBrowserHidden ? (
-          <ViewBlock code={document} />
+          <ViewBlock document={document} />
         ) : (
           <HidedTabBtn
             title={TAB_TITLES.browser_preview}
@@ -156,9 +154,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       <SliderBlock
         onSubmitLesson={onSubmitLesson}
         onSubmitChallenge={onSubmitChallenge}
-        data={data}
+        data={lessonContents}
         integrations={lesson?.integrations ?? []}
-        isFetching={isFetching}
+        isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
       />
 
@@ -166,22 +164,14 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         code={document?.htmlBody?.join('') ?? ''}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
-        preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
-        validations={data[slideIndex]?.validations}
-        isFetching={isFetching}
+        preloadedCode={lastLessonCode ?? lessonContents[slideIndex]?.preload_body}
+        validations={lessonContents[slideIndex]?.validations}
+        isFetching={isFetchingLessonContent}
       />
 
-      <ViewBlock {...{ code: document, language }} />
+      <ViewBlock document={document} />
     </SwipeableViews>
   )
-}
-
-const STACK_PROPS: StackProps = {
-  px: 1,
-  gap: 1,
-  display: 'flex',
-  direction: 'row',
-  alignItems: 'stretch',
 }
 
 export default CodePanelBody

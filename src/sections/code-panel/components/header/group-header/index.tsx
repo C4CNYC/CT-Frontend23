@@ -1,9 +1,10 @@
 import { type FC } from 'react'
 
-import { Avatar, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Avatar, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import { useDispatch } from 'react-redux'
 
 import PersonIcon from '@/assets/icons/PersonIcon'
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { toggleRealtimeCodeHidden } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 
@@ -20,7 +21,7 @@ const MAX_TRIBE_NAME_LENGTH = 23
 
 const GroupHeader: FC = () => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const tribe = useSelector((state) => state.codePanel.class)
   const dispatch = useDispatch()
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)

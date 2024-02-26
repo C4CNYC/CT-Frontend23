@@ -1,8 +1,9 @@
 import { forwardRef } from 'react'
 
-import { Box, BoxProps, Link, useMediaQuery, useTheme } from '@mui/material'
+import { Box, BoxProps, Link, useTheme } from '@mui/material'
 import NextLink from 'next/link'
 
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 import { icon } from './icon'
@@ -29,7 +30,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
       </Box>
     )
 
-    const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+    const isDesktop = useIsDesktop()
     if (!isDesktop) return null
 
     if (disabledLink) {

@@ -1,6 +1,6 @@
 import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Box, useMediaQuery, useTheme } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import * as _ from 'lodash-es'
@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
 
 import { EmptyContent, LoadingScreen } from '@/components'
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
@@ -62,7 +63,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
   const translate = useTranslate()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
 
   const title = translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {

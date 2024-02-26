@@ -1,7 +1,8 @@
 import { type FC, useEffect, useState, useCallback, useMemo } from 'react'
 
-import { Box, Slider, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Slider, useTheme } from '@mui/material'
 
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 
 import { SLIDER_STYLE, getBoxStyles } from './constants'
@@ -14,7 +15,7 @@ const DEFAULT_VALUE = 10
 
 const ProgressBottomBar: FC<ProgressBottomBarProps> = ({ sliderSteps }) => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const [value, setValue] = useState(DEFAULT_VALUE)

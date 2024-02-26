@@ -4,13 +4,11 @@ import { SupportedLang } from '@/sections/code-panel/lib/types'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 export interface CodePanelBodyProps {
-  isFetching?: boolean
+  isFetchingLessonContent?: boolean
   lesson?: ILesson & BaseResponseInterface
-  data: Array<ILessonContent & BaseResponseInterface>
+  lessonContents: Array<ILessonContent & BaseResponseInterface>
   user: AuthUserType
-  code: string
   language: SupportedLang
-  onChangeCode: (code: string) => void
   onSubmitChallenge: (lessonContentId: string) => Promise<void>
   onSubmitLesson: () => Promise<void>
   lastLessonCode?: string

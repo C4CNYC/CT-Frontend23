@@ -1,12 +1,14 @@
 import { type FC, useMemo } from 'react'
 
-import { Box, Skeleton, useMediaQuery, useTheme, SkeletonProps } from '@mui/material'
+import { Box, Skeleton, useTheme, SkeletonProps } from '@mui/material'
+
+import useIsDesktop from '@/hooks/useIsDesktop'
 
 import { getSkeletonCodePanelStyles, getTopBarSkeletonStyles } from './styles'
 
 const SkeletonCodePanel: FC = () => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const styles = useMemo(() => getSkeletonCodePanelStyles(isDesktop), [isDesktop])
 
   return (
@@ -52,7 +54,7 @@ const SkeletonCodePanel: FC = () => {
 
 export const CPTopBarSkeleton = (): React.ReactElement => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const styles = useMemo(() => getTopBarSkeletonStyles(isDesktop), [isDesktop])
 
   return (

@@ -1,7 +1,8 @@
 import { type FC, type ReactNode, useMemo, useState } from 'react'
 
-import { Box, Collapse, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Collapse, useTheme } from '@mui/material'
 
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 import { localStorageAvailable } from '@/utils'
 
@@ -44,7 +45,8 @@ const BaseBlock: FC<IBaseBlock> = ({
 }) => {
   const theme = useTheme()
   const storageAvailable = localStorageAvailable()
-  const isTabletAndMobile = useMediaQuery(theme.breakpoints.down(1000))
+  const isDesktop = useIsDesktop()
+  const isTabletAndMobile = !isDesktop
   const boxStyles = useMemo(() => getBoxStyles(isTabletAndMobile, theme), [useTheme])
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
 

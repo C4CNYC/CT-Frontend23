@@ -1,6 +1,8 @@
 import { type FC, type ReactNode, useMemo } from 'react'
 
-import { Box, type SxProps, useMediaQuery, useTheme } from '@mui/material'
+import { Box, type SxProps } from '@mui/material'
+
+import useIsDesktop from '@/hooks/useIsDesktop'
 
 import GroupHeader from './group-header'
 import Logo from './logo'
@@ -9,13 +11,12 @@ import MobileBar from './nav-bar/mobile-bar'
 
 interface ITopPanel {
   chatComponent?: ReactNode | null
-  onHanldeFullScreen: () => void
+  onHandleFullScreen: () => void
   isFullScreenView: boolean
 }
 
-const TopPanel: FC<ITopPanel> = ({ chatComponent, onHanldeFullScreen, isFullScreenView }) => {
-  const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+const TopPanel: FC<ITopPanel> = ({ chatComponent, onHandleFullScreen, isFullScreenView }) => {
+  const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
 
   return (
@@ -28,7 +29,7 @@ const TopPanel: FC<ITopPanel> = ({ chatComponent, onHanldeFullScreen, isFullScre
       {isDesktop ? (
         <DesktopBar
           chatComponent={chatComponent}
-          onHanldeFullScreen={onHanldeFullScreen}
+          onHandleFullScreen={onHandleFullScreen}
           isFullScreenView={isFullScreenView}
         />
       ) : (
