@@ -9,7 +9,10 @@ import { useSelector } from '@/redux/store'
 
 const Tips: FC = () => {
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId }, { skip: !lessonId })
+  const { data, isLoading } = useGetLessonStudentQuery(
+    { id: lessonId as string },
+    { skip: !lessonId }
+  )
 
   if (isLoading) {
     return (
@@ -35,14 +38,12 @@ const Tips: FC = () => {
           </Alert>
         ))
       ) : (
-        <Box sx={BOX_SX}>
+        <Box height='300px'>
           <EmptyContent title='No data' />
         </Box>
       )}
     </Stack>
   )
 }
-
-const BOX_SX = { height: '300px' }
 
 export default Tips

@@ -305,6 +305,7 @@ export default function CodePanelPage(): ReactElement | null {
       socket?.off('leaveLesson')
       // unsubscribeSocket(socket);
       socket?.disconnect()
+      dispatch(setSocket(undefined))
     }
   }, [isRealtimeCodeEnabled, authIsInitialized, user])
 

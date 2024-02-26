@@ -43,7 +43,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
     isLoading: isLoadingLessonContent,
     isFetching: isFetchingLessonContent,
   } = useGetLessonContentStudentQuery({ id: lessonId as string }, { skip: !lessonId })
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId })
+  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId as string })
 
   const slideTips = (lessonContent?.[slideIndex]?.tips ?? '').split('\n')
 
