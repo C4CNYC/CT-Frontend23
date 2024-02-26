@@ -195,7 +195,7 @@ export default function StepContentEditor(): React.ReactElement {
           ) : null}
           {bodyType === LessonContentType.Code ? (
             <StepCode
-              content={data?.type === LessonContentType.Code ? data?.body : ''}
+              content={data?.body || ''}
               integrations={integrations ?? []}
               onSubmit={onSubmit}
               data={data!}
