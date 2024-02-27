@@ -1,15 +1,22 @@
 import { FC } from 'react'
 
-import { Avatar, Box, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { CgClose } from '@react-icons/all-files/cg/CgClose'
 import { MdFilterCenterFocus } from '@react-icons/all-files/md/MdFilterCenterFocus'
 
-import { useSelector } from '@/redux/store'
+import { useDispatch, useSelector } from '@/redux/store'
+import { toggleBrowser, toggleInstrations } from '@root/src/redux/slices/code-panel-global'
 
 import { GROUP_TITLE_STYLES, TRIBE_NAME_STYLES } from './styles'
 
 const FocusOverlay: FC = () => {
   const tribe = useSelector((state) => state.codePanel.class)
+  const dispatch = useDispatch()
+
+  const onChangeColumnVisability = () => {
+    dispatch(toggleBrowser(false))
+    dispatch(toggleInstrations(false))
+  }
 
   return (
     <Box
@@ -19,6 +26,7 @@ const FocusOverlay: FC = () => {
         bgcolor: '#0198ED',
         borderRadius: '35px',
         px: 1,
+        py: '2px',
         gap: 1,
       }}
     >
@@ -29,11 +37,12 @@ const FocusOverlay: FC = () => {
       >
         🤖
       </Avatar>
-
-      <MdFilterCenterFocus
-        size={25}
-        color='#fff'
-      />
+      <IconButton sx={{ p: 0 }}>
+        <MdFilterCenterFocus
+          size={25}
+          color='#fff'
+        />
+      </IconButton>
 
       <Stack sx={{ pr: 4, width: '196px' }}>
         <Typography
@@ -52,11 +61,15 @@ const FocusOverlay: FC = () => {
           </Typography>
         </Tooltip>
       </Stack>
-
-      <CgClose
-        size={25}
-        color='#fff'
-      />
+      <IconButton
+        sx={{ p: 0 }}
+        onClick={onChangeColumnVisability}
+      >
+        <CgClose
+          size={28}
+          color='#fff'
+        />
+      </IconButton>
     </Box>
   )
 }
