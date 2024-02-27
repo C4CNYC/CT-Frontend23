@@ -115,6 +115,7 @@ export default function ModulePage(): React.ReactElement {
             {!isLoadingModules && !isLoadingModule && module ? (
               <ModuleHeader
                 name={module.name}
+                lessons={module?.lessons ?? []}
                 description={module?.description ? module.description : translate('description')}
                 avatar={module.avatar}
               />
