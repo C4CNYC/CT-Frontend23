@@ -78,6 +78,7 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
+    if (data?.body) setBodyType(LessonContentType.Code)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {
@@ -195,7 +196,7 @@ export default function StepContentEditor(): React.ReactElement {
           ) : null}
           {bodyType === LessonContentType.Code ? (
             <StepCode
-              content={data?.type === LessonContentType.Code ? data?.body : ''}
+              content={data?.body || ''}
               integrations={integrations ?? []}
               onSubmit={onSubmit}
               data={data!}
