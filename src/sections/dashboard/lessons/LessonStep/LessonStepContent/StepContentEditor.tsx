@@ -78,6 +78,7 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
+    if (data?.body) setBodyType(LessonContentType.Code)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {
