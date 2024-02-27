@@ -107,7 +107,10 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
         >
           <Button
             component={NextLink}
-            href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(query.id as string)}?${unit.id}`}
+            href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+              courseId: query.id as string,
+              unitId: unit.id,
+            })}
             sx={{
               display: 'inline-flex',
               alignSelf: isMobile ? 'flex-end' : 'flex-start',

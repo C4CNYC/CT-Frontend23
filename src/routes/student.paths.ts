@@ -48,7 +48,19 @@ export const STUDENT_PATH_DASHBOARD = {
   },
   codePanel: {
     root: '/student/code-panel',
-    workSpace: (id: string) => path('/student/code-panel/', `${id}`),
+    workSpace: ({
+      courseId,
+      unitId,
+      lessonId,
+    }: {
+      courseId: string
+      unitId?: string
+      lessonId?: string
+    }) =>
+      path(
+        '/student/code-panel',
+        `?courseId=${courseId}${unitId ? `&unitId=${unitId}` : ''}${lessonId ? `&lessonId=${lessonId}` : ''}`
+      ),
   },
   publicCodePanel: {
     root: '/student/public-code-panel',

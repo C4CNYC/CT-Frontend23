@@ -1,11 +1,12 @@
 import { type FC, memo, useCallback, useEffect, useRef, useState } from 'react'
 
-import { Box, Collapse, useMediaQuery } from '@mui/material'
+import { Box, Collapse } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useDispatch } from 'react-redux'
 
 import { type AuthUserType } from '@/auth/types'
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { type IValidation } from '@/redux/interfaces/content.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
@@ -52,7 +53,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
   const [typing, setTyping] = useState<boolean | null>(null)
   const room = useSelector((state) => state.codeEditorController.room)

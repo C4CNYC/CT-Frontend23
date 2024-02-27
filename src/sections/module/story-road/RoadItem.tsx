@@ -68,10 +68,12 @@ const RoadItem = ({
   const seeMoreBtnSx = useMemo(() => getSeeMoreBtnSx(theme), [theme])
 
   const redirectToCodePanel = () => {
-    push(
-      `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(query.id as string)}?${
-        query.unitId
-      }&${lessonId}`
+    void push(
+      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+        courseId: query.id as string,
+        unitId: query.unitId as string,
+        lessonId,
+      })
     )
   }
 

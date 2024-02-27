@@ -9,14 +9,14 @@ interface ViewToomblerProps {
   isFullScreenView: boolean
   isColumnHidden: boolean
   onChangeColumnVisability: (value: boolean) => void
-  onHanldeFullScreen: () => void
+  onHandleFullScreen: () => void
 }
 
 const ViewTumbler: FC<ViewToomblerProps> = ({
   isFullScreenView,
   isColumnHidden,
   onChangeColumnVisability,
-  onHanldeFullScreen,
+  onHandleFullScreen,
 }) => {
   const columnIcon = isColumnHidden ? 'tabler:columns-3' : 'tabler:columns-1'
   const screenViewIcon = isFullScreenView ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'
@@ -52,7 +52,7 @@ const ViewTumbler: FC<ViewToomblerProps> = ({
         </IconButton>
       </Tooltip>
 
-      <IconButton onClick={onHanldeFullScreen}>
+      <IconButton onClick={onHandleFullScreen}>
         <Iconify icon={screenViewIcon} />
       </IconButton>
     </Box>

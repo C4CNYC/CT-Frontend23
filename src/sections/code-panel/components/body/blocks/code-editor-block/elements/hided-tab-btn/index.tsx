@@ -1,6 +1,8 @@
 import { type FC } from 'react'
 
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+
+import useIsDesktop from '@/hooks/useIsDesktop'
 
 import { COLLAPSEBAR_TITLE_SX, getCollapsebarSx } from './constants'
 
@@ -11,8 +13,8 @@ interface IHidedTabRtn {
 }
 
 const HidedTabBtn: FC<IHidedTabRtn> = ({ icon, title, openPanelFnc }) => {
-  const theme = useTheme()
-  const isTabletAndMobile = useMediaQuery(theme.breakpoints.down(1000))
+  const isDesktop = useIsDesktop()
+  const isTabletAndMobile = !isDesktop
 
   return (
     <>

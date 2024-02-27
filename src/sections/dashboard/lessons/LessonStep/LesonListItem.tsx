@@ -65,7 +65,7 @@ export default function LessonListItem({
   const chooseBorderColor = (): string => {
     if (hasValidation) {
       return CHALANGES
-    } else if (step.type === LessonContentType.Code) {
+    } else if (step.type === LessonContentType.Code || step.body) {
       return CUSTOM
     } else {
       return BRIEFING

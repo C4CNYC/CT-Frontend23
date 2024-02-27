@@ -15,11 +15,11 @@ import ViewTumbler from '../options/view-tumbler'
 
 interface IDesktopBar {
   chatComponent: ReactNode
-  onHanldeFullScreen: () => void
+  onHandleFullScreen: () => void
   isFullScreenView: boolean
 }
 
-const DesktopBar: FC<IDesktopBar> = ({ chatComponent, onHanldeFullScreen, isFullScreenView }) => {
+const DesktopBar: FC<IDesktopBar> = ({ chatComponent, onHandleFullScreen, isFullScreenView }) => {
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
@@ -45,7 +45,7 @@ const DesktopBar: FC<IDesktopBar> = ({ chatComponent, onHanldeFullScreen, isFull
       <SettingDrawer />
 
       <ViewTumbler
-        onHanldeFullScreen={onHanldeFullScreen}
+        onHandleFullScreen={onHandleFullScreen}
         isFullScreenView={isFullScreenView}
         isColumnHidden={isBrowserHidden && isInstructionsHidden}
         onChangeColumnVisability={onChangeColumnVisability}

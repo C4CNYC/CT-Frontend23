@@ -1,7 +1,8 @@
 import { type FC, useEffect } from 'react'
 
-import { Box, Button, List, Popover, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, List, Popover, Typography, useTheme } from '@mui/material'
 
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 
 import {
@@ -21,7 +22,7 @@ interface TipsPopoverProps {
 
 const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, tips }) => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
 
   useEffect(() => {

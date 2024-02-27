@@ -14,12 +14,6 @@ export interface CodePanelFooterProps extends ProgressBottomBarProps, MenuProps 
   lessonManagerComponent: ReactNode
 }
 
-const STACK_STYLES = {
-  width: '100%',
-  justifyContent: 'flex-end',
-  alignItems: 'center',
-}
-
 const CodePanelFooter: FC<CodePanelFooterProps> = ({
   publicPage = false,
   sliderSteps,
@@ -27,7 +21,6 @@ const CodePanelFooter: FC<CodePanelFooterProps> = ({
   lessonManagerComponent,
 }) => {
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
-  const code = useSelector((state) => state.codePanelGlobal.code)
   return (
     <Stack
       pl='20px'
@@ -43,12 +36,13 @@ const CodePanelFooter: FC<CodePanelFooterProps> = ({
       <Stack
         spacing={2}
         direction='row'
-        sx={STACK_STYLES}
+        width='100%'
+        justifyContent='flex-end'
+        alignItems='center'
       >
         {activeTab === 0 ? <ProgressBottomBar sliderSteps={sliderSteps} /> : null}
 
         <Menu
-          code={code}
           language={language}
           publicPage={publicPage}
         />
