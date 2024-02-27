@@ -81,6 +81,7 @@ export default function CodePanelPage(): ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
 
   const { user, isInitialized: authIsInitialized } = useAuthContext()
+  const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
   const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
@@ -177,8 +178,14 @@ export default function CodePanelPage(): ReactElement | null {
     if (!courseContent) return
 
     const courseId = router.query.courseId
-    const unitId = router.query.unitId ?? lastUnitId ?? courseContent.units[0].id
-    const lessonId = router.query.lessonId ?? lastLessonId ?? courseContent.units[0].lessons[0].id
+    const unitId =
+      router.query.unitId ??
+      (router.query.courseId === lastCourseId && lastUnitId
+        ? lastUnitId
+        : courseContent.units[0].id)
+    const lessonId =
+      router.query.lessonId ??
+      (unitId === lastUnitId && lastLessonId ? lastLessonId : courseContent.units[0].lessons[0].id)
 
     if (!courseId || !unitId || !lessonId) {
       void router.replace(STUDENT_PATH_DASHBOARD.page404)
