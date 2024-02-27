@@ -7,7 +7,6 @@ import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
 import { useSelector } from '@/redux/store'
-import { RESET_LESSON_EVENT } from 'src/sections/code-panel/lib/events'
 
 import { RoomStatus } from '../components/status-label'
 
@@ -202,24 +201,24 @@ export const useCodeEditorCollab = ({
     [runInitWatcher, runInitOwner, runInitSubOwner]
   )
 
-  useEffect(() => {
-    const onResetLesson = () => {
-      editorView.current?.destroy()
-      if (initializeBlockedRef.current) {
-        return
-      }
-
-      if (socket) {
-        initialize[modeRef.current](firstInit.current)
-      }
-    }
-
-    window.addEventListener(RESET_LESSON_EVENT, onResetLesson)
-
-    return () => {
-      window.removeEventListener(RESET_LESSON_EVENT, onResetLesson)
-    }
-  }, [socket])
+  // useEffect(() => {
+  //   const onResetLesson = () => {
+  //     editorView.current?.destroy()
+  //     if (initializeBlockedRef.current) {
+  //       return
+  //     }
+  //
+  //     if (socket) {
+  //       initialize[modeRef.current](firstInit.current)
+  //     }
+  //   }
+  //
+  //   window.addEventListener(RESET_LESSON_EVENT, onResetLesson)
+  //
+  //   return () => {
+  //     window.removeEventListener(RESET_LESSON_EVENT, onResetLesson)
+  //   }
+  // }, [socket])
 
   useModeSubscriptions({
     roomId,
