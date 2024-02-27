@@ -7,7 +7,12 @@ import { MdFilterCenterFocus } from '@react-icons/all-files/md/MdFilterCenterFoc
 import { useDispatch, useSelector } from '@/redux/store'
 import { toggleBrowser, toggleInstrations } from '@root/src/redux/slices/code-panel-global'
 
-import { GROUP_TITLE_STYLES, TRIBE_NAME_STYLES } from './styles'
+import {
+  OVERLAY_AVATAR_SX,
+  OVERLAY_GROUP_TITLE_SX,
+  OVERLAY_WRAPPER_SX,
+  TRIBE_NAME_STYLES,
+} from './styles'
 
 const FocusOverlay: FC = () => {
   const tribe = useSelector((state) => state.codePanel.class)
@@ -19,21 +24,11 @@ const FocusOverlay: FC = () => {
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        bgcolor: '#0198ED',
-        borderRadius: '35px',
-        px: 1,
-        py: '2px',
-        gap: 1,
-      }}
-    >
+    <Box sx={OVERLAY_WRAPPER_SX}>
       <Avatar
         alt='avatar'
         src={tribe?.avatar ?? ''}
-        sx={{ border: '2px solid #FBDD3F', background: '#0198ED', width: '30px', height: '30px' }}
+        sx={OVERLAY_AVATAR_SX}
       >
         🤖
       </Avatar>
@@ -44,10 +39,10 @@ const FocusOverlay: FC = () => {
         />
       </IconButton>
 
-      <Stack sx={{ pr: 4, width: '196px' }}>
+      <Stack sx={{ pr: 4, width: '193px' }}>
         <Typography
           variant='caption'
-          sx={{ ...GROUP_TITLE_STYLES, color: '#fff', textTransform: 'uppercase', fontSize: 10 }}
+          sx={OVERLAY_GROUP_TITLE_SX}
         >
           Focus mode
         </Typography>
