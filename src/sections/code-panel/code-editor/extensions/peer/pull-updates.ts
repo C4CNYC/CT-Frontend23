@@ -1,0 +1,85 @@
+import { type Update } from '@codemirror/collab'
+import { ChangeSet, StateEffect, StateEffectType } from '@codemirror/state'
+import { Socket } from 'socket.io-client'
+
+import { EmitSocketEvents } from '../../../lib/socket'
+import { COMMENT_TYPE } from '../../hooks/constants'
+import type { File } from '../../utils/requests'
+import type { Cursor } from '../cursors/types'
+
+interface PullUpdateProps {
+  roomId: string
+  version: number
+  fileName: File
+  socket: Socket
+  addCursor: StateEffectType<Cursor>
+  commentEffect: StateEffectType<any>
+}
+
+export const pullUpdates = ({
+  socket,
+  roomId,
+  version,
+  fileName,
+  addCursor,
+  commentEffect,
+}: PullUpdateProps): Promise<Update[]> => {
+  return new Promise<Update[]>(function (resolve) {
+    socket.emit(EmitSocketEvents.Pull, {
+      roomId,
+      version,
+      fileName,
+      socketId: socket.id,
+    })
+    socket.once(
+      `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`,
+      function (updates: Update[]) {
+        resolve(updates)
+      }
+    )
+  }).then((updates: Update[]) => {
+    return new Promise<Update[]>(function (resolve) {
+      socket.emit(EmitSocketEvents.Pull, {
+        roomId,
+        version,
+        fileName,
+        socketId: socket.id,
+      })
+
+      socket.once(
+        `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`,
+        function (updates: Update[]) {
+          resolve(updates)
+        }
+      )
+    }).then((updates: Update[]) =>
+      updates?.map((u: Update) => {
+        if (u.effects?.length) {
+          return {
+            changes: ChangeSet.fromJSON(u.changes),
+            clientID: u.clientID,
+            effects: u.effects.reduce<StateEffect<Cursor>[]>((res, { value }) => {
+              const isSelection = value.type === 'selection' && value?.id != null
+              const isComment = value.type === COMMENT_TYPE
+
+              if (isSelection) {
+                res.push(addCursor.of({ ...value }))
+              }
+
+              if (isComment) {
+                res.push(commentEffect.of({ ...value }))
+              }
+
+              return res
+            }, []),
+          }
+        }
+
+        return {
+          changes: ChangeSet.fromJSON(u.changes),
+          clientID: u.clientID,
+        }
+      })
+    )
+  })
+}
