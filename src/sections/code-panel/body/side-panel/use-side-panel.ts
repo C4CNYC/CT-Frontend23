@@ -13,26 +13,23 @@ import { type DragEndEvent } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
 import { useFilters } from '@/hooks/useFilters'
-import { IFriend } from '@/redux/interfaces/friends.interface'
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
 import { useSelector } from '@/redux/store'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { UserWithStatusAndStudent } from '@/sections/code-panel/lib/types'
 
 import { type DraggableBlockConfig, getDraggableBlockConfig } from './utils'
-
-type FriendUser = IFriend & BaseResponseInterface
 
 interface UseSidePanelReturn {
   drawerRef: MutableRefObject<HTMLDivElement | null>
   isOpen: boolean
-  onAddBlock: (user: FriendUser) => void
+  onAddBlock: (user: UserWithStatusAndStudent) => void
   setIsOpen: (isOpen: boolean) => void
   onDragEnd: (e: DragEndEvent) => void
   onDeletePreviewUser: (id: string) => void
-  previewUsers: FriendUser[]
+  previewUsers: UserWithStatusAndStudent[]
   draggableConfig: DraggableBlockConfig | null
-  users: FriendUser[]
-  setUsers: Dispatch<SetStateAction<FriendUser[]>>
+  users: UserWithStatusAndStudent[]
+  setUsers: Dispatch<SetStateAction<UserWithStatusAndStudent[]>>
   activeUsersAmount: number
   isUsersLoading: boolean
   onLoadMore: () => void
@@ -47,13 +44,13 @@ export const useSidePanel = (
 ): UseSidePanelReturn => {
   const drawerRef = useRef<HTMLDivElement | null>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [previewUsers, setPreviewUsers] = useState<FriendUser[]>([])
+  const [previewUsers, setPreviewUsers] = useState<UserWithStatusAndStudent[]>([])
   const [draggableConfig, setDraggableConfig] = useState<DraggableBlockConfig | null>(null)
   const classId = useSelector((state) => state?.codePanel?.class?.id)
   const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
-  const [users, setUsers] = useState<FriendUser[]>([])
+  const [users, setUsers] = useState<UserWithStatusAndStudent[]>([])
 
-  const { data: availableUsers, isLoading: isAvailableUsersLoading } =
+  const { data: availableStudents, isLoading: isAvailableUsersLoading } =
     useGetFriendsStudentContentQuery(filters)
 
   useEffect(() => {
@@ -61,14 +58,14 @@ export const useSidePanel = (
   }, [classId])
 
   const onLoadMore = () => {
-    if (!availableUsers?.meta?.hasNextPage) {
+    if (!availableStudents?.meta?.hasNextPage) {
       return
     }
 
-    setFilter(FILTER_NAME, availableUsers.meta.page + 1)
+    setFilter(FILTER_NAME, availableStudents.meta.page + 1)
   }
 
-  const onAddBlock = (user: FriendUser): void => {
+  const onAddBlock = (user: UserWithStatusAndStudent): void => {
     const newPreviewedUsers = [...previewUsers]
     const isMaxBlocksInView = newPreviewedUsers.length === draggableConfig?.blockAmount
     const isExist = newPreviewedUsers.some(({ id }) => id === user.id)
@@ -134,15 +131,19 @@ export const useSidePanel = (
   }, [wrapperListenerRef])
 
   useEffect(() => {
-    if (availableUsers?.data != null) {
-      setUsers((prev) => [
-        ...prev,
-        ...availableUsers.data.map((_user) =>
-          _user.status ? _user : { ..._user, status: 'inactive' }
-        ),
-      ])
-    }
-  }, [availableUsers?.data])
+    setUsers((prev) => [
+      ...prev,
+      ...(availableStudents?.data
+        ? availableStudents?.data.map((student) => {
+            return {
+              ...student.account,
+              student,
+              status: 'inactive',
+            } as UserWithStatusAndStudent
+          })
+        : []),
+    ])
+  }, [availableStudents?.data])
 
   const { activeUsersAmount, sortedUsers } = useMemo(() => {
     const statusOrder: Record<string, number> = {
@@ -171,6 +172,6 @@ export const useSidePanel = (
     setUsers,
     isUsersLoading: isAvailableUsersLoading,
     onLoadMore,
-    hasNextPage: availableUsers?.meta.hasNextPage ?? false,
+    hasNextPage: availableStudents?.meta.hasNextPage ?? false,
   }
 }

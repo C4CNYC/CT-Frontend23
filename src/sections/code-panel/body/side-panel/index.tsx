@@ -8,10 +8,9 @@ import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
 
 import { SimpleInfiniteList } from '@/components'
-import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { useSelector } from '@/redux/store'
+import { UserWithStatusAndStudent } from '@/sections/code-panel/lib/types'
 import { ILessonUserStatus } from '@/types'
-import { type BaseResponseInterface } from '@/utils'
 
 import CodePreview from './code-preview'
 import CustomNavItem from './custom-nav-item'
@@ -75,7 +74,7 @@ const SidePanel: FC<SidePanelProps> = ({ cursorName, wrapperListenerRef, lessonI
 
   useEffect(() => {
     // console.log({ usersStatus });
-    const _users = users.map((_user: IFriend & BaseResponseInterface) => {
+    const _users = users.map((_user: UserWithStatusAndStudent) => {
       const userStatus = usersStatus.find(
         (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
       )

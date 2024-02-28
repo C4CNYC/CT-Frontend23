@@ -12,13 +12,12 @@ import {
   Tooltip,
 } from '@mui/material'
 
-import { IFriend } from '@/redux/interfaces/friends.interface'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { UserWithStatusAndStudent } from '@/sections/code-panel/lib/types'
 
 interface UserItemProps {
   onClick?: () => void
   onToggle: () => void
-  user: IFriend & BaseResponseInterface
+  user: UserWithStatusAndStudent
 }
 
 const MAX_NAME_LENGTH = 15
@@ -27,7 +26,7 @@ const MAX_ABOUT_LENGTH = 28
 const UserItem: FC<UserItemProps> = ({ onToggle, onClick, user }) => {
   const name = `${user.first_name} ${user.last_name}`
   const tooltipNameTitle = name.length > MAX_NAME_LENGTH ? name : ''
-  const tooltipAbout = user.about?.length > MAX_ABOUT_LENGTH ? user.about : ''
+  const tooltipAbout = user.student?.about?.length > MAX_ABOUT_LENGTH ? user.student.about : ''
   return (
     <ListItem>
       <Badge
@@ -64,7 +63,7 @@ const UserItem: FC<UserItemProps> = ({ onToggle, onClick, user }) => {
         >
           <ListItemText
             sx={TOPIC_SX}
-            primary={user.about}
+            primary={tooltipAbout}
           />
         </Tooltip>
       </Stack>
