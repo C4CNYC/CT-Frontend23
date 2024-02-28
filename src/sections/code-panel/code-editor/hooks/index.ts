@@ -16,7 +16,7 @@ import { EditorMode } from './constants'
 import { type UseCommentsPropsReturn, useComments } from './useComments'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
-import { useModeSubscriptions } from './useModeSubscriotions'
+import { useModeSubscriptions } from './useModeSubscriptions'
 
 export interface UseCodeEditorProps extends MemoizedProps {
   roomId: string

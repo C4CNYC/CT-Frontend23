@@ -8,12 +8,12 @@ import { dracula } from '@uiw/codemirror-theme-dracula'
 import { StateEffectType } from '@uiw/react-codemirror'
 import { Socket } from 'socket.io-client'
 
+import { AuthUserType } from '@/auth/types'
 import { commentExtenstion } from '@/sections/code-panel/code-editor/extensions/comments'
 import type { CommentEffect } from '@/sections/code-panel/code-editor/extensions/comments/types'
 import { cursorExtension } from '@/sections/code-panel/code-editor/extensions/cursors'
 import type { Cursor } from '@/sections/code-panel/code-editor/extensions/cursors/types'
 import { peerExtension } from '@/sections/code-panel/code-editor/extensions/peer'
-import { AuthUserType } from '@root/src/auth/types'
 
 import { language } from '../utils'
 import { type File, getDocument } from '../utils/requests'
