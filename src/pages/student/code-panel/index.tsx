@@ -28,6 +28,7 @@ import {
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CodePanelBody from '@/sections/code-panel/body'
+import Confetti from '@/sections/code-panel/confetti'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/skeleton'
@@ -53,8 +54,6 @@ const CodePanelTour = dynamic(async () => await import('@/sections/code-panel/to
 const CodePanelHeader = dynamic(async () => await import('@/sections/code-panel/header'), {
   loading: () => <CPTopBarSkeleton />,
 })
-
-const Confetti = dynamic(async () => await import('@/sections/code-panel/confetti'), { ssr: false })
 
 const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/footer'))
 
@@ -398,8 +397,7 @@ export default function CodePanelPage(): ReactElement | null {
           />
         </Box>
       </FullScreen>
-
-      {completedLessonId && <Confetti completedLessonId={completedLessonId} />}
+      <Confetti completedLessonId={completedLessonId} />
     </>
   )
 }
