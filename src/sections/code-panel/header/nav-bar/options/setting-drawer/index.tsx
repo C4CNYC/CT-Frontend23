@@ -7,13 +7,13 @@ import { useDispatch } from 'react-redux'
 import { Iconify } from '@/components/iconify'
 import { setSlideIndex } from '@/redux/slices/code-panel-global'
 import { setStartTour } from '@/redux/slices/tour'
-import { useTranslate } from '@/utils/translateHelper'
 import {
   resetLessonEvent,
   updateColorsEvent,
   updateFontSize,
   updateLineWrap,
-} from 'src/sections/code-panel/lib/events'
+} from '@/sections/code-panel/lib/events'
+import { useTranslate } from '@/utils/translateHelper'
 
 import EditColors from './preferences/EditColors'
 import EditorFontSize from './preferences/EditorFontSize'

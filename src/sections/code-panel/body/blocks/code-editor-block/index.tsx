@@ -1,7 +1,6 @@
 import { type FC, memo, useCallback, useEffect, useRef, useState } from 'react'
 
 import { Box, Collapse } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useDispatch } from 'react-redux'
 
@@ -10,7 +9,8 @@ import useIsDesktop from '@/hooks/useIsDesktop'
 import { type IValidation } from '@/redux/interfaces/content.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
-import { EditorMode } from '@/sections/code-panel/code-editor/hooks/constants'
+import { EditorMode } from '@/sections/code-panel/code-editor/lib/hooks/constants'
+import getRoomId from '@/sections/code-panel/lib/utils/getRoomId'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
 
@@ -25,18 +25,11 @@ import Title from './elements/title'
 interface ICodeEditorBlock {
   user: AuthUserType | null
   code: string
-  onChangeStreamingDocInfo: (doc: Record<string, string>) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
   isFetching?: boolean
 }
 
-const icon = (
-  <BiCodeAlt
-    size='20px'
-    color='#43D4DD'
-  />
-)
 const TYPING_DELEY = 20000
 const FIRST_LOADING_DELEY = 15000
 const MOBILE_HEIGHT = 80
@@ -47,11 +40,9 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   user,
   validations,
   code,
-  onChangeStreamingDocInfo,
   preloadedCode,
   isFetching = false,
 }) => {
-  const theme = useTheme()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
@@ -59,9 +50,8 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const room = useSelector((state) => state.codeEditorController.room)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const timer = useRef<NodeJS.Timeout>()
-  const codeRef = useRef(code)
 
-  const typingListener = (deley: number, firstLoad: boolean): void => {
+  const typingListener = (delay: number, firstLoad: boolean): void => {
     if (!firstLoad) {
       setTyping(false)
     }
@@ -72,7 +62,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 
     timer.current = setInterval(() => {
       setTyping(true)
-    }, deley)
+    }, delay)
   }
 
   useEffect(() => {
@@ -89,15 +79,14 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
     setCodingSymbols(!codingSymbols)
   }, [codingSymbols])
 
-  const onResetRoom = useCallback(() => {
+  const resetRoom = useCallback(() => {
     if (user && lessonId) {
       dispatch(
         setRoom({
-          // roomId: user?.id as string,
-          roomId: `${user?.id as string}_${lessonId as string}`,
+          roomId: getRoomId(user?.id, lessonId),
           cursorText: user?.first_name as string,
           preloadedCode,
-          code: codeRef.current,
+          code,
           mode: EditorMode.Owner,
         })
       )
@@ -105,18 +94,23 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [user, lessonId, dispatch, preloadedCode])
 
   useEffect(() => {
-    onResetRoom()
-  }, [onResetRoom])
+    resetRoom()
+  }, [resetRoom])
 
   return (
     <BlockWrapper
       title={
         <Title
           room={room}
-          onResetRoom={onResetRoom}
+          resetRoom={resetRoom}
         />
       }
-      icon={icon}
+      icon={
+        <BiCodeAlt
+          size='20px'
+          color='#43D4DD'
+        />
+      }
       className='codeEditorTour'
     >
       <style>{getTitleStyles(isDesktop)}</style>
@@ -128,7 +122,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )}
 
       <CodeEditorController
-        onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
         isFetching={isFetching}
       />

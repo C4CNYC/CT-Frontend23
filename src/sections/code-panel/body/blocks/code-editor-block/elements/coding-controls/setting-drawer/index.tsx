@@ -9,7 +9,7 @@ import {
   updateColorsEvent,
   updateFontSize,
   updateLineWrap,
-} from 'src/sections/code-panel/lib/events'
+} from '@/sections/code-panel/lib/events'
 
 // import { globalCodePanelAtom } from './atoms/global-code-panel.atom'
 // import { startTour } from './atoms/tour-atom'

@@ -57,6 +57,7 @@ const getButtonSx = (sx: SxProps, isDisabled: boolean): SxProps => ({
   border: 'none! important',
   whiteSpace: 'nowrap',
   pointerEvents: isDisabled ? 'none' : 'auto',
+  opacity: 1,
   '&:hover': {
     border: 'none! important',
     backgroundColor: 'none',

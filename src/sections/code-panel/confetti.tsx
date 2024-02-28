@@ -13,7 +13,7 @@ export default function Confetti({
   const [show, setShow] = useState(!!completedLessonId)
 
   useEffect(() => {
-    setShow(true)
+    completedLessonId && setShow(true)
   }, [completedLessonId])
 
   const onConfettiComplete = (confetti?: ConfettiType) => {

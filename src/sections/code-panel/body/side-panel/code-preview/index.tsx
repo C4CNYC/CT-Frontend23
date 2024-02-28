@@ -5,17 +5,18 @@ import { type SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import CloseIcon from '@mui/icons-material/Close'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import { Box, Stack, Avatar, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
 import OpenCodeIcon from '@/assets/icons/OpenCodeIcon'
+import { useAuthContext } from '@/auth/useAuthContext'
 import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import CodeEditor from '@/sections/code-panel/code-editor'
-import { RoomStatus } from '@/sections/code-panel/code-editor/components/status-label'
-import { EditorMode } from '@/sections/code-panel/code-editor/hooks/constants'
-import { createSocket, waitConnectSocket } from '@/sections/code-panel/lib/socket'
+import { EditorMode } from '@/sections/code-panel/code-editor/lib/hooks/constants'
+import { RoomStatus } from '@/sections/code-panel/code-editor/status-label'
+import getRoomId from '@/sections/code-panel/lib/utils/getRoomId'
+import { createSocket, waitForSocketConnection } from '@/sections/code-panel/lib/utils/socket'
 import { voidFunction, type BaseResponseInterface } from '@/utils'
 
 import { getRandomIndex } from '../utils'
@@ -23,8 +24,6 @@ import { getRandomIndex } from '../utils'
 import { BOX_COLORS, HEADER_COLORS } from './constants'
 import styles from './styles'
 
-let previousValue: string | null = null
-let checkValueTimeout: any | null = null
 interface CodePreviewProps {
   onClose: () => void
   attributes?: DraggableAttributes
@@ -47,8 +46,7 @@ const CodePreview: FC<CodePreviewProps> = ({
   const dispatch = useDispatch()
   const [isConnected, setIsConnected] = useState(false)
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive)
-  const route = useRouter()
-  // const socket = useSocket();
+  const { user } = useAuthContext()
 
   const { boxSx, headerSx, socket } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0]
@@ -57,7 +55,7 @@ const CodePreview: FC<CodePreviewProps> = ({
     return {
       boxSx: styles.getBoxSx(boxColor),
       headerSx: styles.getHeaderSx(headerColor),
-      socket: createSocket(),
+      socket: createSocket({ userId: user?.id }),
     }
   }, [])
 
@@ -70,8 +68,7 @@ const CodePreview: FC<CodePreviewProps> = ({
 
     dispatch(
       setRoom({
-        // roomId: data.id,
-        roomId: `${owner.id as string}_${lessonId as string}`,
+        roomId: getRoomId(owner.id, lessonId as string),
         cursorText: owner.first_name,
         mode: EditorMode.SubOwner,
       })
@@ -80,7 +77,7 @@ const CodePreview: FC<CodePreviewProps> = ({
 
   useEffect(() => {
     const runAsyncEffect = async (socket: Socket) => {
-      const isConnected = await waitConnectSocket(socket)
+      const isConnected = await waitForSocketConnection(socket)
 
       if (isConnected) {
         setIsConnected(isConnected)
@@ -139,12 +136,10 @@ const CodePreview: FC<CodePreviewProps> = ({
             {...attributes}
             {...listeners}
           />
-
           <Avatar
             sx={styles.AVATAR_SX}
             src={owner.avatar}
           />
-
           <Typography sx={styles.TYP_NAME_SX}>
             {owner.first_name} {owner.last_name}
           </Typography>
@@ -162,7 +157,6 @@ const CodePreview: FC<CodePreviewProps> = ({
               ...(isOpenCodeDisabled ? styles.OPEN_CODE_DISABLED : null),
             }}
           />
-
           <CloseIcon
             sx={styles.CLOSE_ICON_SX}
             onClick={onClose}
@@ -172,8 +166,7 @@ const CodePreview: FC<CodePreviewProps> = ({
 
       {isConnected && (
         <CodeEditor
-          // roomId={data.id}
-          roomId={`${owner.id as string}_${lessonId as string}`}
+          roomId={getRoomId(owner.id, lessonId as string)}
           mode={EditorMode.Watcher}
           withFileManager={false}
           cursorText={cursorName}

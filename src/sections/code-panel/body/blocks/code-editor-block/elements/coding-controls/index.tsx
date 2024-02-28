@@ -13,12 +13,8 @@ import { TbBoxMargin } from '@react-icons/all-files/tb/TbBoxMargin'
 import { TbBraces } from '@react-icons/all-files/tb/TbBraces'
 import { TbTool } from '@react-icons/all-files/tb/TbTool'
 
+import { moveCursorEvent, pasteSymbolEvent, undoRedoEvent } from '@/sections/code-panel/lib/events'
 import { copyPasteEvent } from '@/sections/code-panel/lib/events/copy-paste'
-import {
-  moveCursorEvent,
-  pasteSymbolEvent,
-  undoRedoEvent,
-} from 'src/sections/code-panel/lib/events'
 
 // import SettingDrawer from '@/sections/code-panel/top-bar/nav-bar/options/setting-drawer'
 import {

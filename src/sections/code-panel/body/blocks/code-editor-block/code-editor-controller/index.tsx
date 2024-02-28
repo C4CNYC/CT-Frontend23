@@ -1,71 +1,114 @@
-import { type FC, memo, useState, useEffect } from 'react'
+import { type FC, memo, useCallback } from 'react'
 
-import { Socket } from 'socket.io-client'
+import { Box } from '@mui/material'
+import { useDispatch } from 'react-redux'
 
 import { AuthUserType } from '@/auth/types'
+import { setDocument } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
-import { waitConnectSocket } from '@/sections/code-panel/lib/socket'
-import { voidFunction } from '@/utils/voidFunction'
-import CodeEditor from 'src/sections/code-panel/code-editor'
+import CodeEditor from '@/sections/code-panel/code-editor'
+import LoadingCodeEditor from '@/sections/code-panel/code-editor/loading-code-editor'
+import { CodeDocument } from '@/types/code-document'
 
 interface CodeEditorControllerProps {
-  onChangeStreamingDocInfo?: (value: Record<string, string>) => void
   user?: AuthUserType
   isFetching?: boolean
 }
 
-const CodeEditorController: FC<CodeEditorControllerProps> = ({
-  onChangeStreamingDocInfo = voidFunction,
-  user,
-  isFetching = false,
-}) => {
-  // const { user } = useAuthContext()
+let previousLength: number | undefined = undefined
+let checkValueTimeout: any | undefined = undefined
 
-  const [isConnected, setIsConnected] = useState(false)
+const CodeEditorController: FC<CodeEditorControllerProps> = ({ user, isFetching = false }) => {
+  const dispatch = useDispatch()
+
+  // const [isConnected, setIsConnected] = useState(false)
   const room = useSelector((state) => state.codeEditorController.room)
-
-  // const socket = useMemo(() => createSocket(user?.id || generateId(20)), [user]);
   const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
-  useEffect(() => {
-    const runAsyncEffect = async (socket: Socket) => {
-      const isConnected = await waitConnectSocket(socket)
+  const onChangeStreamingDocInfo = useCallback(
+    (doc: CodeDocument) => {
+      try {
+        if (checkValueTimeout) {
+          // Clear the previous timeout if the value changes
+          clearTimeout(checkValueTimeout)
+        }
 
-      if (isConnected) {
-        setIsConnected(isConnected)
-      } else {
-        void runAsyncEffect(socket)
+        previousLength = doc?.htmlBody?.length // Store the current value
+        if (lessonId && user) {
+          socket?.emit('changeStatusInLesson', {
+            lesson: lessonId,
+            user: user?.id,
+            status: 'active',
+          })
+        }
+
+        // Set up the check for 30 seconds later
+        checkValueTimeout = setTimeout(() => {
+          if (doc?.htmlBody?.length === previousLength) {
+            socket?.emit('changeStatusInLesson', {
+              lesson: lessonId,
+              user: user?.id,
+              status: 'idle',
+            })
+          }
+        }, 30000) // 30 seconds
+
+        dispatch(setDocument(doc))
+      } catch (error: any) {
+        // eslint-disable-next-line no-console
+        console.log('Error: ', error)
       }
-    }
+    },
+    [user, lessonId, socket]
+  )
 
-    if (socket) {
-      if (socket.connected) {
-        setIsConnected(true)
-      } else {
-        void runAsyncEffect(socket)
-      }
-    } else {
-      setIsConnected(false)
-    }
-  }, [socket])
+  // useEffect(() => {
+  //   const runAsyncEffect = async (socket: Socket) => {
+  //     const isConnected = await waitForSocketConnection(socket)
+  //
+  //     if (isConnected) {
+  //       setIsConnected(isConnected)
+  //     } else {
+  //       void runAsyncEffect(socket)
+  //     }
+  //   }
+  //
+  //   if (socket) {
+  //     if (socket.connected) {
+  //       setIsConnected(true)
+  //     } else {
+  //       void runAsyncEffect(socket)
+  //     }
+  //   } else {
+  //     setIsConnected(false)
+  //   }
+  // }, [socket])
 
-  if (room == null /* || !isConnected */) {
-    // if (room == null  || !isConnected ) {
-    return null
-  }
+  // if (!room || !isConnected) {
 
   return (
-    <CodeEditor
-      roomId={room.roomId}
-      cursorText={room.cursorText}
-      preloadedCode={room.preloadedCode}
-      onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-      code={room.code}
-      mode={room.mode}
-      socket={socket}
-      user={user}
-      isFetching={isFetching}
-    />
+    <Box
+      width='100%'
+      height='100%'
+      position='relative'
+    >
+      {!room || !socket ? (
+        <LoadingCodeEditor />
+      ) : (
+        <CodeEditor
+          roomId={room.roomId}
+          cursorText={room.cursorText}
+          preloadedCode={room.preloadedCode}
+          onChangeStreamingDocInfo={onChangeStreamingDocInfo}
+          code={room.code}
+          mode={room.mode}
+          socket={socket}
+          user={user}
+          isFetching={isFetching}
+        />
+      )}
+    </Box>
   )
 }
 

@@ -11,7 +11,7 @@ export const TOUR_STEPS_DECKTOP = [
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '290px' }}
         />
-        I'will show you what do we have here. The Code Panel consists of:
+        I'll show you what we have here. The Code Panel consists of:
       </div>
     ),
     disableBeacon: true,
@@ -20,14 +20,14 @@ export const TOUR_STEPS_DECKTOP = [
   {
     target: '.sliderTour',
     title: <div>Slider</div>,
-    content: <div>It's contain information 📖 from the teacher</div>,
+    content: <div>It contains information 📖 from the teacher</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },
   {
     target: '.codeEditorTour',
     title: <div>Work space</div>,
-    content: <div>You have nice code editor where you could show your coding skills 💪</div>,
+    content: <div>A nice code editor where you can show off your coding skills 💪</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },
@@ -41,7 +41,7 @@ export const TOUR_STEPS_DECKTOP = [
   {
     target: '.lessonsTour',
     title: <div>Lesons list</div>,
-    content: <div>Feel free to choose lesson which you want 😉 or ...</div>,
+    content: <div>Feel free to choose a lesson 😉 or ...</div>,
     disableBeacon: true,
     placement: 'top' as const,
   },
@@ -54,14 +54,14 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.tourBottombarMenu',
-    content: <div>Save or publish your project</div>,
+    content: <div>Save or publish your work</div>,
     disableBeacon: true,
     spotlightPadding: 25,
     placement: 'top' as const,
   },
   {
     target: '.topBarTour',
-    title: <div>Now let`s look at this usefull part</div>,
+    title: <div>Now let`s look at this useful part</div>,
     content: (
       <div>
         <p>
@@ -95,7 +95,7 @@ export const TOUR_STEPS_MOBILE = [
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '180px' }}
         />
-        I'will show you what do we have here. The Code Panel consists of:
+        I'll show you what we have here. The Code Panel consists of:
       </div>
     ),
     disableBeacon: true,
@@ -105,32 +105,32 @@ export const TOUR_STEPS_MOBILE = [
     target: '.sliderTour',
     title: <div>Slider</div>,
     content: (
-      <div>It's contain information 📖 from the teacher, space for practice and online browser</div>
+      <div>It contains information 📖 from the teacher, space for practice and online browser</div>
     ),
     disableBeacon: true,
   },
   {
     target: '.smallSliderTour',
     title: <div>Navigation</div>,
-    content: <div>Here you can change this tabs</div>,
+    content: <div>Here you can change the active tab</div>,
     disableBeacon: true,
   },
   {
     target: '.lessonsTourMobile',
-    title: <div>Lesons list</div>,
-    content: <div>Feel free to choose lesson which you want 😉</div>,
+    title: <div>Lessons list</div>,
+    content: <div>Feel free to choose lesson here 😉</div>,
     disableBeacon: true,
     placement: 'top' as const,
   },
   {
     target: '.coursesTour',
-    content: <div>check your learning progress </div>,
+    content: <div>Check your progress </div>,
     disableBeacon: true,
     placement: 'top' as const,
   },
   {
     target: '.menuTourMobile',
-    title: <div>Now let`s look at this usefull part</div>,
+    title: <div>Now let's look at this useful part</div>,
     content: (
       <div>
         <p>

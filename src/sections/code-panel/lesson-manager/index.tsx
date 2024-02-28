@@ -7,7 +7,7 @@ import { type BaseResponseInterface } from '@/utils'
 
 import LessonItem from './lesson-item'
 import LessonManagerButton from './lesson-manager-button'
-import LessonManagerSideBar from './lesson-manger-side-bar'
+import LessonManagerSideBar from './lesson-manager-side-bar'
 import SkeletonDrawer from './skeleton-drawer'
 
 export interface LessonManagerProps {

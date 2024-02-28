@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
-import { Socket, io } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
@@ -31,6 +31,7 @@ import CodePanelBody from '@/sections/code-panel/body'
 import Confetti from '@/sections/code-panel/confetti'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
+import { createSocket } from '@/sections/code-panel/lib/utils/socket'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/skeleton'
 import { ILessonUserStatus } from '@/types'
 import generateId from '@/utils/generate-id'
@@ -256,80 +257,53 @@ export default function CodePanelPage(): ReactElement | null {
 
   useEffect(() => {
     if (lessonIdFromRoute && socket) {
-      socket.emit(
-        'joinLesson',
-        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
-      )
+      socket.emit('joinLesson', JSON.stringify({ lesson: lessonIdFromRoute, user: user?.id }))
 
       return () => {
-        socket?.emit(
-          'leaveLesson',
-          JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
-        )
+        socket?.emit('leaveLesson', JSON.stringify({ lesson: lessonIdFromRoute, user: user?.id }))
       }
     }
   }, [lessonIdFromRoute, socket])
 
   useEffect(() => {
-    let socket: Socket | undefined
-
     if (isRealtimeCodeEnabled && authIsInitialized) {
-      socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
-        path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-        auth: { userId: user?.id ?? generateId(20) },
-      })
-      socket.on('connect_error', (error) => {
-        // eslint-disable-next-line no-console
-        console.error('Connection error', error)
-      })
+      createSocket({
+        userId: user?.id ?? generateId(20),
+        onConnect: (s: Socket) => {
+          if (!s) return
 
-      socket.on('connect', () => {
-        // eslint-disable-next-line no-console
-        console.log('Connected to socket server')
-
-        if (!socket) return
-
-        socket.on('joinLesson', (data: { lesson: string; user: string }) => {
-          const { user, lesson } = data
-          setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status: 'idle', lessonId: lesson },
-          ])
-        })
-        socket.on(
-          'changeStatusInLesson',
-          (data: { lesson: string; user: string; status: string }) => {
+          s.on('joinLesson', (data: { lesson: string; user: string }) => {
+            const { user, lesson } = data
+            setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+              ..._usersStatus.filter((_status) => _status.id !== user),
+              { id: user, status: 'idle', lessonId: lesson },
+            ])
+          })
+          s.on('changeStatusInLesson', (data: { lesson: string; user: string; status: string }) => {
             const { status, user, lesson } = data
             setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
               ..._usersStatus.filter((_status) => _status.id !== user),
               { id: user, status, lessonId: lesson },
             ])
-          }
-        )
+          })
 
-        socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
-          const { participants } = data
-          setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
-        })
-        socket.on('leaveLesson', (data: { lesson: string; user: string }) => {
-          const { user, lesson } = data
-          setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status: 'inactive', lessonId: lesson },
-          ])
-        })
+          s.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
+            const { participants } = data
+            setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+              ..._usersStatus,
+              ...participants,
+            ])
+          })
+          s.on('leaveLesson', (data: { lesson: string; user: string }) => {
+            const { user, lesson } = data
+            setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+              ..._usersStatus.filter((_status) => _status.id !== user),
+              { id: user, status: 'inactive', lessonId: lesson },
+            ])
+          })
 
-        // socket.onAnyOutgoing((e) => {
-        //   // eslint-disable-next-line no-console
-        //   console.log('out:', e)
-        // })
-        //
-        // socket.onAny((e) => {
-        //   // eslint-disable-next-line no-console
-        //   console.log('in:', e)
-        // })
-
-        dispatch(setSocket(socket))
+          dispatch(setSocket(s))
+        },
       })
     } else {
       dispatch(setSocket(undefined))
@@ -363,12 +337,8 @@ export default function CodePanelPage(): ReactElement | null {
         {showTour && <CodePanelTour />}
         {!user && <CodePanelSignUpDialog />}
         <Box
-          sx={{
-            bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
-            position: 'relative',
-            overflow: 'hidden',
-          }}
+          position='relative'
+          overflow='hidden'
         >
           <CodePanelHeader
             chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
@@ -379,7 +349,7 @@ export default function CodePanelPage(): ReactElement | null {
             isFetchingLessonContent={isFetchingLessonContent}
             lesson={lesson}
             lessonContents={lessonContent ?? []}
-            user={user?.student_profile}
+            user={user}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
             lastLessonCode={lastLessonCode}

@@ -1,15 +1,12 @@
-import { type FC, useEffect, useState } from 'react'
+import { type FC, useMemo } from 'react'
+
+import { useSettingsContext } from '@/components/settings'
+import { CodeDocument } from '@/types/code-document'
 
 import SkeletonViewBlock from '../skeleton-view-box'
 
-export interface CodeDocument {
-  htmlBody?: string[]
-  cssBody?: string[]
-  jsBody?: string[]
-}
-
 interface BrowserViewProps {
-  document: CodeDocument | null
+  document?: CodeDocument
   isOpenHeader?: boolean
 }
 
@@ -31,28 +28,27 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
   )
 
 const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
-  const [docSrc, setDocSrc] = useState('')
+  const { themeMode } = useSettingsContext()
 
-  useEffect(() => {
-    if (document == null) {
-      return
-    }
+  const docSrc = useMemo(() => {
+    if (document) {
+      const { htmlBody = [], cssBody = [], jsBody = [] } = document
 
-    const { htmlBody = [], cssBody = [], jsBody = [] } = document
-    setDocSrc(`
+      return `
       <html style="height: 100%">
         <head>
           ${getBody(cssBody, TagNames.Style)}
         </head>
-        <body style="height: 100%; margin: 0;">
+        <body style="height: 100%; margin: 0; color: ${themeMode === 'dark' ? 'white' : 'black'}">
           ${htmlBody.join('\n')}
           ${getBody(jsBody, TagNames.Script)}
         </body>
       </html>
-    `)
-  }, [document])
+    `
+    }
+  }, [document, themeMode])
 
-  return document != null ? (
+  return docSrc ? (
     <iframe
       srcDoc={docSrc}
       style={IFRAME_STYLE}

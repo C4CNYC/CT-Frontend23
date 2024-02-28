@@ -4,16 +4,17 @@ import { CgBrowser } from '@react-icons/all-files/cg/CgBrowser'
 import { TbArrowBarToRight } from '@react-icons/all-files/tb/TbArrowBarToRight'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { toggleBrowser } from '@/redux/slices/code-panel-global'
+import { type RootState } from '@/redux/store'
+import { CodeDocument } from '@/types/code-document'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { toggleBrowser } from '../../../../../redux/slices/code-panel-global'
-import { type RootState } from '../../../../../redux/store'
 import BlockWrapper from '../block-wrapper'
 
-import BrowserView, { CodeDocument } from './browser-view'
+import BrowserView from './browser-view'
 
 interface IViewBlock {
-  document: CodeDocument | null
+  document?: CodeDocument
 }
 
 const ViewBlock: FC<IViewBlock> = ({ document }) => {
@@ -37,7 +38,12 @@ const ViewBlock: FC<IViewBlock> = ({ document }) => {
     <BlockWrapper
       closeIcon={<TbArrowBarToRight size={20} />}
       title={TITLE}
-      icon={icon}
+      icon={
+        <CgBrowser
+          size='20px'
+          color='#43D4DD'
+        />
+      }
       className='browserTour'
       hideTabsHandler={() => {
         dispatch(toggleBrowser(true))
@@ -51,12 +57,5 @@ const ViewBlock: FC<IViewBlock> = ({ document }) => {
     </BlockWrapper>
   )
 }
-
-const icon = (
-  <CgBrowser
-    size='20px'
-    color='#43D4DD'
-  />
-)
 
 export default ViewBlock

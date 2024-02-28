@@ -3,7 +3,7 @@ import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } fro
 import { Box, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
-import * as _ from 'lodash-es'
+import { isEmpty } from 'lodash-es'
 import dynamic from 'next/dynamic'
 import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
@@ -15,9 +15,8 @@ import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
 import { setSlideIndex, setSolutionCode, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
-import BrowserView, {
-  CodeDocument,
-} from '@/sections/code-panel/body/blocks/view-block/browser-view/index'
+import BrowserView from '@/sections/code-panel/body/blocks/view-block/browser-view/index'
+import { CodeDocument } from '@/types/code-document'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -40,15 +39,8 @@ interface ISliderBlock {
 interface IView {
   type: LessonContentType
   body: string
-  connectIntegrations: (body: string) => CodeDocument | null
+  connectIntegrations: (body: string) => CodeDocument | undefined
 }
-
-const icon = (
-  <SlDirections
-    size='20px'
-    color='#43D4DD'
-  />
-)
 
 const SliderBlock: FC<ISliderBlock> = ({
   data,
@@ -108,7 +100,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     dispatch(setSlideIndex(next))
   }
 
-  const connectIntegrations = (body: string): CodeDocument | null => {
+  const connectIntegrations = (body: string): CodeDocument | undefined => {
     if (integrations) {
       return {
         htmlBody: [JSON.parse(body).content],
@@ -116,7 +108,6 @@ const SliderBlock: FC<ISliderBlock> = ({
         jsBody: [integrations.reduce((ac, cur) => ac + cur.scripts, '')],
       }
     }
-    return null
   }
 
   return (
@@ -124,13 +115,18 @@ const SliderBlock: FC<ISliderBlock> = ({
       closeIcon={<TbArrowBarToLeft size={20} />}
       className='instructions'
       title={title}
-      icon={icon}
+      icon={
+        <SlDirections
+          size='20px'
+          color='#43D4DD'
+        />
+      }
       hideTabsHandler={() => {
         dispatch(toggleInstrations(true))
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
-      {_.isEmpty(data) ? (
+      {isEmpty(data) ? (
         <EmptyContent title={translate('messages_no_data')} />
       ) : (
         <>

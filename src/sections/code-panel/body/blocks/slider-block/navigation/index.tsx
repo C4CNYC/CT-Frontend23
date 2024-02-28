@@ -17,7 +17,7 @@ import {
 
 export enum BtnType {
   next = 'btn_group_next',
-  compleated = 'btn_group_you_did_it',
+  completed = 'btn_group_you_did_it',
   coding = 'btn_group_lets_coding',
 }
 
@@ -49,7 +49,7 @@ const Navigation: FC<INavigation> = ({
   const getNextBtnType = useCallback((): void => {
     if (stepHasValidation) {
       if (canMoveNext) {
-        setBtnNext(BtnType.compleated)
+        setBtnNext(BtnType.completed)
       } else {
         setBtnNext(BtnType.coding)
       }

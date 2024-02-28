@@ -52,9 +52,9 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
       return hover ? '#EE467A' : '#FFF'
     }
     if (btnNext === BtnType.coding) {
-      return '#155275CC'
+      return '#155275'
     }
-    if (btnNext === BtnType.compleated) {
+    if (btnNext === BtnType.completed) {
       return '#75CF6D'
     }
     return ''
@@ -64,7 +64,7 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
     pl: '30px',
     width: '100%',
     height: '100%',
-    color: !(btnNext === BtnType.next || btnNext === BtnType.compleated)
+    color: !(btnNext === BtnType.next || btnNext === BtnType.completed)
       ? '#43D4DD!important'
       : '#EE467A',
     zIndex: 5,
