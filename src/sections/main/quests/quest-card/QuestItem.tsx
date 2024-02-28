@@ -169,7 +169,13 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
             >
               <Link
                 component={NextLink}
-                href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(assignment?.courseid)}
+                href={
+                  assignment?.courseid
+                    ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                        courseId: assignment.courseid,
+                      })
+                    : '#'
+                }
                 underline='none'
                 sx={{
                   display: 'inline-flex',

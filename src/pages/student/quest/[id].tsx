@@ -101,7 +101,9 @@ export default function Quest(): React.ReactElement | null {
         )}
         <Link
           component={NextLink}
-          href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(course?.id ?? '')}
+          href={
+            course?.id ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({ courseId: course.id }) : '#'
+          }
           underline='none'
           sx={KEEP_CODING_LINK_SX}
         >

@@ -20,6 +20,7 @@ export interface IFriend {
   username: string | null
   socials: ISocials[]
   status: string
+  currentLessonId?: string
   createdAt: string
   updatedAt: string
 }

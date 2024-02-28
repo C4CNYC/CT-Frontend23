@@ -1,7 +1,9 @@
 import { type FC, type ReactNode, useMemo } from 'react'
 
-import { Box, Button, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, Stack, Typography, useTheme } from '@mui/material'
 import { AiOutlineClose } from '@react-icons/all-files/ai/AiOutlineClose'
+
+import useIsDesktop from '@/hooks/useIsDesktop'
 
 // import { localStorageAvailable } from "@utils";
 import { BUTTON_SX, TYP_SX, getHeaderWrapperSx } from './constants'
@@ -17,7 +19,7 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ title, icon, isLeftBtn, closeHandler, isLeftBlock }) => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const headerSx = useMemo(() => getHeaderWrapperSx(isDesktop), [isDesktop])
 
   return (

@@ -35,7 +35,11 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
         if (!assigments?.data[0]) {
           enqueueSnackbar('No lesson to code', { variant: 'warning' })
         } else {
-          push(STUDENT_PATH_DASHBOARD.codePanel.workSpace(assigments?.data[0].courseid))
+          push(
+            STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+              courseId: assigments?.data[0].courseid,
+            })
+          )
         }
       }}
       variant='contained'

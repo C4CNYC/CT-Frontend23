@@ -36,6 +36,7 @@ interface FormValuesProps {
   complexity: LessonContentComplexity
   preload_body: string
   solution_body: string
+  body?: string
 }
 
 interface Props {
@@ -114,6 +115,9 @@ export default function Preferences({
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    if (!data.body) {
+      delete data.body
+    }
     try {
       await updateLessonContent({
         lessonId,

@@ -1,31 +1,38 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
+import type { Socket } from 'socket.io-client'
+
+import { ILessonUserStatus } from '@/types'
 
 export interface IGlobalCodePanel {
   slideIndex: number
   solutionCode: string
   nextStepAble: boolean
-  lessonId: string
-  unitId: string
-  courseId: string
+  lessonId?: string
+  unitId?: string
+  courseId?: string
   code: string
   isInstructionsHidden: boolean
   isBrowserHidden: boolean
   isRealtimeCodeEnabled: boolean
   isRealtimeCodeHidden: boolean
+  usersStatus: ILessonUserStatus[]
+  socket?: Socket | undefined
 }
 
 const initialState: IGlobalCodePanel = {
   slideIndex: 0,
   solutionCode: '',
-  lessonId: '',
-  unitId: '',
-  courseId: '',
+  lessonId: undefined,
+  unitId: undefined,
+  courseId: undefined,
   nextStepAble: true,
   code: '',
   isInstructionsHidden: false,
   isBrowserHidden: false,
   isRealtimeCodeEnabled: true,
   isRealtimeCodeHidden: true,
+  usersStatus: [],
+  socket: undefined,
 }
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
@@ -79,6 +86,12 @@ export const codePanelSlice = createSlice({
     setCode: (state, action: PayloadAction<string>) => {
       state.code = action.payload
     },
+    setUsersStatus: (state, action: PayloadAction<ILessonUserStatus[]>) => {
+      state.usersStatus = action.payload
+    },
+    setSocket: (state, action: PayloadAction<Socket | undefined>) => {
+      state.socket = action.payload as any
+    },
   },
 })
 
@@ -94,6 +107,8 @@ export const {
   toggleRealtimeCodeEnabled,
   toggleRealtimeCodeHidden,
   setCode,
+  setUsersStatus,
+  setSocket,
 } = codePanelSlice.actions
 
 export default codePanelSlice.reducer

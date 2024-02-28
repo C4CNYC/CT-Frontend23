@@ -1,10 +1,11 @@
 import { type FC, type ReactNode, useMemo } from 'react'
 
-import { Drawer, IconButton, Link, Stack, useMediaQuery, useTheme } from '@mui/material'
+import { Drawer, IconButton, Link, Stack, useTheme } from '@mui/material'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 import { RxExternalLink } from '@react-icons/all-files/rx/RxExternalLink'
 import NextLink from 'next/link'
 
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { ICON_BTN_SX, LINK_SX, STACK_SX, getBaseStackSx } from './constants'
@@ -23,7 +24,8 @@ const LessonManagerSideBar: FC<LessonManagerSideBarProps> = ({
   children,
 }) => {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down(1000))
+  const isDesktop = useIsDesktop()
+  const isMobile = !isDesktop
   const baseStackSx = useMemo(() => getBaseStackSx(isMobile), [isMobile])
   const translate = useTranslate()
 

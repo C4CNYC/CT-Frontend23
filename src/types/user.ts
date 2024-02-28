@@ -149,4 +149,5 @@ export interface IUserAccountNotificationSettings {
 export interface ILessonUserStatus {
   id: string
   status: string
+  lessonId: string
 }

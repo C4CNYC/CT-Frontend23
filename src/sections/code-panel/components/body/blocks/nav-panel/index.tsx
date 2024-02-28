@@ -6,12 +6,10 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
-import { useRouter } from 'next/router'
 
 import { SimpleInfiniteList } from '@/components'
-import { useLessonStatus, useSocket } from '@/hooks'
 import { type IFriend } from '@/redux/interfaces/friends.interface'
-import { useSelector, RootState } from '@/redux/store'
+import { useSelector } from '@/redux/store'
 import { ILessonUserStatus } from '@/types'
 import { type BaseResponseInterface } from '@/utils'
 
@@ -62,11 +60,10 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
-  const router = useRouter()
-  const socket = useSocket()
-  const usersStatus = useLessonStatus()
-  const room = useSelector((state: RootState) => state.codeEditorController.room)
-  const roomId = room?.roomId ?? ''
+  // const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const usersStatus = useSelector((state) => state.codePanelGlobal.usersStatus)
+  // const room = useSelector((state: RootState) => state.codeEditorController.room)
+  // const roomId = room?.roomId ?? ''
 
   const drawerSx = useMemo(() => {
     return getDrawerSx(isOpen, isRealtimeCodeHidden)
@@ -79,42 +76,36 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
   useEffect(() => {
     // console.log({ usersStatus });
     const _users = users.map((_user: IFriend & BaseResponseInterface) => {
-      if (!usersStatus.some((_userStatus: ILessonUserStatus) => _userStatus.id === _user.id)) {
-        return {
-          ..._user,
-        }
-      } else {
-        return {
-          ..._user,
-          status: usersStatus.filter(
-            (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
-          )[0].status,
-        }
+      const userStatus = usersStatus.find(
+        (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
+      )
+      return {
+        ..._user,
+        status: userStatus?.status ?? _user.status,
+        currentLessonId: userStatus?.lessonId ?? _user.currentLessonId,
       }
     })
     setUsers(_users)
   }, [usersStatus, users.length])
 
-  const onChangeUserStatus = (status: string = 'active') => {
-    try {
-      // if (socket && socket.connected && router.query.lessonId) {
-      socket?.emit('changeStatusInLesson', {
-        lesson: router.query.lessonId,
-        user: roomId,
-        status,
-      })
-      // }
-      setUsers((_users: IFriend[]) =>
-        _users.map((_user: IFriend) => {
-          if (_user.id === roomId) return { ..._user, status }
-          return { ..._user }
-        })
-      )
-    } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('onChangeUserStatusError: ', error)
-    }
-  }
+  // const onChangeUserStatus = (status: string, lessonId: string) => {
+  //   try {
+  //     socket?.emit('changeStatusInLesson', {
+  //       lesson: lessonId,
+  //       user: roomId,
+  //       status,
+  //     })
+  //     setUsers((_users: IFriend[]) =>
+  //       _users.map((_user: IFriend) => {
+  //         if (roomId === `${_user.id as string}_${lessonId as string}`) return { ..._user, status }
+  //         return { ..._user }
+  //       })
+  //     )
+  //   } catch (error: any) {
+  //     // eslint-disable-next-line no-console
+  //     console.log('onChangeUserStatusError: ', error)
+  //   }
+  // }
 
   return (
     <Drawer
@@ -152,7 +143,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
               {users.map((user, index) => (
                 <NavItem
                   key={`${user.id}-${index}`}
-                  data={user}
+                  user={user}
                   onToggle={() => {
                     setIsOpen(!isOpen)
                   }}
@@ -211,10 +202,10 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
                       onClose={() => {
                         onDeletePreviewUser(user.id)
                       }}
-                      data={user}
+                      owner={user}
                       cursorName={cursorName}
-                      onChangeUserStatus={onChangeUserStatus}
-                      lessonId={lessonId}
+                      // onChangeUserStatus={onChangeUserStatus}
+                      lessonId={user.currentLessonId ?? lessonId}
                     />
                   </SortableItem>
                 )
