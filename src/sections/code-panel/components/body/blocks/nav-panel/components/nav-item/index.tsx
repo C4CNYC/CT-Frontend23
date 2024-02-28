@@ -29,7 +29,7 @@ const NavItem: FC<NavItemProps> = ({ onToggle, onClick, user }) => {
   const tooltipNameTitle = name.length > MAX_NAME_LENGTH ? name : ''
   const tooltipAbout = user.about?.length > MAX_ABOUT_LENGTH ? user.about : ''
   return (
-    <ListItem>
+    <ListItem sx={{ p: 1 }}>
       <Badge
         sx={BADGE_SX}
         badgeContent=''
@@ -80,7 +80,7 @@ const NavItem: FC<NavItemProps> = ({ onToggle, onClick, user }) => {
 }
 
 const STACK_TEXT_SX = {
-  width: '100%',
+  width: '60%',
 }
 
 const NAME_SX = {

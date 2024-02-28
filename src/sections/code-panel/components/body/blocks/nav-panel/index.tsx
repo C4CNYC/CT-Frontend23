@@ -2,7 +2,6 @@ import { type FC, type RefObject, useEffect, useMemo } from 'react'
 
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import AssignmentIcon from '@mui/icons-material/Assignment'
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
@@ -171,14 +170,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
         <CustomNavItem
           icon={<EventNoteIcon sx={ICON_SX} />}
           name='Notes'
-          onToggle={() => {
-            setIsOpen(!isOpen)
-          }}
-        />
-
-        <CustomNavItem
-          icon={<AssignmentIcon sx={ICON_SX} />}
-          name='Sandbox'
           onToggle={() => {
             setIsOpen(!isOpen)
           }}

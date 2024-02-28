@@ -1,6 +1,14 @@
 import { type FC } from 'react'
 
-import { Badge, IconButton, ListItem, ListItemIcon, Stack, Typography } from '@mui/material'
+import {
+  Badge,
+  IconButton,
+  ListItem,
+  ListItemIcon,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { FaChevronLeft } from '@react-icons/all-files/fa/FaChevronLeft'
 import { FaChevronRight } from '@react-icons/all-files/fa/FaChevronRight'
 import { useSelector } from 'react-redux'
@@ -18,6 +26,7 @@ interface HeaderItemProps {
 const HeaderItem: FC<HeaderItemProps> = ({ onClick, activeUsers, activeAdmins = 0, isOpen }) => {
   const transalte = useTranslate()
   const tribe = useSelector((state: RootState) => state.codePanel.class)
+  const theme = useTheme()
   return (
     <ListItem sx={LIST_ITEM_SX}>
       <ListItemIcon>
@@ -25,7 +34,17 @@ const HeaderItem: FC<HeaderItemProps> = ({ onClick, activeUsers, activeAdmins = 
           onClick={onClick}
           sx={ARROW_SX}
         >
-          {!isOpen ? <FaChevronLeft /> : <FaChevronRight />}
+          {!isOpen ? (
+            <FaChevronLeft
+              size={20}
+              color={theme.palette.text.disabled}
+            />
+          ) : (
+            <FaChevronRight
+              size={20}
+              color={theme.palette.text.disabled}
+            />
+          )}
         </IconButton>
       </ListItemIcon>
 
@@ -54,15 +73,12 @@ const HeaderItem: FC<HeaderItemProps> = ({ onClick, activeUsers, activeAdmins = 
   )
 }
 
-const LIST_ITEM_SX = { height: 64 }
+const LIST_ITEM_SX = { py: 0, px: '10px' }
 
-const ARROW_SX = {
-  ml: '-3px',
-}
+const ARROW_SX = {}
 
 const STACK_SX = {
   width: '100%',
-  marginLeft: '-8px',
 }
 
 const TITLE_SX = {
@@ -75,6 +91,7 @@ const SUBTITLE_SX = {
   fontSize: '11px',
   color: '#364954',
   paddingLeft: '12px',
+  textTransform: 'capitalize',
 }
 
 const USER_SUBTITLE_SX = {
