@@ -55,6 +55,7 @@ const SettingDrawer = (): React.ReactElement => {
         onOpen={() => {
           setDrawer(true)
         }}
+        sx={{ zIndex: 3000 }}
       >
         <Box
           width='350px'
