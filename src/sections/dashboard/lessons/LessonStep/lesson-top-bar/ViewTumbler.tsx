@@ -7,7 +7,7 @@ interface ViewToomblerProps {
   fullScreenView: boolean
   allColumnsVisible: boolean
   onChangeSreenView: (value: boolean) => void
-  onChangeColumnVisability: (value: boolean) => void
+  onChangeColumnVisibility: (value: boolean) => void
   fullScreenOpen: () => void
   fullScreenClose: () => void
 }
@@ -15,7 +15,7 @@ interface ViewToomblerProps {
 const ViewTumbler = ({
   fullScreenView,
   onChangeSreenView,
-  onChangeColumnVisability,
+  onChangeColumnVisibility,
   fullScreenOpen,
   fullScreenClose,
   allColumnsVisible,
@@ -36,7 +36,7 @@ const ViewTumbler = ({
     >
       <IconButton
         onClick={() => {
-          onChangeColumnVisability(!allColumnsVisible)
+          onChangeColumnVisibility(!allColumnsVisible)
         }}
       >
         <Iconify icon={columnIcon} />

@@ -24,7 +24,7 @@ const DesktopBar: FC<IDesktopBar> = ({ chatComponent, onHandleFullScreen, isFull
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
-  const onChangeColumnVisability = (value: boolean) => {
+  const onChangeColumnVisibility = (value: boolean) => {
     dispatch(toggleBrowser(value))
     dispatch(toggleInstrations(value))
   }
@@ -48,7 +48,7 @@ const DesktopBar: FC<IDesktopBar> = ({ chatComponent, onHandleFullScreen, isFull
         onHandleFullScreen={onHandleFullScreen}
         isFullScreenView={isFullScreenView}
         isColumnHidden={isBrowserHidden && isInstructionsHidden}
-        onChangeColumnVisability={onChangeColumnVisability}
+        onChangeColumnVisibility={onChangeColumnVisibility}
       />
 
       <Menu />

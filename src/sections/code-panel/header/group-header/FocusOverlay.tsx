@@ -18,7 +18,7 @@ const FocusOverlay: FC = () => {
   const tribe = useSelector((state) => state.codePanel.class)
   const dispatch = useDispatch()
 
-  const onChangeColumnVisability = () => {
+  const onChangeColumnVisibility = () => {
     dispatch(toggleBrowser(false))
     dispatch(toggleInstrations(false))
   }
@@ -58,7 +58,7 @@ const FocusOverlay: FC = () => {
       </Stack>
       <IconButton
         sx={{ p: 0 }}
-        onClick={onChangeColumnVisability}
+        onClick={onChangeColumnVisibility}
       >
         <CgClose
           size={28}

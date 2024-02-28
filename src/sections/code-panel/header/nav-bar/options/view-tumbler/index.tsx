@@ -8,14 +8,14 @@ import { Iconify } from '@/components/iconify'
 interface ViewToomblerProps {
   isFullScreenView: boolean
   isColumnHidden: boolean
-  onChangeColumnVisability: (value: boolean) => void
+  onChangeColumnVisibility: (value: boolean) => void
   onHandleFullScreen: () => void
 }
 
 const ViewTumbler: FC<ViewToomblerProps> = ({
   isFullScreenView,
   isColumnHidden,
-  onChangeColumnVisability,
+  onChangeColumnVisibility,
   onHandleFullScreen,
 }) => {
   const columnIcon = isColumnHidden ? 'tabler:columns-3' : 'tabler:columns-1'
@@ -45,7 +45,7 @@ const ViewTumbler: FC<ViewToomblerProps> = ({
       >
         <IconButton
           onClick={() => {
-            onChangeColumnVisability(!isColumnHidden)
+            onChangeColumnVisibility(!isColumnHidden)
           }}
         >
           <Iconify icon={columnIcon} />
