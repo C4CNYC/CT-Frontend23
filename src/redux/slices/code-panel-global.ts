@@ -2,6 +2,7 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 import type { Socket } from 'socket.io-client'
 
 import { ILessonUserStatus } from '@/types'
+import { CodeDocument } from '@/types/code-document'
 
 export interface IGlobalCodePanel {
   slideIndex: number
@@ -10,6 +11,7 @@ export interface IGlobalCodePanel {
   lessonId?: string
   unitId?: string
   courseId?: string
+  document?: CodeDocument
   code: string
   isInstructionsHidden: boolean
   isBrowserHidden: boolean
@@ -83,8 +85,9 @@ export const codePanelSlice = createSlice({
     ) => {
       state.isRealtimeCodeHidden = payload
     },
-    setCode: (state, action: PayloadAction<string>) => {
-      state.code = action.payload
+    setDocument: (state, action: PayloadAction<CodeDocument | undefined>) => {
+      state.document = action.payload
+      state.code = state.document?.htmlBody?.join('') ?? ''
     },
     setUsersStatus: (state, action: PayloadAction<ILessonUserStatus[]>) => {
       state.usersStatus = action.payload
@@ -106,7 +109,7 @@ export const {
   toggleBrowser,
   toggleRealtimeCodeEnabled,
   toggleRealtimeCodeHidden,
-  setCode,
+  setDocument,
   setUsersStatus,
   setSocket,
 } = codePanelSlice.actions
