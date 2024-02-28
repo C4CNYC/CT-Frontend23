@@ -19,7 +19,7 @@ export const SPEED_DIAL_SX = {
   position: 'absolute',
   bottom: '10px',
   right: 18,
-  zIndex: 20,
+  zIndex: 1500,
   '& .MuiSpeedDial-actions': {
     gap: 0,
   },

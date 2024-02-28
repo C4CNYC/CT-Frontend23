@@ -69,6 +69,7 @@ const LessonsManager = dynamic(
 interface LessonUserResponseType {
   id: string
   status: string
+  lessonId: string
 }
 
 const DEFAULT_LANGUAGE = 'html'
@@ -80,6 +81,7 @@ export default function CodePanelPage(): ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
 
   const { user, isInitialized: authIsInitialized } = useAuthContext()
+  const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
   const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
@@ -176,8 +178,14 @@ export default function CodePanelPage(): ReactElement | null {
     if (!courseContent) return
 
     const courseId = router.query.courseId
-    const unitId = router.query.unitId ?? lastUnitId ?? courseContent.units[0].id
-    const lessonId = router.query.lessonId ?? lastLessonId ?? courseContent.units[0].lessons[0].id
+    const unitId =
+      router.query.unitId ??
+      (router.query.courseId === lastCourseId && lastUnitId
+        ? lastUnitId
+        : courseContent.units[0].id)
+    const lessonId =
+      router.query.lessonId ??
+      (unitId === lastUnitId && lastLessonId ? lastLessonId : courseContent.units[0].lessons[0].id)
 
     if (!courseId || !unitId || !lessonId) {
       void router.replace(STUDENT_PATH_DASHBOARD.page404)
@@ -267,7 +275,7 @@ export default function CodePanelPage(): ReactElement | null {
     !isLoadingLesson &&
     router.query.courseId !== null
 
-  const lessonId = router.query.lessonId
+  const lessonIdFromRoute = router.query.lessonId
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   const [showTour, setShowTour] = useState(false)
@@ -276,6 +284,22 @@ export default function CodePanelPage(): ReactElement | null {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
     if (!hasSeenTour) setShowTour(true)
   }, [])
+
+  useEffect(() => {
+    if (lessonIdFromRoute && socket) {
+      socket.emit(
+        'joinLesson',
+        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+      )
+
+      return () => {
+        socket?.emit(
+          'leaveLesson',
+          JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+        )
+      }
+    }
+  }, [lessonIdFromRoute, socket])
 
   useEffect(() => {
     let socket: Socket | undefined
@@ -292,7 +316,49 @@ export default function CodePanelPage(): ReactElement | null {
 
       socket.on('connect', () => {
         // eslint-disable-next-line no-console
-        console.log('Connected to socket server', lessonId)
+        console.log('Connected to socket server')
+
+        if (!socket) return
+
+        socket.on('joinLesson', (data: { lesson: string; user: string }) => {
+          const { user, lesson } = data
+          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+            ..._usersStatus.filter((_status) => _status.id !== user),
+            { id: user, status: 'idle', lessonId: lesson },
+          ])
+        })
+        socket.on(
+          'changeStatusInLesson',
+          (data: { lesson: string; user: string; status: string }) => {
+            const { status, user, lesson } = data
+            _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+              ..._usersStatus.filter((_status) => _status.id !== user),
+              { id: user, status, lessonId: lesson },
+            ])
+          }
+        )
+
+        socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
+          const { participants } = data
+          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
+        })
+        socket.on('leaveLesson', (data: { lesson: string; user: string }) => {
+          const { user, lesson } = data
+          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+            ..._usersStatus.filter((_status) => _status.id !== user),
+            { id: user, status: 'inactive', lessonId: lesson },
+          ])
+        })
+
+        // socket.onAnyOutgoing((e) => {
+        //   // eslint-disable-next-line no-console
+        //   console.log('out:', e)
+        // })
+        //
+        // socket.onAny((e) => {
+        //   // eslint-disable-next-line no-console
+        //   console.log('in:', e)
+        // })
 
         dispatch(setSocket(socket))
       })
@@ -303,67 +369,13 @@ export default function CodePanelPage(): ReactElement | null {
     return () => {
       socket?.off('joinLesson')
       socket?.off('leaveLesson')
-      // unsubscribeSocket(socket);
+      socket?.off('changeStatusInLesson')
+      socket?.off('lessonMembers')
+
       socket?.disconnect()
       dispatch(setSocket(undefined))
     }
   }, [isRealtimeCodeEnabled, authIsInitialized, user])
-
-  useEffect(() => {
-    if (lessonId && socket) {
-      socket.emit(
-        'joinLesson',
-        JSON.stringify({ lesson: lessonId, user: user?.student_profile?.id })
-      )
-
-      socket.on('joinLesson_', (data: { lesson: string; user: string }) => {
-        const { user } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-          ..._usersStatus.filter((_status) => _status.id !== user),
-          { id: user, status: 'idle' },
-        ])
-      })
-      socket.on('changeStatusInLesson_', (data: { user: string; status: string }) => {
-        const { status, user } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-          ..._usersStatus.filter((_status) => _status.id !== user),
-          { id: user, status },
-        ])
-      })
-
-      socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
-        const { participants } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
-      })
-      socket.on('leaveLesson_', (data: { lesson: string; user: string }) => {
-        const { user } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-          ..._usersStatus.filter((_status) => _status.id !== user),
-          { id: user, status: 'inactive' },
-        ])
-      })
-
-      socket.onAnyOutgoing((e) => {
-        // eslint-disable-next-line no-console
-        console.log('out:', e)
-      })
-
-      socket.onAny((e) => {
-        // eslint-disable-next-line no-console
-        console.log('in:', e)
-      })
-      return () => {
-        socket?.off('joinLesson_')
-        socket?.off('changeStatusInLesson_')
-        socket?.off('lessonMembers')
-        // socket.off('leaveLesson_')
-        socket?.emit(
-          'leaveLesson',
-          JSON.stringify({ lesson: lessonId, user: user?.student_profile?.id })
-        )
-      }
-    }
-  }, [lessonId, socket])
 
   if (!isLoadingComplete) {
     return <SkeletonCodePanel />

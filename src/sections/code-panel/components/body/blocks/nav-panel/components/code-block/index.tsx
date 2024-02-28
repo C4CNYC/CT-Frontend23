@@ -32,17 +32,17 @@ interface CodeBlockProps {
   onClose: () => void
   attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
-  data: IFriend & BaseResponseInterface
+  owner: IFriend & BaseResponseInterface
   cursorName?: string
   lessonId?: string
-  onChangeUserStatus?: (status: string) => void
+  onChangeUserStatus?: (status: string, lessonId: string) => void
 }
 
 const CodeBlock: FC<CodeBlockProps> = ({
   onClose,
   attributes,
   listeners,
-  data,
+  owner,
   cursorName,
   lessonId,
   onChangeUserStatus = voidFunction,
@@ -74,8 +74,8 @@ const CodeBlock: FC<CodeBlockProps> = ({
     dispatch(
       setRoom({
         // roomId: data.id,
-        roomId: `${data.id as string}_${lessonId as string}`,
-        cursorText: data.first_name,
+        roomId: `${owner.id as string}_${lessonId as string}`,
+        cursorText: owner.first_name,
         mode: EditorMode.SubOwner,
       })
     )
@@ -103,27 +103,27 @@ const CodeBlock: FC<CodeBlockProps> = ({
     }
   }, [socket])
 
-  const onChangeCodemirrorValue = (value: string) => {
-    if (checkValueTimeout) {
-      // Clear the previous timeout if the value changes
-      clearTimeout(checkValueTimeout)
-    }
-
-    previousValue = value // Store the current value
-    onChangeUserStatus('active')
-
-    // Set up the check for 30 seconds later
-    checkValueTimeout = setTimeout(() => {
-      if (value === previousValue) {
-        // eslint-disable-next-line no-console
-        console.log(`Value after 30 seconds: ${value} (unchanged)`)
-        onChangeUserStatus('idle')
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Value has changed')
-      }
-    }, 30000) // 30 seconds
-  }
+  // const onChangeCodemirrorValue = (value: string) => {
+  //   if (checkValueTimeout) {
+  //     // Clear the previous timeout if the value changes
+  //     clearTimeout(checkValueTimeout)
+  //   }
+  //
+  //   previousValue = value // Store the current value
+  //   onChangeUserStatus('active', lessonId as string)
+  //
+  //   // Set up the check for 30 seconds later
+  //   checkValueTimeout = setTimeout(() => {
+  //     if (value === previousValue) {
+  //       // eslint-disable-next-line no-console
+  //       console.log(`Value after 30 seconds: ${value} (unchanged)`)
+  //       onChangeUserStatus('idle', lessonId as string)
+  //     } else {
+  //       // eslint-disable-next-line no-console
+  //       console.log('Value has changed')
+  //     }
+  //   }, 30000) // 30 seconds
+  // }
 
   return (
     <Box sx={boxSx}>
@@ -145,11 +145,11 @@ const CodeBlock: FC<CodeBlockProps> = ({
 
           <Avatar
             sx={styles.AVATAR_SX}
-            src={data.avatar}
+            src={owner.avatar}
           />
 
           <Typography sx={styles.TYP_NAME_SX}>
-            {data.first_name} {data.last_name}
+            {owner.first_name} {owner.last_name}
           </Typography>
         </Stack>
 
@@ -176,13 +176,13 @@ const CodeBlock: FC<CodeBlockProps> = ({
       {isConnected && (
         <CodeEditorCollab
           // roomId={data.id}
-          roomId={`${data.id as string}_${lessonId as string}`}
+          roomId={`${owner.id as string}_${lessonId as string}`}
           mode={EditorMode.Watcher}
           withFileManager={false}
           cursorText={cursorName}
           onRoomStatusChanged={setEditorStatus}
           socket={socket}
-          onChangeCodemirrorValue={onChangeCodemirrorValue}
+          // onChangeCodemirrorValue={onChangeCodemirrorValue}
         />
       )}
     </Box>

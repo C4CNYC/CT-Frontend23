@@ -60,7 +60,9 @@ export default function JoinTribeModal({
             />
           </GoogleOAuthProvider>
         ) : (
-          <JoinTribeRegister handleChangeAuthorization={handleChangeAuthorization} />
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
+            <JoinTribeRegister handleChangeAuthorization={handleChangeAuthorization} />
+          </GoogleOAuthProvider>
         )}
       </Box>
     </Dialog>
