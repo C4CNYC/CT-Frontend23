@@ -10,14 +10,14 @@ import { Socket } from 'socket.io-client'
 
 import OpenCodeIcon from '@/assets/icons/OpenCodeIcon'
 import { useAuthContext } from '@/auth/useAuthContext'
-import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import CodeEditor from '@/sections/code-panel/code-editor'
 import { EditorMode } from '@/sections/code-panel/code-editor/lib/hooks/constants'
 import { RoomStatus } from '@/sections/code-panel/code-editor/status-label'
+import { UserWithStatusAndStudent } from '@/sections/code-panel/lib/types'
 import getRoomId from '@/sections/code-panel/lib/utils/getRoomId'
 import { createSocket, waitForSocketConnection } from '@/sections/code-panel/lib/utils/socket'
-import { voidFunction, type BaseResponseInterface } from '@/utils'
+import { voidFunction } from '@/utils'
 
 import { getRandomIndex } from '../utils'
 
@@ -28,7 +28,7 @@ interface CodePreviewProps {
   onClose: () => void
   attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
-  owner: IFriend & BaseResponseInterface
+  owner: UserWithStatusAndStudent
   cursorName?: string
   lessonId?: string
   onChangeUserStatus?: (status: string, lessonId: string) => void
