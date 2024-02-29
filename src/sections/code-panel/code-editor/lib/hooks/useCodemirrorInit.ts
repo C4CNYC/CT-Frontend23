@@ -1,5 +1,6 @@
 import { type MutableRefObject, useCallback, useEffect, useState } from 'react'
 
+import type { Update } from '@codemirror/collab'
 import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect, Text } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
@@ -9,25 +10,24 @@ import { StateEffectType } from '@uiw/react-codemirror'
 import { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
-import { commentExtenstion } from '@/sections/code-panel/code-editor/lib/extensions/comments'
+import { commentExtension } from '@/sections/code-panel/code-editor/lib/extensions/comments'
 import type { CommentEffect } from '@/sections/code-panel/code-editor/lib/extensions/comments/types'
 import { cursorExtension } from '@/sections/code-panel/code-editor/lib/extensions/cursors'
 import type { Cursor } from '@/sections/code-panel/code-editor/lib/extensions/cursors/types'
 import { peerExtension } from '@/sections/code-panel/code-editor/lib/extensions/peer'
+import { CodeDocument } from '@/types/code-document'
 
 import { language } from '../utils'
 import { type File, getDocument } from '../utils/requests'
 
-import { BASIC_SETUP, EditorMode } from './constants'
+import { BASIC_SETUP } from './constants'
 import type { CommentPopupProps } from './useComments'
 
-interface UseBaseInit {
+interface UseCodemirrorInitProps {
   socket?: Socket
   withTooltip: boolean
-  onChangeStreamingDocInfo?: (code: Record<string, string>) => void
+  onChangeStreamingDocInfo?: (code: CodeDocument) => void
   roomId: string
-  lessonId?: string
-  mode: EditorMode
   user?: AuthUserType
   cursorText: string
   defaultFileName: string
@@ -36,52 +36,51 @@ interface UseBaseInit {
   onCommentIconClick: (props: CommentPopupProps | null) => void
 }
 
-export interface UseBaseInitReturn {
+export interface UseCodemirrorInitReturn {
   key: number
   streamingDoc?: Text
-  isLoading: boolean
+  isInitializing: boolean
+  setIsInitializing: (isInitializingCodemirror: boolean) => void
   extensions?: Extension[]
-  baseInit: (fileName: File) => Promise<void>
-  setIsLoading: (isLoading: boolean) => void
+  init: (fileName: File) => Promise<void>
 }
 
-export const useInitCodemirror = ({
+export const useCodemirrorInit = ({
   socket,
   withTooltip,
   onChangeStreamingDocInfo,
   roomId,
-  lessonId,
-  mode,
   user,
   cursorText,
   defaultFileName,
   preloadedCode,
   commentEffectRef,
   onCommentIconClick,
-}: UseBaseInit): UseBaseInitReturn => {
+}: UseCodemirrorInitProps): UseCodemirrorInitReturn => {
   const [key, setKey] = useState(0)
   const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isInitializing, setIsInitializing] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
 
   useEffect(() => {
     setStreamingDoc(undefined)
   }, [roomId])
 
-  const baseInit = useCallback(
-    async (fileName: File) => {
+  const setupExtensions = useCallback(
+    ({
+      version,
+      fileName,
+      cursorName,
+      updates,
+    }: {
+      fileName: File
+      version: number
+      cursorName: string
+      updates: Update[]
+    }) => {
       const lineWrap = new Compartment()
       const addCursor = StateEffect.define<Cursor>()
       commentEffectRef.current = StateEffect.define<CommentEffect>()
-
-      const { version, doc, cursorName, docInfo, updates } = await getDocument({
-        roomId,
-        fileName,
-        socket,
-        cursorName: user?.id ?? cursorText,
-        defaultFileName,
-        preloadedCode,
-      })
 
       setExtensions([
         indentUnit.of('\t'),
@@ -107,7 +106,7 @@ export const useInitCodemirror = ({
                 addCursor,
                 userId: user?.id,
               }),
-              commentExtenstion({
+              commentExtension({
                 updates,
                 fileId: fileName.id,
                 roomId,
@@ -117,11 +116,28 @@ export const useInitCodemirror = ({
             ]
           : []),
       ])
+    },
+    []
+  )
+
+  const init = useCallback(
+    async (fileName: File) => {
+      const { version, doc, cursorName, docInfo, updates } = await getDocument({
+        roomId,
+        fileName,
+        socket,
+        cursorName: user?.id ?? cursorText,
+        defaultFileName,
+        preloadedCode,
+      })
+
+      setupExtensions({ version, fileName, cursorName, updates })
+
       onChangeStreamingDocInfo?.(docInfo)
       setStreamingDoc(doc)
 
       setKey((prev) => ++prev)
-      setIsLoading(false)
+      setIsInitializing(false)
     },
     [
       roomId,
@@ -138,8 +154,8 @@ export const useInitCodemirror = ({
     key,
     extensions,
     streamingDoc,
-    isLoading,
-    baseInit,
-    setIsLoading,
+    isInitializing,
+    init,
+    setIsInitializing,
   }
 }

@@ -39,9 +39,9 @@ export const AccordionSummary = styled((props: AccordionSummaryProps) => (
 ))(({ theme }) => ({
   paddingRight: '15px',
   borderTop: '1px solid rgba(0, 0, 0, .125)',
-  '&:first-child': {
-    borderTop: 0,
-  },
+  // '&:first-child': {
+  //   borderTop: 0,
+  // },
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     left: 1,
     transform: 'rotate(180deg)',

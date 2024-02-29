@@ -5,15 +5,16 @@ import makeStyles from '@mui/styles/makeStyles'
 import CodeMirror from '@uiw/react-codemirror'
 import { Socket } from 'socket.io-client'
 
+import { CodeDocument } from '@/types/code-document'
 import { voidFunction } from '@/utils/voidFunction'
 
 import AddComment from './add-comment'
 import CommentPopup from './comment-popup'
 import FileModal from './file-modal'
 import FileSwitcher from './file-switcher'
-import { type UseCodeEditorProps, useCodeEditor } from './lib/hooks'
 import { EditorMode } from './lib/hooks/constants'
 import { useFileManager } from './lib/hooks/file-manager'
+import { type UseCodeEditorProps, useCodeCollab } from './lib/hooks/useCodeCollab'
 import LoadingCodeEditor from './loading-code-editor'
 import StatusLabel, { RoomStatus } from './status-label'
 
@@ -59,7 +60,7 @@ const useStyles = makeStyles({
 
 const CodeEditor: FC<CodeEditorProps> = ({
   className,
-  isReadOnly: _isReadOnly = false,
+  isReadOnly: isReadOnlyFromProps = false,
   mode = EditorMode.Owner,
   withFileManager = true,
   roomId,
@@ -69,11 +70,19 @@ const CodeEditor: FC<CodeEditorProps> = ({
   preloadedCode,
   onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
-  ...collabProps
+
+  code,
+  user,
+  onRoomStatusChanged,
+  isLoading: isLoadingProp,
+  withTooltip,
+  cursorText,
+
+  // ...codeEditorProps
 }) => {
   const styles = useStyles()
 
-  const localstorageCode = useMemo(() => {
+  const localStorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
       const json = localStorage.getItem(getLocalStorageRoomKey(roomId))
       if (json) {
@@ -92,7 +101,7 @@ const CodeEditor: FC<CodeEditorProps> = ({
     onChangeCodemirrorValueFromProps(value)
     void updateCommentWidgetPosition()
   }
-  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
+  const onChangeStreamingDocInfo = (doc: CodeDocument) => {
     onChangeStreamingDocInfoFromProps?.(doc)
 
     localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
@@ -109,7 +118,10 @@ const CodeEditor: FC<CodeEditorProps> = ({
     addedFileList,
     onDeleteFileWithEvents,
     onChangeFileWithEvents,
-    ...collabPropsFromFileManager
+
+    onResetFileManager,
+    setActiveFile,
+    onDeleteFile,
   } = useFileManager({
     socket,
     roomId,
@@ -118,10 +130,12 @@ const CodeEditor: FC<CodeEditorProps> = ({
 
   const {
     editorRef,
-    isLoading,
-    extensions,
-    streamingDoc,
-    key,
+    codeMirror: {
+      isInitializing: codeMirrorIsInitializing,
+      extensions: codeMirrorExtensions,
+      streamingDoc,
+      key: codeMirrorKey,
+    },
     onCreateEditor,
     roomStatus,
     commentProps: {
@@ -138,11 +152,22 @@ const CodeEditor: FC<CodeEditorProps> = ({
       onRemoveCommentGroup,
       updateCommentWidgetPosition,
     },
-  } = useCodeEditor({
-    ...collabProps,
-    ...collabPropsFromFileManager,
+  } = useCodeCollab({
+    // ...codeEditorProps,
+
+    code,
+    user,
+    onRoomStatusChanged,
+    isLoading: isLoadingProp,
+    withTooltip,
+    cursorText,
+
+    onResetFileManager,
+    setActiveFile,
+    // onDeleteFile,
+
     onChangeStreamingDocInfo,
-    preloadedCode: localstorageCode ?? preloadedCode,
+    preloadedCode: localStorageCode ?? preloadedCode,
     activeFile,
     mode,
     socket,
@@ -150,7 +175,7 @@ const CodeEditor: FC<CodeEditorProps> = ({
     defaultFileName,
   })
 
-  const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
+  const isReadOnly = isReadOnlyFromProps || roomStatus === RoomStatus.Inactive
 
   return (
     <div
@@ -182,19 +207,19 @@ const CodeEditor: FC<CodeEditorProps> = ({
 
       <StatusLabel status={roomStatus} />
 
-      {isLoading || collabProps.isFetching || !streamingDoc ? (
+      {codeMirrorIsInitializing || isLoadingProp || !streamingDoc ? (
         <LoadingCodeEditor />
       ) : (
         <>
           <CodeMirror
             onContextMenu={onContextMenu}
             onCreateEditor={onCreateEditor}
-            key={key}
+            key={codeMirrorKey}
             className={className}
             height='100%'
             basicSetup={false}
             theme='dark'
-            extensions={extensions}
+            extensions={codeMirrorExtensions}
             readOnly={isReadOnly}
             value={streamingDoc.toString()}
             onChange={onChangeCodemirrorValue}

@@ -24,7 +24,7 @@ import SidePanel from './side-panel'
 interface CodePanelBodyProps {
   isFetchingLessonContent?: boolean
   lesson?: ILesson & BaseResponseInterface
-  lessonContents: Array<ILessonContent & BaseResponseInterface>
+  lessonContent: Array<ILessonContent & BaseResponseInterface>
   user: AuthUserType
   onSubmitChallenge: (lessonContentId: string) => Promise<void>
   onSubmitLesson: () => Promise<void>
@@ -35,7 +35,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
   onSubmitChallenge,
   onSubmitLesson,
-  lessonContents,
+  lessonContent,
   user,
   isFetchingLessonContent = false,
   lastLessonCode,
@@ -66,7 +66,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         <SliderBlock
           onSubmitLesson={onSubmitLesson}
           onSubmitChallenge={onSubmitChallenge}
-          data={lessonContents}
+          data={lessonContent}
           integrations={lesson?.integrations ?? []}
           isFetching={isFetchingLessonContent}
           code={code}
@@ -81,10 +81,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
       <CodeEditorBlock
         code={code}
-        preloadedCode={lastLessonCode ?? lessonContents[slideIndex]?.preload_body}
-        validations={lessonContents[slideIndex]?.validations}
+        preloadedCode={lastLessonCode ?? lessonContent[slideIndex]?.preload_body}
+        validations={lessonContent[slideIndex]?.validations}
         user={user}
-        isFetching={isFetchingLessonContent}
+        isFetchingLessonContent={isFetchingLessonContent}
       />
 
       {!isBrowserHidden || !isDesktop ? (
