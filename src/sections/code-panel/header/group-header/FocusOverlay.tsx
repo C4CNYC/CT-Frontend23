@@ -4,9 +4,6 @@ import { Avatar, Box, IconButton, Stack, Tooltip, Typography } from '@mui/materi
 import { CgClose } from '@react-icons/all-files/cg/CgClose'
 import { MdFilterCenterFocus } from '@react-icons/all-files/md/MdFilterCenterFocus'
 
-import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
-import { useDispatch, useSelector } from '@/redux/store'
-
 import {
   OVERLAY_AVATAR_SX,
   OVERLAY_GROUP_TITLE_SX,
@@ -14,20 +11,17 @@ import {
   TRIBE_NAME_STYLES,
 } from './styles'
 
-const FocusOverlay: FC = () => {
-  const tribe = useSelector((state) => state.codePanel.class)
-  const dispatch = useDispatch()
+interface IProps {
+  title: string
+  resetRoom: () => void
+}
 
-  const onChangeColumnVisibility = () => {
-    dispatch(toggleBrowser(false))
-    dispatch(toggleInstrations(false))
-  }
-
+const FocusOverlay: FC<IProps> = ({ title, resetRoom }) => {
   return (
     <Box sx={OVERLAY_WRAPPER_SX}>
       <Avatar
         alt='avatar'
-        src={tribe?.avatar ?? ''}
+        src={''}
         sx={OVERLAY_AVATAR_SX}
       >
         🤖
@@ -52,13 +46,13 @@ const FocusOverlay: FC = () => {
             variant='subtitle2'
             sx={{ ...TRIBE_NAME_STYLES, color: '#fff' }}
           >
-            {tribe?.name}
+            {title}
           </Typography>
         </Tooltip>
       </Stack>
       <IconButton
         sx={{ p: 0 }}
-        onClick={onChangeColumnVisibility}
+        onClick={resetRoom}
       >
         <CgClose
           size={28}

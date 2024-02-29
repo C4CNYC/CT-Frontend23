@@ -12,6 +12,7 @@ import { useSelector } from '@/redux/store'
 import { EditorMode } from '@/sections/code-panel/code-editor/lib/hooks/constants'
 import getRoomId from '@/sections/code-panel/lib/utils/getRoomId'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useTranslate } from '@/utils/translateHelper'
 import { mapValidations } from '@/utils/validationMaping'
 
 import BlockWrapper from '../block-wrapper'
@@ -20,7 +21,6 @@ import CodeEditorController from './code-editor-controller'
 import Checkers from './elements/checkers-code-editor'
 import { CodingSymbols, CodingTools } from './elements/coding-controls'
 import MumuSpeedDial from './elements/mumu-speed-deal'
-import Title from './elements/title'
 
 interface ICodeEditorBlock {
   user: AuthUserType | null
@@ -43,6 +43,8 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   preloadedCode,
   isFetching = false,
 }) => {
+  const translate = useTranslate()
+  const TITLE = translate('code_editor')
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
@@ -99,12 +101,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 
   return (
     <BlockWrapper
-      title={
-        <Title
-          room={room}
-          resetRoom={resetRoom}
-        />
-      }
+      title={TITLE}
       icon={
         <BiCodeAlt
           size='20px'
