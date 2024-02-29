@@ -1,20 +1,17 @@
 import { type RefObject, useEffect, useState, useRef, useCallback, useMemo } from 'react'
 
-import type { Extension } from '@codemirror/state'
-import type { Text } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
-import { useSelector } from '@/redux/store'
 
-import { EmitSocketEvents, unsubscribeAllSocketEvents } from '../../../lib/utils/socket'
+import { EmitSocketEvents } from '../../../lib/utils/socket'
 import { RoomStatus } from '../../status-label'
 import { type File, getFileInfo, isRoomExist } from '../utils/requests'
 
 import { EditorMode } from './constants'
+import { useCodemirrorInit, UseCodemirrorInitReturn } from './useCodemirrorInit'
 import { type UseCommentsPropsReturn, useComments } from './useComments'
-import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
 import { useModeSubscriptions } from './useModeSubscriptions'
 
@@ -27,34 +24,39 @@ export interface UseCodeEditorProps extends MemoizedProps {
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
 
-interface UseCodeEditorReturn extends Omit<UseBaseInitReturn, 'baseInit' | 'setIsLoading'> {
-  extensions?: Extension[]
+interface UseCodeCollabReturn {
   editorRef: RefObject<HTMLDivElement>
-  isLoading: boolean
-  key: number
-  streamingDoc?: Text
   onCreateEditor: (view: EditorView) => void
   roomStatus: RoomStatus
   commentProps: Omit<UseCommentsPropsReturn, 'commentEffectRef' | 'onCommentIconClick'>
+  codeMirror: UseCodemirrorInitReturn
 }
 
-export const useCodeEditor = ({
+export const useCodeCollab = ({
   roomId,
   mode = EditorMode.Owner,
   activeFile,
   socket,
   onRoomStatusChanged,
   user,
+
+  // code,
+  // preloadedCode,
+  // defaultFileName,
+  // onChangeStreamingDocInfo,
+  // onResetFileManager,
+  // setActiveFile,
+  // cursorText,
+  // withTooltip,
+  // isFetching
   ...propsToMemoize
-}: UseCodeEditorProps): UseCodeEditorReturn => {
+}: UseCodeEditorProps): UseCodeCollabReturn => {
   const modeRef = useRef(mode)
   const firstInit = useRef(true)
-  const initializeBlockedRef = useRef(false)
-  const initRoomDataRef = useRef({ mode, roomId })
+  const initializationBlockedRef = useRef(false)
   const editorView = useRef<EditorView | null>(null)
   const editorRef = useRef<HTMLDivElement | null>(null)
   const [roomStatus, setRoomStatus] = useState(RoomStatus.Active)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
   const {
     cursorText,
@@ -70,15 +72,6 @@ export const useCodeEditor = ({
     editorView.current = view
   }
 
-  const clearSocketData = useCallback((): void => {
-    if (initRoomDataRef.current.mode === EditorMode.Owner) {
-      socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId)
-    }
-
-    unsubscribeAllSocketEvents(socket)
-    // editorView.current?.destroy()
-  }, [])
-
   const { commentEffectRef, onCommentIconClick, ...commentProps } = useComments({
     editorView,
     socket,
@@ -87,13 +80,11 @@ export const useCodeEditor = ({
     activeFile: activeFile.id,
   })
 
-  const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
+  const codeMirror = useCodemirrorInit({
     socket,
     withTooltip,
     onChangeStreamingDocInfo,
     roomId,
-    lessonId,
-    mode,
     user,
     cursorText,
     defaultFileName,
@@ -101,6 +92,8 @@ export const useCodeEditor = ({
     commentEffectRef,
     onCommentIconClick,
   })
+
+  const { init: codemirrorInit, setIsInitializing: setCodemirrorIsInitializing } = codeMirror
 
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
@@ -110,17 +103,17 @@ export const useCodeEditor = ({
       const isRoom = await isRoomExist(roomId, socket)
 
       if (!isRoom) {
-        initializeBlockedRef.current = true
+        initializationBlockedRef.current = true
         onResetFileManager()
         setRoomStatus(RoomStatus.Inactive)
-        setIsLoading(false)
+        setCodemirrorIsInitializing(false)
         return
       }
 
       setRoomStatus(RoomStatus.Active)
 
       if (!isFirstInit) {
-        await baseInit(activeFile)
+        await codemirrorInit(activeFile)
         return
       }
 
@@ -132,7 +125,7 @@ export const useCodeEditor = ({
         await runInitSubOwner(false)
       }
     },
-    [activeFile, baseInit, onResetFileManager, socket]
+    [activeFile, codemirrorInit, onResetFileManager, socket]
   )
 
   const runInitOwner = useCallback(
@@ -145,7 +138,7 @@ export const useCodeEditor = ({
       const fileInfo = await getFileInfo(roomId, socket)
 
       if (!isFirstInit || fileInfo == null) {
-        await baseInit(activeFile)
+        await codemirrorInit(activeFile)
         return
       }
 
@@ -155,7 +148,7 @@ export const useCodeEditor = ({
         await runInitOwner(false)
       }
     },
-    [activeFile, baseInit, onResetFileManager, socket]
+    [activeFile, codemirrorInit, onResetFileManager, socket]
   )
 
   const runInitWatcher = useCallback(async (): Promise<void> => {
@@ -165,9 +158,9 @@ export const useCodeEditor = ({
     const isRoom = await isRoomExist(roomId, socket)
 
     if (!isRoom) {
-      initializeBlockedRef.current = true
+      initializationBlockedRef.current = true
       onResetFileManager()
-      setIsLoading(false)
+      setCodemirrorIsInitializing(false)
       setRoomStatus(RoomStatus.Inactive)
       return
     }
@@ -189,8 +182,8 @@ export const useCodeEditor = ({
       _activeFile = fileInfo.activeFile ?? activeFile
     }
 
-    await baseInit(_activeFile)
-  }, [activeFile, baseInit, setActiveFile, socket, onResetFileManager])
+    await codemirrorInit(_activeFile)
+  }, [activeFile, codemirrorInit, setActiveFile, socket, onResetFileManager])
 
   const initialize = useMemo(
     () => ({
@@ -223,7 +216,7 @@ export const useCodeEditor = ({
   useModeSubscriptions({
     roomId,
     roomStatus,
-    initializeBlockedRef,
+    initializeBlockedRef: initializationBlockedRef,
     runInitSubOwner,
     runInitWatcher,
     mode,
@@ -236,7 +229,7 @@ export const useCodeEditor = ({
   }, [roomStatus, onRoomStatusChanged])
 
   useEffect(() => {
-    initializeBlockedRef.current = false
+    initializationBlockedRef.current = false
     firstInit.current = true
     modeRef.current = mode
   }, [mode, roomId])
@@ -245,11 +238,11 @@ export const useCodeEditor = ({
     editorView.current?.destroy()
 
     if (!socket) {
-      setIsLoading(false)
+      setCodemirrorIsInitializing(false)
       return
     }
 
-    if (initializeBlockedRef.current) {
+    if (initializationBlockedRef.current) {
       return
     }
 
@@ -257,18 +250,42 @@ export const useCodeEditor = ({
   }, [initialize, socket])
 
   useEffect(() => {
-    window.addEventListener('beforeunload', clearSocketData)
-    return () => {
-      window.removeEventListener('beforeunload', clearSocketData)
-      clearSocketData()
+    const currentRoomId = roomId
+    const currentMode = mode
+    const currentSocket = socket
+    const clearRoom = () => {
+      if (currentMode === EditorMode.Owner) {
+        currentSocket?.emit(EmitSocketEvents.DeleteRoom, currentRoomId)
+      }
     }
-  }, [clearSocketData])
+    window.addEventListener('beforeunload', clearRoom)
+    return () => {
+      window.removeEventListener('beforeunload', clearRoom)
+      clearRoom()
+      editorView.current?.destroy()
+    }
+  }, [socket, roomId, mode])
+
+  // useEffect(() => {
+  //   const currentSocket = socket
+  //   const clearSocketData = () => {
+  //     console.log('clearSocketData')
+  //
+  //     unsubscribeAllSocketEvents(currentSocket)
+  //   }
+  //
+  //   window.addEventListener('beforeunload', clearSocketData)
+  //   return () => {
+  //     window.removeEventListener('beforeunload', clearSocketData)
+  //     clearSocketData()
+  //   }
+  // }, [socket])
 
   return {
     editorRef,
     onCreateEditor,
     roomStatus,
     commentProps,
-    ...codeMirrorProps,
+    codeMirror,
   }
 }

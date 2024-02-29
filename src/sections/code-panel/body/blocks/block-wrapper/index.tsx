@@ -1,10 +1,10 @@
-import { type FC, type ReactNode, useMemo, useState } from 'react'
+import { type FC, type ReactNode, useEffect, useMemo, useState } from 'react'
 
 import { Box, Collapse, useTheme } from '@mui/material'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
-import { localStorageAvailable } from '@/utils'
+import { isClient } from '@/utils/env'
 
 import { getBoxStyles } from './constants'
 import Header from './header'
@@ -44,37 +44,35 @@ const BlockWrapper: FC<IBlockWrapper> = ({
   takeHeaderSettings,
 }) => {
   const theme = useTheme()
-  const storageAvailable = localStorageAvailable()
   const isDesktop = useIsDesktop()
   const isTabletAndMobile = !isDesktop
   const boxStyles = useMemo(() => getBoxStyles(isTabletAndMobile, theme), [useTheme])
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
 
   const getHeaderSettings = () => {
-    if (storageAvailable) {
-      const headerSettings = JSON.parse(
-        window.localStorage.getItem(localStorageKey) ?? JSON.stringify(isClosedHeaders)
-      )
-      return headerSettings
+    if (isClient) {
+      return JSON.parse(localStorage.getItem(localStorageKey) ?? JSON.stringify(isClosedHeaders))
     }
   }
 
   const isTabLeft = isTabletAndMobile && activeTab !== 0
   const isTabRight = isTabletAndMobile && activeTab !== 2
-  const [isClosedHeader, setIsClosedHeader] = useState<IHeaderSettings>(() => getHeaderSettings())
+  const [isClosedHeader, setIsClosedHeader] = useState<IHeaderSettings>(getHeaderSettings())
 
   const closeHeaderHandler = (): void => {
     setIsClosedHeader({ ...isClosedHeader, [className]: false })
 
-    window.localStorage.setItem(
+    localStorage.setItem(
       localStorageKey,
       JSON.stringify({ ...getHeaderSettings(), [className]: false })
     )
   }
 
-  if (takeHeaderSettings) {
-    takeHeaderSettings(isClosedHeader?.browserTour)
-  }
+  useEffect(() => {
+    if (takeHeaderSettings) {
+      takeHeaderSettings(isClosedHeader?.browserTour)
+    }
+  }, [takeHeaderSettings])
 
   return (
     <Box

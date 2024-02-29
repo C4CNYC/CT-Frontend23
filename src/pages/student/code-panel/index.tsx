@@ -348,7 +348,7 @@ export default function CodePanelPage(): ReactElement | null {
           <CodePanelBody
             isFetchingLessonContent={isFetchingLessonContent}
             lesson={lesson}
-            lessonContents={lessonContent ?? []}
+            lessonContent={lessonContent ?? []}
             user={user}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
