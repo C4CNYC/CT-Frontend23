@@ -1,4 +1,4 @@
-import { type FC, useMemo, useState, useEffect } from 'react'
+import { type FC, useMemo, useState, useEffect, useCallback } from 'react'
 
 import { type DraggableAttributes } from '@dnd-kit/core'
 import { type SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
@@ -16,7 +16,7 @@ import { EditorMode } from '@/sections/code-panel/code-editor/lib/hooks/constant
 import { RoomStatus } from '@/sections/code-panel/code-editor/status-label'
 import { UserWithStatusAndStudent } from '@/sections/code-panel/lib/types'
 import getRoomId from '@/sections/code-panel/lib/utils/getRoomId'
-import { createSocket, waitForSocketConnection } from '@/sections/code-panel/lib/utils/socket'
+import { createSocket, unsubscribeAllSocketEvents } from '@/sections/code-panel/lib/utils/socket'
 import { voidFunction } from '@/utils'
 
 import { getRandomIndex } from '../utils'
@@ -44,27 +44,38 @@ const CodePreview: FC<CodePreviewProps> = ({
   onChangeUserStatus = voidFunction,
 }) => {
   const dispatch = useDispatch()
-  const [isConnected, setIsConnected] = useState(false)
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive)
   const { user } = useAuthContext()
+  const [socket, setSocket] = useState<Socket | undefined>()
 
-  const { boxSx, headerSx, socket } = useMemo(() => {
+  const { boxSx, headerSx } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0]
     const headerColor = HEADER_COLORS[getRandomIndex(HEADER_COLORS.length)] ?? HEADER_COLORS[0]
 
     return {
       boxSx: styles.getBoxSx(boxColor),
       headerSx: styles.getHeaderSx(headerColor),
-      socket: createSocket({ userId: user?.id }),
     }
   }, [])
 
-  const isOpenCodeDisabled = RoomStatus.Inactive === editorStatus
+  useEffect(() => {
+    const socket = createSocket({
+      userId: user?.id,
+      onConnect: (s: Socket) => {
+        setSocket(s)
+      },
+    })
 
-  const onOpenCode = () => {
-    if (isOpenCodeDisabled) {
-      return
+    return () => {
+      unsubscribeAllSocketEvents(socket)
+      socket?.disconnect()
     }
+  }, [])
+
+  const maximizeCodeRoomDisabled = RoomStatus.Inactive === editorStatus
+
+  const maximizeCodeRoom = useCallback(() => {
+    if (maximizeCodeRoomDisabled) return
 
     dispatch(
       setRoom({
@@ -73,29 +84,7 @@ const CodePreview: FC<CodePreviewProps> = ({
         mode: EditorMode.SubOwner,
       })
     )
-  }
-
-  useEffect(() => {
-    const runAsyncEffect = async (socket: Socket) => {
-      const isConnected = await waitForSocketConnection(socket)
-
-      if (isConnected) {
-        setIsConnected(isConnected)
-      } else {
-        void runAsyncEffect(socket)
-      }
-    }
-
-    if (socket) {
-      if (socket.connected) {
-        setIsConnected(true)
-      } else {
-        void runAsyncEffect(socket)
-      }
-    } else {
-      setIsConnected(false)
-    }
-  }, [socket])
+  }, [owner, maximizeCodeRoomDisabled, lessonId])
 
   // const onChangeCodemirrorValue = (value: string) => {
   //   if (checkValueTimeout) {
@@ -151,10 +140,10 @@ const CodePreview: FC<CodePreviewProps> = ({
           height='100%'
         >
           <OpenCodeIcon
-            onClick={onOpenCode}
+            onClick={maximizeCodeRoom}
             sx={{
               ...styles.OPEN_CODE_ICON,
-              ...(isOpenCodeDisabled ? styles.OPEN_CODE_DISABLED : null),
+              ...(maximizeCodeRoomDisabled ? styles.OPEN_CODE_DISABLED : null),
             }}
           />
           <CloseIcon
@@ -164,7 +153,7 @@ const CodePreview: FC<CodePreviewProps> = ({
         </Stack>
       </Stack>
 
-      {isConnected && (
+      {socket && (
         <CodeEditor
           roomId={getRoomId(owner.id, lessonId as string)}
           mode={EditorMode.Watcher}

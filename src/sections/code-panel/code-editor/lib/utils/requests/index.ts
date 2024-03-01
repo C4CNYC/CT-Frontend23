@@ -2,6 +2,8 @@ import { type Update } from '@codemirror/collab'
 import { Text } from '@codemirror/state'
 import { Socket } from 'socket.io-client'
 
+import { CodeDocument } from '@/types/code-document'
+
 import { EmitSocketEvents, SubscribedEvents } from '../../../../lib/utils/socket'
 
 export const createFile = async ({ socket, fileName, roomId }: CreateFile): Promise<File> => {
@@ -89,7 +91,7 @@ interface GetDocumentReturn {
   doc: Text
   cursorName: string
   updates: Update[]
-  docInfo: Record<string, string>
+  docInfo: CodeDocument
 }
 
 export interface File {

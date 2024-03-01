@@ -12,13 +12,16 @@ import { CodeDocument } from '@/types/code-document'
 
 interface CodeEditorControllerProps {
   user?: AuthUserType
-  isFetching?: boolean
+  isFetchingLessonContent?: boolean
 }
 
 let previousLength: number | undefined = undefined
 let checkValueTimeout: any | undefined = undefined
 
-const CodeEditorController: FC<CodeEditorControllerProps> = ({ user, isFetching = false }) => {
+const CodeEditorController: FC<CodeEditorControllerProps> = ({
+  user,
+  isFetchingLessonContent = false,
+}) => {
   const dispatch = useDispatch()
 
   // const [isConnected, setIsConnected] = useState(false)
@@ -93,7 +96,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({ user, isFetching 
       height='100%'
       position='relative'
     >
-      {!room || !socket ? (
+      {!room || !socket || isFetchingLessonContent ? (
         <LoadingCodeEditor />
       ) : (
         <CodeEditor
@@ -105,7 +108,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({ user, isFetching 
           mode={room.mode}
           socket={socket}
           user={user}
-          isFetching={isFetching}
+          isLoading={isFetchingLessonContent}
         />
       )}
     </Box>

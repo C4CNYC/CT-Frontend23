@@ -27,7 +27,7 @@ interface ICodeEditorBlock {
   code: string
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
-  isFetching?: boolean
+  isFetchingLessonContent?: boolean
 }
 
 const TYPING_DELEY = 20000
@@ -41,7 +41,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   validations,
   code,
   preloadedCode,
-  isFetching = false,
+  isFetchingLessonContent = false,
 }) => {
   const translate = useTranslate()
   const TITLE = translate('code_editor')
@@ -81,7 +81,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
     setCodingSymbols(!codingSymbols)
   }, [codingSymbols])
 
-  const resetRoom = useCallback(() => {
+  const initRoom = useCallback(() => {
     if (user && lessonId) {
       dispatch(
         setRoom({
@@ -96,8 +96,8 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [user, lessonId, dispatch, preloadedCode])
 
   useEffect(() => {
-    resetRoom()
-  }, [resetRoom])
+    initRoom()
+  }, [initRoom])
 
   return (
     <BlockWrapper
@@ -120,7 +120,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 
       <CodeEditorController
         user={user}
-        isFetching={isFetching}
+        isFetchingLessonContent={isFetchingLessonContent}
       />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>

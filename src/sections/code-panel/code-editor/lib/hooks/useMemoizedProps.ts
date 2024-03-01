@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 
+import { CodeDocument } from '@/types/code-document'
+
 import type { File, FileInfo } from '../utils/requests'
 
 export interface MemoizedProps {
@@ -7,11 +9,11 @@ export interface MemoizedProps {
   cursorText?: string
   withTooltip?: boolean
   preloadedCode?: string
-  onChangeStreamingDocInfo?: (doc: Record<string, string>) => void
+  onChangeStreamingDocInfo?: (doc: CodeDocument) => void
   setActiveFile: (fileName: File) => void
   onResetFileManager: (info?: FileInfo) => void
   defaultFileName: string
-  isFetching?: boolean
+  isLoading?: boolean
 }
 
 interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {
@@ -54,7 +56,7 @@ export const useMemoizedProps = ({
     onChangeRef.current = onChangeStreamingDocInfo
   }, [onChangeStreamingDocInfo])
 
-  const _onChange = useCallback((code: Record<string, string>): void => {
+  const _onChange = useCallback((code: CodeDocument): void => {
     onChangeRef.current?.(code)
   }, [])
 
