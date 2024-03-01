@@ -1,12 +1,17 @@
-import { type FC } from 'react'
+import { useCallback, type FC } from 'react'
 
-import { Avatar, Box, Stack, Tooltip, Typography, useTheme } from '@mui/material'
+import { Avatar, Box, Stack, Tooltip, Typography } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
 import PersonIcon from '@/assets/icons/PersonIcon'
 import useIsDesktop from '@/hooks/useIsDesktop'
+import { setRoom } from '@/redux/slices/code-editor-controller'
 import { toggleRealtimeCodeHidden } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
+import { EditorMode } from '@/sections/code-panel/code-editor/lib/hooks/constants'
+
+import getRoomId from '../../lib/utils/getRoomId'
 
 import CustomSwitch from './custom-switch'
 import FocusOverlay from './FocusOverlay'
@@ -21,18 +26,29 @@ import {
 const MAX_TRIBE_NAME_LENGTH = 23
 
 const GroupHeader: FC = () => {
-  const theme = useTheme()
+  const { query } = useRouter()
+
   const isDesktop = useIsDesktop()
   const tribe = useSelector((state) => state.codePanel.class)
   const dispatch = useDispatch()
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
+  const room = useSelector((state) => state.codeEditorController.room)
+  const user = useSelector((state) => state.global.user)
 
-  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
-  const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
+  const resetRoom = useCallback(() => {
+    return dispatch(
+      setRoom({
+        roomId: getRoomId(user?.id ?? '', query?.lessonId as string),
+        mode: EditorMode.Owner,
+      })
+    )
+  }, [dispatch])
 
   const onChange = () => {
     dispatch(toggleRealtimeCodeHidden(!isRealtimeCodeHidden))
   }
+
+  const isFocusMode = room == null || room.mode === EditorMode.Owner || room.mode == null
 
   const groupTitle =
     tribe && tribe.name.length > MAX_TRIBE_NAME_LENGTH ? (
@@ -50,9 +66,7 @@ const GroupHeader: FC = () => {
       sx={STACK_STYLES}
       direction='row'
     >
-      {isBrowserHidden && isInstructionsHidden ? (
-        <FocusOverlay />
-      ) : (
+      {isFocusMode ? (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar
             alt='avatar'
@@ -86,6 +100,11 @@ const GroupHeader: FC = () => {
             alignItems='center'
           />
         </Box>
+      ) : (
+        <FocusOverlay
+          title={room?.cursorText ?? ''}
+          resetRoom={resetRoom}
+        />
       )}
 
       <CustomSwitch
