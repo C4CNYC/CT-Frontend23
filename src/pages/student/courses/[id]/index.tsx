@@ -63,39 +63,41 @@ export default function CoursePage(): React.ReactElement {
               />
             </Stack>
           ) : (
-            <CourseInfo
-              name={data?.name ?? ''}
-              description={data?.description ?? ''}
-              cover={data?.cover}
-              duration={'9'}
-              level={data?.level ?? ''}
-              lessonsCount={
-                data?.units.reduce((total, unit) => {
-                  return total + unit.lessons.length
-                }, 0) ?? 0
-              }
-            />
+            <>
+              <CourseInfo
+                name={data?.name ?? ''}
+                description={data?.description ?? ''}
+                cover={data?.cover}
+                duration={'9'}
+                level={data?.level ?? ''}
+                lessonsCount={
+                  data?.units.reduce((total, unit) => {
+                    return total + unit.lessons.length
+                  }, 0) ?? 0
+                }
+              />
+              <Stack
+                sx={{
+                  flexDirection: {
+                    xs: 'column-reverse',
+                    sm: 'column-reverse',
+                    md: 'column-reverse',
+                    lg: 'row',
+                    xl: 'row',
+                  },
+                  gap: { xs: 6, lg: 2, xl: 6 },
+                }}
+              >
+                <ModulesListBlock modules={data?.units} />
+                <CourseSidebar
+                  duration={'9'}
+                  grade='5th-10th Grade'
+                  lessons={data?.total_lessons ?? 0}
+                  level={data?.level ?? '-'}
+                />
+              </Stack>
+            </>
           )}
-          <Stack
-            sx={{
-              flexDirection: {
-                xs: 'column-reverse',
-                sm: 'column-reverse',
-                md: 'column-reverse',
-                lg: 'row',
-                xl: 'row',
-              },
-              gap: { xs: 6, lg: 2, xl: 6 },
-            }}
-          >
-            <ModulesListBlock />
-            <CourseSidebar
-              duration={'9'}
-              grade='5th-10th Grade'
-              lessons={data?.total_lessons ?? 0}
-              level={data?.level ?? '-'}
-            />
-          </Stack>
         </Box>
       </Container>
     </>
