@@ -61,6 +61,13 @@ const extendedApi = adminApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Teachers' }],
     }),
+    archiveSchool: builder.mutation<void, { schoolId: string }>({
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: [{ type: 'School' }],
+    }),
     addTeacher: builder.mutation<void, AddTeacherRequest>({
       query: ({ schoolId, ...body }) => ({
         url: `/school/${schoolId}/teacher`,
@@ -121,6 +128,7 @@ export const {
   useUpdateClassMutation,
   useCreateClassMutation,
   useDeleteTeacherMutation,
+  useArchiveSchoolMutation,
   useAddTeacherMutation,
   useCreateOrganizationSchoolMutation,
 } = extendedApi

@@ -2,8 +2,11 @@ import { useState } from 'react'
 
 import { Avatar, Button, Divider, IconButton, MenuItem, TableCell, TableRow } from '@mui/material'
 import { BiDotsVerticalRounded } from '@react-icons/all-files/bi/BiDotsVerticalRounded'
+import { enqueueSnackbar } from 'notistack'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { ConfirmDialog, Iconify, Label, MenuPopover } from '@/components'
+import { useArchiveSchoolMutation } from '@/redux/services/admin/school-amdin'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -19,6 +22,8 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
   const [openConfirm, setOpenConfirm] = useState(false)
 
   const [openDetails, setOpenDetails] = useState(false)
+  const [archive] = useArchiveSchoolMutation()
+  const { user } = useAuthContext()
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
   }
@@ -42,6 +47,20 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
 
   const handleClosePopover = (): void => {
     setOpenPopover(null)
+  }
+
+  const archiveSchool = async () => {
+    try {
+      await archive({
+        schoolId: row?.id as string,
+      }).unwrap()
+      setOpenConfirm(false)
+      enqueueSnackbar('School is archived')
+    } catch (e: any) {
+      enqueueSnackbar(e.data.message, {
+        variant: 'error',
+      })
+    }
   }
   return (
     <TableRow>
@@ -136,6 +155,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           <Button
             variant='contained'
             color='error'
+            onClick={archiveSchool}
           >
             {translate('actions_archive')}
           </Button>
