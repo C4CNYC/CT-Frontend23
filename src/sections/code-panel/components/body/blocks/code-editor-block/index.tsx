@@ -1,7 +1,6 @@
 import { type FC, memo, useCallback, useEffect, useRef, useState } from 'react'
 
 import { Box, Collapse } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useDispatch } from 'react-redux'
 
@@ -12,6 +11,7 @@ import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 
@@ -20,7 +20,6 @@ import CodeEditorController from './code-editor-controller'
 import Checkers from './elements/checkers-code-editor'
 import { CodingSymbols, CodingTools } from './elements/coding-controls'
 import MumuSpeedDial from './elements/mumu-speed-deal'
-import Title from './elements/title'
 
 interface ICodeEditorBlock {
   user: AuthUserType | null
@@ -51,7 +50,8 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   preloadedCode,
   isFetching = false,
 }) => {
-  const theme = useTheme()
+  const translate = useTranslate()
+  const TITLE = translate('code_editor')
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
@@ -110,12 +110,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 
   return (
     <BaseBlock
-      title={
-        <Title
-          room={room}
-          onResetRoom={onResetRoom}
-        />
-      }
+      title={TITLE}
       icon={icon}
       className='codeEditorTour'
     >
