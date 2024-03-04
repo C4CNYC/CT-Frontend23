@@ -8,9 +8,9 @@ import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 import { convertNumber } from '@/utils'
 
 interface IActionBlockProps {
-  certificate: number
-  likes: number
-  rated: number
+  certificate: number | undefined
+  likes: number | undefined
+  rated: number | undefined
 }
 
 export default function ActionsBlock({
@@ -45,7 +45,7 @@ export default function ActionsBlock({
             color='rgba(67, 212, 221, 1)'
             size={22}
           />
-          {convertNumber(certificate)}
+          {convertNumber(certificate as number)}
         </Stack>
         <Stack
           direction='row'
@@ -55,7 +55,7 @@ export default function ActionsBlock({
             color='rgba(238, 70, 122, 1)'
             size={22}
           />
-          {convertNumber(likes)}
+          {convertNumber(likes as number)}
         </Stack>
         <Stack
           direction='row'
@@ -65,7 +65,7 @@ export default function ActionsBlock({
             color='rgba(251, 221, 63, 1)'
             size={22}
           />
-          {convertNumber(rated)}
+          {convertNumber(rated as number)}
         </Stack>
       </Stack>
       <Stack
