@@ -1,3 +1,4 @@
+import { User } from '@/redux/interfaces/auth.interface'
 import { BaseSearchInterface } from '@/utils'
 
 import { ISocials } from './socials.interface'
@@ -20,9 +21,9 @@ export interface IFriend {
   username: string | null
   socials: ISocials[]
   status: string
-  currentLessonId?: string
   createdAt: string
   updatedAt: string
+  account?: User
 }
 export interface IFriendsSearchParams extends BaseSearchInterface {
   name?: string

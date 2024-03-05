@@ -1,5 +1,3 @@
-// mui
-
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
@@ -8,7 +6,7 @@ import { CgMenuMotion } from '@react-icons/all-files/cg/CgMenuMotion'
 import { FcInfo } from '@react-icons/all-files/fc/FcInfo'
 import { MdAddCircleOutline } from '@react-icons/all-files/md/MdAddCircleOutline'
 import { MdEdit } from '@react-icons/all-files/md/MdEdit'
-import * as _ from 'lodash-es'
+import { capitalize } from 'lodash-es'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -52,7 +50,7 @@ export function CardModule({ type, image }: Props): React.ReactElement {
               mb='16px'
               fontWeight='600'
             >
-              {_.capitalize(type)}
+              {capitalize(type)}
             </Typography>
             <Stack
               display='flex'

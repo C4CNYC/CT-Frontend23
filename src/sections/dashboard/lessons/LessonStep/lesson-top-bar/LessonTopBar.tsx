@@ -42,7 +42,7 @@ export default function LessonTopBar(): React.ReactElement {
           fullScreenClose={fullScreenClose}
           fullScreenView={isFullScreenView}
           allColumnsVisible={isAllColumnsVisible}
-          onChangeColumnVisability={(value) => {
+          onChangeColumnVisibility={(value) => {
             setGlobalCodePanel((prev) => ({
               ...prev,
               isAllColumnsVisible: value,

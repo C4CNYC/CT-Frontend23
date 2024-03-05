@@ -5,10 +5,9 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
-import type ConfettiType from 'react-confetti/dist/types/Confetti'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
-import { Socket, io } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
@@ -24,14 +23,16 @@ import {
   setSlideIndex,
   setSocket,
   setUnitId,
-  setUsersStatus,
+  setUsersStatus as setGlobalUsersStatus,
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import CodePanelBody from '@/sections/code-panel/components/body'
-import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
+import CodePanelBody from '@/sections/code-panel/body'
+import Confetti from '@/sections/code-panel/confetti'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
+import { createSocket } from '@/sections/code-panel/lib/utils/socket'
+import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/skeleton'
 import { ILessonUserStatus } from '@/types'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
@@ -41,38 +42,29 @@ const CodePanelChat = dynamic(async () => await import('../../../components/chat
 })
 
 const CodePanelSignUpDialog = dynamic(
-  async () => await import('@/sections/code-panel/components/sign-up-dialog'),
+  async () => await import('@/sections/code-panel/sign-up-dialog'),
   {
     ssr: false,
   }
 )
 
-const CodePanelTour = dynamic(async () => await import('@/sections/code-panel/components/tour'), {
+const CodePanelTour = dynamic(async () => await import('@/sections/code-panel/tour'), {
   ssr: false,
 })
 
-const CodePanelHeader = dynamic(
-  async () => await import('@/sections/code-panel/components/header'),
-  {
-    loading: () => <CPTopBarSkeleton />,
-  }
-)
+const CodePanelHeader = dynamic(async () => await import('@/sections/code-panel/header'), {
+  loading: () => <CPTopBarSkeleton />,
+})
 
-const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
+const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/footer'))
 
-const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/components/footer'))
-
-const LessonsManager = dynamic(
-  async () => await import('@/sections/code-panel/components/lesson-manager')
-)
+const LessonsManager = dynamic(async () => await import('@/sections/code-panel/lesson-manager'))
 
 interface LessonUserResponseType {
   id: string
   status: string
   lessonId: string
 }
-
-const DEFAULT_LANGUAGE = 'html'
 
 export default function CodePanelPage(): ReactElement | null {
   const translate = useTranslate()
@@ -82,40 +74,40 @@ export default function CodePanelPage(): ReactElement | null {
 
   const { user, isInitialized: authIsInitialized } = useAuthContext()
   const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
+  const courseIdFromRoute = router.query.courseId as string
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
+  const unitIdFromRoute = router.query.unitId as string
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const lessonIdFromRoute = router.query.lessonId as string
   const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
-  const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
-    dispatch(setUsersStatus(cb(usersStatus)))
+  const setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
+    dispatch(setGlobalUsersStatus(cb(usersStatus)))
   }
 
   const handle = useFullScreenHandle()
 
-  const [showConfetti, setShowConfetti] = useState(false)
+  const [completedLessonId, setCompletedLessonId] = useState<string | undefined>()
 
   const { data: courseContent, isLoading: isLoadingCourseContent } = useGetCourseContentQuery(
-    { id: router.query.courseId as string },
-    { skip: !router.query.courseId }
+    { id: courseIdFromRoute },
+    { skip: !courseIdFromRoute }
   )
 
   const { data: courseUnit } = useGetModuleWithLessonsQuery(
-    { id: router.query.unitId as string },
-    { skip: !router.query.unitId }
+    { id: unitIdFromRoute },
+    { skip: !unitIdFromRoute }
   )
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
-    { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId }
+    { id: lessonIdFromRoute },
+    { skip: !lessonIdFromRoute }
   )
 
   const {
     data: lessonContent,
     isLoading: isLoadingLessonContent,
     isFetching: isFetchingLessonContent,
-  } = useGetLessonContentStudentQuery(
-    { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId }
-  )
+  } = useGetLessonContentStudentQuery({ id: lessonIdFromRoute }, { skip: !lessonIdFromRoute })
 
   // const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
   //   unitId: null,
@@ -128,10 +120,7 @@ export default function CodePanelPage(): ReactElement | null {
   const lastLessonCode = useMemo(
     () =>
       courseUnit?.lessons
-        .slice(
-          0,
-          courseUnit?.lessons.findIndex((lesson) => lesson.id === router.query.lessonId) + 1
-        )
+        .slice(0, courseUnit?.lessons.findIndex((lesson) => lesson.id === lessonIdFromRoute) + 1)
         .reverse()
         ?.find((lesson) =>
           lesson.contents?.find((content) =>
@@ -142,24 +131,8 @@ export default function CodePanelPage(): ReactElement | null {
           content.progress?.find((progress) => progress.progress_meta?.body.length > 0)
         )
         ?.progress?.find((progress) => progress.progress_meta?.body.length > 0)?.progress_meta.body,
-    [courseUnit, router.query.lessonId]
+    [courseUnit, lessonIdFromRoute]
   )
-
-  const onConfettiComplete = (confetti?: ConfettiType) => {
-    setShowConfetti(false)
-    confetti?.reset()
-  }
-
-  const onOpenLesson = (lessonId: string, unitId: string): void => {
-    if (!router.query.courseId) return
-    void router.push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-        courseId: router.query.courseId as string,
-        unitId,
-        lessonId,
-      })
-    )
-  }
 
   // const updateLastVisitedData = async () => {
   //   if (isValidLastVisitedData(lastVisitedData)) {
@@ -167,24 +140,29 @@ export default function CodePanelPage(): ReactElement | null {
   //   }
   // }
 
-  const onChooseLesson = (lessonId: string, unitId: string) => {
-    if (router.query.lessonId === lessonId) return
+  const onLessonSelected = (lessonId: string, unitId: string) => {
+    if (lessonIdFromRoute === lessonId) return
 
     window.dispatchEvent(resetLessonEvent)
-    onOpenLesson(lessonId, unitId)
+
+    void router.push(
+      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+        courseId: courseIdFromRoute,
+        unitId,
+        lessonId,
+      })
+    )
   }
 
   useEffect(() => {
     if (!courseContent) return
 
-    const courseId = router.query.courseId
+    const courseId = courseIdFromRoute
     const unitId =
-      router.query.unitId ??
-      (router.query.courseId === lastCourseId && lastUnitId
-        ? lastUnitId
-        : courseContent.units[0].id)
+      unitIdFromRoute ??
+      (courseIdFromRoute === lastCourseId && lastUnitId ? lastUnitId : courseContent.units[0].id)
     const lessonId =
-      router.query.lessonId ??
+      lessonIdFromRoute ??
       (unitId === lastUnitId && lastLessonId ? lastLessonId : courseContent.units[0].lessons[0].id)
 
     if (!courseId || !unitId || !lessonId) {
@@ -192,7 +170,7 @@ export default function CodePanelPage(): ReactElement | null {
       return
     }
 
-    if (!router.query.unitId || !router.query.lessonId) {
+    if (!unitIdFromRoute || !lessonIdFromRoute) {
       void router.replace(
         STUDENT_PATH_DASHBOARD.codePanel.workSpace({
           courseId: courseId as string,
@@ -206,13 +184,13 @@ export default function CodePanelPage(): ReactElement | null {
     dispatch(setLessonId(lessonId as string))
     dispatch(setUnitId(unitId as string))
     dispatch(setCourseId(courseId as string))
-  }, [courseContent, router.query.courseId, router.query.unitId, router.query.lessonId])
+  }, [courseContent, courseIdFromRoute, unitIdFromRoute, lessonIdFromRoute])
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
     try {
       await completeLesson({
-        id: router.query.courseId as string,
-        module_id: router.query.unit_id as string,
+        id: courseIdFromRoute,
+        module_id: unitIdFromRoute,
         lesson_content_id: lessonContentId,
         code,
       }).unwrap()
@@ -222,14 +200,14 @@ export default function CodePanelPage(): ReactElement | null {
   }
 
   const onSubmitLesson = async (): Promise<void> => {
-    setShowConfetti(true)
+    setCompletedLessonId(lessonIdFromRoute)
+    enqueueSnackbar(translate('messages_lesson_complete'))
     try {
-      enqueueSnackbar(translate('messages_lesson_complete'))
       if (!courseContent) return
       const nextLessonInfo = getNextLessonId(
         courseContent.units,
-        router.query.lessonId as string,
-        router.query.unitId as string
+        lessonIdFromRoute,
+        unitIdFromRoute
       )
 
       if (nextLessonInfo) {
@@ -268,14 +246,6 @@ export default function CodePanelPage(): ReactElement | null {
   //   }
   // }, [lastVisitedData])
 
-  const isLoadingComplete =
-    !!lesson &&
-    !isLoadingLessonContent &&
-    !isLoadingCourseContent &&
-    !isLoadingLesson &&
-    router.query.courseId !== null
-
-  const lessonIdFromRoute = router.query.lessonId
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   const [showTour, setShowTour] = useState(false)
@@ -287,80 +257,53 @@ export default function CodePanelPage(): ReactElement | null {
 
   useEffect(() => {
     if (lessonIdFromRoute && socket) {
-      socket.emit(
-        'joinLesson',
-        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
-      )
+      socket.emit('joinLesson', JSON.stringify({ lesson: lessonIdFromRoute, user: user?.id }))
 
       return () => {
-        socket?.emit(
-          'leaveLesson',
-          JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
-        )
+        socket?.emit('leaveLesson', JSON.stringify({ lesson: lessonIdFromRoute, user: user?.id }))
       }
     }
   }, [lessonIdFromRoute, socket])
 
   useEffect(() => {
-    let socket: Socket | undefined
-
     if (isRealtimeCodeEnabled && authIsInitialized) {
-      socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
-        path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-        auth: { userId: user?.id ?? generateId(20) },
-      })
-      socket.on('connect_error', (error) => {
-        // eslint-disable-next-line no-console
-        console.error('Connection error', error)
-      })
+      createSocket({
+        userId: user?.id ?? generateId(20),
+        onConnect: (s: Socket) => {
+          if (!s) return
 
-      socket.on('connect', () => {
-        // eslint-disable-next-line no-console
-        console.log('Connected to socket server')
-
-        if (!socket) return
-
-        socket.on('joinLesson', (data: { lesson: string; user: string }) => {
-          const { user, lesson } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status: 'idle', lessonId: lesson },
-          ])
-        })
-        socket.on(
-          'changeStatusInLesson',
-          (data: { lesson: string; user: string; status: string }) => {
+          s.on('joinLesson', (data: { lesson: string; user: string }) => {
+            const { user, lesson } = data
+            setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+              ..._usersStatus.filter((_status) => _status.id !== user),
+              { id: user, status: 'idle', lessonId: lesson },
+            ])
+          })
+          s.on('changeStatusInLesson', (data: { lesson: string; user: string; status: string }) => {
             const { status, user, lesson } = data
-            _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+            setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
               ..._usersStatus.filter((_status) => _status.id !== user),
               { id: user, status, lessonId: lesson },
             ])
-          }
-        )
+          })
 
-        socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
-          const { participants } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
-        })
-        socket.on('leaveLesson', (data: { lesson: string; user: string }) => {
-          const { user, lesson } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status: 'inactive', lessonId: lesson },
-          ])
-        })
+          s.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
+            const { participants } = data
+            setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+              ..._usersStatus,
+              ...participants,
+            ])
+          })
+          s.on('leaveLesson', (data: { lesson: string; user: string }) => {
+            const { user, lesson } = data
+            setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+              ..._usersStatus.filter((_status) => _status.id !== user),
+              { id: user, status: 'inactive', lessonId: lesson },
+            ])
+          })
 
-        // socket.onAnyOutgoing((e) => {
-        //   // eslint-disable-next-line no-console
-        //   console.log('out:', e)
-        // })
-        //
-        // socket.onAny((e) => {
-        //   // eslint-disable-next-line no-console
-        //   console.log('in:', e)
-        // })
-
-        dispatch(setSocket(socket))
+          dispatch(setSocket(s))
+        },
       })
     } else {
       dispatch(setSocket(undefined))
@@ -377,6 +320,9 @@ export default function CodePanelPage(): ReactElement | null {
     }
   }, [isRealtimeCodeEnabled, authIsInitialized, user])
 
+  const isLoadingComplete =
+    !!lesson && !isLoadingLessonContent && !isLoadingCourseContent && !isLoadingLesson
+
   if (!isLoadingComplete) {
     return <SkeletonCodePanel />
   }
@@ -391,12 +337,8 @@ export default function CodePanelPage(): ReactElement | null {
         {showTour && <CodePanelTour />}
         {!user && <CodePanelSignUpDialog />}
         <Box
-          sx={{
-            bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
-            position: 'relative',
-            overflow: 'hidden',
-          }}
+          position='relative'
+          overflow='hidden'
         >
           <CodePanelHeader
             chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
@@ -407,18 +349,16 @@ export default function CodePanelPage(): ReactElement | null {
             isFetchingLessonContent={isFetchingLessonContent}
             lesson={lesson}
             lessonContents={lessonContent ?? []}
-            user={user?.student_profile}
-            language={DEFAULT_LANGUAGE}
+            user={user}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
             lastLessonCode={lastLessonCode}
           />
           <CodePanelFooter
-            language={DEFAULT_LANGUAGE}
             sliderSteps={lessonContent?.length ?? 0}
             lessonManagerComponent={
               <LessonsManager
-                onChooseLesson={onChooseLesson}
+                onLessonSelected={onLessonSelected}
                 lesson={lesson}
                 data={courseContent}
                 isLoading={isLoadingCourseContent}
@@ -427,15 +367,7 @@ export default function CodePanelPage(): ReactElement | null {
           />
         </Box>
       </FullScreen>
-
-      {showConfetti && (
-        <Confetti
-          numberOfPieces={500}
-          recycle={false}
-          gravity={0.25}
-          onConfettiComplete={onConfettiComplete}
-        />
-      )}
+      <Confetti completedLessonId={completedLessonId} />
     </>
   )
 }

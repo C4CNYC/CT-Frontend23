@@ -27,7 +27,6 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@root/*": ["./*"],
       "@/*": ["./src/*"]
     },
     "incremental": true,
