@@ -86,6 +86,7 @@ export default function AddQuest(): React.ReactElement {
         description: JSON.parse(assignment?.description ?? '{}'),
         type: assignment?.type ?? AssignmentTypes.COURSE,
         module: assignment?.courseUnit?.id,
+        lesson: assignment?.lessonId,
         course: assignment?.course?.id,
         startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
         dueDate: format(DATE_PARSER(assignment?.end_date), DATE_FORMAT),
@@ -93,7 +94,7 @@ export default function AddQuest(): React.ReactElement {
         active: assignment?.active,
       })
     }
-  }, [isAssignmentLoading])
+  }, [isAssignmentLoading, assignment])
 
   useEffect(() => {
     if (coursesData?.data?.data[0]?.id && !methods.getValues().course) {
@@ -123,12 +124,14 @@ export default function AddQuest(): React.ReactElement {
           schoolId: query.schoolId as string,
           assignmentId: query.assignmentId as string,
           name: formData.name,
+          type: formData.type,
           description: JSON.stringify(formData.description ?? {}),
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
           courseUnitId: formData.module,
+          lessonId: formData.lesson,
         }).unwrap()
         await addAssignmentToClass({
           assignmentId: assignment.id,
@@ -163,6 +166,7 @@ export default function AddQuest(): React.ReactElement {
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           courseUnitId: formData.module,
+          lessonId: formData.lesson,
           active: Boolean(formData.active),
           skill_tags: assignmentsSkillsId?.map((el) => el.id) ?? [],
           classes: [query.id as string],
@@ -259,6 +263,8 @@ export default function AddQuest(): React.ReactElement {
                 <DetailsStep
                   methods={methods}
                   initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                  initialType={assignment?.type}
+                  initialLesson={assignment?.lessonId}
                   coursesData={{
                     data: coursesData.data?.data,
                     isLoading: coursesData.isLoading,
