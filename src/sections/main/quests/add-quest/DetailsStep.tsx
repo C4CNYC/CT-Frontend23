@@ -5,8 +5,10 @@ import { UseFormReturn } from 'react-hook-form'
 
 import { RHFSelect, RHFTextField } from '@/components'
 import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
+import { FilterMode, useFilters } from '@/hooks'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
-import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
+import { ICourse, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
+import { useGetLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { InitialDescriptionValueType } from '@/types'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
@@ -17,6 +19,8 @@ export default function DetailsStep({
   coursesData,
   methods,
   initialValue,
+  initialType,
+  initialLesson,
 }: {
   coursesData: {
     data: Array<ICourse & BaseResponseInterface> | undefined
@@ -24,14 +28,31 @@ export default function DetailsStep({
   }
   methods: UseFormReturn<any>
   initialValue: InitialDescriptionValueType
+  initialType: AssignmentTypes | undefined
+  initialLesson: string | undefined
 }): React.ReactElement {
   const theme = useTheme()
   const { data, isLoading } = coursesData
-  const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE)
+  const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.COURSE)
   const [course, setCourse] = useState<string | null>()
+  const [lesson, setLesson] = useState<string | undefined>(initialLesson || undefined)
   const translate = useTranslate()
 
   const selectedModules = useMemo(() => data?.find((c) => c.id === course)?.units, [data, course])
+  const { filters } = useFilters<ILessonSearchParams>(
+    {
+      take: 25,
+      module_id: '',
+      name: '',
+    },
+    FilterMode.global
+  )
+
+  const {
+    data: lessons,
+    isLoading: lessonLoading,
+    isFetching: lessonFetching,
+  } = useGetLessonsQuery(filters)
 
   useEffect(() => {
     setCourse(methods.getValues('course') ?? data?.[0]?.id)
@@ -64,6 +85,7 @@ export default function DetailsStep({
             onChange={(event: any) => {
               setType(event?.target?.value)
               setCourse(null)
+              methods.setValue('type', event?.target?.value)
             }}
             value={type}
             sx={{ ...selectStyle(theme), textTransform: 'capitalize' }}
@@ -146,60 +168,127 @@ export default function DetailsStep({
           width: '100%',
         }}
       >
-        <Typography
-          variant='h5'
-          gutterBottom
-          pl={2}
-        >
-          {translate('auest_select_module')}
-        </Typography>
-        {!isLoading ? (
-          <RHFSelect
-            native
-            name='module'
-            size='small'
-            sx={{
-              borderRadius: 1,
-              '& fieldset': { border: 'none' },
-              background: theme.palette.mode === 'light' ? '#fff' : '',
-              border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
-            }}
-          >
-            {!selectedModules?.length && (
-              <option
-                key='empty'
-                value='empty'
+        {type === AssignmentTypes.CUSTOM_CONTENT ? (
+          <>
+            <Typography
+              variant='h5'
+              gutterBottom
+              pl={2}
+            >
+              Select lesson
+            </Typography>
+            {!lessonLoading ? (
+              <RHFSelect
+                native
+                name='lesson'
+                value={lesson}
+                size='small'
+                onChange={(event: any) => {
+                  setLesson(event?.target?.value)
+                  methods.setValue('lesson', event?.target?.value)
+                }}
+                sx={{
+                  borderRadius: 1,
+                  '& fieldset': { border: 'none' },
+                  background: theme.palette.mode === 'light' ? '#fff' : '',
+                  border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
+                }}
               >
-                {translate('quest_you_dont_have_module_msg')}
-              </option>
-            )}
-            {selectedModules
-              ? [
+                {!lessons?.data?.length && (
                   <option
-                    key='module'
-                    value='all'
+                    key='empty'
+                    value='empty'
                   >
-                    {translate('quest_all_modules')}
-                  </option>,
-                  ...selectedModules.map((unit) => (
-                    <option
-                      key={unit.id}
-                      value={unit.id}
-                    >
-                      {unit.name}
-                    </option>
-                  )),
-                ]
-              : null}
-          </RHFSelect>
+                    You don't have any lessons
+                  </option>
+                )}
+                {lessons?.data
+                  ? [
+                      <option
+                        key='module'
+                        value='all'
+                      >
+                        All lessons
+                      </option>,
+                      ...lessons?.data?.map((lesson) => (
+                        <option
+                          key={lesson.id}
+                          value={lesson.id}
+                        >
+                          {lesson.name}
+                        </option>
+                      )),
+                    ]
+                  : null}
+              </RHFSelect>
+            ) : (
+              <Skeleton
+                variant='rounded'
+                sx={(theme) => ({
+                  height: '40px',
+                  background: theme.palette.common.white,
+                })}
+              />
+            )}
+          </>
         ) : (
-          <Skeleton
-            variant='rounded'
-            sx={(theme) => ({
-              height: '40px',
-              background: theme.palette.common.white,
-            })}
-          />
+          <>
+            <Typography
+              variant='h5'
+              gutterBottom
+              pl={2}
+            >
+              {translate('auest_select_module')}
+            </Typography>
+            {!isLoading ? (
+              <RHFSelect
+                native
+                name='module'
+                size='small'
+                sx={{
+                  borderRadius: 1,
+                  '& fieldset': { border: 'none' },
+                  background: theme.palette.mode === 'light' ? '#fff' : '',
+                  border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
+                }}
+              >
+                {!selectedModules?.length && (
+                  <option
+                    key='empty'
+                    value='empty'
+                  >
+                    {translate('quest_you_dont_have_module_msg')}
+                  </option>
+                )}
+                {selectedModules
+                  ? [
+                      <option
+                        key='module'
+                        value='all'
+                      >
+                        {translate('quest_all_modules')}
+                      </option>,
+                      ...selectedModules.map((unit) => (
+                        <option
+                          key={unit.id}
+                          value={unit.id}
+                        >
+                          {unit.name}
+                        </option>
+                      )),
+                    ]
+                  : null}
+              </RHFSelect>
+            ) : (
+              <Skeleton
+                variant='rounded'
+                sx={(theme) => ({
+                  height: '40px',
+                  background: theme.palette.common.white,
+                })}
+              />
+            )}
+          </>
         )}
       </FormGroup>
       <FormGroup sx={{ position: 'relative' }}>
