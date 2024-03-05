@@ -1,18 +1,15 @@
 import { Skeleton, Stack, useTheme } from '@mui/material'
-import { useRouter } from 'next/router'
 
-import { useGetStudentCourseModulesQuery } from '@/redux/services/manager/courses-student'
+import { Unit } from '@/redux/interfaces/challenges.interface'
 import { useGetStudentLastVisitedUnitAndLessonQuery } from '@/redux/services/manager/lesson-student'
 
 import ModuleItem from './module-item'
 
-export default function ModulesListBlock(): React.ReactElement {
+interface ModulesListBlockProps {
+  modules: Unit[] | undefined
+}
+export default function ModulesListBlock({ modules }: ModulesListBlockProps): React.ReactElement {
   const theme = useTheme()
-  const { query } = useRouter()
-  const { data, isLoading } = useGetStudentCourseModulesQuery(
-    { id: query?.id as string },
-    { skip: !query?.id }
-  )
   const { data: lastVisitedData } = useGetStudentLastVisitedUnitAndLessonQuery()
 
   return (
@@ -26,8 +23,8 @@ export default function ModulesListBlock(): React.ReactElement {
         flex: 1,
       }}
     >
-      {data && !isLoading
-        ? data.map((m) => (
+      {modules?.length
+        ? modules?.map((m) => (
             <ModuleItem
               key={m.id}
               unit={m}
