@@ -18,29 +18,29 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 interface NavItemProps {
   onClick?: () => void
   onToggle: () => void
-  user: IFriend & BaseResponseInterface
+  data: IFriend & BaseResponseInterface
 }
 
 const MAX_NAME_LENGTH = 15
 const MAX_ABOUT_LENGTH = 28
 
-const NavItem: FC<NavItemProps> = ({ onToggle, onClick, user }) => {
-  const name = `${user.first_name} ${user.last_name}`
+const NavItem: FC<NavItemProps> = ({ onToggle, onClick, data }) => {
+  const name = `${data.first_name} ${data.last_name}`
   const tooltipNameTitle = name.length > MAX_NAME_LENGTH ? name : ''
-  const tooltipAbout = user.about?.length > MAX_ABOUT_LENGTH ? user.about : ''
+  const tooltipAbout = data.about?.length > MAX_ABOUT_LENGTH ? data.about : ''
   return (
-    <ListItem>
+    <ListItem sx={{ p: 1 }}>
       <Badge
         sx={BADGE_SX}
         badgeContent=''
         color={
-          user.status !== 'active'
-            ? `${user.status === 'inactive' ? 'default' : 'warning'}`
+          data.status !== 'active'
+            ? `${data.status === 'inactive' ? 'default' : 'warning'}`
             : `secondary`
         }
       >
         <ListItemAvatar onClick={onToggle}>
-          <Avatar src={user.avatar} />
+          <Avatar src={data.avatar} />
         </ListItemAvatar>
       </Badge>
 
@@ -64,7 +64,7 @@ const NavItem: FC<NavItemProps> = ({ onToggle, onClick, user }) => {
         >
           <ListItemText
             sx={TOPIC_SX}
-            primary={user.about}
+            primary={data.about}
           />
         </Tooltip>
       </Stack>
@@ -80,7 +80,7 @@ const NavItem: FC<NavItemProps> = ({ onToggle, onClick, user }) => {
 }
 
 const STACK_TEXT_SX = {
-  width: '100%',
+  width: '60%',
 }
 
 const NAME_SX = {

@@ -41,6 +41,7 @@ export interface IAssignmentFull {
   skill_tags: ISkill[]
   assignee_classes: IClass[]
   courseUnit?: ICourse
+  lessonId?: string
 }
 
 export interface IAssignmentUpdate {
@@ -59,6 +60,7 @@ export interface IAssignmentUpdate {
   tags?: string[] | []
   skill_tags?: ISkill[]
   courseUnitId?: string | undefined
+  lessonId?: string | undefined
 }
 
 export interface IAssignmentCreate {
@@ -75,6 +77,7 @@ export interface IAssignmentCreate {
   tags?: string[] | []
   skill_tags: string[]
   courseUnitId: string | undefined
+  lessonId: string | undefined
 }
 
 export interface IAssignmetsSearchParams extends BaseSearchInterface {}

@@ -4,4 +4,5 @@ export enum AssignmentTypes {
   GROUP_CODING_PROJECT = 'group_coding_project',
   REVIEW = 'review',
   EXERSIZE = 'exersize',
+  CUSTOM_CONTENT = 'custom_content',
 }

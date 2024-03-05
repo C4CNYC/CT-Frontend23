@@ -14,6 +14,7 @@ export interface FormQuestProps {
   active: boolean
   skill_tags?: ISkill[]
   module?: string
+  lesson?: string
 }
 
 export interface IAddQuest {
