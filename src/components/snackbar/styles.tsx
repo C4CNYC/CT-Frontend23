@@ -10,6 +10,9 @@ export const StyledNotistack = styled(MaterialDesignContent)(({ theme }) => {
       padding: 1,
       flexGrow: 1,
     },
+    '& .go703367398': {
+      marginRight: 0,
+    },
     '&.notistack-MuiContent': {
       width: '100%',
       padding: theme.spacing(1),
