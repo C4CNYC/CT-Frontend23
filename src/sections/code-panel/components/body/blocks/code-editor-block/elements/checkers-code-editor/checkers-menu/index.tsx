@@ -1,7 +1,6 @@
 import { type FC } from 'react'
 
 import { Box, Typography } from '@mui/material'
-import { CgClose } from '@react-icons/all-files/cg/CgClose'
 
 import { type IValidationMap } from '@/utils/validationMaping'
 
@@ -10,10 +9,9 @@ import { CheckerIcon } from '../CheckersIcon'
 
 interface CheckersMenuProps {
   checkers: IValidationMap[]
-  onClose: () => void
 }
 
-const CheckersMenu: FC<CheckersMenuProps> = ({ checkers, onClose }) => {
+const CheckersMenu: FC<CheckersMenuProps> = ({ checkers }) => {
   return (
     <Box sx={BOX_SX}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -23,10 +21,6 @@ const CheckersMenu: FC<CheckersMenuProps> = ({ checkers, onClose }) => {
           color='#fff'
         />
         <Typography sx={{ fontSize: '600', ml: 1, mr: 'auto' }}>Code Tests</Typography>
-        <CgClose
-          onClick={onClose}
-          cursor='pointer'
-        />
       </Box>
 
       {checkers.map((item, i) => (
@@ -41,6 +35,7 @@ const CheckersMenu: FC<CheckersMenuProps> = ({ checkers, onClose }) => {
 }
 
 const BOX_SX = {
+  minHeight: 130,
   color: '#fff',
   width: 220,
   p: '8px 16px',

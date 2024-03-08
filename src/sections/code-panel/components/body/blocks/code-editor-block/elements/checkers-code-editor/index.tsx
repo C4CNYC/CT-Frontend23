@@ -3,6 +3,7 @@ import { type FC, useEffect, useMemo } from 'react'
 import { Box } from '@mui/material'
 import { Stack } from '@mui/system'
 import { AnimatePresence, m } from 'framer-motion'
+import { useDetectClickOutside } from 'react-detect-click-outside'
 import { useDispatch } from 'react-redux'
 
 import { setIsVisible } from '@/redux/slices/checkers-animation'
@@ -43,6 +44,14 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
     }
   }
 
+  const handleClose = (): void => {
+    if (isVisible) {
+      dispatch(setIsVisible(false))
+    }
+  }
+
+  const ref = useDetectClickOutside({ onTriggered: handleClose })
+
   useEffect(() => {
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
     if (allPased === nextStepAble) return
@@ -75,7 +84,10 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
     <>
       <CheckersCompleated />
 
-      <Box sx={OPEN_BOX_SX}>
+      <Box
+        sx={OPEN_BOX_SX}
+        ref={ref}
+      >
         <AnimatePresence>
           <m.div
             initial='visible'
@@ -113,10 +125,7 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
             variants={CHECKERS_ANIMATION}
             style={M_DIV_STYLE}
           >
-            <CheckersMenu
-              checkers={checkers}
-              onClose={handleCollaps}
-            />
+            <CheckersMenu checkers={checkers} />
           </m.div>
         </AnimatePresence>
       </Stack>
