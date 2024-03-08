@@ -145,11 +145,7 @@ export const social = {
       path: STUDENT_PATH_DASHBOARD.friends.root,
       icon: <FaUserFriends size={20} />,
     },
-    {
-      title: 'sidebar_menu_gallery',
-      path: STUDENT_PATH_DASHBOARD.gallery.root,
-      icon: <TbPhoto size={20} />,
-    },
+
     {
       title: 'Invite Friends',
       path: '#',
@@ -163,6 +159,11 @@ export const social = {
 export const apps = {
   subheader: 'sidebar_menu_apps',
   items: [
+    {
+      title: 'sidebar_menu_gallery',
+      path: STUDENT_PATH_DASHBOARD.gallery.root,
+      icon: <TbPhoto size={20} />,
+    },
     {
       title: 'sidebar_menu_my_notes',
       path: STUDENT_PATH_DASHBOARD.myNotes,
