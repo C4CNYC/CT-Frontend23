@@ -95,6 +95,7 @@ export const content = {
       path: ' ',
       icon: <FaTasks />,
       info: <Label color='success'>Coming soon</Label>,
+      disabled: true,
     },
     {
       title: 'sidebar_menu_integrations',
