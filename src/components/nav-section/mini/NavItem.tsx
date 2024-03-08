@@ -102,6 +102,11 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       if (component) {
         return component(renderContent)
       }
+
+      if (disabled) {
+        return renderContent
+      }
+
       // Default
       return (
         <Link
