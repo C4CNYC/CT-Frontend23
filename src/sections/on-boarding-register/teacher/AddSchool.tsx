@@ -50,7 +50,7 @@ export default function AddSchool(): React.ReactElement {
         schoolName: data.data[0].name ?? '',
         city: data.data[0].city ?? '',
         zip: data.data[0].zip ?? '',
-        country: data.data[0].country ?? defaultCountry.label,
+        country: data.data[0].country ?? defaultCountry.code.toLowerCase(),
       })
     }
   }, [isLoading])
@@ -77,7 +77,7 @@ export default function AddSchool(): React.ReactElement {
       localStorage.setItem('ON-BOARDING', 'on-boarding')
       reload()
     } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: 'error' })
+      enqueueSnackbar(error?.message ?? 'Something went wrong', { variant: 'error' })
     }
   }
 
@@ -155,7 +155,7 @@ export default function AddSchool(): React.ReactElement {
           >
             <option
               key={defaultCountry.code}
-              value={defaultCountry.label}
+              value={defaultCountry.code.toLowerCase()}
             >
               {defaultCountry.label}
             </option>
@@ -165,7 +165,7 @@ export default function AddSchool(): React.ReactElement {
               .map((country) => (
                 <option
                   key={country.code}
-                  value={country.label}
+                  value={country.code.toLowerCase()}
                 >
                   {country.label}
                 </option>
