@@ -1,12 +1,9 @@
 import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography, useTheme } from '@mui/material'
+import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography } from '@mui/material'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
-import {
-  useGetLessonContentStudentQuery,
-  useGetLessonStudentQuery,
-} from '@/redux/services/manager/lesson-student'
+import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
 import { useSelector } from '@/redux/store'
 import SolutionMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/solution-mobile-dialog'
 import UnstuckMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog'
@@ -27,7 +24,6 @@ interface MumuSpeedDialProps {
 }
 
 const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
-  const theme = useTheme()
   const isDesktop = useIsDesktop()
   const [actionsList, setActionsList] = useState<Array<Record<string, any>>>(actions)
   const popperRef = useRef<null | HTMLElement>(null)
@@ -38,14 +34,10 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   const translate = useTranslate()
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const {
-    data: lessonContent,
-    isLoading: isLoadingLessonContent,
-    isFetching: isFetchingLessonContent,
-  } = useGetLessonContentStudentQuery({ id: lessonId as string }, { skip: !lessonId })
+
   const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId as string })
 
-  const slideTips = (lessonContent?.[slideIndex]?.tips ?? '').split('\n')
+  const slideTips = data?.contents[slideIndex].tips
 
   const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal])
   const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop])
@@ -82,18 +74,15 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
     }
   }, [openPoper])
 
-  const isTipsPopover = !isLoading && data?.tips.length
-
   return (
     <>
-      {Boolean(isTipsPopover) && (
-        <TipsPopover
-          anchorEl={anchorEl}
-          openPoper={openPoper}
-          setOpenPoper={setOpenPoper}
-          tips={[...(data?.tips ?? []), ...slideTips]}
-        />
-      )}
+      <TipsPopover
+        anchorEl={anchorEl}
+        openPoper={openPoper}
+        setOpenPoper={setOpenPoper}
+        tips={slideTips ?? ''}
+      />
+
       <Tooltip title={<Typography>{translate('code_editor_mumu_menu_tooltip')}</Typography>}>
         <SpeedDial
           ref={popperRef}
