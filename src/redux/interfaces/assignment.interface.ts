@@ -21,6 +21,7 @@ export interface IAssignmentReduced {
   course_progress: null
   pined: string
   pined_assignment_id: string
+  lessonid?: string
 }
 
 export interface IAssignmentFull {
@@ -44,6 +45,7 @@ export interface IAssignmentFull {
   lessonId?: string
   language?: string
   category?: AssignmentProjectCategories
+  lessonTitle?: string
 }
 
 export interface IAssignmentUpdate {
@@ -65,6 +67,7 @@ export interface IAssignmentUpdate {
   lessonId?: string | undefined
   language?: string
   category?: AssignmentProjectCategories
+  lessonTitle?: string
 }
 
 export interface IAssignmentCreate {
@@ -84,6 +87,7 @@ export interface IAssignmentCreate {
   lessonId: string | undefined
   language?: string
   category?: AssignmentProjectCategories
+  lessonTitle?: string
 }
 
 export interface IAssignmetsSearchParams extends BaseSearchInterface {}
