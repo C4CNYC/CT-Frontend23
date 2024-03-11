@@ -7,7 +7,7 @@ export interface FormQuestProps {
   classes?: string[] | []
   students?: string[] | []
   name: string
-  description?: string
+  description?: any
   startDate: string
   dueDate: string
   closeDate: string
