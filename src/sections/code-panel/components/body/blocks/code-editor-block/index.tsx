@@ -11,6 +11,7 @@ import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
+import { UPDATE_COLORS } from '@root/src/sections/code-panel/lib/events/update-colors.event'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
@@ -114,7 +115,8 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       icon={icon}
       className='codeEditorTour'
     >
-      <style>{getTitleStyles(isDesktop)}</style>
+      {/* <style>{getTitleStyles(isDesktop)}</style> */}
+      <CodeEditorStyles isDesktop={isDesktop} />
 
       <MumuSpeedDial typing={typing} />
 
@@ -147,16 +149,51 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   )
 }
 
-const getTitleStyles = (isDesktop: boolean): string => {
-  return `
-  .cm-editor{
-    height: calc(100vh - ${isDesktop ? DESKTOP_HEIGHT : MOBILE_HEIGHT}px)!important;
-  }
-  .cm-scroller::-webkit-scrollbar{
-    width: 0px;
+const CodeEditorStyles = ({ isDesktop }: { isDesktop: boolean }) => {
+  const [color, setColor] = useState()
+  const [bgColor, setBgcolor] = useState()
+
+  const colorListener = (data: any) => {
+    setBgcolor(data?.detail?.background)
+    setColor(data?.detail?.text)
   }
 
-`
+  const subscribeSettings = (eventName: string, listener: (data: any) => void) => {
+    window.addEventListener(eventName, listener)
+  }
+
+  const unsebscribeSettings = (eventName: string, listener: (data: any) => void) => {
+    window.removeEventListener(eventName, listener)
+  }
+
+  useEffect(() => {
+    subscribeSettings(UPDATE_COLORS, colorListener)
+    return () => unsebscribeSettings(UPDATE_COLORS, colorListener)
+  })
+
+  return (
+    <style>
+      {`
+        .cm-editor{
+          height: calc(100vh - ${isDesktop ? DESKTOP_HEIGHT : MOBILE_HEIGHT}px)!important;
+          background-color: ${bgColor};
+        }
+        .cm-gutter{
+          background-color: ${bgColor};
+        }
+        .cm-gutterElement.cm-activeLineGutter{
+          background-color: ${bgColor};
+        }
+        .cm-scroller::-webkit-scrollbar{
+          width: 0px;
+        }
+        .cm-content{
+          color: ${color};
+          font-size: 16px;
+        }
+      `}
+    </style>
+  )
 }
 
 export default memo(CodeEditorBlock)
