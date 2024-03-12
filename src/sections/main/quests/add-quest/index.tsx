@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { html } from '@codemirror/lang-html'
 import { yupResolver } from '@hookform/resolvers/yup'
 import LoadingButton from '@mui/lab/LoadingButton'
 import {
@@ -16,7 +15,6 @@ import {
 } from '@mui/material'
 import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
 import { TbListDetails } from '@react-icons/all-files/tb/TbListDetails'
-import { EditorState } from '@uiw/react-codemirror'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -128,16 +126,6 @@ export default function AddQuest(): React.ReactElement {
   })
 
   const onSubmit = async (formData: FormQuestProps) => {
-    const lessonTitle = EditorState.create({
-      doc: `<h1>${formData.name}</h1>
-</br>
-<p>${formData.description?.doc?.content?.content?.[0]?.content?.content?.[0]?.text ? formData.description.doc?.content.content[0].content.content[0].text : ''}</p>
-<p>${formData.description?.doc?.content?.[0]?.content?.[0]?.text ? formData.description?.doc?.content?.[0].content?.[0]?.text : ''}</p>
-
-`,
-      extensions: [html()],
-    })
-
     if (assignment) {
       try {
         updateAssignment({
@@ -152,7 +140,7 @@ export default function AddQuest(): React.ReactElement {
           language: formData.language,
           lessonTitle:
             query?.type === OPEN_PROJECT || assignment?.type === OPEN_PROJECT
-              ? JSON.stringify(lessonTitle)
+              ? JSON.stringify(formData.description)
               : '',
           description: JSON.stringify(formData.description ?? {}),
           start_date: formData.startDate,
@@ -193,7 +181,7 @@ export default function AddQuest(): React.ReactElement {
           type: query?.type !== OPEN_PROJECT ? formData.type : AssignmentTypes.OPEN_PROJECT,
           category: formData.category,
           language: formData.language,
-          lessonTitle: query?.type === OPEN_PROJECT ? JSON.stringify(lessonTitle) : '',
+          lessonTitle: query?.type === OPEN_PROJECT ? JSON.stringify(formData.description) : '',
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,

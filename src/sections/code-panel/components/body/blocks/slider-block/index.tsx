@@ -41,6 +41,7 @@ interface IView {
   type: LessonContentType
   body: string
   connectIntegrations: (body: string) => CodeDocument | null
+  title?: string
 }
 
 const icon = (
@@ -148,6 +149,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                 {data.map((step) => {
                   return (
                     <View
+                      title={step.title}
                       key={step.id}
                       type={step.type}
                       body={step.body}
@@ -175,12 +177,17 @@ const SliderBlock: FC<ISliderBlock> = ({
   )
 }
 
-const View: FC<IView> = ({ type, body, connectIntegrations }) => {
+const View: FC<IView> = ({ type, body, connectIntegrations, title }) => {
   const translate = useTranslate()
 
   switch (type) {
     case 'editable':
-      return <ProsaMirrorView multimediaValue={body} />
+      return (
+        <ProsaMirrorView
+          title={title}
+          multimediaValue={body}
+        />
+      )
     case 'code':
       return <BrowserView document={connectIntegrations(body)} />
     default:
