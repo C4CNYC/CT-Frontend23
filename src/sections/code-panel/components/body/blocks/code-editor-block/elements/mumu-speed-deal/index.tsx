@@ -58,7 +58,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   }, [])
 
   useEffect(() => {
-    if (typing) {
+    if (typing && slideTips) {
       setOpenPoper(true)
     }
   }, [typing])
@@ -96,24 +96,30 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
           direction='up'
           icon={<Box sx={BOX_PROPS} />}
         >
-          {actionsList.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              onClick={() => {
-                setDialogType(action.type)
-                if (action.type === IActionDialogType.tips) {
-                  setOpenPoper(true)
+          {actionsList.map((action) => {
+            if (action.name === 'tips' && !slideTips) {
+              return null
+            }
+
+            return (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                onClick={() => {
+                  setDialogType(action.type)
+                  if (action.type === IActionDialogType.tips) {
+                    setOpenPoper(true)
+                  }
+                }}
+                tooltipTitle={
+                  <Typography sx={{ color: action.color, p: '2px' }}>
+                    {translate(action.name)}
+                  </Typography>
                 }
-              }}
-              tooltipTitle={
-                <Typography sx={{ color: action.color, p: '2px' }}>
-                  {translate(action.name)}
-                </Typography>
-              }
-              FabProps={SPEED_DEAL_ACTION_FAB_PROPS}
-            />
-          ))}
+                FabProps={SPEED_DEAL_ACTION_FAB_PROPS}
+              />
+            )
+          })}
         </SpeedDial>
       </Tooltip>
       {/* commented before V1 release */}
