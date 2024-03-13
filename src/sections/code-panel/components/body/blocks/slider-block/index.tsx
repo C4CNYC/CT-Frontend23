@@ -13,7 +13,12 @@ import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
-import { setSlideIndex, setSolutionCode, toggleInstrations } from '@/redux/slices/code-panel-global'
+import {
+  setNextStepAble,
+  setSlideIndex,
+  setSolutionCode,
+  toggleInstrations,
+} from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import BrowserView, {
   CodeDocument,
@@ -89,6 +94,9 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
   }, [data])
 
+  useEffect(() => {
+    dispatch(setNextStepAble(false))
+  }, [slideIndex])
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
