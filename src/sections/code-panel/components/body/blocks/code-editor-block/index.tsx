@@ -12,6 +12,7 @@ import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
 import { UPDATE_COLORS } from '@root/src/sections/code-panel/lib/events/update-colors.event'
+import { UPDATE_FONT_SIZE } from '@root/src/sections/code-panel/lib/events/update-font-size.event'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
@@ -152,10 +153,15 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 const CodeEditorStyles = ({ isDesktop }: { isDesktop: boolean }) => {
   const [color, setColor] = useState()
   const [bgColor, setBgcolor] = useState()
+  const [fontSize, setFontSize] = useState()
 
   const colorListener = (data: any) => {
     setBgcolor(data?.detail?.background)
     setColor(data?.detail?.text)
+  }
+
+  const fontListener = (data: any) => {
+    setFontSize(data?.detail?.size)
   }
 
   const subscribeSettings = (eventName: string, listener: (data: any) => void) => {
@@ -168,7 +174,11 @@ const CodeEditorStyles = ({ isDesktop }: { isDesktop: boolean }) => {
 
   useEffect(() => {
     subscribeSettings(UPDATE_COLORS, colorListener)
-    return () => unsebscribeSettings(UPDATE_COLORS, colorListener)
+    subscribeSettings(UPDATE_FONT_SIZE, fontListener)
+    return () => {
+      unsebscribeSettings(UPDATE_COLORS, colorListener)
+      unsebscribeSettings(UPDATE_FONT_SIZE, fontListener)
+    }
   })
 
   return (
@@ -189,7 +199,7 @@ const CodeEditorStyles = ({ isDesktop }: { isDesktop: boolean }) => {
         }
         .cm-content{
           color: ${color};
-          font-size: 16px;
+          font-size: ${fontSize}px;
         }
       `}
     </style>

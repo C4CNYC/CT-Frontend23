@@ -280,9 +280,11 @@ export default function CodePanelPage(): ReactElement | null {
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   const [showTour, setShowTour] = useState(false)
 
+  const isShowTour = useSelector((state) => state.tour.isStarted)
+
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
-    if (!hasSeenTour) setShowTour(true)
+    if (!hasSeenTour && isShowTour) setShowTour(true)
   }, [])
 
   useEffect(() => {
