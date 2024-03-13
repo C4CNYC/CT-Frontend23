@@ -53,15 +53,9 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
   const ref = useDetectClickOutside({ onTriggered: handleClose })
   const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
   useEffect(() => {
-    if (allPased && allPased !== nextStepAble) {
-      dispatch(setNextStepAble(allPased))
-    }
-  }, [checkers, nextStepAble])
-  useEffect(() => {
-    if (!allPased) {
-      dispatch(setNextStepAble(false))
-    }
-  }, [])
+    dispatch(setNextStepAble(allPased))
+  }, [allPased])
+
   const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
 
   const handleIconColor = (checkers: IValidationMap[]): string => {
