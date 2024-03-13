@@ -51,10 +51,13 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
   }
 
   const ref = useDetectClickOutside({ onTriggered: handleClose })
-  const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
+
   useEffect(() => {
-    dispatch(setNextStepAble(allPased))
-  }, [allPased])
+    const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
+    if (allPased && allPased !== nextStepAble) {
+      dispatch(setNextStepAble(allPased))
+    }
+  }, [checkers, nextStepAble])
 
   const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
 
