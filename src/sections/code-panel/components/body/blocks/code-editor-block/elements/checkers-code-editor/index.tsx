@@ -54,10 +54,10 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
 
   useEffect(() => {
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
-    if (allPased === nextStepAble) return
-
-    dispatch(setNextStepAble(allPased))
-  }, [checkers])
+    if (allPased && allPased !== nextStepAble) {
+      dispatch(setNextStepAble(allPased))
+    }
+  }, [checkers, nextStepAble])
 
   const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
 

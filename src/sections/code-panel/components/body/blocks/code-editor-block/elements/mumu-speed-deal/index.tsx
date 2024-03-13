@@ -37,7 +37,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
 
   const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId as string })
 
-  const slideTips = data?.contents[slideIndex].tips
+  const slideTips = data?.contents[slideIndex]?.tips
 
   const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal])
   const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop])
