@@ -1,5 +1,6 @@
 import { type FC } from 'react'
 
+import { Typography } from '@mui/material'
 import { FileExtension } from '@remirror/extension-file'
 import {
   Remirror,
@@ -79,6 +80,7 @@ type Extensions =
 
 interface ProsaMirrorViewProps {
   multimediaValue: string
+  title?: string
 }
 
 const extensions = (): Extensions[] => [
@@ -116,7 +118,7 @@ const extensions = (): Extensions[] => [
   new TaskListExtension(),
 ]
 
-const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({ multimediaValue }) => {
+const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({ multimediaValue, title }) => {
   const { manager, state } = useRemirror({
     extensions: extensions as any, // @ToDo,
     content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : '',
@@ -126,7 +128,7 @@ const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({ multimediaValue }) => {
   return (
     <ThemeProvider>
       <style>{STYLES}</style>
-
+      {title && <Typography variant='h1'>{title}</Typography>}
       <Remirror
         editable={false}
         manager={manager}

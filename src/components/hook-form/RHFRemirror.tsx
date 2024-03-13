@@ -7,7 +7,12 @@ import { IoIosRedo } from '@react-icons/all-files/io/IoIosRedo'
 import { IoIosUndo } from '@react-icons/all-files/io/IoIosUndo'
 import { EditorComponent, Remirror, useCommands, useRemirror } from '@remirror/react'
 import { Controller, useController, useFormContext } from 'react-hook-form'
-import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions'
+import {
+  BoldExtension,
+  ItalicExtension,
+  LinkExtension,
+  UnderlineExtension,
+} from 'remirror/extensions'
 
 import { InitialDescriptionValueType } from '@/types'
 
@@ -38,7 +43,13 @@ export function RHFRemirror({
   })
 
   const { manager, state, setState } = useRemirror({
-    extensions: () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()] as any,
+    extensions: () =>
+      [
+        new BoldExtension(),
+        new ItalicExtension(),
+        new UnderlineExtension(),
+        new LinkExtension({ autoLink: true }),
+      ] as any,
     content: field.value.doc ?? initialValue,
     stringHandler: 'html',
   })
