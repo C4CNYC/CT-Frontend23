@@ -116,6 +116,7 @@ export interface ILessonContent {
   meta: Record<string, any>
   integrations: IIntegration[]
   progress?: ILessonContentProgress[]
+  title?: string
 }
 
 export interface ISkill {

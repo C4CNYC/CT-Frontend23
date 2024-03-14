@@ -2,7 +2,7 @@ import { Box, Container, Skeleton, Stack } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
+import { CustomBreadcrumbs, EmptyContent, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetCoursContentQuery } from '@/redux/services/manager/courses-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -88,13 +88,25 @@ export default function CoursePage(): React.ReactElement {
                   gap: { xs: 6, lg: 2, xl: 6 },
                 }}
               >
-                <ModulesListBlock modules={data?.units} />
-                <CourseSidebar
-                  duration={'9'}
-                  grade='5th-10th Grade'
-                  lessons={data?.total_lessons ?? 0}
-                  level={data?.level ?? '-'}
-                />
+                {data?.units?.length ? (
+                  <>
+                    <ModulesListBlock modules={data?.units} />
+                    <CourseSidebar
+                      duration={'9'}
+                      grade='5th-10th Grade'
+                      lessons={data?.total_lessons ?? 0}
+                      level={data?.level ?? '-'}
+                    />
+                  </>
+                ) : (
+                  <Box
+                    width='100%'
+                    display='flex'
+                    justifyContent='center'
+                  >
+                    <EmptyContent title='No modules' />
+                  </Box>
+                )}
               </Stack>
             </>
           )}

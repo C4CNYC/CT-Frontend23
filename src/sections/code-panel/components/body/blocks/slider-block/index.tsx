@@ -13,7 +13,12 @@ import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
-import { setSlideIndex, setSolutionCode, toggleInstrations } from '@/redux/slices/code-panel-global'
+import {
+  setNextStepAble,
+  setSlideIndex,
+  setSolutionCode,
+  toggleInstrations,
+} from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import BrowserView, {
   CodeDocument,
@@ -41,6 +46,7 @@ interface IView {
   type: LessonContentType
   body: string
   connectIntegrations: (body: string) => CodeDocument | null
+  title?: string
 }
 
 const icon = (
@@ -88,6 +94,9 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
   }, [data])
 
+  useEffect(() => {
+    dispatch(setNextStepAble(false))
+  }, [slideIndex])
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
@@ -148,6 +157,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                 {data.map((step) => {
                   return (
                     <View
+                      title={step.title}
                       key={step.id}
                       type={step.type}
                       body={step.body}
@@ -175,12 +185,17 @@ const SliderBlock: FC<ISliderBlock> = ({
   )
 }
 
-const View: FC<IView> = ({ type, body, connectIntegrations }) => {
+const View: FC<IView> = ({ type, body, connectIntegrations, title }) => {
   const translate = useTranslate()
 
   switch (type) {
     case 'editable':
-      return <ProsaMirrorView multimediaValue={body} />
+      return (
+        <ProsaMirrorView
+          title={title}
+          multimediaValue={body}
+        />
+      )
     case 'code':
       return <BrowserView document={connectIntegrations(body)} />
     default:

@@ -1,9 +1,8 @@
 import { useState } from 'react'
 
-import { Badge, Button, Link, MenuItem, Stack, useMediaQuery } from '@mui/material'
+import { Button, Link, MenuItem, Stack, useMediaQuery } from '@mui/material'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
-import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/system'
 import { AiOutlineFundProjectionScreen } from '@react-icons/all-files/ai/AiOutlineFundProjectionScreen'
 import { CiMountain1 } from '@react-icons/all-files/ci/CiMountain1'
@@ -18,6 +17,7 @@ import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { MenuPopover } from '@/components'
 import CustomTabPanel, { customTabProps } from '@/components/custom-tab-panel'
+import { OPEN_PROJECT } from '@/redux/enums/assignment-types.enum'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { Role } from '@/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -54,6 +54,10 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
 
   const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(classData.id, {
     schoolId: classData?.school?.id as string,
+  })
+  const addQuestOpenProjectPath = STUDENT_PATH_DASHBOARD.class.addQuest(classData.id, {
+    schoolId: classData?.school?.id as string,
+    type: OPEN_PROJECT,
   })
 
   return (
@@ -200,20 +204,17 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           </MenuItem>
         </Link>
         <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
-          <MenuItem sx={{ pl: '5px' }}>
-            <Badge
-              sx={BADGE_SX}
-              badgeContent={
-                <Typography sx={{ fontSize: '11px', fontWeight: 700 }}>
-                  {translate('coming_soon')}
-                </Typography>
-              }
-              color='success'
-            >
+          <Link
+            component={NextLink}
+            href={addQuestOpenProjectPath}
+            underline='none'
+            color='initial'
+          >
+            <MenuItem>
               <AiOutlineFundProjectionScreen size={20} />
               {translate('home_assign_project')}
-            </Badge>
-          </MenuItem>
+            </MenuItem>
+          </Link>
         </RoleBasedGuard>
       </MenuPopover>
     </Stack>

@@ -2,6 +2,7 @@ import { type FC, memo, useCallback, useEffect, useRef, useState } from 'react'
 
 import { Box, Collapse } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
+import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
 import { type AuthUserType } from '@/auth/types'
@@ -83,6 +84,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       typingListener(TYPING_DELEY, false)
     }
   }, [code])
+  const { query } = useRouter()
 
   const symbolsHandler = useCallback((): void => {
     setCodingSymbols(!codingSymbols)
@@ -93,7 +95,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       dispatch(
         setRoom({
           // roomId: user?.id as string,
-          roomId: `${user?.id as string}_${lessonId as string}`,
+          roomId: `${user?.id as string}_${query?.lessonId as string}`,
           cursorText: user?.first_name as string,
           preloadedCode,
           code: codeRef.current,
@@ -101,7 +103,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         })
       )
     }
-  }, [user, lessonId, dispatch, preloadedCode])
+  }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
 
   useEffect(() => {
     onResetRoom()
