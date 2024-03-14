@@ -280,11 +280,13 @@ export default function CodePanelPage(): ReactElement | null {
     !isLoadingLesson &&
     router.query.courseId !== null &&
     !render
+  const isShowTour = useSelector((state) => state.tour.isStarted)
+
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
     if (!hasSeenTour) setShowTour(true)
     setTimeout(() => setRender(false))
-  }, [])
+  }, [isShowTour, showTour])
 
   useEffect(() => {
     if (lessonIdFromRoute && socket) {
@@ -389,7 +391,7 @@ export default function CodePanelPage(): ReactElement | null {
       </Head>
 
       <FullScreen handle={handle}>
-        {showTour && <CodePanelTour />}
+        {showTour || isShowTour ? <CodePanelTour /> : null}
         {!user && <CodePanelSignUpDialog />}
         <Box
           sx={{

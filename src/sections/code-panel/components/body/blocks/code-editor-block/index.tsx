@@ -18,6 +18,7 @@ import BaseBlock from '../base-block'
 
 import { EditorMode } from './code-editor-collab/hook/constants'
 import CodeEditorController from './code-editor-controller'
+import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
 import { CodingSymbols, CodingTools } from './elements/coding-controls'
 import MumuSpeedDial from './elements/mumu-speed-deal'
@@ -39,8 +40,6 @@ const icon = (
 )
 const TYPING_DELEY = 20000
 const FIRST_LOADING_DELEY = 15000
-const MOBILE_HEIGHT = 80
-const DESKTOP_HEIGHT = 145
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
@@ -116,7 +115,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       icon={icon}
       className='codeEditorTour'
     >
-      <style>{getTitleStyles(isDesktop)}</style>
+      <CodeEditorStyles isDesktop={isDesktop} />
 
       <MumuSpeedDial typing={typing} />
 
@@ -147,18 +146,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       </Box>
     </BaseBlock>
   )
-}
-
-const getTitleStyles = (isDesktop: boolean): string => {
-  return `
-  .cm-editor{
-    height: calc(100vh - ${isDesktop ? DESKTOP_HEIGHT : MOBILE_HEIGHT}px)!important;
-  }
-  .cm-scroller::-webkit-scrollbar{
-    width: 0px;
-  }
-
-`
 }
 
 export default memo(CodeEditorBlock)
