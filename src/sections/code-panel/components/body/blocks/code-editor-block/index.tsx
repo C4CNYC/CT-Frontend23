@@ -11,14 +11,13 @@ import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
-import { UPDATE_COLORS } from '@root/src/sections/code-panel/lib/events/update-colors.event'
-import { UPDATE_FONT_SIZE } from '@root/src/sections/code-panel/lib/events/update-font-size.event'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 
 import { EditorMode } from './code-editor-collab/hook/constants'
 import CodeEditorController from './code-editor-controller'
+import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
 import { CodingSymbols, CodingTools } from './elements/coding-controls'
 import MumuSpeedDial from './elements/mumu-speed-deal'
@@ -40,8 +39,6 @@ const icon = (
 )
 const TYPING_DELEY = 20000
 const FIRST_LOADING_DELEY = 15000
-const MOBILE_HEIGHT = 80
-const DESKTOP_HEIGHT = 145
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
@@ -116,7 +113,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       icon={icon}
       className='codeEditorTour'
     >
-      {/* <style>{getTitleStyles(isDesktop)}</style> */}
       <CodeEditorStyles isDesktop={isDesktop} />
 
       <MumuSpeedDial typing={typing} />
@@ -147,62 +143,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         </Collapse>
       </Box>
     </BaseBlock>
-  )
-}
-
-const CodeEditorStyles = ({ isDesktop }: { isDesktop: boolean }) => {
-  const [color, setColor] = useState()
-  const [bgColor, setBgcolor] = useState()
-  const [fontSize, setFontSize] = useState()
-
-  const colorListener = (data: any) => {
-    setBgcolor(data?.detail?.background)
-    setColor(data?.detail?.text)
-  }
-
-  const fontListener = (data: any) => {
-    setFontSize(data?.detail?.size)
-  }
-
-  const subscribeSettings = (eventName: string, listener: (data: any) => void) => {
-    window.addEventListener(eventName, listener)
-  }
-
-  const unsebscribeSettings = (eventName: string, listener: (data: any) => void) => {
-    window.removeEventListener(eventName, listener)
-  }
-
-  useEffect(() => {
-    subscribeSettings(UPDATE_COLORS, colorListener)
-    subscribeSettings(UPDATE_FONT_SIZE, fontListener)
-    return () => {
-      unsebscribeSettings(UPDATE_COLORS, colorListener)
-      unsebscribeSettings(UPDATE_FONT_SIZE, fontListener)
-    }
-  })
-
-  return (
-    <style>
-      {`
-        .cm-editor{
-          height: calc(100vh - ${isDesktop ? DESKTOP_HEIGHT : MOBILE_HEIGHT}px)!important;
-          background-color: ${bgColor};
-        }
-        .cm-gutter{
-          background-color: ${bgColor};
-        }
-        .cm-gutterElement.cm-activeLineGutter{
-          background-color: ${bgColor};
-        }
-        .cm-scroller::-webkit-scrollbar{
-          width: 0px;
-        }
-        .cm-content{
-          color: ${color};
-          font-size: ${fontSize}px;
-        }
-      `}
-    </style>
   )
 }
 
