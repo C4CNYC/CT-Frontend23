@@ -268,21 +268,22 @@ export default function CodePanelPage(): ReactElement | null {
   //   }
   // }, [lastVisitedData])
 
+  const lessonIdFromRoute = router.query.lessonId
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const [showTour, setShowTour] = useState(false)
+  const [render, setRender] = useState(true)
   const isLoadingComplete =
     !!lesson &&
     !isLoadingLessonContent &&
     !isLoadingCourseContent &&
     !isLoadingLesson &&
-    router.query.courseId !== null
-
-  const lessonIdFromRoute = router.query.lessonId
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
-  const [showTour, setShowTour] = useState(false)
-
+    router.query.courseId !== null &&
+    !render
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
     if (!hasSeenTour) setShowTour(true)
+    setTimeout(() => setRender(false))
   }, [])
 
   useEffect(() => {
@@ -375,9 +376,9 @@ export default function CodePanelPage(): ReactElement | null {
       socket?.disconnect()
       dispatch(setSocket(undefined))
     }
-  }, [isRealtimeCodeEnabled, authIsInitialized, user])
+  }, [isRealtimeCodeEnabled, authIsInitialized, user, lessonIdFromRoute])
 
-  if (!isLoadingComplete) {
+  if (!isLoadingComplete && render) {
     return <SkeletonCodePanel />
   }
 
@@ -404,7 +405,7 @@ export default function CodePanelPage(): ReactElement | null {
             isFullScreenView={handle.active}
           />
           <CodePanelBody
-            isFetchingLessonContent={isFetchingLessonContent}
+            isFetchingLessonContent={isFetchingLessonContent && render}
             lesson={lesson}
             lessonContents={lessonContent ?? []}
             user={user?.student_profile}
