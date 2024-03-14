@@ -177,7 +177,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             theme='dark'
             extensions={extensions}
             readOnly={isReadOnly}
-            value={streamingDoc.toString()}
+            value={streamingDoc.toString() || preloadedCode}
             onChange={onChangeCodemirrorValue}
           />
 
