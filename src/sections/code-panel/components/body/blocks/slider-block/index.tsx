@@ -28,7 +28,13 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 
-import { LOADER_SCREEN_SX, getBoxSx, getCarouselSettings } from './constants'
+import {
+  LOADER_SCREEN_SX,
+  PROGRESS_ITEM_SX,
+  getBoxSx,
+  getCarouselSettings,
+  getProgressWrapperSx,
+} from './constants'
 import Navigation from './navigation'
 
 const ProsaMirrorView = dynamic(async () => await import('./prosa-mirror-view'), { ssr: false })
@@ -76,6 +82,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     setIsOpenHeader(isOpen)
   }, [])
 
+  const progressWrapperSx = useMemo(() => getProgressWrapperSx(theme), [theme])
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
 
   const carousel1 = useRef<Carousel | null>(null)
@@ -139,6 +146,18 @@ const SliderBlock: FC<ISliderBlock> = ({
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
+      <Box sx={progressWrapperSx}>
+        {data.map((slide, index) => (
+          <Box
+            key={index}
+            sx={{
+              bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`,
+              ...PROGRESS_ITEM_SX,
+            }}
+          ></Box>
+        ))}
+      </Box>
+
       {_.isEmpty(data) ? (
         <EmptyContent title={translate('messages_no_data')} />
       ) : (
