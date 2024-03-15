@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic'
 import { useSelector } from '@/redux/store'
 
 import type { MenuProps } from './menu'
-import ProgressBottomBar, { type ProgressBottomBarProps } from './progress-bottom-bar'
+import { type ProgressBottomBarProps } from './progress-bottom-bar'
 
 const Menu = dynamic(async () => await import('./menu'))
 
@@ -40,7 +40,8 @@ const CodePanelFooter: FC<CodePanelFooterProps> = ({
         justifyContent='flex-end'
         alignItems='center'
       >
-        {activeTab === 0 ? <ProgressBottomBar sliderSteps={sliderSteps} /> : null}
+        {/* Move progress to the Slider block */}
+        {/* {activeTab === 0 ? <ProgressBottomBar sliderSteps={sliderSteps} /> : null} */}
 
         <Menu
           language={language}
