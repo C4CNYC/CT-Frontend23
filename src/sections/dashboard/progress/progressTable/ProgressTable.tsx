@@ -285,7 +285,7 @@ export default function ProgressTable({
                   {(levelName === 'course'
                     ? el.courses
                     : levelName === 'module'
-                      ? el.courses.find((c) => c.id === filters.courseId)!.modules
+                      ? selectedData
                       : el.courses
                           .find((c) => c.id === filters.courseId)!
                           .modules.find((m) => m.id === filters.moduleId)!.lessons
