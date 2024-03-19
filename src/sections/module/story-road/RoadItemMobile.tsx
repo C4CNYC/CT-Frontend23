@@ -11,6 +11,7 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 import CompleatedIcon from '../icons/CompleatedIcon'
 import RocketIcon from '../icons/RocketIcon'
+import LessonDialog from '../lesson-item/LessonDialog'
 
 import {
   DESCRIPTION_GRADIENT_TEXT_SX,
@@ -52,6 +53,7 @@ const RoadItemMobile = ({
   const { query, push } = useRouter()
   const [compleatedColor, setCompleatedColor] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const projectTime = '20 mins'
 
@@ -72,13 +74,25 @@ const RoadItemMobile = ({
   const lessonTimeSx = { ...LESSON_TIME_SX, fontSize: '14px' }
 
   const redirectToCodePanel = () => {
-    void push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-        courseId: query.id as string,
-        unitId: query.unitId as string,
-        lessonId,
-      })
-    )
+    if (locked && !lastActive) {
+      openDialog()
+    } else {
+      void push(
+        STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          courseId: query.id as string,
+          unitId: query.unitId as string,
+          lessonId,
+        })
+      )
+    }
+  }
+
+  const openDialog = () => {
+    setOpen(true)
+  }
+
+  const closeDialog = () => {
+    setOpen(false)
   }
 
   useEffect(() => {
@@ -239,6 +253,15 @@ const RoadItemMobile = ({
           </Box>
         </Collapse>
       </Stack>
+      <LessonDialog
+        open={open}
+        closeDialog={closeDialog}
+        link={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          courseId: query.id as string,
+          unitId: query.unitId as string,
+          lessonId,
+        })}
+      />
     </Box>
   )
 }
