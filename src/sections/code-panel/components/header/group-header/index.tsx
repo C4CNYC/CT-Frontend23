@@ -37,7 +37,7 @@ const GroupHeader: FC = () => {
   const resetRoom = useCallback(() => {
     return dispatch(
       setRoom({
-        roomId: `${user?.id ?? ''}_${query?.lessonId as string}`,
+        roomId: `${user?.student_profile?.id ?? ''}_${query?.lessonId as string}`,
         mode: EditorMode.Owner,
       })
     )
