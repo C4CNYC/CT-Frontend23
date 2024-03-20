@@ -12,12 +12,12 @@ import { useSnackbar } from 'notistack'
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { ConfirmDialog, MenuPopover } from '@/components'
 import { Iconify } from '@/components/iconify'
+import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { IAssignmentReduced } from '@/redux/interfaces/assignment.interface'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useDeleteAssignmentMutation } from '@/redux/services/manager/assignments-manager'
-import {
-  usePinAssignmentMutation, // useUnpinAssignmentMutation,
-} from '@/redux/services/manager/assignments-student'
+import { usePinAssignmentMutation } from '@/redux/services/manager/assignments-student'
+import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -70,6 +70,11 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
   const assignmentPath = STUDENT_PATH_DASHBOARD.quest.id(assignment.id, {
     schoolId,
   })
+
+  const { data: courseUnit } = useGetModuleWithLessonsQuery(
+    { id: assignment.courseunitid as string },
+    { skip: !assignment.courseunitid }
+  )
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -171,14 +176,24 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                 component={NextLink}
                 href={
                   assignment?.courseid
-                    ? assignment.lessonid
+                    ? assignment.lessonid &&
+                      (assignment.type === AssignmentTypes.CUSTOM_CONTENT ||
+                        assignment.type === AssignmentTypes.OPEN_PROJECT)
                       ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({
                           courseId: assignment.courseid,
                           lessonId: assignment.lessonid,
                         })
-                      : STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-                          courseId: assignment.courseid,
-                        })
+                      : assignment.courseunitid &&
+                          courseUnit &&
+                          assignment.type === AssignmentTypes.COURSE
+                        ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                            courseId: assignment.courseid,
+                            unitId: assignment.courseunitid,
+                            lessonId: courseUnit?.lessons[0]?.id,
+                          })
+                        : STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                            courseId: assignment.courseid,
+                          })
                     : '#'
                 }
                 underline='none'
