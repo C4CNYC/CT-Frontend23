@@ -22,6 +22,7 @@ export interface IAssignmentReduced {
   pined: string
   pined_assignment_id: string
   lessonid?: string
+  courseunitid?: string
 }
 
 export interface IAssignmentFull {
