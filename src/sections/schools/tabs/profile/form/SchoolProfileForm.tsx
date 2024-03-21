@@ -141,7 +141,7 @@ export default function SchoolProfileForm({
                 {countries.map((country) => (
                   <option
                     key={country.code}
-                    value={country.label}
+                    value={country.code.toLowerCase()}
                   >
                     {country.label}
                   </option>
