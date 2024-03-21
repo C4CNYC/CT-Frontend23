@@ -157,48 +157,49 @@ const SliderBlock: FC<ISliderBlock> = ({
           ></Box>
         ))}
       </Box>
-
-      {_.isEmpty(data) ? (
-        <EmptyContent title={translate('messages_no_data')} />
-      ) : (
+      {!isFetching ? (
         <>
-          <Box
-            className='sliderTour'
-            height='100%'
-            sx={boxSx}
-          >
-            {!isFetching ? (
-              <Carousel
-                {...getCarouselSettings(onBeforeChange)}
-                asNavFor={nav2}
-                ref={carousel1}
+          {_.isEmpty(data) ? (
+            <EmptyContent title={translate('messages_no_data')} />
+          ) : (
+            <>
+              <Box
+                className='sliderTour'
+                height='100%'
+                sx={boxSx}
               >
-                {data.map((step) => {
-                  return (
-                    <View
-                      title={step.title}
-                      key={step.id}
-                      type={step.type}
-                      body={step.body}
-                      connectIntegrations={connectIntegrations}
-                    />
-                  )
-                })}
-              </Carousel>
-            ) : (
-              <LoadingScreen sx={LOADER_SCREEN_SX} />
-            )}
-          </Box>
+                <Carousel
+                  {...getCarouselSettings(onBeforeChange)}
+                  asNavFor={nav2}
+                  ref={carousel1}
+                >
+                  {data.map((step) => {
+                    return (
+                      <View
+                        title={step.title}
+                        key={step.id}
+                        type={step.type}
+                        body={step.body}
+                        connectIntegrations={connectIntegrations}
+                      />
+                    )
+                  })}
+                </Carousel>
+              </Box>
 
-          <Navigation
-            hasPrev={slideIndex > 0}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            stepHasValidation={stepHasValidation}
-            canMoveNext={nextStepAble || !stepHasValidation}
-            hasNextStep={hasNextStep}
-          />
+              <Navigation
+                hasPrev={slideIndex > 0}
+                onNext={handleNext}
+                onPrev={handlePrev}
+                stepHasValidation={stepHasValidation}
+                canMoveNext={nextStepAble || !stepHasValidation}
+                hasNextStep={hasNextStep}
+              />
+            </>
+          )}
         </>
+      ) : (
+        <LoadingScreen sx={LOADER_SCREEN_SX} />
       )}
     </BaseBlock>
   )
