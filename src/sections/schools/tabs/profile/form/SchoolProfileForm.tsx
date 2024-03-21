@@ -83,20 +83,18 @@ export default function SchoolProfileForm({
         setImgValue([])
         enqueueSnackbar(translate('messages_cover_success'))
       }
-      if (methods.formState.isDirty) {
-        await updateSchoolProfile({
-          schoolId,
-          name: formData.name,
-          country: formData.country,
-          address: formData.address,
-          city: formData.city,
-          active: formData.active ?? false,
-          about: formData.about ?? '',
-          phone: formData.phone,
-        }).unwrap()
-        methods.reset({}, { keepValues: true, keepIsValid: true })
-        enqueueSnackbar(translate('messages_update_info_success'))
-      }
+      await updateSchoolProfile({
+        schoolId,
+        name: formData.name,
+        country: formData.country || schoolProfile?.country,
+        address: formData.address,
+        city: formData.city,
+        active: formData.active ?? false,
+        about: formData.about ?? '',
+        phone: formData.phone,
+      }).unwrap()
+      methods.reset({}, { keepValues: true, keepIsValid: true })
+      enqueueSnackbar(translate('messages_update_info_success'))
     } catch (error: any) {
       enqueueSnackbar(error.message.text, { variant: 'error' })
     }
