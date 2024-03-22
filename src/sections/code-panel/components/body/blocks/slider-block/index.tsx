@@ -127,7 +127,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const connectIntegrations = (body: string): CodeDocument | null => {
     if (integrations) {
       return {
-        htmlBody: [JSON.parse(body).content],
+        htmlBody: body ? [JSON.parse(body).content] : [''],
         cssBody: [integrations.reduce((ac, cur) => ac + cur.head, '')],
         jsBody: [integrations.reduce((ac, cur) => ac + cur.scripts, '')],
       }
