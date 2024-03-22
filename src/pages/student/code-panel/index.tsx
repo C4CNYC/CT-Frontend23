@@ -407,7 +407,7 @@ export default function CodePanelPage(): ReactElement | null {
             isFullScreenView={handle.active}
           />
           <CodePanelBody
-            isFetchingLessonContent={isFetchingLessonContent || !lessonContent?.length}
+            isFetchingLessonContent={isFetchingLessonContent}
             lesson={lesson}
             lessonContents={lessonContent ?? []}
             user={user?.student_profile}
