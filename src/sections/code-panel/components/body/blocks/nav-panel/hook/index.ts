@@ -29,6 +29,7 @@ interface UseNavPanelReturn {
   setIsOpen: (isOpen: boolean) => void
   onDragEnd: (e: DragEndEvent) => void
   onDeletePreviewUser: (id: string) => void
+  closeAllUsersPreview: () => void
   previewUsers: FriendUser[]
   draggableConfig: DraggableBlockConfig | null
   users: FriendUser[]
@@ -95,6 +96,10 @@ export const useNavPanel = (
       newPreviewUsers.splice(index, 1)
       setPreviewUsers(newPreviewUsers)
     }
+  }
+
+  const closeAllUsersPreview = () => {
+    setPreviewUsers([])
   }
 
   const onDragEnd = (event: DragEndEvent) => {
@@ -164,6 +169,7 @@ export const useNavPanel = (
     setIsOpen,
     onDragEnd,
     onDeletePreviewUser,
+    closeAllUsersPreview,
     previewUsers,
     draggableConfig,
     activeUsersAmount,

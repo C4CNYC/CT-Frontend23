@@ -3,7 +3,7 @@ import { type SxProps } from '@mui/material'
 export const BOX_HEIGHT = 276
 export const BOX_WIDTH = 355
 
-export default {
+const styles = {
   getBoxSx: (background: string): SxProps => ({
     width: BOX_WIDTH,
     height: BOX_HEIGHT,
@@ -85,3 +85,4 @@ export default {
     cursor: 'not-allowed',
   },
 }
+export default styles

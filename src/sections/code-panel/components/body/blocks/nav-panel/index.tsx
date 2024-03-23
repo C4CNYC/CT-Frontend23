@@ -46,6 +46,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
     setIsOpen,
     onDragEnd,
     onDeletePreviewUser,
+    closeAllUsersPreview,
     draggableConfig,
     users,
     setUsers,
@@ -73,7 +74,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
   }, [draggableConfig?.height, isOpen])
 
   useEffect(() => {
-    // console.log({ usersStatus });
     const _users = users.map((_user: IFriend & BaseResponseInterface) => {
       const userStatus = usersStatus.find(
         (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
@@ -86,6 +86,13 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
     })
     setUsers(_users)
   }, [usersStatus, users.length])
+
+  useEffect(() => {
+    if (isRealtimeCodeEnabled) {
+      setIsOpen(false)
+      closeAllUsersPreview()
+    }
+  }, [isRealtimeCodeHidden])
 
   // const onChangeUserStatus = (status: string, lessonId: string) => {
   //   try {

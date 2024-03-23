@@ -87,7 +87,8 @@ export const anonimUserConfig: IMenuConfigItem[] = [
   },
 ]
 
-export default {
+const config = {
   [UserType.Authorized]: authorizedUserConfig,
   [UserType.Anonim]: anonimUserConfig,
 }
+export default config
