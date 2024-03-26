@@ -45,7 +45,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
           ${getBody(cssBody, TagNames.Style)}
         </head>
         <body style="height: 100%; margin: 0;">
-       <script src="https://unpkg.com/kaboom@3000.0.1/dist/kaboom.js"></script>
+             <script src="https://unpkg.com/kaboom@2000.2.9/dist/kaboom"></script>
           ${htmlBody.join('\n')}
           ${getBody(jsBody, TagNames.Script)}
         </body>
