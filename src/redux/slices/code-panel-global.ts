@@ -2,7 +2,11 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 import type { Socket } from 'socket.io-client'
 
 import { ILessonUserStatus } from '@/types'
-
+import { IValidationMap } from '@/utils'
+export interface ContentValidation {
+  contentId: string
+  checkers?: IValidationMap[] | undefined
+}
 export interface IGlobalCodePanel {
   slideIndex: number
   solutionCode: string
@@ -17,6 +21,7 @@ export interface IGlobalCodePanel {
   isRealtimeCodeHidden: boolean
   usersStatus: ILessonUserStatus[]
   socket?: Socket | undefined
+  contentValidations?: ContentValidation[]
 }
 
 const initialState: IGlobalCodePanel = {
@@ -33,6 +38,7 @@ const initialState: IGlobalCodePanel = {
   isRealtimeCodeHidden: true,
   usersStatus: [],
   socket: undefined,
+  contentValidations: [],
 }
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
@@ -58,6 +64,12 @@ export const codePanelSlice = createSlice({
     },
     setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<'lessonId'>>): void => {
       state.lessonId = payload
+    },
+    setContentValidations: (
+      state,
+      { payload }: PayloadAction<PickedStoreItem<'contentValidations'>>
+    ): void => {
+      state.contentValidations = payload
     },
     toggleInstrations: (
       state,
@@ -109,6 +121,7 @@ export const {
   setCode,
   setUsersStatus,
   setSocket,
+  setContentValidations,
 } = codePanelSlice.actions
 
 export default codePanelSlice.reducer

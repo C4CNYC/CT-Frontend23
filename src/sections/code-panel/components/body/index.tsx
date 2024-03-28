@@ -123,6 +123,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           user={user}
           onChangeStreamingDocInfo={onChangeStreamingDocInfo}
           isFetching={isFetchingLessonContent}
+          contentId={lessonContents[slideIndex]?.id}
         />
 
         {!isBrowserHidden ? (

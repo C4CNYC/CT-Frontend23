@@ -30,6 +30,7 @@ interface ICodeEditorBlock {
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
   isFetching?: boolean
+  contentId?: string
 }
 
 const icon = (
@@ -49,6 +50,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   onChangeStreamingDocInfo,
   preloadedCode,
   isFetching = false,
+  contentId,
 }) => {
   const translate = useTranslate()
   const TITLE = translate('code_editor')
@@ -60,7 +62,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const timer = useRef<NodeJS.Timeout>()
   const codeRef = useRef(code)
-
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const typingListener = (deley: number, firstLoad: boolean): void => {
     if (!firstLoad) {
       setTyping(false)
@@ -109,6 +111,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
     onResetRoom()
   }, [onResetRoom])
 
+  const selectedContent = contentValidations?.find((item) => item.contentId === contentId)
   return (
     <BaseBlock
       title={TITLE}
@@ -120,7 +123,14 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       <MumuSpeedDial typing={typing} />
 
       {Boolean(validations?.length) && (
-        <Checkers checkers={mapValidations(code ?? '', validations)} />
+        <Checkers
+          contentId={contentId}
+          checkers={
+            selectedContent?.checkers?.length
+              ? selectedContent?.checkers
+              : mapValidations(code ?? '', validations)
+          }
+        />
       )}
 
       <CodeEditorController
