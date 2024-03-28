@@ -55,15 +55,15 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId }) => {
 
   useEffect(() => {
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
-    if (allPased && allPased !== nextStepAble) {
-      dispatch(setNextStepAble(allPased))
+    if (allPased) {
       const checkedContents = contentValidations?.map((item) => ({
         ...item,
         checkers: item.contentId === contentId ? checkers : [],
       }))
       dispatch(setContentValidations(checkedContents))
     }
-  }, [checkers, nextStepAble])
+    dispatch(setNextStepAble(allPased))
+  }, [checkers])
 
   const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
 
