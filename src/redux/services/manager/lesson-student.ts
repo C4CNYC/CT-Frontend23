@@ -5,6 +5,7 @@ import {
   LastVisitedBody,
   LastVisitedData,
 } from '@/redux/interfaces/content.interface'
+import { setContentValidations } from '@/redux/slices/code-panel-global'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { managerApi } from '.'
@@ -22,6 +23,15 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
         res.sort((a, b) => a.meta.order - b.meta.order),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          const mutatedData = data
+            .filter((item) => item.validations.length)
+            .map((item) => ({ contentId: item.id, checkers: [] }))
+          dispatch(setContentValidations(mutatedData))
+        } catch (err) {}
+      },
     }),
     getLessonStudent: builder.query<ILesson & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({

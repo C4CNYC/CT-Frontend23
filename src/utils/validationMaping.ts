@@ -13,6 +13,8 @@ export function mapValidations(
   if (!validations) return []
   return validations.map((validator) => ({
     text: validator.name,
-    valid: new RegExp(validator.regex).test(code),
+    valid:
+      new RegExp(validator.regex).test(code) ||
+      code.replace(/\s/g, '') === validator.regex.replace(/\s/g, ''),
   }))
 }

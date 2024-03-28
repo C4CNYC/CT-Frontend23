@@ -7,7 +7,7 @@ import { useDetectClickOutside } from 'react-detect-click-outside'
 import { useDispatch } from 'react-redux'
 
 import { setIsVisible } from '@/redux/slices/checkers-animation'
-import { setNextStepAble } from '@/redux/slices/code-panel-global'
+import { setContentValidations, setNextStepAble } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { type IValidationMap } from '@/utils/validationMaping'
 
@@ -28,14 +28,15 @@ import {
 
 interface ICheckers {
   checkers: IValidationMap[]
+  contentId?: string | undefined
 }
 
-const Checkers: FC<ICheckers> = ({ checkers }) => {
+const Checkers: FC<ICheckers> = ({ checkers, contentId }) => {
   const dispatch = useDispatch()
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
-
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const handleCollaps = (): void => {
     if (isVisible) {
       dispatch(setIsVisible(false))
@@ -56,6 +57,11 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
     if (allPased && allPased !== nextStepAble) {
       dispatch(setNextStepAble(allPased))
+      const checkedContents = contentValidations?.map((item) => ({
+        ...item,
+        checkers: item.contentId === contentId ? checkers : [],
+      }))
+      dispatch(setContentValidations(checkedContents))
     }
   }, [checkers, nextStepAble])
 
