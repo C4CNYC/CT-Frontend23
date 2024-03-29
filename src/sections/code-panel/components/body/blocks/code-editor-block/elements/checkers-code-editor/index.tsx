@@ -58,7 +58,7 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId }) => {
     if (allPased) {
       const checkedContents = contentValidations?.map((item) => ({
         ...item,
-        checkers: item.contentId === contentId ? checkers : [],
+        checkers: item.contentId === contentId ? checkers : item.checkers,
       }))
       dispatch(setContentValidations(checkedContents))
     }
