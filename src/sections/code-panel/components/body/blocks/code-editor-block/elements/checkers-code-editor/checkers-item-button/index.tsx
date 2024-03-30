@@ -12,12 +12,14 @@ import { LIST_ITEM_SX } from './constants'
 interface CheckersItemButtonProps {
   active: boolean
   name: string
+  isCheckedOnce: boolean
 }
 
-const CheckersItemButton: FC<CheckersItemButtonProps> = ({ active, name }) => {
+const CheckersItemButton: FC<CheckersItemButtonProps> = ({ active, name, isCheckedOnce }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    if (isCheckedOnce) return
     if (!active) {
       dispatch(setIsActivateCompeated(true))
     }

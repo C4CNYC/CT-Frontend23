@@ -9,9 +9,10 @@ import { CheckerIcon } from '../CheckersIcon'
 
 interface CheckersMenuProps {
   checkers: IValidationMap[]
+  isCheckedOnce: boolean
 }
 
-const CheckersMenu: FC<CheckersMenuProps> = ({ checkers }) => {
+const CheckersMenu: FC<CheckersMenuProps> = ({ checkers, isCheckedOnce }) => {
   return (
     <Box sx={BOX_SX}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -28,6 +29,7 @@ const CheckersMenu: FC<CheckersMenuProps> = ({ checkers }) => {
           key={i}
           active={!item.valid}
           name={item.text}
+          isCheckedOnce={isCheckedOnce}
         />
       ))}
     </Box>

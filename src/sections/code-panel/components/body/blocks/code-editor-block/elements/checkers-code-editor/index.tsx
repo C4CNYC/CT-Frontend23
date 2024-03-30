@@ -29,9 +29,10 @@ import {
 interface ICheckers {
   checkers: IValidationMap[]
   contentId?: string | undefined
+  isCheckedOnce: boolean
 }
 
-const Checkers: FC<ICheckers> = ({ checkers, contentId }) => {
+const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const dispatch = useDispatch()
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
@@ -131,7 +132,10 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId }) => {
             variants={CHECKERS_ANIMATION}
             style={M_DIV_STYLE}
           >
-            <CheckersMenu checkers={checkers} />
+            <CheckersMenu
+              checkers={checkers}
+              isCheckedOnce={isCheckedOnce}
+            />
           </m.div>
         </AnimatePresence>
       </Stack>
