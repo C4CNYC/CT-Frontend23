@@ -130,6 +130,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
               ? selectedContent?.checkers
               : mapValidations(code ?? '', validations)
           }
+          isCheckedOnce={!!selectedContent?.checkers?.length}
         />
       )}
 
