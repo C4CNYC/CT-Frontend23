@@ -7,16 +7,11 @@ import { GoTriangleDown } from '@react-icons/all-files/go/GoTriangleDown'
 import { GoTriangleUp } from '@react-icons/all-files/go/GoTriangleUp'
 import { HiLockClosed } from '@react-icons/all-files/hi2/HiLockClosed'
 import { TbPlayerPlay } from '@react-icons/all-files/tb/TbPlayerPlay'
-// import { useAtom } from 'jotai'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
 import { ILesson } from '@/redux/interfaces/content.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-// import {
-//   IGlobalCodePanelAtom,
-//   globalCodePanelAtom,
-// } from '@/sections/code-panel/atoms/global-code-panel.atom'
 import { useTranslate } from '@/utils/translateHelper'
 
 import RocketIcon from '../icons/RocketIcon'
@@ -38,14 +33,7 @@ import TrainingProgress from './LessonProgress'
 interface ILessonItemProps {
   lesson: ILesson
   unitId: string
-  lastVisitedData: boolean
   locked: boolean
-}
-
-interface IUpdateCodePanelAtom {
-  courseId: string
-  unitId: string
-  lessonId: string
 }
 
 const MAX_DESC = 50
@@ -53,13 +41,11 @@ const MAX_DESC = 50
 export default function LessonItem({
   lesson,
   unitId,
-  lastVisitedData,
   locked,
 }: ILessonItemProps): React.ReactElement {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(600))
   const [openDetails, setOpenDetails] = useState(false)
-  // const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom)
   const courseId = useRouter().query.id
   const [open, setOpen] = useState(false)
 
@@ -70,15 +56,6 @@ export default function LessonItem({
   const closeDialog = () => {
     setOpen(false)
   }
-
-  // const updateCodePanelAtom = ({ courseId, unitId, lessonId }: IUpdateCodePanelAtom) => {
-  //   setGlobalCodePanel((prev: IGlobalCodePanelAtom) => ({
-  //     ...prev,
-  //     courseId,
-  //     unitId,
-  //     lessonId,
-  //   }))
-  // }
 
   const translate = useTranslate()
 
