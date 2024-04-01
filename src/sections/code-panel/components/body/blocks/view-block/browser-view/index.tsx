@@ -38,10 +38,13 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
       return
     }
 
+    const fontPath = '/fonts/index.css'
+    const fontCssLink = `<link rel="stylesheet" href="${fontPath}">`
     const { htmlBody = [], cssBody = [], jsBody = [] } = document
     setDocSrc(`
       <html style="height: 100%">
         <head>
+          ${fontCssLink}
           ${getBody(cssBody, TagNames.Style)}
         </head>
         <body style="height: 100%; margin: 0;">

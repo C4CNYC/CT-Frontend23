@@ -19,4 +19,31 @@
   src: local('CircularStd'), url('CircularStd-Bold.otf') format('opentype');
 }
 
+@font-face {
+  font-family: 'Rajdhani';
+  font-weight: 400;
+  font-style: normal;
+  src: local('Rajdhani'), url('rajdhani-regular-webfont.woff') format('opentype');
+}
+
+@font-face {
+  font-family: 'Rajdhani';
+  font-weight: 700;
+  font-style: normal;
+  src: local('Rajdhani'), url('rajdhani-bold-webfont.woff') format('opentype');
+}
+
+@font-face {
+  font-family: 'Rajdhani';
+  font-weight: 500;
+  font-style: normal;
+  src: local('Rajdhani'), url('rajdhani-medium-webfont.woff') format('opentype');
+}
+
+@font-face {
+  font-family: 'Rajdhani';
+  font-weight: 600;
+  font-style: normal;
+  src: local('Rajdhani'), url('rajdhani-semibold-webfont.woff') format('opentype');
+}
  
