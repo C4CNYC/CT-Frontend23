@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Button, Stack, useMediaQuery, useTheme } from '@mui/material'
 import { HiMenuAlt2 } from '@react-icons/all-files/hi/HiMenuAlt2'
@@ -14,29 +14,21 @@ import StoryRoad from './story-road'
 interface ILessonListProps {
   lessons: Array<ILesson & BaseResponseInterface>
   unitId: string
-  lastVisitedData: string
 }
 
-export default function LessonsList({
-  lessons,
-  unitId,
-  lastVisitedData,
-}: ILessonListProps): React.ReactElement {
+export default function LessonsList({ lessons, unitId }: ILessonListProps): React.ReactElement {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(600))
   const [isList, setIsList] = useState(true)
-  const [lastActiveIndex, setLastActiveIndex] = useState(0)
 
-  useEffect(() => {
-    if (lessons) {
-      lessons.map((el, i) => {
-        if (el.id === lastVisitedData) {
-          setLastActiveIndex(i)
-        }
-        return
-      })
+  const isLockedLessonCheck = (index: number) => {
+    if (index === 0) return false
+    const prewLesson = lessons[index - 1]
+    if (prewLesson.progress) {
+      if (prewLesson.progress >= 90) return false
     }
-  }, [lessons])
+    return true
+  }
 
   return (
     <Stack sx={getLessonListSx(isMobile, theme)}>
@@ -85,15 +77,14 @@ export default function LessonsList({
           <LessonItem
             lesson={l}
             unitId={unitId}
-            lastVisitedData={l.id === lastVisitedData}
             key={l.id}
-            locked={i >= lastActiveIndex + 1}
+            locked={isLockedLessonCheck(i)}
           />
         ))
       ) : (
         <StoryRoad
           lessons={lessons}
-          lastActiveIndex={lastActiveIndex}
+          isLockedLessonCheck={isLockedLessonCheck}
         />
       )}
     </Stack>

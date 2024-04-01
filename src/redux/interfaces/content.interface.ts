@@ -82,7 +82,7 @@ export interface ILesson {
   integrations: Array<IIntegration & BaseResponseInterface>
   id: string
   tips: string[] | []
-  progress?: number
+  progress: number | null
   skills: ISkill[]
   independent?: boolean
   contents: ILessonContent[]

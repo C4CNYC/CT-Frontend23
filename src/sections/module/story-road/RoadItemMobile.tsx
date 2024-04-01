@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { Box, Button, CircularProgress, Collapse, Stack, Typography, useTheme } from '@mui/material'
 import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
-import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { FaChevronUp } from '@react-icons/all-files/fa/FaChevronUp'
 import { useRouter } from 'next/router'
@@ -19,17 +18,17 @@ import {
   PROGRES_BOX_SX,
   getDescriptionBoxSx,
   getIconWrapperSx,
-  getMobileButtonSx,
   getMobileRoadBoxSx,
   getSeeMoreBtnSx,
 } from './constants'
+import RoadItemBtn from './RoadItemBtn'
 
 interface RoadItemMobileProps {
   firstItem: boolean
   compleated: boolean
   locked: boolean
   progress: number
-  lastActive?: boolean
+  lastActive: boolean
   lastItem?: boolean
   name: string
   description: string
@@ -66,7 +65,6 @@ const RoadItemMobile = ({
 
   const seeMoreBtnSx = useMemo(() => getSeeMoreBtnSx(theme), [theme])
 
-  const buttonSx = useMemo(() => getMobileButtonSx(lastActive), [lastActive])
   const descroptionGradientTesxtSx = {
     ...DESCRIPTION_GRADIENT_TEXT_SX,
     fontSize: '14px',
@@ -185,38 +183,13 @@ const RoadItemMobile = ({
             )}
           </Box>
         </Box>
-        <Button
-          variant='contained'
-          onClick={redirectToCodePanel}
-          disableRipple
-          sx={buttonSx}
-        >
-          {compleated ? 'Review' : null}
-          {lastActive ? (
-            <Stack
-              direction='row'
-              alignItems='center'
-              gap={0.5}
-            >
-              <Stack>
-                <Typography
-                  variant='body1'
-                  fontWeight={700}
-                >
-                  Explore
-                </Typography>
-                <Typography
-                  variant='body1'
-                  fontWeight={700}
-                >
-                  Now
-                </Typography>
-              </Stack>
-              <FaArrowRight size={18} />
-            </Stack>
-          ) : null}
-          {locked && !lastActive ? 'Open' : null}
-        </Button>
+        <RoadItemBtn
+          compleated={compleated}
+          lastActive={lastActive}
+          locked={locked}
+          isMobile
+          redirectToCodePanel={redirectToCodePanel}
+        />
       </Box>
       <Stack ml={lastActive ? -5 : 1}>
         <Typography
