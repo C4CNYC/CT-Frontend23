@@ -5,7 +5,7 @@ import {
   LastVisitedBody,
   LastVisitedData,
 } from '@/redux/interfaces/content.interface'
-import { setContentValidations } from '@/redux/slices/code-panel-global'
+import { ContentValidation, setContentValidations } from '@/redux/slices/code-panel-global'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { managerApi } from '.'
@@ -23,13 +23,46 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
         res.sort((a, b) => a.meta.order - b.meta.order),
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+      async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
         try {
           const { data } = await queryFulfilled
           const mutatedData = data
             .filter((item) => item.validations.length)
             .map((item) => ({ contentId: item.id, checkers: [] }))
           dispatch(setContentValidations(mutatedData))
+        } catch (err) {}
+      },
+    }),
+    getContentCheckers: builder.query<
+      BaseResponseInterface & { completed_chalanges: ILessonContent[] },
+      undefined
+    >({
+      query: () => ({
+        url: `/student/progress/get-complete-chalange`,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 0,
+      async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
+        try {
+          const { data } = await queryFulfilled
+          const { completed_chalanges } = data
+          let result
+          const contentValidations = getState() as any
+          result = completed_chalanges.reduce(
+            (acc, c) =>
+              acc.map((content: ContentValidation) => ({
+                ...content,
+                checkers:
+                  content.contentId === c.id
+                    ? c.validations.map((val) => ({
+                        text: val.name,
+                        valid: true,
+                      }))
+                    : content.checkers,
+              })),
+            contentValidations?.codePanelGlobal?.contentValidations
+          )
+          dispatch(setContentValidations(result))
         } catch (err) {}
       },
     }),
@@ -52,6 +85,7 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['Lessons'],
     }),
+
     getStudentLastVisitedUnitAndLesson: builder.query<LastVisitedData, void>({
       query: () => ({
         url: '/student/lesson/last-visited',
@@ -77,6 +111,7 @@ export const {
   useGetLessonStudentQuery,
   useGetLessonsListStudentQuery,
   useGetStudentLastVisitedUnitAndLessonQuery,
+  useGetContentCheckersQuery,
   // -------------mutation-----------
   useUpdateStudentLastVisitedDataMutation,
 } = extendedApi
