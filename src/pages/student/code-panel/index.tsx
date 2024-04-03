@@ -11,8 +11,10 @@ import { useDispatch } from 'react-redux'
 import { Socket, io } from 'socket.io-client'
 
 import { useAuthContext } from '@/auth/useAuthContext'
+import type { ILesson } from '@/redux/interfaces/content.interface'
 import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
 import {
+  useGetContentCheckersQuery,
   useGetLessonContentStudentQuery,
   useGetLessonStudentQuery,
 } from '@/redux/services/manager/lesson-student'
@@ -33,6 +35,7 @@ import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/compo
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { ILessonUserStatus } from '@/types'
+import type { BaseResponseInterface } from '@/utils'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -112,10 +115,15 @@ export default function CodePanelPage(): ReactElement | null {
     data: lessonContent,
     isLoading: isLoadingLessonContent,
     isFetching: isFetchingLessonContent,
+    fulfilledTimeStamp,
   } = useGetLessonContentStudentQuery(
     { id: router.query.lessonId as string },
     { skip: !router.query.lessonId }
   )
+
+  const { data: checkers, isLoading: isLoadingCheckers } = useGetContentCheckersQuery(undefined, {
+    skip: !fulfilledTimeStamp,
+  })
 
   // const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
   //   unitId: null,
@@ -408,7 +416,7 @@ export default function CodePanelPage(): ReactElement | null {
           />
           <CodePanelBody
             isFetchingLessonContent={isFetchingLessonContent}
-            lesson={lesson}
+            lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
             lessonContents={lessonContent ?? []}
             user={user?.student_profile}
             language={DEFAULT_LANGUAGE}
@@ -422,7 +430,7 @@ export default function CodePanelPage(): ReactElement | null {
             lessonManagerComponent={
               <LessonsManager
                 onChooseLesson={onChooseLesson}
-                lesson={lesson}
+                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
                 data={courseContent}
                 isLoading={isLoadingCourseContent}
               />

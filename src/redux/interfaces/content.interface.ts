@@ -117,6 +117,7 @@ export interface ILessonContent {
   integrations: IIntegration[]
   progress?: ILessonContentProgress[]
   title?: string
+  id?: string
 }
 
 export interface ISkill {
