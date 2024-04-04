@@ -187,6 +187,7 @@ export default function CreateLessonDialog({
                   native
                   name='type'
                   size='small'
+                  label='Lesson type'
                 >
                   <option
                     key='practical'
@@ -204,13 +205,13 @@ export default function CreateLessonDialog({
                     key='exercise1'
                     value='exercise1'
                   >
-                    {translate('exercise1')}
+                    {translate('Lesson type 2')}
                   </option>
                   <option
                     key='exercise2'
                     value='exercise2'
                   >
-                    {translate('exercise2')}
+                    {translate('Lesson type 3')}
                   </option>
                 </RHFSelect>
                 <RHFSwitch

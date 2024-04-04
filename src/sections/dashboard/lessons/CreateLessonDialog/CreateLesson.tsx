@@ -147,6 +147,7 @@ export default function CreateLesson({
                     native
                     name='type'
                     size='small'
+                    label='Lesson type'
                   >
                     <option
                       key='practical'
@@ -159,6 +160,18 @@ export default function CreateLesson({
                       value='exercise'
                     >
                       {translate('lessons_exercise')}
+                    </option>
+                    <option
+                      key='exercise1'
+                      value='exercise1'
+                    >
+                      {translate('Lesson type 2')}
+                    </option>
+                    <option
+                      key='exercise2'
+                      value='exercise2'
+                    >
+                      {translate('Lesson type 3')}
                     </option>
                   </RHFSelect>
                   <Box>
