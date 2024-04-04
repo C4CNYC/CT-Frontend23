@@ -107,7 +107,14 @@ export default function CreateLesson({
         <DialogTitle>
           {isEdit ? translate('lessons_edit_lesson') : translate('lessons_create_lesson')}
         </DialogTitle>
-        <DialogContent sx={{ p: 0 }}>
+        <DialogContent
+          sx={{
+            p: 0,
+            width: { xs: '360px', sm: '440px', md: '500px', lg: '580px' },
+            height: 'auto',
+            minHeight: '400px',
+          }}
+        >
           <FormProvider
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
@@ -123,7 +130,6 @@ export default function CreateLesson({
                   display='grid'
                 >
                   <RHFTextField
-                    style={{ width: '350px' }}
                     name='name'
                     label={translate('lessons_name')}
                     required
@@ -183,7 +189,7 @@ export default function CreateLesson({
                     display: 'flex',
                     justifyContent: 'flex-end',
                     gap: 2,
-                    mt: 7,
+                    mt: 2,
                   }}
                 >
                   <Button onClick={handleClose}>{translate('actions_close')}</Button>
