@@ -74,6 +74,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const dispatch = useDispatch()
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
 
@@ -91,9 +92,15 @@ const SliderBlock: FC<ISliderBlock> = ({
   const stepHasValidation = !!data[slideIndex]?.validations?.length
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
 
+  const lastVisitedSlide: number = lessonId ? JSON.parse(localStorage.getItem(lessonId) ?? '0') : 0
+
   useEffect(() => {
-    carousel1.current?.slickGoTo(slideIndex)
-  }, [slideIndex])
+    carousel1.current?.slickGoTo(lastVisitedSlide)
+    if (lessonId && slideIndex > 0) {
+      localStorage.setItem(lessonId, JSON.stringify(slideIndex))
+      setSlideIndex(lastVisitedSlide)
+    }
+  }, [slideIndex, lessonId, lastVisitedSlide])
 
   useEffect(() => {
     if (carousel1.current) {
@@ -107,6 +114,11 @@ const SliderBlock: FC<ISliderBlock> = ({
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
+
+  // console.log('lessonId', lessonId)
+  // console.log(lessonId, slideIndex)
+
+  // console.log('lastVisitedSlide', lastVisitedSlide)
 
   const handleNext = (skip = false): void => {
     if (stepHasValidation && !skip) {
@@ -151,7 +163,7 @@ const SliderBlock: FC<ISliderBlock> = ({
           <Box
             key={index}
             sx={{
-              bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`,
+              bgcolor: `${lastVisitedSlide >= index ? '#708090' : '#D3D3D3'}`,
               ...PROGRESS_ITEM_SX,
             }}
           ></Box>
@@ -172,6 +184,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                   {...getCarouselSettings(onBeforeChange)}
                   asNavFor={nav2}
                   ref={carousel1}
+                  initialSlide={lastVisitedSlide}
                 >
                   {data.map((step) => {
                     return (
