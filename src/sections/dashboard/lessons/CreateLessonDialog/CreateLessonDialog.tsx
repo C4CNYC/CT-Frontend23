@@ -30,7 +30,6 @@ import { useTranslate } from '@/utils/translateHelper'
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
 import SkillsTab from './SkillsTab'
-import TipsTab from './TipsTab'
 
 interface FormValuesProps {
   name: string
@@ -96,7 +95,6 @@ export default function CreateLessonDialog({
           ...data,
           tips: data.tips.trim() !== '' ? [...lessonTips, data.tips] : lessonTips,
         }).unwrap()
-        methods.resetField('tips')
       } else {
         const lesson = await createLesson({
           ...data,
@@ -119,23 +117,6 @@ export default function CreateLessonDialog({
     }
 
     handleClose()
-  }
-
-  const deleteTip = async (tips: string[]): Promise<void> => {
-    try {
-      if (isEdit && id) {
-        await editLesson({
-          id,
-          ...methods.getValues(),
-          tips: lessonTips.filter((t) => !tips.includes(t)),
-        }).unwrap()
-        enqueueSnackbar(translate('messages_tip_deleted'))
-      }
-    } catch (error: any) {
-      enqueueSnackbar(error?.data?.message, {
-        variant: 'error',
-      })
-    }
   }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
@@ -175,22 +156,13 @@ export default function CreateLessonDialog({
                   label={translate('integration')}
                   {...a11yProps(2)}
                 />
-                {isEdit ? (
-                  <Tab
-                    label={translate('tips')}
-                    {...a11yProps(3)}
-                  />
-                ) : null}
               </Tabs>
             </Box>
             <TabPanel
               value={value}
               index={0}
             >
-              <Stack
-                gap={2}
-                mt={1}
-              >
+              <Stack gap={2}>
                 <RHFTextField
                   name='name'
                   label={translate('lessons_name')}
@@ -205,11 +177,6 @@ export default function CreateLessonDialog({
                   rows={3}
                 />
 
-                <RHFTextField
-                  name='tips'
-                  placeholder={translate('actions_enter_tip')}
-                  label={translate('actions_add_tip')}
-                />
                 <RHFCode
                   placeholder={translate('integrations_head_links_plh')}
                   name='head'
@@ -220,6 +187,7 @@ export default function CreateLessonDialog({
                   native
                   name='type'
                   size='small'
+                  label='Lesson type'
                 >
                   <option
                     key='practical'
@@ -232,6 +200,18 @@ export default function CreateLessonDialog({
                     value='exercise'
                   >
                     {translate('lessons_exercise')}
+                  </option>
+                  <option
+                    key='exercise1'
+                    value='exercise1'
+                  >
+                    {translate('Lesson type 2')}
+                  </option>
+                  <option
+                    key='exercise2'
+                    value='exercise2'
+                  >
+                    {translate('Lesson type 3')}
                   </option>
                 </RHFSelect>
                 <RHFSwitch
@@ -257,24 +237,10 @@ export default function CreateLessonDialog({
             >
               <IntegrationsTab contentId={id as string} />
             </TabPanel>
-            {isEdit ? (
-              <TabPanel
-                value={value}
-                index={3}
-              >
-                <TipsTab
-                  tips={lessonTips ?? []}
-                  deleteTip={deleteTip}
-                  isLoading={isLoadingUpdate}
-                />
-              </TabPanel>
-            ) : null}
-
             {value === 0 ? (
               <DialogActions>
                 <Box
                   sx={{
-                    mt: 14,
                     display: 'flex',
                     justifyContent: 'flex-end',
                     gap: 2,
@@ -343,9 +309,10 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
         <Box
           sx={{
             px: { xs: 2, sm: 3 },
-            pt: 2,
-            width: { xs: '320px', sm: '370px' },
+            pt: { xs: 2, sm: 3 },
+            width: { xs: '360px', sm: '440px', md: '500px', lg: '580px' },
             height: 'auto',
+            minHeight: '400px',
           }}
         >
           {children}
