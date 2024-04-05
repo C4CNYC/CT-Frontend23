@@ -89,18 +89,24 @@ const SliderBlock: FC<ISliderBlock> = ({
   const carousel1 = useRef<Carousel | null>(null)
   const [nav2, setNav2] = useState<Carousel>()
   const hasNextStep = slideIndex < data.length - 1
-  const stepHasValidation = !!data[slideIndex]?.validations?.length
+  const stepHasValidation = useMemo(
+    () => !!data[slideIndex]?.validations?.length,
+    [slideIndex, data]
+  )
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
 
-  const lastVisitedSlide: number = lessonId ? JSON.parse(localStorage.getItem(lessonId) ?? '0') : 0
+  useEffect(() => {
+    if (lessonId) {
+      const storIndex = JSON.parse(localStorage.getItem(lessonId) ?? '0')
+      dispatch(setSlideIndex(storIndex))
+    }
+  }, [lessonId])
 
   useEffect(() => {
-    carousel1.current?.slickGoTo(lastVisitedSlide)
-    if (lessonId && slideIndex > 0) {
+    if (lessonId) {
       localStorage.setItem(lessonId, JSON.stringify(slideIndex))
-      setSlideIndex(lastVisitedSlide)
     }
-  }, [slideIndex, lessonId, lastVisitedSlide])
+  }, [slideIndex, lessonId])
 
   useEffect(() => {
     if (carousel1.current) {
@@ -114,11 +120,6 @@ const SliderBlock: FC<ISliderBlock> = ({
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
-
-  // console.log('lessonId', lessonId)
-  // console.log(lessonId, slideIndex)
-
-  // console.log('lastVisitedSlide', lastVisitedSlide)
 
   const handleNext = (skip = false): void => {
     if (stepHasValidation && !skip) {
@@ -163,7 +164,7 @@ const SliderBlock: FC<ISliderBlock> = ({
           <Box
             key={index}
             sx={{
-              bgcolor: `${lastVisitedSlide >= index ? '#708090' : '#D3D3D3'}`,
+              bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`,
               ...PROGRESS_ITEM_SX,
             }}
           ></Box>
@@ -184,7 +185,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                   {...getCarouselSettings(onBeforeChange)}
                   asNavFor={nav2}
                   ref={carousel1}
-                  initialSlide={lastVisitedSlide}
+                  initialSlide={slideIndex}
                 >
                   {data.map((step) => {
                     return (
