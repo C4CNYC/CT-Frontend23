@@ -1,8 +1,8 @@
 import { Localization } from '@mui/material/locale'
 import { useTranslation } from 'react-i18next'
 
-import { useSettingsContext } from '@/components/settings'
-import { localStorageAvailable } from '@/utils/localStorageAvailable'
+import { useSettingsContext } from '../components'
+import { localStorageAvailable } from '../utils'
 
 import { allLangs, defaultLang } from './config-lang'
 
@@ -41,7 +41,9 @@ export function useLocales(): IUseLocals {
   return {
     onChangeLang: handleChangeLanguage,
     translate: (text: any, options?: any) => translate(text, options),
+    // @ts-ignore
     currentLang,
+    // @ts-ignore
     allLangs,
   }
 }
