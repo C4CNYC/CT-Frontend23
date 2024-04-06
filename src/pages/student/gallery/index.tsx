@@ -47,7 +47,8 @@ export default function Gallery(): React.ReactElement {
 
       <Grid
         container
-        spacing={2}
+        rowSpacing={4}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         mt={2}
       >
         <Grid
