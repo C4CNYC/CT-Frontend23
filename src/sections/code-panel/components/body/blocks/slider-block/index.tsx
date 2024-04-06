@@ -74,6 +74,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const dispatch = useDispatch()
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
 
@@ -88,12 +89,24 @@ const SliderBlock: FC<ISliderBlock> = ({
   const carousel1 = useRef<Carousel | null>(null)
   const [nav2, setNav2] = useState<Carousel>()
   const hasNextStep = slideIndex < data.length - 1
-  const stepHasValidation = !!data[slideIndex]?.validations?.length
+  const stepHasValidation = useMemo(
+    () => !!data[slideIndex]?.validations?.length,
+    [slideIndex, data]
+  )
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
 
   useEffect(() => {
-    carousel1.current?.slickGoTo(slideIndex)
-  }, [slideIndex])
+    if (lessonId) {
+      const storIndex = JSON.parse(localStorage.getItem(lessonId) ?? '0')
+      dispatch(setSlideIndex(storIndex))
+    }
+  }, [lessonId])
+
+  useEffect(() => {
+    if (lessonId) {
+      localStorage.setItem(lessonId, JSON.stringify(slideIndex))
+    }
+  }, [slideIndex, lessonId])
 
   useEffect(() => {
     if (carousel1.current) {
@@ -172,6 +185,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                   {...getCarouselSettings(onBeforeChange)}
                   asNavFor={nav2}
                   ref={carousel1}
+                  initialSlide={slideIndex}
                 >
                   {data.map((step) => {
                     return (
