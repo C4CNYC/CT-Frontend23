@@ -1,4 +1,4 @@
-import { type FC, memo, useEffect, useMemo, useRef } from 'react'
+import { type FC, memo, useEffect, useMemo } from 'react'
 
 import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
@@ -58,7 +58,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const styles = useStyles()
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
-  const firstRender = useRef(true)
   const dispatch = useDispatch()
   const localstorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
@@ -79,31 +78,11 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onChangeCodemirrorValueFromProps(value)
     void updateCommentWidgetPosition()
   }
-  const prevLessonJson = localStorage.getItem(getLocalStorageRoomKey(prevLessonId as string))
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
-    if (firstRender.current && (prevLessonCode || prevLessonId)) {
-      if (prevLessonId) {
-        onChangeStreamingDocInfoFromProps?.(
-          JSON.parse(prevLessonJson as string) as Record<string, string>
-        )
+    onChangeStreamingDocInfoFromProps?.(doc)
 
-        localStorage.setItem(getLocalStorageRoomKey(roomId), prevLessonJson as string)
-      }
-      if (prevLessonCode) {
-        onChangeStreamingDocInfoFromProps?.({ htmlBody: [prevLessonCode] } as any)
-
-        localStorage.setItem(
-          getLocalStorageRoomKey(roomId),
-          JSON.stringify({ htmlBody: [prevLessonCode] })
-        )
-      }
-      firstRender.current = false
-    } else {
-      onChangeStreamingDocInfoFromProps?.(doc)
-
-      localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
-    }
+    localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
   }
 
   const {
@@ -150,7 +129,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     ...collabProps,
     ...collabPropsFromFileManager,
     onChangeStreamingDocInfo,
-    preloadedCode: prevLessonCode ?? localstorageCode ?? preloadedCode,
+    preloadedCode: localstorageCode ?? preloadedCode,
     activeFile,
     mode,
     socket,
@@ -211,11 +190,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             theme='dark'
             extensions={extensions}
             readOnly={isReadOnly}
-            value={
-              prevLessonCode ??
-              (JSON.parse(prevLessonJson as string)?.htmlBody?.join() as string) ??
-              (streamingDoc.toString() || preloadedCode)
-            }
+            value={streamingDoc.toString() || preloadedCode}
             onChange={onChangeCodemirrorValue}
           />
 

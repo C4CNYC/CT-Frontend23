@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Box, Button, Collapse, Link, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
@@ -10,13 +10,16 @@ import { TbPlayerPlay } from '@react-icons/all-files/tb/TbPlayerPlay'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
+import { io, Socket } from 'socket.io-client'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { ILesson } from '@/redux/interfaces/content.interface'
-import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
+import { setPrevLessonCode, setPrevLessonId, setSocket } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { EmitSocketEvents } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
 import CatalogLessonDialog from '@/sections/module/lesson-item/CatalogLessonDialog'
+import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
 
 import RocketIcon from '../icons/RocketIcon'
@@ -58,6 +61,7 @@ export default function LessonItem({
   const courseId = useRouter().query.id
   const [open, setOpen] = useState(false)
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
   const { push } = useRouter()
   const openDialog = () => {
     setOpen(true)
@@ -71,6 +75,7 @@ export default function LessonItem({
   const dispatch = useDispatch()
   const firstChallenge = prevLesson?.contents?.filter((cont) => cont.validations.length)?.[0]
   const fetchCodeFromPrevLesson = () => {
+    socket?.emit(EmitSocketEvents.DeleteRoom, `${user?.student_profile?.id}_${lesson?.id}` as any)
     dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
     push(
       STUDENT_PATH_DASHBOARD.codePanel.workSpace({
@@ -82,6 +87,7 @@ export default function LessonItem({
   }
 
   const fetchDefaultCodeFromPrevLesson = () => {
+    socket?.emit(EmitSocketEvents.DeleteRoom, `${user?.student_profile?.id}_${lesson?.id}` as any)
     const firstChallenge = prevLesson?.contents?.filter((cont) => cont.validations.length)?.[0]
     dispatch(setPrevLessonCode(firstChallenge?.preload_body ?? firstChallenge?.solution_body) ?? '')
     push(
@@ -92,6 +98,32 @@ export default function LessonItem({
       })
     )
   }
+
+  useEffect(() => {
+    let socket: Socket | undefined
+
+    if (isRealtimeCodeEnabled && authIsInitialized) {
+      socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
+        path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
+        auth: { userId: user?.id ?? generateId(20) },
+      })
+      socket.on('connect_error', (error) => {
+        // eslint-disable-next-line no-console
+        console.error('Connection error', error)
+      })
+
+      socket.on('connect', () => {
+        // eslint-disable-next-line no-console
+        console.log('Connected to socket server')
+
+        if (!socket) return
+
+        dispatch(setSocket(socket))
+      })
+    } else {
+      dispatch(setSocket(undefined))
+    }
+  }, [isRealtimeCodeEnabled, authIsInitialized, user])
 
   return (
     <Stack sx={getLessonSx(theme)}>

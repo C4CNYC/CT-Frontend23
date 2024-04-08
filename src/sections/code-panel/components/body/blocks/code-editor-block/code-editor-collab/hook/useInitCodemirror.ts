@@ -1,4 +1,4 @@
-import { type MutableRefObject, useCallback, useState } from 'react'
+import { type MutableRefObject, useCallback, useRef, useState } from 'react'
 
 import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect, Text } from '@codemirror/state'
@@ -8,6 +8,7 @@ import { dracula } from '@uiw/codemirror-theme-dracula'
 import { StateEffectType } from '@uiw/react-codemirror'
 import { Socket } from 'socket.io-client'
 
+import { useSelector } from '@/redux/store'
 import { AuthUserType } from '@root/src/auth/types'
 
 import { BASIC_SETUP, EditorMode } from './constants'
@@ -62,20 +63,26 @@ export const useInitCodemirror = ({
   const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [isLoading, setIsLoading] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
-
+  const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
+  const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
+  const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
+  const prevLessonJson = localStorage.getItem(getLocalStorageRoomKey(prevLessonId as string))
+  const firstRender = useRef(true)
   const baseInit = useCallback(
     async (fileName: File) => {
       const lineWrap = new Compartment()
       const addCursor = StateEffect.define<Cursor>()
       commentEffectRef.current = StateEffect.define<CommentEffect>()
-
       const { version, doc, cursorName, docInfo, updates } = await getDocument({
         roomId,
         fileName,
         socket,
         cursorName: user?.id ?? cursorText,
         defaultFileName,
-        preloadedCode,
+        preloadedCode:
+          (prevLessonId && JSON.parse(prevLessonJson as string)?.htmlBody?.join('')) ||
+          prevLessonCode ||
+          preloadedCode,
       })
 
       setExtensions([
@@ -112,6 +119,7 @@ export const useInitCodemirror = ({
             ]
           : []),
       ])
+
       onChangeStreamingDocInfo?.(docInfo)
       setStreamingDoc(doc)
 
@@ -126,6 +134,7 @@ export const useInitCodemirror = ({
       onChangeStreamingDocInfo,
       defaultFileName,
       preloadedCode,
+      firstRender,
     ]
   )
 
