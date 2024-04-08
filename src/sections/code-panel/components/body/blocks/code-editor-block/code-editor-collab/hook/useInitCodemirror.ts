@@ -1,4 +1,4 @@
-import { type MutableRefObject, useCallback, useRef, useState } from 'react'
+import { type MutableRefObject, useCallback, useState } from 'react'
 
 import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect, Text } from '@codemirror/state'
@@ -67,7 +67,6 @@ export const useInitCodemirror = ({
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
   const prevLessonJson = localStorage.getItem(getLocalStorageRoomKey(prevLessonId as string))
-  const firstRender = useRef(true)
   const baseInit = useCallback(
     async (fileName: File) => {
       const lineWrap = new Compartment()
@@ -134,7 +133,6 @@ export const useInitCodemirror = ({
       onChangeStreamingDocInfo,
       defaultFileName,
       preloadedCode,
-      firstRender,
     ]
   )
 

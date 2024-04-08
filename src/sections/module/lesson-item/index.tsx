@@ -75,7 +75,7 @@ export default function LessonItem({
   const dispatch = useDispatch()
   const firstChallenge = prevLesson?.contents?.filter((cont) => cont.validations.length)?.[0]
   const fetchCodeFromPrevLesson = () => {
-    socket?.emit(EmitSocketEvents.DeleteRoom, `${user?.student_profile?.id}_${lesson?.id}` as any)
+    socket?.emit(EmitSocketEvents.DeleteRoom, `${user?.student_profile?.id}_${lesson?.id}`)
     dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
     push(
       STUDENT_PATH_DASHBOARD.codePanel.workSpace({
@@ -87,7 +87,7 @@ export default function LessonItem({
   }
 
   const fetchDefaultCodeFromPrevLesson = () => {
-    socket?.emit(EmitSocketEvents.DeleteRoom, `${user?.student_profile?.id}_${lesson?.id}` as any)
+    socket?.emit(EmitSocketEvents.DeleteRoom, `${user?.student_profile?.id}_${lesson?.id}`)
     const firstChallenge = prevLesson?.contents?.filter((cont) => cont.validations.length)?.[0]
     dispatch(setPrevLessonCode(firstChallenge?.preload_body ?? firstChallenge?.solution_body) ?? '')
     push(
