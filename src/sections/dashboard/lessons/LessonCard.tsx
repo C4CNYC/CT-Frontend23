@@ -83,11 +83,11 @@ export default function LessonCard({ lesson, index }: Props): React.ReactElement
               p: 2.5,
               width: 1,
               boxShadow: 0,
-              bgcolor: 'background.default',
+              bgcolor: (theme) => theme.palette.background.paper,
               maxWidth: 'auto',
               border: (theme) => `solid 1px ${theme.palette.divider}`,
               '&:hover': {
-                bgcolor: 'grey.100',
+                border: (theme) => `solid 1px ${theme.palette.text.secondary}`,
               },
             }}
           >
