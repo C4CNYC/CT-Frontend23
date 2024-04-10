@@ -1,9 +1,14 @@
-import { type FC, memo, useMemo } from 'react'
+import { type FC, memo, useEffect, useMemo } from 'react'
 
 import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
+import { useAuthContext } from '@/auth/useAuthContext'
+import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
+import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
 
 import AddComment from './components/add-comment'
@@ -53,26 +58,33 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   ...collabProps
 }) => {
   const styles = useStyles()
-
+  const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
+  const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
+  const { user, isInitialized: authIsInitialized } = useAuthContext()
+  const { query } = useRouter()
+  const dispatch = useDispatch()
   const localstorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
-      const json = localStorage.getItem(getLocalStorageRoomKey(roomId))
+      const json = localStorage.getItem(
+        getLocalStorageRoomKey(prevLessonId || `${user?.student_profile?.id}_${query?.lessonId}`)
+      )
       if (json) {
         try {
           const docInfo = JSON.parse(json) as Record<string, string>
-          const code = (docInfo?.htmlBody as unknown as string[])?.join('')
+          const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
           if (code) {
             return code
           }
         } catch (e) {}
       }
     }
-  }, [mode, roomId])
+  }, [mode, query?.lessonId, prevLessonId, preloadedCode])
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
     void updateCommentWidgetPosition()
   }
+
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     onChangeStreamingDocInfoFromProps?.(doc)
 
@@ -132,6 +144,13 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   })
 
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
+
+  useEffect(() => {
+    return () => {
+      dispatch(setPrevLessonId(null))
+      dispatch(setPrevLessonCode(null))
+    }
+  }, [])
 
   return (
     <div
