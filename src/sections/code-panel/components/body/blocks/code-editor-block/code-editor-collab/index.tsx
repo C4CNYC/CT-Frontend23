@@ -2,9 +2,11 @@ import { type FC, memo, useEffect, useMemo } from 'react'
 
 import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
+import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
@@ -58,10 +60,14 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const styles = useStyles()
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
+  const { user, isInitialized: authIsInitialized } = useAuthContext()
+  const { query } = useRouter()
   const dispatch = useDispatch()
   const localstorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
-      const json = localStorage.getItem(getLocalStorageRoomKey(prevLessonId || roomId))
+      const json = localStorage.getItem(
+        getLocalStorageRoomKey(prevLessonId || `${user?.student_profile?.id}_${query?.lessonId}`)
+      )
       if (json) {
         try {
           const docInfo = JSON.parse(json) as Record<string, string>
@@ -72,7 +78,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         } catch (e) {}
       }
     }
-  }, [mode, roomId, prevLessonId, preloadedCode])
+  }, [mode, query?.lessonId, prevLessonId, preloadedCode])
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)

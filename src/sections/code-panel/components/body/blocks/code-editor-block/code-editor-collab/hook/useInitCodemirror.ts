@@ -63,7 +63,6 @@ export const useInitCodemirror = ({
   const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [isLoading, setIsLoading] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
-  const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
   const prevLessonJson = localStorage.getItem(getLocalStorageRoomKey(prevLessonId as string))
@@ -80,7 +79,6 @@ export const useInitCodemirror = ({
         defaultFileName,
         preloadedCode:
           (prevLessonId && JSON.parse(prevLessonJson as string)?.htmlBody?.join('')) ||
-          prevLessonCode ||
           preloadedCode,
       })
 
