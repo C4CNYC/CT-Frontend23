@@ -88,7 +88,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     onChangeStreamingDocInfoFromProps?.(doc)
 
-    localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
+    localStorage.setItem(
+      getLocalStorageRoomKey(`${user?.student_profile?.id}_${query?.lessonId}`),
+      JSON.stringify(doc)
+    )
   }
 
   const {
@@ -105,7 +108,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     ...collabPropsFromFileManager
   } = useFileManager({
     socket,
-    roomId,
+    roomId: `${user?.student_profile?.id}_${query?.lessonId}`,
     mode,
   })
 
@@ -139,7 +142,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     activeFile,
     mode,
     socket,
-    roomId,
+    roomId: `${user?.student_profile?.id}_${query?.lessonId}`,
     defaultFileName,
   })
 
