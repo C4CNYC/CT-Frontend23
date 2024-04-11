@@ -89,24 +89,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   const carousel1 = useRef<Carousel | null>(null)
   const [nav2, setNav2] = useState<Carousel>()
   const hasNextStep = slideIndex < data.length - 1
-  const stepHasValidation = useMemo(
-    () => !!data[slideIndex]?.validations?.length,
-    [slideIndex, data]
-  )
+  const stepHasValidation = !!data[slideIndex]?.validations?.length
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
-
-  useEffect(() => {
-    if (lessonId) {
-      const storIndex = JSON.parse(localStorage.getItem(lessonId) ?? '0')
-      dispatch(setSlideIndex(storIndex))
-    }
-  }, [lessonId])
-
-  useEffect(() => {
-    if (lessonId) {
-      localStorage.setItem(lessonId, JSON.stringify(slideIndex))
-    }
-  }, [slideIndex, lessonId])
 
   useEffect(() => {
     if (carousel1.current) {
