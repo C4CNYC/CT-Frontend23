@@ -115,6 +115,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const {
     editorRef,
     isLoading,
+    render,
     extensions,
     streamingDoc,
     key,

@@ -43,6 +43,7 @@ export interface UseBaseInitReturn {
   extensions?: Extension[]
   baseInit: (fileName: File) => Promise<void>
   setIsLoading: (isLoading: boolean) => void
+  render?: boolean
 }
 
 export const useInitCodemirror = ({
@@ -62,6 +63,7 @@ export const useInitCodemirror = ({
   const [key, setKey] = useState(0)
   const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [isLoading, setIsLoading] = useState(true)
+  const [render, setRender] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
@@ -122,6 +124,8 @@ export const useInitCodemirror = ({
 
       setKey((prev) => ++prev)
       setIsLoading(false)
+      setTimeout(() => setRender(false), 3000)
+      setTimeout(() => setRender(true), 4000)
     },
     [
       roomId,
@@ -141,5 +145,6 @@ export const useInitCodemirror = ({
     isLoading,
     baseInit,
     setIsLoading,
+    render,
   }
 }

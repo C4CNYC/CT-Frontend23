@@ -44,6 +44,7 @@ export const useCodeEditorCollab = ({
   activeFile,
   socket,
   onRoomStatusChanged,
+  preloadedCode,
   user,
   ...propsToMemoize
 }: UseCodeEditorCollabProps): UseCodeEditorCollabReturn => {
@@ -63,7 +64,7 @@ export const useCodeEditorCollab = ({
     setActiveFile,
     onResetFileManager,
     defaultFileName,
-    preloadedCode,
+    // preloadedCode,
   } = useMemoizedProps(propsToMemoize)
 
   const onCreateEditor = (view: EditorView): void => {
@@ -87,7 +88,7 @@ export const useCodeEditorCollab = ({
     activeFile: activeFile.id,
   })
 
-  const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
+  const { baseInit, render, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
     socket,
     withTooltip,
     onChangeStreamingDocInfo,
@@ -269,6 +270,7 @@ export const useCodeEditorCollab = ({
     onCreateEditor,
     roomStatus,
     commentProps,
+    render,
     ...codeMirrorProps,
   }
 }
