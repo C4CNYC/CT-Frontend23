@@ -17,7 +17,6 @@ import { ILesson } from '@/redux/interfaces/content.interface'
 import { setPrevLessonId, setSocket } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import { EmitSocketEvents } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
 import CatalogLessonDialog from '@/sections/module/lesson-item/CatalogLessonDialog'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
@@ -75,7 +74,6 @@ export default function LessonItem({
   const dispatch = useDispatch()
   const firstChallenge = prevLesson?.contents?.filter((cont) => cont.validations.length)?.[0]
   const fetchCodeFromPrevLesson = () => {
-    socket?.emit(EmitSocketEvents.DeleteRoom, `${user?.student_profile?.id}_${lesson?.id}`)
     dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
     push(
       STUDENT_PATH_DASHBOARD.codePanel.workSpace({
