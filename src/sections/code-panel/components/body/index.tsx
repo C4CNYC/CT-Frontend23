@@ -117,7 +117,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         )}
 
         <CodeEditorBlock
-          preloadedCode={(lastLessonCode ?? lessonContents[0]?.preload_body) || ''}
+          preloadedCode={lessonContents[0]?.preload_body ?? ''}
           validations={lessonContents[slideIndex]?.validations || ''}
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
@@ -165,7 +165,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         code={document?.htmlBody?.join('') ?? ''}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
-        preloadedCode={lastLessonCode ?? lessonContents[0]?.preload_body}
+        preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations}
         isFetching={isFetchingLessonContent}
       />
