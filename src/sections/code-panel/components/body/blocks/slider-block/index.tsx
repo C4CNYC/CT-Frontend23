@@ -46,6 +46,7 @@ interface ISliderBlock {
   integrations: Array<IIntegration & BaseResponseInterface>
   isFetching: boolean
   code: string
+  lessonType?: string
 }
 
 interface IView {
@@ -53,6 +54,7 @@ interface IView {
   body: string
   connectIntegrations: (body: string) => CodeDocument | null
   title?: string
+  lessonType?: string
 }
 
 const icon = (
@@ -69,6 +71,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   integrations,
   isFetching,
   code,
+  lessonType,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
@@ -175,6 +178,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                     return (
                       <View
                         title={step.title}
+                        lessonType={lessonType}
                         key={step.id}
                         type={step.type}
                         body={step.body}
@@ -203,7 +207,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   )
 }
 
-const View: FC<IView> = ({ type, body, connectIntegrations, title }) => {
+const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType }) => {
   const translate = useTranslate()
 
   switch (type) {
@@ -212,6 +216,7 @@ const View: FC<IView> = ({ type, body, connectIntegrations, title }) => {
         <ProsaMirrorView
           title={title}
           multimediaValue={body}
+          lessonType={lessonType}
         />
       )
     case 'code':
