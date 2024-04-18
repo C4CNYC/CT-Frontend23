@@ -97,7 +97,7 @@ export default function FileManagerNewFolderDialog({
             flexGrow={1}
           >
             <Button
-              disabled={fileLoading || !folderName || !fileUrl}
+              disabled={fileLoading || !folderName || (name === 'file' && !fileUrl)}
               variant='soft'
               onClick={onCreate || onUpdate}
             >
