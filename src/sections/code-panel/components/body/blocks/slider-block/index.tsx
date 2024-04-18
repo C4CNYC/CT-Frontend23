@@ -106,7 +106,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       setNav2(carousel1.current)
       carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
     }
-  }, [data, lastSlide])
+  }, [data])
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
