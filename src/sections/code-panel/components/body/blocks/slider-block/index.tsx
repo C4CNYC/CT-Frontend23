@@ -25,6 +25,10 @@ import BrowserView, {
 } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import {
+  useGetStudentLastVisitedSlideQuery,
+  useUpdateStudentLastVisitedSlideMutation,
+} from '@root/src/redux/services/manager/lesson-student'
 
 import BaseBlock from '../base-block'
 
@@ -78,6 +82,11 @@ const SliderBlock: FC<ISliderBlock> = ({
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
 
+  const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
+  const { data: lastSlide } = useGetStudentLastVisitedSlideQuery({
+    id: lessonId as string,
+  })
+
   const title = translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
     setIsOpenHeader(isOpen)
@@ -95,8 +104,9 @@ const SliderBlock: FC<ISliderBlock> = ({
   useEffect(() => {
     if (carousel1.current) {
       setNav2(carousel1.current)
+      carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
     }
-  }, [data])
+  }, [data, lastSlide])
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
@@ -119,6 +129,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const onBeforeChange = (_: number, next: number) => {
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
+    updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {
@@ -169,7 +180,6 @@ const SliderBlock: FC<ISliderBlock> = ({
                   {...getCarouselSettings(onBeforeChange)}
                   asNavFor={nav2}
                   ref={carousel1}
-                  initialSlide={slideIndex}
                 >
                   {data.map((step) => {
                     return (

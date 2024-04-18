@@ -163,3 +163,14 @@ export interface LastVisitedState {
   unitId: string | null
   lessonId: string | null
 }
+
+export interface ILastVisitedSlide {
+  id: string
+  slideNumber: number
+  lessonId: string
+}
+
+export interface ILastVisitedSlideBody {
+  lessonId: string
+  slideNumber: number
+}
