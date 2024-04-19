@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { Skeleton } from '@mui/material'
+import { IconButton, Skeleton, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Dialog, { DialogProps } from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -8,7 +9,12 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
+import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
+import { useForm } from 'react-hook-form'
 
+import { RHFUpload, SingleFilePreview } from '@/components'
+import { FormProvider } from '@/components'
+import { HELPER_IMG_TEXT, UPLOAD_IMG_BTN } from '@/sections/dashboard/modules/constants'
 import { useTranslate } from '@/utils/translateHelper'
 
 interface Props extends DialogProps {
@@ -23,10 +29,11 @@ interface Props extends DialogProps {
   //
   folderName?: string
   onChangeFolderName?: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onChangeFile?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeFile?: (newFile: File) => void
   //
   open: boolean
   onClose: VoidFunction
+  setFileUrl?: (file: null | File) => void
 }
 
 export default function FileManagerNewFolderDialog({
@@ -37,6 +44,7 @@ export default function FileManagerNewFolderDialog({
   onClose,
   fileLoading,
   fileUrl,
+
   //
   onCreate,
   onUpdate,
@@ -44,10 +52,15 @@ export default function FileManagerNewFolderDialog({
   folderName,
   onChangeFolderName,
   onChangeFile,
+  setFileUrl,
   ...other
 }: Props) {
   const translate = useTranslate()
-
+  const methods = useForm({
+    defaultValues: {
+      module_img: '',
+    },
+  })
   return (
     <Dialog
       fullWidth
@@ -75,11 +88,39 @@ export default function FileManagerNewFolderDialog({
             />
           )}
           {onChangeFile && (
-            <TextField
-              inputProps={{ accept: 'image/*' }}
-              type='file'
-              onChange={onChangeFile}
-            />
+            <>
+              <FormProvider methods={methods}>
+                <Box sx={{ position: 'relative' }}>
+                  {fileUrl ? (
+                    <IconButton
+                      sx={UPLOAD_IMG_BTN}
+                      onClick={() => {
+                        setFileUrl?.(null)
+                      }}
+                    >
+                      <IoMdClose size='20px' />
+                    </IconButton>
+                  ) : null}
+                  <RHFUpload
+                    name='module_img'
+                    onDrop={(files: File[]) => {
+                      onChangeFile(files[0])
+                    }}
+                    helperText={
+                      <Typography
+                        variant='caption'
+                        noWrap
+                        width='90px'
+                        sx={HELPER_IMG_TEXT}
+                      >
+                        {fileUrl}
+                      </Typography>
+                    }
+                  />
+                  <SingleFilePreview file={fileUrl || null} />
+                </Box>
+              </FormProvider>
+            </>
           )}
         </DialogContent>
       ) : (
@@ -97,7 +138,7 @@ export default function FileManagerNewFolderDialog({
             flexGrow={1}
           >
             <Button
-              disabled={fileLoading || !folderName || !fileUrl}
+              disabled={fileLoading || !folderName || (name === 'file' && !fileUrl)}
               variant='soft'
               onClick={onCreate || onUpdate}
             >

@@ -44,7 +44,7 @@ export function MediaModal({ children }: MediaModalProps): React.ReactElement | 
   const [newFile, setNewFile] = React.useState<boolean>(false)
   const [fileLoading, setFileLoading] = React.useState<boolean>(false)
   const [newFolderName, setNewFolderName] = React.useState<string>('')
-  const [fileUrl, setFileUrl] = React.useState<string>('')
+  const [fileUrl, setFileUrl] = React.useState<string | File | null>('')
   const [fileName, setFileName] = React.useState<string>('')
   const [currentPathFiles, setCurrentPathFiles] =
     React.useState<(IMedia & BaseResponseInterface)[]>()
@@ -121,9 +121,9 @@ export function MediaModal({ children }: MediaModalProps): React.ReactElement | 
     },
     [setNewFolderName]
   )
-  const handleFileChange = async (event: any) => {
+  const handleFileChange = async (newFile: File) => {
     const file = new FormData()
-    file.append('file', event.target.files[0])
+    file.append('file', newFile)
     setFileLoading(true)
     try {
       const res: any = await uploadMediaFile({ file })
@@ -285,7 +285,7 @@ export function MediaModal({ children }: MediaModalProps): React.ReactElement | 
                   title={translate('new_file')}
                   onCreate={() => {
                     createMedia({
-                      url: fileUrl,
+                      url: fileUrl as string,
                       name: `${currentPath.join('/')}/`.replace('/', '') + fileName,
                       size: 0,
                       type: 'image',
@@ -305,7 +305,8 @@ export function MediaModal({ children }: MediaModalProps): React.ReactElement | 
                   onChangeFolderName={handleChangeFolderName}
                   onChangeFile={handleFileChange}
                   fileLoading={fileLoading}
-                  fileUrl={fileUrl}
+                  fileUrl={fileUrl as string}
+                  setFileUrl={setFileUrl}
                 />
                 <Divider sx={{ my: 5, borderStyle: 'dashed' }} />
 
