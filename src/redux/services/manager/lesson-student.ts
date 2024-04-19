@@ -4,6 +4,8 @@ import {
   ILessonSearchParams,
   LastVisitedBody,
   LastVisitedData,
+  ILastVisitedSlide,
+  ILastVisitedSlideBody,
 } from '@/redux/interfaces/content.interface'
 import { ContentValidation, setContentValidations } from '@/redux/slices/code-panel-global'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
@@ -93,6 +95,23 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ['LastVisitedUnitAndLesson'],
     }),
+    getStudentLastVisitedSlide: builder.query<
+      ILastVisitedSlide & BaseResponseInterface,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `student/lesson/last-slide/${id}`,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 0,
+    }),
+    updateStudentLastVisitedSlide: builder.mutation<void, ILastVisitedSlideBody>({
+      query: ({ ...body }) => ({
+        url: 'student/lesson/last-slide',
+        method: 'POST',
+        body,
+      }),
+    }),
     updateStudentLastVisitedData: builder.mutation<void, LastVisitedBody>({
       query: ({ ...body }) => ({
         url: '/student/lesson/last-visited',
@@ -112,6 +131,8 @@ export const {
   useGetLessonsListStudentQuery,
   useGetStudentLastVisitedUnitAndLessonQuery,
   useGetContentCheckersQuery,
+  useGetStudentLastVisitedSlideQuery,
   // -------------mutation-----------
   useUpdateStudentLastVisitedDataMutation,
+  useUpdateStudentLastVisitedSlideMutation,
 } = extendedApi
