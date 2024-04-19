@@ -90,8 +90,6 @@ const SliderBlock: FC<ISliderBlock> = ({
     { skip: !lessonId }
   )
 
-  // console.log('last slide from slide-block component', lastSlide?.slideNumber)
-
   const title = translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
     setIsOpenHeader(isOpen)
