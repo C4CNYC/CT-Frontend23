@@ -35,7 +35,7 @@ export default function MumuSpeedDial({ typing }: Props): React.ReactElement {
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null)
 
   const [{ lessonId }] = useAtom(globalCodePanelAtom)
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId })
+  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId },{ skip: !lessonId})
 
   const openSpeedDial = () => {
     setSpeedDial(true)
