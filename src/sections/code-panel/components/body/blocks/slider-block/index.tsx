@@ -83,9 +83,14 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useIsDesktop()
 
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
-  const { data: lastSlide } = useGetStudentLastVisitedSlideQuery({
-    id: lessonId as string,
-  })
+  const { data: lastSlide } = useGetStudentLastVisitedSlideQuery(
+    {
+      id: lessonId as string,
+    },
+    { skip: !lessonId }
+  )
+
+  // console.log('last slide from slide-block component', lastSlide?.slideNumber)
 
   const title = translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
@@ -126,10 +131,13 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
   }
 
+  const onUpdateLastSlide = (next: number) => {
+    updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
+  }
+
   const onBeforeChange = (_: number, next: number) => {
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {
@@ -180,6 +188,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                   {...getCarouselSettings(onBeforeChange)}
                   asNavFor={nav2}
                   ref={carousel1}
+                  afterChange={onUpdateLastSlide}
                 >
                   {data.map((step) => {
                     return (

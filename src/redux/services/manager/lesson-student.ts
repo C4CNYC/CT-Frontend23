@@ -103,6 +103,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `student/lesson/last-slide/${id}`,
         method: 'GET',
       }),
+      keepUnusedDataFor: 0,
     }),
     updateStudentLastVisitedSlide: builder.mutation<void, ILastVisitedSlideBody>({
       query: ({ ...body }) => ({
