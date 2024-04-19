@@ -107,6 +107,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             integrations={lesson?.integrations ?? []}
             isFetching={isFetchingLessonContent}
             code={document?.htmlBody?.join('') ?? ''}
+            lessonType={lesson?.type}
           />
         ) : (
           <HidedTabBtn
@@ -159,6 +160,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         integrations={lesson?.integrations ?? []}
         isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
+        lessonType={lesson?.type}
       />
 
       <CodeEditorBlock
