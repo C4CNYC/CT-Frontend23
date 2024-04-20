@@ -22,7 +22,12 @@ import { animals, colors, uniqueNamesGenerator } from 'unique-names-generator'
 
 import { FormProvider, useSnackbar } from '@/components'
 import CustomTabPanel, { customTabProps } from '@/components/custom-tab-panel'
-import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
+import {
+  AssignmentProjectCategories,
+  AssignmentProjectLanguages,
+  AssignmentTypes,
+  OPEN_PROJECT,
+} from '@/redux/enums/assignment-types.enum'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import {
   useCreateAssignmentMutation,
@@ -33,6 +38,7 @@ import {
 } from '@/redux/services/manager/assignments-manager'
 import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import DetailsStepOpenProject from '@/sections/main/quests/add-quest/DetailsStepOpenProject'
 import { useTranslate } from '@/utils/translateHelper'
 
 import {
@@ -41,9 +47,9 @@ import {
   DATE_PARSER,
   DAYS_TO_CLOSE,
   DAYS_TO_END,
+  mainContainerStyles,
   TABS_SX,
   TOOLTIP_TEXT,
-  mainContainerStyles,
 } from './constants'
 import DetailsStep from './DetailsStep'
 import { CreateQuestSchema } from './helpers/create-quest.schema'
@@ -86,6 +92,7 @@ export default function AddQuest(): React.ReactElement {
         description: JSON.parse(assignment?.description ?? '{}'),
         type: assignment?.type ?? AssignmentTypes.COURSE,
         module: assignment?.courseUnit?.id,
+        lesson: assignment?.lessonId,
         course: assignment?.course?.id,
         startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
         dueDate: format(DATE_PARSER(assignment?.end_date), DATE_FORMAT),
@@ -93,7 +100,7 @@ export default function AddQuest(): React.ReactElement {
         active: assignment?.active,
       })
     }
-  }, [isAssignmentLoading])
+  }, [isAssignmentLoading, assignment])
 
   useEffect(() => {
     if (coursesData?.data?.data[0]?.id && !methods.getValues().course) {
@@ -108,6 +115,8 @@ export default function AddQuest(): React.ReactElement {
       name: assignment?.name ?? RANDOM_NAME,
       description: JSON.parse(assignment?.description ?? '{}'),
       type: assignment?.type ?? AssignmentTypes.COURSE,
+      category: assignment?.category ?? AssignmentProjectCategories.CREATIVE_PROJECT,
+      language: assignment?.language ?? AssignmentProjectLanguages.HTML_CSS_JSS,
       course: assignment?.course?.id ?? coursesData.data?.data[0]?.id,
       startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
       dueDate: format(DATE_PARSER(assignment?.end_date, DAYS_TO_END), DATE_FORMAT),
@@ -123,12 +132,23 @@ export default function AddQuest(): React.ReactElement {
           schoolId: query.schoolId as string,
           assignmentId: query.assignmentId as string,
           name: formData.name,
+          type:
+            query?.type === OPEN_PROJECT || assignment?.type === OPEN_PROJECT
+              ? AssignmentTypes.OPEN_PROJECT
+              : formData.type,
+          category: formData.category,
+          language: formData.language,
+          lessonTitle:
+            query?.type === OPEN_PROJECT || assignment?.type === OPEN_PROJECT
+              ? JSON.stringify(formData.description)
+              : '',
           description: JSON.stringify(formData.description ?? {}),
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
           courseUnitId: formData.module,
+          lessonId: formData.lesson,
         }).unwrap()
         await addAssignmentToClass({
           assignmentId: assignment.id,
@@ -158,11 +178,15 @@ export default function AddQuest(): React.ReactElement {
           schoolId: query.schoolId as string,
           name: formData.name,
           description: JSON.stringify(formData.description),
-          type: formData.type,
+          type: query?.type !== OPEN_PROJECT ? formData.type : AssignmentTypes.OPEN_PROJECT,
+          category: formData.category,
+          language: formData.language,
+          lessonTitle: query?.type === OPEN_PROJECT ? JSON.stringify(formData.description) : '',
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           courseUnitId: formData.module,
+          lessonId: formData.lesson,
           active: Boolean(formData.active),
           skill_tags: assignmentsSkillsId?.map((el) => el.id) ?? [],
           classes: [query.id as string],
@@ -221,7 +245,9 @@ export default function AddQuest(): React.ReactElement {
             variant='subtitle2'
             textAlign='left'
           >
-            {translate('quest_type')}
+            {query?.type === OPEN_PROJECT || assignment?.type === OPEN_PROJECT
+              ? 'Type: Open Project'
+              : translate('quest_type')}
           </Typography>
         </Stack>
         <Box sx={{ px: { xs: 1, sm: 3, md: 5, lg: 12 } }}>
@@ -255,16 +281,31 @@ export default function AddQuest(): React.ReactElement {
               value={value}
               index={0}
             >
-              {!isLoading && (
-                <DetailsStep
-                  methods={methods}
-                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
-                  coursesData={{
-                    data: coursesData.data?.data,
-                    isLoading: coursesData.isLoading,
-                  }}
-                />
-              )}
+              {!isLoading &&
+                ((query?.type && query?.type === OPEN_PROJECT) ||
+                assignment?.type === OPEN_PROJECT ? (
+                  <DetailsStepOpenProject
+                    methods={methods}
+                    initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                    initialCategory={assignment?.category}
+                    initialLanguage={assignment?.language}
+                    coursesData={{
+                      data: coursesData.data?.data,
+                      isLoading: coursesData.isLoading,
+                    }}
+                  />
+                ) : (
+                  <DetailsStep
+                    methods={methods}
+                    initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                    initialType={assignment?.type}
+                    initialLesson={assignment?.lessonId}
+                    coursesData={{
+                      data: coursesData.data?.data,
+                      isLoading: coursesData.isLoading,
+                    }}
+                  />
+                ))}
             </CustomTabPanel>
             <CustomTabPanel
               value={value}

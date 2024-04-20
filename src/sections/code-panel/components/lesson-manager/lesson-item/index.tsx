@@ -10,13 +10,12 @@ import {
   Stack,
   Tooltip,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material'
-import { useRouter } from 'next/router'
 
 import { Accordion, AccordionDetails, AccordionSummary } from '@/components'
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { type Unit } from '@/redux/interfaces/challenges.interface'
+import { useSelector } from '@/redux/store'
 
 import { ACC_SUMMARY_SX, DIVIDER_SX, LIST_SX, getButtonSx, getTypSx } from './constants'
 
@@ -29,12 +28,12 @@ interface ILessonItem {
 const MAX_TEXT_LENGTH = 39
 
 const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down(1000))
-  const { query } = useRouter()
+  const isDesktop = useIsDesktop()
+  const isMobile = !isDesktop
   const typSx = useMemo(() => getTypSx(isMobile), [isMobile])
   const tooltipText = module.name.length > MAX_TEXT_LENGTH ? module.name : ''
   const isLessonsExists = module.lessons.length > 0
+  const currentLessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
   return (
     <Stack key={module.id}>
@@ -65,7 +64,7 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
                   onClick(lesson.id, module.id)
                   onClose()
                 }}
-                sx={getButtonSx(lesson.id === query.lesson_id)}
+                sx={getButtonSx(lesson.id === currentLessonId)}
               >
                 <Box display='flex'>
                   <Typography

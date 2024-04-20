@@ -39,7 +39,7 @@ export default function UserProfile(): React.ReactElement {
       value: 'links',
       label: 'profile_links',
       icon: <Iconify icon='nimbus:planet' />,
-      component: <ProfileLinks studentId={data?.id ?? ''} />,
+      component: <ProfileLinks studentId={data?.student_profile?.id ?? ''} />,
     },
   ]
 

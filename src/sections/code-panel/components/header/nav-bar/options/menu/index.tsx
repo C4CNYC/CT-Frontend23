@@ -1,7 +1,7 @@
 // node modules
 import { type ReactNode, useState } from 'react'
 
-import { Divider, Link, MenuItem, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Divider, Link, MenuItem, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
 import Hamburger from 'hamburger-react'
 import NextLink from 'next/link'
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { Iconify, MenuPopover } from '@/components'
 // local files
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
 import { PATH_AUTH } from '@/routes/paths'
@@ -38,7 +39,7 @@ interface CustomMultiEvent {
 
 const Menu = (): React.ReactElement => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
   const { replace } = useRouter()
   const { enqueueSnackbar } = useSnackbar()

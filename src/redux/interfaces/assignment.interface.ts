@@ -1,4 +1,4 @@
-import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
+import { AssignmentProjectCategories, AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import { ICourse } from '@/types'
 import { BaseSearchInterface } from '@/utils'
@@ -21,6 +21,8 @@ export interface IAssignmentReduced {
   course_progress: null
   pined: string
   pined_assignment_id: string
+  lessonid?: string
+  courseunitid?: string
 }
 
 export interface IAssignmentFull {
@@ -41,6 +43,10 @@ export interface IAssignmentFull {
   skill_tags: ISkill[]
   assignee_classes: IClass[]
   courseUnit?: ICourse
+  lessonId?: string
+  language?: string
+  category?: AssignmentProjectCategories
+  lessonTitle?: string
 }
 
 export interface IAssignmentUpdate {
@@ -59,6 +65,10 @@ export interface IAssignmentUpdate {
   tags?: string[] | []
   skill_tags?: ISkill[]
   courseUnitId?: string | undefined
+  lessonId?: string | undefined
+  language?: string
+  category?: AssignmentProjectCategories
+  lessonTitle?: string
 }
 
 export interface IAssignmentCreate {
@@ -75,6 +85,10 @@ export interface IAssignmentCreate {
   tags?: string[] | []
   skill_tags: string[]
   courseUnitId: string | undefined
+  lessonId: string | undefined
+  language?: string
+  category?: AssignmentProjectCategories
+  lessonTitle?: string
 }
 
 export interface IAssignmetsSearchParams extends BaseSearchInterface {}

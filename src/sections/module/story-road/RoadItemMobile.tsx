@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { Box, Button, CircularProgress, Collapse, Stack, Typography, useTheme } from '@mui/material'
 import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
-import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { FaChevronUp } from '@react-icons/all-files/fa/FaChevronUp'
 import { useRouter } from 'next/router'
@@ -11,6 +10,7 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 import CompleatedIcon from '../icons/CompleatedIcon'
 import RocketIcon from '../icons/RocketIcon'
+import LessonDialog from '../lesson-item/LessonDialog'
 
 import {
   DESCRIPTION_GRADIENT_TEXT_SX,
@@ -18,17 +18,17 @@ import {
   PROGRES_BOX_SX,
   getDescriptionBoxSx,
   getIconWrapperSx,
-  getMobileButtonSx,
   getMobileRoadBoxSx,
   getSeeMoreBtnSx,
 } from './constants'
+import RoadItemBtn from './RoadItemBtn'
 
 interface RoadItemMobileProps {
   firstItem: boolean
   compleated: boolean
   locked: boolean
   progress: number
-  lastActive?: boolean
+  lastActive: boolean
   lastItem?: boolean
   name: string
   description: string
@@ -52,6 +52,7 @@ const RoadItemMobile = ({
   const { query, push } = useRouter()
   const [compleatedColor, setCompleatedColor] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const projectTime = '20 mins'
 
@@ -64,7 +65,6 @@ const RoadItemMobile = ({
 
   const seeMoreBtnSx = useMemo(() => getSeeMoreBtnSx(theme), [theme])
 
-  const buttonSx = useMemo(() => getMobileButtonSx(lastActive), [lastActive])
   const descroptionGradientTesxtSx = {
     ...DESCRIPTION_GRADIENT_TEXT_SX,
     fontSize: '14px',
@@ -72,11 +72,25 @@ const RoadItemMobile = ({
   const lessonTimeSx = { ...LESSON_TIME_SX, fontSize: '14px' }
 
   const redirectToCodePanel = () => {
-    push(
-      `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(query.id as string)}?${
-        query.unitId
-      }&${lessonId}`
-    )
+    if (locked && !lastActive) {
+      openDialog()
+    } else {
+      void push(
+        STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          courseId: query.id as string,
+          unitId: query.unitId as string,
+          lessonId,
+        })
+      )
+    }
+  }
+
+  const openDialog = () => {
+    setOpen(true)
+  }
+
+  const closeDialog = () => {
+    setOpen(false)
   }
 
   useEffect(() => {
@@ -169,38 +183,13 @@ const RoadItemMobile = ({
             )}
           </Box>
         </Box>
-        <Button
-          variant='contained'
-          onClick={redirectToCodePanel}
-          disableRipple
-          sx={buttonSx}
-        >
-          {compleated ? 'Review' : null}
-          {lastActive ? (
-            <Stack
-              direction='row'
-              alignItems='center'
-              gap={0.5}
-            >
-              <Stack>
-                <Typography
-                  variant='body1'
-                  fontWeight={700}
-                >
-                  Explore
-                </Typography>
-                <Typography
-                  variant='body1'
-                  fontWeight={700}
-                >
-                  Now
-                </Typography>
-              </Stack>
-              <FaArrowRight size={18} />
-            </Stack>
-          ) : null}
-          {locked && !lastActive ? 'Open' : null}
-        </Button>
+        <RoadItemBtn
+          compleated={compleated}
+          lastActive={lastActive}
+          locked={locked}
+          isMobile
+          redirectToCodePanel={redirectToCodePanel}
+        />
       </Box>
       <Stack ml={lastActive ? -5 : 1}>
         <Typography
@@ -237,6 +226,15 @@ const RoadItemMobile = ({
           </Box>
         </Collapse>
       </Stack>
+      <LessonDialog
+        open={open}
+        closeDialog={closeDialog}
+        link={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          courseId: query.id as string,
+          unitId: query.unitId as string,
+          lessonId,
+        })}
+      />
     </Box>
   )
 }

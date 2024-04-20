@@ -14,7 +14,7 @@ import { MdIosShare } from '@react-icons/all-files/md/MdIosShare'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import { IModuleContent } from '@/redux/interfaces/content.interface'
+import { Unit } from '@/redux/interfaces/challenges.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -23,7 +23,7 @@ import ImageLightBox from './ImageLightBox'
 import ModuleProgress from './ModuleProgress'
 
 interface IModuleItemProps {
-  unit: IModuleContent
+  unit: Unit | undefined
   lastVisited: boolean
 }
 
@@ -51,7 +51,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
       ) : null}
       <ImageLightBox
         sx={isMobile ? { alignSelf: 'center' } : {}}
-        image={unit.avatar ?? '/assets/projects/bg1.png'}
+        image={unit?.avatar ?? '/assets/projects/bg1.png'}
       >
         <Box
           sx={{
@@ -61,7 +61,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
             width: '150px',
             height: '100%',
             background: `no-repeat url(${
-              unit.avatar ?? '/assets/projects/bg1.png'
+              unit?.avatar ?? '/assets/projects/bg1.png'
             }) center / cover`,
             position: 'relative',
             [theme.breakpoints.down(800)]: {
@@ -80,7 +80,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
           flex: 1,
         }}
       >
-        <ModuleProgress progress={unit.progress ?? '2'} />
+        <ModuleProgress progress={unit?.progress?.toString() ?? '2'} />
         <Box>
           <Typography
             variant='h5'
@@ -93,12 +93,12 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
               wordWrap: 'break-word',
             }}
           >
-            {unit.name}
+            {unit?.name}
           </Typography>
           <Typography variant='body1'>
-            {unit.description && unit.description?.length > 85
-              ? `${unit.description.slice(0, 80)} ...`
-              : unit.description}
+            {unit?.description && unit?.description?.length > 85
+              ? `${unit?.description.slice(0, 80)} ...`
+              : unit?.description}
           </Typography>
         </Box>
         <Stack
@@ -107,7 +107,11 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
         >
           <Button
             component={NextLink}
-            href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(query.id as string)}?${unit.id}`}
+            href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+              courseId: query.id as string,
+              unitId: unit?.id,
+              lessonId: unit?.lessons[0].id,
+            })}
             sx={{
               display: 'inline-flex',
               alignSelf: isMobile ? 'flex-end' : 'flex-start',
@@ -151,7 +155,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
             />
           </Button>
           <Link
-            href={STUDENT_PATH_DASHBOARD.courses.unit(query.id as string, unit.id)}
+            href={STUDENT_PATH_DASHBOARD.courses.unit(query.id as string, unit?.id as string)}
             component={NextLink}
             sx={{
               ml: isMobile ? 0 : 3,
@@ -171,9 +175,9 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
             sx={{ borderRightWidth: 2, my: 4 }}
           />
           <ActionsBlock
-            certificate={unit.initial_enrolled}
-            likes={unit.initial_likes}
-            rated={unit.initial_stars}
+            certificate={unit?.initial_enrolled}
+            likes={unit?.initial_likes}
+            rated={unit?.initial_stars}
           />
         </>
       ) : null}

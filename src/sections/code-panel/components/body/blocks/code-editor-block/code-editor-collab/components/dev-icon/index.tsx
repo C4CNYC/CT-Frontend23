@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import type { FC } from 'react'
 
 import CssIcon from 'react-devicons/css3/original'
 import HtmlIcon from 'react-devicons/html5/original'

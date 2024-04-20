@@ -9,8 +9,8 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import BasePreference from './BasePreference'
 
-const DEFAULT_BACKGROUDN = '#FFF'
-const DEFAULT_TEXT_COLOR = '#000'
+const DEFAULT_BACKGROUDN = '#282c34'
+const DEFAULT_TEXT_COLOR = '#FFF'
 
 interface IEditColors {
   onUpdateColors: (data: { background: string; text: string }) => void

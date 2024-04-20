@@ -1,6 +1,6 @@
 import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Box, useMediaQuery, useTheme } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import * as _ from 'lodash-es'
@@ -9,20 +9,36 @@ import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
 
 import { EmptyContent, LoadingScreen } from '@/components'
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
-import { setSlideIndex, setSolutionCode, toggleInstrations } from '@/redux/slices/code-panel-global'
+import {
+  setNextStepAble,
+  setSlideIndex,
+  setSolutionCode,
+  toggleInstrations,
+} from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import BrowserView, {
   CodeDocument,
 } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import {
+  useGetStudentLastVisitedSlideQuery,
+  useUpdateStudentLastVisitedSlideMutation,
+} from '@root/src/redux/services/manager/lesson-student'
 
 import BaseBlock from '../base-block'
 
-import { LOADER_SCREEN_SX, getBoxSx, getCarouselSettings } from './constants'
+import {
+  LOADER_SCREEN_SX,
+  PROGRESS_ITEM_SX,
+  getBoxSx,
+  getCarouselSettings,
+  getProgressWrapperSx,
+} from './constants'
 import Navigation from './navigation'
 
 const ProsaMirrorView = dynamic(async () => await import('./prosa-mirror-view'), { ssr: false })
@@ -34,12 +50,15 @@ interface ISliderBlock {
   integrations: Array<IIntegration & BaseResponseInterface>
   isFetching: boolean
   code: string
+  lessonType?: string
 }
 
 interface IView {
   type: LessonContentType
   body: string
   connectIntegrations: (body: string) => CodeDocument | null
+  title?: string
+  lessonType?: string
 }
 
 const icon = (
@@ -56,19 +75,30 @@ const SliderBlock: FC<ISliderBlock> = ({
   integrations,
   isFetching,
   code,
+  lessonType,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const translate = useTranslate()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
+
+  const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
+  const { data: lastSlide } = useGetStudentLastVisitedSlideQuery(
+    {
+      id: lessonId as string,
+    },
+    { skip: !lessonId }
+  )
 
   const title = translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
     setIsOpenHeader(isOpen)
   }, [])
 
+  const progressWrapperSx = useMemo(() => getProgressWrapperSx(theme), [theme])
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
 
   const carousel1 = useRef<Carousel | null>(null)
@@ -78,15 +108,15 @@ const SliderBlock: FC<ISliderBlock> = ({
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
 
   useEffect(() => {
-    carousel1.current?.slickGoTo(slideIndex)
-  }, [slideIndex])
-
-  useEffect(() => {
     if (carousel1.current) {
       setNav2(carousel1.current)
+      carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
     }
   }, [data])
 
+  useEffect(() => {
+    dispatch(setNextStepAble(false))
+  }, [slideIndex])
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
@@ -102,6 +132,10 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
   }
 
+  const onUpdateLastSlide = (next: number) => {
+    updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
+  }
+
   const onBeforeChange = (_: number, next: number) => {
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
@@ -110,7 +144,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const connectIntegrations = (body: string): CodeDocument | null => {
     if (integrations) {
       return {
-        htmlBody: [JSON.parse(body).content],
+        htmlBody: body ? [JSON.parse(body).content] : [''],
         cssBody: [integrations.reduce((ac, cur) => ac + cur.head, '')],
         jsBody: [integrations.reduce((ac, cur) => ac + cur.scripts, '')],
       }
@@ -129,57 +163,79 @@ const SliderBlock: FC<ISliderBlock> = ({
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
-      {_.isEmpty(data) ? (
-        <EmptyContent title={translate('messages_no_data')} />
-      ) : (
-        <>
+      <Box sx={progressWrapperSx}>
+        {data.map((slide, index) => (
           <Box
-            className='sliderTour'
-            height='100%'
-            sx={boxSx}
-          >
-            {!isFetching ? (
-              <Carousel
-                {...getCarouselSettings(onBeforeChange)}
-                asNavFor={nav2}
-                ref={carousel1}
+            key={index}
+            sx={{
+              bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`,
+              ...PROGRESS_ITEM_SX,
+            }}
+          ></Box>
+        ))}
+      </Box>
+      {!isFetching ? (
+        <>
+          {_.isEmpty(data) ? (
+            <EmptyContent title={translate('messages_no_data')} />
+          ) : (
+            <>
+              <Box
+                className='sliderTour'
+                height='100%'
+                sx={boxSx}
               >
-                {data.map((step) => {
-                  return (
-                    <View
-                      key={step.id}
-                      type={step.type}
-                      body={step.body}
-                      connectIntegrations={connectIntegrations}
-                    />
-                  )
-                })}
-              </Carousel>
-            ) : (
-              <LoadingScreen sx={LOADER_SCREEN_SX} />
-            )}
-          </Box>
+                <Carousel
+                  {...getCarouselSettings(onBeforeChange)}
+                  asNavFor={nav2}
+                  ref={carousel1}
+                  afterChange={onUpdateLastSlide}
+                >
+                  {data.map((step) => {
+                    return (
+                      <View
+                        title={step.title}
+                        lessonType={lessonType}
+                        key={step.id}
+                        type={step.type}
+                        body={step.body}
+                        connectIntegrations={connectIntegrations}
+                      />
+                    )
+                  })}
+                </Carousel>
+              </Box>
 
-          <Navigation
-            hasPrev={slideIndex > 0}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            stepHasValidation={stepHasValidation}
-            canMoveNext={nextStepAble || !stepHasValidation}
-            hasNextStep={hasNextStep}
-          />
+              <Navigation
+                hasPrev={slideIndex > 0}
+                onNext={handleNext}
+                onPrev={handlePrev}
+                stepHasValidation={stepHasValidation}
+                canMoveNext={nextStepAble || !stepHasValidation}
+                hasNextStep={hasNextStep}
+              />
+            </>
+          )}
         </>
+      ) : (
+        <LoadingScreen sx={LOADER_SCREEN_SX} />
       )}
     </BaseBlock>
   )
 }
 
-const View: FC<IView> = ({ type, body, connectIntegrations }) => {
+const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType }) => {
   const translate = useTranslate()
 
   switch (type) {
     case 'editable':
-      return <ProsaMirrorView multimediaValue={body} />
+      return (
+        <ProsaMirrorView
+          title={title}
+          multimediaValue={body}
+          lessonType={lessonType}
+        />
+      )
     case 'code':
       return <BrowserView document={connectIntegrations(body)} />
     default:

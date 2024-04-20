@@ -1,32 +1,36 @@
 import { type FC, memo, useCallback, useEffect, useRef, useState } from 'react'
 
-import { Box, Collapse, useMediaQuery } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { Box, Collapse } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
+import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
 import { type AuthUserType } from '@/auth/types'
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { type IValidation } from '@/redux/interfaces/content.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 
+import { EditorMode } from './code-editor-collab/hook/constants'
 import CodeEditorController from './code-editor-controller'
-import { EditorMode } from './constants'
+import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
 import { CodingSymbols, CodingTools } from './elements/coding-controls'
 import MumuSpeedDial from './elements/mumu-speed-deal'
-import Title from './elements/title'
 
 interface ICodeEditorBlock {
   user: AuthUserType | null
   code: string
-  onChangeCode: (code: Record<string, string>) => void
+  onChangeStreamingDocInfo: (doc: Record<string, string>) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
+  isFetching?: boolean
+  contentId?: string
 }
 
 const icon = (
@@ -37,27 +41,28 @@ const icon = (
 )
 const TYPING_DELEY = 20000
 const FIRST_LOADING_DELEY = 15000
-const MOBILE_HEIGHT = 80
-const DESKTOP_HEIGHT = 145
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   user,
   validations,
   code,
-  onChangeCode,
+  onChangeStreamingDocInfo,
   preloadedCode,
+  isFetching = false,
+  contentId,
 }) => {
-  const theme = useTheme()
+  const translate = useTranslate()
+  const TITLE = translate('code_editor')
   const dispatch = useDispatch()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
   const [typing, setTyping] = useState<boolean | null>(null)
   const room = useSelector((state) => state.codeEditorController.room)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const timer = useRef<NodeJS.Timeout>()
-  const preloadedCodeRef = useRef(preloadedCode)
   const codeRef = useRef(code)
-
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const typingListener = (deley: number, firstLoad: boolean): void => {
     if (!firstLoad) {
       setTyping(false)
@@ -81,47 +86,60 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       typingListener(TYPING_DELEY, false)
     }
   }, [code])
+  const { query } = useRouter()
 
   const symbolsHandler = useCallback((): void => {
     setCodingSymbols(!codingSymbols)
   }, [codingSymbols])
 
   const onResetRoom = useCallback(() => {
-    dispatch(
-      setRoom({
-        roomId: user?.id as string,
-        cursorText: user?.first_name as string,
-        preloadedCode: preloadedCodeRef.current,
-        code: codeRef.current,
-        mode: EditorMode.Owner,
-      })
-    )
-  }, [user, dispatch])
+    if (user && lessonId) {
+      dispatch(
+        setRoom({
+          // roomId: user?.id as string,
+          roomId: `${user?.id as string}_${query?.lessonId as string}`,
+          cursorText: user?.first_name as string,
+          preloadedCode,
+          code: codeRef.current,
+          mode: EditorMode.Owner,
+        })
+      )
+    }
+  }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
 
   useEffect(() => {
     onResetRoom()
   }, [onResetRoom])
 
+  const selectedContent = contentValidations?.find((item) => item.contentId === contentId)
   return (
     <BaseBlock
-      title={
-        <Title
-          room={room}
-          onResetRoom={onResetRoom}
-        />
-      }
+      title={TITLE}
       icon={icon}
       className='codeEditorTour'
     >
-      <style>{getTitleStyles(isDesktop)}</style>
+      <CodeEditorStyles isDesktop={isDesktop} />
 
       <MumuSpeedDial typing={typing} />
 
       {Boolean(validations?.length) && (
-        <Checkers checkers={mapValidations(code ?? '', validations)} />
+        <Checkers
+          contentId={contentId}
+          checkers={
+            selectedContent?.checkers?.length
+              ? selectedContent?.checkers
+              : mapValidations(code ?? '', validations)
+          }
+          isCheckedOnce={!!selectedContent?.checkers?.length}
+        />
       )}
 
-      <CodeEditorController onChange={onChangeCode} />
+      <CodeEditorController
+        preloadedCode={preloadedCode}
+        onChangeStreamingDocInfo={onChangeStreamingDocInfo}
+        user={user}
+        isFetching={isFetching}
+      />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>
         <Collapse
@@ -140,18 +158,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       </Box>
     </BaseBlock>
   )
-}
-
-const getTitleStyles = (isDesktop: boolean): string => {
-  return `
-  .cm-editor{
-    height: calc(100vh - ${isDesktop ? DESKTOP_HEIGHT : MOBILE_HEIGHT}px)!important;
-  }
-  .cm-scroller::-webkit-scrollbar{
-    width: 0px;
-  }
-
-`
 }
 
 export default memo(CodeEditorBlock)

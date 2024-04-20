@@ -3,12 +3,13 @@ import { type CSSProperties, type FC, type ReactNode } from 'react'
 // import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 import CloseIcon from '@mui/icons-material/Close'
-import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material'
+import { Box, IconButton, useTheme } from '@mui/material'
 import { SxProps, Theme } from '@mui/system'
 import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEllipsesOutline'
 import Draggable from 'react-draggable'
 import { useDispatch } from 'react-redux'
 
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { setChatVisible } from '@/redux/slices/chat-handler'
 import { useSelector } from '@/redux/store'
 
@@ -18,7 +19,7 @@ interface IChatPopup {
 
 const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
   const isChatVisible = useSelector((state) => state.chatHandler.isChatVisible)
 
@@ -89,7 +90,7 @@ const ICON_BUTTON_STYLES = {
 const DRAGGABLE_STYLES: CSSProperties = {
   position: 'absolute',
   height: '500px',
-  width: '350px',
+  width: '800px',
   right: 20,
   bottom: 20,
   zIndex: 5000,

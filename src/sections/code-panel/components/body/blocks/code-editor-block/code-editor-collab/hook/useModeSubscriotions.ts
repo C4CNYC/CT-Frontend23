@@ -1,11 +1,11 @@
 import { type MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import pDebounce from 'p-debounce'
-import type { Socket } from 'socket.io-client'
+import { Socket } from 'socket.io-client'
 
-import { EditorMode } from '../../constants'
 import { RoomStatus } from '../components/status-label'
 
+import { EditorMode } from './constants'
 import { SubscribedEvents } from './utils/socket'
 
 interface UseModeSubscriptionsProps {
@@ -16,7 +16,7 @@ interface UseModeSubscriptionsProps {
   runInitSubOwner: (isFirstInit: boolean) => void
   mode: EditorMode
   roomStatus: RoomStatus
-  onChange?: (doc: any) => void
+  onChangeStreamingDocInfo?: (doc: any) => void
 }
 
 const CODE_CHANGE_DELAY = 700
@@ -29,16 +29,16 @@ export const useModeSubscriptions = ({
   runInitWatcher,
   runInitSubOwner,
   initializeBlockedRef,
-  onChange,
+  onChangeStreamingDocInfo,
 }: UseModeSubscriptionsProps) => {
   const runInitWatcherRef = useRef(runInitWatcher)
   const runInitSubOwnerRef = useRef(runInitSubOwner)
 
   const delayedOnChange = useCallback(
     pDebounce((doc) => {
-      onChange?.(doc)
+      onChangeStreamingDocInfo?.(doc)
     }, CODE_CHANGE_DELAY),
-    [onChange]
+    [onChangeStreamingDocInfo]
   )
 
   useEffect(() => {

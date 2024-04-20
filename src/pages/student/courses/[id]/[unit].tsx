@@ -11,7 +11,6 @@ import {
   useGetCoursContentQuery,
   useGetStudentCourseModulesQuery,
 } from '@/redux/services/manager/courses-student'
-import { useGetStudentLastVisitedUnitAndLessonQuery } from '@/redux/services/manager/lesson-student'
 import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import {
@@ -47,7 +46,6 @@ export default function ModulePage(): React.ReactElement {
     },
     { skip: !query.id }
   )
-  const { data: lastVisitedData } = useGetStudentLastVisitedUnitAndLessonQuery()
 
   const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
     { id: query.unit as string },
@@ -115,6 +113,7 @@ export default function ModulePage(): React.ReactElement {
             {!isLoadingModules && !isLoadingModule && module ? (
               <ModuleHeader
                 name={module.name}
+                lessons={module?.lessons ?? []}
                 description={module?.description ? module.description : translate('description')}
                 avatar={module.avatar}
               />
@@ -128,7 +127,6 @@ export default function ModulePage(): React.ReactElement {
               <LessonsList
                 lessons={module?.lessons ?? []}
                 unitId={query?.unit as string}
-                lastVisitedData={lastVisitedData?.lastVisitedLessonId ?? ''}
               />
             ) : (
               <Stack sx={getLessonListSx(isMobile, theme)}>

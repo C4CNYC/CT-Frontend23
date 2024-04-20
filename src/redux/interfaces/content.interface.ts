@@ -82,7 +82,7 @@ export interface ILesson {
   integrations: Array<IIntegration & BaseResponseInterface>
   id: string
   tips: string[] | []
-  progress?: number
+  progress: number | null
   skills: ISkill[]
   independent?: boolean
   contents: ILessonContent[]
@@ -116,6 +116,8 @@ export interface ILessonContent {
   meta: Record<string, any>
   integrations: IIntegration[]
   progress?: ILessonContentProgress[]
+  title?: string
+  id?: string
 }
 
 export interface ISkill {
@@ -160,4 +162,15 @@ export interface LastVisitedBody {
 export interface LastVisitedState {
   unitId: string | null
   lessonId: string | null
+}
+
+export interface ILastVisitedSlide {
+  id: string
+  slideNumber: number
+  lessonId: string
+}
+
+export interface ILastVisitedSlideBody {
+  lessonId: string
+  slideNumber: number
 }

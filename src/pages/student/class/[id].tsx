@@ -45,7 +45,7 @@ export default function HomeOverview(): React.ReactElement {
     if (data) {
       dispatch(setClass(data))
     }
-  }, [isLoading])
+  }, [isLoading, data])
 
   return (
     <>

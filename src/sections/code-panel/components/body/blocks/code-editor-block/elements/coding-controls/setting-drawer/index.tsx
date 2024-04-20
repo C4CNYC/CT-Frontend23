@@ -4,12 +4,7 @@ import { IconButton, SwipeableDrawer, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
 import { Iconify } from '@/components/iconify'
-import {
-  resetLessonEvent,
-  updateColorsEvent,
-  updateFontSize,
-  updateLineWrap,
-} from 'src/sections/code-panel/lib/events'
+import { resetLessonEvent, updateLineWrap } from 'src/sections/code-panel/lib/events'
 
 // import { globalCodePanelAtom } from './atoms/global-code-panel.atom'
 // import { startTour } from './atoms/tour-atom'
@@ -90,7 +85,7 @@ const SettingDrawer = (): React.ReactElement => {
             <Typography variant='body1'>CODING EDITOR:</Typography>
             <EditorFontSize
               onUpdateFontSize={(size: number) => {
-                window.dispatchEvent(updateFontSize({ detail: { size } }))
+                // window.dispatchEvent(updateFontSize({ detail: { size } }))
               }}
             />
             <EditorWordWrap
@@ -101,7 +96,7 @@ const SettingDrawer = (): React.ReactElement => {
             <Typography variant='body1'>CUSTOMIZE:</Typography>
             <EditColors
               onUpdateColors={(data) => {
-                window.dispatchEvent(updateColorsEvent(data))
+                // window.dispatchEvent(updateColorsEvent(data))
               }}
             />
           </Box>

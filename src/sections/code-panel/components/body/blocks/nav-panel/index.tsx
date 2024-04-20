@@ -2,16 +2,13 @@ import { type FC, type RefObject, useEffect, useMemo } from 'react'
 
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import AssignmentIcon from '@mui/icons-material/Assignment'
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
-import { useRouter } from 'next/router'
 
 import { SimpleInfiniteList } from '@/components'
-import { useLessonStatus, useSocket } from '@/hooks'
 import { type IFriend } from '@/redux/interfaces/friends.interface'
-import { useSelector, RootState } from '@/redux/store'
+import { useSelector } from '@/redux/store'
 import { ILessonUserStatus } from '@/types'
 import { type BaseResponseInterface } from '@/utils'
 
@@ -36,11 +33,12 @@ import {
 interface NavPanelProps {
   cursorName?: string
   wrapperListenerRef: RefObject<HTMLDivElement | null>
+  lessonId?: string
 }
 
 const LOADER_SIZE = 20
 
-const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
+const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId }) => {
   const {
     drawerRef,
     isOpen,
@@ -48,6 +46,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
     setIsOpen,
     onDragEnd,
     onDeletePreviewUser,
+    closeAllUsersPreview,
     draggableConfig,
     users,
     setUsers,
@@ -59,60 +58,60 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   } = useNavPanel(wrapperListenerRef)
 
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
-  const router = useRouter()
-  const socket = useSocket()
-  const usersStatus = useLessonStatus()
-  const room = useSelector((state: RootState) => state.codeEditorController.room)
-  const roomId = room?.roomId ?? ''
+  // const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const usersStatus = useSelector((state) => state.codePanelGlobal.usersStatus)
+  // const room = useSelector((state: RootState) => state.codeEditorController.room)
+  // const roomId = room?.roomId ?? ''
 
   const drawerSx = useMemo(() => {
-    return getDrawerSx(isOpen, isRealtimeCodeEnabled)
-  }, [isOpen, isRealtimeCodeEnabled])
+    return getDrawerSx(isOpen, isRealtimeCodeHidden)
+  }, [isOpen, isRealtimeCodeHidden])
 
   const stackCodeBoxSx = useMemo(() => {
     return getStackCodeBoxSx(draggableConfig?.height, isOpen)
   }, [draggableConfig?.height, isOpen])
 
   useEffect(() => {
-    // console.log({ usersStatus });
     const _users = users.map((_user: IFriend & BaseResponseInterface) => {
-      if (!usersStatus.some((_userStatus: ILessonUserStatus) => _userStatus.id === _user.id)) {
-        return {
-          ..._user,
-        }
-      } else {
-        return {
-          ..._user,
-          status: usersStatus.filter(
-            (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
-          )[0].status,
-        }
+      const userStatus = usersStatus.find(
+        (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
+      )
+      return {
+        ..._user,
+        status: userStatus?.status ?? _user.status,
+        currentLessonId: userStatus?.lessonId ?? _user.currentLessonId,
       }
     })
     setUsers(_users)
   }, [usersStatus, users.length])
 
-  const onChangeUserStatus = (status: string = 'active') => {
-    try {
-      // if (socket && socket.connected && router.query.lessonId) {
-      socket?.emit('changeStatusInLesson', {
-        lesson: router.query.lessonId,
-        user: roomId,
-        status,
-      })
-      // }
-      setUsers((_users: IFriend[]) =>
-        _users.map((_user: IFriend) => {
-          if (_user.id === roomId) return { ..._user, status }
-          return { ..._user }
-        })
-      )
-    } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('onChangeUserStatusError: ', error)
+  useEffect(() => {
+    if (isRealtimeCodeEnabled) {
+      setIsOpen(false)
+      closeAllUsersPreview()
     }
-  }
+  }, [isRealtimeCodeHidden])
+
+  // const onChangeUserStatus = (status: string, lessonId: string) => {
+  //   try {
+  //     socket?.emit('changeStatusInLesson', {
+  //       lesson: lessonId,
+  //       user: roomId,
+  //       status,
+  //     })
+  //     setUsers((_users: IFriend[]) =>
+  //       _users.map((_user: IFriend) => {
+  //         if (roomId === `${_user.id as string}_${lessonId as string}`) return { ..._user, status }
+  //         return { ..._user }
+  //       })
+  //     )
+  //   } catch (error: any) {
+  //     // eslint-disable-next-line no-console
+  //     console.log('onChangeUserStatusError: ', error)
+  //   }
+  // }
 
   return (
     <Drawer
@@ -182,14 +181,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
             setIsOpen(!isOpen)
           }}
         />
-
-        <CustomNavItem
-          icon={<AssignmentIcon sx={ICON_SX} />}
-          name='Sandbox'
-          onToggle={() => {
-            setIsOpen(!isOpen)
-          }}
-        />
       </List>
 
       {isRealtimeCodeEnabled && (
@@ -209,9 +200,10 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
                       onClose={() => {
                         onDeletePreviewUser(user.id)
                       }}
-                      data={user}
+                      owner={user}
                       cursorName={cursorName}
-                      onChangeUserStatus={onChangeUserStatus}
+                      // onChangeUserStatus={onChangeUserStatus}
+                      lessonId={user.currentLessonId ?? lessonId}
                     />
                   </SortableItem>
                 )

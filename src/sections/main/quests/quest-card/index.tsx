@@ -18,7 +18,11 @@ const DEFAULT_TAKE_PER_PAGE = 10
 
 export default function QuestsTab({ classId, schoolId, activeTab }: IQuestTabProps) {
   const { filters, setFilter } = useFilters<IAssignmetsSearchParams>({}, FilterMode.local)
-  const { data, isLoading, isFetching } = useGetAssignmentListStudentQuery(
+  const {
+    data: assignments,
+    isLoading,
+    isFetching,
+  } = useGetAssignmentListStudentQuery(
     { class_id: classId, ...filters },
     { skip: !activeTab || !classId, refetchOnMountOrArgChange: true }
   )
@@ -36,14 +40,14 @@ export default function QuestsTab({ classId, schoolId, activeTab }: IQuestTabPro
         flexGrow={1}
       >
         <SimpleInfiniteList
-          hasNextPage={data?.meta.hasNextPage ?? false}
+          hasNextPage={assignments?.meta.hasNextPage ?? false}
           onLoadMore={() => {
-            if (data?.meta.take !== Number(filters?.take)) return
+            if (assignments?.meta.take !== Number(filters?.take)) return
             setFilter('take', DEFAULT_TAKE_PER_PAGE)
           }}
           loading={isLoading ?? isFetching}
         >
-          {data?.data.map((el) => (
+          {assignments?.data.map((el) => (
             <QuestItem
               key={el.id}
               assignment={el}
@@ -53,7 +57,7 @@ export default function QuestsTab({ classId, schoolId, activeTab }: IQuestTabPro
 
           {isFetching ? getQuestsSkeletonList() : null}
         </SimpleInfiniteList>
-        {!isLoading && !isFetching && !data?.data.length && (
+        {!isLoading && !isFetching && !assignments?.data.length && (
           <EmptyContent title={translate('messages_no_data')} />
         )}
       </Stack>

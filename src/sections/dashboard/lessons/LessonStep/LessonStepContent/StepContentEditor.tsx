@@ -1,6 +1,14 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
@@ -44,6 +52,7 @@ export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query
   const { enqueueSnackbar } = useSnackbar()
   const [locked, setLocked] = useState(false)
+  const [open, setOpen] = useState<boolean>(false)
   const translate = useTranslate()
   const [updateContent] = useUpdateLessonContentMutation()
   const { data: integrations, isLoading: isIntegrationLoading } = useGetLessonIntegrationsQuery(
@@ -78,6 +87,7 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
+    if (data?.body) setBodyType(LessonContentType.Code)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {
@@ -95,6 +105,45 @@ export default function StepContentEditor(): React.ReactElement {
         lockedHandler: setLocked,
       }}
     >
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpen(false)
+        }}
+      >
+        <DialogTitle
+          textAlign='center'
+          typography='h5'
+          color='error'
+        >
+          Any content in the current editor can be deleted if you switch now
+        </DialogTitle>
+        <DialogTitle
+          textAlign='center'
+          typography='h6'
+        >
+          Are you sure you want to switch?
+        </DialogTitle>
+        <DialogActions sx={{ gap: 2, justifyContent: 'center' }}>
+          <Button
+            onClick={() => setOpen(false)}
+            variant='outlined'
+            color='error'
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              setOpen(false)
+              setBodyType(LessonContentType.Editable)
+            }}
+            variant='outlined'
+            color='success'
+          >
+            Yes. I understand
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Box
         sx={(theme) => ({
           position: 'relative',
@@ -125,7 +174,8 @@ export default function StepContentEditor(): React.ReactElement {
               exclusive
               value={bodyType}
               onChange={(_, newValue) => {
-                setBodyType(newValue)
+                if (bodyType === LessonContentType.Code) setOpen(true)
+                else setBodyType(newValue)
               }}
               aria-label='select slide type'
             >
@@ -195,7 +245,7 @@ export default function StepContentEditor(): React.ReactElement {
           ) : null}
           {bodyType === LessonContentType.Code ? (
             <StepCode
-              content={data?.type === LessonContentType.Code ? data?.body : ''}
+              content={data?.body || ''}
               integrations={integrations ?? []}
               onSubmit={onSubmit}
               data={data!}

@@ -12,11 +12,11 @@ import BaseBlock from '../base-block'
 
 import BrowserView, { CodeDocument } from './browser-view'
 
-interface IVueBlock {
-  code: CodeDocument | null
+interface IViewBlock {
+  document: CodeDocument | null
 }
 
-const ViewBlock: FC<IVueBlock> = ({ code }) => {
+const ViewBlock: FC<IViewBlock> = ({ document }) => {
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state: RootState) => state.codePanelGlobal.isBrowserHidden)
   const translate = useTranslate()
@@ -45,7 +45,7 @@ const ViewBlock: FC<IVueBlock> = ({ code }) => {
       takeHeaderSettings={takeHeaderSettings}
     >
       <BrowserView
-        document={code}
+        document={document}
         isOpenHeader={isOpenHeader}
       />
     </BaseBlock>

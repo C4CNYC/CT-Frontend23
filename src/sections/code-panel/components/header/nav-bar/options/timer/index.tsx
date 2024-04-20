@@ -146,12 +146,14 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
               >
                 {translate('timer_finish')}
               </Typography>
-              <img
-                src='https://i.giphy.com/l4HogV6533Je2oG40.gif'
-                width='150px'
-                height='130px'
-                alt='Your GIF'
-              />
+              <picture>
+                <img
+                  src='https://i.giphy.com/l4HogV6533Je2oG40.gif'
+                  width='150px'
+                  height='130px'
+                  alt='Your GIF'
+                />
+              </picture>
             </Stack>
           )}
           {!start && !finish ? (

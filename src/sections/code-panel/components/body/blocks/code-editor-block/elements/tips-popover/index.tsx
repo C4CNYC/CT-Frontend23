@@ -1,7 +1,8 @@
 import { type FC, useEffect } from 'react'
 
-import { Box, Button, List, Popover, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, Popover, Typography } from '@mui/material'
 
+import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 
 import {
@@ -16,12 +17,11 @@ interface TipsPopoverProps {
   openPoper: boolean
   anchorEl: HTMLElement | null
   setOpenPoper: (open: boolean) => void
-  tips: string[]
+  tips: string
 }
 
 const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, tips }) => {
-  const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000))
+  const isDesktop = useIsDesktop()
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
 
   useEffect(() => {
@@ -49,17 +49,12 @@ const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, 
       }}
     >
       <Box sx={BOX_STYLES}>
-        <List>
-          {tips.map((t, i) => (
-            <Typography
-              key={t}
-              variant='body1'
-              sx={TYP_COLOR}
-            >
-              {i + 1}. {t}
-            </Typography>
-          ))}
-        </List>
+        <Typography
+          variant='body1'
+          sx={TYP_COLOR}
+        >
+          {tips}
+        </Typography>
 
         <Button
           onClick={() => {

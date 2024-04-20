@@ -1,23 +1,27 @@
 import { type RefObject, useEffect, useState, useRef, useCallback, useMemo } from 'react'
 
-import { type Extension } from '@codemirror/state'
+import type { Extension } from '@codemirror/state'
+import type { Text } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import type { Socket } from 'socket.io-client'
 
-import { RESET_LESSON_EVENT } from 'src/sections/code-panel/lib/events'
+import { AuthUserType } from '@/auth/types'
+import { useSelector } from '@/redux/store'
 
-import { EditorMode } from '../../constants'
 import { RoomStatus } from '../components/status-label'
 
+import { EditorMode } from './constants'
+import { type File, getFileInfo, isRoomExist } from './requests'
+import { type UseCommentsPropsReturn, useComments } from './useComments'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
 import { useModeSubscriptions } from './useModeSubscriotions'
-import { type File, getFileInfo, isRoomExist } from './utils/collab/requests'
-import { unsubscribeSocket, EmitSocketEvents } from './utils/socket'
+import { EmitSocketEvents, unsubscribeSocket } from './utils/socket'
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
   mode?: EditorMode
+  user?: AuthUserType
   activeFile: File
   socket?: Socket
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
@@ -28,9 +32,10 @@ interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' |
   editorRef: RefObject<HTMLDivElement>
   isLoading: boolean
   key: number
-  doc: string
+  streamingDoc?: Text
   onCreateEditor: (view: EditorView) => void
   roomStatus: RoomStatus
+  commentProps: Omit<UseCommentsPropsReturn, 'commentEffectRef' | 'onCommentIconClick'>
 }
 
 export const useCodeEditorCollab = ({
@@ -39,6 +44,8 @@ export const useCodeEditorCollab = ({
   activeFile,
   socket,
   onRoomStatusChanged,
+  user,
+  preloadedCode,
   ...propsToMemoize
 }: UseCodeEditorCollabProps): UseCodeEditorCollabReturn => {
   const modeRef = useRef(mode)
@@ -48,15 +55,16 @@ export const useCodeEditorCollab = ({
   const editorView = useRef<EditorView | null>(null)
   const editorRef = useRef<HTMLDivElement | null>(null)
   const [roomStatus, setRoomStatus] = useState(RoomStatus.Active)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
   const {
     cursorText,
     withTooltip,
-    onChange,
+    onChangeStreamingDocInfo,
     setActiveFile,
     onResetFileManager,
     defaultFileName,
-    preloadedCode,
+    // preloadedCode,
   } = useMemoizedProps(propsToMemoize)
 
   const onCreateEditor = (view: EditorView): void => {
@@ -72,14 +80,27 @@ export const useCodeEditorCollab = ({
     editorView.current?.destroy()
   }, [])
 
+  const { commentEffectRef, onCommentIconClick, ...commentProps } = useComments({
+    editorView,
+    socket,
+    cursorText,
+    roomId,
+    activeFile: activeFile.id,
+  })
+
   const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
     socket,
     withTooltip,
-    onChange,
+    onChangeStreamingDocInfo,
     roomId,
+    lessonId,
+    mode,
+    user,
     cursorText,
     defaultFileName,
     preloadedCode,
+    commentEffectRef,
+    onCommentIconClick,
   })
 
   const runInitSubOwner = useCallback(
@@ -181,24 +202,24 @@ export const useCodeEditorCollab = ({
     [runInitWatcher, runInitOwner, runInitSubOwner]
   )
 
-  useEffect(() => {
-    const onResetLesson = () => {
-      editorView.current?.destroy()
-      if (initializeBlockedRef.current) {
-        return
-      }
-
-      if (socket) {
-        initialize[modeRef.current](firstInit.current)
-      }
-    }
-
-    window.addEventListener(RESET_LESSON_EVENT, onResetLesson)
-
-    return () => {
-      window.removeEventListener(RESET_LESSON_EVENT, onResetLesson)
-    }
-  }, [socket])
+  // useEffect(() => {
+  //   const onResetLesson = () => {
+  //     editorView.current?.destroy()
+  //     if (initializeBlockedRef.current) {
+  //       return
+  //     }
+  //
+  //     if (socket) {
+  //       initialize[modeRef.current](firstInit.current)
+  //     }
+  //   }
+  //
+  //   window.addEventListener(RESET_LESSON_EVENT, onResetLesson)
+  //
+  //   return () => {
+  //     window.removeEventListener(RESET_LESSON_EVENT, onResetLesson)
+  //   }
+  // }, [socket])
 
   useModeSubscriptions({
     roomId,
@@ -208,7 +229,7 @@ export const useCodeEditorCollab = ({
     runInitWatcher,
     mode,
     socket,
-    onChange,
+    onChangeStreamingDocInfo,
   })
 
   useEffect(() => {
@@ -248,6 +269,7 @@ export const useCodeEditorCollab = ({
     editorRef,
     onCreateEditor,
     roomStatus,
+    commentProps,
     ...codeMirrorProps,
   }
 }

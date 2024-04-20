@@ -1,9 +1,9 @@
-import { type SxProps } from '@mui/system'
+import { Theme, type SxProps } from '@mui/system'
 
 export const getBoxSx = (isDesktop: boolean, isOpenHeader: boolean): SxProps => ({
   overflowY: 'scroll',
   scrollbarWidth: 'none',
-  height: isOpenHeader ? 'calc(100vh - 80px)' : 'calc(100vh - 110px)',
+  height: isOpenHeader ? 'calc(100vh - 92px)' : 'calc(100vh - 122px)',
   '&::-webkit-scrollbar': {
     width: 0,
   },
@@ -46,4 +46,19 @@ export const LOADER_SCREEN_SX = {
       opacity: 0,
     },
   },
+}
+
+export const getProgressWrapperSx = (theme: Theme): SxProps => ({
+  width: '100%',
+  bgcolor: theme.palette.background.default,
+  display: 'flex',
+  gap: '2px',
+  py: '4px',
+  px: '10px',
+})
+
+export const PROGRESS_ITEM_SX = {
+  height: 4,
+  flex: 1,
+  borderRadius: 16,
 }

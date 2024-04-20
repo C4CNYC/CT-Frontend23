@@ -2,12 +2,12 @@ import { useRef } from 'react'
 
 import { Box, Collapse, IconButton } from '@mui/material'
 import { alpha } from '@mui/material/styles'
-import { SnackbarProvider as NotistackProvider, SnackbarKey } from 'notistack'
+import { SnackbarProvider, SnackbarKey } from 'notistack'
 
 import { Iconify, IconifyProps } from '../iconify'
 import { useSettingsContext } from '../settings/SettingsContext'
 
-import StyledNotistack from './styles'
+import { StyledNotistack } from './styles'
 
 export interface SnackbarProviderWrapperProps {
   children: React.ReactNode
@@ -28,9 +28,14 @@ export function SnackbarProviderWrapper({
 
   return (
     <>
-      <StyledNotistack />
-
-      <NotistackProvider
+      <SnackbarProvider
+        Components={{
+          default: StyledNotistack,
+          info: StyledNotistack,
+          success: StyledNotistack,
+          warning: StyledNotistack,
+          error: StyledNotistack,
+        }}
         ref={notistackRef}
         dense
         maxSnack={5}
@@ -77,7 +82,7 @@ export function SnackbarProviderWrapper({
         )}
       >
         {children}
-      </NotistackProvider>
+      </SnackbarProvider>
     </>
   )
 }

@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-import { File, type FileInfo } from './utils/collab/requests'
+import type { File, FileInfo } from './requests'
 
 export interface MemoizedProps {
   code?: string
   cursorText?: string
   withTooltip?: boolean
   preloadedCode?: string
-  onChange?: (code: Record<string, string>) => void
+  onChangeStreamingDocInfo?: (doc: Record<string, string>) => void
   setActiveFile: (fileName: File) => void
   onResetFileManager: (info?: FileInfo) => void
   defaultFileName: string
+  isFetching?: boolean
 }
 
 interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {
@@ -21,7 +22,7 @@ interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTo
 export const useMemoizedProps = ({
   cursorText = 'Unknown',
   withTooltip = true,
-  onChange,
+  onChangeStreamingDocInfo,
   onResetFileManager,
   setActiveFile,
   code,
@@ -29,7 +30,7 @@ export const useMemoizedProps = ({
   defaultFileName,
 }: MemoizedProps): MemoizedPropsReturn => {
   const codeRef = useRef(code)
-  const onChangeRef = useRef(onChange)
+  const onChangeRef = useRef(onChangeStreamingDocInfo)
   const withTooltipRef = useRef(withTooltip)
   const preloadedCodeRef = useRef(preloadedCode)
   const setActiveFileRef = useRef(setActiveFile)
@@ -46,8 +47,12 @@ export const useMemoizedProps = ({
   }, [onResetFileManager])
 
   useEffect(() => {
-    onChangeRef.current = onChange
-  }, [onChange])
+    preloadedCodeRef.current = preloadedCode
+  }, [preloadedCode])
+
+  useEffect(() => {
+    onChangeRef.current = onChangeStreamingDocInfo
+  }, [onChangeStreamingDocInfo])
 
   const _onChange = useCallback((code: Record<string, string>): void => {
     onChangeRef.current?.(code)
@@ -62,7 +67,7 @@ export const useMemoizedProps = ({
   }, [])
 
   return {
-    onChange: _onChange,
+    onChangeStreamingDocInfo: _onChange,
     onResetFileManager: _onResetFileManager,
     setActiveFile: _setActiveFile,
     cursorText: cursorTextRef.current,

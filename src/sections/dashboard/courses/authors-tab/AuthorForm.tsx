@@ -67,7 +67,7 @@ export default function AuthorForm({
           linkedin: data.linkedin,
           about: data.about,
         }).unwrap()
-        if (data.avatar) {
+        if (data.avatar && typeof data.avatar !== 'string') {
           file.append('file', data.avatar)
           await postCover({ id: defaultValues.id, file }).unwrap()
         }

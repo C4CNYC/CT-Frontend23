@@ -2,7 +2,7 @@ import { Box, Container, Skeleton, Stack } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
+import { CustomBreadcrumbs, EmptyContent, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetCoursContentQuery } from '@/redux/services/manager/courses-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -63,39 +63,53 @@ export default function CoursePage(): React.ReactElement {
               />
             </Stack>
           ) : (
-            <CourseInfo
-              name={data?.name ?? ''}
-              description={data?.description ?? ''}
-              cover={data?.cover}
-              duration={'9'}
-              level={data?.level ?? ''}
-              lessonsCount={
-                data?.units.reduce((total, unit) => {
-                  return total + unit.lessons.length
-                }, 0) ?? 0
-              }
-            />
+            <>
+              <CourseInfo
+                name={data?.name ?? ''}
+                description={data?.description ?? ''}
+                cover={data?.cover}
+                duration={'9'}
+                level={data?.level ?? ''}
+                lessonsCount={
+                  data?.units.reduce((total, unit) => {
+                    return total + unit.lessons.length
+                  }, 0) ?? 0
+                }
+              />
+              <Stack
+                sx={{
+                  flexDirection: {
+                    xs: 'column-reverse',
+                    sm: 'column-reverse',
+                    md: 'column-reverse',
+                    lg: 'row',
+                    xl: 'row',
+                  },
+                  gap: { xs: 6, lg: 2, xl: 6 },
+                }}
+              >
+                {data?.units?.length ? (
+                  <>
+                    <ModulesListBlock modules={data?.units} />
+                    <CourseSidebar
+                      duration={'9'}
+                      grade='5th-10th Grade'
+                      lessons={data?.total_lessons ?? 0}
+                      level={data?.level ?? '-'}
+                    />
+                  </>
+                ) : (
+                  <Box
+                    width='100%'
+                    display='flex'
+                    justifyContent='center'
+                  >
+                    <EmptyContent title='No modules' />
+                  </Box>
+                )}
+              </Stack>
+            </>
           )}
-          <Stack
-            sx={{
-              flexDirection: {
-                xs: 'column-reverse',
-                sm: 'column-reverse',
-                md: 'column-reverse',
-                lg: 'row',
-                xl: 'row',
-              },
-              gap: { xs: 6, lg: 2, xl: 6 },
-            }}
-          >
-            <ModulesListBlock />
-            <CourseSidebar
-              duration={'9'}
-              grade='5th-10th Grade'
-              lessons={data?.total_lessons ?? 0}
-              level={data?.level ?? '-'}
-            />
-          </Stack>
         </Box>
       </Container>
     </>

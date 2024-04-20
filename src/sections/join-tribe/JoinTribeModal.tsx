@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Box, Dialog } from '@mui/material'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import { IClass } from '@/redux/interfaces/class.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
@@ -52,12 +53,16 @@ export default function JoinTribeModal({
             handleCloseModal={handleCloseModal}
           />
         ) : isLogin ? (
-          <JoinTribeLogin
-            classId={classInfo.id}
-            handleChangeAuthorization={handleChangeAuthorization}
-          />
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
+            <JoinTribeLogin
+              classId={classInfo.id}
+              handleChangeAuthorization={handleChangeAuthorization}
+            />
+          </GoogleOAuthProvider>
         ) : (
-          <JoinTribeRegister handleChangeAuthorization={handleChangeAuthorization} />
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
+            <JoinTribeRegister handleChangeAuthorization={handleChangeAuthorization} />
+          </GoogleOAuthProvider>
         )}
       </Box>
     </Dialog>

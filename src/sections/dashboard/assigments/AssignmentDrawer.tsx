@@ -311,7 +311,9 @@ export default function AssignmentDrawer({
               {translate('assignments_assign_to')}:
             </ListItemText>
             <Avatar sx={{ width: '25px', height: '25px', mr: 1 }} />
-            <ListItemText>{assignment.assignee_classes[0].name}</ListItemText>
+            {assignment?.assignee_classes?.[0]?.name && (
+              <ListItemText>{assignment?.assignee_classes?.[0]?.name}</ListItemText>
+            )}
           </ListItem>
           <ListItem>
             <LoadingButton

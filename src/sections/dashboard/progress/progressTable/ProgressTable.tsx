@@ -302,18 +302,20 @@ export default function ProgressTable({
                         onClick={() => onSelectGroup(item.id)}
                       />
                     ) : (
-                      <TableItemProgress
-                        key={item.id}
-                        studentName={`${el.first_name} ${
-                          !lastNameOnly
-                            ? `${el?.last_name ? el?.last_name?.substring(0, 1) : ''}`
-                            : el?.last_name
-                        }`}
-                        type={levelName}
-                        name={item.name}
-                        progress={item.progress}
-                        onClick={() => onSelectGroup(item.id)}
-                      />
+                      <>
+                        <TableItemProgress
+                          key={item.id}
+                          studentName={`${el.first_name} ${
+                            !lastNameOnly
+                              ? `${el?.last_name ? el?.last_name?.substring(0, 1) : ''}`
+                              : el?.last_name
+                          }`}
+                          type={levelName}
+                          name={item.name}
+                          progress={item.progress}
+                          onClick={() => onSelectGroup(item.id)}
+                        />
+                      </>
                     )
                   )}
                 </TableRow>

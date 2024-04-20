@@ -3,7 +3,10 @@ import { useMemo } from 'react'
 import { Chip, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
 
 import { Image } from '@/components'
+import { ILesson, ISkill } from '@/redux/interfaces/content.interface'
 import ImageLightBox from '@/sections/course/modules-list/module-item/ImageLightBox'
+import { BaseResponseInterface } from '@/utils'
+import { getUniqueSkills } from '@/utils/getUniqueSkills'
 
 import { CHIP_SX, HEADER_IMG_SX, getHeaderContainerSx } from './constants'
 
@@ -11,17 +14,20 @@ interface IModuleHeaderProps {
   name: string
   description: string
   avatar: string | null
+  lessons: Array<ILesson & BaseResponseInterface>
 }
 
 export default function ModuleHeader({
   name,
   description,
   avatar,
+  lessons,
 }: IModuleHeaderProps): React.ReactElement {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(1000))
-
   const moduleCont = useMemo(() => getHeaderContainerSx(isMobile, theme), [isMobile, theme])
+  const skills = getUniqueSkills(lessons.map((item: ILesson) => item.skills).flat())
+
   return (
     <Stack sx={moduleCont}>
       <Stack>
@@ -39,29 +45,22 @@ export default function ModuleHeader({
         >
           {description}
         </Typography>
-        <Stack
-          direction='row'
-          gap={2}
-          my={2}
-          flexWrap='wrap'
-        >
-          <Chip
-            label='HTML'
-            sx={CHIP_SX}
-          />
-          <Chip
-            label='CSS'
-            sx={CHIP_SX}
-          />
-          <Chip
-            label='BASICS'
-            sx={CHIP_SX}
-          />
-          <Chip
-            label='AUTO-CHECKED'
-            sx={CHIP_SX}
-          />
-        </Stack>
+        {!!skills?.length && (
+          <Stack
+            direction='row'
+            gap={2}
+            my={2}
+            flexWrap='wrap'
+          >
+            {skills?.map((item: ISkill) => (
+              <Chip
+                key={item.id}
+                label={item.name}
+                sx={CHIP_SX}
+              />
+            ))}
+          </Stack>
+        )}
       </Stack>
       <ImageLightBox image={avatar ?? '/assets/courses/courseImg.png'}>
         <Image

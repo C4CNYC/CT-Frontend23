@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { Box, Button, CircularProgress, Collapse, Stack, Typography, useTheme } from '@mui/material'
 import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
-import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { FaChevronUp } from '@react-icons/all-files/fa/FaChevronUp'
 import { useRouter } from 'next/router'
@@ -11,24 +10,25 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 import CompleatedIcon from '../icons/CompleatedIcon'
 import RocketIcon from '../icons/RocketIcon'
+import LessonDialog from '../lesson-item/LessonDialog'
 
 import {
   DESCRIPTION_GRADIENT_TEXT_SX,
   LESSON_TIME_SX,
   PROGRES_BOX_SX,
-  getButtonSx,
   getDescriptionBoxSx,
   getIconWrapperSx,
   getRoadBoxSx,
   getSeeMoreBtnSx,
 } from './constants'
+import RoadItemBtn from './RoadItemBtn'
 
 interface RoadItemProps {
   compleated: boolean
   locked: boolean
   progress: number
   oddItem: boolean
-  lastActive?: boolean
+  lastActive: boolean
   firstItem?: boolean
   lastItem?: boolean
   name: string
@@ -54,6 +54,7 @@ const RoadItem = ({
   const { push, query } = useRouter()
   const [compleatedColor, setCompleatedColor] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const projectTime = '20 mins'
 
@@ -63,16 +64,28 @@ const RoadItem = ({
   )
   const iconWrapperSx = useMemo(() => getIconWrapperSx(compleated), [compleated])
 
-  const buttonSx = useMemo(() => getButtonSx(lastActive), [lastActive])
-
   const seeMoreBtnSx = useMemo(() => getSeeMoreBtnSx(theme), [theme])
 
   const redirectToCodePanel = () => {
-    push(
-      `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(query.id as string)}?${
-        query.unitId
-      }&${lessonId}`
-    )
+    if (locked && !lastActive) {
+      openDialog()
+    } else {
+      void push(
+        STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          courseId: query.id as string,
+          unitId: query.unitId as string,
+          lessonId,
+        })
+      )
+    }
+  }
+
+  const openDialog = () => {
+    setOpen(true)
+  }
+
+  const closeDialog = () => {
+    setOpen(false)
   }
 
   useEffect(() => {
@@ -165,38 +178,12 @@ const RoadItem = ({
             )}
           </Box>
         </Box>
-        <Button
-          variant='contained'
-          disableRipple
-          onClick={redirectToCodePanel}
-          sx={buttonSx}
-        >
-          {compleated ? 'Review' : null}
-          {lastActive ? (
-            <Stack
-              direction='row'
-              alignItems='center'
-              gap={0.5}
-            >
-              <Stack>
-                <Typography
-                  variant='body1'
-                  fontWeight={700}
-                >
-                  Explore
-                </Typography>
-                <Typography
-                  variant='body1'
-                  fontWeight={700}
-                >
-                  Now
-                </Typography>
-              </Stack>
-              <FaArrowRight size={18} />
-            </Stack>
-          ) : null}
-          {locked && !lastActive ? 'Open' : null}
-        </Button>
+        <RoadItemBtn
+          compleated={compleated}
+          lastActive={lastActive}
+          locked={locked}
+          redirectToCodePanel={redirectToCodePanel}
+        />
       </Box>
       <Stack
         pl={lastActive ? 2 : 5}
@@ -237,6 +224,15 @@ const RoadItem = ({
           </Box>
         </Collapse>
       </Stack>
+      <LessonDialog
+        open={open}
+        closeDialog={closeDialog}
+        link={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          courseId: query.id as string,
+          unitId: query.unitId as string,
+          lessonId,
+        })}
+      />
     </Box>
   )
 }

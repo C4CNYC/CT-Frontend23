@@ -1,6 +1,6 @@
-import type { File } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/collab/requests'
-import { Extensions } from '@/sections/code-panel/components/body/blocks/code-editor-block/constants'
 import { getFileExtension } from '@/utils/getFileExtension'
+import { Extensions } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
+import type { File } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/requests'
 
 const validationList: string[] = [Extensions.Html, Extensions.Css, Extensions.Js]
 const EMPTY_ERROR = 'Cannot be empty'

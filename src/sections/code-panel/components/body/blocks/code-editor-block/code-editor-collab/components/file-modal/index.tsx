@@ -6,8 +6,8 @@ import FolderIcon from '@mui/icons-material/Folder'
 import { Button, ClickAwayListener, Stack, Typography, IconButton } from '@mui/material'
 import { useTheme } from '@mui/system'
 
-import { EditorMode } from '../../../constants'
-import { File } from '../../hook/utils/collab/requests'
+import { EditorMode } from '../../hook/constants'
+import { File } from '../../hook/requests'
 import DevIcon from '../dev-icon'
 
 import ConfirmModalWrapper from './confirm-wrapper-modal'

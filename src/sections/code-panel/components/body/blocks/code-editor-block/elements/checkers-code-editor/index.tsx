@@ -3,10 +3,11 @@ import { type FC, useEffect, useMemo } from 'react'
 import { Box } from '@mui/material'
 import { Stack } from '@mui/system'
 import { AnimatePresence, m } from 'framer-motion'
+import { useDetectClickOutside } from 'react-detect-click-outside'
 import { useDispatch } from 'react-redux'
 
 import { setIsVisible } from '@/redux/slices/checkers-animation'
-import { setNextStepAble } from '@/redux/slices/code-panel-global'
+import { setContentValidations, setNextStepAble } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { type IValidationMap } from '@/utils/validationMaping'
 
@@ -27,14 +28,16 @@ import {
 
 interface ICheckers {
   checkers: IValidationMap[]
+  contentId?: string | undefined
+  isCheckedOnce: boolean
 }
 
-const Checkers: FC<ICheckers> = ({ checkers }) => {
+const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const dispatch = useDispatch()
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
-
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const handleCollaps = (): void => {
     if (isVisible) {
       dispatch(setIsVisible(false))
@@ -43,10 +46,23 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
     }
   }
 
+  const handleClose = (): void => {
+    if (isVisible) {
+      dispatch(setIsVisible(false))
+    }
+  }
+
+  const ref = useDetectClickOutside({ onTriggered: handleClose })
+
   useEffect(() => {
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
-    if (allPased === nextStepAble) return
-
+    if (allPased) {
+      const checkedContents = contentValidations?.map((item) => ({
+        ...item,
+        checkers: item.contentId === contentId ? checkers : item.checkers,
+      }))
+      dispatch(setContentValidations(checkedContents))
+    }
     dispatch(setNextStepAble(allPased))
   }, [checkers])
 
@@ -75,7 +91,10 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
     <>
       <CheckersCompleated />
 
-      <Box sx={OPEN_BOX_SX}>
+      <Box
+        sx={OPEN_BOX_SX}
+        ref={ref}
+      >
         <AnimatePresence>
           <m.div
             initial='visible'
@@ -115,7 +134,7 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
           >
             <CheckersMenu
               checkers={checkers}
-              onClose={handleCollaps}
+              isCheckedOnce={isCheckedOnce}
             />
           </m.div>
         </AnimatePresence>

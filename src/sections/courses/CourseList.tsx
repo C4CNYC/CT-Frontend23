@@ -22,10 +22,7 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useGetCourseQuery(
-    { take: DEFAULT_TAKE_PER_PAGE },
-    { skip: publicPage }
-  )
+  const { data, isLoading, isFetching } = useGetCourseQuery({ take: 50 }, { skip: publicPage })
   const {
     data: publicData,
     isLoading: publicIsLoading,
