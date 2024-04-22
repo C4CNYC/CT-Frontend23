@@ -47,7 +47,7 @@ const NavigationElement: FC<INavigationElement> = ({
 }
 
 const getButtonSx = (sx: SxProps, isDisabled: boolean): SxProps => ({
-  fontSize: '1rem',
+  fontSize: '1.4rem',
   display: 'flex',
   gap: 2,
   textTransform: 'capitalize',
