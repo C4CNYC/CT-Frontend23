@@ -108,15 +108,16 @@ const SliderBlock: FC<ISliderBlock> = ({
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
 
   useEffect(() => {
-    if (carousel1.current) {
+    if (carousel1.current && lastSlide) {
       setNav2(carousel1.current)
       carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
     }
-  }, [data])
+  }, [data, lastSlide])
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
   }, [slideIndex])
+
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
