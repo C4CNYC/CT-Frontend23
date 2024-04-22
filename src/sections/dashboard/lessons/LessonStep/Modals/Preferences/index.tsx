@@ -21,6 +21,7 @@ import * as Yup from 'yup'
 import { FormProvider, RHFCode, RHFTextField } from '@/components'
 import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
 import { LessonContentComplexity } from '@/redux/services/enums/lesson-content-complexity.enum'
+import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import { useUpdateLessonContentMutation } from '@/redux/services/manager/lesson-content-manager'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -37,6 +38,7 @@ interface FormValuesProps {
   preload_body: string
   solution_body: string
   body?: string
+  type?: LessonContentType
 }
 
 interface Props {
@@ -122,6 +124,7 @@ export default function Preferences({
       await updateLessonContent({
         lessonId,
         ..._.omit(data, ['createdAt', 'updatedAt', 'cover']),
+        type: defaultValues?.type,
         id: contentId,
       }).unwrap()
       enqueueSnackbar(translate('step_updated'))
