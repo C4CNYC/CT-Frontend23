@@ -20,7 +20,10 @@ export default function TribeListItem({ active, classItem }: Props): React.React
   const isNavMini = themeLayout === 'mini' && !isMobile
 
   return (
-    <Tooltip title={isNavMini ? classItem.name : ''}>
+    <Tooltip
+      placement='right'
+      title={isNavMini ? classItem.name : ''}
+    >
       <Link
         component={NextLink}
         underline='none'
