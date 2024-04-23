@@ -123,6 +123,7 @@ export function MediaModal({ children }: MediaModalProps): React.ReactElement | 
   )
   const handleFileChange = async (newFile: File) => {
     const file = new FormData()
+    setFileName(newFile.name)
     file.append('file', newFile)
     setFileLoading(true)
     try {
