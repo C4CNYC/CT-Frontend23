@@ -1,11 +1,11 @@
-import { Theme } from '@mui/material'
+import { SxProps, Theme } from '@mui/material'
 
-export const HEADER_SX = {
-  backgroundColor: '#60ced2',
+export const getHeaderXs = (bgColor: string | undefined): SxProps => ({
+  backgroundColor: bgColor ? bgColor : '#60ced2',
   borderTopLeftRadius: 2,
   borderTopRightRadius: 2,
   p: 1,
-}
+})
 export const HEADER_TITLE_SX = {
   mt: '35px',
   ml: '32px',
