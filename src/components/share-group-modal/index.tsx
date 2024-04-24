@@ -41,12 +41,12 @@ import {
   DIVIDER_SX,
   EMAIL_BTN_SX,
   FORM_CONTROL_SX,
-  HEADER_SX,
   HEADER_TITLE_SX,
   LINK_TEXT_SX,
   RADIO_GROUP_SX,
   RADIO_SX,
   getCopySx,
+  getHeaderXs,
   getSubtitleFooterSx,
   getSubtitleSx,
 } from './constansts'
@@ -114,6 +114,7 @@ export default function ShareGroupModal({
   const subtitleSx = useMemo(() => getSubtitleSx(isLight), [isLight])
   const copySx = useMemo(() => getCopySx(isLight, theme), [isLight, theme])
   const subtitleFooterSx = useMemo(() => getSubtitleFooterSx(isLight), [isLight])
+  const headerSx = useMemo(() => getHeaderXs(schoolClass.cover), [schoolClass])
 
   return (
     <>
@@ -125,7 +126,7 @@ export default function ShareGroupModal({
         maxWidth='xs'
         scroll='body'
       >
-        <Box sx={HEADER_SX}>
+        <Box sx={headerSx}>
           <Box
             display='flex'
             justifyContent='end'
