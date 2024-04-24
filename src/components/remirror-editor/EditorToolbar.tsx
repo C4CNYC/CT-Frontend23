@@ -18,6 +18,7 @@ import {
 } from '@remirror/react'
 
 import { LessonContentContext } from '@/sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context'
+import { ThemeProvider } from '@/theme'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
@@ -43,7 +44,7 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
   const { locked } = useContext(LessonContentContext)
 
   return (
-    <>
+    <ThemeProvider>
       <Toolbar
         style={{
           position: 'sticky',
@@ -57,7 +58,6 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
         }}
       >
         <>
-          {' '}
           <Stack
             direction='column'
             sx={{ width: '100%', gap: 1 }}
@@ -156,6 +156,6 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
           </Stack>
         </FloatingToolbar>
       ) : null}
-    </>
+    </ThemeProvider>
   )
 }
