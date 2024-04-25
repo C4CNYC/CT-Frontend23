@@ -35,7 +35,10 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
 
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId as string })
+  const { data, isLoading } = useGetLessonStudentQuery(
+    { id: lessonId as string },
+    { skip: !lessonId }
+  )
 
   const slideTips = data?.contents[slideIndex]?.tips
 
