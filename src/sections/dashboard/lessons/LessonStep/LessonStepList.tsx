@@ -176,12 +176,11 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
             name: lesson?.name as string,
             description: lesson?.description as string,
             active: lesson?.active as boolean,
-            tips: '',
             head: lesson?.head || '',
             independent: lesson?.independent ?? false,
             type: lesson?.type ?? 'practical',
+            duration: lesson?.duration,
           }}
-          lessonTips={lesson?.tips ?? []}
           isEdit
         >
           <Button

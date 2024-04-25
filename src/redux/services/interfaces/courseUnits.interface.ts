@@ -23,7 +23,7 @@ export interface ILesson {
   name: string
   description: string
   head?: string
-  tips: string[] | []
+  duration: Record<string, number> | null
   meta: Record<string, Record<string, any>>
   independent: boolean
   type: 'practical' | 'exercise' | 'quiz'
@@ -85,7 +85,7 @@ export interface ILessonUpdate {
   name: string
   description: string
   active?: boolean
-  tips?: string[] | []
+  duration: string
 }
 
 export interface IAddLessonToModule {
@@ -130,6 +130,7 @@ export interface ILessonCreate {
   active: boolean
   name: string
   description: string
+  duration: string
 }
 
 export interface IModulesSearchParams extends BaseSearchInterface {

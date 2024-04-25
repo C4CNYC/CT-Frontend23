@@ -129,12 +129,11 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                   name: lesson.name,
                   description: lesson.description,
                   active: lesson.active,
-                  tips: '',
                   head: lesson?.head || '',
                   independent: lesson.independent,
                   type: lesson.type,
+                  duration: lesson.duration,
                 }}
-                lessonTips={lesson.tips}
               >
                 <IconButton>
                   <Iconify icon='ep:setting' />
