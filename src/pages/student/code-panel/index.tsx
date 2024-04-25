@@ -106,9 +106,9 @@ export default function CodePanelPage(): ReactElement | null {
     { skip: !router.query.unitId }
   )
 
-  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
-    { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId }
+  const { data: lesson, isFetching: isLoadingLesson } = useGetLessonStudentQuery(
+    { id: router.query.lessonId as string, unitId: router.query.unitId as string },
+    { skip: !router.query.lessonId && !router.query.unitId }
   )
 
   const {
@@ -415,7 +415,7 @@ export default function CodePanelPage(): ReactElement | null {
             isFullScreenView={handle.active}
           />
           <CodePanelBody
-            isFetchingLessonContent={isFetchingLessonContent}
+            isFetchingLessonContent={isFetchingLessonContent || isLoadingLesson}
             lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
             lessonContents={lessonContent ?? []}
             user={user?.student_profile}
@@ -432,7 +432,7 @@ export default function CodePanelPage(): ReactElement | null {
                 onChooseLesson={onChooseLesson}
                 lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
                 data={courseContent}
-                isLoading={isLoadingCourseContent}
+                isLoading={isLoadingCourseContent || isLoadingLesson}
               />
             }
           />

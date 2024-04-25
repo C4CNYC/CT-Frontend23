@@ -3,17 +3,19 @@ import { type FC, memo, useState, useEffect } from 'react'
 import { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
+import type { ILesson } from '@/redux/interfaces/content.interface'
 import { useSelector } from '@/redux/store'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
 import LoadingCodeEditor from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/components/loading-code-editor'
 import { waitConnectSocket } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
-import { voidFunction } from '@/utils'
+import { BaseResponseInterface, voidFunction } from '@/utils'
 
 interface CodeEditorControllerProps {
   onChangeStreamingDocInfo?: (value: Record<string, string>) => void
   user?: AuthUserType
   isFetching?: boolean
   preloadedCode?: string
+  lesson?: ILesson & BaseResponseInterface
 }
 
 const CodeEditorController: FC<CodeEditorControllerProps> = ({
@@ -21,6 +23,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
   user,
   isFetching = false,
   preloadedCode,
+  lesson,
 }) => {
   // const { user } = useAuthContext()
 
@@ -70,6 +73,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
           socket={socket}
           user={user}
           isFetching={isFetching}
+          lesson={lesson}
         />
       ) : (
         <LoadingCodeEditor />

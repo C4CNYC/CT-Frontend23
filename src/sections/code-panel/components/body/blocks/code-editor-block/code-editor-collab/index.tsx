@@ -7,9 +7,10 @@ import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
 import { useAuthContext } from '@/auth/useAuthContext'
+import type { ILesson } from '@/redux/interfaces/content.interface'
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
-import { voidFunction } from '@/utils'
+import { BaseResponseInterface, voidFunction } from '@/utils'
 
 import AddComment from './components/add-comment'
 import CommentPopup from './components/comment-popup'
@@ -39,6 +40,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   isMultipleExtensionFiles?: boolean
   defaultFileName?: string
   onChangeCodemirrorValue?: (value: string) => void
+  lesson?: ILesson & BaseResponseInterface
 }
 
 const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
@@ -53,6 +55,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   isMultipleExtensionFiles = false,
   defaultFileName = 'index.html',
   preloadedCode,
+  lesson,
   onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
   ...collabProps
@@ -141,6 +144,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     socket,
     roomId,
     defaultFileName,
+    lesson,
   })
 
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive

@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { ILesson } from '@/redux/interfaces/content.interface'
-import { setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CatalogLessonDialog from '@/sections/module/lesson-item/CatalogLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
@@ -68,7 +67,7 @@ export default function LessonItem({
   const translate = useTranslate()
   const dispatch = useDispatch()
   const fetchCodeFromPrevLesson = () => {
-    dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
+    // dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
     push(
       STUDENT_PATH_DASHBOARD.codePanel.workSpace({
         courseId: courseId as string,

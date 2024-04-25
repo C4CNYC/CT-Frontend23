@@ -68,10 +68,16 @@ const extendedApi = managerApi.injectEndpoints({
         } catch (err) {}
       },
     }),
-    getLessonStudent: builder.query<ILesson & BaseResponseInterface, { id: string }>({
-      query: ({ id }) => ({
+    getLessonStudent: builder.query<
+      ILesson & BaseResponseInterface,
+      { id: string; unitId?: string }
+    >({
+      query: ({ id, unitId }) => ({
         url: `/student/lesson/${id}`,
         method: 'GET',
+        params: {
+          unitId: unitId, // Include the unitId as a query parameter if provided
+        },
       }),
       keepUnusedDataFor: 0,
     }),

@@ -28,6 +28,7 @@ export interface ILesson {
   independent: boolean
   type: 'practical' | 'exercise' | 'quiz'
   sort?: number
+  prevLesson?: ILesson
 }
 
 export interface ICourse {

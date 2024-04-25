@@ -87,6 +87,7 @@ export interface ILesson {
   independent?: boolean
   contents: ILessonContent[]
   type: 'practical' | 'exercise'
+  prevLesson?: ILesson
 }
 
 export interface ILessonCurrent {

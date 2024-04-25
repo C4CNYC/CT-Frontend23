@@ -8,7 +8,8 @@ import { dracula } from '@uiw/codemirror-theme-dracula'
 import { StateEffectType } from '@uiw/react-codemirror'
 import { Socket } from 'socket.io-client'
 
-import { useSelector } from '@/redux/store'
+import type { ILesson } from '@/redux/interfaces/content.interface'
+import { BaseResponseInterface } from '@/utils'
 import { AuthUserType } from '@root/src/auth/types'
 
 import { BASIC_SETUP, EditorMode } from './constants'
@@ -34,6 +35,7 @@ interface UseBaseInit {
   preloadedCode?: string
   commentEffectRef: MutableRefObject<StateEffectType<CommentEffect> | null>
   onCommentIconClick: (props: CommentPopupProps | null) => void
+  lesson?: ILesson & BaseResponseInterface
 }
 
 export interface UseBaseInitReturn {
@@ -58,14 +60,16 @@ export const useInitCodemirror = ({
   preloadedCode,
   commentEffectRef,
   onCommentIconClick,
+  lesson,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0)
   const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [isLoading, setIsLoading] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
-  const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
-  const prevLessonJson = localStorage.getItem(getLocalStorageRoomKey(prevLessonId as string))
+  const prevLessonJson = localStorage.getItem(
+    getLocalStorageRoomKey(`${user?.id}_${lesson?.prevLesson?.id}` as string)
+  )
   const baseInit = useCallback(
     async (fileName: File) => {
       const lineWrap = new Compartment()
@@ -78,7 +82,11 @@ export const useInitCodemirror = ({
         cursorName: user?.id ?? cursorText,
         defaultFileName,
         preloadedCode:
-          (prevLessonId && JSON.parse(prevLessonJson as string)?.htmlBody?.join('')) ||
+          (lesson?.prevLesson &&
+            lesson?.prevLesson?.progress &&
+            lesson?.prevLesson?.progress >= 90 &&
+            !lesson?.progress &&
+            JSON.parse(prevLessonJson as string)?.htmlBody?.join('')) ||
           preloadedCode,
       })
 

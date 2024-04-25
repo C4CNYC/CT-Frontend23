@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 
 import { type AuthUserType } from '@/auth/types'
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { type IValidation } from '@/redux/interfaces/content.interface'
+import { ILesson, type IValidation } from '@/redux/interfaces/content.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
@@ -31,6 +31,7 @@ interface ICodeEditorBlock {
   preloadedCode: string
   isFetching?: boolean
   contentId?: string
+  lesson?: ILesson & BaseResponseInterface
 }
 
 const icon = (
@@ -51,6 +52,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   preloadedCode,
   isFetching = false,
   contentId,
+  lesson,
 }) => {
   const translate = useTranslate()
   const TITLE = translate('code_editor')
@@ -139,6 +141,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
         isFetching={isFetching}
+        lesson={lesson}
       />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>

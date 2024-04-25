@@ -6,7 +6,9 @@ import { EditorView } from '@codemirror/view'
 import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
+import type { ILesson } from '@/redux/interfaces/content.interface'
 import { useSelector } from '@/redux/store'
+import { BaseResponseInterface } from '@/utils'
 
 import { RoomStatus } from '../components/status-label'
 
@@ -25,6 +27,7 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   activeFile: File
   socket?: Socket
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
+  lesson?: ILesson & BaseResponseInterface
 }
 
 interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' | 'setIsLoading'> {
@@ -46,6 +49,7 @@ export const useCodeEditorCollab = ({
   onRoomStatusChanged,
   user,
   preloadedCode,
+  lesson,
   ...propsToMemoize
 }: UseCodeEditorCollabProps): UseCodeEditorCollabReturn => {
   const modeRef = useRef(mode)
@@ -99,6 +103,7 @@ export const useCodeEditorCollab = ({
     cursorText,
     defaultFileName,
     preloadedCode,
+    lesson,
     commentEffectRef,
     onCommentIconClick,
   })

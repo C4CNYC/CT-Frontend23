@@ -125,6 +125,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           onChangeStreamingDocInfo={onChangeStreamingDocInfo}
           isFetching={isFetchingLessonContent}
           contentId={lessonContents[slideIndex]?.id}
+          lesson={lesson}
         />
 
         {!isBrowserHidden ? (
@@ -170,6 +171,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations}
         isFetching={isFetchingLessonContent}
+        lesson={lesson}
       />
 
       <ViewBlock document={document} />
