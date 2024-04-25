@@ -12,7 +12,7 @@ import { useGetLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import CreateLesson from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLesson'
+import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import LessonCard from '@/sections/dashboard/lessons/LessonCard'
 import LessonStepMain from '@/sections/dashboard/lessons/LessonStep/LessonStepMain'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
@@ -138,7 +138,7 @@ export default function LessonsListPage(): React.ReactElement {
             },
           ]}
           action={
-            <CreateLesson>
+            <CreateLessonDialog>
               <Button
                 variant='contained'
                 startIcon={<Iconify icon='eva:plus-fill' />}
@@ -146,7 +146,7 @@ export default function LessonsListPage(): React.ReactElement {
               >
                 {translate('lessons_create_lesson')}
               </Button>
-            </CreateLesson>
+            </CreateLessonDialog>
           }
         />
 

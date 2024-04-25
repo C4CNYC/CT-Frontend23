@@ -8,6 +8,7 @@ import { Box, Button, DialogActions, Stack, Tab, Tabs } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
+import InputAdornment from '@mui/material/InputAdornment'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -35,19 +36,28 @@ interface FormValuesProps {
   name: string
   description: string
   active: boolean
-  tips: string
   independent: boolean
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
+  duration: number
+}
+
+interface IDefaultProps {
+  name: string
+  description: string
+  active: boolean
+  independent: boolean
+  head?: string
+  type: 'practical' | 'exercise' | 'quiz'
+  duration: Record<string, number> | null | undefined
 }
 
 interface ICreateLessonDialogProps {
-  defaultValues?: FormValuesProps
+  defaultValues?: IDefaultProps
   children: React.ReactElement
   isEdit?: boolean
   id?: string
   contentId?: string
-  lessonTips: string[]
 }
 
 export default function CreateLessonDialog({
@@ -55,7 +65,6 @@ export default function CreateLessonDialog({
   isEdit,
   children,
   defaultValues,
-  lessonTips,
 }: ICreateLessonDialogProps): React.ReactElement {
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
@@ -68,6 +77,23 @@ export default function CreateLessonDialog({
   const [editLesson, { isLoading: isLoadingUpdate }] = useUpdateLessonMutation()
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
+
+  const timeConvertorToSeconds = (time: Record<string, number> | null | undefined) => {
+    if (time) {
+      return Object.entries(time).reduce((acc, [timeTipe, time]) => {
+        if (timeTipe === 'minutes') {
+          return (acc += time)
+        }
+        return (acc += time * 60 + acc * 60)
+      }, 0)
+    }
+    return 0
+  }
+
+  const defaultLessonValue = {
+    ...defaultValues,
+    duration: timeConvertorToSeconds(defaultValues?.duration),
+  }
 
   const handleClickOpen = (): void => {
     setOpen(true)
@@ -84,7 +110,7 @@ export default function CreateLessonDialog({
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateCourseSchema),
-    defaultValues,
+    defaultValues: defaultLessonValue,
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
@@ -93,11 +119,12 @@ export default function CreateLessonDialog({
         await editLesson({
           id,
           ...data,
-          tips: data.tips.trim() !== '' ? [...lessonTips, data.tips] : lessonTips,
+          duration: `${data.duration * 60}`,
         }).unwrap()
       } else {
         const lesson = await createLesson({
           ...data,
+          duration: `${data.duration * 60}`,
         }).unwrap()
         if (router.query.module_id) {
           addLessonToModule({
@@ -138,26 +165,28 @@ export default function CreateLessonDialog({
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Box sx={{ borderBottom: 1, borderColor: 'divider', pl: 2 }}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label='basic tabs example'
-              >
-                <Tab
-                  label={translate('main')}
-                  {...a11yProps(0)}
-                />
-                <Tab
-                  label={translate('skills')}
-                  {...a11yProps(1)}
-                />
-                <Tab
-                  label={translate('integration')}
-                  {...a11yProps(2)}
-                />
-              </Tabs>
-            </Box>
+            {isEdit ? (
+              <Box sx={{ borderBottom: 1, borderColor: 'divider', pl: 2 }}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label='basic tabs example'
+                >
+                  <Tab
+                    label={translate('main')}
+                    {...a11yProps(0)}
+                  />
+                  <Tab
+                    label={translate('skills')}
+                    {...a11yProps(1)}
+                  />
+                  <Tab
+                    label={translate('integration')}
+                    {...a11yProps(2)}
+                  />
+                </Tabs>
+              </Box>
+            ) : null}
             <TabPanel
               value={value}
               index={0}
@@ -183,6 +212,17 @@ export default function CreateLessonDialog({
                   height='180px'
                   extensions={[javascript({ jsx: true })]}
                 />
+
+                <RHFTextField
+                  name='duration'
+                  label='duration'
+                  type='number'
+                  required
+                  InputProps={{
+                    startAdornment: <InputAdornment position='start'>min</InputAdornment>,
+                  }}
+                />
+
                 <RHFSelect
                   native
                   name='type'
