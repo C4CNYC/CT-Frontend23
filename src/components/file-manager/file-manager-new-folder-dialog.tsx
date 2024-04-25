@@ -76,7 +76,7 @@ export default function FileManagerNewFolderDialog({
           dividers
           sx={{ pt: 1, pb: 0, border: 'none' }}
         >
-          {(onCreate || onUpdate) && (
+          {(onCreate || onUpdate) && name !== 'file' && (
             <TextField
               fullWidth
               label={label || translate('folder_name')}

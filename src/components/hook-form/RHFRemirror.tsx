@@ -60,9 +60,16 @@ export function RHFRemirror({
         {`
           .remirror-editor-wrapper { padding: 0; }
           .remirror-theme .ProseMirror{
+              padding: 8px;
               max-height: 100px;
-              background: ${theme.palette.mode === 'light' ? '#fff' : ''} ;
-              border: ${theme.palette.mode === 'light' ? '' : '1px solid #fff'};
+              min-height: 140px;
+              background: ${theme.palette.mode === 'light' ? '#fff' : 'transparent'} ;
+              border: ${theme.palette.mode === 'light' ? 'none' : '1px solid #fff'};
+              border-radius: 16px;
+              overflow-y: scroll;
+              &:focus-visible {
+                outline: none;
+              } 
           }
         `}
       </style>
