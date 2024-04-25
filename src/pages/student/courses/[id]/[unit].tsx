@@ -47,10 +47,11 @@ export default function ModulePage(): React.ReactElement {
     { skip: !query.id }
   )
 
-  const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
-    { id: query.unit as string },
-    { skip: !query.unit }
-  )
+  const {
+    data: module,
+    isLoading: isLoadingModule,
+    refetch,
+  } = useGetModuleWithLessonsQuery({ id: query.unit as string }, { skip: !query.unit })
 
   const moduleDuration = useMemo(
     () =>
@@ -68,6 +69,9 @@ export default function ModulePage(): React.ReactElement {
     }
   }, [isLoadingModules])
 
+  useEffect(() => {
+    refetch()
+  }, [query?.id])
   return (
     <>
       <Head>
