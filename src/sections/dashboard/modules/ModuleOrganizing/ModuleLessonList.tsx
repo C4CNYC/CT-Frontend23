@@ -23,46 +23,13 @@ import CreateModuleDialog from '../CreateModuleDialog'
 import { LESSON_LIST_BLOCK_SX, getAddLessonBtnSx, getModuleBtnSx } from './constants'
 import ModuleLessonItem from './ModuleLessonItem'
 
-function parseSort(sort?: number) {
-  return sort ?? 0
-}
+// Reorder lesson in the array
+const reorderLesson = (list: ILesson[], startIndex: number, endIndex: number): ILesson[] => {
+  const result = Array.from(list)
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
 
-function getSort(result: DropResult, lessons: ILesson[]): number {
-  const { destination, draggableId } = result
-
-  // case: move to start
-  if (destination?.index === 0) {
-    return parseSort(lessons[0].sort) / 2
-  }
-
-  // case: move to end
-  if (destination?.index && destination?.index >= lessons.length - 1) {
-    const lastId = lessons.length - 1
-    return parseSort(lessons[lastId].sort) + 1
-  }
-
-  // case: when you move lesson to after next.
-  if (lessons[Number(destination?.index) - 1].id === draggableId) {
-    const prevId = Number(destination?.index)
-    const nextId = Number(destination?.index) + 1
-
-    return lessons[nextId]?.sort
-      ? (parseSort(lessons[nextId].sort) + parseSort(lessons[prevId].sort)) / 2
-      : parseSort(lessons[prevId].sort) + 1
-  }
-
-  // case: all other cases
-  const nextId = Number(destination?.index)
-  const prevId = Number(destination?.index) - 1
-
-  return lessons[nextId]?.sort
-    ? (parseSort(lessons[nextId].sort) + parseSort(lessons[prevId].sort)) / 2
-    : parseSort(lessons[prevId].sort) + 1
-}
-
-function moveItemInArray<T>(array: T[], from: number, to: number, on: number = 1): T[] {
-  // eslint-disable-next-line no-return-assign,no-sequences
-  return (array = array.slice()), array.splice(to, 0, ...array.splice(from, on)), array
+  return result.map((el, i) => ({ ...el, sort: i }))
 }
 
 interface Props {
@@ -97,86 +64,24 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
     return str
   }
 
-  const testData = [
-    {
-      active: true,
-      auto_graded: true,
-      core: true,
-      createdAt: '2023-08-15T06:40:36.105Z',
-      description: 'Build Kaboom js games',
-      duration: { hours: 2, minutes: 1 },
-      head: '<script></script>\n',
-      id: '1',
-      independent: false,
-      lessonToUnits: [],
-      name: '1',
-      sort: 1,
-      type: 'practical',
-    },
-    {
-      active: true,
-      auto_graded: true,
-      core: true,
-      createdAt: '2023-08-15T06:40:36.105Z',
-      description: 'Build Kaboom js games',
-      duration: { hours: 2, minutes: 1 },
-      head: '<script></script>\n',
-      id: '2',
-      independent: false,
-      lessonToUnits: [],
-      name: '2',
-      sort: 1,
-      type: 'practical',
-    },
-    {
-      active: true,
-      auto_graded: true,
-      core: true,
-      createdAt: '2023-08-15T06:40:36.105Z',
-      description: 'Build Kaboom js games',
-      duration: { hours: 2, minutes: 1 },
-      head: '<script></script>\n',
-      id: '3',
-      independent: false,
-      lessonToUnits: [],
-      name: '3',
-      sort: 1,
-      type: 'practical',
-    },
-  ]
-
-  const reorder = (list: any, startIndex: any, endIndex: any): ILesson[] => {
-    const result = Array.from(list)
-    // console.log('result', result)
-
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
-
-    return result as ILesson[]
-  }
-
-  const onDragEnd = (result: DropResult): void => {
-    // console.log(result)
-    if (!result.destination) {
+  const onDragEnd = ({ source, destination }: DropResult): void => {
+    if (!destination || source.index === destination.index) {
       return
     }
 
-    const items = reorder(lessons, result.source.index, result.destination.index)
+    const items = reorderLesson(lessons, source.index, destination.index)
 
     setLessons(items)
 
-    // if (!moduleId) return
-    // const { destination, source, draggableId } = result
-    // if (!destination) return
-    // if (destination.droppableId === source.droppableId && destination.index === source.index) {
-    //   return
-    // }
-    // setLessons(moveItemInArray(lessons, source.index, destination.index))
-    // updateModuleLesson({
-    //   id: moduleId,
-    //   lesson_id: draggableId,
-    //   sort: getSort(result, lessons),
-    // })
+    if (!moduleId) return
+
+    items.forEach((lesson) => {
+      updateModuleLesson({
+        id: moduleId,
+        lesson_id: lesson.id,
+        sort: lesson.sort,
+      })
+    })
   }
 
   useEffect(() => {

@@ -67,7 +67,7 @@ export default function ModuleLessonItem({
       draggableId={lesson.id}
       index={index}
     >
-      {(provided, snapshot) => (
+      {(provided) => (
         <Paper
           {...other}
           ref={provided.innerRef}
