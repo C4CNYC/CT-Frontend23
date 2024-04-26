@@ -58,13 +58,14 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
 
   return (
     <Draggable
+      key={lesson.id}
       draggableId={lesson.id}
-      index={index ?? 0}
+      index={index}
     >
       {(provided) => (
         <Paper
-          {...provided.draggableProps}
           ref={provided.innerRef}
+          {...provided.draggableProps}
           onClick={selectStep}
           elevation={8}
           sx={{ ...getLessonItemPaperSx(chooseBorderColor) }}
