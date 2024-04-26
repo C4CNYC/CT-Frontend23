@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useState } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
@@ -79,7 +79,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
 
   const [lessons, setLessons] = useState<ILesson[]>([])
 
-  const { data, isLoading, isFetching } = useGetLessonsQuery({ module_id: moduleId })
+  const { data, isLoading } = useGetLessonsQuery({ module_id: moduleId })
 
   const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
     { id: moduleId },
@@ -97,28 +97,87 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
     return str
   }
 
-  const onDragEnd = useCallback(
-    (result: DropResult): void => {
-      if (!moduleId) return
-
-      const { destination, source, draggableId } = result
-
-      if (!destination) return
-
-      if (destination.droppableId === source.droppableId && destination.index === source.index) {
-        return
-      }
-
-      setLessons(moveItemInArray(lessons, source.index, destination.index))
-
-      updateModuleLesson({
-        id: moduleId,
-        lesson_id: draggableId,
-        sort: getSort(result, lessons),
-      })
+  const testData = [
+    {
+      active: true,
+      auto_graded: true,
+      core: true,
+      createdAt: '2023-08-15T06:40:36.105Z',
+      description: 'Build Kaboom js games',
+      duration: { hours: 2, minutes: 1 },
+      head: '<script></script>\n',
+      id: '1',
+      independent: false,
+      lessonToUnits: [],
+      name: '1',
+      sort: 1,
+      type: 'practical',
     },
-    [lessons]
-  )
+    {
+      active: true,
+      auto_graded: true,
+      core: true,
+      createdAt: '2023-08-15T06:40:36.105Z',
+      description: 'Build Kaboom js games',
+      duration: { hours: 2, minutes: 1 },
+      head: '<script></script>\n',
+      id: '2',
+      independent: false,
+      lessonToUnits: [],
+      name: '2',
+      sort: 1,
+      type: 'practical',
+    },
+    {
+      active: true,
+      auto_graded: true,
+      core: true,
+      createdAt: '2023-08-15T06:40:36.105Z',
+      description: 'Build Kaboom js games',
+      duration: { hours: 2, minutes: 1 },
+      head: '<script></script>\n',
+      id: '3',
+      independent: false,
+      lessonToUnits: [],
+      name: '3',
+      sort: 1,
+      type: 'practical',
+    },
+  ]
+
+  const reorder = (list: any, startIndex: any, endIndex: any): ILesson[] => {
+    const result = Array.from(list)
+    // console.log('result', result)
+
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
+
+    return result as ILesson[]
+  }
+
+  const onDragEnd = (result: DropResult): void => {
+    // console.log(result)
+    if (!result.destination) {
+      return
+    }
+
+    const items = reorder(lessons, result.source.index, result.destination.index)
+
+    setLessons(items)
+
+    // if (!moduleId) return
+    // const { destination, source, draggableId } = result
+    // if (!destination) return
+    // if (destination.droppableId === source.droppableId && destination.index === source.index) {
+    //   return
+    // }
+    // setLessons(moveItemInArray(lessons, source.index, destination.index))
+    // updateModuleLesson({
+    //   id: moduleId,
+    //   lesson_id: draggableId,
+    //   sort: getSort(result, lessons),
+    // })
+  }
 
   useEffect(() => {
     setLessons(data?.data ?? [])
@@ -192,7 +251,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
         <SkeletonList />
       ) : (
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='lessons'>
+          <Droppable droppableId='droppable'>
             {(provided) => (
               <Stack
                 {...provided.droppableProps}
@@ -201,7 +260,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
                 spacing={1}
                 sx={{ py: 1 }}
               >
-                {lessons.map((lesson, index) => (
+                {lessons.map((lesson: any, index: number) => (
                   <ModuleLessonItem
                     onRemove={onRemove}
                     key={index}
