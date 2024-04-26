@@ -26,12 +26,7 @@ const BRIEFING = '#0198ED'
 const CUSTOM = '#364954'
 const CHALANGES = '#FBDD3F'
 
-export default function ModuleLessonItem({
-  onRemove,
-  index,
-  lesson,
-  ...other
-}: Props): React.ReactElement {
+export default function ModuleLessonItem({ onRemove, index, lesson }: Props): React.ReactElement {
   const router = useRouter()
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
@@ -69,7 +64,6 @@ export default function ModuleLessonItem({
     >
       {(provided) => (
         <Paper
-          {...other}
           ref={provided.innerRef}
           {...provided.draggableProps}
           onClick={selectStep}
