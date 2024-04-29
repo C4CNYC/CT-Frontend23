@@ -5,7 +5,7 @@ import NextLink from 'next/link'
 import { useTranslate } from '@/utils/translateHelper'
 
 interface IModuleProgressProps {
-  progress: string
+  progress: number
 }
 
 export default function ModuleProgress({ progress }: IModuleProgressProps): React.ReactElement {
@@ -22,7 +22,7 @@ export default function ModuleProgress({ progress }: IModuleProgressProps): Reac
       >
         <LinearProgress
           variant='determinate'
-          value={+progress}
+          value={progress}
           sx={{
             '& .MuiLinearProgress-bar': {
               background: 'background: linear-gradient(135deg, #90F361 0%, #00D9CC 100%);',
