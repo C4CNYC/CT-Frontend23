@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { CssBaseline } from '@mui/material'
 import { ThemeProvider, createTheme, useTheme } from '@mui/material/styles'
-import merge from 'lodash/merge'
+import merge from 'lodash-es/merge'
 
 import { useSettingsContext } from './SettingsContext'
 

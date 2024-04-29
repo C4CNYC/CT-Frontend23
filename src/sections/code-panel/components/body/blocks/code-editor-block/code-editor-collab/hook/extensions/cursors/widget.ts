@@ -1,5 +1,5 @@
 import { EditorView, WidgetType } from '@uiw/react-codemirror'
-import { debounce } from 'lodash'
+import debounce from 'lodash-es/debounce'
 
 interface TooltipWidgetProps {
   id: string
