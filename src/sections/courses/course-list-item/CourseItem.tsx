@@ -44,7 +44,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         },
       }}
     >
-      <CourseHeader progress={course.progress} />
+      <CourseHeader progress={course.progress ?? 3} />
       <Box
         sx={{
           display: 'flex',
