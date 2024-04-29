@@ -31,7 +31,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   user,
   language,
   isFetchingLessonContent = false,
-  lastLessonCode,
 }) => {
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const isDesktop = useIsDesktop()
