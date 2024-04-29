@@ -148,6 +148,7 @@ export interface ICourseSearchParams extends BaseSearchInterface {
   class_id?: string
   school_id?: string
   name?: string
+  catalog?: boolean
 }
 
 export interface ICourseCreate {
