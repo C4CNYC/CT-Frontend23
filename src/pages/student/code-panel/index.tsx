@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 import { Box } from '@mui/material'
 import dynamic from 'next/dynamic'
@@ -18,7 +18,6 @@ import {
   useGetLessonContentStudentQuery,
   useGetLessonStudentQuery,
 } from '@/redux/services/manager/lesson-student'
-import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
 import {
   setCourseId,
@@ -101,11 +100,6 @@ export default function CodePanelPage(): ReactElement | null {
     { skip: !router.query.courseId }
   )
 
-  const { data: courseUnit } = useGetModuleWithLessonsQuery(
-    { id: router.query.unitId as string },
-    { skip: !router.query.unitId }
-  )
-
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
     { skip: !router.query.lessonId }
@@ -121,37 +115,11 @@ export default function CodePanelPage(): ReactElement | null {
     { skip: !router.query.lessonId }
   )
 
-  const { data: checkers, isLoading: isLoadingCheckers } = useGetContentCheckersQuery(undefined, {
+  const { data: checkers } = useGetContentCheckersQuery(undefined, {
     skip: !fulfilledTimeStamp,
   })
 
-  // const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
-  //   unitId: null,
-  //   lessonId: null,
-  // })
-
   const [completeLesson] = useCompleteLessonMutation()
-  // const [updateLastVisitedDataTrigger] = useUpdateStudentLastVisitedDataMutation()
-
-  const lastLessonCode = useMemo(
-    () =>
-      courseUnit?.lessons
-        .slice(
-          0,
-          courseUnit?.lessons.findIndex((lesson) => lesson.id === router.query.lessonId) + 1
-        )
-        .reverse()
-        ?.find((lesson) =>
-          lesson.contents?.find((content) =>
-            content.progress?.find((progress) => progress.progress_meta?.body.length > 0)
-          )
-        )
-        ?.contents.find((content) =>
-          content.progress?.find((progress) => progress.progress_meta?.body.length > 0)
-        )
-        ?.progress?.find((progress) => progress.progress_meta?.body.length > 0)?.progress_meta.body,
-    [courseUnit, router.query.lessonId]
-  )
 
   const onConfettiComplete = (confetti?: ConfettiType) => {
     setShowConfetti(false)
@@ -168,12 +136,6 @@ export default function CodePanelPage(): ReactElement | null {
       })
     )
   }
-
-  // const updateLastVisitedData = async () => {
-  //   if (isValidLastVisitedData(lastVisitedData)) {
-  //     await updateLastVisitedDataTrigger(lastVisitedData).unwrap()
-  //   }
-  // }
 
   const onChooseLesson = (lessonId: string, unitId: string) => {
     if (router.query.lessonId === lessonId) return
@@ -263,19 +225,6 @@ export default function CodePanelPage(): ReactElement | null {
     }
   }
 
-  // useEffect(() => {
-  //   setLastVisitedData({
-  //     unitId,
-  //     lessonId,
-  //   })
-  // }, [unitId, lessonId])
-  //
-  // useEffect(() => {
-  //   return () => {
-  //     updateLastVisitedData()
-  //   }
-  // }, [lastVisitedData])
-
   const lessonIdFromRoute = router.query.lessonId
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
@@ -284,7 +233,6 @@ export default function CodePanelPage(): ReactElement | null {
   const isLoadingComplete =
     !!lesson &&
     !isLoadingLessonContent &&
-    !isLoadingCourseContent &&
     !isLoadingLesson &&
     router.query.courseId !== null &&
     !render
@@ -422,7 +370,6 @@ export default function CodePanelPage(): ReactElement | null {
             language={DEFAULT_LANGUAGE}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
-            lastLessonCode={lastLessonCode}
           />
           <CodePanelFooter
             language={DEFAULT_LANGUAGE}
