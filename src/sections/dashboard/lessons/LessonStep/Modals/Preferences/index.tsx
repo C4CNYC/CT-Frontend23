@@ -103,9 +103,7 @@ export default function Preferences({
   }
 
   const CreateLessonDemonSchema = Yup.object().shape({
-    slug: Yup.string().required(translate('required_slug')),
     title: Yup.string().required(translate('required_title')),
-    description: Yup.string().required(translate('required_description')),
     skills: Yup.array(),
   })
 
