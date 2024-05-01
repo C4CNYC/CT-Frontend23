@@ -27,7 +27,11 @@ export const TOUR_STEPS_DECKTOP = [
   {
     target: '.codeEditorTour',
     title: <div>Work space</div>,
-    content: <div>You have nice code editor where you could show your coding skills 💪</div>,
+    content: (
+      <div>
+        You have nice code editor <br /> where you could show your <br /> coding skills 💪
+      </div>
+    ),
     disableBeacon: true,
     placement: 'right' as const,
   },
