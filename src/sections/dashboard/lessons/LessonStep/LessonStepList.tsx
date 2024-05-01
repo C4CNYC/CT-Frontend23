@@ -103,6 +103,8 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     try {
       const { id: stepId } = await createLessonContent({
         lessonId,
+        draft: false,
+        active: true,
         title: translate('slide'),
         meta: { order: newContentOrder },
       }).unwrap()
