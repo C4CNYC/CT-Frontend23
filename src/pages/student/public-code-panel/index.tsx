@@ -9,16 +9,9 @@ import type ConfettiType from 'react-confetti/dist/types/Confetti'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
 import { Socket, io } from 'socket.io-client'
+import { animals, colors, uniqueNamesGenerator } from 'unique-names-generator'
 
-import { useAuthContext } from '@/auth/useAuthContext'
 import type { ILesson } from '@/redux/interfaces/content.interface'
-import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
-import {
-  useGetContentCheckersQuery,
-  useGetLessonContentStudentQuery,
-  useGetLessonStudentQuery,
-} from '@/redux/services/manager/lesson-student'
-import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
 import {
   setCourseId,
   setLessonId,
@@ -37,7 +30,12 @@ import { ILessonUserStatus } from '@/types'
 import type { BaseResponseInterface } from '@/utils'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
-import { useGetPublicCourseQuery } from '@root/src/redux/services/public-student'
+import GuestGuard from '@root/src/auth/GuestGuard'
+import {
+  useGetPublicCourseContentQuery,
+  useGetPublicLessonContentQuery,
+  useGetPublicLessonQuery,
+} from '@root/src/redux/services/public-student'
 
 const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'), {
   ssr: false,
@@ -75,55 +73,79 @@ interface LessonUserResponseType {
   lessonId: string
 }
 
+interface ILocalUser {
+  id: string
+  first_name: string
+  student_profile: {
+    id: string
+    first_name: string
+  }
+}
+
+const RANDOM_NAME = uniqueNamesGenerator({
+  dictionaries: [colors, animals],
+  separator: ' ',
+  length: 2,
+  style: 'capital',
+})
+
 const DEFAULT_LANGUAGE = 'html'
 
 export default function CodePanelPage(): ReactElement | null {
   const translate = useTranslate()
-  const router = useRouter()
+  const { query, push, replace } = useRouter()
   const dispatch = useDispatch()
   const { enqueueSnackbar } = useSnackbar()
 
-  const { user, isInitialized: authIsInitialized } = useAuthContext()
-  const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
-  const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
-  const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const [user, setUser] = useState<ILocalUser>()
+
+  useEffect(() => {
+    const user = localStorage.getItem('user')
+
+    if (user) {
+      setUser(JSON.parse(user))
+    } else {
+      const newUser = {
+        id: generateId(20),
+        first_name: RANDOM_NAME,
+        student_profile: {
+          id: generateId(20),
+          first_name: RANDOM_NAME,
+        },
+      }
+      setUser(newUser)
+      localStorage.setItem('user', JSON.stringify(newUser))
+    }
+  }, [])
+
+  // const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
+  // const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
+  // const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
   const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
   const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
     dispatch(setUsersStatus(cb(usersStatus)))
   }
 
-  const { data, isLoading } = useGetPublicCourseQuery({})
-  // console.log('publick', data?.data)
-
   const handle = useFullScreenHandle()
 
   const [showConfetti, setShowConfetti] = useState(false)
 
-  const { data: courseContent, isLoading: isLoadingCourseContent } = useGetCourseContentQuery(
-    { id: router.query.courseId as string },
-    { skip: !router.query.courseId }
+  const { data: courseContent, isLoading: isLoadingCourseContent } = useGetPublicCourseContentQuery(
+    { id: query.courseId as string },
+    { skip: !query.courseId }
   )
 
-  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
-    { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId }
-  )
-
-  const {
-    data: lessonContent,
-    isLoading: isLoadingLessonContent,
-    isFetching: isFetchingLessonContent,
-    fulfilledTimeStamp,
-  } = useGetLessonContentStudentQuery(
-    { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId }
-  )
-
-  const { data: checkers } = useGetContentCheckersQuery(undefined, {
-    skip: !fulfilledTimeStamp,
+  const { data, isLoading } = useGetPublicLessonContentQuery({
+    id: query.courseId as string,
+    lesson_id: query.lessonId as string,
   })
 
-  const [completeLesson] = useCompleteLessonMutation()
+  const { data: lesson } = useGetPublicLessonQuery({
+    id: query.courseId as string,
+    lesson_id: query.lessonId as string,
+  })
+
+  // const [completeLesson] = useCompleteLessonMutation()
 
   const onConfettiComplete = (confetti?: ConfettiType) => {
     setShowConfetti(false)
@@ -131,10 +153,10 @@ export default function CodePanelPage(): ReactElement | null {
   }
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
-    if (!router.query.courseId) return
-    void router.push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-        courseId: router.query.courseId as string,
+    if (!query.courseId) return
+    void push(
+      STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace({
+        courseId: query.courseId as string,
         unitId,
         lessonId,
       })
@@ -142,7 +164,7 @@ export default function CodePanelPage(): ReactElement | null {
   }
 
   const onChooseLesson = (lessonId: string, unitId: string) => {
-    if (router.query.lessonId === lessonId) return
+    if (query.lessonId === lessonId) return
 
     window.dispatchEvent(resetLessonEvent)
     onOpenLesson(lessonId, unitId)
@@ -151,24 +173,21 @@ export default function CodePanelPage(): ReactElement | null {
   useEffect(() => {
     if (!courseContent) return
 
-    const courseId = router.query.courseId
-    const unitId =
-      router.query.unitId ??
-      (router.query.courseId === lastCourseId && lastUnitId
-        ? lastUnitId
-        : courseContent.units[0].id)
-    const lessonId =
-      router.query.lessonId ??
-      (unitId === lastUnitId && lastLessonId ? lastLessonId : courseContent.units[0].lessons[0].id)
+    const courseId = query.courseId
+    const unitId = query.unitId ?? courseContent.units[0].id
+    const lessonId = query.lessonId ?? courseContent.units[0].lessons[0].id
+
+    setUnitId(courseContent.units[0].id)
+    setLessonId(courseContent.units[0].lessons[0].id)
 
     if (!courseId || !unitId || !lessonId) {
-      void router.replace(STUDENT_PATH_DASHBOARD.page404)
+      void replace(STUDENT_PATH_DASHBOARD.page404)
       return
     }
 
-    if (!router.query.unitId || !router.query.lessonId) {
-      void router.replace(
-        STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+    if (!query.unitId || !query.lessonId) {
+      void replace(
+        STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace({
           courseId: courseId as string,
           unitId: unitId as string,
           lessonId: lessonId as string,
@@ -177,22 +196,22 @@ export default function CodePanelPage(): ReactElement | null {
       return
     }
 
-    dispatch(setLessonId(lessonId as string))
+    // dispatch(setLessonId(lessonId as string))
     dispatch(setUnitId(unitId as string))
     dispatch(setCourseId(courseId as string))
-  }, [courseContent, router.query.courseId, router.query.unitId, router.query.lessonId])
+  }, [courseContent, query.courseId, query.unitId, query.lessonId])
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
-    try {
-      await completeLesson({
-        id: router.query.courseId as string,
-        module_id: router.query.unit_id as string,
-        lesson_content_id: lessonContentId,
-        code,
-      }).unwrap()
-    } catch (e: any) {
-      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
-    }
+    // try {
+    //   await completeLesson({
+    //     id: query.courseId as string,
+    //     module_id: query.unit_id as string,
+    //     lesson_content_id: lessonContentId,
+    //     code,
+    //   }).unwrap()
+    // } catch (e: any) {
+    //   enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+    // }
   }
 
   const onSubmitLesson = async (): Promise<void> => {
@@ -202,25 +221,23 @@ export default function CodePanelPage(): ReactElement | null {
       if (!courseContent) return
       const nextLessonInfo = getNextLessonId(
         courseContent.units,
-        router.query.lessonId as string,
-        router.query.unitId as string
+        query.lessonId as string,
+        query.unitId as string
       )
 
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
-        router
-          .push(
-            STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-              courseId: courseContent.id,
-              unitId: pathStr[0],
-              lessonId: pathStr[1],
-            })
-          )
-          .then(() => {
-            dispatch(setUnitId(pathStr[0]))
-            dispatch(setLessonId(pathStr[1]))
-            dispatch(setSlideIndex(0))
+        push(
+          STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+            courseId: courseContent.id,
+            unitId: pathStr[0],
+            lessonId: pathStr[1],
           })
+        ).then(() => {
+          dispatch(setUnitId(pathStr[0]))
+          dispatch(setLessonId(pathStr[1]))
+          dispatch(setSlideIndex(0))
+        })
       } else {
         enqueueSnackbar(translate('messages_course_complete'))
       }
@@ -229,17 +246,13 @@ export default function CodePanelPage(): ReactElement | null {
     }
   }
 
-  const lessonIdFromRoute = router.query.lessonId
+  const lessonIdFromRoute = query.lessonId
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   const [showTour, setShowTour] = useState(false)
   const [render, setRender] = useState(true)
   const isLoadingComplete =
-    !!lesson &&
-    !isLoadingLessonContent &&
-    !isLoadingLesson &&
-    router.query.courseId !== null &&
-    !render
+    !!lesson && !isLoadingCourseContent && !isLoading && query.courseId !== null && !render
   const isShowTour = useSelector((state) => state.tour.isStarted)
 
   useEffect(() => {
@@ -267,10 +280,10 @@ export default function CodePanelPage(): ReactElement | null {
   useEffect(() => {
     let socket: Socket | undefined
 
-    if (isRealtimeCodeEnabled && authIsInitialized) {
+    if (isRealtimeCodeEnabled && true) {
       socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
         path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-        auth: { userId: user?.id ?? generateId(20) },
+        auth: { userId: generateId(20) },
       })
       socket.on('connect_error', (error) => {
         // eslint-disable-next-line no-console
@@ -338,21 +351,20 @@ export default function CodePanelPage(): ReactElement | null {
       socket?.disconnect()
       dispatch(setSocket(undefined))
     }
-  }, [isRealtimeCodeEnabled, authIsInitialized, user, lessonIdFromRoute])
+  }, [isRealtimeCodeEnabled, lessonIdFromRoute])
 
   if (!isLoadingComplete && render) {
     return <SkeletonCodePanel />
   }
 
   return (
-    <>
+    <GuestGuard>
       <Head>
         <title> CodePanel: CodeTribe </title>
       </Head>
 
       <FullScreen handle={handle}>
         {showTour || isShowTour ? <CodePanelTour /> : null}
-        {!user && <CodePanelSignUpDialog />}
         <Box
           sx={{
             bgcolor: (theme) =>
@@ -367,17 +379,17 @@ export default function CodePanelPage(): ReactElement | null {
             isFullScreenView={handle.active}
           />
           <CodePanelBody
-            isFetchingLessonContent={isFetchingLessonContent}
+            isFetchingLessonContent={isLoading}
             lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-            lessonContents={lessonContent ?? []}
-            user={user?.student_profile}
+            lessonContents={data ?? []}
+            user={user?.student_profile as ILocalUser}
             language={DEFAULT_LANGUAGE}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
           />
           <CodePanelFooter
             language={DEFAULT_LANGUAGE}
-            sliderSteps={lessonContent?.length ?? 0}
+            sliderSteps={data?.length ?? 0}
             lessonManagerComponent={
               <LessonsManager
                 onChooseLesson={onChooseLesson}
@@ -398,6 +410,6 @@ export default function CodePanelPage(): ReactElement | null {
           onConfettiComplete={onConfettiComplete}
         />
       )}
-    </>
+    </GuestGuard>
   )
 }
