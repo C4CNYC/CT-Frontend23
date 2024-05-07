@@ -18,7 +18,7 @@ interface UseFileManagerReturn {
   fileList: File[]
   addedFileList: File[]
   isFileFormOpen: boolean
-  onAddFile: (fileName: string, defaultDoc: string) => Promise<void>
+  onAddFile: (fileName: string) => Promise<void>
   activeFile: File
   setActiveFile: (fileName: File) => void
   setIsOpen: (isOpen: boolean) => void
@@ -50,12 +50,12 @@ export const useFileManager = ({
   //                        Handlers                        //
   // ------------------------------------------------------ //
 
-  const onAddFile = async (fileName: string, defaultDoc: string): Promise<void> => {
+  const onAddFile = async (fileName: string): Promise<void> => {
     if (!socket) {
       // console.error("TODO onAddFile not implemented without sockets")
       return
     }
-    const file = await createFile({ roomId, fileName, socket, defaultDoc })
+    const file = await createFile({ roomId, fileName, socket })
     setFileList([...fileList, file])
   }
 
