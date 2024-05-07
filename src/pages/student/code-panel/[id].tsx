@@ -6,7 +6,6 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 export default function CodePanelPage(): ReactElement | null {
   const router = useRouter()
-
   useEffect(() => {
     if (!router.query.id) return
     void router.push(
