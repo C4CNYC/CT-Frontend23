@@ -21,10 +21,11 @@ interface FileModalProps {
   isFileFormOpen: boolean
   setIsFileFormOpen: (fileName: boolean) => void
   setIsOpen: (isOpen: boolean) => void
-  onAddFile: (fileName: string) => Promise<void>
+  onAddFile: (fileName: string, defaultDoc: string) => Promise<void>
   onDeleteFile: (fileName: File) => void
   mode: EditorMode
   isMultipleExtensionFiles: boolean
+  preloadedCode?: string
 }
 
 const FileModal: FC<FileModalProps> = ({
@@ -38,6 +39,7 @@ const FileModal: FC<FileModalProps> = ({
   onDeleteFile,
   mode,
   isMultipleExtensionFiles,
+  preloadedCode,
 }) => {
   const theme = useTheme()
   const styles = useStyles(theme)
@@ -114,7 +116,9 @@ const FileModal: FC<FileModalProps> = ({
         <FileForm
           isOpen={isFileFormOpen}
           onClose={() => setIsFileFormOpen(false)}
-          onSubmit={onAddFile}
+          onSubmit={(fileName) => {
+            return onAddFile(fileName, preloadedCode ?? '')
+          }}
           fileList={fileList}
           isMultipleExtensionFiles={isMultipleExtensionFiles}
         />

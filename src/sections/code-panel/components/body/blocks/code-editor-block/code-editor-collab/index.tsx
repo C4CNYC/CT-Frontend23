@@ -169,6 +169,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             onAddFile={onAddFile}
             onDeleteFile={onDeleteFileWithEvents}
             mode={mode}
+            preloadedCode={preloadedCode}
             isMultipleExtensionFiles={isMultipleExtensionFiles}
           />
 

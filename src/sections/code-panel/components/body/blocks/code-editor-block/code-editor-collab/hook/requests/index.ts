@@ -4,9 +4,14 @@ import { Socket } from 'socket.io-client'
 
 import { EmitSocketEvents, SubscribedEvents } from '../utils/socket'
 
-export const createFile = async ({ socket, fileName, roomId }: CreateFile): Promise<File> => {
+export const createFile = async ({
+  socket,
+  fileName,
+  roomId,
+  defaultDoc,
+}: CreateFile): Promise<File> => {
   return await new Promise((res, rej) => {
-    socket.emit(EmitSocketEvents.CreateFile, { roomId, fileName })
+    socket.emit(EmitSocketEvents.CreateFile, { roomId, fileName, defaultDoc })
 
     socket.once(`${SubscribedEvents.CreateFileResponse}${roomId}`, (file: File | null) => {
       if (file != null) {
@@ -107,4 +112,5 @@ interface CreateFile {
   socket: Socket
   fileName: string
   roomId: string
+  defaultDoc?: string
 }
