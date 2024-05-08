@@ -38,7 +38,7 @@ export default function StepperInfo(): React.ReactElement {
   const onSubmit = async (data: FormValueProps) => {
     try {
       await updateUser({
-        country: data.country?.toLowerCase(),
+        country: data.country?.toLowerCase() ?? 'us',
         // birthDate: data.birthDate,
       }).unwrap()
 
@@ -101,10 +101,11 @@ export default function StepperInfo(): React.ReactElement {
           name='country'
           label={translate('country')}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          defaultValue={'us'}
         >
           <option
             key={'US'}
-            value={'US'}
+            value={'us'}
           >
             United States
           </option>
