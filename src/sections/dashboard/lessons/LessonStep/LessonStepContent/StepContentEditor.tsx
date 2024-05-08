@@ -69,7 +69,7 @@ export default function StepContentEditor(): React.ReactElement {
     { skip: !lessonId || !stepId }
   )
 
-  const [bodyType, setBodyType] = useState<LessonContentType>(LessonContentType.Code)
+  const [bodyType, setBodyType] = useState<LessonContentType>(LessonContentType.Editable)
 
   const onSubmit = async (body: string): Promise<void> => {
     try {
@@ -87,7 +87,6 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
-    if (data?.body) setBodyType(LessonContentType.Code)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {
@@ -235,14 +234,6 @@ export default function StepContentEditor(): React.ReactElement {
             overflow: 'scroll',
           }}
         >
-          {bodyType === LessonContentType.Editable ? (
-            <StepMultimedia
-              content={data?.type === LessonContentType.Editable ? data?.body : ''}
-              onSubmit={onSubmit}
-              data={data!}
-              lessonId={lessonId as string}
-            />
-          ) : null}
           {bodyType === LessonContentType.Code ? (
             <StepCode
               content={data?.body || ''}
@@ -251,7 +242,14 @@ export default function StepContentEditor(): React.ReactElement {
               data={data!}
               lessonId={lessonId as string}
             />
-          ) : null}
+          ) : (
+            <StepMultimedia
+              content={data?.type === LessonContentType.Editable ? data?.body : ''}
+              onSubmit={onSubmit}
+              data={data!}
+              lessonId={lessonId as string}
+            />
+          )}
         </Box>
       </Box>
     </LessonContentContext.Provider>
