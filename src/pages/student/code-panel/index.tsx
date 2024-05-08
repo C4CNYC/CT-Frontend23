@@ -4,10 +4,9 @@ import { GetServerSideProps } from 'next'
 import { enqueueSnackbar } from 'notistack'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { generateRandomEmoji } from '@/utils'
 import { isValidToken } from '@root/src/auth/utils'
-import { Role } from '@root/src/redux/services/enums/role.enum'
 import CodePanelLayout from '@root/src/sections/code-panel'
+import { generateAnonymousUser } from '@root/src/utils/generateAnonymousUser'
 
 export default function CodePanelContainer({ query }: any): ReactElement | null {
   const { register, login } = useAuthContext()
@@ -17,20 +16,11 @@ export default function CodePanelContainer({ query }: any): ReactElement | null 
     const accessToken = localStorage.getItem('accessToken')
     const isUserLoggedIn = accessToken && isValidToken(accessToken)
 
-    const randomEmoji = generateRandomEmoji(true)
-    const payload = {
-      email: `${Math.random() * 100}@random.com`,
-      password: Math.random().toString(),
-      firstName: `Anonymous`,
-      lastName: `User ${Math.random() * 100}`,
-      role: Role.Student,
-      emojiAvatar: randomEmoji,
-    }
-
     try {
       if (isUserLoggedIn) return null
-      await register(payload)
-      await login(payload.email, payload.password, 'codetribe')
+      const generatedUser = generateAnonymousUser()
+      await register(generatedUser)
+      await login(generatedUser.email, generatedUser.password, 'codetribe')
     } catch (error: any) {
       enqueueSnackbar(error.message, { variant: 'error', autoHideDuration: 1000 })
     } finally {
