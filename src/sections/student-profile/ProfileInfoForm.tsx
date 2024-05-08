@@ -189,6 +189,7 @@ export default function ProfileInfoForm({
                   name='country'
                   label={translate('country')}
                 >
+                  <option value='' />
                   <option
                     key={'US'}
                     value={'us'}
