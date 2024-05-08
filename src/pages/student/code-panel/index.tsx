@@ -1,10 +1,11 @@
 import { ReactElement, useEffect, useState } from 'react'
 
 import { Box } from '@mui/material'
+import { GetServerSideProps } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useSnackbar } from 'notistack'
+import { enqueueSnackbar, useSnackbar } from 'notistack'
 import type ConfettiType from 'react-confetti/dist/types/Confetti'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
@@ -34,9 +35,11 @@ import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/compo
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { ILessonUserStatus } from '@/types'
-import type { BaseResponseInterface } from '@/utils'
+import { generateRandomEmoji, type BaseResponseInterface } from '@/utils'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
+import { isValidToken } from '@root/src/auth/utils'
+import { Role } from '@root/src/redux/services/enums/role.enum'
 
 const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'), {
   ssr: false,
@@ -76,7 +79,54 @@ interface LessonUserResponseType {
 
 const DEFAULT_LANGUAGE = 'html'
 
-export default function CodePanelPage(): ReactElement | null {
+export default function CodePanelContainer({ query }: any): ReactElement | null {
+  const { register, login } = useAuthContext()
+  const reduxDispatch = useDispatch()
+  const [render, setRender] = useState(false)
+
+  const onSubmit = async () => {
+    const accessToken = localStorage.getItem('accessToken')
+    const isUserLoggedIn = accessToken && isValidToken(accessToken)
+
+    const randomEmoji = generateRandomEmoji(true)
+    const payload = {
+      email: `${Math.random() * 100}@random.com`,
+      password: Math.random().toString(),
+      firstName: `Anonymous`,
+      lastName: `User ${Math.random() * 100}`,
+      role: Role.Student,
+      emojiAvatar: randomEmoji,
+    }
+
+    try {
+      if (isUserLoggedIn) return null
+      await register(payload)
+      await login(payload.email, payload.password, 'codetribe')
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: 'error', autoHideDuration: 1000 })
+    } finally {
+      if (isUserLoggedIn) return setRender(true)
+      else return setTimeout(() => setRender(true), 1000)
+    }
+  }
+
+  useEffect(() => {
+    onSubmit()
+  }, [query])
+
+  if (render) return <CodePanelPage />
+  else return null
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { query } = context
+
+  return {
+    props: { query },
+  }
+}
+
+function CodePanelPage(): ReactElement | null {
   const translate = useTranslate()
   const router = useRouter()
   const dispatch = useDispatch()
