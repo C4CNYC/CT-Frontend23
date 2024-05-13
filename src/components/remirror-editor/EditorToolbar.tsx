@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 import { Divider, Stack } from '@mui/material'
 import {
@@ -16,6 +16,7 @@ import {
   ToggleTaskListButton,
   Toolbar,
 } from '@remirror/react'
+import { MuiColorInput, matchIsValidColor } from 'mui-color-input'
 
 import { LessonContentContext } from '@/sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context'
 import { ThemeProvider } from '@/theme'
@@ -38,10 +39,21 @@ interface Props {
   saveContent: () => void
   data: ILessonContent & BaseResponseInterface
   lessonId: string
+  bgColor: string
+  setBgColor?: (bgColor: string) => void
 }
 
-export default function EditorToolbar({ saveContent, data, lessonId }: Props): React.ReactElement {
+const DEFAULT_COLOR = '#FFF'
+
+export default function EditorToolbar({
+  saveContent,
+  data,
+  lessonId,
+  bgColor,
+  setBgColor,
+}: Props): React.ReactElement {
   const { locked } = useContext(LessonContentContext)
+  const [color, setColor] = useState<string>(DEFAULT_COLOR)
 
   return (
     <ThemeProvider>
@@ -81,6 +93,23 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
                   <ToggleTaskListButton />
                 </CommandButtonGroup>
                 <EmojiPickerBtn />
+                <MuiColorInput
+                  sx={{
+                    '& .MuiInputBase-input': {
+                      opacity: 0,
+                      width: 0,
+                      padding: '8.5px 3px',
+                    },
+                  }}
+                  format='hex'
+                  value={matchIsValidColor(bgColor) ? bgColor : ''}
+                  onChange={(data) => {
+                    setColor(data)
+                    if (setBgColor) {
+                      setBgColor(data)
+                    }
+                  }}
+                />
               </Stack>
 
               <SaveButton onClick={saveContent} />

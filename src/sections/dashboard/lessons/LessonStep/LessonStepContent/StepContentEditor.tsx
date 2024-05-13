@@ -48,11 +48,14 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }))
 
+const DEFAULT_COLOR = '#FFF'
+
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query
   const { enqueueSnackbar } = useSnackbar()
   const [locked, setLocked] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [bgColor, setBgColor] = useState<string>(DEFAULT_COLOR)
   const translate = useTranslate()
   const [updateContent] = useUpdateLessonContentMutation()
   const { data: integrations, isLoading: isIntegrationLoading } = useGetLessonIntegrationsQuery(
@@ -248,6 +251,8 @@ export default function StepContentEditor(): React.ReactElement {
               onSubmit={onSubmit}
               data={data!}
               lessonId={lessonId as string}
+              bgColor={bgColor}
+              setBgColor={setBgColor}
             />
           )}
         </Box>
