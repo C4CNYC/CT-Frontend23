@@ -92,7 +92,7 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
-    if (data?.stepBgColor) setBgColor(data.stepBgColor)
+    setBgColor(data?.stepBgColor ?? DEFAULT_COLOR)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {
