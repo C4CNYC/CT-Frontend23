@@ -48,7 +48,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }))
 
-const DEFAULT_COLOR = '#FFF'
+const DEFAULT_COLOR = '#F6F9FC'
 
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query
@@ -80,6 +80,8 @@ export default function StepContentEditor(): React.ReactElement {
         lessonId: lessonId as string,
         id: stepId as string,
         type: bodyType,
+        // until BE functionality for bg saving is done
+        // stepBgColor: bgColor,
         body,
       }).unwrap()
       enqueueSnackbar(translate('slide_content_updated'))
@@ -90,6 +92,7 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
+    if (data?.stepBgColor) setBgColor(data.stepBgColor)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {

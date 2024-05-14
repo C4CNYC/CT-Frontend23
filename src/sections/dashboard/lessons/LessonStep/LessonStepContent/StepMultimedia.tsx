@@ -35,20 +35,22 @@ export default function StepMultimedia({
       primary='first'
       defaultSize={800}
     >
-      <MyEditor
-        onSubmit={() => {
-          onSubmit(JSON.stringify(value))
-        }}
-        multimediaValue={content}
-        setMultimediaValue={setValue}
-        editable={!locked}
-        locked={locked}
-        data={data}
-        lessonId={lessonId}
-        bgColor={bgColor}
-        setBgColor={setBgColor}
-      />
-      <Box sx={{ border: '1px solid red', bgcolor: bgColor }}>
+      <Box sx={{ bgcolor: bgColor, height: '100%' }}>
+        <MyEditor
+          onSubmit={() => {
+            onSubmit(JSON.stringify(value))
+          }}
+          multimediaValue={content}
+          setMultimediaValue={setValue}
+          editable={!locked}
+          locked={locked}
+          data={data}
+          lessonId={lessonId}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+        />
+      </Box>
+      <Box sx={{ bgcolor: bgColor, height: '100%' }}>
         <MyEditor
           editable={false}
           multimediaValue={value}

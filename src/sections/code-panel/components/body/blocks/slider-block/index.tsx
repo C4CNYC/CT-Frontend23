@@ -59,6 +59,7 @@ interface IView {
   connectIntegrations: (body: string) => CodeDocument | null
   title?: string
   lessonType?: string
+  stepBgColor?: string | undefined
 }
 
 const icon = (
@@ -204,6 +205,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                         type={step.type}
                         body={step.body}
                         connectIntegrations={connectIntegrations}
+                        stepBgColor={step.stepBgColor}
                       />
                     )
                   })}
@@ -228,7 +230,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   )
 }
 
-const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType }) => {
+const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType, stepBgColor }) => {
   const translate = useTranslate()
 
   switch (type) {
@@ -238,6 +240,7 @@ const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType })
           title={title}
           multimediaValue={body}
           lessonType={lessonType}
+          stepBgColor={stepBgColor}
         />
       )
     case 'code':

@@ -118,6 +118,7 @@ export interface ILessonContent {
   progress?: ILessonContentProgress[]
   title?: string
   id?: string
+  stepBgColor?: string
 }
 
 export interface ISkill {
