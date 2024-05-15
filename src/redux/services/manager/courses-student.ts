@@ -85,16 +85,12 @@ const extendedApi = managerApi.injectEndpoints({
         body,
       }),
     }),
-    courseAddRating: builder.mutation<
-      ICourseContent & BaseResponseInterface,
-      { id: string; rating: number }
-    >({
+    courseAddRating: builder.mutation<void, { id: string; rating: number }>({
       query: ({ id, ...body }) => ({
         url: `/student/course/${id}/rating`,
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: 'Courses' }],
     }),
   }),
   overrideExisting: false,
