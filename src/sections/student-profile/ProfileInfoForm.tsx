@@ -190,14 +190,22 @@ export default function ProfileInfoForm({
                   label={translate('country')}
                 >
                   <option value='' />
-                  {countries.map((country) => (
-                    <option
-                      key={country.code}
-                      value={country.code.toLowerCase()}
-                    >
-                      {country.label}
-                    </option>
-                  ))}
+                  <option
+                    key={'US'}
+                    value={'us'}
+                  >
+                    United States
+                  </option>
+                  {countries
+                    .filter((el) => el.code !== 'US')
+                    .map((country) => (
+                      <option
+                        key={country.code}
+                        value={country.code.toLowerCase()}
+                      >
+                        {country.label}
+                      </option>
+                    ))}
                 </RHFSelect>
               </Stack>
             </Stack>
