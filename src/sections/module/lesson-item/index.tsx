@@ -88,6 +88,9 @@ export default function LessonItem({
     )
   }
 
+  const lastLessonProgress = prevLesson?.progress ?? 100
+  const isLastLessonInProgress = lastLessonProgress <= 90
+
   return (
     <Stack sx={getLessonSx(theme)}>
       <TrainingProgress
@@ -149,7 +152,7 @@ export default function LessonItem({
           </Stack>
         </Stack>
         {!locked ? (
-          !lesson.progress && index !== 0 ? (
+          !lesson.progress && index !== 0 && isLastLessonInProgress ? (
             <>
               <Box
                 sx={LOCKED_BTN_CONT_SX}
@@ -196,7 +199,7 @@ So pulled your code from previous lesson, so that you can keep building'
               </Link>
             </>
           )
-        ) : !lesson.progress ? (
+        ) : !lesson.progress && isLastLessonInProgress ? (
           <>
             <Box
               sx={LOCKED_BTN_CONT_SX}
