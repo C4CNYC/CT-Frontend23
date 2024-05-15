@@ -1,4 +1,4 @@
-import { type CSSProperties, type FC, type ReactNode } from 'react'
+import { useState, type CSSProperties, type FC, type ReactNode } from 'react'
 
 // import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
@@ -12,6 +12,9 @@ import { useDispatch } from 'react-redux'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { setChatVisible } from '@/redux/slices/chat-handler'
 import { useSelector } from '@/redux/store'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+
+import AuthModal from '../../../../auth-modal/AuthModal'
 
 interface IChatPopup {
   chatComponent: ReactNode
@@ -22,10 +25,21 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
   const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
   const isChatVisible = useSelector((state) => state.chatHandler.isChatVisible)
+  const { isAuthenticated } = useAuthContext()
+  const [open, setOpen] = useState(false)
+
+  const closeDialog = () => {
+    setOpen(false)
+  }
 
   const getContent = () => {
-    if (!isChatVisible) {
-      return
+    if (!isChatVisible || !isAuthenticated) {
+      return (
+        <AuthModal
+          open={open}
+          onClose={closeDialog}
+        ></AuthModal>
+      )
     }
 
     if (isDesktop) {
@@ -59,6 +73,9 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
         }}
         onClick={() => {
           dispatch(setChatVisible(!isChatVisible))
+          if (!isAuthenticated) {
+            setOpen(true)
+          }
         }}
       >
         <IoChatboxEllipsesOutline size={20} />
