@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { useMemo, type FC } from 'react'
 
 import { Typography } from '@mui/material'
 import { FileExtension } from '@remirror/extension-file'
@@ -82,6 +82,7 @@ interface ProsaMirrorViewProps {
   multimediaValue: string
   title?: string
   lessonType?: string | undefined
+  stepBgColor?: string
 }
 
 const extensions = (): Extensions[] => [
@@ -119,16 +120,23 @@ const extensions = (): Extensions[] => [
   new TaskListExtension(),
 ]
 
-const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({ multimediaValue, title, lessonType }) => {
+const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({
+  multimediaValue,
+  title,
+  lessonType,
+  stepBgColor,
+}) => {
   const { manager, state } = useRemirror({
     extensions: extensions as any, // @ToDo,
     content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : '',
     stringHandler: 'html',
   })
 
+  const styles = useMemo(() => getRemirrorStyles(stepBgColor ?? '#F6F9FC'), [stepBgColor])
+
   return (
     <ThemeProvider>
-      <style>{STYLES}</style>
+      <style>{styles}</style>
       {title && lessonType === 'open_project' && <Typography variant='h1'>{title}</Typography>}
       <Remirror
         editable={false}
@@ -142,11 +150,14 @@ const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({ multimediaValue, title, les
   )
 }
 
-const STYLES = `
+const getRemirrorStyles = (stepBgColor: string) => `
 .remirror-theme .ProseMirror:active, .remirror-theme .ProseMirror:focus {
   box-shadow: none;
 }
-.remirror-editor-wrapper { padding: 0 }
+.remirror-editor-wrapper {
+  padding: 0;
+  background-color: ${stepBgColor};
+}
 .remirror-theme .ProseMirror {
   scrollbar-width: none;
   box-shadow: none;

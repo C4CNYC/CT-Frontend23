@@ -14,6 +14,8 @@ interface Props {
   onSubmit: (value: string) => void
   data: ILessonContent & BaseResponseInterface
   lessonId: string
+  bgColor: string
+  setBgColor?: (bgColor: string) => void
 }
 
 export default function StepMultimedia({
@@ -21,6 +23,8 @@ export default function StepMultimedia({
   content,
   data,
   lessonId,
+  bgColor,
+  setBgColor,
 }: Props): React.ReactElement {
   const { locked } = useContext(LessonContentContext)
   const [value, setValue] = useState<string>('')
@@ -31,23 +35,28 @@ export default function StepMultimedia({
       primary='first'
       defaultSize={800}
     >
-      <MyEditor
-        onSubmit={() => {
-          onSubmit(JSON.stringify(value))
-        }}
-        multimediaValue={content}
-        setMultimediaValue={setValue}
-        editable={!locked}
-        locked={locked}
-        data={data}
-        lessonId={lessonId}
-      />
-      <Box>
+      <Box sx={{ bgcolor: bgColor, height: '100%' }}>
+        <MyEditor
+          onSubmit={() => {
+            onSubmit(JSON.stringify(value))
+          }}
+          multimediaValue={content}
+          setMultimediaValue={setValue}
+          editable={!locked}
+          locked={locked}
+          data={data}
+          lessonId={lessonId}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+        />
+      </Box>
+      <Box sx={{ bgcolor: bgColor, height: '100%' }}>
         <MyEditor
           editable={false}
           multimediaValue={value}
           data={data}
           lessonId={lessonId}
+          bgColor={bgColor}
         />
       </Box>
     </ResizerUi>

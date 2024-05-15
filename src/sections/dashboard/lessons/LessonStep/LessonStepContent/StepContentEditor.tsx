@@ -48,11 +48,14 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }))
 
+const DEFAULT_COLOR = '#F6F9FC'
+
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query
   const { enqueueSnackbar } = useSnackbar()
   const [locked, setLocked] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [bgColor, setBgColor] = useState<string>(DEFAULT_COLOR)
   const translate = useTranslate()
   const [updateContent] = useUpdateLessonContentMutation()
   const { data: integrations, isLoading: isIntegrationLoading } = useGetLessonIntegrationsQuery(
@@ -77,6 +80,8 @@ export default function StepContentEditor(): React.ReactElement {
         lessonId: lessonId as string,
         id: stepId as string,
         type: bodyType,
+        // until BE functionality for bg saving is done
+        // stepBgColor: bgColor,
         body,
       }).unwrap()
       enqueueSnackbar(translate('slide_content_updated'))
@@ -87,6 +92,7 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
+    setBgColor(data?.stepBgColor ?? DEFAULT_COLOR)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {
@@ -248,6 +254,8 @@ export default function StepContentEditor(): React.ReactElement {
               onSubmit={onSubmit}
               data={data!}
               lessonId={lessonId as string}
+              bgColor={bgColor}
+              setBgColor={setBgColor}
             />
           )}
         </Box>
