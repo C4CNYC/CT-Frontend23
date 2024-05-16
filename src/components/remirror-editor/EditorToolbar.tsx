@@ -84,8 +84,6 @@ export default function EditorToolbar({
     setOpenPopover(null)
   }
 
-  // const ref = useDetectClickOutside({})
-
   return (
     <ThemeProvider>
       <Toolbar
