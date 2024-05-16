@@ -84,6 +84,8 @@ export default function EditorToolbar({
     setOpenPopover(null)
   }
 
+  // const ref = useDetectClickOutside({})
+
   return (
     <ThemeProvider>
       <Toolbar
@@ -218,7 +220,7 @@ export default function EditorToolbar({
             },
           }}
           style={{
-            zIndex: 9999999,
+            zIndex: 1500,
             padding: 10,
           }}
         >

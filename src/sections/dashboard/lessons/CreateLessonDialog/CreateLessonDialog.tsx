@@ -152,10 +152,16 @@ export default function CreateLessonDialog({
 
   return (
     <>
-      <Box onClick={handleClickOpen}>{children}</Box>
+      <Box
+        onClick={handleClickOpen}
+        zIndex={99999}
+      >
+        {children}
+      </Box>
       <Dialog
         open={open}
         onClose={handleClose}
+        sx={{ zIndex: 9999 }}
       >
         <DialogTitle>
           {isEdit ? translate('lessons_edit_lesson') : translate('lessons_create_lesson')}
