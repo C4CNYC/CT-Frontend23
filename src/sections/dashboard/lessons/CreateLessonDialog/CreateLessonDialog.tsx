@@ -152,12 +152,7 @@ export default function CreateLessonDialog({
 
   return (
     <>
-      <Box
-        onClick={handleClickOpen}
-        zIndex={99999}
-      >
-        {children}
-      </Box>
+      <Box onClick={handleClickOpen}>{children}</Box>
       <Dialog
         open={open}
         onClose={handleClose}
