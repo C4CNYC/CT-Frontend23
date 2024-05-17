@@ -60,7 +60,7 @@ export default function TextColorPicker(): JSX.Element {
           <IconButton
             sx={{ p: '10px' }}
             onClick={() => {
-              commands.removeTextColor()
+              commands.removeTextHighlight()
               setEdit(!edit)
             }}
           >
