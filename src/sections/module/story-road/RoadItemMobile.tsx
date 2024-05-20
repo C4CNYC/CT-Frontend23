@@ -85,6 +85,16 @@ const RoadItemMobile = ({
     }
   }
 
+  const fetchDefaultCodeFromPrevLesson = () => {
+    push(
+      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+        courseId: query.id as string,
+        unitId: query.unit as string,
+        lessonId: lessonId,
+      })
+    )
+  }
+
   const openDialog = () => {
     setOpen(true)
   }
@@ -229,11 +239,7 @@ const RoadItemMobile = ({
       <LessonDialog
         open={open}
         closeDialog={closeDialog}
-        link={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-          courseId: query.id as string,
-          unitId: query.unitId as string,
-          lessonId,
-        })}
+        openLesson={fetchDefaultCodeFromPrevLesson}
       />
     </Box>
   )
