@@ -24,6 +24,7 @@ import {
   ToggleSubscriptButton,
   ToggleSuperscriptButton,
   ToggleTaskListButton,
+  ToggleCodeButton,
   Toolbar,
 } from '@remirror/react'
 import { MuiColorInput, matchIsValidColor } from 'mui-color-input'
@@ -117,6 +118,7 @@ export default function EditorToolbar({
                 }}
               >
                 <ToggleBoldButton />
+                <ToggleCodeButton />
                 <CommandButtonGroup>
                   <ToggleOrderedListButton />
                 </CommandButtonGroup>
@@ -231,6 +233,7 @@ export default function EditorToolbar({
             alignContent='center'
           >
             <BasicFormattingButtonGroup />
+            <ToggleCodeButton />
             <Divider
               sx={{ ml: 1, mr: 1, mt: 0.5, height: '70%' }}
               orientation='vertical'
