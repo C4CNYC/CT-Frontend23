@@ -31,6 +31,7 @@ import {
   getLessonContentSx,
   getLessonSx,
 } from './constants'
+import LessonDialog from './LessonDialog'
 import TrainingProgress from './LessonProgress'
 
 interface ILessonItemProps {
@@ -215,13 +216,10 @@ So pulled your code from previous lesson, so that you can keep building'
                 />
               </Box>
             </Box>
-            <CatalogLessonDialog
+            <LessonDialog
               open={open}
-              confirmText={'Yes, start the lesson.'}
-              closeText={'No, I’ll go back.'}
               closeDialog={closeDialog}
-              confirmClick={fetchDefaultCodeFromPrevLesson}
-              title='It’s better to complete the lessons in order'
+              openLesson={fetchDefaultCodeFromPrevLesson}
             />
           </>
         ) : (
