@@ -42,7 +42,7 @@ export default function GeneralInfo({ activeTab }: IGeneralInfo) {
               sx={{ height: '36px', width: '40px', m: '0 auto' }}
             />
           ) : (
-            <Typography variant='h4'>{data?.data.length ?? 0}</Typography>
+            <Typography variant='h4'>{data?.meta.itemCount ?? 0}</Typography>
           )}
 
           <Typography
