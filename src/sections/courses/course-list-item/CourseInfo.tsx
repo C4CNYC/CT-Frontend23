@@ -56,7 +56,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           variant='body2'
           sx={{ ml: 1 }}
         >
-          {totalLessons}
+          {totalLessons}{' '}
           {totalLessons && totalLessons > 1 ? translate('lessons') : translate('lesson')}
         </Typography>
       </Box>
