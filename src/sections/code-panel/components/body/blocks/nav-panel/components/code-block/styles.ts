@@ -65,6 +65,10 @@ const styles = {
     color: '#FFF',
     fontSize: '16px',
     marginLeft: '10px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '220px',
   },
   CLOSE_ICON_SX: {
     color: '#EAEAEB',
