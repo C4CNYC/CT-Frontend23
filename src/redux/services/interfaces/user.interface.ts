@@ -102,7 +102,7 @@ export interface IStudentProfile {
   last_name?: string
   avatar?: string
   cover?: string
-  country?: string
+  country?: string | undefined
   birthDate?: string
   phone?: string
 }
