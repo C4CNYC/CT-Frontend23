@@ -80,7 +80,15 @@ export default function SingUp({
       >
         {translate('login_my_first_time')}
       </Typography>
-      <Stack sx={{ mt: 1 }}>
+      <Stack
+        sx={{
+          mt: 1,
+          '& .MuiInputLabel-root': {
+            fontSize: '1.1rem',
+            color: '#637381',
+          },
+        }}
+      >
         <RHFTextField
           name='email'
           label={translate('email')}
@@ -125,7 +133,7 @@ export default function SingUp({
             py: 1.5,
             mb: 1,
             gap: 2,
-            background: theme.palette.mode === 'light' ? theme.palette.grey[200] : '',
+            background: theme.palette.mode === 'light' ? '#efefef' : '',
             fontWeight: 400,
             fontSize: '1.3em',
             '&:hover': {

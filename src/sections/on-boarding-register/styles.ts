@@ -1,10 +1,11 @@
 import { SxProps, Theme } from '@mui/material'
 
 export const styledRegisterInput = (theme: Theme, sx?: SxProps): SxProps => ({
+  fontSize: 25,
   color: theme.palette.mode === 'light' ? '#000' : '#fff',
   '& .MuiInputBase-root': {
     height: '52px',
-    background: theme.palette.mode === 'light' ? theme.palette.grey[200] : 'initial',
+    background: theme.palette.mode === 'light' ? '#efefef' : 'initial',
   },
   '& fieldset': {
     border: theme.palette.mode === 'light' ? 'none' : '',
