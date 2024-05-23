@@ -60,7 +60,7 @@ export default function SignInLogin({
         variant='body1'
         sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 2 }}
       >
-        {translate('login_welcome_back')}
+        Excited to LOGIN again.
       </Typography>
       <Stack sx={{ mt: 1 }}>
         <RHFTextField
@@ -111,7 +111,7 @@ export default function SignInLogin({
             py: 1.5,
             mb: 1,
             gap: 2,
-            background: theme.palette.grey[200],
+            background: '#efefef',
             fontWeight: 400,
             fontSize: '1.3em',
             '&:hover': {

@@ -48,7 +48,7 @@ export default function LoginLayout({
               textAlign: 'left',
             }}
           >
-            {title ?? translate('login_hi')}
+            {title ?? 'Yaaaay!'}
           </Typography>
 
           <Typography
@@ -60,7 +60,7 @@ export default function LoginLayout({
               color: 'text.secondary',
             }}
           >
-            {subtitle ?? translate('login_welcome_back')}
+            {subtitle ?? "You're back!"}
           </Typography>
 
           <Image

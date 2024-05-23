@@ -6,13 +6,13 @@ export const StyledRoot = styled('main')(({ theme }) => ({
   height: '100%',
   display: 'flex',
   position: 'relative',
-  backgroundColor: theme.palette.mode === 'light' ? '#E6FBFC' : 'rgba(54, 73, 84, 1)',
+  backgroundColor: theme.palette.mode === 'light' ? '#cbfcff' : 'rgba(54, 73, 84, 1)',
 }))
 
 export const StyledSection = styled('div')(({ theme }) => ({
   display: 'none',
   position: 'relative',
-  backgroundColor: '#E6FBFC',
+  backgroundColor: '#cbfcff',
   ...bgBlur({
     color: theme.palette.mode === 'light' ? '#fff' : theme.palette.background.default,
   }),
