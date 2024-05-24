@@ -14,11 +14,11 @@ export default function GeneralInfo({ activeTab }: IGeneralInfo) {
   const translate = useTranslate()
   const { data, isLoading } = useGetClassStudentsQuery(
     { id: query.id as string },
-    { skip: !query.id || activeTab }
+    { skip: !query.id }
   )
   const { data: quests, isLoading: questsLoading } = useGetAssignmentListStudentQuery(
     { class_id: query.id as string },
-    { skip: !query.id || activeTab }
+    { skip: !query.id }
   )
 
   return (
