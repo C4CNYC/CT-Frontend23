@@ -2,7 +2,7 @@ import { type Update } from '@codemirror/collab'
 import { ChangeSet, StateEffect, StateEffectType } from '@codemirror/state'
 import { Socket } from 'socket.io-client'
 
-import { COMMENT_TYPE } from '../../constants'
+import { EffectType } from '../../constants'
 import type { File } from '../../requests'
 import { EmitSocketEvents } from '../../utils/socket'
 import type { Cursor } from '../cursors/types'
@@ -59,8 +59,8 @@ export const pullUpdates = ({
             changes: ChangeSet.fromJSON(u.changes),
             clientID: u.clientID,
             effects: u.effects.reduce<StateEffect<Cursor>[]>((res, { value }) => {
-              const isSelection = value.type === 'selection' && value?.id != null
-              const isComment = value.type === COMMENT_TYPE
+              const isSelection = value.type === EffectType.SELECTION && value?.id != null
+              const isComment = value.type === EffectType.COMMENT
 
               if (isSelection) {
                 res.push(addCursor.of({ ...value }))
