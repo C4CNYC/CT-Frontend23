@@ -64,7 +64,7 @@ export interface ILessonContent {
   meta: Record<string, any>
   complexity: LessonContentComplexity
   validations: Array<ILessonContentValidation & BaseResponseInterface>
-  stepBgColor?: string
+  bg_color?: string
 }
 
 export interface ILessonContentUpdate {
@@ -79,7 +79,7 @@ export interface ILessonContentUpdate {
   tags?: string[]
   meta?: Record<string, any>
   complexity?: LessonContentComplexity
-  stepBgColor?: string
+  bg_color?: string
 }
 
 export interface ILessonUpdate {

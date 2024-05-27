@@ -205,7 +205,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                         type={step.type}
                         body={step.body}
                         connectIntegrations={connectIntegrations}
-                        stepBgColor={step.stepBgColor}
+                        stepBgColor={step.bg_color}
                       />
                     )
                   })}
