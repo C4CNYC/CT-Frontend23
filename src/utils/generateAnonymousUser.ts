@@ -4,7 +4,7 @@ import { generateRandomEmoji } from './createRandomAvatar'
 
 // Better to use faker.js for this or have better defaults
 const RANDOM_USER_DATA = {
-  email: `${(Math.random() * 10000).toFixed(0)}@gmail.com`,
+  email: `${(Math.random() * 10000).toFixed(0)}@random.com`,
   password: Math.random().toString(),
   firstName: `Anonymous`,
   lastName: `${(Math.random() * 1000).toFixed(0)}`,
