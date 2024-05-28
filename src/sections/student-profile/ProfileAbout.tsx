@@ -35,9 +35,8 @@ export default function ProfileAbout({ data }: IProfileAboutProps): React.ReactE
 
           <Typography variant='body2'>
             {translate('profile_live_at_country')} &nbsp;
-            {countries.find(
-              (el) => data?.student_profile?.country ?? data?.country === el.code.toLowerCase()
-            )?.label ?? '-'}
+            {countries.find((el) => data?.student_profile?.country === el.code.toLowerCase())
+              ?.label ?? '-'}
           </Typography>
         </Stack>
         <Stack direction='row'>
