@@ -35,7 +35,7 @@ export default function AuthGuard({ children }: AuthGuardProps): React.ReactElem
 
   useEffect(() => {
     if (isInitialized && !isAuthenticated) {
-      push('/auth/signIn')
+      // push('/auth/signIn')
     }
   }, [isAuthenticated, isInitialized])
 
@@ -44,7 +44,7 @@ export default function AuthGuard({ children }: AuthGuardProps): React.ReactElem
   }
 
   if (!isAuthenticated) {
-    return null
+    // return null
     // if (pathname !== requestedLocation) {
     //   setRequestedLocation(pathname);
     // }
