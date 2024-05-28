@@ -9,7 +9,11 @@ import {
 import type { Cursor } from './types'
 import { TooltipWidget } from './widget'
 
-export const getCursorField = (addCursor: StateEffectType<Cursor>, withTooltip: boolean) => {
+export const getCursorField = (
+  addCursor: StateEffectType<Cursor>,
+  withTooltip: boolean,
+  userId?: string
+) => {
   const cursorsItems = new Map<string, number>()
 
   return StateField.define<DecorationSet>({
@@ -19,10 +23,14 @@ export const getCursorField = (addCursor: StateEffectType<Cursor>, withTooltip: 
     update(cursors, tr) {
       let cursorTransacions = cursors.map(tr.changes)
 
-      for (const e of tr.effects)
+      for (const e of tr.effects) {
         if (e.is(addCursor)) {
           const addUpdates = []
-          if (!cursorsItems.has(e.value.id)) cursorsItems.set(e.value.id, cursorsItems.size)
+          const isCurrentUser = e.value.userId === userId
+
+          if (!cursorsItems.has(e.value.id)) {
+            cursorsItems.set(e.value.id, cursorsItems.size)
+          }
 
           if (e.value.from !== e.value.to) {
             const className = `cm-highlight-${(cursorsItems.get(e.value.id)! % 8) + 1}`
@@ -39,7 +47,7 @@ export const getCursorField = (addCursor: StateEffectType<Cursor>, withTooltip: 
                 name: e.value.tooltipText,
                 color: cursorsItems.get(e.value.id)!,
                 pos: e.value.to,
-                withTooltip,
+                withTooltip: !isCurrentUser && withTooltip,
                 userId: e.value.userId,
               }),
               block: false,
@@ -52,6 +60,7 @@ export const getCursorField = (addCursor: StateEffectType<Cursor>, withTooltip: 
             filter: (_, __, value) => value?.spec?.id !== e.value.id,
           })
         }
+      }
 
       return cursorTransacions
     },

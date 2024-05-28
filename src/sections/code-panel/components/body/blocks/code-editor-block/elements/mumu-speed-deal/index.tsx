@@ -3,7 +3,7 @@ import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography } from '@mui/material'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetLessonContentStudentQuery } from '@/redux/services/manager/lesson-student'
 import { useSelector } from '@/redux/store'
 import SolutionMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/solution-mobile-dialog'
 import UnstuckMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog'
@@ -21,9 +21,10 @@ import {
 
 interface MumuSpeedDialProps {
   typing: boolean | null
+  contentId?: string
 }
 
-const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
+const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
   const isDesktop = useIsDesktop()
   const [actionsList, setActionsList] = useState<Array<Record<string, any>>>(actions)
   const popperRef = useRef<null | HTMLElement>(null)
@@ -35,12 +36,18 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
 
-  const { data, isLoading } = useGetLessonStudentQuery(
+  const { data, isLoading } = useGetLessonContentStudentQuery(
     { id: lessonId as string },
     { skip: !lessonId }
   )
 
-  const slideTips = data?.contents[slideIndex]?.tips
+  const slideTips = data?.[slideIndex]?.tips
+
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
+
+  const selectedContent = contentValidations?.find((item) => item.contentId === contentId)
+
+  const isChecked = !!selectedContent?.checkers?.length
 
   const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal])
   const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop])
@@ -61,7 +68,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   }, [])
 
   useEffect(() => {
-    if (typing && slideTips) {
+    if (typing && slideTips && !isChecked) {
       setOpenPoper(true)
     }
   }, [typing])
@@ -100,8 +107,10 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
           icon={<Box sx={BOX_PROPS} />}
         >
           {actionsList.map((action) => {
-            if (action.name === 'tips' && !slideTips) {
-              return null
+            if (action.name === 'tips') {
+              if (!slideTips || isChecked) {
+                return null
+              }
             }
 
             return (
