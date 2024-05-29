@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, useCallback, useState } from 'react'
 
-import { IconButton, Stack } from '@mui/material'
+import { IconButton, Stack, Tooltip } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton'
 import { AiOutlineClear } from '@react-icons/all-files/ai/AiOutlineClear'
 import { AiOutlineHighlight } from '@react-icons/all-files/ai/AiOutlineHighlight'
@@ -68,17 +68,19 @@ export default function TextColorPicker(): JSX.Element {
           </IconButton>
         </div>
       )}
-      <ToggleButton
-        value='left'
-        key='left'
-        size='small'
-        onMouseDown={handleMouseDown}
-        onClick={() => {
-          setEdit(!edit)
-        }}
-      >
-        <AiOutlineHighlight size={13} />
-      </ToggleButton>
+      <Tooltip title='Text background color'>
+        <ToggleButton
+          value='left'
+          key='left'
+          size='small'
+          onMouseDown={handleMouseDown}
+          onClick={() => {
+            setEdit(!edit)
+          }}
+        >
+          <AiOutlineHighlight size={13} />
+        </ToggleButton>
+      </Tooltip>
     </Stack>
   )
 }

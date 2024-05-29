@@ -1,17 +1,30 @@
 import React, { MouseEventHandler, useCallback, useState } from 'react'
 
-import { Box, Stack } from '@mui/material'
+import { Box, Stack, Tooltip } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton'
 import { BsEmojiSmile } from '@react-icons/all-files/bs/BsEmojiSmile'
 import { useCommands } from '@remirror/react'
 import EmojiPicker, { EmojiClickData } from 'emoji-picker-react'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 
+import { MenuPopover } from '@/components'
+
 import 'remirror/styles/all.css'
 
 export default function EmojiPickerBtn(): React.ReactElement {
   const allCommand = useCommands()
-  const [showMenu, setShowMenu] = useState<boolean>(false)
+
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
+    event.stopPropagation()
+    event.preventDefault()
+    setOpenPopover(event.currentTarget)
+  }
+
+  const handleClosePopover = (): void => {
+    setOpenPopover(null)
+  }
 
   const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback((e: any) => {
     e.preventDefault()
@@ -20,43 +33,37 @@ export default function EmojiPickerBtn(): React.ReactElement {
   const emojiClickHandler = (emojiData: EmojiClickData): void => {
     allCommand.insertText(emojiData.emoji)
   }
-  const onOpenMenu = (): void => {
-    setShowMenu(true)
-  }
-  const closeMenu = (): void => {
-    setShowMenu(false)
-  }
-  const ref = useDetectClickOutside({ onTriggered: closeMenu })
+
+  const ref = useDetectClickOutside({ onTriggered: handleClosePopover })
 
   return (
-    <Stack
-      ref={ref}
-      sx={{ position: 'relative', alignItems: 'center' }}
-    >
-      <style>
+    <Stack sx={{ position: 'relative', alignItems: 'center' }}>
+      {/* <style>
         {`
             aside.EmojiPickerReact.epr-main {
                 z-index: 1000;
             }
         `}
-      </style>
-      <ToggleButton
-        value='left'
-        key='left'
-        onMouseDown={handleMouseDown}
-        onClick={onOpenMenu}
-        sx={{ p: '5px' }}
-      >
-        <BsEmojiSmile size='20px' />
-      </ToggleButton>
-      {showMenu && (
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: '-480px',
-            left: '-150px',
-          }}
+      </style> */}
+      <Tooltip title='emoji picker'>
+        <ToggleButton
+          value='left'
+          key='left'
+          onMouseDown={handleMouseDown}
+          onClick={handleOpenPopover}
+          sx={{ p: '5px' }}
         >
+          <BsEmojiSmile size='20px' />
+        </ToggleButton>
+      </Tooltip>
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        disabledArrow
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: -5, horizontal: 5 }}
+      >
+        <Box>
           <EmojiPicker
             width={300}
             previewConfig={{ showPreview: false }}
@@ -65,7 +72,7 @@ export default function EmojiPickerBtn(): React.ReactElement {
             }}
           />
         </Box>
-      )}
+      </MenuPopover>
     </Stack>
   )
 }
