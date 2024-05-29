@@ -53,7 +53,7 @@ export interface IStudent {
   first_name: string
   last_name: string
   phone: string
-  country: string
+  country: string | null
   state: string
   city: string
   post_code: string
