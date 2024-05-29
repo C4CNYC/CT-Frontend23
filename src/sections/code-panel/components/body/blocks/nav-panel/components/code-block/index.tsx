@@ -64,6 +64,8 @@ const CodeBlock: FC<CodeBlockProps> = ({
     }
   }, [])
 
+  const isActiveUser = owner.active || owner.status !== 'inactive'
+
   const isOpenCodeDisabled = RoomStatus.Inactive === editorStatus
 
   const onOpenCode = () => {
@@ -173,18 +175,21 @@ const CodeBlock: FC<CodeBlockProps> = ({
         </Stack>
       </Stack>
 
-      {isConnected && (
-        <CodeEditorCollab
-          // roomId={data.id}
-          roomId={`${owner.id as string}_${lessonId as string}`}
-          mode={EditorMode.Watcher}
-          withFileManager={false}
-          cursorText={cursorName}
-          onRoomStatusChanged={setEditorStatus}
-          socket={socket}
-          // onChangeCodemirrorValue={onChangeCodemirrorValue}
-        />
-      )}
+      {isConnected &&
+        (isActiveUser ? (
+          <CodeEditorCollab
+            // roomId={data.id}
+            roomId={`${owner.id as string}_${lessonId as string}`}
+            mode={EditorMode.Watcher}
+            withFileManager={false}
+            cursorText={cursorName}
+            onRoomStatusChanged={setEditorStatus}
+            socket={socket}
+            // onChangeCodemirrorValue={onChangeCodemirrorValue}
+          />
+        ) : (
+          <Box>User Offline</Box>
+        ))}
     </Box>
   )
 }
