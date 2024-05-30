@@ -154,6 +154,54 @@ const SliderBlock: FC<ISliderBlock> = ({
     return null
   }
 
+  const carouselRef = useRef()
+
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+
+  const handleNetworkChange = () => {
+    setIsOnline(navigator.onLine)
+  }
+
+  useEffect(() => {
+    window.addEventListener('online', handleNetworkChange)
+    window.addEventListener('offline', handleNetworkChange)
+
+    return () => {
+      window.removeEventListener('online', handleNetworkChange)
+      window.removeEventListener('offline', handleNetworkChange)
+    }
+  }, [])
+
+  const saveToLocal = useCallback((code: any) => {
+    localStorage.setItem('userCode', code)
+  }, [])
+
+  const saveToServer = useCallback(async () => {
+    if (isOnline) {
+      const codeToSave = localStorage.getItem('userCode')
+      if (codeToSave) {
+        await onSubmitChallenge(data[slideIndex].id, codeToSave)
+        localStorage.removeItem('userCode')
+      }
+    }
+  }, [onSubmitChallenge, data, slideIndex, isOnline])
+
+  useEffect(() => {
+    saveToLocal(code)
+  }, [code, saveToLocal])
+
+  useEffect(() => {
+    saveToServer()
+  }, [saveToServer])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      saveToServer()
+    }, 60000)
+
+    return () => clearInterval(interval)
+  }, [saveToServer])
+
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToLeft size={20} />}
