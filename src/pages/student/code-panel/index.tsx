@@ -20,7 +20,7 @@ export default function CodePanelContainer(): ReactElement | null {
   const verifyUserAuthenticationStatus = async () => {
     try {
       if (isUserLoggedIn()) return null
-      await registerAndLoginAnonymousUser()
+      // await registerAndLoginAnonymousUser()
     } catch (error: any) {
       enqueueSnackbar(error.message, { variant: 'error', autoHideDuration: 1000 })
     } finally {

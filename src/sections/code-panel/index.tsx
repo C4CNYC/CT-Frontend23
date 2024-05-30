@@ -348,7 +348,6 @@ export default function CodePanelLayout(): ReactElement | null {
 
       <FullScreen handle={handle}>
         {showTour || isShowTour ? <CodePanelTour /> : null}
-        {!user && <CodePanelSignUpDialog />}
         <Box
           sx={{
             bgcolor: (theme) =>
