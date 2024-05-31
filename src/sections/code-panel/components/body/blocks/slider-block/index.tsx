@@ -180,7 +180,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     if (isOnline) {
       const codeToSave = localStorage.getItem('userCode')
       if (codeToSave) {
-        await onSubmitChallenge(data[slideIndex].id, codeToSave)
+        await onSubmitChallenge(data[slideIndex]?.id, codeToSave)
         localStorage.removeItem('userCode')
       }
     }
