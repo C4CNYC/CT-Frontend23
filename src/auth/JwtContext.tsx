@@ -195,6 +195,24 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
     })
   }
 
+  // LOGIN ANON  
+  const loginAsAnon = async (anonUserId: string) => {
+    const { data } = await axios.post<any, any>('auth/anon-signin', {
+      anonUserId,
+    })
+    
+    const { access_token: accessToken, user } = data
+    reduxDispatch(setUser(user))
+    setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
+
+    dispatch({
+      type: Types.LOGIN,
+      payload: {
+        user,
+      },
+    })
+  }
+
   // Register WITH GOOGLE
   const registerWithGoogle = async (token: string, role: Role) => {
     try {
@@ -310,6 +328,7 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
       authenticate,
       loginWithGoogle,
       registerWithGoogle,
+      loginAsAnon,
       loginWithGithub: voidFunction,
       loginWithTwitter: voidFunction,
       register,
@@ -322,6 +341,7 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
       state.user,
       registerWithGoogle,
       loginWithGoogle,
+      loginAsAnon,
       authenticate,
       login,
       logout,
