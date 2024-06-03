@@ -20,15 +20,19 @@ export const pushUpdates = ({
   fileName,
 }: PushUpdatesProps): Promise<boolean> => {
   return new Promise(function (resolve) {
-    socket.emit(EmitSocketEvents.Push, {
+    socket.emit(
+      EmitSocketEvents.Push,
       roomId,
-      version,
-      updates: updates.map(({ changes, ...other }) => ({
-        changes: changes.toJSON(),
-        ...other,
-      })),
-      fileName,
-    })
+      JSON.stringify({
+        roomId,
+        version,
+        updates: updates.map(({ changes, ...other }) => ({
+          changes: changes.toJSON(),
+          ...other,
+        })),
+        fileName,
+      })
+    )
     socket.once(SubscribedEvents.PushResponse, function (status: boolean) {
       resolve(status)
     })

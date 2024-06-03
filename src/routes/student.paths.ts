@@ -46,6 +46,10 @@ export const STUDENT_PATH_DASHBOARD = {
     root: '/student/tribes',
     tribe: (id: string) => path('/student/tribes/', `${id}`),
   },
+  codeStream: {
+    root: '/code-stream',
+    workSpace: (roomId: string) => `/code-stream/${roomId}`,
+  },
   codePanel: {
     root: '/student/code-panel',
     workSpace: ({

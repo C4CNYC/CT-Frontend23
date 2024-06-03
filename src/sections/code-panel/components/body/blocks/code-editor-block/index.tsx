@@ -52,17 +52,20 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   isFetching = false,
   contentId,
 }) => {
-  const translate = useTranslate()
-  const TITLE = translate('code_editor')
+  const router = useRouter()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
-  const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
+  const translate = useTranslate()
   const [typing, setTyping] = useState<boolean | null>(null)
-  const room = useSelector((state) => state.codeEditorController.room)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const timer = useRef<NodeJS.Timeout>()
+  const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
+
   const codeRef = useRef(code)
+  const timer = useRef<NodeJS.Timeout>()
+
+  const TITLE = translate('code_editor')
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
+
   const typingListener = (deley: number, firstLoad: boolean): void => {
     if (!firstLoad) {
       setTyping(false)
@@ -86,18 +89,16 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       typingListener(TYPING_DELEY, false)
     }
   }, [code])
-  const { query } = useRouter()
 
   const symbolsHandler = useCallback((): void => {
     setCodingSymbols(!codingSymbols)
   }, [codingSymbols])
 
   const onResetRoom = useCallback(() => {
-    if (user && lessonId) {
+    if (user && lessonId && router.query.id) {
       dispatch(
         setRoom({
-          // roomId: user?.id as string,
-          roomId: `${user?.id as string}_${query?.lessonId as string}`,
+          roomId: router.query.id as string,
           cursorText: user?.first_name as string,
           preloadedCode,
           code: codeRef.current,
@@ -105,7 +106,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         })
       )
     }
-  }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
+  }, [user, lessonId, dispatch, preloadedCode, router.query.roomId])
 
   useEffect(() => {
     onResetRoom()

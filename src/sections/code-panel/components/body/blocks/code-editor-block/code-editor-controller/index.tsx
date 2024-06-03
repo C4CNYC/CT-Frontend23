@@ -22,8 +22,6 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
   isFetching = false,
   preloadedCode,
 }) => {
-  // const { user } = useAuthContext()
-
   const [isConnected, setIsConnected] = useState(false)
   const room = useSelector((state) => state.codeEditorController.room)
 

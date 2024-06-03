@@ -25,12 +25,16 @@ export const pullUpdates = ({
   commentEffect,
 }: PullUpdateProps): Promise<Update[]> => {
   return new Promise<Update[]>(function (resolve) {
-    socket.emit(EmitSocketEvents.Pull, {
+    socket.emit(
+      EmitSocketEvents.Pull,
       roomId,
-      version,
-      fileName,
-      socketId: socket.id,
-    })
+      JSON.stringify({
+        roomId,
+        version,
+        fileName,
+        socketId: socket.id,
+      })
+    )
     socket.once(
       `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`,
       function (updates: Update[]) {
@@ -39,12 +43,16 @@ export const pullUpdates = ({
     )
   }).then((updates: Update[]) => {
     return new Promise<Update[]>(function (resolve) {
-      socket.emit(EmitSocketEvents.Pull, {
+      socket.emit(
+        EmitSocketEvents.Pull,
         roomId,
-        version,
-        fileName,
-        socketId: socket.id,
-      })
+        JSON.stringify({
+          roomId,
+          version,
+          fileName,
+          socketId: socket.id,
+        })
+      )
 
       socket.once(
         `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`,

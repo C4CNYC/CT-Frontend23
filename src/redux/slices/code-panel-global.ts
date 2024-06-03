@@ -69,6 +69,12 @@ export const codePanelSlice = createSlice({
     setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<'lessonId'>>): void => {
       state.lessonId = payload
     },
+    setStudentPosition: (state, { payload }: PayloadAction<any>): void => {
+      state.courseId = payload.courseId
+      state.lessonId = payload.lessonId
+      state.slideIndex = payload.slideIndex
+      state.unitId = payload.unitId
+    },
     setContentValidations: (
       state,
       { payload }: PayloadAction<PickedStoreItem<'contentValidations'>>
@@ -137,6 +143,7 @@ export const {
   setContentValidations,
   setPrevLessonId,
   setPrevLessonCode,
+  setStudentPosition,
 } = codePanelSlice.actions
 
 export default codePanelSlice.reducer

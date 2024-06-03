@@ -8,6 +8,7 @@ enum EditorMode {
 }
 
 export interface CodeEditorControllerRoom {
+  ownerId?: string
   roomId: string
   cursorText?: string
   preloadedCode?: string

@@ -6,7 +6,7 @@ import { EmitSocketEvents, SubscribedEvents } from '../utils/socket'
 
 export const createFile = async ({ socket, fileName, roomId }: CreateFile): Promise<File> => {
   return await new Promise((res, rej) => {
-    socket.emit(EmitSocketEvents.CreateFile, { roomId, fileName })
+    socket.emit(EmitSocketEvents.CreateFile, roomId, { roomId, fileName })
 
     socket.once(`${SubscribedEvents.CreateFileResponse}${roomId}`, (file: File | null) => {
       if (file != null) {
@@ -17,11 +17,12 @@ export const createFile = async ({ socket, fileName, roomId }: CreateFile): Prom
     })
   })
 }
+
 export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileInfo> => {
   return await new Promise((resolve) => {
-    socket.emit(EmitSocketEvents.GetFileInfo, roomId, socket.id)
+    socket.emit(EmitSocketEvents.GetFileInfo, roomId)
 
-    socket.once(SubscribedEvents.GetFileInfoResponse + socket.id, (info: FileInfo) => {
+    socket.once(SubscribedEvents.GetFileInfoResponse + roomId, (info: FileInfo) => {
       resolve(info)
     })
   })
@@ -49,7 +50,7 @@ export const getDocument = async ({
         ...other,
       } as any)
     } else {
-      socket.emit(EmitSocketEvents.GetDoc, other)
+      socket.emit(EmitSocketEvents.GetDoc, other.roomId, JSON.stringify(other))
       socket.once(SubscribedEvents.GetDocResponse, ({ doc, ...other }) => {
         resolve({
           doc: doc?.length > 0 ? Text.of(doc.split('\n')) : Text.of(['']),

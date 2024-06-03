@@ -18,6 +18,7 @@ import {
   setSlideIndex,
   setSolutionCode,
   toggleInstrations,
+  setStudentPosition,
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import BrowserView, {
@@ -25,10 +26,7 @@ import BrowserView, {
 } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import {
-  useGetStudentLastVisitedSlideQuery,
-  useUpdateStudentLastVisitedSlideMutation,
-} from '@root/src/redux/services/manager/lesson-student'
+import { useUpdateStudentLastVisitedSlideMutation } from '@root/src/redux/services/manager/lesson-student'
 
 import BaseBlock from '../base-block'
 
@@ -40,6 +38,7 @@ import {
   getProgressWrapperSx,
 } from './constants'
 import Navigation from './navigation'
+import { useRouter } from 'next/router'
 
 const ProsaMirrorView = dynamic(async () => await import('./prosa-mirror-view'), { ssr: false })
 
@@ -79,20 +78,19 @@ const SliderBlock: FC<ISliderBlock> = ({
   lessonType,
 }) => {
   const theme = useTheme()
+  const router = useRouter()
   const dispatch = useDispatch()
+  const isDesktop = useIsDesktop()
+  const translate = useTranslate()
+
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const translate = useTranslate()
-  const isDesktop = useIsDesktop()
+  const unitId = useSelector((state) => state.codePanelGlobal.unitId)
+  const courseId = useSelector((state) => state.codePanelGlobal.courseId)
 
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
-  const { data: lastSlide } = useGetStudentLastVisitedSlideQuery(
-    {
-      id: lessonId as string,
-    },
-    { skip: !lessonId }
-  )
 
   const title = translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
@@ -107,13 +105,6 @@ const SliderBlock: FC<ISliderBlock> = ({
   const hasNextStep = slideIndex < data.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
-
-  useEffect(() => {
-    if (carousel1.current && lastSlide) {
-      setNav2(carousel1.current)
-      carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
-    }
-  }, [data, lastSlide])
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
@@ -135,6 +126,18 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onUpdateLastSlide = (next: number) => {
+    if (socket && next !== slideIndex) {
+      socket?.emit(
+        'stream-activity:set-stream-activity-by-room-id',
+        router.query.id,
+        JSON.stringify({
+          unit_id: unitId,
+          slide_index: next,
+          course_id: courseId,
+          lesson_id: lessonId,
+        })
+      )
+    }
     updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
   }
 

@@ -75,7 +75,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
 
     dispatch(
       setRoom({
-        // roomId: data.id,
+        ownerId: owner.id as string,
         roomId: `${owner.id as string}_${lessonId as string}`,
         cursorText: owner.first_name,
         mode: EditorMode.SubOwner,
