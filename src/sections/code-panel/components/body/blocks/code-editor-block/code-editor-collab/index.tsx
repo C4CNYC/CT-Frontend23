@@ -41,7 +41,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   onChangeCodemirrorValue?: (value: string) => void
 }
 
-const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
+const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
@@ -58,6 +58,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   ...collabProps
 }) => {
   const styles = useStyles()
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
   const { user, isInitialized: authIsInitialized } = useAuthContext()
@@ -65,30 +66,34 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const dispatch = useDispatch()
   const localstorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
-      const json = localStorage.getItem(
-        getLocalStorageRoomKey(prevLessonId || `${user?.student_profile?.id}_${query?.lessonId}`)
+      const localStorageCodeValue = localStorage.getItem(
+        getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId)
       )
-      if (json) {
+      if (localStorageCodeValue) {
         try {
-          const docInfo = JSON.parse(json) as Record<string, string>
+          const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
           const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
           if (code) {
             return code
           }
-        } catch (e) {}
+        } catch (e) {
+          return localStorageCodeValue;
+        }
       }
     }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode])
+  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId])
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
+    localStorage.setItem(getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId), value);
     void updateCommentWidgetPosition()
   }
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     onChangeStreamingDocInfoFromProps?.(doc)
 
-    localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
+    onChangeCodemirrorValue(JSON.stringify(doc));
+
   }
 
   const {
@@ -182,9 +187,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
       <StatusLabel status={roomStatus} />
 
-      {isLoading || collabProps.isFetching || !streamingDoc ? (
-        <LoadingCodeEditor />
-      ) : (
+      {(
         <>
           <CodeMirror
             onContextMenu={onContextMenu}
@@ -196,7 +199,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             theme='dark'
             extensions={extensions}
             readOnly={isReadOnly}
-            value={streamingDoc.toString() ?? preloadedCode}
+            value={streamingDoc?.toString()?.length ? streamingDoc.toString() : localstorageCode ?? preloadedCode}
             onChange={onChangeCodemirrorValue}
           />
 

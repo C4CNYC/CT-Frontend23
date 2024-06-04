@@ -22,7 +22,7 @@ export default function CodePanelContainer(): ReactElement | null {
       if (isUserLoggedIn()) return null
       // await registerAndLoginAnonymousUser()
     } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: 'error', autoHideDuration: 1000 })
+      enqueueSnackbar(`${error?.message}`, { variant: 'error', autoHideDuration: 1000 })
     } finally {
       setRender(true)
     }
