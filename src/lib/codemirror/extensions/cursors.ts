@@ -1,10 +1,13 @@
 import { StateEffect, StateField } from '@codemirror/state'
 import { Decoration, DecorationSet, EditorView, WidgetType } from '@codemirror/view'
 
+import { EffectType } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
+
 export interface cursor {
   id: string
   from: number
   to: number
+  type: string
 }
 
 export interface Cursors {
@@ -236,6 +239,7 @@ export function cursorExtension(id = ''): any[] {
             id,
             from: e.selection.ranges[0].from,
             to: e.selection.ranges[0].to,
+            type: EffectType.SELECTION,
           }
 
           update.view.dispatch({

@@ -76,7 +76,7 @@ export default function StudentNewEditForm({
       last_name: currentUser?.last_name ?? '',
       email: currentUser?.account?.email ?? '',
       phone: currentUser?.phone ?? '',
-      country: currentUser?.country ?? '',
+      country: currentUser?.country?.toUpperCase() ?? undefined,
       city: currentUser?.city ?? '',
       post_code: currentUser?.post_code ?? '',
       about: currentUser?.about ?? '',
@@ -129,7 +129,12 @@ export default function StudentNewEditForm({
     }).unwrap()
   }
 
-  const onSubmit = async ({ avatarUrl, ...data }: FormValuesProps): Promise<void> => {
+  const onSubmit = async ({ avatarUrl, ...formData }: FormValuesProps): Promise<void> => {
+    const data = {
+      ...formData,
+      country: formData.country ? formData.country.toLowerCase() : null,
+    }
+
     try {
       if (isEdit && currentUser?.id) {
         const { email, password, ...body } = data
@@ -354,14 +359,22 @@ export default function StudentNewEditForm({
                 label={translate('country')}
               >
                 <option value='' />
-                {countries.map((country) => (
-                  <option
-                    key={country.code}
-                    value={country.label}
-                  >
-                    {country.label}
-                  </option>
-                ))}
+                <option
+                  key={'US'}
+                  value={'US'}
+                >
+                  United States
+                </option>
+                {countries
+                  .filter((el) => el.code !== 'US')
+                  .map((country) => (
+                    <option
+                      key={country.code}
+                      value={country.code}
+                    >
+                      {country.label}
+                    </option>
+                  ))}
               </RHFSelect>
               <RHFTextField
                 name='city'
