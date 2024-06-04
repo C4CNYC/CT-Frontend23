@@ -51,7 +51,7 @@ export default function EmojiPickerBtn(): React.ReactElement {
           key='left'
           onMouseDown={handleMouseDown}
           onClick={handleOpenPopover}
-          sx={{ p: '5px' }}
+          sx={{ py: '4px', px: '10px' }}
         >
           <BsEmojiSmile size='20px' />
         </ToggleButton>
