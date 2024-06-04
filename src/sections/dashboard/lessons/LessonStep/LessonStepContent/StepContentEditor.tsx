@@ -83,8 +83,7 @@ export default function StepContentEditor(): React.ReactElement {
         lessonId: lessonId as string,
         id: stepId as string,
         type: bodyType,
-        // until BE functionality for bg saving is done
-        // stepBgColor: bgColor,
+        bg_color: bgColor,
         body,
       }).unwrap()
       enqueueSnackbar(translate('slide_content_updated'))
@@ -95,7 +94,7 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
-    setBgColor(data?.stepBgColor ?? DEFAULT_COLOR)
+    setBgColor(data?.bg_color ?? DEFAULT_COLOR)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {
