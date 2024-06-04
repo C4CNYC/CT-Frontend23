@@ -33,10 +33,10 @@ import {
   TextBgColorPicker,
   TextCaseSelect,
   TextColorPicker,
+  TemplateSelector,
+  BgColorToggleBtn,
+  EmojiPickerBtn,
 } from './toolbars'
-import BgColorToggleBtn from './toolbars/BgColorToggleBtn'
-import EmojiPickerBtn from './toolbars/EmojiPicker'
-import TemplateSelector from './toolbars/TemplateSelector'
 
 interface Props {
   saveContent: () => void
