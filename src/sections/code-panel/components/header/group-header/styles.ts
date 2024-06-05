@@ -11,7 +11,7 @@ export const STACK_STYLES = {
 export const OVERLAY_WRAPPER_SX = {
   display: 'flex',
   alignItems: 'center',
-  bgcolor: '#0198ED',
+  bgcolor: '#EE467A',
   borderRadius: '35px',
   px: 1,
   py: '2px',
