@@ -43,6 +43,9 @@ export default function CoursesListPage(): React.ReactElement {
       />
     )
   }
+
+  const isAdmin = user?.role === Role.Admin
+
   return (
     <>
       <Head>
@@ -62,14 +65,18 @@ export default function CoursesListPage(): React.ReactElement {
             },
           ]}
           action={
-            <CreateCourseDialog id=''>
-              <Button
-                variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
-              >
-                {translate('courses_add')}
-              </Button>
-            </CreateCourseDialog>
+            isAdmin ? (
+              <CreateCourseDialog id=''>
+                <Button
+                  variant='contained'
+                  startIcon={<Iconify icon='eva:plus-fill' />}
+                >
+                  {translate('courses_add')}
+                </Button>
+              </CreateCourseDialog>
+            ) : (
+              ''
+            )
           }
         />
         <FilterCourses
