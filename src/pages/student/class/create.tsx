@@ -53,7 +53,9 @@ export default function CreateClass(): React.ReactElement {
   const [studentJoin, { isLoading: isStudentJoining }] = useStudentJoinClassMutation()
   const [updateClassAvatar, { isLoading: isUpdatingAvatar }] = useUpdateClassesAvatarMutation()
   const CreateEmailSchema = Yup.object().shape({
-    name: Yup.string().required(translate('required_name')),
+    name: Yup.string()
+      .required(translate('required_name'))
+      .max(30, 'The tribe name should be shorter than 30 characters'),
     description: Yup.string(),
   })
   const methods = useForm<FormValueProps>({
