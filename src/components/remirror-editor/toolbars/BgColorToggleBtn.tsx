@@ -10,10 +10,11 @@ import {
   ToggleButton,
   Tooltip,
 } from '@mui/material'
-import { BiColorFill } from '@react-icons/all-files/bi/BiColorFill'
 import { MuiColorInput, matchIsValidColor } from 'mui-color-input'
 
 import { MenuPopover } from '../../menu-popover'
+
+import SlideBgColorIcon from './SlideBgColorIcon'
 
 interface IBgColorToggleBtn {
   bgColor: string
@@ -52,7 +53,7 @@ export default function BgColorToggleBtn({ bgColor, setBgColor }: IBgColorToggle
           onClick={handleOpenPopover}
           sx={{ py: '4px', px: '10px' }}
         >
-          <BiColorFill size={20} />
+          <SlideBgColorIcon size={20} />
         </ToggleButton>
       </Tooltip>
       <MenuPopover
