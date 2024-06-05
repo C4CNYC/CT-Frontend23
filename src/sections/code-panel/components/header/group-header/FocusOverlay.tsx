@@ -2,8 +2,8 @@ import { FC } from 'react'
 
 import { Avatar, Box, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { CgClose } from '@react-icons/all-files/cg/CgClose'
-import { MdFilterCenterFocus } from '@react-icons/all-files/md/MdFilterCenterFocus'
 
+import { FocusModeIcon } from './FocusModeIcon'
 import {
   OVERLAY_AVATAR_SX,
   OVERLAY_GROUP_TITLE_SX,
@@ -14,52 +14,61 @@ import {
 interface IProps {
   title: string
   resetRoom: () => void
+  avatar?: string
 }
 
-const FocusOverlay: FC<IProps> = ({ title, resetRoom }) => {
+const FocusOverlay: FC<IProps> = ({ title, resetRoom, avatar }) => {
   return (
-    <Box sx={OVERLAY_WRAPPER_SX}>
-      <Avatar
-        alt='avatar'
-        src={''}
-        sx={OVERLAY_AVATAR_SX}
-      >
-        🤖
-      </Avatar>
-      <IconButton sx={{ p: 0 }}>
-        <MdFilterCenterFocus
-          size={25}
-          color='#fff'
-        />
-      </IconButton>
-
-      <Stack sx={{ pr: 4, width: '193px' }}>
-        <Typography
-          variant='caption'
-          sx={OVERLAY_GROUP_TITLE_SX}
-        >
-          Focus mode
+    <Tooltip
+      placement='left'
+      title={
+        <Typography>
+          <b>Teleport</b> to see the full editor, preview and slides of this person.
         </Typography>
+      }
+    >
+      <Box sx={OVERLAY_WRAPPER_SX}>
+        <Avatar
+          alt='avatar'
+          src={avatar}
+          sx={OVERLAY_AVATAR_SX}
+        >
+          🤖
+        </Avatar>
+        <IconButton sx={{ p: 0 }}>
+          <FocusModeIcon
+            widht={25}
+            height={16}
+            color='#FFF'
+          />
+        </IconButton>
 
-        <Tooltip title={'groupTitle'}>
+        <Stack sx={{ pr: 4, width: '193px' }}>
+          <Typography
+            variant='caption'
+            sx={OVERLAY_GROUP_TITLE_SX}
+          >
+            telepor mode
+          </Typography>
+
           <Typography
             variant='subtitle2'
             sx={{ ...TRIBE_NAME_STYLES, color: '#fff' }}
           >
             {title}
           </Typography>
-        </Tooltip>
-      </Stack>
-      <IconButton
-        sx={{ p: 0 }}
-        onClick={resetRoom}
-      >
-        <CgClose
-          size={28}
-          color='#fff'
-        />
-      </IconButton>
-    </Box>
+        </Stack>
+        <IconButton
+          sx={{ p: 0 }}
+          onClick={resetRoom}
+        >
+          <CgClose
+            size={28}
+            color='#fff'
+          />
+        </IconButton>
+      </Box>
+    </Tooltip>
   )
 }
 
