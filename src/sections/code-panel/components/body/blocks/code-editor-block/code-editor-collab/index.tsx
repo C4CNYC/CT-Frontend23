@@ -85,15 +85,13 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
+    onChangeStreamingDocInfoFromProps?.(value as any);
     localStorage.setItem(getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId), value);
     void updateCommentWidgetPosition()
   }
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     onChangeStreamingDocInfoFromProps?.(doc)
-
-    onChangeCodemirrorValue(JSON.stringify(doc));
-
   }
 
   const {
@@ -148,6 +146,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     defaultFileName,
   })
 
+  const codeValue = streamingDoc?.toString()?.length ? streamingDoc.toString() : localstorageCode ?? preloadedCode;
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
   useEffect(() => {
@@ -199,7 +198,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             theme='dark'
             extensions={extensions}
             readOnly={isReadOnly}
-            value={streamingDoc?.toString()?.length ? streamingDoc.toString() : localstorageCode ?? preloadedCode}
+            value={codeValue}
             onChange={onChangeCodemirrorValue}
           />
 

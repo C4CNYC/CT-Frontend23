@@ -103,7 +103,7 @@ const CodeEditorBlock = React.memo(
           cursorText={`${user?.first_name} ${user?.last_name?.[0]}.`}
           // @ts-expect-error
           onChange={onChangeCode}
-          roomId={user?.id}
+          roomId={user?.id ?? `${Math.random()}${Date.now()}`}
           code={code}
         />
         {/* ) : ( */}
