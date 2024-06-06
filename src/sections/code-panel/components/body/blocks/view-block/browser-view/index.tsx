@@ -31,9 +31,13 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
   )
 
 const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
+  console.log(`BrowserView:`);
+  console.log(document);
   const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
+    console.log('useEffect in BrowserVIew');
+    console.log(document);
     if (document == null) {
       return
     }
@@ -41,6 +45,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
     const fontPath = '/fonts/index.css'
     const fontCssLink = `<link rel="stylesheet" href="${fontPath}">`
     const { htmlBody = [], cssBody = [], jsBody = [] } = document
+    
     setDocSrc(`
       <html style="height: 100%">
         <head>
@@ -49,14 +54,14 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
         </head>
         <body style="height: 100%; margin: 0;">
         <script src="https://unpkg.com/kaboom@2000.2.9/dist/kaboom.js"></script>
-          ${htmlBody.join('\n')}
+          ${(document as any).length ? document : htmlBody.join('\n')}
           ${getBody(jsBody, TagNames.Script)}
         </body>
       </html>
     `)
   }, [document])
 
-  return document != null ? (
+  return document ? (
     <iframe
       srcDoc={docSrc}
       style={IFRAME_STYLE}

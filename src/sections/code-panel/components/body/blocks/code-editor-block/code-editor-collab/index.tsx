@@ -91,6 +91,9 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   }
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
+    if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
+      return;
+    }
     onChangeStreamingDocInfoFromProps?.(doc)
   }
 
@@ -154,6 +157,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       dispatch(setPrevLessonId(null))
       dispatch(setPrevLessonCode(null))
     }
+  }, [])
+
+  useEffect(() => {
+    onChangeCodemirrorValue(codeValue as string);
   }, [])
 
   return (
