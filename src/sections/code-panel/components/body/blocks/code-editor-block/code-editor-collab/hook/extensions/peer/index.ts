@@ -3,7 +3,6 @@ import { StateEffectType } from '@codemirror/state'
 import { EditorView, ViewPlugin, ViewUpdate } from '@codemirror/view'
 import { Socket } from 'socket.io-client'
 
-import type { File } from '../../requests'
 import { EmitSocketEvents } from '../../utils/socket'
 import type { Cursor } from '../cursors/types'
 
@@ -12,18 +11,16 @@ import { pushUpdates } from './push-updates'
 
 interface PeerExtensionProps {
   socket: Socket
-  roomId: string
+  roomId_fileId: string
   startVersion: number
-  fileName: File
   addCursor: StateEffectType<Cursor>
   commentEffect: StateEffectType<any>
 }
 
 export const peerExtension = ({
   socket,
-  roomId,
+  roomId_fileId,
   startVersion,
-  fileName,
   addCursor,
   commentEffect,
 }: PeerExtensionProps) => {
@@ -53,7 +50,7 @@ export const peerExtension = ({
         this.pushing = true
 
         const version = getSyncedVersion(this.view.state)
-        await pushUpdates({ socket, roomId, version, updates, fileName })
+        await pushUpdates({ socket, roomId_fileId, version, updates })
         this.pushing = false
 
         if (sendableUpdates(this.view.state).length) {
@@ -68,9 +65,8 @@ export const peerExtension = ({
           const version = getSyncedVersion(this.view.state)
           const updates = await pullUpdates({
             socket,
-            roomId,
+            roomId_fileId,
             version,
-            fileName,
             addCursor,
             commentEffect,
           })
@@ -81,7 +77,7 @@ export const peerExtension = ({
       }
 
       destroy() {
-        socket.off(`${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`)
+        socket.off(`${EmitSocketEvents.PullResponse}${roomId_fileId}`)
         this.done = true
       }
     }

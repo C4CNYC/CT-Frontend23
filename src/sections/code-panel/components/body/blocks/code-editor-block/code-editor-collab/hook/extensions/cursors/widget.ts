@@ -60,7 +60,7 @@ export class TooltipWidget extends WidgetType {
 
     if (this.withTooltip) dom.appendChild(cursorTooltip)
 
-    if (this.id.split('_')[0] === this.userId) dom.appendChild(cursorCaret)
+    if (this.id?.split('_')[0] === this.userId) dom.appendChild(cursorCaret)
 
     debouncedHideTooltip(dom)
 

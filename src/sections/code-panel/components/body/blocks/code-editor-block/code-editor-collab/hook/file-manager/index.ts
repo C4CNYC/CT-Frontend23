@@ -1,14 +1,10 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
+import { useRouter } from 'next/router'
 import type { Socket } from 'socket.io-client'
 
-import {
-  EditorMode,
-  DEFAULT_FILE,
-  MIN_FILE_LIST_LENGTH,
-  getEmptyFileManagement,
-} from '../constants'
-import { type FileInfo, type File, createFile } from '../requests'
+import { EditorMode, MIN_FILE_LIST_LENGTH } from '../constants'
+import { type FileInfo, type File } from '../requests'
 import { EmitSocketEvents } from '../utils/socket'
 
 import { useModeSubscriptions } from './useModeSubscriptions'
@@ -19,7 +15,7 @@ interface UseFileManagerReturn {
   addedFileList: File[]
   isFileFormOpen: boolean
   onAddFile: (fileName: string) => Promise<void>
-  activeFile: File
+  activeFile?: File
   setActiveFile: (fileName: File) => void
   setIsOpen: (isOpen: boolean) => void
   setIsFileFormOpen: (isOpen: boolean) => void
@@ -40,72 +36,80 @@ export const useFileManager = ({
   roomId,
   mode,
 }: UseFileManagerProps): UseFileManagerReturn => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
-  const [activeFile, _setActiveFile] = useState<File>(DEFAULT_FILE)
-  const [fileList, setFileList] = useState<File[]>([DEFAULT_FILE])
-  const [addedFileList, setAddedFileList] = useState<File[]>([DEFAULT_FILE])
+
+  const [activeFile, _setActiveFile] = useState<File | undefined>()
+  const [fileList, setFileList] = useState<File[]>([])
+  const [addedFileList, setAddedFileList] = useState<File[]>([])
   const [isFileFormOpen, setIsFileFormOpen] = useState(false)
+
+  useEffect(() => {
+    if (router.query.id) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_file?stream_room_id=${router.query.id}`,
+        { method: 'GET' }
+      )
+        .then((res) => {
+          if (res.ok) {
+            return res.json()
+          }
+        })
+        .then((res) => {
+          setFileList(res)
+          setActiveFile(res[0])
+        })
+    }
+  }, [router.query.id])
 
   // ------------------------------------------------------ //
   //                        Handlers                        //
   // ------------------------------------------------------ //
 
-  const onAddFile = async (fileName: string): Promise<void> => {
-    if (!socket) {
-      // console.error("TODO onAddFile not implemented without sockets")
-      return
-    }
-    const file = await createFile({ roomId, fileName, socket })
-    setFileList([...fileList, file])
-  }
+  const onAddFile = useCallback(
+    async (fileName: string): Promise<void> => {
+      // TODO: MOVE TO RTKQuery
+      fetch(`${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_file`, {
+        method: 'POST',
+        body: JSON.stringify({
+          name: fileName.split('.')[0],
+          code: '',
+          extension: fileName.split('.')[1],
+          stream_room_id: router.query.id,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json()
+          }
+        })
+        .then((res) => {
+          setFileList([...fileList, res])
+        })
+    },
+    [router.query.id, fileList]
+  )
 
   const onDeleteFile = useCallback(
-    (fileName: File): File | null => {
+    (fileName: File) => {
       if (fileList.length === MIN_FILE_LIST_LENGTH) {
         return null
       }
 
-      const isActiveFileDeleted = fileName.id === activeFile.id
-      const newFileList = [...fileList]
-      const index = newFileList.findIndex(({ id }) => id === fileName.id)
-      const addedFileIndex = addedFileList.findIndex(({ id }) => id === fileName.id)
-
-      if (addedFileIndex > -1) {
-        const newAddedFileList = [...addedFileList]
-        newAddedFileList.splice(addedFileIndex, 1)
-        setAddedFileList(newAddedFileList)
-        socket?.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList)
+      try {
+        fetch(
+          `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_file/${fileName._id}?stream_room_id=${router.query.id}`,
+          { method: 'DELETE' }
+        )
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
       }
-
-      let newActiveFile: File | null = null
-
-      if (isActiveFileDeleted) {
-        const nextActiveFile =
-          newFileList[index - 1] != null ? newFileList[index - 1] : newFileList[index + 1]
-
-        newActiveFile = nextActiveFile
-        _setActiveFile(nextActiveFile)
-      }
-
-      newFileList.splice(index, 1)
-      setFileList(newFileList)
-
-      return newActiveFile
     },
     [fileList, addedFileList, activeFile, roomId, socket]
-  )
-
-  const onDeleteFileWithEvents = useCallback(
-    (fileName: File) => {
-      const newActiveFile = onDeleteFile(fileName)
-
-      if (newActiveFile != null) {
-        socket?.emit(EmitSocketEvents.SetActiveFile, roomId, newActiveFile)
-      }
-
-      socket?.emit(EmitSocketEvents.DeleteFile, roomId, fileName)
-    },
-    [onDeleteFile, socket]
   )
 
   const onChangeFileWithEvents = (fileName: File): void => {
@@ -118,14 +122,14 @@ export const useFileManager = ({
 
   const setActiveFile = useCallback(
     (fileName: File): void => {
-      const isExist = addedFileList.some(({ id }) => fileName.id === id)
+      const isExist = addedFileList.some(({ _id }) => fileName._id === _id)
 
       if (!isExist) {
         const newAddedFileList = [fileName, ...addedFileList]
 
         setAddedFileList(newAddedFileList)
 
-        socket?.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList)
+        // socket?.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList)
       }
 
       _setActiveFile(fileName)
@@ -133,20 +137,17 @@ export const useFileManager = ({
     [addedFileList, socket, mode, roomId]
   )
 
-  const onResetFileManager = useCallback(
-    ({ activeFile, files, filesInLayout }: FileInfo = getEmptyFileManagement()) => {
-      _setActiveFile(activeFile)
-      setFileList(files)
-      setAddedFileList(filesInLayout)
-    },
-    []
-  )
+  const onResetFileManager = useCallback(({ activeFile, files, filesInLayout }: any) => {
+    _setActiveFile(activeFile)
+    setFileList(files)
+    setAddedFileList(filesInLayout)
+  }, [])
 
   const onUpdateFileList = useCallback(
     (fileName: File, socketId: string) => {
       if (socket?.id !== socketId) {
         setFileList((prev) => {
-          const isExist = prev.some(({ id }) => id === fileName.id)
+          const isExist = prev.some(({ _id }) => _id === fileName._id)
 
           return isExist ? prev : [...prev, fileName]
         })
@@ -154,6 +155,48 @@ export const useFileManager = ({
     },
     [socket]
   )
+
+  useEffect(() => {
+    if (!socket) {
+      return
+    }
+
+    if (!socket.hasListeners('fileRemoved')) {
+      socket.off('fileRemoved')
+    }
+
+    socket?.on('fileRemoved', (file_id: string) => {
+      const newFileList = [...fileList]
+      const sideMenuFileIndex = newFileList.findIndex(({ _id }) => _id === file_id)
+      const tabFileIndex = addedFileList.findIndex(({ _id }) => _id === file_id)
+
+      if (tabFileIndex > -1) {
+        const newAddedFileList = [...addedFileList]
+        newAddedFileList.splice(tabFileIndex, 1)
+        setAddedFileList(newAddedFileList)
+
+        if (file_id === activeFile?._id) {
+          const firstTabFile = newAddedFileList[0]
+
+          if (firstTabFile) {
+            _setActiveFile(firstTabFile)
+          } else {
+            _setActiveFile(newFileList[0])
+            setAddedFileList([newFileList[0]])
+          }
+        }
+      }
+
+      newFileList.splice(sideMenuFileIndex, 1)
+      setFileList(newFileList)
+    })
+
+    if (!socket.hasListeners('fileAdded')) {
+      socket?.on('fileAdded', (file: File) => {
+        setFileList((prev) => [...prev, file])
+      })
+    }
+  }, [socket, fileList, addedFileList, activeFile])
 
   useModeSubscriptions({
     roomId,
@@ -176,9 +219,9 @@ export const useFileManager = ({
     setIsOpen,
     setIsFileFormOpen,
     addedFileList,
-    onDeleteFile,
+    onDeleteFile: onDeleteFile as (fileName: File) => File | null, // Fix: Change the return type of onDeleteFile
     onResetFileManager,
-    onDeleteFileWithEvents,
+    onDeleteFileWithEvents: onDeleteFile,
     onChangeFileWithEvents,
   }
 }

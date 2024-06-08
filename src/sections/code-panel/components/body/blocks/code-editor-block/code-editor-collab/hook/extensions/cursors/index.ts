@@ -8,7 +8,6 @@ import { cursorBaseTheme } from './theme'
 import type { Cursor } from './types'
 
 interface CursorExtentionProps {
-  cursorId: string
   tooltipText: string
   withTooltip: boolean
   addCursor: StateEffectType<Cursor>
@@ -16,7 +15,6 @@ interface CursorExtentionProps {
 }
 
 export const cursorExtension = ({
-  cursorId,
   tooltipText,
   withTooltip,
   addCursor,
@@ -30,7 +28,7 @@ export const cursorExtension = ({
         if (e.selection) {
           update.view.dispatch({
             effects: addCursor.of({
-              id: cursorId,
+              id: userId!,
               from: e.selection.ranges[0].from,
               to: e.selection.ranges[0].to,
               tooltipText,

@@ -303,16 +303,16 @@ export default function CodePanelPage(): ReactElement | null {
             { id: user, status: 'idle', lessonId: lesson },
           ])
         })
-        socket.on(
-          'changeStatusInLesson',
-          (data: { lesson: string; user: string; status: string }) => {
-            const { status, user, lesson } = data
-            _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-              ..._usersStatus.filter((_status) => _status.id !== user),
-              { id: user, status, lessonId: lesson },
-            ])
-          }
-        )
+        // socket.on(
+        //   'changeStatusInLesson',
+        //   (data: { lesson: string; user: string; status: string }) => {
+        //     const { status, user, lesson } = data
+        //     _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+        //       ..._usersStatus.filter((_status) => _status.id !== user),
+        //       { id: user, status, lessonId: lesson },
+        //     ])
+        //   }
+        // )
 
         socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
           const { participants } = data
@@ -345,7 +345,7 @@ export default function CodePanelPage(): ReactElement | null {
     return () => {
       socket?.off('joinLesson')
       socket?.off('leaveLesson')
-      socket?.off('changeStatusInLesson')
+      // socket?.off('changeStatusInLesson')
       socket?.off('lessonMembers')
 
       socket?.disconnect()

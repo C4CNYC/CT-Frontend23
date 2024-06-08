@@ -109,26 +109,30 @@ async function pullUpdates(
 
 export async function getDocument(
   socket: Socket,
-  roomId: string,
+  roomIdFileId: string,
   timeout = 3000
 ): Promise<{ version: number; doc: Text }> {
   return await new Promise(function (resolve, reject) {
     socket
       .timeout(timeout)
-      .emit('getDocument', roomId, (error: unknown, version: number | unknown, doc: string) => {
-        if (error) {
-          reject(error)
-          return
+      .emit(
+        'getDocument',
+        roomIdFileId,
+        (error: unknown, version: number | unknown, doc: string) => {
+          if (error) {
+            reject(error)
+            return
+          }
+          if (typeof version !== 'number') {
+            reject(new Error('No permission to access this document'))
+            return
+          }
+          resolve({
+            version,
+            doc: Text.of(doc?.length ? doc.split('\n') : ['']),
+          })
         }
-        if (typeof version !== 'number') {
-          reject(new Error('No permission to access this document'))
-          return
-        }
-        resolve({
-          version,
-          doc: Text.of(doc?.length ? doc.split('\n') : ['']),
-        })
-      })
+      )
   })
 }
 

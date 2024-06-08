@@ -81,27 +81,26 @@ const FileModal: FC<FileModalProps> = ({
           </Typography>
 
           <Stack>
-            {fileList.map(({ id, name }) => {
+            {fileList.map((file) => {
               return (
                 <Stack
-                  key={id}
+                  key={file._id}
                   sx={styles.BUTTON_WRAPPER}
                 >
                   <Button
-                    onClick={() => setActiveFile({ id, name })}
+                    onClick={() => setActiveFile(file)}
                     sx={styles.BUTTON_FILE_SX}
                     variant='text'
                   >
                     <DevIcon
                       sx={styles.devIcon}
-                      fileName={name}
+                      fileName={`${file.name}.${file.extension}`}
                     />
-
-                    {name}
+                    {file.name}.{file.extension}
                   </Button>
 
                   {isDeleteExist && (
-                    <IconButton onClick={() => setFileToDelete({ id, name })}>
+                    <IconButton onClick={() => setFileToDelete(file)}>
                       <Close />
                     </IconButton>
                   )}
@@ -125,7 +124,11 @@ const FileModal: FC<FileModalProps> = ({
           title='Delete file'
         >
           <Stack sx={styles.REMOVE_FILE_CONTENT}>
-            Are you sure you want to delete <span>{fileToDelete?.name}</span> file ?
+            Are you sure you want to delete{' '}
+            <span>
+              {fileToDelete?.name}.{fileToDelete?.extension}
+            </span>{' '}
+            file ?
           </Stack>
 
           <Button

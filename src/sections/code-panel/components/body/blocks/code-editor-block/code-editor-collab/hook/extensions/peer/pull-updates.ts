@@ -3,14 +3,12 @@ import { ChangeSet, StateEffect, StateEffectType } from '@codemirror/state'
 import { Socket } from 'socket.io-client'
 
 import { EffectType } from '../../constants'
-import type { File } from '../../requests'
 import { EmitSocketEvents } from '../../utils/socket'
 import type { Cursor } from '../cursors/types'
 
 interface PullUpdateProps {
-  roomId: string
+  roomId_fileId: string
   version: number
-  fileName: File
   socket: Socket
   addCursor: StateEffectType<Cursor>
   commentEffect: StateEffectType<any>
@@ -18,48 +16,39 @@ interface PullUpdateProps {
 
 export const pullUpdates = ({
   socket,
-  roomId,
+  roomId_fileId,
   version,
-  fileName,
   addCursor,
   commentEffect,
 }: PullUpdateProps): Promise<Update[]> => {
   return new Promise<Update[]>(function (resolve) {
     socket.emit(
       EmitSocketEvents.Pull,
-      roomId,
+      roomId_fileId,
       JSON.stringify({
-        roomId,
+        roomId_fileId,
         version,
-        fileName,
         socketId: socket.id,
       })
     )
-    socket.once(
-      `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`,
-      function (updates: Update[]) {
-        resolve(updates)
-      }
-    )
+    socket.once(`${EmitSocketEvents.PullResponse}${roomId_fileId}`, function (updates: Update[]) {
+      resolve(updates)
+    })
   }).then((updates: Update[]) => {
     return new Promise<Update[]>(function (resolve) {
       socket.emit(
         EmitSocketEvents.Pull,
-        roomId,
+        roomId_fileId,
         JSON.stringify({
-          roomId,
+          roomId_fileId,
           version,
-          fileName,
           socketId: socket.id,
         })
       )
 
-      socket.once(
-        `${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`,
-        function (updates: Update[]) {
-          resolve(updates)
-        }
-      )
+      socket.once(`${EmitSocketEvents.PullResponse}${roomId_fileId}`, function (updates: Update[]) {
+        resolve(updates)
+      })
     }).then((updates: Update[]) =>
       updates?.map((u: Update) => {
         if (u.effects?.length) {

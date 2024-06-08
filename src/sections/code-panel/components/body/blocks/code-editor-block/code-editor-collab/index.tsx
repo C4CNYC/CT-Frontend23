@@ -152,6 +152,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     }
   }, [])
 
+  if (!activeFile) return null
+
   return (
     <div
       className={`${styles.wrapper} code-editor-wrapper`}

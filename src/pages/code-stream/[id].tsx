@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useLayoutEffect, useState } from 'react'
+import { ReactElement, useEffect, useMemo, useState } from 'react'
 
 import { Box } from '@mui/material'
 import dynamic from 'next/dynamic'
@@ -14,7 +14,6 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import type { ILesson } from '@/redux/interfaces/content.interface'
 import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
 import {
-  useGetContentCheckersQuery,
   useGetLessonContentStudentQuery,
   useGetLessonStudentQuery,
 } from '@/redux/services/manager/lesson-student'
@@ -25,15 +24,12 @@ import {
   setSocket,
   setStudentPosition,
   setUnitId,
-  setUsersStatus,
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
-import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
-import { ILessonUserStatus } from '@/types'
 import type { BaseResponseInterface } from '@/utils'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
@@ -60,12 +56,6 @@ const LessonsManager = dynamic(
   async () => await import('@/sections/code-panel/components/lesson-manager')
 )
 
-interface LessonUserResponseType {
-  id: string
-  status: string
-  lessonId: string
-}
-
 const DEFAULT_LANGUAGE = 'html'
 
 export default function CodePanelPage(): ReactElement | null {
@@ -74,15 +64,15 @@ export default function CodePanelPage(): ReactElement | null {
   const dispatch = useDispatch()
   const { enqueueSnackbar } = useSnackbar()
 
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const socket = useSelector((state: any) => state.codePanelGlobal.socket)
   const { user, isInitialized: authIsInitialized } = useAuthContext()
   const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
-  const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
-  // const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
-  //   dispatch(setUsersStatus(cb(usersStatus)))
-  // }
+  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const [showTour, setShowTour] = useState(false)
+  const [render, setRender] = useState(true)
+  const isShowTour = useSelector((state) => state.tour.isStarted)
 
   const handle = useFullScreenHandle()
 
@@ -102,14 +92,14 @@ export default function CodePanelPage(): ReactElement | null {
     data: lessonContent,
     isLoading: isLoadingLessonContent,
     isFetching: isFetchingLessonContent,
-    fulfilledTimeStamp,
   } = useGetLessonContentStudentQuery({ id: lastLessonId as string }, { skip: !lastLessonId })
 
-  const { data: checkers } = useGetContentCheckersQuery(undefined, {
-    skip: !fulfilledTimeStamp,
-  })
-
   const [completeLesson] = useCompleteLessonMutation()
+
+  const isLoadingComplete = useMemo(
+    () => !!lesson && !isLoadingLessonContent && !isLoadingLesson && !render,
+    [lesson, isLoadingLessonContent, isLoadingLesson, render]
+  )
 
   const onConfettiComplete = (confetti?: ConfettiType) => {
     setShowConfetti(false)
@@ -117,10 +107,9 @@ export default function CodePanelPage(): ReactElement | null {
   }
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
-    if (!router.query.courseId) return
     void router.push(
       STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-        courseId: router.query.courseId as string,
+        courseId: lastCourseId!,
         unitId,
         lessonId,
       })
@@ -195,17 +184,6 @@ export default function CodePanelPage(): ReactElement | null {
     }
   }
 
-  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
-  const [showTour, setShowTour] = useState(false)
-  const [render, setRender] = useState(true)
-  const isLoadingComplete =
-    !!lesson &&
-    !isLoadingLessonContent &&
-    !isLoadingLesson &&
-    router.query.courseId !== null &&
-    !render
-  const isShowTour = useSelector((state) => state.tour.isStarted)
-
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
     if (!hasSeenTour) setShowTour(true)
@@ -278,11 +256,6 @@ export default function CodePanelPage(): ReactElement | null {
     }
 
     return () => {
-      socket?.off('joinLesson')
-      socket?.off('leaveLesson')
-      socket?.off('changeStatusInLesson')
-      socket?.off('lessonMembers')
-
       socket?.disconnect()
       dispatch(setSocket(undefined))
     }

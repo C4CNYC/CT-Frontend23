@@ -20,59 +20,28 @@ import SliderBlock from './blocks/slider-block'
 import ViewBlock from './blocks/view-block'
 import { CodeDocument } from './blocks/view-block/browser-view'
 
-let previousLength: number | null = null
-let checkValueTimeout: any | null = null
-
 const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
   onSubmitChallenge,
   onSubmitLesson,
   lessonContents,
   user,
-  language,
   isFetchingLessonContent = false,
 }) => {
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
   const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const [document, setDocument] = useState<CodeDocument | null>(null)
+
+  const isDesktop = useIsDesktop()
+
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
-
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
-
-  const [document, setDocument] = useState<CodeDocument | null>(null)
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
-      if (checkValueTimeout) {
-        // Clear the previous timeout if the value changes
-        clearTimeout(checkValueTimeout)
-      }
-
-      previousLength = doc?.htmlBody?.length // Store the current value
-      if (lessonId && user) {
-        socket?.emit('changeStatusInLesson', {
-          lesson: lessonId,
-          user: user?.id,
-          status: 'active',
-        })
-      }
-
-      // Set up the check for 30 seconds later
-      checkValueTimeout = setTimeout(() => {
-        if (doc?.htmlBody?.length === previousLength) {
-          socket?.emit('changeStatusInLesson', {
-            lesson: lessonId,
-            user: user?.id,
-            status: 'idle',
-          })
-        }
-      }, 30000) // 30 seconds
-
       setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? ''))
     } catch (error: any) {

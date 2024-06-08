@@ -3,6 +3,7 @@ import { Text } from '@codemirror/state'
 import { Socket } from 'socket.io-client'
 
 import { EmitSocketEvents, SubscribedEvents } from '../utils/socket'
+import { Extensions } from '../constants'
 
 export const createFile = async ({ socket, fileName, roomId }: CreateFile): Promise<File> => {
   return await new Promise((res, rej) => {
@@ -50,7 +51,7 @@ export const getDocument = async ({
         ...other,
       } as any)
     } else {
-      socket.emit(EmitSocketEvents.GetDoc, other.roomId, JSON.stringify(other))
+      socket.emit(EmitSocketEvents.GetDoc, other.roomId_fileId, JSON.stringify(other))
       socket.once(SubscribedEvents.GetDocResponse, ({ doc, ...other }) => {
         resolve({
           doc: doc?.length > 0 ? Text.of(doc.split('\n')) : Text.of(['']),
@@ -78,11 +79,8 @@ export const getCodeInfo = async ({ socket, roomId }: GetCodeInfo): Promise<any>
 
 interface GetDocumentProps {
   socket?: Socket
-  roomId: string
+  roomId_fileId: string
   cursorName: string
-  fileName: File
-  preloadedCode?: string
-  defaultFileName: string
 }
 
 interface GetDocumentReturn {
@@ -94,8 +92,13 @@ interface GetDocumentReturn {
 }
 
 export interface File {
-  id: string
+  code: string
+  created_at?: string
+  extension: Extensions
   name: string
+  stream_room_id: string
+  updated_at?: string
+  _id: string
 }
 
 export interface FileInfo {

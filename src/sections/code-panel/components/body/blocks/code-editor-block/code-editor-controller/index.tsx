@@ -50,8 +50,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
     }
   }, [socket])
 
-  if (room == null /* || !isConnected */) {
-    // if (room == null  || !isConnected ) {
+  if (room == null) {
     return null
   }
 

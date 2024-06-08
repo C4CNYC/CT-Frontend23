@@ -48,6 +48,8 @@ export enum Extensions {
 export const DEFAULT_FILE = {
   id: 'index.html',
   name: 'index.html',
+  code: '',
+  extension: Extensions.Html,
 }
 
 export const MIN_FILE_LIST_LENGTH = 1

@@ -18,29 +18,28 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
     <Stack sx={styles.WRAPPER_STACK_SX}>
       <Tabs
         sx={styles.TABS}
-        value={activeFile?.name}
-        onChange={(_, id) => {
-          onChange(fileList.find(({ id: _id }) => id === _id) as File)
+        value={activeFile?._id}
+        onChange={(_, newId) => {
+          onChange(fileList.find(({ _id }) => newId === _id) as File)
         }}
         variant='scrollable'
         scrollButtons={false}
         aria-label='scrollable prevent tabs example'
       >
-        {fileList.map(({ name, id }) => (
+        {fileList.map(({ name, extension, _id }) => (
           <Tab
             sx={styles.TAB}
-            key={id}
+            key={_id}
             label={
               <>
                 <DevIcon
                   sx={styles.DEV_ICON}
-                  fileName={name}
+                  fileName={`${name}.${extension}`}
                 />
-
-                {name}
+                {name}.{extension}
               </>
             }
-            value={id}
+            value={_id}
           />
         ))}
       </Tabs>

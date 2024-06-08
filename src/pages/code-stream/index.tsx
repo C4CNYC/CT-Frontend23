@@ -12,6 +12,10 @@ export default function CodePanelPage(): ReactElement | null {
   const user = useSelector((state) => state.global.user)
 
   useEffect(() => {
+    if (!user) {
+      return
+    }
+
     fetch(`${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_room`, {
       method: 'POST',
       headers: {
@@ -42,7 +46,7 @@ export default function CodePanelPage(): ReactElement | null {
         )
         void router.push(STUDENT_PATH_DASHBOARD.codeStream.workSpace(data._id))
       })
-  }, [router.query])
+  }, [router.query, user])
 
   return null
 }
