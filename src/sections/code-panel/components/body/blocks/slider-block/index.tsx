@@ -5,6 +5,7 @@ import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import * as _ from 'lodash-es'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
 
@@ -18,7 +19,6 @@ import {
   setSlideIndex,
   setSolutionCode,
   toggleInstrations,
-  setStudentPosition,
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import BrowserView, {
@@ -38,7 +38,6 @@ import {
   getProgressWrapperSx,
 } from './constants'
 import Navigation from './navigation'
-import { useRouter } from 'next/router'
 
 const ProsaMirrorView = dynamic(async () => await import('./prosa-mirror-view'), { ssr: false })
 

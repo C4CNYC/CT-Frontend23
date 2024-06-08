@@ -2,8 +2,8 @@ import { type Update } from '@codemirror/collab'
 import { Text } from '@codemirror/state'
 import { Socket } from 'socket.io-client'
 
-import { EmitSocketEvents, SubscribedEvents } from '../utils/socket'
 import { Extensions } from '../constants'
+import { EmitSocketEvents, SubscribedEvents } from '../utils/socket'
 
 export const createFile = async ({ socket, fileName, roomId }: CreateFile): Promise<File> => {
   return await new Promise((res, rej) => {

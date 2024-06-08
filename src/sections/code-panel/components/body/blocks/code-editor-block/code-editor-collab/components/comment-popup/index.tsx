@@ -74,7 +74,7 @@ const CommentPopup: FC<CommentComponentPopupProps> = ({
               >
                 <CodeMirror
                   value={doc}
-                  extensions={[...language(activeFile)]}
+                  extensions={[...language(activeFile.extension)]}
                   maxHeight='68px'
                   theme='dark'
                   readOnly
