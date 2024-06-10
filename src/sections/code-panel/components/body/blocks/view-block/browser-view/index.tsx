@@ -31,13 +31,9 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
   )
 
 const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
-  console.log(`BrowserView:`);
-  console.log(document);
   const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
-    console.log('useEffect in BrowserVIew');
-    console.log(document);
     if (document == null) {
       return
     }
@@ -45,7 +41,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
     const fontPath = '/fonts/index.css'
     const fontCssLink = `<link rel="stylesheet" href="${fontPath}">`
     const { htmlBody = [], cssBody = [], jsBody = [] } = document
-    
+
     setDocSrc(`
       <html style="height: 100%">
         <head>

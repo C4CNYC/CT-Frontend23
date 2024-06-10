@@ -10,7 +10,7 @@ export default function HomePage(): React.ReactElement {
   const { isAuthenticated } = useAuthContext()
   const { push } = useRouter()
   useEffect(() => {
-      void push(STUDENT_PATH_DASHBOARD.class.root)
+    void push(STUDENT_PATH_DASHBOARD.class.root)
   }, [push])
   return (
     <>
