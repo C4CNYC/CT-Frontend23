@@ -15,7 +15,6 @@ import AddComment from './components/add-comment'
 import CommentPopup from './components/comment-popup'
 import FileModal from './components/file-modal'
 import FileSwitcher from './components/file-switcher'
-import LoadingCodeEditor from './components/loading-code-editor'
 import StatusLabel, { RoomStatus } from './components/status-label'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
 import { EditorMode } from './hook/constants'
@@ -77,7 +76,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             return code
           }
         } catch (e) {
-          return localStorageCodeValue;
+          return localStorageCodeValue
         }
       }
     }
@@ -85,14 +84,14 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
-    onChangeStreamingDocInfoFromProps?.(value as any);
-    localStorage.setItem(getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId), value);
+    onChangeStreamingDocInfoFromProps?.(value as any)
+    localStorage.setItem(getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId), value)
     void updateCommentWidgetPosition()
   }
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
-      return;
+      return
     }
     onChangeStreamingDocInfoFromProps?.(doc)
   }
@@ -149,7 +148,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     defaultFileName,
   })
 
-  const codeValue = streamingDoc?.toString()?.length ? streamingDoc.toString() : localstorageCode ?? preloadedCode;
+  const codeValue = streamingDoc?.toString()?.length
+     ? streamingDoc.toString() 
+     : localstorageCode ?? preloadedCode;
+
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
   useEffect(() => {
@@ -160,7 +162,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   }, [])
 
   useEffect(() => {
-    onChangeCodemirrorValue(codeValue as string);
+    onChangeCodemirrorValue(codeValue as string)
   }, [])
 
   return (
@@ -193,7 +195,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
       <StatusLabel status={roomStatus} />
 
-      {(
+      {
         <>
           <CodeMirror
             onContextMenu={onContextMenu}
@@ -235,7 +237,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             </ClickAwayListener>
           </Popover>
         </>
-      )}
+      }
     </div>
   )
 }

@@ -4,7 +4,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { PATH_AUTH } from '@/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 export default function HomePage(): React.ReactElement {
@@ -13,7 +12,6 @@ export default function HomePage(): React.ReactElement {
   useEffect(() => {
       void push(STUDENT_PATH_DASHBOARD.class.root)
   }, [push])
-
   return (
     <>
       <Head>
