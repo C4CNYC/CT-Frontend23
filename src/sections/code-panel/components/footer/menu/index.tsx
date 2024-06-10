@@ -3,7 +3,7 @@ import { type FC, useMemo, useState } from 'react'
 import { Chip, SpeedDial, SpeedDialAction, Typography, useTheme } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import { Box } from '@mui/system'
-import { GiSave } from '@react-icons/all-files/gi/GiSave'
+import { IoShareOutline } from '@react-icons/all-files/io5/IoShareOutline'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
@@ -55,7 +55,13 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
   return (
     <Box
       className='tourBottombarMenu'
-      sx={{ width: '50px', display: !isDesktop ? 'none' : 'flex' }}
+      sx={{
+        width: '40px',
+        display: !isDesktop ? 'none' : 'flex',
+        position: 'relative',
+        minWidth: 40,
+        height: 36,
+      }}
     >
       {isContentExist && (
         <SpeedDial
@@ -66,11 +72,11 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
           onOpen={openSpeedDial}
           FabProps={speedDialFabProps}
           sx={SPEED_DIAL_SX}
-          direction='up'
+          direction='down'
           icon={
-            <GiSave
+            <IoShareOutline
               size='20px'
-              style={{ color: speedDial ? '#43D4DD' : '#b3b3b3' }}
+              style={{ color: speedDial ? '#43D4DD' : '#637381' }}
             />
           }
         >

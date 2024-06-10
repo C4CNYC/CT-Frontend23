@@ -4,10 +4,10 @@ import { BtnType } from '.'
 
 export const stylesPrev = (theme: Theme): Record<string, unknown> => {
   return {
-    width: '35%',
+    width: '40%',
     borderRadius: '35px',
     color: theme.palette.text.secondary,
-    pr: '51px',
+    pr: '20px',
     zIndex: 4,
     position: 'relative',
     background: 'rgba(196, 196, 196, .5)',
@@ -120,4 +120,22 @@ export const stylesSkip = (theme: Theme) => {
       backgroundColor: '#272727',
     },
   }
+}
+
+export const FEEDBACK_BTN_SX = {
+  zIndex: 99,
+  mr: -5,
+  height: '100%',
+  borderRadius: '50%',
+  minWidth: 50,
+  background: '#fff',
+  justifyContent: 'ceter',
+  color: '#D9D9D9',
+  backgroundColor: '#fff',
+  boxShadow: ' 0px 4px 4px rgba(0, 0, 0, 0.25)',
+  width: '50px',
+  minHeight: '50px',
+  '&:hover': {
+    backgroundColor: '#fff',
+  },
 }
