@@ -7,7 +7,7 @@ export const stylesPrev = (theme: Theme): Record<string, unknown> => {
     width: '40%',
     borderRadius: '35px',
     color: theme.palette.text.secondary,
-    pr: '20px',
+    pr: '22px',
     zIndex: 4,
     position: 'relative',
     background: 'rgba(196, 196, 196, .5)',
