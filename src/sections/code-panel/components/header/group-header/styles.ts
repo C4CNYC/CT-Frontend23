@@ -3,7 +3,7 @@ export const STACK_STYLES = {
   background: 'rgba(1, 152, 237, 0.1)',
   p: '2px',
   alignItems: 'center',
-  ml: '141px',
+  ml: '50px',
   textDecoration: 'none',
   pointerEvents: 'all',
 }
@@ -11,7 +11,7 @@ export const STACK_STYLES = {
 export const OVERLAY_WRAPPER_SX = {
   display: 'flex',
   alignItems: 'center',
-  bgcolor: '#0198ED',
+  bgcolor: '#EE467A',
   borderRadius: '35px',
   px: 1,
   py: '2px',

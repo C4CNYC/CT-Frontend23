@@ -62,8 +62,6 @@ const CodePanelHeader = dynamic(
 
 const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
 
-const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/components/footer'))
-
 const LessonsManager = dynamic(
   async () => await import('@/sections/code-panel/components/lesson-manager')
 )
@@ -361,6 +359,15 @@ export default function CodePanelPage(): ReactElement | null {
             chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
             onHandleFullScreen={handle.active ? handle.exit : handle.enter}
             isFullScreenView={handle.active}
+            lessonManagerComponent={
+              <LessonsManager
+                onChooseLesson={onChooseLesson}
+                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+                data={courseContent}
+                isLoading={isLoadingCourseContent}
+              />
+            }
+            language={DEFAULT_LANGUAGE}
           />
           <CodePanelBody
             isFetchingLessonContent={isFetchingLessonContent}
@@ -370,18 +377,6 @@ export default function CodePanelPage(): ReactElement | null {
             language={DEFAULT_LANGUAGE}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
-          />
-          <CodePanelFooter
-            language={DEFAULT_LANGUAGE}
-            sliderSteps={lessonContent?.length ?? 0}
-            lessonManagerComponent={
-              <LessonsManager
-                onChooseLesson={onChooseLesson}
-                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-                data={courseContent}
-                isLoading={isLoadingCourseContent}
-              />
-            }
           />
         </Box>
       </FullScreen>

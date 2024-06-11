@@ -4,10 +4,14 @@ import { Box, Button, Tooltip, Typography, useTheme } from '@mui/material'
 
 import { useTranslate } from '@/utils/translateHelper'
 
+import LessonFeedback from '../../../../footer/lesson-feedback/LessonFeedback'
+
 import { BOX_SX, getNestedBoxSx } from './constants'
+import { FeedbackIcon } from './FeedbackIcon'
 import NavigationElement from './navigation-element'
 import NavigationSpeedDial from './navigation-speed-dial'
 import {
+  FEEDBACK_BTN_SX,
   TOOLTIP_CONTENT_SX,
   getTooltipWrapperSx,
   stylesNext,
@@ -65,6 +69,11 @@ const Navigation: FC<INavigation> = ({
   return (
     <Box sx={BOX_SX}>
       <Box sx={nestedBox}>
+        <LessonFeedback>
+          <Button sx={FEEDBACK_BTN_SX}>
+            <FeedbackIcon size={30} />
+          </Button>
+        </LessonFeedback>
         <NavigationElement
           sx={stylePrev}
           disabled={!hasPrev}
