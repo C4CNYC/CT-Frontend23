@@ -3,7 +3,7 @@ export const STACK_STYLES = {
   background: 'rgba(1, 152, 237, 0.1)',
   p: '2px',
   alignItems: 'center',
-  ml: '141px',
+  ml: '50px',
   textDecoration: 'none',
   pointerEvents: 'all',
 }

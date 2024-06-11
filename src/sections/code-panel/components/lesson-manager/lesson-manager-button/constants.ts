@@ -12,11 +12,22 @@ export const getButtonSx = (theme: Theme): SxProps => ({
   },
   width: '175px',
   justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  flexDirection: 'column',
 })
 
 export const ICON_BTN_SX = { mr: '5px' }
-export const TYP_SX = {
+export const GetTypSx = (theme: Theme): SxProps => ({
   textOverflow: 'ellipsis',
   overflow: ' hidden',
   textTransform: 'none',
-}
+  color: theme.palette.text.disabled,
+  maxWidth: '200px',
+})
+
+export const getSubtitleSx = (theme: Theme): SxProps => ({
+  textTransform: 'uppercase',
+  fontSize: 8,
+  color: theme.palette.text.disabled,
+  lineHeight: 1,
+})
