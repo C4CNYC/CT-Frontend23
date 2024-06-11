@@ -18,12 +18,14 @@ import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
 import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
+  const { isAdmin } = useIsAdmin()
   const { user } = useAuthContext()
   const { filters, setFilter } = useFilters<ICourseSearchParams>(
     {
@@ -43,8 +45,6 @@ export default function CoursesListPage(): React.ReactElement {
       />
     )
   }
-
-  const isAdmin = user?.role === Role.Admin
 
   return (
     <>

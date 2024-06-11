@@ -11,6 +11,7 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface
@@ -57,6 +58,8 @@ export default function CourseCard({ course }: ICourseCardProps): React.ReactEle
     }
   }
 
+  const { isAdmin } = useIsAdmin()
+
   return (
     <>
       <Card
@@ -74,19 +77,22 @@ export default function CourseCard({ course }: ICourseCardProps): React.ReactEle
         component={Link}
         href={`${MANAGER_PATH_DASHBOARD.modules.root}?course_id=${course.id}`}
       >
-        <Stack
-          direction='row'
-          alignItems='center'
-          sx={{ zIndex: 2, top: 8, right: 8, position: 'absolute' }}
-        >
-          <IconButton
-            color={openPopover ? 'inherit' : 'default'}
-            onClick={handleOpenPopover}
+        {isAdmin ? (
+          <Stack
+            direction='row'
+            alignItems='center'
+            sx={{ zIndex: 2, top: 8, right: 8, position: 'absolute' }}
           >
-            <Iconify icon='eva:more-vertical-fill' />
-          </IconButton>
-        </Stack>
-
+            <IconButton
+              color={openPopover ? 'inherit' : 'default'}
+              onClick={handleOpenPopover}
+            >
+              <Iconify icon='eva:more-vertical-fill' />
+            </IconButton>
+          </Stack>
+        ) : (
+          ''
+        )}
         <Box
           sx={{
             position: 'relative',
