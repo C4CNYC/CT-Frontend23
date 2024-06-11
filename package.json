@@ -81,7 +81,7 @@
     "cm6-theme-material-dark": "^0.2.0",
     "date-fns": "^2.29.3",
     "emoji-picker-react": "^4.4.9",
-    "firebase": "^9.20.0",
+    "firebase": "^10.12.2",
     "framer-motion": "^7.6.12",
     "generate-password": "^1.7.0",
     "hamburger-react": "^2.5.0",
