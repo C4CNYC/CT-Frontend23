@@ -3,7 +3,8 @@ import { Theme, type SxProps } from '@mui/system'
 export const getBoxSx = (isDesktop: boolean, isOpenHeader: boolean): SxProps => ({
   overflowY: 'scroll',
   scrollbarWidth: 'none',
-  height: isOpenHeader ? 'calc(100vh - 92px)' : 'calc(100vh - 122px)',
+  height: isOpenHeader ? 'calc(100vh - 110px)' : 'calc(100vh - 80px)',
+  pb: 7,
   '&::-webkit-scrollbar': {
     width: 0,
   },
