@@ -6,13 +6,13 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
+  Divider,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
-import { IoMdInformationCircleOutline } from '@react-icons/all-files/io/IoMdInformationCircleOutline'
 import { MdOutlinePermMedia } from '@react-icons/all-files/md/MdOutlinePermMedia'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
@@ -24,6 +24,9 @@ import {
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
+
+import Preferences from '../Modals/Preferences'
 
 import { LessonContentContext } from './LessonContent.context'
 import SkeletonContentCode from './SkeletonContentCode'
@@ -170,7 +173,7 @@ export default function StepContentEditor(): React.ReactElement {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 4,
+              gap: 144,
             }}
           >
             <StyledToggleButtonGroup
@@ -190,6 +193,10 @@ export default function StepContentEditor(): React.ReactElement {
               >
                 <MdOutlinePermMedia size='20px' /> {translate('slide_standard')}
               </ToggleButton>
+              <Divider
+                orientation='vertical'
+                flexItem
+              />
               <ToggleButton
                 value={LessonContentType.Code}
                 aria-label='HTML'
@@ -198,27 +205,14 @@ export default function StepContentEditor(): React.ReactElement {
                 <BsCodeSlash size='20px' /> HTML
               </ToggleButton>
             </StyledToggleButtonGroup>
-            <div
-              style={{
-                lineHeight: 0,
-                gap: 2,
-                display: 'flex',
-                alignItems: 'center',
-              }}
+            <Preferences
+              defaultValues={{ ...data! }}
+              contentId={data?.id as string}
+              lessonId={lessonId as string}
+              defaultTab={0}
             >
-              <IoMdInformationCircleOutline
-                size='14px'
-                color='#4396e6'
-              />
-              <span
-                style={{
-                  opacity: 0.6,
-                  fontSize: 12,
-                }}
-              >
-                {translate('slide_select_format')}
-              </span>
-            </div>
+              <SettingsBtn />
+            </Preferences>
           </div>
           <div
             style={{
