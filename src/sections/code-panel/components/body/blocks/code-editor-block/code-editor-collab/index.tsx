@@ -153,7 +153,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const codeValue = streamingDoc?.toString()?.length
     ? streamingDoc.toString()
-    : localstorageCode ?? preloadedCode;
+    : localstorageCode ?? preloadedCode
 
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
