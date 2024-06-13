@@ -1,9 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Box, IconButton } from '@mui/material'
+import { Box, IconButton, Rating } from '@mui/material'
 import { AiFillHeart } from '@react-icons/all-files/ai/AiFillHeart'
 import { AiOutlineHeart } from '@react-icons/all-files/ai/AiOutlineHeart'
-import { Rating } from 'react-simple-star-rating'
 
 import { Image, useSnackbar } from '@/components'
 import { ICourseElement } from '@/redux/interfaces/content.interface'
@@ -23,9 +22,15 @@ interface Props {
 export default function CourseAvatar({ course }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const [liked, setLiked] = useState(course.liked)
+  const [rating, setRating] = useState<number>(course.my_rating ?? 0)
   const [addLike, { isLoading }] = useCourseAddLikeMutation()
   const [removeLike, { isLoading: isRemoving }] = useCourseRemoveLikeMutation()
   const [updateRating] = useCourseAddRatingMutation()
+
+  useEffect(() => {
+    setRating(course.my_rating ?? 0)
+  }, [course])
+
   const likeHandler = async (): Promise<void> => {
     try {
       if (liked) {
@@ -60,13 +65,7 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
   return (
     <>
       <Box sx={{ position: 'relative', alignSelf: 'center' }}>
-        <Box
-          onClick={(e) => {
-            e.stopPropagation()
-            e.preventDefault()
-          }}
-          sx={LIKE_BTN_WRAPPER_SX}
-        >
+        <Box sx={LIKE_BTN_WRAPPER_SX}>
           <IconButton
             onClick={likeHandler}
             disabled={isLoading || isRemoving}
@@ -92,14 +91,12 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
         {course.progress && course.progress > 30 && (
           <Box sx={COURSE_RATING_WRAPPER_SX}>
             <Rating
-              onClick={(rating, index, e) => {
-                e?.stopPropagation()
-                e?.preventDefault()
-                handleRating(rating)
+              onChange={(e, rating) => {
+                setRating(rating ?? 0)
+                handleRating(rating ?? 0)
               }}
-              initialValue={course.my_rating ?? 0}
-              transition
-              size={30}
+              defaultValue={0}
+              value={rating}
             />
           </Box>
         )}

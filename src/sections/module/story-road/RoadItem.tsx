@@ -55,7 +55,6 @@ const RoadItem = ({
   const [compleatedColor, setCompleatedColor] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [open, setOpen] = useState(false)
-
   const projectTime = '20 mins'
 
   const roadBoxSx = useMemo(
@@ -73,11 +72,21 @@ const RoadItem = ({
       void push(
         STUDENT_PATH_DASHBOARD.codePanel.workSpace({
           courseId: query.id as string,
-          unitId: query.unitId as string,
+          unitId: query.unit as string,
           lessonId,
         })
       )
     }
+  }
+
+  const fetchDefaultCodeFromPrevLesson = () => {
+    push(
+      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+        courseId: query.id as string,
+        unitId: query.unit as string,
+        lessonId: lessonId,
+      })
+    )
   }
 
   const openDialog = () => {
@@ -227,11 +236,7 @@ const RoadItem = ({
       <LessonDialog
         open={open}
         closeDialog={closeDialog}
-        link={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-          courseId: query.id as string,
-          unitId: query.unitId as string,
-          lessonId,
-        })}
+        openLesson={fetchDefaultCodeFromPrevLesson}
       />
     </Box>
   )

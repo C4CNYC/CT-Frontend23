@@ -103,6 +103,7 @@ const GroupHeader: FC = () => {
         <FocusOverlay
           title={room?.cursorText ?? ''}
           resetRoom={resetRoom}
+          avatar={room?.avatar}
         />
       )}
 

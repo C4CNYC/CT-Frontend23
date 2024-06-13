@@ -120,9 +120,16 @@ export default function QuestDescription({ description }: Props) {
 
   return (
     <>
-      <style>{`.remirror-editor-wrapper { padding: ; }
+      <style>{`
+      .remirror-editor-wrapper { 
+        padding: 10px; 
+        background-color: ${theme.palette.background.default}; 
+        min-height: 100px;
+        border-radius: 16px;
+        box-shadow: 0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12);
+      }
         .remirror-theme .ProseMirror{
-          background-color: ${theme.palette.background.default};
+          
         }
         .ProseMirror:focus {
           outline: none!important;

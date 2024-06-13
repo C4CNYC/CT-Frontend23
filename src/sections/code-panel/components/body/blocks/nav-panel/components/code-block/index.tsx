@@ -2,9 +2,9 @@ import { type FC, useMemo, useState, useEffect } from 'react'
 
 import { type DraggableAttributes } from '@dnd-kit/core'
 import { type SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
-import CloseIcon from '@mui/icons-material/Close'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
-import { Box, Stack, Avatar, Typography } from '@mui/material'
+import { Box, Stack, Avatar, Typography, IconButton } from '@mui/material'
+import { CgClose } from '@react-icons/all-files/cg/CgClose'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
@@ -64,6 +64,8 @@ const CodeBlock: FC<CodeBlockProps> = ({
     }
   }, [])
 
+  const isActiveUser = owner.active || owner.status !== 'inactive'
+
   const isOpenCodeDisabled = RoomStatus.Inactive === editorStatus
 
   const onOpenCode = () => {
@@ -74,6 +76,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
     dispatch(
       setRoom({
         // roomId: data.id,
+        avatar: owner.avatar,
         roomId: `${owner.id as string}_${lessonId as string}`,
         cursorText: owner.first_name,
         mode: EditorMode.SubOwner,
@@ -160,31 +163,44 @@ const CodeBlock: FC<CodeBlockProps> = ({
         >
           <OpenCodeIcon
             onClick={onOpenCode}
+            width={32}
+            height={20}
             sx={{
               ...styles.OPEN_CODE_ICON,
               ...(isOpenCodeDisabled ? styles.OPEN_CODE_DISABLED : null),
             }}
           />
 
-          <CloseIcon
-            sx={styles.CLOSE_ICON_SX}
+          <IconButton
             onClick={onClose}
-          />
+            sx={{
+              mx: 1,
+              p: 0,
+            }}
+          >
+            <CgClose
+              size={24}
+              color='#fff'
+            />
+          </IconButton>
         </Stack>
       </Stack>
 
-      {isConnected && (
-        <CodeEditorCollab
-          // roomId={data.id}
-          roomId={`${owner.id as string}_${lessonId as string}`}
-          mode={EditorMode.Watcher}
-          withFileManager={false}
-          cursorText={cursorName}
-          onRoomStatusChanged={setEditorStatus}
-          socket={socket}
-          // onChangeCodemirrorValue={onChangeCodemirrorValue}
-        />
-      )}
+      {isConnected &&
+        (isActiveUser ? (
+          <CodeEditorCollab
+            // roomId={data.id}
+            roomId={`${owner.id as string}_${lessonId as string}`}
+            mode={EditorMode.Watcher}
+            withFileManager={false}
+            cursorText={cursorName}
+            onRoomStatusChanged={setEditorStatus}
+            socket={socket}
+            // onChangeCodemirrorValue={onChangeCodemirrorValue}
+          />
+        ) : (
+          <Box>User Offline</Box>
+        ))}
     </Box>
   )
 }

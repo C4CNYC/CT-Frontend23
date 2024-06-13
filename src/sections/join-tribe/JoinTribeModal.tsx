@@ -20,7 +20,7 @@ export default function JoinTribeModal({
   classInfo,
   isSignIn,
 }: IJoinTribeModal): React.ReactElement {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(false)
   const [modalOpen, setModalOpen] = useState(true)
 
   const handleCloseModal = (): void => {

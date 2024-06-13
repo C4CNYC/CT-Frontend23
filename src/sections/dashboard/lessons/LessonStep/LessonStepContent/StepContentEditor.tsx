@@ -6,13 +6,13 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
+  Divider,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
-import { IoMdInformationCircleOutline } from '@react-icons/all-files/io/IoMdInformationCircleOutline'
 import { MdOutlinePermMedia } from '@react-icons/all-files/md/MdOutlinePermMedia'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
@@ -24,6 +24,9 @@ import {
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
+
+import Preferences from '../Modals/Preferences'
 
 import { LessonContentContext } from './LessonContent.context'
 import SkeletonContentCode from './SkeletonContentCode'
@@ -48,11 +51,14 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }))
 
+const DEFAULT_COLOR = '#F6F9FC'
+
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query
   const { enqueueSnackbar } = useSnackbar()
   const [locked, setLocked] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [bgColor, setBgColor] = useState<string>(DEFAULT_COLOR)
   const translate = useTranslate()
   const [updateContent] = useUpdateLessonContentMutation()
   const { data: integrations, isLoading: isIntegrationLoading } = useGetLessonIntegrationsQuery(
@@ -69,7 +75,7 @@ export default function StepContentEditor(): React.ReactElement {
     { skip: !lessonId || !stepId }
   )
 
-  const [bodyType, setBodyType] = useState<LessonContentType>(LessonContentType.Code)
+  const [bodyType, setBodyType] = useState<LessonContentType>(LessonContentType.Editable)
 
   const onSubmit = async (body: string): Promise<void> => {
     try {
@@ -77,6 +83,7 @@ export default function StepContentEditor(): React.ReactElement {
         lessonId: lessonId as string,
         id: stepId as string,
         type: bodyType,
+        bg_color: bgColor,
         body,
       }).unwrap()
       enqueueSnackbar(translate('slide_content_updated'))
@@ -87,7 +94,7 @@ export default function StepContentEditor(): React.ReactElement {
 
   useEffect(() => {
     if (data?.type) setBodyType(data.type)
-    if (data?.body) setBodyType(LessonContentType.Code)
+    setBgColor(data?.bg_color ?? DEFAULT_COLOR)
   }, [data])
 
   if (isFetching || isLoading || isIntegrationLoading) {
@@ -166,7 +173,7 @@ export default function StepContentEditor(): React.ReactElement {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 4,
+              gap: 144,
             }}
           >
             <StyledToggleButtonGroup
@@ -186,6 +193,10 @@ export default function StepContentEditor(): React.ReactElement {
               >
                 <MdOutlinePermMedia size='20px' /> {translate('slide_standard')}
               </ToggleButton>
+              <Divider
+                orientation='vertical'
+                flexItem
+              />
               <ToggleButton
                 value={LessonContentType.Code}
                 aria-label='HTML'
@@ -194,27 +205,14 @@ export default function StepContentEditor(): React.ReactElement {
                 <BsCodeSlash size='20px' /> HTML
               </ToggleButton>
             </StyledToggleButtonGroup>
-            <div
-              style={{
-                lineHeight: 0,
-                gap: 2,
-                display: 'flex',
-                alignItems: 'center',
-              }}
+            <Preferences
+              defaultValues={{ ...data! }}
+              contentId={data?.id as string}
+              lessonId={lessonId as string}
+              defaultTab={0}
             >
-              <IoMdInformationCircleOutline
-                size='14px'
-                color='#4396e6'
-              />
-              <span
-                style={{
-                  opacity: 0.6,
-                  fontSize: 12,
-                }}
-              >
-                {translate('slide_select_format')}
-              </span>
-            </div>
+              <SettingsBtn />
+            </Preferences>
           </div>
           <div
             style={{
@@ -235,14 +233,6 @@ export default function StepContentEditor(): React.ReactElement {
             overflow: 'scroll',
           }}
         >
-          {bodyType === LessonContentType.Editable ? (
-            <StepMultimedia
-              content={data?.type === LessonContentType.Editable ? data?.body : ''}
-              onSubmit={onSubmit}
-              data={data!}
-              lessonId={lessonId as string}
-            />
-          ) : null}
           {bodyType === LessonContentType.Code ? (
             <StepCode
               content={data?.body || ''}
@@ -251,7 +241,16 @@ export default function StepContentEditor(): React.ReactElement {
               data={data!}
               lessonId={lessonId as string}
             />
-          ) : null}
+          ) : (
+            <StepMultimedia
+              content={data?.type === LessonContentType.Editable ? data?.body : ''}
+              onSubmit={onSubmit}
+              data={data!}
+              lessonId={lessonId as string}
+              bgColor={bgColor}
+              setBgColor={setBgColor}
+            />
+          )}
         </Box>
       </Box>
     </LessonContentContext.Provider>

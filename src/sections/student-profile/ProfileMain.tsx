@@ -38,7 +38,7 @@ export default function ProfileMain({ data, isFriend, isLoading }: IProfileMainP
           )}
 
           {!isLoading ? (
-            <ProfileSocialInfo studentId={data?.id ?? ''} />
+            <ProfileSocialInfo studentId={data?.student_profile.id ?? ''} />
           ) : (
             <Skeleton
               variant='rounded'

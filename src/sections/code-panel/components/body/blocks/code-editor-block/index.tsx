@@ -121,7 +121,10 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
     >
       <CodeEditorStyles isDesktop={isDesktop} />
 
-      <MumuSpeedDial typing={typing} />
+      <MumuSpeedDial
+        typing={typing}
+        contentId={contentId}
+      />
 
       {Boolean(validations?.length) && (
         <Checkers

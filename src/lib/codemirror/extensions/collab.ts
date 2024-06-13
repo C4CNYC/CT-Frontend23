@@ -9,6 +9,8 @@ import { ChangeSet, Extension, StateEffect, Text } from '@codemirror/state'
 import { EditorView, ViewPlugin, ViewUpdate } from '@codemirror/view'
 import type { Socket } from 'socket.io-client'
 
+import { EffectType } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
+
 import { addCursor, removeCursor } from './cursors'
 
 async function pushUpdates(
@@ -79,6 +81,7 @@ async function pullUpdates(
               id: effect.value.id,
               from: effect.value.from,
               to: effect.value.to,
+              type: EffectType.SELECTION,
             }
 
             effects.push(addCursor.of(cursor))

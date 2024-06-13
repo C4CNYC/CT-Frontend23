@@ -5,6 +5,8 @@ import { type Action } from './config'
 export const ACTION_FAB_PROPS: Partial<FabProps> = {
   size: 'small',
   sx: {
+    width: 36,
+    height: 36,
     boxShadow: 'none',
     background: '#155275',
     display: 'flex',
@@ -17,9 +19,9 @@ export const ACTION_FAB_PROPS: Partial<FabProps> = {
 
 export const SPEED_DIAL_SX = {
   position: 'absolute',
-  bottom: '10px',
-  right: 18,
-  zIndex: 20,
+  zIndex: 1200,
+  left: 0,
+  width: 40,
   '& .MuiSpeedDial-actions': {
     gap: 0,
   },
@@ -45,9 +47,10 @@ export const getChipSx = (action: Action): SxProps => ({
 export const getSpeedDialFabProps = (isSpeedDial: boolean): Partial<FabProps> => ({
   size: 'small',
   sx: {
+    width: 36,
+    height: 36,
     background: isSpeedDial ? '#155275' : 'white',
     boxShadow: 'none',
-    border: !isSpeedDial ? '2px solid #b3b3b3' : 'none',
     '&:hover': {
       background: '#155275',
     },

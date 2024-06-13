@@ -12,7 +12,7 @@ import { type ReactCodeMirrorProps, StateEffectType, EditorView } from '@uiw/rea
 import pDebounce from 'p-debounce'
 import { Socket } from 'socket.io-client'
 
-import { COMMENT_TYPE } from './constants'
+import { EffectType } from './constants'
 import type { CommentEffect } from './extensions/comments/types'
 import { CommentWidget } from './extensions/comments/widget'
 import {
@@ -144,7 +144,7 @@ export const useComments = ({
       onCloseCommentPopup()
       editorView.current?.dispatch({
         effects: commentEffectRef.current?.of({
-          type: COMMENT_TYPE,
+          type: EffectType.COMMENT,
           status: 'deleted',
           id: groupId,
           comments: [],
@@ -225,7 +225,7 @@ export const useComments = ({
 
     editorView.current?.dispatch({
       effects: commentEffectRef.current?.of({
-        type: COMMENT_TYPE,
+        type: EffectType.COMMENT,
         ...selection,
         ...commentGroup,
       }),

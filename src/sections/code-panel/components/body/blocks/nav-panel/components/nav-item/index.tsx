@@ -39,7 +39,10 @@ const NavItem: FC<NavItemProps> = ({ onToggle, onClick, data }) => {
             : `secondary`
         }
       >
-        <ListItemAvatar onClick={onToggle}>
+        <ListItemAvatar
+          onClick={onClick}
+          sx={{ cursor: 'pointer' }}
+        >
           <Avatar src={data.avatar} />
         </ListItemAvatar>
       </Badge>
@@ -55,6 +58,7 @@ const NavItem: FC<NavItemProps> = ({ onToggle, onClick, data }) => {
           <ListItemText
             sx={NAME_SX}
             primary={name}
+            onClick={onClick}
           />
         </Tooltip>
 
@@ -91,6 +95,7 @@ const NAME_SX = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     maxWidth: '150px',
+    cursor: 'pointer',
   },
 }
 

@@ -170,7 +170,7 @@ export default function SocialItem({ schoolId, socialItem }: Props): React.React
                 }}
                 sx={{ ml: { xs: 0, sm: 2, md: 2 }, height: '40px' }}
               >
-                {edit ? translate('actions_edit') : translate('actions_cansel')}
+                {edit ? translate('actions_edit') : translate('actions_cancel')}
               </LoadingButton>
               <LoadingButton
                 sx={{ ml: 2, mr: 2, height: '40px' }}
