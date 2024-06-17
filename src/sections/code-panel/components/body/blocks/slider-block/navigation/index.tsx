@@ -71,7 +71,10 @@ const Navigation: FC<INavigation> = ({
       <Box sx={nestedBox}>
         <LessonFeedback>
           <Button sx={FEEDBACK_BTN_SX}>
-            <FeedbackIcon size={30} />
+            <FeedbackIcon
+              size={30}
+              color={theme.palette.text.secondary}
+            />
           </Button>
         </LessonFeedback>
         <NavigationElement
