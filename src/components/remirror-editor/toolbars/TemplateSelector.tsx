@@ -16,24 +16,65 @@ import {
 } from '@mui/material'
 import { HiOutlineTemplate } from '@react-icons/all-files/hi/HiOutlineTemplate'
 import { IoCloseOutline } from '@react-icons/all-files/io5/IoCloseOutline'
+import { useRemirrorContext } from '@remirror/react'
+
+const testTemplate = {
+  type: 'doc',
+  content: [
+    {
+      attrs: {
+        nodeTextAlignment: 'center',
+      },
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: 'Just Test Template',
+        },
+      ],
+    },
+    {
+      attrs: {
+        nodeTextAlignment: 'center',
+      },
+      type: 'paragraph',
+      content: [{ type: 'text', text: 'Template' }],
+    },
+    {
+      attrs: {
+        nodeTextAlignment: 'center',
+      },
+      type: 'paragraph',
+      content: [{ type: 'text', marks: [{ type: 'code' }], text: '<h3>🤩</h3>' }],
+    },
+  ],
+}
+
+const shortTemplate = 'test'
 
 const LESSON_TEMLATES = [
-  { title: '1-Page Lesson - Short', value: '1-page-lesson-short' },
-  { title: '1-Page Lesson - Extended', value: '1-page-lesson-extended' },
-  { title: 'Challenge - Short', value: 'challenge-short' },
-  { title: 'Challenge - Long', value: 'challenge-long' },
-  { title: 'Challenge - without code', value: 'challenge-without-code' },
-  { title: 'Briefing - w large image', value: 'briefing-w-large-image' },
-  { title: 'Briefing - w small image', value: 'briefing-w-small-image' },
-  { title: 'Briefing - no image', value: 'briefing-no-image' },
+  { title: '1-Page Lesson - Short', value: testTemplate },
+  { title: '1-Page Lesson - Extended', value: testTemplate },
+  { title: 'Challenge - Short', value: testTemplate },
+  { title: 'Challenge - Long', value: testTemplate },
+  { title: 'Challenge - without code', value: testTemplate },
+  { title: 'Briefing - w large image', value: testTemplate },
+  { title: 'Briefing - w small image', value: testTemplate },
+  { title: 'Briefing - no image', value: shortTemplate },
 ]
 
-export default function TemplateSelector({}) {
+interface IValue {
+  value: string
+  name: string
+}
+
+export default function TemplateSelector() {
   const [type, setType] = useState('')
   const [openDialog, setOpenDialog] = useState<boolean>(false)
+  const { setContent } = useRemirrorContext()
 
   const handleChangeType = (event: SelectChangeEvent) => {
-    setType(event.target.value as string)
+    setType(event.target.value)
     setOpenDialog(true)
   }
 
@@ -43,6 +84,7 @@ export default function TemplateSelector({}) {
   }
 
   const confirmTemplate = () => {
+    setContent(type)
     setOpenDialog(false)
   }
 
@@ -75,7 +117,7 @@ export default function TemplateSelector({}) {
         >
           {LESSON_TEMLATES.map((template, index) => (
             <MenuItem
-              value={template.value}
+              value={template.value as string}
               key={index}
             >
               {template.title}
