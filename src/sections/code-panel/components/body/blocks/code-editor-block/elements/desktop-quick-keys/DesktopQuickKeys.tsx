@@ -1,7 +1,13 @@
 import { useState } from 'react'
 
-import { Box } from '@mui/material'
+import { Box, Button, Divider } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
+import { FaRegClipboard } from '@react-icons/all-files/fa6/FaRegClipboard'
+import { IoCloseOutline } from '@react-icons/all-files/io5/IoCloseOutline'
+import { MdOutlineContentCopy } from '@react-icons/all-files/md/MdOutlineContentCopy'
+import { MdRedo } from '@react-icons/all-files/md/MdRedo'
+import { MdUndo } from '@react-icons/all-files/md/MdUndo'
+import { RiBracesFill } from '@react-icons/all-files/ri/RiBracesFill'
 import { AnimatePresence, m } from 'framer-motion'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 
@@ -39,8 +45,7 @@ export default function DesktopQuickKeys() {
             animate={open ? 'open' : 'closed'}
             variants={{
               open: {
-                opacity: 1,
-                width: 200,
+                opacity: 0,
               },
               closed: {
                 opacity: 0.7,
@@ -55,23 +60,22 @@ export default function DesktopQuickKeys() {
               sx={{
                 width: 50,
                 height: 30,
-                // bgcolor: '#b06b6b85',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderTopRightRadius: 8,
               }}
             >
-              <BiCodeAlt />
+              <MdUndo />
             </Box>
           </m.div>
         </AnimatePresence>
       </Box>
-      <Box sx={{ position: 'absolute', zIndex: 300, bottom: 40, left: 0 }}>
+      <Box sx={{ position: 'absolute', zIndex: 300, bottom: 0, left: 0 }}>
         <AnimatePresence>
           <m.div
             initial={false}
-            animate={open ? 'closed' : 'open'}
+            animate={open ? 'open' : 'closed'}
             variants={{
               open: {
                 width: 'auto',
@@ -88,9 +92,64 @@ export default function DesktopQuickKeys() {
             }}
           >
             <Box
-              onMouseOut={handleClose}
-              sx={{ width: 200, height: 30 }}
-            ></Box>
+              // onMouseOut={handleClose}
+              sx={{ height: 30, display: 'flex' }}
+            >
+              <Button sx={{ borderRadius: 0, minWidth: 50 }}>
+                <MdUndo
+                  color='#fff'
+                  size={20}
+                />
+              </Button>
+              <Button sx={{ borderRadius: 0, minWidth: 50 }}>
+                <MdRedo
+                  color='#fff'
+                  size={20}
+                />
+              </Button>
+              <Divider
+                orientation='vertical'
+                variant='middle'
+                sx={{ bgcolor: '#d6d6d6', height: 'auto', my: '4px' }}
+              />
+              <Button sx={{ borderRadius: 0, minWidth: 40 }}>
+                <BiCodeAlt
+                  color='#fff'
+                  size={20}
+                />
+              </Button>
+              <Button sx={{ borderRadius: 0, minWidth: 40 }}>
+                <MdOutlineContentCopy
+                  color='#fff'
+                  size={20}
+                />
+              </Button>
+              <Button sx={{ borderRadius: 0, minWidth: 40 }}>
+                <FaRegClipboard
+                  color='#fff'
+                  size={20}
+                />
+              </Button>
+
+              <Divider
+                orientation='vertical'
+                variant='middle'
+                sx={{ bgcolor: '#d6d6d6', height: 'auto', my: '4px' }}
+              />
+
+              <Button sx={{ borderRadius: 0, minWidth: 40 }}>
+                <RiBracesFill
+                  color='#fff'
+                  size={20}
+                />
+              </Button>
+              <Button sx={{ borderRadius: 0, minWidth: 40 }}>
+                <IoCloseOutline
+                  color='#fff'
+                  size={20}
+                />
+              </Button>
+            </Box>
           </m.div>
         </AnimatePresence>
       </Box>
