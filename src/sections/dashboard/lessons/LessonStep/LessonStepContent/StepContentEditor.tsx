@@ -142,7 +142,11 @@ export default function StepContentEditor(): React.ReactElement {
           <Button
             onClick={() => {
               setOpen(false)
-              setBodyType(LessonContentType.Editable)
+              setBodyType(
+                bodyType === LessonContentType.Editable
+                  ? LessonContentType.Code
+                  : LessonContentType.Editable
+              )
             }}
             variant='outlined'
             color='success'
@@ -181,7 +185,8 @@ export default function StepContentEditor(): React.ReactElement {
               exclusive
               value={bodyType}
               onChange={(_, newValue) => {
-                if (bodyType === LessonContentType.Code) setOpen(true)
+                if (newValue === LessonContentType.Code || newValue === LessonContentType.Editable)
+                  setOpen(true)
                 else setBodyType(newValue)
               }}
               aria-label='select slide type'
