@@ -21,6 +21,7 @@ import CodeEditorController from './code-editor-controller'
 import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
 import { CodingSymbols, CodingTools } from './elements/coding-controls'
+import DesktopQuickKeys from './elements/desktop-quick-keys/DesktopQuickKeys'
 import MumuSpeedDial from './elements/mumu-speed-deal'
 
 interface ICodeEditorBlock {
@@ -159,6 +160,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
           <CodingTools symbolsHandler={symbolsHandler} />
         </Collapse>
       </Box>
+      <DesktopQuickKeys />
     </BaseBlock>
   )
 }
