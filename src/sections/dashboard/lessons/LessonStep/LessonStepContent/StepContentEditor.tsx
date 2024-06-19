@@ -62,20 +62,21 @@ export default function StepContentEditor(): React.ReactElement {
   const translate = useTranslate()
   const [updateContent] = useUpdateLessonContentMutation()
   const { data: integrations, isLoading: isIntegrationLoading } = useGetLessonIntegrationsQuery(
-    {
-      id: lessonId as string,
-    },
+    { id: lessonId as string },
     { skip: !lessonId || !stepId }
   )
   const { data, isFetching, isLoading } = useGetLessonContentByIdQuery(
-    {
-      lessonId: lessonId as string,
-      id: stepId as string,
-    },
+    { lessonId: lessonId as string, id: stepId as string },
     { skip: !lessonId || !stepId }
   )
 
-  const [bodyType, setBodyType] = useState<LessonContentType>(LessonContentType.Editable)
+  const [bodyType, setBodyType] = useState<LessonContentType>(
+    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.Editable
+  )
+
+  useEffect(() => {
+    localStorage.setItem('bodyType', bodyType)
+  }, [bodyType])
 
   const onSubmit = async (body: string): Promise<void> => {
     try {
@@ -93,7 +94,9 @@ export default function StepContentEditor(): React.ReactElement {
   }
 
   useEffect(() => {
-    if (data?.type) setBodyType(data.type)
+    if (!localStorage.getItem('bodyType') && data?.type) {
+      setBodyType(data.type)
+    }
     setBgColor(data?.bg_color ?? DEFAULT_COLOR)
   }, [data])
 
