@@ -4,6 +4,7 @@ import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography } from '@mui/mater
 
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetPublicLessonQuery } from '@/redux/services/public-student'
 import { useSelector } from '@/redux/store'
 import SolutionMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/solution-mobile-dialog'
 import UnstuckMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog'
@@ -33,14 +34,23 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null)
   const translate = useTranslate()
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const profile = useSelector((state) => state.global.user)
 
-  const { data, isLoading } = useGetLessonStudentQuery(
+  const { data: studentData, isLoading: isStudentDataLoading } = useGetLessonStudentQuery(
     { id: lessonId as string },
-    { skip: !lessonId }
+    { skip: !lessonId || !profile }
   )
 
-  const slideTips = data?.contents[slideIndex]?.tips
+  const { data: publicData, isLoading: isPublicDataLoading } = useGetPublicLessonQuery(
+    { id: courseId as string, lesson_id: lessonId as string },
+    { skip: !lessonId || !courseId || !!profile }
+  )
+
+  const data = studentData ?? publicData
+  const isLoading = isStudentDataLoading ?? isPublicDataLoading
+  const slideTips = data?.contents?.[slideIndex]?.tips
 
   const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal])
   const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop])

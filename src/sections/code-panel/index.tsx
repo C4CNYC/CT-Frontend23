@@ -20,6 +20,11 @@ import {
 } from '@/redux/services/manager/lesson-student'
 import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
 import {
+  useGetPublicLessonQuery,
+  useGetPublicLessonContentQuery,
+  useGetPublicCourseContentQuery,
+} from '@/redux/services/public-student'
+import {
   setCourseId,
   setLessonId,
   setSlideIndex,
@@ -87,6 +92,7 @@ export default function CodePanelLayout(): ReactElement | null {
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
   const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
+  const profile = useSelector((state) => state.global.user)
   const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
     dispatch(setUsersStatus(cb(usersStatus)))
   }
@@ -95,25 +101,56 @@ export default function CodePanelLayout(): ReactElement | null {
 
   const [showConfetti, setShowConfetti] = useState(false)
 
-  const { data: courseContent, isLoading: isLoadingCourseContent } = useGetCourseContentQuery(
+  const { data: studentCourseContent, isLoading: isLoadingStudentCourseContent } = useGetCourseContentQuery(
     { id: router.query.courseId as string },
-    { skip: !router.query.courseId }
+    { skip: !router.query.courseId || !profile }
   )
 
-  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
+  const { data: publicCourseContent, isLoading: isLoadingPublicCourseContent } = useGetPublicCourseContentQuery(
+    { id: router.query.courseId as string },
+    { skip: !router.query.courseId || !!profile }
+  )
+
+  const courseContent = profile ? studentCourseContent : publicCourseContent;
+  const isLoadingCourseContent = profile ? isLoadingStudentCourseContent : isLoadingPublicCourseContent
+
+  const { data: studentLesson, isLoading: isLoadingStudentLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId }
+    { skip: !router.query.lessonId || !profile }
+  )
+
+  const { data: publicLesson, isLoading: isPublicLessonLoading } = useGetPublicLessonQuery(
+    { id: router.query.courseId as string, lesson_id: router.query.lessonId as string },
+    { skip: !router.query.lessonId  || !router.query.courseId || !!profile },
+  )
+
+  const lesson = studentLesson ?? publicLesson;
+  const isLoadingLesson = isLoadingStudentLesson ?? isPublicLessonLoading
+
+  const {
+    data: lessonStudentContent,
+    isLoading: isLoadingLessonStudentContent,
+    isFetching: isFetchingLessonStudentContent,
+    fulfilledTimeStamp: fulfilledStudentTimeStamp,
+  } = useGetLessonContentStudentQuery(
+    { id: router.query.lessonId as string },
+    { skip: !router.query.lessonId || !profile }
   )
 
   const {
-    data: lessonContent,
-    isLoading: isLoadingLessonContent,
-    isFetching: isFetchingLessonContent,
-    fulfilledTimeStamp,
-  } = useGetLessonContentStudentQuery(
-    { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId }
-  )
+    data: publicLessonContent,
+    isLoading: isPublicLessonContentLoading,
+    isFetching: isPublicFetchingLessonContent,
+    fulfilledTimeStamp: fulfilledPublicTimeStamp
+   } = useGetPublicLessonContentQuery(
+    { id: router.query.courseId as string, lesson_id: router.query.lessonId as string },
+    { skip: !!profile || !router.query.courseId || !router.query.lessonId }
+   )
+
+   const lessonContent = profile ? lessonStudentContent : publicLessonContent
+   const isLoadingLessonContent = profile ? isLoadingLessonStudentContent : isPublicLessonContentLoading
+   const isFetchingLessonContent = profile ? isFetchingLessonStudentContent : isPublicFetchingLessonContent
+   const fulfilledTimeStamp = profile ? fulfilledStudentTimeStamp : fulfilledPublicTimeStamp
 
   const { data: checkers } = useGetContentCheckersQuery(undefined, {
     skip: !fulfilledTimeStamp,
@@ -192,6 +229,7 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   const onSubmitLesson = async (): Promise<void> => {
+
     setShowConfetti(true)
     try {
       enqueueSnackbar(translate('messages_lesson_complete'))

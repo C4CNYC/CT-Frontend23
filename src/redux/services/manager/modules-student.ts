@@ -11,6 +11,12 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getPublicModuleWithLessons: builder.query<IModule & BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `/student/module/public/${id}`,
+        method: 'GET',
+      }),
+    }),
     getModulesList: builder.query<
       BaseListResponseInterface<IModule & BaseResponseInterface>,
       IModulesSearchParams
@@ -29,6 +35,7 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetModuleWithLessonsQuery,
+  useGetPublicModuleWithLessonsQuery,
   useGetModulesListQuery,
   // -------------mutation-----------
 } = extendedApi

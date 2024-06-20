@@ -82,6 +82,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const profile = useSelector((state) => state.global.user)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
 
@@ -90,7 +91,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     {
       id: lessonId as string,
     },
-    { skip: !lessonId }
+    { skip: !lessonId || !profile }
   )
 
   const title = translate('instructions')
@@ -134,7 +135,9 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onUpdateLastSlide = (next: number) => {
-    updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
+    if (profile) {
+      updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
+    }
   }
 
   const onBeforeChange = (_: number, next: number) => {

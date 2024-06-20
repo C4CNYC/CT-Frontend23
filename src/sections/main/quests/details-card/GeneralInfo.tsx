@@ -1,8 +1,9 @@
 import { Card, Divider, Skeleton, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
 import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-student'
+import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
+import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 
 interface IGeneralInfo {
@@ -10,6 +11,7 @@ interface IGeneralInfo {
 }
 
 export default function GeneralInfo({ activeTab }: IGeneralInfo) {
+  const profile = useSelector((state) => state.global.user)
   const { query } = useRouter()
   const translate = useTranslate()
   const { data, isLoading } = useGetClassStudentsQuery(
@@ -18,7 +20,7 @@ export default function GeneralInfo({ activeTab }: IGeneralInfo) {
   )
   const { data: quests, isLoading: questsLoading } = useGetAssignmentListStudentQuery(
     { class_id: query.id as string },
-    { skip: !query.id || !activeTab }
+    { skip: !query.id || !activeTab || !profile }
   )
 
   return (

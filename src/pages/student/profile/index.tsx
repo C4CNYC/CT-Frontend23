@@ -6,6 +6,7 @@ import Head from 'next/head'
 import { CustomBreadcrumbs, Iconify, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useProfileQuery } from '@/redux/services/auth'
+import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import ProfileCover from '@/sections/student-profile/ProfileCover'
 import ProfileLinks from '@/sections/student-profile/ProfileLinks'
@@ -18,7 +19,8 @@ UserProfile.getLayout = (page: React.ReactElement) => (
 
 export default function UserProfile(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
-  const { data, isLoading } = useProfileQuery()
+  const profile = useSelector((state) => state.global.user)
+  const { data, isLoading } = profile ? useProfileQuery() : { data: undefined, isLoading: false }
   const [currentTab, setCurrentTab] = useState('profile')
   const translate = useTranslate()
 

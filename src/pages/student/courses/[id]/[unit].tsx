@@ -11,8 +11,10 @@ import {
   useGetCoursContentQuery,
   useGetStudentCourseModulesQuery,
 } from '@/redux/services/manager/courses-student'
-import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import {
+  useGetModuleWithLessonsQuery,
+  useGetPublicModuleWithLessonsQuery,
+} from '@/redux/services/manager/modules-student'
 import {
   CONTAINER_SX,
   getBreadcrumbsSx,
@@ -23,6 +25,9 @@ import LessonsList from '@/sections/module/LessonsList'
 import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetPublicCourseContentQuery } from '@root/src/redux/services/public-student'
+import { useSelector } from '@/redux/store'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -35,23 +40,42 @@ export default function ModulePage(): React.ReactElement {
   const { query } = useRouter()
   const [currentModule, setCurrentModule] = useState<IModuleContent>()
   const translate = useTranslate()
+  const profile = useSelector((state) => state.global.user)
 
   const { data: modules, isLoading: isLoadingModules } = useGetStudentCourseModulesQuery(
     { id: query?.id as string },
-    { skip: !query?.id }
+    { skip: !query?.id || !profile }
   )
   const { data: course } = useGetCoursContentQuery(
     {
       id: query.id as string,
     },
-    { skip: !query.id }
+    { skip: !query.id || !profile }
+  )
+
+  const { data: publicCourse } = useGetPublicCourseContentQuery(
+    { id: query.id as string },
+    { skip: !query.id || !!profile }
   )
 
   const {
-    data: module,
-    isLoading: isLoadingModule,
-    refetch,
-  } = useGetModuleWithLessonsQuery({ id: query.unit as string }, { skip: !query.unit })
+    data: lessonsModule,
+    isLoading: isLoadingLessonsModule,
+    refetch: refetchModule,
+  } = useGetModuleWithLessonsQuery({ id: query.unit as string }, { skip: !query.unit || !profile })
+
+  const {
+    data: publicModule,
+    isLoading: isLoadingPublicModule,
+    refetch: refetchPublic,
+  } = useGetPublicModuleWithLessonsQuery(
+    { id: query.unit as string },
+    { skip: !query.unit || !!profile }
+  )
+
+  const module = lessonsModule ?? publicModule
+  const isLoadingModule = isLoadingLessonsModule ?? isLoadingPublicModule
+  const refetch = refetchModule ?? refetchPublic
 
   const moduleDuration = useMemo(
     () =>
@@ -70,8 +94,10 @@ export default function ModulePage(): React.ReactElement {
   }, [isLoadingModules])
 
   useEffect(() => {
-    refetch()
-  }, [query?.id])
+    if (profile) {
+      refetch()
+    }
+  }, [query?.id, refetch, profile])
   return (
     <>
       <Head>
