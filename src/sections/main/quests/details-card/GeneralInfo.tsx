@@ -16,7 +16,7 @@ export default function GeneralInfo({ activeTab }: IGeneralInfo) {
   const translate = useTranslate()
   const { data, isLoading } = useGetClassStudentsQuery(
     { id: query.id as string },
-    { skip: !query.id || !activeTab }
+    { skip: !query.id }
   )
   const { data: quests, isLoading: questsLoading } = useGetAssignmentListStudentQuery(
     { class_id: query.id as string },
@@ -44,7 +44,7 @@ export default function GeneralInfo({ activeTab }: IGeneralInfo) {
               sx={{ height: '36px', width: '40px', m: '0 auto' }}
             />
           ) : (
-            <Typography variant='h4'>{data?.data.length ?? 0}</Typography>
+            <Typography variant='h4'>{data?.meta.itemCount ?? 0}</Typography>
           )}
 
           <Typography
@@ -65,7 +65,7 @@ export default function GeneralInfo({ activeTab }: IGeneralInfo) {
               sx={{ height: '36px', width: '40px', m: '0 auto' }}
             />
           ) : (
-            <Typography variant='h4'>{quests?.data.length}</Typography>
+            <Typography variant='h4'>{quests?.data.length ?? 0}</Typography>
           )}
 
           <Typography

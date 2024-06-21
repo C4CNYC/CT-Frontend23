@@ -1,7 +1,7 @@
 import { type DecorationSet, EditorView, Decoration } from '@codemirror/view'
 import { RangeSet, RangeValue, StateEffect, StateField } from '@uiw/react-codemirror'
 
-import { COMMENT_TYPE } from '../../constants'
+import { EffectType } from '../../constants'
 
 import type { CommentEffect, CommentExtensionProps } from './types'
 import { CommentWidget } from './widget'
@@ -43,7 +43,7 @@ export const getCommentField = ({ updates, ...other }: CommentExtensionProps) =>
 
       updates.forEach(({ effects }) => {
         effects?.forEach((effect) => {
-          if (effect.value.type === COMMENT_TYPE) {
+          if (effect.value.type === EffectType.COMMENT) {
             transactions = updateEffect({ transactions, effect, ...other })
           }
         })
@@ -56,7 +56,7 @@ export const getCommentField = ({ updates, ...other }: CommentExtensionProps) =>
       let transactions = value.map(changes)
 
       effects.forEach((effect) => {
-        if (effect.value.type === COMMENT_TYPE) {
+        if (effect.value.type === EffectType.COMMENT) {
           transactions = updateEffect({ transactions, effect, ...other }) as RangeSet<Decoration>
         }
       })

@@ -1,6 +1,6 @@
 import { type FC } from 'react'
 
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { FileExtension } from '@remirror/extension-file'
 import {
   Remirror,
@@ -82,6 +82,7 @@ interface ProsaMirrorViewProps {
   multimediaValue: string
   title?: string
   lessonType?: string | undefined
+  stepBgColor?: string
 }
 
 const extensions = (): Extensions[] => [
@@ -119,7 +120,12 @@ const extensions = (): Extensions[] => [
   new TaskListExtension(),
 ]
 
-const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({ multimediaValue, title, lessonType }) => {
+const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({
+  multimediaValue,
+  title,
+  lessonType,
+  stepBgColor,
+}) => {
   const { manager, state } = useRemirror({
     extensions: extensions as any, // @ToDo,
     content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : '',
@@ -128,25 +134,29 @@ const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({ multimediaValue, title, les
 
   return (
     <ThemeProvider>
-      <style>{STYLES}</style>
+      <style>{remirrorStyles}</style>
       {title && lessonType === 'open_project' && <Typography variant='h1'>{title}</Typography>}
-      <Remirror
-        editable={false}
-        manager={manager}
-        state={state}
-        autoFocus
-        autoRender='end'
-        onChange={voidFunction}
-      ></Remirror>
+      <Box bgcolor={stepBgColor ?? '#F6F9FC'}>
+        <Remirror
+          editable={false}
+          manager={manager}
+          state={state}
+          autoFocus
+          autoRender='end'
+          onChange={voidFunction}
+        ></Remirror>
+      </Box>
     </ThemeProvider>
   )
 }
 
-const STYLES = `
+const remirrorStyles = `
 .remirror-theme .ProseMirror:active, .remirror-theme .ProseMirror:focus {
   box-shadow: none;
 }
-.remirror-editor-wrapper { padding: 0 }
+.remirror-editor-wrapper {
+  padding: 0;
+}
 .remirror-theme .ProseMirror {
   scrollbar-width: none;
   box-shadow: none;
@@ -180,6 +190,16 @@ const STYLES = `
 
 .remirror-theme [data-task-list] {
   margin-left: 30px;
+}
+
+.remirror-theme code {
+  background-color: #f5f4f4;
+  border: .1rem solid rgba(0, 0, 0, .1);
+  border-radius: 0.4rem;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 100%;
+  padding: 0.1rem;
+  vertical-align: middle;
 }
 
 `

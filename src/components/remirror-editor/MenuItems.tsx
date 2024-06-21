@@ -1,59 +1,95 @@
-import { Stack, SxProps } from '@mui/material'
-import { Theme } from '@mui/system'
+import { useState } from 'react'
+
+import { Button, SxProps } from '@mui/material'
+import { LuCheckCircle } from '@react-icons/all-files/lu/LuCheckCircle'
 
 import Preferences from '@/sections/dashboard/lessons/LessonStep/Modals/Preferences'
 import Validation from '@/sections/dashboard/lessons/LessonStep/Modals/Validation'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
+import { MenuPopover } from '../menu-popover'
 
-import { ChallengeBtn, MediaBtn, SettingsBtn, TipsBtn } from './controls-btn'
+import { ChallengeBtn, PreCodeBtn, SolutionBtn, TipsBtn } from './controls-btn'
 
-const MenuItems = ({
-  data,
-  lessonId,
-  style = {},
-}: {
+interface IMenuItems {
   data: ILessonContent & BaseResponseInterface
   lessonId: string
-  style?: SxProps<Theme>
-}) => {
+  sx?: SxProps
+}
+
+const MenuItems = ({ data, lessonId, sx = {} }: IMenuItems) => {
+  const [open, setOpen] = useState<HTMLElement | null>(null)
+
+  const handleOpenChallengeMenu = (event: React.MouseEvent<HTMLElement>): void => {
+    event.stopPropagation()
+    event.preventDefault()
+    setOpen(event.currentTarget)
+  }
+
+  const handleCloseChallengeManu = (): void => {
+    setOpen(null)
+  }
+
   return (
-    <Stack
-      direction='row'
-      sx={{
-        maxWidth: '450px',
-        gap: 1,
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        ...style,
-      }}
-    >
-      <Preferences
-        defaultValues={{ ...data }}
-        contentId={data.id}
-        lessonId={lessonId}
-        defaultTab={3}
+    <>
+      <Button
+        onClick={handleOpenChallengeMenu}
+        sx={{
+          display: 'flex',
+          gap: 1,
+          width: 140,
+          fontSize: '1.1rem',
+          color: '#364954',
+          fontWeight: 400,
+          ...sx,
+        }}
       >
-        <TipsBtn />
-      </Preferences>
-      <Validation
-        stepId={data.id}
-        stepTitle={data.title}
-        setHasValidation={() => {}}
+        <LuCheckCircle size={20} />
+        Challenge
+      </Button>
+
+      <MenuPopover
+        open={open}
+        onClose={handleCloseChallengeManu}
+        disabledArrow
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: -5, horizontal: 5 }}
+        sx={{ p: 0, width: 140, bgcolor: '#D9F6F8' }}
       >
-        <ChallengeBtn />
-      </Validation>
-      <Preferences
-        defaultValues={{ ...data }}
-        contentId={data.id}
-        lessonId={lessonId}
-        defaultTab={0}
-      >
-        <SettingsBtn />
-      </Preferences>
-      <MediaBtn />
-    </Stack>
+        <Validation
+          stepId={data.id}
+          stepTitle={data.title}
+          setHasValidation={() => {}}
+        >
+          <ChallengeBtn />
+        </Validation>
+        <Preferences
+          defaultValues={{ ...data }}
+          contentId={data.id}
+          lessonId={lessonId}
+          defaultTab={3}
+        >
+          <TipsBtn />
+        </Preferences>
+        <Preferences
+          defaultValues={{ ...data }}
+          contentId={data.id}
+          lessonId={lessonId}
+          defaultTab={1}
+        >
+          <SolutionBtn />
+        </Preferences>
+        <Preferences
+          defaultValues={{ ...data }}
+          contentId={data.id}
+          lessonId={lessonId}
+          defaultTab={2}
+        >
+          <PreCodeBtn />
+        </Preferences>
+      </MenuPopover>
+    </>
   )
 }
 

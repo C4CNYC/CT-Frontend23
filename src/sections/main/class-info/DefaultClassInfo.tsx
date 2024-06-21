@@ -113,7 +113,9 @@ export default function DefaultClassInfo({
   return (
     <>
       <Stack sx={{ mx: { lg: -2 } }}>
-        <OnceOffNotification classData={classData} />
+        <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Editor, Role.Manager]}>
+          <OnceOffNotification classData={classData} />
+        </RoleBasedGuard>
         {/* <ClassInfoToggle /> */}
         <Stack
           sx={() => ({

@@ -31,6 +31,8 @@ interface Props {
   locked?: boolean
   data: ILessonContent & BaseResponseInterface
   lessonId: string
+  bgColor: string
+  setBgColor?: (bgColor: string) => void
 }
 
 function Editor({
@@ -41,6 +43,8 @@ function Editor({
   setMultimediaValue,
   data,
   lessonId,
+  bgColor,
+  setBgColor,
 }: Props): React.ReactElement {
   // const { uploadToS3 } = useS3Upload();
   const [createMedia] = useCreateMediaMutation()
@@ -108,12 +112,14 @@ function Editor({
   const saveContent = async (): Promise<void> => {
     if (onSubmit) onSubmit()
   }
+
   return (
     <ThemeProvider>
       <style>
         {`
           .remirror-theme .ProseMirror:active, .remirror-theme .ProseMirror:focus {
             box-shadow: none;
+            background-color: ${bgColor};
           }
           .remirror-editor-wrapper { padding: 0 }
           .remirror-theme .ProseMirror {
@@ -143,6 +149,15 @@ function Editor({
           .remirror-theme [data-task-list] {
             margin-left: 30px;
           }
+          .remirror-theme code {
+            background-color: #f5f4f4;
+            border: .1rem solid rgba(0, 0, 0, .1);
+            border-radius: 0.4rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 100%;
+            padding: 0.1rem;
+            vertical-align: middle;
+          }
         `}
       </style>
       <Remirror
@@ -167,6 +182,7 @@ function Editor({
               saveContent={saveContent}
               data={data}
               lessonId={lessonId}
+              bgColor={bgColor}
             />
           ) : null
         ) : (
@@ -174,6 +190,8 @@ function Editor({
             saveContent={saveContent}
             data={data}
             lessonId={lessonId}
+            bgColor={bgColor}
+            setBgColor={setBgColor}
           />
         )}
       </Remirror>

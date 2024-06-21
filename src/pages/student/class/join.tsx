@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { CircularProgress, Container, InputAdornment, Stack, Typography } from '@mui/material'
+import { CircularProgress, Container, InputAdornment, Stack, Typography, Link } from '@mui/material'
 import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
+import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -115,6 +116,20 @@ export default function JoinClass(): React.ReactElement {
                 ),
               }}
             />
+            <Typography
+              variant='body1'
+              sx={{ maxWidth: '350px', mt: 3 }}
+            >
+              Hey, if you have no Tribe or Class, you can just start coding in the Catalog.{' '}
+              <Link
+                component={NextLink}
+                href={STUDENT_PATH_DASHBOARD.courses.root}
+                underline='none'
+              >
+                “Click here”
+              </Link>{' '}
+              to see the courses available
+            </Typography>
           </Stack>
           <Stack>
             <Image

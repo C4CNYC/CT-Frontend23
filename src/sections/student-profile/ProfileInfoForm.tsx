@@ -69,7 +69,7 @@ export default function ProfileInfoForm({
     about: about ?? '',
     phone: phone ?? '',
     postcode: postcode ?? '',
-    country: country ?? '',
+    country: country ?? undefined,
     cover,
   }
   const methods = useForm<FormValuesProps>({
@@ -87,7 +87,7 @@ export default function ProfileInfoForm({
         first_name: formData.firstName,
         last_name: formData.lastName,
         post_code: formData.postcode,
-        country: formData.country,
+        country: formData.country ? formData.country : undefined,
         cover: formData.cover,
       }).unwrap()
       if (formData.photoURL) {
@@ -190,14 +190,22 @@ export default function ProfileInfoForm({
                   label={translate('country')}
                 >
                   <option value='' />
-                  {countries.map((country) => (
-                    <option
-                      key={country.code}
-                      value={country.code.toLowerCase()}
-                    >
-                      {country.label}
-                    </option>
-                  ))}
+                  <option
+                    key={'US'}
+                    value={'us'}
+                  >
+                    United States
+                  </option>
+                  {countries
+                    .filter((el) => el.code !== 'US')
+                    .map((country) => (
+                      <option
+                        key={country.code}
+                        value={country.code.toLowerCase()}
+                      >
+                        {country.label}
+                      </option>
+                    ))}
                 </RHFSelect>
               </Stack>
             </Stack>

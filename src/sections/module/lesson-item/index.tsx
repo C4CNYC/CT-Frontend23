@@ -31,6 +31,7 @@ import {
   getLessonContentSx,
   getLessonSx,
 } from './constants'
+import LessonDialog from './LessonDialog'
 import TrainingProgress from './LessonProgress'
 
 interface ILessonItemProps {
@@ -87,6 +88,9 @@ export default function LessonItem({
       })
     )
   }
+
+  const lastLessonProgress = prevLesson?.progress ?? 100
+  const isLastLessonInProgress = lastLessonProgress <= 90
 
   return (
     <Stack sx={getLessonSx(theme)}>
@@ -149,7 +153,7 @@ export default function LessonItem({
           </Stack>
         </Stack>
         {!locked ? (
-          !lesson.progress && index !== 0 ? (
+          !lesson.progress && index !== 0 && isLastLessonInProgress ? (
             <>
               <Box
                 sx={LOCKED_BTN_CONT_SX}
@@ -196,7 +200,7 @@ So pulled your code from previous lesson, so that you can keep building'
               </Link>
             </>
           )
-        ) : !lesson.progress ? (
+        ) : !lesson.progress && isLastLessonInProgress ? (
           <>
             <Box
               sx={LOCKED_BTN_CONT_SX}
@@ -212,13 +216,10 @@ So pulled your code from previous lesson, so that you can keep building'
                 />
               </Box>
             </Box>
-            <CatalogLessonDialog
+            <LessonDialog
               open={open}
-              confirmText={'Yes, start the lesson.'}
-              closeText={'No, I’ll go back.'}
               closeDialog={closeDialog}
-              confirmClick={fetchDefaultCodeFromPrevLesson}
-              title='It’s better to complete the lessons in order'
+              openLesson={fetchDefaultCodeFromPrevLesson}
             />
           </>
         ) : (

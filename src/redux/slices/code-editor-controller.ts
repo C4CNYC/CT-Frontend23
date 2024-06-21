@@ -13,6 +13,7 @@ export interface CodeEditorControllerRoom {
   preloadedCode?: string
   code?: string
   mode?: EditorMode
+  avatar?: string
 }
 
 interface StateControllerProps {

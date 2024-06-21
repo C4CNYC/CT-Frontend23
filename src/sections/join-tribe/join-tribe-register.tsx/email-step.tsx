@@ -30,7 +30,11 @@ export default function EmailStep({ nextStep, isValid }: IEmailStepProps): React
 
   return (
     <>
-      <Stack sx={{ minHeight: '360px', justifyContent: 'center', width: '280px' }}>
+      <Stack
+        justifyContent='center'
+        width='280px'
+        pt={2.3}
+      >
         <RHFTextField
           name='email'
           label='Email'
