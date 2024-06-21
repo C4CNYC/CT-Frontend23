@@ -20,7 +20,7 @@ UserProfile.getLayout = (page: React.ReactElement) => (
 export default function UserProfile(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
   const profile = useSelector((state) => state.global.user)
-  const { data, isLoading } = profile ? useProfileQuery() : { data: undefined, isLoading: false }
+  const { data, isLoading } = useProfileQuery(null as unknown as void, { skip: !profile })
   const [currentTab, setCurrentTab] = useState('profile')
   const translate = useTranslate()
 

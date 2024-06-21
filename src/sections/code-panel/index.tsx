@@ -101,18 +101,22 @@ export default function CodePanelLayout(): ReactElement | null {
 
   const [showConfetti, setShowConfetti] = useState(false)
 
-  const { data: studentCourseContent, isLoading: isLoadingStudentCourseContent } = useGetCourseContentQuery(
-    { id: router.query.courseId as string },
-    { skip: !router.query.courseId || !profile }
-  )
+  const { data: studentCourseContent, isLoading: isLoadingStudentCourseContent } =
+    useGetCourseContentQuery(
+      { id: router.query.courseId as string },
+      { skip: !router.query.courseId || !profile }
+    )
 
-  const { data: publicCourseContent, isLoading: isLoadingPublicCourseContent } = useGetPublicCourseContentQuery(
-    { id: router.query.courseId as string },
-    { skip: !router.query.courseId || !!profile }
-  )
+  const { data: publicCourseContent, isLoading: isLoadingPublicCourseContent } =
+    useGetPublicCourseContentQuery(
+      { id: router.query.courseId as string },
+      { skip: !router.query.courseId || !!profile }
+    )
 
-  const courseContent = profile ? studentCourseContent : publicCourseContent;
-  const isLoadingCourseContent = profile ? isLoadingStudentCourseContent : isLoadingPublicCourseContent
+  const courseContent = profile ? studentCourseContent : publicCourseContent
+  const isLoadingCourseContent = profile
+    ? isLoadingStudentCourseContent
+    : isLoadingPublicCourseContent
 
   const { data: studentLesson, isLoading: isLoadingStudentLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
@@ -121,10 +125,10 @@ export default function CodePanelLayout(): ReactElement | null {
 
   const { data: publicLesson, isLoading: isPublicLessonLoading } = useGetPublicLessonQuery(
     { id: router.query.courseId as string, lesson_id: router.query.lessonId as string },
-    { skip: !router.query.lessonId  || !router.query.courseId || !!profile },
+    { skip: !router.query.lessonId || !router.query.courseId || !!profile }
   )
 
-  const lesson = studentLesson ?? publicLesson;
+  const lesson = studentLesson ?? publicLesson
   const isLoadingLesson = isLoadingStudentLesson ?? isPublicLessonLoading
 
   const {
@@ -141,19 +145,23 @@ export default function CodePanelLayout(): ReactElement | null {
     data: publicLessonContent,
     isLoading: isPublicLessonContentLoading,
     isFetching: isPublicFetchingLessonContent,
-    fulfilledTimeStamp: fulfilledPublicTimeStamp
-   } = useGetPublicLessonContentQuery(
+    fulfilledTimeStamp: fulfilledPublicTimeStamp,
+  } = useGetPublicLessonContentQuery(
     { id: router.query.courseId as string, lesson_id: router.query.lessonId as string },
     { skip: !!profile || !router.query.courseId || !router.query.lessonId }
-   )
+  )
 
-   const lessonContent = profile ? lessonStudentContent : publicLessonContent
-   const isLoadingLessonContent = profile ? isLoadingLessonStudentContent : isPublicLessonContentLoading
-   const isFetchingLessonContent = profile ? isFetchingLessonStudentContent : isPublicFetchingLessonContent
-   const fulfilledTimeStamp = profile ? fulfilledStudentTimeStamp : fulfilledPublicTimeStamp
+  const lessonContent = profile ? lessonStudentContent : publicLessonContent
+  const isLoadingLessonContent = profile
+    ? isLoadingLessonStudentContent
+    : isPublicLessonContentLoading
+  const isFetchingLessonContent = profile
+    ? isFetchingLessonStudentContent
+    : isPublicFetchingLessonContent
+  const fulfilledTimeStamp = profile ? fulfilledStudentTimeStamp : fulfilledPublicTimeStamp
 
   const { data: checkers } = useGetContentCheckersQuery(undefined, {
-    skip: !fulfilledTimeStamp,
+    skip: !fulfilledTimeStamp || !profile,
   })
 
   const [completeLesson] = useCompleteLessonMutation()
@@ -229,7 +237,6 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   const onSubmitLesson = async (): Promise<void> => {
-
     setShowConfetti(true)
     try {
       enqueueSnackbar(translate('messages_lesson_complete'))

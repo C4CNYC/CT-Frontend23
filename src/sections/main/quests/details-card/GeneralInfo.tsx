@@ -1,8 +1,8 @@
 import { Card, Divider, Skeleton, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-student'
 import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
+import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-student'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 

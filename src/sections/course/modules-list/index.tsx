@@ -12,9 +12,10 @@ interface ModulesListBlockProps {
 export default function ModulesListBlock({ modules }: ModulesListBlockProps): React.ReactElement {
   const theme = useTheme()
   const profile = useSelector((state) => state.global.user)
-  const { data: lastVisitedData = undefined } = profile
-    ? useGetStudentLastVisitedUnitAndLessonQuery()
-    : {}
+  const { data: lastVisitedData } = useGetStudentLastVisitedUnitAndLessonQuery(
+    null as unknown as void,
+    { skip: !profile }
+  )
 
   return (
     <Stack

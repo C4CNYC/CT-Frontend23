@@ -9,9 +9,9 @@ import { useSelector } from 'react-redux'
 import { Iconify, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetTeacherListQuery } from '@/redux/services/admin/school-amdin'
-import { 
+import {
   useGetAssignmentStudentQuery,
-  useGetAssignmentStudentPublicQuery
+  useGetAssignmentStudentPublicQuery,
 } from '@/redux/services/manager/assignments-student'
 import { useGetCoursQuery } from '@/redux/services/manager/courses-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -44,7 +44,7 @@ export default function Quest(): React.ReactElement | null {
 
   const { data: course, isLoading: isLoadingCourse } = useGetCoursQuery(
     { id: data?.course.id as string },
-    { skip: !data?.course.id }
+    { skip: !data?.course.id  || !profile }
   )
 
   const { data: teachers } = useGetTeacherListQuery(

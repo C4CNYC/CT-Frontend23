@@ -13,6 +13,7 @@ import { MenuPopover, Scrollbar, useSettingsContext } from '@/components'
 import { StyledSubheader } from '@/components/nav-section/vertical/styles'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-student'
+import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -26,10 +27,11 @@ export default function MenuTribesList(): React.ReactElement {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const isNavMini = themeLayout === 'mini' && !isMobile
   const translate = useTranslate()
+  const profile = useSelector((state) => state.global.user)
 
   const [containerHeignt, setContainerHeignt] = useState('auto')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
-  const { data, isLoading } = useGetStudentClassesQuery({})
+  const { data, isLoading } = useGetStudentClassesQuery({}, { skip: !profile })
   const { query } = useRouter()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
