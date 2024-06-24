@@ -14,7 +14,7 @@ import PublishModal from '../modals/publish'
 
 interface GetActions {
   code: string
-  language: SupportedLang
+  language?: SupportedLang
 }
 
 export interface Action {

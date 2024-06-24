@@ -20,7 +20,7 @@ import { DIALOG_SX, BASE_BOX_SX } from './constants'
 interface IPublishModal {
   children: React.ReactElement
   code: string
-  language: string
+  language?: string
   isPublic: boolean
 }
 
