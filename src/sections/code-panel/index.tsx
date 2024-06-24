@@ -405,6 +405,8 @@ export default function CodePanelLayout(): ReactElement | null {
             chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
             onHandleFullScreen={handle.active ? handle.exit : handle.enter}
             isFullScreenView={handle.active}
+            language={DEFAULT_LANGUAGE}
+            lessonManagerComponent={<></>}
           />
           <CodePanelBody
             isFetchingLessonContent={isFetchingLessonContent}
