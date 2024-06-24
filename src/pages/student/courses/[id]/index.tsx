@@ -27,7 +27,7 @@ export default function CoursePage(): React.ReactElement {
     },
     { skip: !router.query.id || !profile }
   )
-  const { data: publicContent, isLoading: isPublicLoading} = useGetPublicCourseContentQuery(
+  const { data: publicContent, isLoading: isPublicLoading } = useGetPublicCourseContentQuery(
     {
       id: router.query.id as string,
     },

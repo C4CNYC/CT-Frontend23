@@ -32,7 +32,7 @@ export default function Quest(): React.ReactElement | null {
   const [hasContent, setHasContent] = useState(false)
   const containerSx = useMemo(() => getContainerSx(theme), [theme])
   const skeletonSx = useMemo(() => getSkeletonSx(theme), [theme])
-  const profile = useSelector((state) => state.global.user)
+  const profile = useSelector((state: any) => state.global.user)
   const assignmentQuery = profile
     ? useGetAssignmentStudentQuery
     : useGetAssignmentStudentPublicQuery
@@ -44,7 +44,7 @@ export default function Quest(): React.ReactElement | null {
 
   const { data: course, isLoading: isLoadingCourse } = useGetCoursQuery(
     { id: data?.course.id as string },
-    { skip: !data?.course.id  || !profile }
+    { skip: !data?.course.id || !profile }
   )
 
   const { data: teachers } = useGetTeacherListQuery(

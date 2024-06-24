@@ -5,7 +5,6 @@ import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography } from '@mui/mater
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
 import { useGetPublicLessonQuery } from '@/redux/services/public-student'
-import { useGetLessonContentStudentQuery } from '@/redux/services/manager/lesson-student'
 import { useSelector } from '@/redux/store'
 import SolutionMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/solution-mobile-dialog'
 import UnstuckMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog'

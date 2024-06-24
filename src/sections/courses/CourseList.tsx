@@ -24,7 +24,10 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
     FilterMode.global
   )
   const profile = useSelector((state) => state.global.user)
-  const { data, isLoading, isFetching } = useGetCourseQuery({ take: 50 }, { skip: publicPage || !profile })
+  const { data, isLoading, isFetching } = useGetCourseQuery(
+    { take: 50 },
+    { skip: publicPage || !profile }
+  )
   const {
     data: publicData,
     isLoading: publicIsLoading,

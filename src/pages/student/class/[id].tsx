@@ -8,8 +8,8 @@ import { useRouter } from 'next/router'
 import { useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetClassQuery } from '@/redux/services/manager/classes-student'
-import { useGetPublicClassQuery } from '@/redux/services/public-student'
 import { useGetPublicTribeQuery } from '@/redux/services/public/tribe-public'
+import { useGetPublicClassQuery } from '@/redux/services/public-student'
 import { setClass } from '@/redux/slices/code-panel'
 import { useDispatch, useSelector } from '@/redux/store'
 import JoinTribeModal from '@/sections/join-tribe/JoinTribeModal'
@@ -39,7 +39,7 @@ export default function HomeOverview(): React.ReactElement {
     { skip: !query.id || !!query.joinCode || !!profile }
   )
 
-  const data = classData ?? publicClass;
+  const data = classData ?? publicClass
   const isLoading = isClassLoading ?? isPublicLoading
 
   const translate = useTranslate()
