@@ -14,8 +14,8 @@ interface ITopPanel {
   chatComponent?: ReactNode | null
   onHandleFullScreen: () => void
   isFullScreenView: boolean
-  lessonManagerComponent?: ReactNode
-  language?: SupportedLang
+  lessonManagerComponent: ReactNode
+  language: SupportedLang
   publicPage?: boolean
 }
 

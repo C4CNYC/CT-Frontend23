@@ -19,7 +19,7 @@ interface IDesktopBar {
   chatComponent: ReactNode
   onHandleFullScreen: () => void
   isFullScreenView: boolean
-  language?: SupportedLang
+  language: SupportedLang
   publicPage?: boolean
 }
 

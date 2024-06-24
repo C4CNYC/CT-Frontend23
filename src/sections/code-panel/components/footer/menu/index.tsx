@@ -20,7 +20,7 @@ import {
 } from './constants'
 
 export interface MenuProps {
-  language?: SupportedLang
+  language: SupportedLang
   publicPage?: boolean
 }
 
