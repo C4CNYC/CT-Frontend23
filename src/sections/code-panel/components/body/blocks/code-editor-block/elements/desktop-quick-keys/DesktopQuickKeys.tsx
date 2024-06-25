@@ -7,10 +7,10 @@ import { MdOutlineContentCopy } from '@react-icons/all-files/md/MdOutlineContent
 import { MdRedo } from '@react-icons/all-files/md/MdRedo'
 import { MdUndo } from '@react-icons/all-files/md/MdUndo'
 import { RiBracesFill } from '@react-icons/all-files/ri/RiBracesFill'
+import { TbSelectAll } from '@react-icons/all-files/tb/TbSelectAll'
 import { AnimatePresence, m } from 'framer-motion'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 
-import { BlockIcon } from './BlockIcon'
 import QuickButton from './QuickButton'
 
 export default function DesktopQuickKeys() {
@@ -100,10 +100,10 @@ export default function DesktopQuickKeys() {
                 sx={{ bgcolor: '#d6d6d6', height: 'auto', my: '4px' }}
               />
               <QuickButton
-                tooltipTitle='Undo'
-                tooltipSubtitle='Shortcut: Ctrl + Z'
+                tooltipTitle='Select All'
+                tooltipSubtitle='Shortcut: Ctrl + A'
               >
-                <BlockIcon size={20} />
+                <TbSelectAll size={20} />
               </QuickButton>
               <QuickButton
                 tooltipTitle='Copy'
