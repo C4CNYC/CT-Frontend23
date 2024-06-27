@@ -46,7 +46,7 @@ export default function ModulePage(): React.ReactElement {
     { id: query?.id as string },
     { skip: !query?.id || !profile }
   )
-  const { data: course } = useGetCoursContentQuery(
+  const { data: studentCourse } = useGetCoursContentQuery(
     {
       id: query.id as string,
     },
@@ -57,6 +57,8 @@ export default function ModulePage(): React.ReactElement {
     { id: query.id as string },
     { skip: !query.id || !!profile }
   )
+
+  const course = studentCourse ?? publicCourse
 
   const {
     data: lessonsModule,
