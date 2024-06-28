@@ -1,6 +1,7 @@
 import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Box, useTheme } from '@mui/material'
+import { sendGAEvent } from '@next/third-parties/google'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import * as _ from 'lodash-es'
@@ -124,6 +125,9 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const handleNext = (skip = false): void => {
+    sendGAEvent('event', 'Next_Slide', {
+      event_label: data[slideIndex].id,
+    })
     if (stepHasValidation && !skip) {
       onSubmitChallenge(data[slideIndex].id, code)
     }

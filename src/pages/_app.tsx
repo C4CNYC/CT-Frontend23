@@ -1,6 +1,7 @@
 import { AppCacheProvider as EmotionAppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
@@ -43,6 +44,7 @@ export default function MyApp(props: MyAppProps): React.ReactElement {
           content='initial-scale=1, width=device-width'
         />
       </Head>
+      <GoogleAnalytics gaId='G-7F2RYWZ875' />
       <ReduxProvider store={store}>
         <AuthProvider>
           <LocalizationProvider dateAdapter={AdapterDateFns}>

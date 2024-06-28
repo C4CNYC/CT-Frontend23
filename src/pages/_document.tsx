@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { DocumentHeadTags, DocumentHeadTagsProps } from '@mui/material-nextjs/v14-pagesRouter'
-import { GoogleAnalytics } from '@next/third-parties/google'
 import { DocumentProps, Head, Html, Main, NextScript } from 'next/document'
 
 import { palette } from '@/theme/palette'
@@ -73,8 +72,6 @@ export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps)
             `}
         </style>
       </Head>
-      <GoogleAnalytics gaId='G-7F2RYWZ875' />
-
       <body>
         <Main />
         <NextScript />
