@@ -1,6 +1,6 @@
 import { type FC } from 'react'
 
-import { useStyles } from './styles'
+import { CustomSwitchWrapper, SubTextActive, SubTextInactive, IconWrapper } from './styles'
 
 interface CustomSwithProps {
   isActive?: boolean
@@ -8,18 +8,16 @@ interface CustomSwithProps {
 }
 
 const CustomSwitch: FC<CustomSwithProps> = ({ onChange, isActive = false }) => {
-  const styles = useStyles()
-
   return (
-    <div
+    <CustomSwitchWrapper
       onClick={() => onChange?.(!isActive)}
-      className={`${styles.wrapper} ${isActive ? 'is-active' : ''}`}
+      className={`${isActive ? 'is-active' : ''}`}
     >
-      <span className={styles.subTextActive}>COLLAB</span>
+      <SubTextActive>COLLAB</SubTextActive>
 
-      <span className={styles.subTextInactive}>OFF</span>
+      <SubTextInactive>OFF</SubTextInactive>
 
-      <span className={styles.iconWrapper}>
+      <IconWrapper>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='13'
@@ -32,8 +30,8 @@ const CustomSwitch: FC<CustomSwithProps> = ({ onChange, isActive = false }) => {
             fill='white'
           />
         </svg>
-      </span>
-    </div>
+      </IconWrapper>
+    </CustomSwitchWrapper>
   )
 }
 

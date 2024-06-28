@@ -31,9 +31,8 @@ export default function StepMultimedia({
 
   return (
     <ResizerUi
-      split='vertical'
-      primary='first'
-      defaultSize={800}
+      vertical
+      defaultSizes={[800]}
     >
       <Box sx={{ bgcolor: bgColor, height: '100%' }}>
         <MyEditor

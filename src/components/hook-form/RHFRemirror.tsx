@@ -45,7 +45,7 @@ export function RHFRemirror({
   const { manager, state, setState } = useRemirror({
     extensions: () =>
       [
-        new BoldExtension(),
+        new BoldExtension({}),
         new ItalicExtension(),
         new UnderlineExtension(),
         new LinkExtension({ autoLink: true }),

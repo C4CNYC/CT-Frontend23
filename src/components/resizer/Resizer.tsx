@@ -1,12 +1,11 @@
-import SplitPane, { SplitPaneProps } from 'react-split-pane'
+import { Allotment, AllotmentProps } from 'allotment'
+import 'allotment/dist/style.css'
 
 interface Props {
   children: React.ReactNode
 }
 
-const SP = SplitPane as any
-
-export const ResizerUi = ({ children, ...props }: Props & SplitPaneProps): React.ReactElement => {
+export const ResizerUi = ({ children, ...props }: Props & AllotmentProps): React.ReactElement => {
   return (
     <>
       <style>
@@ -56,7 +55,7 @@ export const ResizerUi = ({ children, ...props }: Props & SplitPaneProps): React
           }
         `}
       </style>
-      <SP {...props}>{children}</SP>
+      <Allotment {...props}>{children}</Allotment>
     </>
   )
 }

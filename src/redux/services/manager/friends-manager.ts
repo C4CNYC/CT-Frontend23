@@ -1,12 +1,14 @@
-import { IFriend, IFriendsSearchParams } from '@/redux/interfaces/friends.interface'
+import { IFriendsSearchParams } from '@/redux/interfaces/friends.interface'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
+
+import { IUser } from '../interfaces/user.interface'
 
 import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getFriendsStudentContent: builder.query<
-      BaseListResponseInterface<IFriend & BaseResponseInterface>,
+      BaseListResponseInterface<IUser & BaseResponseInterface>,
       IFriendsSearchParams
     >({
       query: (params) => ({
@@ -17,7 +19,7 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['Friends'],
     }),
-    getFriend: builder.query<IFriend & BaseResponseInterface, { id: string }>({
+    getFriend: builder.query<IUser & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/classmates/${id}`,
         method: 'GET',

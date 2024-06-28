@@ -6,25 +6,18 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { formatDistanceToNowStrict } from 'date-fns'
 
-import { IFriend } from '@/redux/interfaces/friends.interface'
+import { IUser } from '@root/src/redux/interfaces/auth.interface'
 
 // ----------------------------------------------------------------------
 
 interface IChatNavItem {
   collapse: boolean
-  friend: IFriend
+  friend: IUser
   selectChat: (id: string) => void
   selected: string
 }
 
 export default function ChatNavItem({ collapse, friend, selectChat, selected }: IChatNavItem) {
-  // const handleClickConversation = useCallback(async () => {
-  //   try {
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }, [friend.id])
-
   const renderSingle = (
     <Badge
       variant='dot'

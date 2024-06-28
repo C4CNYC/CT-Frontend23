@@ -64,6 +64,7 @@ export default function CodePanelPage(): ReactElement | null {
   const dispatch = useDispatch()
   const { enqueueSnackbar } = useSnackbar()
 
+  const roomId = useSelector((state: RootState) => state.codeEditorController.room?.roomId)
   const socket = useSelector((state: any) => state.codePanelGlobal.socket)
   const { user, isInitialized: authIsInitialized } = useAuthContext()
   const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
@@ -129,7 +130,7 @@ export default function CodePanelPage(): ReactElement | null {
     )
     socket?.emit(
       'stream-activity:set-stream-activity-by-room-id',
-      router.query.id,
+      roomId || router.query.id,
       JSON.stringify({
         unit_id: unitId,
         slide_index: 0,
@@ -164,7 +165,7 @@ export default function CodePanelPage(): ReactElement | null {
       if (nextLessonInfo) {
         socket?.emit(
           'stream-activity:set-stream-activity-by-room-id',
-          router.query.id,
+          roomId || router.query.id,
           JSON.stringify({
             unit_id: nextLessonInfo.unitId,
             slide_index: 0,
@@ -192,7 +193,7 @@ export default function CodePanelPage(): ReactElement | null {
 
   useEffect(() => {
     if (socket && router.query.id) {
-      socket.emit('stream-activity:get-stream-activity-by-room-id', router.query.id)
+      socket.emit('stream-activity:get-stream-activity-by-room-id', roomId || router.query.id)
 
       socket.once('stream-activity:get-stream-activity-by-room-id-response', (body: string) => {
         const data = JSON.parse(body) as StreamActivity
@@ -227,7 +228,7 @@ export default function CodePanelPage(): ReactElement | null {
         socket.off('stream-activity:stream-activity-updated')
       }
     }
-  }, [socket, router.query.id])
+  }, [socket, roomId, router.query.id])
 
   useEffect(() => {
     let socket: Socket | undefined

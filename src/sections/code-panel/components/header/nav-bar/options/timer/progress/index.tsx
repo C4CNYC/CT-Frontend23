@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 
-import { useStyles } from './styles'
+import { BoxWrapper, CircleAfter, CircleBefore, MinutesNumber } from './styles'
 
 interface Props {
   min: number
@@ -32,33 +31,28 @@ export const CircularProgressWithLabel = ({
     setDelayAnim(delay - performance.now())
   }, [])
 
-  const classes = useStyles({
-    min,
-    pause,
-    width,
-    height,
-    delay: delayAnim,
-    fontSize,
-  })
-
   return (
     <Box
       position='relative'
       display='inline-flex'
     >
-      <div className={classes.box}>
+      <BoxWrapper
+        width={width}
+        height={height}
+      >
         <svg viewBox='22 22 44 44'>
-          <circle
-            className={classes.circleAfter}
+          <CircleAfter
             cx='44'
             cy='44'
             r='20.2'
             fill='none'
             strokeWidth='4'
           />
-          <circle
+          <CircleBefore
+            delay={delay}
+            min={min}
+            pause={pause}
             onAnimationEnd={setFinish}
-            className={classes.circleBefore}
             cx='44'
             cy='44'
             r='20.2'
@@ -66,7 +60,7 @@ export const CircularProgressWithLabel = ({
             strokeWidth='3.6'
           />
         </svg>
-      </div>
+      </BoxWrapper>
       {time ? (
         <Box
           top={0}
@@ -78,12 +72,12 @@ export const CircularProgressWithLabel = ({
           alignItems='center'
           justifyContent='center'
         >
-          <Typography
+          <MinutesNumber
             variant='body1'
-            classes={{ root: classes.minutesNumber }}
+            fontSize={fontSize}
           >
             {time}
-          </Typography>
+          </MinutesNumber>
         </Box>
       ) : null}
     </Box>

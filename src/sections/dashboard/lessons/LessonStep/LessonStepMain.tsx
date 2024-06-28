@@ -53,10 +53,12 @@ export default function LessonStepMain(): React.ReactElement {
 
           <Box>
             <ResizerUi
-              split='vertical'
+              vertical
               minSize={300}
               maxSize={750}
-              defaultSize={'400px'}
+              //@ts-ignore
+              //TODO: fix sizing
+              defaultSizes={['400px', '400px']}
             >
               <LessonStepList lessonId={lessonId as string} />
               {stepId ? <StepContentEditor /> : <NoSelectedStep />}

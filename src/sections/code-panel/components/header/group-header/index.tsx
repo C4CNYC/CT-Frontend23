@@ -38,7 +38,7 @@ const GroupHeader: FC = () => {
     return dispatch(
       setRoom({
         ownerId: user?.id ?? '',
-        roomId: `${user?.student_profile?.id ?? ''}_${query?.lessonId as string}`,
+        roomId: (query.id as string) ?? '',
         mode: EditorMode.Owner,
       })
     )

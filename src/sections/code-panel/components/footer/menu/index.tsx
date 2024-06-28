@@ -1,7 +1,6 @@
 import { type FC, useMemo, useState } from 'react'
 
 import { Chip, SpeedDial, SpeedDialAction, Typography, useTheme } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import { Box } from '@mui/system'
 import { GiSave } from '@react-icons/all-files/gi/GiSave'
 
@@ -25,7 +24,6 @@ export interface MenuProps {
 }
 
 const Menu: FC<MenuProps> = ({ language, publicPage }) => {
-  const classes = tooltipRewrite()
   const code = useSelector((state) => state.codePanelGlobal.code)
 
   const theme = useTheme()
@@ -78,7 +76,9 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
             <SpeedDialAction
               key={action.name}
               icon={action.icon}
-              TooltipClasses={{ tooltip: classes.tooltip }}
+              TooltipClasses={{
+                tooltip: 'color: #364954; background: transparent',
+              }}
               tooltipTitle={
                 <Box sx={BOX_SX}>
                   <Chip
@@ -96,12 +96,5 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
     </Box>
   )
 }
-
-const tooltipRewrite = makeStyles(() => ({
-  tooltip: {
-    color: '#364954',
-    background: 'transparent',
-  },
-}))
 
 export default Menu

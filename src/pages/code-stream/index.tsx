@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from '@root/src/redux/store'
 export default function CodePanelPage(): ReactElement | null {
   const router = useRouter()
   const dispatch = useDispatch()
+
   const user = useSelector((state) => state.global.user)
 
   useEffect(() => {

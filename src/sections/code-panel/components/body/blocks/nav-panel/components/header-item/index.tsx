@@ -19,11 +19,16 @@ import { useTranslate } from '@/utils/translateHelper'
 interface HeaderItemProps {
   onClick: () => void
   activeUsers: number
-  activeAdmins?: number
+  activeAdmins: number
   isOpen: boolean
 }
 
-const HeaderItem: FC<HeaderItemProps> = ({ onClick, activeUsers, activeAdmins = 0, isOpen }) => {
+const HeaderItem: FC<HeaderItemProps> = ({
+  onClick,
+  activeUsers = 0,
+  activeAdmins = 0,
+  isOpen,
+}) => {
   const transalte = useTranslate()
   const tribe = useSelector((state: RootState) => state.codePanel.class)
   const theme = useTheme()

@@ -16,7 +16,7 @@ import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
 import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
 
 import { useResponsive } from '@/hooks'
-import { IFriend } from '@/redux/interfaces/friends.interface'
+import { IUser } from '@root/src/redux/interfaces/auth.interface'
 
 import { Scrollbar } from '../scrollbar'
 
@@ -33,7 +33,7 @@ interface IChatNav {
   selectChat: (id: string) => void
   selectedConversation: string
   isLoading: boolean
-  friends: IFriend[] | undefined
+  friends: IUser[] | undefined
 }
 
 export default function ChatNav({

@@ -1,5 +1,6 @@
 import { type FC } from 'react'
 
+import Close from '@mui/icons-material/Close'
 import { Stack, Tabs, Tab } from '@mui/material'
 
 import type { File } from '../../hook/requests'
@@ -8,12 +9,17 @@ import DevIcon from '../dev-icon'
 import { styles } from './styles'
 
 interface FileSwitcherProps {
-  activeFile: File | null
+  activeFile?: File | null
   onChange: (fileName: File) => void
+  onClose: (fileId: string) => void
   fileList: File[]
 }
 
-const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList }) => {
+const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, onClose, activeFile, fileList }) => {
+  if (!activeFile) {
+    return null
+  }
+
   return (
     <Stack sx={styles.WRAPPER_STACK_SX}>
       <Tabs
@@ -37,6 +43,15 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
                   fileName={`${name}.${extension}`}
                 />
                 {name}.{extension}
+                {fileList.length > 1 && (
+                  <Close
+                    fontSize='small'
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onClose(_id)
+                    }}
+                  />
+                )}
               </>
             }
             value={_id}

@@ -57,8 +57,10 @@ export default function StepCode({
   })
   return (
     <ResizerUi
-      split='vertical'
-      defaultSize={isAllColumnsVisible ? '70%' : '100%'}
+      vertical
+      //@ts-ignore
+      // TODO: fix sizing
+      defaultSizes={[isAllColumnsVisible ? '70%' : '100%']}
       allowResize={false}
     >
       <Box position='relative'>

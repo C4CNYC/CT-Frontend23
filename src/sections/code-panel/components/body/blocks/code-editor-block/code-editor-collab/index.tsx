@@ -1,6 +1,5 @@
 import { type FC, memo, useEffect, useMemo } from 'react'
 
-import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
@@ -11,16 +10,13 @@ import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-gl
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
 
-import AddComment from './components/add-comment'
 import CommentPopup from './components/comment-popup'
-import FileModal from './components/file-modal'
-import FileSwitcher from './components/file-switcher'
+import { ColabContextMenu } from './components/context-menu'
 import LoadingCodeEditor from './components/loading-code-editor'
-import StatusLabel, { RoomStatus } from './components/status-label'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
 import { EditorMode } from './hook/constants'
-import { useFileManager } from './hook/file-manager'
-import { useStyles } from './styles'
+import { type File } from './hook/requests'
+import { CodeEditorBlockWrapper } from './styles'
 
 type ReducedFields =
   | 'activeFile'
@@ -32,6 +28,7 @@ type ReducedFields =
   | 'defaultFileName'
 
 interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFields> {
+  activeFile?: File
   className?: string
   isReadOnly?: boolean
   withFileManager?: boolean
@@ -45,6 +42,7 @@ const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
+  activeFile,
   isReadOnly: _isReadOnly = false,
   mode = EditorMode.Owner,
   withFileManager = true,
@@ -57,12 +55,13 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
   ...collabProps
 }) => {
-  const styles = useStyles()
-  const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
-  const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
-  const { user, isInitialized: authIsInitialized } = useAuthContext()
   const { query } = useRouter()
   const dispatch = useDispatch()
+  const { user } = useAuthContext()
+
+  const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
+  const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
+
   const localstorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
       const json = localStorage.getItem(
@@ -87,27 +86,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     onChangeStreamingDocInfoFromProps?.(doc)
-
     localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
   }
-
-  const {
-    activeFile,
-    isFileFormOpen,
-    isOpen,
-    setIsOpen,
-    fileList,
-    setIsFileFormOpen,
-    onAddFile,
-    addedFileList,
-    onDeleteFileWithEvents,
-    onChangeFileWithEvents,
-    ...collabPropsFromFileManager
-  } = useFileManager({
-    socket,
-    roomId,
-    mode,
-  })
 
   const {
     editorRef,
@@ -116,7 +96,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     streamingDoc,
     key,
     onCreateEditor,
-    roomStatus,
     commentProps: {
       onContextMenu,
       isAddCommentDisabled,
@@ -133,7 +112,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     },
   } = useCodeEditorCollab({
     ...collabProps,
-    ...collabPropsFromFileManager,
     onChangeStreamingDocInfo,
     preloadedCode: localstorageCode ?? preloadedCode,
     activeFile,
@@ -143,7 +121,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     defaultFileName,
   })
 
-  const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
+  const isReadOnly = _isReadOnly
 
   useEffect(() => {
     return () => {
@@ -155,35 +133,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   if (!activeFile) return null
 
   return (
-    <div
-      className={`${styles.wrapper} code-editor-wrapper`}
+    <CodeEditorBlockWrapper
+      className='code-editor-wrappe'
       ref={editorRef}
     >
-      {withFileManager && (
-        <>
-          <FileModal
-            isOpen={isOpen}
-            isFileFormOpen={isFileFormOpen}
-            setActiveFile={onChangeFileWithEvents}
-            setIsOpen={setIsOpen}
-            fileList={fileList}
-            setIsFileFormOpen={setIsFileFormOpen}
-            onAddFile={onAddFile}
-            onDeleteFile={onDeleteFileWithEvents}
-            mode={mode}
-            isMultipleExtensionFiles={isMultipleExtensionFiles}
-          />
-
-          <FileSwitcher
-            activeFile={activeFile}
-            onChange={onChangeFileWithEvents}
-            fileList={addedFileList}
-          />
-        </>
-      )}
-
-      <StatusLabel status={roomStatus} />
-
       {isLoading || collabProps.isFetching || !streamingDoc ? (
         <LoadingCodeEditor />
       ) : (
@@ -211,25 +164,15 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             activeFile={activeFile}
           />
 
-          <Popover
-            classes={{ root: styles.popover }}
-            anchorReference='anchorPosition'
-            open={isAddCommentOpen}
-            anchorPosition={position}
-          >
-            <ClickAwayListener onClickAway={() => setIsAddCommentOpen(false)}>
-              <Box>
-                <AddComment
-                  isDisabled={isAddCommentDisabled}
-                  onAddComment={onAddComment}
-                  onClose={() => setIsAddCommentOpen(false)}
-                />
-              </Box>
-            </ClickAwayListener>
-          </Popover>
+          <ColabContextMenu
+            onAddComment={onAddComment}
+            isAddCommentOpen={isAddCommentOpen}
+            setIsAddCommentOpen={setIsAddCommentOpen}
+            position={position}
+          />
         </>
       )}
-    </div>
+    </CodeEditorBlockWrapper>
   )
 }
 

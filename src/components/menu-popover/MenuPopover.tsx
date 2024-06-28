@@ -16,8 +16,9 @@ export function MenuPopover({
 
   return (
     <Popover
+      {...other}
       open={Boolean(open)}
-      anchorEl={open}
+      anchorEl={typeof open == 'boolean' ? null : open}
       anchorOrigin={anchorOrigin as PopoverOrigin}
       transformOrigin={transformOrigin as PopoverOrigin}
       PaperProps={{
@@ -35,7 +36,6 @@ export function MenuPopover({
           ...sx,
         },
       }}
-      {...other}
     >
       {!disabledArrow && <StyledArrow arrow={arrow} />}
 

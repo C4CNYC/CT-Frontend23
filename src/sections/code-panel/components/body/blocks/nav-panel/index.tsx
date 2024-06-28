@@ -7,10 +7,7 @@ import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
 
 import { SimpleInfiniteList } from '@/components'
-import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { useSelector } from '@/redux/store'
-import { ILessonUserStatus } from '@/types'
-import { type BaseResponseInterface } from '@/utils'
 
 import CodeBlock from './components/code-block'
 import CustomNavItem from './components/custom-nav-item'
@@ -49,9 +46,9 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
     closeAllUsersPreview,
     draggableConfig,
     users,
-    setUsers,
     previewUsers,
     activeUsersAmount,
+    activeAdminsAmount,
     isUsersLoading,
     onLoadMore,
     hasNextPage,
@@ -59,11 +56,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
 
   const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
-
-  // const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const usersStatus = useSelector((state) => state.codePanelGlobal.usersStatus)
-  // const room = useSelector((state: RootState) => state.codeEditorController.room)
-  // const roomId = room?.roomId ?? ''
 
   const drawerSx = useMemo(() => {
     return getDrawerSx(isOpen, isRealtimeCodeHidden)
@@ -74,44 +66,11 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
   }, [draggableConfig?.height, isOpen])
 
   useEffect(() => {
-    const _users = users.map((_user: IFriend & BaseResponseInterface) => {
-      const userStatus = usersStatus.find(
-        (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
-      )
-      return {
-        ..._user,
-        status: userStatus?.status ?? _user.status,
-        currentLessonId: userStatus?.lessonId ?? _user.currentLessonId,
-      }
-    })
-    setUsers(_users)
-  }, [usersStatus, users.length])
-
-  useEffect(() => {
     if (isRealtimeCodeEnabled) {
       setIsOpen(false)
       closeAllUsersPreview()
     }
   }, [isRealtimeCodeHidden])
-
-  // const onChangeUserStatus = (status: string, lessonId: string) => {
-  //   try {
-  //     socket?.emit('changeStatusInLesson', {
-  //       lesson: lessonId,
-  //       user: roomId,
-  //       status,
-  //     })
-  //     setUsers((_users: IFriend[]) =>
-  //       _users.map((_user: IFriend) => {
-  //         if (roomId === `${_user.id as string}_${lessonId as string}`) return { ..._user, status }
-  //         return { ..._user }
-  //       })
-  //     )
-  //   } catch (error: any) {
-  //     // eslint-disable-next-line no-console
-  //     console.log('onChangeUserStatusError: ', error)
-  //   }
-  // }
 
   return (
     <Drawer
@@ -122,6 +81,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
     >
       <HeaderItem
         activeUsers={activeUsersAmount}
+        activeAdmins={activeAdminsAmount}
         onClick={() => {
           setIsOpen(!isOpen)
         }}
@@ -150,9 +110,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
                 <NavItem
                   key={`${user.id}-${index}`}
                   data={user}
-                  onToggle={() => {
-                    setIsOpen(!isOpen)
-                  }}
                   onClick={() => {
                     onAddBlock(user)
                   }}
@@ -202,8 +159,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
                       }}
                       owner={user}
                       cursorName={cursorName}
-                      // onChangeUserStatus={onChangeUserStatus}
-                      lessonId={user.currentLessonId ?? lessonId}
                     />
                   </SortableItem>
                 )

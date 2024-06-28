@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { memo, type FC } from 'react'
 
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import {
@@ -7,43 +7,53 @@ import {
   Stack,
   Badge,
   ListItemAvatar,
-  Avatar,
   IconButton,
   Tooltip,
 } from '@mui/material'
 
-import { IFriend } from '@/redux/interfaces/friends.interface'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { CustomAvatar } from '@root/src/components'
+import { Role } from '@root/src/redux/services/enums/role.enum'
+import { IUser } from '@root/src/redux/services/interfaces/user.interface'
+
+import { UserStatus } from '../../../../consts'
 
 interface NavItemProps {
   onClick?: () => void
-  onToggle: () => void
-  data: IFriend & BaseResponseInterface
+  data: IUser & { status: UserStatus }
 }
 
 const MAX_NAME_LENGTH = 15
-const MAX_ABOUT_LENGTH = 28
 
-const NavItem: FC<NavItemProps> = ({ onToggle, onClick, data }) => {
+const statusColor: Record<
+  UserStatus,
+  'primary' | 'secondary' | 'default' | 'error' | 'info' | 'success' | 'warning'
+> = {
+  [UserStatus.ONLINE]: 'primary',
+  [UserStatus.OFFLINE]: 'warning',
+  [UserStatus.AWAY]: 'warning',
+  [UserStatus.BUSY]: 'error',
+}
+
+const NavItem: FC<NavItemProps> = memo(({ onClick, data }) => {
   const name = `${data.first_name} ${data.last_name}`
   const tooltipNameTitle = name.length > MAX_NAME_LENGTH ? name : ''
-  const tooltipAbout = data.about?.length > MAX_ABOUT_LENGTH ? data.about : ''
+  const tooltipAbout = data.role === Role.Student ? 'Student' : 'Admin'
+
   return (
     <ListItem sx={{ p: 1 }}>
       <Badge
         sx={BADGE_SX}
         badgeContent=''
-        color={
-          data.status !== 'active'
-            ? `${data.status === 'inactive' ? 'default' : 'warning'}`
-            : `secondary`
-        }
+        color={statusColor[data.status]}
       >
         <ListItemAvatar
           onClick={onClick}
           sx={{ cursor: 'pointer' }}
         >
-          <Avatar src={data.avatar} />
+          <CustomAvatar
+            name={data.first_name}
+            src={data.avatar}
+          />
         </ListItemAvatar>
       </Badge>
 
@@ -68,7 +78,7 @@ const NavItem: FC<NavItemProps> = ({ onToggle, onClick, data }) => {
         >
           <ListItemText
             sx={TOPIC_SX}
-            primary={data.about}
+            primary={tooltipAbout}
           />
         </Tooltip>
       </Stack>
@@ -81,7 +91,7 @@ const NavItem: FC<NavItemProps> = ({ onToggle, onClick, data }) => {
       </IconButton>
     </ListItem>
   )
-}
+})
 
 const STACK_TEXT_SX = {
   width: '60%',

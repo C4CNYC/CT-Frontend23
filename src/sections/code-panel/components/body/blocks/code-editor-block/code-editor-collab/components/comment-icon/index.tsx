@@ -1,7 +1,6 @@
 import { type FC, type MouseEventHandler, useState, useRef, useEffect } from 'react'
 
 import ChatIcon from '@mui/icons-material/Chat'
-import { Box } from '@mui/material'
 import { Socket } from 'socket.io-client'
 
 import { type CommentGroup, getCommentGroup } from '../../hook/requests/comments'
@@ -9,7 +8,7 @@ import type { Comment } from '../../hook/requests/comments'
 import type { CommentPopupProps } from '../../hook/useComments'
 import { SubscribedCommentsEvents } from '../../hook/utils/socket'
 
-import { useStyles } from './styles'
+import { CodeEditorBlockWrapper, CommentIconWrapper } from './styles'
 
 export interface CommentWidgetProps extends CommentGroup {
   socket?: Socket
@@ -29,7 +28,6 @@ const CommentIcon: FC<CommentWidgetProps> = ({
 }) => {
   const anchorElRef = useRef<HTMLDivElement | null>(null)
   const [comments, setComments] = useState<Comment[]>([])
-  const styles = useStyles()
 
   const onClick: MouseEventHandler<SVGSVGElement> = async (e) => {
     e.stopPropagation()
@@ -90,10 +88,7 @@ const CommentIcon: FC<CommentWidgetProps> = ({
   }, [socket, fileId, id, roomId])
 
   return (
-    <Box
-      className={styles.wrapper}
-      ref={anchorElRef}
-    >
+    <CodeEditorBlockWrapper ref={anchorElRef}>
       <ChatIcon
         color='info'
         onClick={onClick}
@@ -101,8 +96,8 @@ const CommentIcon: FC<CommentWidgetProps> = ({
         onMouseUp={(e) => e.stopPropagation()}
       />
 
-      {comments.length > 0 && <div className={styles.amount}>{comments.length}</div>}
-    </Box>
+      {comments.length > 0 && <CommentIconWrapper>{comments.length}</CommentIconWrapper>}
+    </CodeEditorBlockWrapper>
   )
 }
 

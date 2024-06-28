@@ -279,46 +279,6 @@ export default function CodePanelPage(): ReactElement | null {
 
         if (!socket) return
 
-        socket.on('joinLesson', (data: { lesson: string; user: string }) => {
-          const { user, lesson } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status: 'idle', lessonId: lesson },
-          ])
-        })
-        // socket.on(
-        //   'changeStatusInLesson',
-        //   (data: { lesson: string; user: string; status: string }) => {
-        //     const { status, user, lesson } = data
-        //     _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-        //       ..._usersStatus.filter((_status) => _status.id !== user),
-        //       { id: user, status, lessonId: lesson },
-        //     ])
-        //   }
-        // )
-
-        socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
-          const { participants } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
-        })
-        socket.on('leaveLesson', (data: { lesson: string; user: string }) => {
-          const { user, lesson } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status: 'inactive', lessonId: lesson },
-          ])
-        })
-
-        // socket.onAnyOutgoing((e) => {
-        //   // eslint-disable-next-line no-console
-        //   console.log('out:', e)
-        // })
-        //
-        // socket.onAny((e) => {
-        //   // eslint-disable-next-line no-console
-        //   console.log('in:', e)
-        // })
-
         dispatch(setSocket(socket))
       })
     } else {

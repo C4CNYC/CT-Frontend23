@@ -3,7 +3,6 @@ import { ReactNode } from 'react'
 import { Typography } from '@mui/material'
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
-import ReactHtmlParser from 'react-html-parser'
 
 import GuestGuard from '@/auth/GuestGuard'
 import { IGallery } from '@/redux/interfaces/gallary.interface'
@@ -33,7 +32,7 @@ export default function GallaryPublic({ data, error }: Props): React.ReactElemen
   return (
     <GuestGuard>
       {data && data.language === 'html' ? (
-        commentsRemove(ReactHtmlParser(JSON.parse(data.body).body.code))
+        commentsRemove(JSON.parse(data.body).body.cod)
       ) : (
         <Typography
           variant='h4'

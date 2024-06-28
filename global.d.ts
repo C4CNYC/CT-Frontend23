@@ -1,1 +1,1 @@
-declare module 'react-html-parser'
+declare module 'react-swipeable-views-react-18-fix'

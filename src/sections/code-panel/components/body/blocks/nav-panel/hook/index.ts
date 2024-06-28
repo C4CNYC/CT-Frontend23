@@ -13,28 +13,34 @@ import { type DragEndEvent } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
 import { useFilters } from '@/hooks/useFilters'
-import { IFriend } from '@/redux/interfaces/friends.interface'
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
 import { useSelector } from '@/redux/store'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { Role } from '@root/src/redux/services/enums/role.enum'
+import { IUser } from '@root/src/redux/services/interfaces/user.interface'
+
+import { UserStatus } from '../../../consts'
 
 import { type DraggableBlockConfig, getDraggableBlockConfig } from './utils'
-
-type FriendUser = IFriend & BaseResponseInterface
+export interface StreamUsersStatuses {
+  user_id: string
+  status: UserStatus
+  status_reason?: string
+}
 
 interface UseNavPanelReturn {
   drawerRef: MutableRefObject<HTMLDivElement | null>
   isOpen: boolean
-  onAddBlock: (user: FriendUser) => void
+  onAddBlock: (user: IUser & { status: UserStatus }) => void
   setIsOpen: (isOpen: boolean) => void
   onDragEnd: (e: DragEndEvent) => void
   onDeletePreviewUser: (id: string) => void
   closeAllUsersPreview: () => void
-  previewUsers: FriendUser[]
+  previewUsers: (IUser & { status: UserStatus })[]
   draggableConfig: DraggableBlockConfig | null
-  users: FriendUser[]
-  setUsers: Dispatch<SetStateAction<FriendUser[]>>
+  users: (IUser & { status: UserStatus })[]
+  setUsers: Dispatch<SetStateAction<(IUser & { status: UserStatus })[]>>
   activeUsersAmount: number
+  activeAdminsAmount: number
   isUsersLoading: boolean
   onLoadMore: () => void
   hasNextPage: boolean
@@ -46,13 +52,16 @@ const FILTER_NAME = 'page'
 export const useNavPanel = (
   wrapperListenerRef: RefObject<HTMLDivElement | null>
 ): UseNavPanelReturn => {
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const user = useSelector((state) => state.global.user)
+
   const drawerRef = useRef<HTMLDivElement | null>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [previewUsers, setPreviewUsers] = useState<FriendUser[]>([])
+  const [previewUsers, setPreviewUsers] = useState<(IUser & { status: UserStatus })[]>([])
   const [draggableConfig, setDraggableConfig] = useState<DraggableBlockConfig | null>(null)
   const classId = useSelector((state) => state?.codePanel?.class?.id)
   const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
-  const [users, setUsers] = useState<FriendUser[]>([])
+  const [users, setUsers] = useState<(IUser & { status: UserStatus })[]>([])
 
   const { data: availableUsers, isLoading: isAvailableUsersLoading } =
     useGetFriendsStudentContentQuery(filters)
@@ -69,7 +78,7 @@ export const useNavPanel = (
     setFilter(FILTER_NAME, availableUsers.meta.page + 1)
   }
 
-  const onAddBlock = (user: FriendUser): void => {
+  const onAddBlock = (user: IUser & { status: UserStatus }): void => {
     const newPreviewedUsers = [...previewUsers]
     const isMaxBlocksInView = newPreviewedUsers.length === draggableConfig?.blockAmount
     const isExist = newPreviewedUsers.some(({ id }) => id === user.id)
@@ -140,27 +149,80 @@ export const useNavPanel = (
 
   useEffect(() => {
     if (availableUsers?.data != null) {
-      setUsers((prev) => [
-        ...prev,
-        ...availableUsers.data.map((_user) =>
-          _user.status ? _user : { ..._user, status: 'inactive' }
-        ),
-      ])
+      // TODO: siplify this with axios
+      fetch(
+        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream-users-statuses?user_ids=${availableUsers.data.map((user) => user.id).join(',')}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+        .then((res) => {
+          if (res.ok) {
+            return res.json()
+          }
+        })
+        .then((data: StreamUsersStatuses[]) => {
+          const usersExceptMe = availableUsers.data.filter(({ id }) => id !== user?.id)
+          setUsers((prev) => [
+            ...prev,
+            ...usersExceptMe.map((_user) => ({
+              ..._user,
+              status:
+                data?.find(({ user_id }) => user_id === _user.id)?.status ?? UserStatus.OFFLINE,
+            })),
+          ])
+          socket?.emit(
+            'stream-users-statuses:subscribe',
+            JSON.stringify(usersExceptMe.map(({ id }) => id))
+          )
+        })
     }
   }, [availableUsers?.data])
 
-  const { activeUsersAmount, sortedUsers } = useMemo(() => {
+  const { activeUsersAmount, activeAdminsAmount, sortedUsers } = useMemo(() => {
     const statusOrder: Record<string, number> = {
       active: 1,
       idle: 2,
       inactive: 3,
     }
     const sortedUsers = users
-    const activeUsersAmount = users.filter(({ status }) => status !== 'inactive').length
+    const activeAdminsAmount = users.filter(
+      ({ role, status }) =>
+        [Role.Admin, Role.Manager, Role.Student, Role.Owner].includes(role) &&
+        status !== UserStatus.OFFLINE
+    ).length
+    const activeUsersAmount = users.filter(({ status }) => status !== UserStatus.OFFLINE).length
     sortedUsers.sort((a, b) => statusOrder[a.status] - statusOrder[b.status])
 
-    return { activeUsersAmount, sortedUsers }
+    return { activeUsersAmount, activeAdminsAmount, sortedUsers }
   }, [users])
+
+  useEffect(() => {
+    if (socket == null) {
+      return
+    }
+
+    socket.on('stream-users-statuses:status-updated', (data: StreamUsersStatuses) => {
+      setUsers((prev) => {
+        const userIndex = prev.findIndex(({ id }) => id === data.user_id)
+
+        if (userIndex === -1) {
+          return prev
+        }
+
+        const newUser = { ...prev[userIndex], status: data.status }
+
+        return [...prev.slice(0, userIndex), newUser, ...prev.slice(userIndex + 1)]
+      })
+    })
+
+    return () => {
+      socket.off('stream-users-statuses:update')
+    }
+  }, [socket])
 
   return {
     drawerRef,
@@ -173,6 +235,7 @@ export const useNavPanel = (
     previewUsers,
     draggableConfig,
     activeUsersAmount,
+    activeAdminsAmount,
     users: sortedUsers,
     setUsers,
     isUsersLoading: isAvailableUsersLoading,

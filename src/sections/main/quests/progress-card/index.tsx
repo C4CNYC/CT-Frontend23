@@ -64,7 +64,7 @@ export default function ProgressCard({ activeTab }: IProgressCardProps): React.R
   const filteredData =
     loggedUser?.role !== 'student'
       ? progressData
-      : progressData?.filter((c) => c.id === loggedUser?.student_profile.id)
+      : progressData?.filter((c) => c.id === loggedUser?.student_profile?.id)
   const translate = useTranslate()
   const [activeData, setActiveData] = useState<IClassProgressCourse[] | IClassProgressModule[]>([])
   const [selectedIdx, setSelectedIdx] = useState(0)

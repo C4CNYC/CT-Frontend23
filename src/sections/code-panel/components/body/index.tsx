@@ -4,7 +4,7 @@ import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
 import { TiDocumentText } from '@react-icons/all-files/ti/TiDocumentText'
 import { useDispatch } from 'react-redux'
-import SwipeableViews from 'react-swipeable-views'
+import SwipeableViews from 'react-swipeable-views-react-18-fix'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { setCode, toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
@@ -117,7 +117,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   return (
     <SwipeableViews
       index={activeTab}
-      onChangeIndex={(index) => {
+      onChangeIndex={(index: number) => {
         dispatch(setTab(index))
       }}
     >

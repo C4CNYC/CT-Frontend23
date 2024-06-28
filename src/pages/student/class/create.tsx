@@ -48,7 +48,7 @@ export default function CreateClass(): React.ReactElement {
   const translate = useTranslate()
   const { data, isLoading } = useGetMySchoolsQuery({})
 
-  const studentId = useSelector((state) => state.global.user?.student_profile.id)
+  const studentId = useSelector((state) => state.global.user?.student_profile?.id)
   const [createClassByManager, { isLoading: createClassLoading }] = useCreateClassesMutation()
   const [studentJoin, { isLoading: isStudentJoining }] = useStudentJoinClassMutation()
   const [updateClassAvatar, { isLoading: isUpdatingAvatar }] = useUpdateClassesAvatarMutation()

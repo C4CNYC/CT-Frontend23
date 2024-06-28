@@ -72,7 +72,8 @@ export interface IUser {
   username?: string
   post_code?: string
   cover?: string
+  active?: boolean
   role: Role
-  student_profile: IStudent & BaseResponseInterface
+  student_profile?: IStudent & BaseResponseInterface
   city?: string | null
 }

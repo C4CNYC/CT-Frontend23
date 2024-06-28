@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useState, useRef, useCallback } from 'react'
+import { type RefObject, useEffect, useRef, useCallback } from 'react'
 
 import type { Extension } from '@codemirror/state'
 import type { Text } from '@codemirror/state'
@@ -7,8 +7,6 @@ import { EditorSelection } from '@uiw/react-codemirror'
 import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
-
-import { RoomStatus } from '../components/status-label'
 
 import { EditorMode } from './constants'
 import { type File } from './requests'
@@ -23,7 +21,6 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   user?: AuthUserType
   activeFile?: File
   socket?: Socket
-  onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
 
 interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' | 'setIsLoading'> {
@@ -33,7 +30,6 @@ interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' |
   key: number
   streamingDoc?: Text
   onCreateEditor: (view: EditorView) => void
-  roomStatus: RoomStatus
   commentProps: Omit<UseCommentsPropsReturn, 'commentEffectRef' | 'onCommentIconClick'>
 }
 
@@ -42,7 +38,6 @@ export const useCodeEditorCollab = ({
   mode = EditorMode.Owner,
   activeFile,
   socket,
-  onRoomStatusChanged,
   user,
   preloadedCode,
   ...propsToMemoize
@@ -52,7 +47,6 @@ export const useCodeEditorCollab = ({
   const initializeBlockedRef = useRef(false)
   const editorView = useRef<EditorView | null>(null)
   const editorRef = useRef<HTMLDivElement | null>(null)
-  const [roomStatus, setRoomStatus] = useState(RoomStatus.Active)
 
   const { cursorText, withTooltip, onChangeStreamingDocInfo, defaultFileName } =
     useMemoizedProps(propsToMemoize)
@@ -92,10 +86,6 @@ export const useCodeEditorCollab = ({
   })
 
   useEffect(() => {
-    onRoomStatusChanged?.(roomStatus)
-  }, [roomStatus, onRoomStatusChanged])
-
-  useEffect(() => {
     initializeBlockedRef.current = false
     firstInit.current = true
     modeRef.current = mode
@@ -113,10 +103,22 @@ export const useCodeEditorCollab = ({
       return
     }
 
-    setRoomStatus(RoomStatus.Active)
-
     baseInit(activeFile._id)
+
+    return () => {
+      socket.emit('stream-file:leave-stream-file-room', `${roomId}_${activeFile._id}`)
+    }
   }, [socket, activeFile])
+
+  useEffect(() => {
+    return () => {
+      if (socket) {
+        socket.emit('stream-room:leave-stream-room', roomId)
+        socket.disconnect()
+        socket.close()
+      }
+    }
+  }, [socket])
 
   useEffect(() => {
     window.addEventListener('beforeunload', clearSocketData)
@@ -129,7 +131,6 @@ export const useCodeEditorCollab = ({
   return {
     editorRef,
     onCreateEditor,
-    roomStatus,
     commentProps,
     ...codeMirrorProps,
   }

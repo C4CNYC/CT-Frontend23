@@ -9,7 +9,6 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
-  SelectProps,
   TextField,
   TextFieldProps,
 } from '@mui/material'
@@ -72,13 +71,14 @@ export function RHFSelect({
   )
 }
 
-interface RHFMultiSelectProps extends SelectProps {
+interface RHFMultiSelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   name: string
   label?: string
   chip?: boolean
   checkbox?: boolean
   placeholder?: string
   helperText?: React.ReactNode
+  sx: object
   options: Array<{
     label: string
     value: string
@@ -137,6 +137,7 @@ export function RHFMultiSelect({
         <FormControl sx={sx}>
           {label && <InputLabel id={name}> {label} </InputLabel>}
 
+          {/* @ts-ignore */}
           <Select
             {...field}
             multiple

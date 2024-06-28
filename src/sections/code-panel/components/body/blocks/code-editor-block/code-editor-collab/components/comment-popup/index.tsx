@@ -1,7 +1,6 @@
 import type { FC } from 'react'
 
-import Close from '@mui/icons-material/Close'
-import { type PopoverProps, Popover, Box, ClickAwayListener, Button } from '@mui/material'
+import { type PopoverProps, Popover, ClickAwayListener, Button } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
 
 import type { File } from '../../hook/requests'
@@ -9,7 +8,14 @@ import { WidgetPosition } from '../../hook/requests/comments'
 import type { CommentPopupProps } from '../../hook/useComments'
 import { language } from '../../hook/utils'
 
-import { useStyles } from './styles'
+import {
+  CloseIcon,
+  CommentItem,
+  CommentName,
+  CommentPopupWrapper,
+  CommentTitle,
+  CommentWrapper,
+} from './styles'
 
 interface OnRemoveComment {
   groupId: string
@@ -45,8 +51,6 @@ const CommentPopup: FC<CommentComponentPopupProps> = ({
   onRemoveComment,
   activeFile,
 }) => {
-  const styles = useStyles()
-
   return (
     <Popover
       onClose={onClose}
@@ -60,16 +64,13 @@ const CommentPopup: FC<CommentComponentPopupProps> = ({
       transformOrigin={TRANSFORM_ORIGIN}
     >
       <ClickAwayListener onClickAway={onClose}>
-        <Box className={styles.content}>
-          <Close
-            onClick={onClose}
-            className={styles.closeIcon}
-          />
+        <CommentPopupWrapper>
+          <CloseIcon onClick={onClose} />
 
           {comments.map(({ id, name, doc, body }, i) => {
             return (
-              <div
-                className={`${styles.commentWrapper} ${comments.length - 1 === i ? styles.lastCommentWrapper : ''}`}
+              <CommentWrapper
+                lastItem={comments.length - 1 === i}
                 key={id}
               >
                 <CodeMirror
@@ -80,9 +81,8 @@ const CommentPopup: FC<CommentComponentPopupProps> = ({
                   readOnly
                 />
 
-                <div className={styles.commentItem}>
-                  <span className={styles.commentTitle}>Commented by</span>{' '}
-                  <span className={styles.commentName}>{name}</span> <br />
+                <CommentItem>
+                  <CommentTitle>Commented by</CommentTitle> <CommentName>{name}</CommentName> <br />
                   {body} <br />
                   <Button
                     onClick={() => {
@@ -95,13 +95,13 @@ const CommentPopup: FC<CommentComponentPopupProps> = ({
                   >
                     Remove
                   </Button>
-                </div>
-              </div>
+                </CommentItem>
+              </CommentWrapper>
             )
           })}
 
           <Button
-            className={styles.clearAll}
+            style={{ float: 'right' }}
             onClick={() => {
               if (groupId == null) {
                 return
@@ -112,7 +112,7 @@ const CommentPopup: FC<CommentComponentPopupProps> = ({
           >
             Clear all
           </Button>
-        </Box>
+        </CommentPopupWrapper>
       </ClickAwayListener>
     </Popover>
   )

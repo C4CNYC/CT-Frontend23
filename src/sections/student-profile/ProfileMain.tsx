@@ -1,8 +1,5 @@
 import { Grid, Skeleton, Stack } from '@mui/material'
 
-// import { IFriend } from "src/redux/interfaces/friends.interface";
-// import { IStudent } from "src/redux/services/interfaces/user.interface";
-
 import { IUser } from '@/redux/interfaces/auth.interface'
 
 import ProfileAbout from './ProfileAbout'
@@ -38,7 +35,7 @@ export default function ProfileMain({ data, isFriend, isLoading }: IProfileMainP
           )}
 
           {!isLoading ? (
-            <ProfileSocialInfo studentId={data?.student_profile.id ?? ''} />
+            <ProfileSocialInfo studentId={data?.student_profile?.id ?? ''} />
           ) : (
             <Skeleton
               variant='rounded'

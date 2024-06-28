@@ -49,14 +49,12 @@ export default function ProfileInfoForm({
 }: IProfileInfoFormProps): React.ReactElement | null {
   const {
     username,
-    student_profile: {
-      first_name: firstName,
-      last_name: lastName,
-      post_code: postcode,
-      about,
-      phone,
-      country,
-    },
+    first_name: firstName,
+    last_name: lastName,
+    post_code: postcode,
+    about,
+    phone,
+    country,
   } = data
   const cover = !data.cover ? '#5be49b' : data.cover
   const { enqueueSnackbar } = useSnackbar()

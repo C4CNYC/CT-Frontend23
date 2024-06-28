@@ -5,53 +5,41 @@ import { type SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import CloseIcon from '@mui/icons-material/Close'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import { Box, Stack, Avatar, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
 import OpenCodeIcon from '@/assets/icons/OpenCodeIcon'
-import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
-import { RoomStatus } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/components/status-label'
 import {
   createSocket,
   waitConnectSocket,
 } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
-import { voidFunction, type BaseResponseInterface } from '@/utils'
+import { IUser } from '@root/src/redux/services/interfaces/user.interface'
+import { useSelector } from '@root/src/redux/store'
 import { EditorMode } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
+import { type File } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/requests'
 
+import { UserStatus } from '../../../../consts'
+import { useFileManager } from '../../../code-editor-block/code-editor-collab/hook/file-manager'
 import { getRandomIndex } from '../../hook/utils'
 
 import { BOX_COLORS, HEADER_COLORS } from './constants'
 import styles from './styles'
 
-let previousValue: string | null = null
-let checkValueTimeout: any | null = null
 interface CodeBlockProps {
   onClose: () => void
   attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
-  owner: IFriend & BaseResponseInterface
+  owner: IUser & { status: UserStatus }
   cursorName?: string
-  lessonId?: string
-  onChangeUserStatus?: (status: string, lessonId: string) => void
 }
 
-const CodeBlock: FC<CodeBlockProps> = ({
-  onClose,
-  attributes,
-  listeners,
-  owner,
-  cursorName,
-  lessonId,
-  onChangeUserStatus = voidFunction,
-}) => {
+const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, owner, cursorName }) => {
   const dispatch = useDispatch()
+  const [roomId, setRoomId] = useState<string | null>(null)
   const [isConnected, setIsConnected] = useState(false)
-  const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive)
-  const route = useRouter()
-  // const socket = useSocket();
+  const lastCourseId = useSelector((state) => state.codePanelGlobal.courseId)
 
   const { boxSx, headerSx, socket } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0]
@@ -64,19 +52,21 @@ const CodeBlock: FC<CodeBlockProps> = ({
     }
   }, [])
 
-  const isActiveUser = owner.active || owner.status !== 'inactive'
-
-  const isOpenCodeDisabled = RoomStatus.Inactive === editorStatus
+  const { activeFile, _setActiveFile } = useFileManager({
+    socket,
+    roomId: roomId!,
+    mode: EditorMode.Owner,
+  })
 
   const onOpenCode = () => {
-    if (isOpenCodeDisabled) {
+    if (!roomId) {
       return
     }
 
     dispatch(
       setRoom({
+        roomId,
         ownerId: owner.id as string,
-        roomId: `${owner.id as string}_${lessonId as string}`,
         cursorText: owner.first_name,
         mode: EditorMode.SubOwner,
       })
@@ -84,11 +74,33 @@ const CodeBlock: FC<CodeBlockProps> = ({
   }
 
   useEffect(() => {
+    if (!lastCourseId) return
+    fetch(`${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_room/details?owner_id=${owner.id}`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((room) => {
+        _setActiveFile(room.active_file)
+        setRoomId(room._id)
+      })
+  }, [lastCourseId])
+
+  useEffect(() => {
     const runAsyncEffect = async (socket: Socket) => {
       const isConnected = await waitConnectSocket(socket)
 
       if (isConnected) {
         setIsConnected(isConnected)
+
+        socket.on('stream-room:stream-activity-file-updated', (data) => {
+          const { file } = JSON.parse(data) as { file: File }
+
+          if (!file || file._id === activeFile?._id) {
+            return
+          }
+
+          _setActiveFile(file)
+        })
       } else {
         void runAsyncEffect(socket)
       }
@@ -103,29 +115,14 @@ const CodeBlock: FC<CodeBlockProps> = ({
     } else {
       setIsConnected(false)
     }
-  }, [socket])
 
-  // const onChangeCodemirrorValue = (value: string) => {
-  //   if (checkValueTimeout) {
-  //     // Clear the previous timeout if the value changes
-  //     clearTimeout(checkValueTimeout)
-  //   }
-  //
-  //   previousValue = value // Store the current value
-  //   onChangeUserStatus('active', lessonId as string)
-  //
-  //   // Set up the check for 30 seconds later
-  //   checkValueTimeout = setTimeout(() => {
-  //     if (value === previousValue) {
-  //       // eslint-disable-next-line no-console
-  //       console.log(`Value after 30 seconds: ${value} (unchanged)`)
-  //       onChangeUserStatus('idle', lessonId as string)
-  //     } else {
-  //       // eslint-disable-next-line no-console
-  //       console.log('Value has changed')
-  //     }
-  //   }, 30000) // 30 seconds
-  // }
+    return () => {
+      if (socket) {
+        socket.disconnect()
+        socket.close()
+      }
+    }
+  }, [socket])
 
   return (
     <Box sx={boxSx}>
@@ -162,12 +159,8 @@ const CodeBlock: FC<CodeBlockProps> = ({
         >
           <OpenCodeIcon
             onClick={onOpenCode}
-            sx={{
-              ...styles.OPEN_CODE_ICON,
-              ...(isOpenCodeDisabled ? styles.OPEN_CODE_DISABLED : null),
-            }}
+            sx={styles.OPEN_CODE_ICON}
           />
-
           <CloseIcon
             sx={styles.CLOSE_ICON_SX}
             onClick={onClose}
@@ -175,21 +168,16 @@ const CodeBlock: FC<CodeBlockProps> = ({
         </Stack>
       </Stack>
 
-      {isConnected &&
-        (isActiveUser ? (
-          <CodeEditorCollab
-            // roomId={data.id}
-            roomId={`${owner.id as string}_${lessonId as string}`}
-            mode={EditorMode.Watcher}
-            withFileManager={false}
-            cursorText={cursorName}
-            onRoomStatusChanged={setEditorStatus}
-            socket={socket}
-            // onChangeCodemirrorValue={onChangeCodemirrorValue}
-          />
-        ) : (
-          <Box>User Offline</Box>
-        ))}
+      {isConnected && roomId && (
+        <CodeEditorCollab
+          roomId={roomId}
+          mode={EditorMode.Watcher}
+          withFileManager={false}
+          cursorText={cursorName}
+          socket={socket}
+          activeFile={activeFile}
+        />
+      )}
     </Box>
   )
 }

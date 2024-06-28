@@ -82,6 +82,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
 
+  const roomId = useSelector((state) => state.codeEditorController.room?.roomId)
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
@@ -126,15 +127,20 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const onUpdateLastSlide = (next: number) => {
     if (socket && next !== slideIndex) {
-      socket?.emit(
-        'stream-activity:set-stream-activity-by-room-id',
-        router.query.id,
-        JSON.stringify({
-          unit_id: unitId,
-          slide_index: next,
-          course_id: courseId,
-          lesson_id: lessonId,
-        })
+      fetch(
+        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream-activity?stream_room_id=${roomId || router.query.id}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            unit_id: unitId,
+            slide_index: next,
+            course_id: courseId,
+            lesson_id: lessonId,
+          }),
+        }
       )
     }
     updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })

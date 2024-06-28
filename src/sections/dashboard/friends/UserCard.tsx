@@ -4,9 +4,9 @@ import NextLink from 'next/link'
 
 import { SOCIAL_ICONS } from '@/assets/data'
 import { SvgColor } from '@/components'
-import { IFriend } from '@/redux/interfaces/friends.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+import { IUser } from '@root/src/redux/interfaces/auth.interface'
 
 const StyledOverlay = styled('div')(({ theme }) => ({
   top: 0,
@@ -19,7 +19,7 @@ const StyledOverlay = styled('div')(({ theme }) => ({
 }))
 
 interface Props {
-  user: IFriend
+  user: IUser
 }
 
 export default function UserCard({ user }: Props) {
@@ -116,7 +116,7 @@ export default function UserCard({ user }: Props) {
         justifyContent='center'
         sx={{ mt: 1, mb: 2, minHeight: '36px' }}
       >
-        {socials.map((link) => (
+        {socials?.map((link) => (
           <Stack
             key={link.name}
             direction='row'

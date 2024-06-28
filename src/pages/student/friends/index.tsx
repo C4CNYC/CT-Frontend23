@@ -9,15 +9,16 @@ import {
 } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { IFriend, IFriendsSearchParams } from '@/redux/interfaces/friends.interface'
+import { IFriendsSearchParams } from '@/redux/interfaces/friends.interface'
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonFriends } from '@/sections/dashboard/friends/SkeletonFriends'
 import UserCard from '@/sections/dashboard/friends/UserCard'
 import SkeletonBreadcrumbs from '@/sections/skeleton/SkeletonBreadcrumbs'
 import SkeletonFilter from '@/sections/skeleton/skeletonFilter'
-import { getCountTakingElment } from '@/utils'
+import { BaseResponseInterface, getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { IUser } from '@root/src/redux/interfaces/auth.interface'
 
 import FilterFriends from './filter'
 
@@ -122,7 +123,7 @@ export default function Friends(): React.ReactElement {
             }}
             loading={isLoading ?? isFetching}
           >
-            {data?.data.map((user: IFriend, i: number) => {
+            {data?.data.map((user: IUser & BaseResponseInterface, i: number) => {
               return (
                 <UserCard
                   key={user.id}

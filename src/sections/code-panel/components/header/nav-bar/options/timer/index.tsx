@@ -1,7 +1,7 @@
 // node modules
 import { type FC } from 'react'
 
-import { IconButton, InputBase, Popover, Stack, Typography } from '@mui/material'
+import { IconButton, Popover, Stack } from '@mui/material'
 import { MdOutlineTimer } from '@react-icons/all-files/md/MdOutlineTimer'
 import { RxCross2 } from '@react-icons/all-files/rx/RxCross2'
 
@@ -21,7 +21,7 @@ import {
   RX_CROSS_SIZE,
 } from './constants'
 import { CircularProgressWithLabel } from './progress'
-import { useStyles } from './styles'
+import { CloseButton, FinishText, InputNumber, TextHint } from './styles'
 import { DEFAULT_MINUTES, useTimer } from './useTimer.hook'
 
 interface TimerProps {
@@ -29,7 +29,6 @@ interface TimerProps {
 }
 
 const Timer: FC<TimerProps> = ({ mobile = false }) => {
-  const classes = useStyles({ mobile })
   const translate = useTranslate()
 
   const {
@@ -89,7 +88,7 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
       >
         <Stack
           direction='column'
-          classes={{ root: classes.container }}
+          style={{ height: '100%' }}
           alignItems='center'
           justifyContent='space-around'
           sx={{ p: 3 }}
@@ -100,18 +99,12 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
               alignItems='center'
               sx={{ overflow: 'unset' }}
             >
-              <InputBase
+              <InputNumber
                 type='number'
                 value={minutes}
                 onChange={onTimeInputChange}
-                classes={{ root: classes.inputNumber }}
               />
-              <Typography
-                variant='body1'
-                classes={{ root: classes.textHint }}
-              >
-                {minuteTitle}
-              </Typography>
+              <TextHint variant='body1'>{minuteTitle}</TextHint>
             </Stack>
           ) : start && !finish ? (
             <Stack
@@ -127,12 +120,7 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
                 open={openTimer}
                 time={time}
               />
-              <Typography
-                variant='body1'
-                classes={{ root: classes.textHint }}
-              >
-                {minuteTitle}
-              </Typography>
+              <TextHint variant='body1'>{minuteTitle}</TextHint>
             </Stack>
           ) : (
             <Stack
@@ -140,12 +128,7 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
               alignItems='center'
               justifyContent='space-between'
             >
-              <Typography
-                variant='body1'
-                classes={{ root: classes.finishText }}
-              >
-                {translate('timer_finish')}
-              </Typography>
+              <FinishText variant='body1'>{translate('timer_finish')}</FinishText>
               <picture>
                 <img
                   src='https://i.giphy.com/l4HogV6533Je2oG40.gif'
@@ -228,12 +211,9 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
             </Stack>
           )}
         </Stack>
-        <IconButton
-          className={classes.closeButton}
-          onClick={start ? onKeepCodingClick : onCloseClick}
-        >
+        <CloseButton onClick={start ? onKeepCodingClick : onCloseClick}>
           <RxCross2 size={RX_CROSS_SIZE} />
-        </IconButton>
+        </CloseButton>
       </Popover>
     </>
   )

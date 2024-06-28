@@ -71,7 +71,7 @@ export default function UserProfile(): React.ReactElement {
               name={data?.first_name ?? ''}
               lastName={data?.last_name ?? ''}
               avatar={data?.avatar}
-              cover={data?.student_profile.cover}
+              cover={data?.student_profile?.cover}
             />
           ) : (
             <Skeleton

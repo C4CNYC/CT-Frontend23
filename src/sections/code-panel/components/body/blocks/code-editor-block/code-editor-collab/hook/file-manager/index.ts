@@ -7,8 +7,6 @@ import { EditorMode, MIN_FILE_LIST_LENGTH } from '../constants'
 import { type FileInfo, type File } from '../requests'
 import { EmitSocketEvents } from '../utils/socket'
 
-import { useModeSubscriptions } from './useModeSubscriptions'
-
 interface UseFileManagerReturn {
   isOpen: boolean
   fileList: File[]
@@ -23,6 +21,8 @@ interface UseFileManagerReturn {
   onDeleteFileWithEvents: (fileName: File) => void
   onResetFileManager: (info?: FileInfo) => void
   onChangeFileWithEvents: (fileName: File) => void
+  _setActiveFile: (fileName: File) => void
+  onCloseTabFile: (fileId: string) => void
 }
 
 interface UseFileManagerProps {
@@ -45,10 +45,12 @@ export const useFileManager = ({
   const [isFileFormOpen, setIsFileFormOpen] = useState(false)
 
   useEffect(() => {
-    if (router.query.id) {
+    if (roomId || router.query.id) {
       fetch(
-        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_file?stream_room_id=${router.query.id}`,
-        { method: 'GET' }
+        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_file?stream_room_id=${roomId || router.query.id}`,
+        {
+          method: 'GET',
+        }
       )
         .then((res) => {
           if (res.ok) {
@@ -56,11 +58,16 @@ export const useFileManager = ({
           }
         })
         .then((res) => {
-          setFileList(res)
-          setActiveFile(res[0])
+          if (!res) {
+            return
+            // #TODO log sentry error
+          }
+          setFileList(res.files)
+          setActiveFile(res.active_file)
+          setAddedFileList([res.active_file])
         })
     }
-  }, [router.query.id])
+  }, [router.query.id, roomId])
 
   // ------------------------------------------------------ //
   //                        Handlers                        //
@@ -117,6 +124,13 @@ export const useFileManager = ({
 
     if (mode === EditorMode.Owner) {
       socket?.emit(EmitSocketEvents.SetActiveFile, roomId, fileName)
+      fetch(`${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_room/${roomId}/file_activity`, {
+        method: 'PATCH',
+        body: JSON.stringify({ file_id: fileName._id }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
     }
   }
 
@@ -126,10 +140,7 @@ export const useFileManager = ({
 
       if (!isExist) {
         const newAddedFileList = [fileName, ...addedFileList]
-
         setAddedFileList(newAddedFileList)
-
-        // socket?.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList)
       }
 
       _setActiveFile(fileName)
@@ -143,17 +154,16 @@ export const useFileManager = ({
     setAddedFileList(filesInLayout)
   }, [])
 
-  const onUpdateFileList = useCallback(
-    (fileName: File, socketId: string) => {
-      if (socket?.id !== socketId) {
-        setFileList((prev) => {
-          const isExist = prev.some(({ _id }) => _id === fileName._id)
+  const onCloseTabFile = useCallback(
+    (fileId: string) => {
+      const newAddedFileList = addedFileList.filter(({ _id }) => _id !== fileId)
+      setAddedFileList(newAddedFileList)
 
-          return isExist ? prev : [...prev, fileName]
-        })
+      if (activeFile?._id === fileId) {
+        _setActiveFile(newAddedFileList[0])
       }
     },
-    [socket]
+    [addedFileList, activeFile]
   )
 
   useEffect(() => {
@@ -161,11 +171,11 @@ export const useFileManager = ({
       return
     }
 
-    if (!socket.hasListeners('fileRemoved')) {
-      socket.off('fileRemoved')
+    if (!socket.hasListeners('stream-file:file-removed')) {
+      socket.off('stream-file:file-removed')
     }
 
-    socket?.on('fileRemoved', (file_id: string) => {
+    socket?.on('stream-file:file-removed', (file_id: string) => {
       const newFileList = [...fileList]
       const sideMenuFileIndex = newFileList.findIndex(({ _id }) => _id === file_id)
       const tabFileIndex = addedFileList.findIndex(({ _id }) => _id === file_id)
@@ -191,21 +201,12 @@ export const useFileManager = ({
       setFileList(newFileList)
     })
 
-    if (!socket.hasListeners('fileAdded')) {
-      socket?.on('fileAdded', (file: File) => {
+    if (!socket.hasListeners('stream-file:file-added')) {
+      socket?.on('stream-file:file-added', (file: File) => {
         setFileList((prev) => [...prev, file])
       })
     }
   }, [socket, fileList, addedFileList, activeFile])
-
-  useModeSubscriptions({
-    roomId,
-    onDeleteFile,
-    setActiveFile,
-    onUpdateFileList,
-    socket,
-    mode,
-  })
 
   // ------------------------------------------------------ //
 
@@ -215,6 +216,7 @@ export const useFileManager = ({
     isFileFormOpen,
     fileList,
     activeFile,
+    _setActiveFile,
     setActiveFile,
     setIsOpen,
     setIsFileFormOpen,
@@ -223,5 +225,6 @@ export const useFileManager = ({
     onResetFileManager,
     onDeleteFileWithEvents: onDeleteFile,
     onChangeFileWithEvents,
+    onCloseTabFile,
   }
 }
