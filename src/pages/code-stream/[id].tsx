@@ -109,7 +109,7 @@ export default function CodePanelPage(): ReactElement | null {
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
     void router.push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+      STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
         courseId: lastCourseId!,
         unitId,
         lessonId,

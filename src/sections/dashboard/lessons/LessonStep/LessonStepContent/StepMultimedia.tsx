@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 
 import { Box } from '@mui/material'
 
-import { ResizerUi } from '@/components'
+import { PanelGroup, Panel, PanelResizeHandle } from '@/components'
 import { MyEditor } from '@/components/remirror-editor/MyEditor'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
@@ -30,26 +30,29 @@ export default function StepMultimedia({
   const [value, setValue] = useState<string>('')
 
   return (
-    <ResizerUi
-      vertical
-      defaultSizes={[800]}
+    <PanelGroup
+      autoSaveId='example'
+      direction='horizontal'
     >
-      <Box sx={{ bgcolor: bgColor, height: '100%' }}>
-        <MyEditor
-          onSubmit={() => {
-            onSubmit(JSON.stringify(value))
-          }}
-          multimediaValue={content}
-          setMultimediaValue={setValue}
-          editable={!locked}
-          locked={locked}
-          data={data}
-          lessonId={lessonId}
-          bgColor={bgColor}
-          setBgColor={setBgColor}
-        />
-      </Box>
-      <Box sx={{ bgcolor: bgColor, height: '100%' }}>
+      <Panel defaultSize={50}>
+        <Box sx={{ bgcolor: bgColor, height: '100%' }}>
+          <MyEditor
+            onSubmit={() => {
+              onSubmit(JSON.stringify(value))
+            }}
+            multimediaValue={content}
+            setMultimediaValue={setValue}
+            editable={!locked}
+            locked={locked}
+            data={data}
+            lessonId={lessonId}
+            bgColor={bgColor}
+            setBgColor={setBgColor}
+          />
+        </Box>
+      </Panel>
+      <PanelResizeHandle />
+      <Panel>
         <MyEditor
           editable={false}
           multimediaValue={value}
@@ -57,7 +60,7 @@ export default function StepMultimedia({
           lessonId={lessonId}
           bgColor={bgColor}
         />
-      </Box>
-    </ResizerUi>
+      </Panel>
+    </PanelGroup>
   )
 }

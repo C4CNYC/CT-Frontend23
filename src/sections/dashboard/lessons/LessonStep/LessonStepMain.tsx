@@ -5,7 +5,7 @@ import { useAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 
-import { ResizerUi } from '@/components'
+import { Panel, PanelGroup, PanelResizeHandle } from '@root/src/components/resizer/Resizer'
 
 import { lessonViewAtom } from './lesson-atoms/lesson-view-atom'
 import LessonTopBar from './lesson-top-bar/LessonTopBar'
@@ -33,6 +33,7 @@ export default function LessonStepMain(): React.ReactElement {
       fullScreenClose: handle.exit,
     }))
   }, [])
+
   return (
     <>
       <style>
@@ -52,17 +53,22 @@ export default function LessonStepMain(): React.ReactElement {
           <LessonTopBar />
 
           <Box>
-            <ResizerUi
-              vertical
-              minSize={300}
-              maxSize={750}
-              //@ts-ignore
-              //TODO: fix sizing
-              defaultSizes={['400px', '400px']}
+            <PanelGroup
+              autoSaveId='example'
+              direction='horizontal'
             >
-              <LessonStepList lessonId={lessonId as string} />
-              {stepId ? <StepContentEditor /> : <NoSelectedStep />}
-            </ResizerUi>
+              <Panel
+                defaultSize={15}
+                minSize={20}
+                maxSize={30}
+              >
+                <LessonStepList lessonId={lessonId as string} />
+              </Panel>
+              <PanelResizeHandle />
+              <Panel>
+                <Box marginTop={5}>{stepId ? <StepContentEditor /> : <NoSelectedStep />}</Box>
+              </Panel>
+            </PanelGroup>
           </Box>
         </FullScreen>
       </Dialog>

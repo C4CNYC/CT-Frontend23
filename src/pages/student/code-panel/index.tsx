@@ -129,7 +129,7 @@ export default function CodePanelPage(): ReactElement | null {
   const onOpenLesson = (lessonId: string, unitId: string): void => {
     if (!router.query.courseId) return
     void router.push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+      STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
         courseId: router.query.courseId as string,
         unitId,
         lessonId,
@@ -164,7 +164,7 @@ export default function CodePanelPage(): ReactElement | null {
 
     if (!router.query.unitId || !router.query.lessonId) {
       void router.replace(
-        STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+        STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
           courseId: courseId as string,
           unitId: unitId as string,
           lessonId: lessonId as string,
@@ -206,7 +206,7 @@ export default function CodePanelPage(): ReactElement | null {
         const pathStr = nextLessonInfo.path.split('/')
         router
           .push(
-            STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+            STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
               courseId: courseContent.id,
               unitId: pathStr[0],
               lessonId: pathStr[1],

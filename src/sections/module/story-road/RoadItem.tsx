@@ -70,7 +70,7 @@ const RoadItem = ({
       openDialog()
     } else {
       void push(
-        STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+        STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
           courseId: query.id as string,
           unitId: query.unit as string,
           lessonId,
@@ -81,7 +81,7 @@ const RoadItem = ({
 
   const fetchDefaultCodeFromPrevLesson = () => {
     push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+      STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
         courseId: query.id as string,
         unitId: query.unit as string,
         lessonId: lessonId,

@@ -7,13 +7,13 @@ import { dracula } from '@uiw/codemirror-theme-dracula'
 import CodeMirror from '@uiw/react-codemirror'
 import { useAtom } from 'jotai'
 
-import { ResizerUi } from '@/components'
 import MenuItems from '@/components/remirror-editor/MenuItems'
 import { SaveButton } from '@/components/remirror-editor/SaveButton'
 import { useDebounceCallback } from '@/hooks'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { Panel, PanelGroup, PanelResizeHandle } from '@root/src/components/resizer/Resizer'
 
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
 
@@ -56,62 +56,69 @@ export default function StepCode({
     if (content) setValue(JSON.parse(content).content)
   })
   return (
-    <ResizerUi
-      vertical
-      //@ts-ignore
-      // TODO: fix sizing
-      defaultSizes={[isAllColumnsVisible ? '70%' : '100%']}
-      allowResize={false}
-    >
-      <Box position='relative'>
-        <MenuItems
-          data={data}
-          lessonId={lessonId}
-          style={{ mb: 1, mt: 1, ml: 2 }}
-        />
-        <CodeMirror
-          value={value}
-          theme={dracula}
-          height='calc(100vh - 96px)'
-          extensions={[html()]}
-          onChange={(value) => {
-            setValue(value)
-          }}
-        />
-        <SaveButton
-          onClick={() => {
-            onSubmit(JSON.stringify({ content: value }))
-          }}
-          sx={{
-            position: 'absolute',
-            top: 65,
-            right: 35,
-            color: '#7963d2',
-            border: '1px solid rgba(121, 99, 210, 0.5)',
-            borderRadius: '4px',
-            '&:hover': {
-              border: '1px solid rgba(121, 99, 210, 0.5)',
-              backgroundColor: ' rgba(121, 99, 210, 0.1)',
-            },
-          }}
-        />
-      </Box>
-      {isAllColumnsVisible && (
-        <Box
-          sx={{
-            height: 'calc(100vh - 96px)',
-          }}
-        >
-          <iframe
-            style={{
-              border: 0,
-              width: '100%',
-              height: '100%',
+    <>
+      <PanelGroup
+        autoSaveId='example'
+        direction='horizontal'
+      >
+        <Panel
+          defaultSize={15}
+          minSize={20}
+          maxSize={30}
+        ></Panel>
+        <Box position='relative'>
+          <MenuItems
+            data={data}
+            lessonId={lessonId}
+            style={{ mb: 1, mt: 1, ml: 2 }}
+          />
+          <CodeMirror
+            value={value}
+            theme={dracula}
+            height='calc(100vh - 96px)'
+            extensions={[html()]}
+            onChange={(value) => {
+              setValue(value)
             }}
-            src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
+          />
+          <SaveButton
+            onClick={() => {
+              onSubmit(JSON.stringify({ content: value }))
+            }}
+            sx={{
+              position: 'absolute',
+              top: 65,
+              right: 35,
+              color: '#7963d2',
+              border: '1px solid rgba(121, 99, 210, 0.5)',
+              borderRadius: '4px',
+              '&:hover': {
+                border: '1px solid rgba(121, 99, 210, 0.5)',
+                backgroundColor: ' rgba(121, 99, 210, 0.1)',
+              },
+            }}
           />
         </Box>
-      )}
-    </ResizerUi>
+        <PanelResizeHandle />
+        <Panel>
+          {isAllColumnsVisible && (
+            <Box
+              sx={{
+                height: 'calc(100vh - 96px)',
+              }}
+            >
+              <iframe
+                style={{
+                  border: 0,
+                  width: '100%',
+                  height: '100%',
+                }}
+                src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
+              />
+            </Box>
+          )}
+        </Panel>
+      </PanelGroup>
+    </>
   )
 }

@@ -71,7 +71,7 @@ export default function LessonItem({
   const fetchCodeFromPrevLesson = () => {
     dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
     push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+      STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
         courseId: courseId as string,
         unitId,
         lessonId: lesson.id,
@@ -81,7 +81,7 @@ export default function LessonItem({
 
   const fetchDefaultCodeFromPrevLesson = () => {
     push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+      STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
         courseId: courseId as string,
         unitId,
         lessonId: lesson.id,
@@ -182,7 +182,7 @@ So pulled your code from previous lesson, so that you can keep building'
             <>
               <Link
                 component={NextLink}
-                href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                href={STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
                   courseId: courseId as string,
                   unitId,
                   lessonId: lesson.id,
@@ -226,7 +226,7 @@ So pulled your code from previous lesson, so that you can keep building'
           <>
             <Link
               component={NextLink}
-              href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+              href={STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
                 courseId: courseId as string,
                 unitId,
                 lessonId: lesson.id,

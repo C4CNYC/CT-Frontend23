@@ -127,21 +127,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const onUpdateLastSlide = (next: number) => {
     if (socket && next !== slideIndex) {
-      fetch(
-        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream-activity?stream_room_id=${roomId || router.query.id}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            unit_id: unitId,
-            slide_index: next,
-            course_id: courseId,
-            lesson_id: lessonId,
-          }),
-        }
-      )
+      // TODO: Sync slide index with other colaborators
     }
     updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
   }

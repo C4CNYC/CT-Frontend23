@@ -1,61 +1,70 @@
-import { Allotment, AllotmentProps } from 'allotment'
-import 'allotment/dist/style.css'
+import { JSX, HTMLAttributes, CSSProperties, ReactNode, RefAttributes } from 'react'
 
-interface Props {
-  children: React.ReactNode
-}
+import {
+  ImperativePanelGroupHandle,
+  ImperativePanelHandle,
+  Panel as PanelComponent,
+  PanelGroup as PanelGroupComponent,
+  PanelGroupOnLayout,
+  PanelGroupStorage,
+  PanelOnCollapse,
+  PanelOnExpand,
+  PanelOnResize,
+  PanelResizeHandle as PanelResizeHandleComponent,
+  PanelResizeHandleOnDragging,
+} from 'react-resizable-panels'
+import { PointerHitAreaMargins } from 'react-resizable-panels/dist/declarations/src/PanelResizeHandleRegistry'
+import { Direction } from 'react-resizable-panels/dist/declarations/src/types'
 
-export const ResizerUi = ({ children, ...props }: Props & AllotmentProps): React.ReactElement => {
-  return (
-    <>
-      <style>
-        {`
-          .Resizer {
-            background: #000;
-            opacity: 0.2;
-            z-index: 1;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            -moz-background-clip: padding;
-            -webkit-background-clip: padding;
-            background-clip: padding-box;
-            owerflow-y: scroll;
-          }
-          ::-webkit-scrollbar {
-             width: 0
-          }
-          .Resizer.vertical {
-            width: 11px;
-            margin: 0 -5px;
-            border-left: 5px solid rgba(255, 255, 255, 0);
-            border-right: 5px solid rgba(255, 255, 255, 0);
-            cursor: col-resize;
-            position: initial;
-          }
-          .Resizer.vertical:hover {
-            border-left: 5px solid rgba(0, 0, 0, 0.5);
-            border-right: 5px solid rgba(0, 0, 0, 0.5);
-          }
-          .Resizer.disabled {
-            cursor: not-allowed;
-          }
-          .Resizer.disabled:hover {
-            border-color: transparent;
-          }
-          .SplitPane{
-            max-height: calc(100vh - 48px);
-          }
-          .Pane1{
-            overflow-y: auto;
-          }
-          .Pane2 {
-            overflow-y: hidden;
-            max-height: calc(100vh - 48px);
-          }
-        `}
-      </style>
-      <Allotment {...props}>{children}</Allotment>
-    </>
-  )
-}
+export const PanelGroup = (
+  props: JSX.IntrinsicAttributes &
+    Omit<HTMLAttributes<keyof HTMLElementTagNameMap>, 'id'> & {
+      autoSaveId?: string | null | undefined
+      className?: string | undefined
+      direction: Direction
+      id?: string | null | undefined
+      keyboardResizeBy?: number | null | undefined
+      onLayout?: PanelGroupOnLayout | null | undefined
+      storage?: PanelGroupStorage | undefined
+      style?: CSSProperties | undefined
+      tagName?: keyof HTMLElementTagNameMap | undefined
+    } & { children?: ReactNode } & RefAttributes<ImperativePanelGroupHandle>
+) => <PanelGroupComponent {...props} />
+
+export const PanelResizeHandle = (
+  props: JSX.IntrinsicAttributes &
+    Omit<HTMLAttributes<keyof HTMLElementTagNameMap>, 'id'> & {
+      className?: string | undefined
+      disabled?: boolean | undefined
+      hitAreaMargins?: PointerHitAreaMargins | undefined
+      id?: string | null | undefined
+      onDragging?: PanelResizeHandleOnDragging | undefined
+      style?: CSSProperties | undefined
+      tabIndex?: number | undefined
+      tagName?: keyof HTMLElementTagNameMap | undefined
+    } & { children?: ReactNode }
+) => (
+  <PanelResizeHandleComponent
+    {...props}
+    style={{ width: 1, background: '#e4e4e4' }}
+  />
+)
+
+export const Panel = (
+  props: JSX.IntrinsicAttributes &
+    Omit<HTMLAttributes<keyof HTMLElementTagNameMap>, 'id' | 'onResize'> & {
+      className?: string | undefined
+      collapsedSize?: number | undefined
+      collapsible?: boolean | undefined
+      defaultSize?: number | undefined
+      id?: string | undefined
+      maxSize?: number | undefined
+      minSize?: number | undefined
+      onCollapse?: PanelOnCollapse | undefined
+      onExpand?: PanelOnExpand | undefined
+      onResize?: PanelOnResize | undefined
+      order?: number | undefined
+      style?: object | undefined
+      tagName?: keyof HTMLElementTagNameMap | undefined
+    } & { children?: ReactNode } & RefAttributes<ImperativePanelHandle>
+) => <PanelComponent {...props} />

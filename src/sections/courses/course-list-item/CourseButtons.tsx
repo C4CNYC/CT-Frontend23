@@ -1,7 +1,6 @@
 import { Button, Link, Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { CONTINUE_COURSE_BTN_SX, ENROLL_COURSE_BTN_SX, EXPLORE_COURSE_BTN_SX } from './constants'
@@ -26,7 +25,8 @@ export default function CourseButtons({ redirect, progress, courseId }: Props): 
           onClick={async (e) => {
             e.stopPropagation()
             e.preventDefault()
-            await push(`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`)
+            // TODO: Redirect to stream service with preloaded course
+            // await push(`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`)
           }}
           variant='outlined'
           sx={CONTINUE_COURSE_BTN_SX}

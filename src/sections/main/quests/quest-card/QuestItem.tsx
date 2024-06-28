@@ -179,21 +179,21 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                     ? assignment.lessonid &&
                       (assignment.type === AssignmentTypes.CUSTOM_CONTENT ||
                         assignment.type === AssignmentTypes.OPEN_PROJECT)
-                      ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                      ? STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
                           courseId: assignment.courseid,
                           lessonId: assignment.lessonid,
                         })
                       : assignment.courseunitid &&
-                          courseUnit &&
-                          assignment.type === AssignmentTypes.COURSE
-                        ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-                            courseId: assignment.courseid,
-                            unitId: assignment.courseunitid,
-                            lessonId: courseUnit?.lessons[0]?.id,
-                          })
-                        : STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-                            courseId: assignment.courseid,
-                          })
+                        courseUnit &&
+                        assignment.type === AssignmentTypes.COURSE
+                      ? STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
+                          courseId: assignment.courseid,
+                          unitId: assignment.courseunitid,
+                          lessonId: courseUnit?.lessons[0]?.id,
+                        })
+                      : STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
+                          courseId: assignment.courseid,
+                        })
                     : '#'
                 }
                 underline='none'

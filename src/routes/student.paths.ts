@@ -49,6 +49,21 @@ export const STUDENT_PATH_DASHBOARD = {
   codeStream: {
     root: '/code-stream',
     workSpace: (roomId: string) => `/code-stream/${roomId}`,
+    initWorkSpace: ({
+      courseId,
+      unitId,
+      lessonId,
+    }: {
+      courseId: string
+      unitId?: string
+      lessonId?: string
+    }) =>
+      path(
+        '/code-stream',
+        `?courseId=${courseId}${unitId ? `&unitId=${unitId}` : ''}${
+          lessonId ? `&lessonId=${lessonId}` : ''
+        }`
+      ),
   },
   codePanel: {
     root: '/student/code-panel',
@@ -63,7 +78,9 @@ export const STUDENT_PATH_DASHBOARD = {
     }) =>
       path(
         '/student/code-panel',
-        `?courseId=${courseId}${unitId ? `&unitId=${unitId}` : ''}${lessonId ? `&lessonId=${lessonId}` : ''}`
+        `?courseId=${courseId}${unitId ? `&unitId=${unitId}` : ''}${
+          lessonId ? `&lessonId=${lessonId}` : ''
+        }`
       ),
   },
   publicCodePanel: {
@@ -79,7 +96,9 @@ export const STUDENT_PATH_DASHBOARD = {
     }) =>
       path(
         '/student/public-code-panel/',
-        `?courseId=${courseId}${unitId ? `&unitId=${unitId}` : ''}${lessonId ? `&lessonId=${lessonId}` : ''}`
+        `?courseId=${courseId}${unitId ? `&unitId=${unitId}` : ''}${
+          lessonId ? `&lessonId=${lessonId}` : ''
+        }`
       ),
   },
   courses: {

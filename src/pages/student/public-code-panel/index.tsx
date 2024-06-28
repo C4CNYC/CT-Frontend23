@@ -228,7 +228,7 @@ export default function CodePanelPage(): ReactElement | null {
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
         push(
-          STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
             courseId: courseContent.id,
             unitId: pathStr[0],
             lessonId: pathStr[1],

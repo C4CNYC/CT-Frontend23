@@ -9,7 +9,7 @@ export default function CodePanelPage(): ReactElement | null {
   useEffect(() => {
     if (!router.query.id) return
     void router.push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+      STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
         courseId: router.query.id as string,
         unitId: router.query.unitId as string,
         lessonId: router.query.lessonId as string,

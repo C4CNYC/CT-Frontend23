@@ -107,7 +107,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
         >
           <Button
             component={NextLink}
-            href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+            href={STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
               courseId: query.id as string,
               unitId: unit?.id,
               lessonId: unit?.lessons[0].id,
