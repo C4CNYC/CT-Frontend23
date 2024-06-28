@@ -1,46 +1,46 @@
-import type { Meta } from "@storybook/react";
-import { SnackbarProvider, useSnackbar } from "notistack";
+import type { Meta } from '@storybook/react'
+import { SnackbarProvider, useSnackbar } from 'notistack'
 
-import { UploadImageModal, UploadImageProps } from "./index";
+import { UploadImageModal, UploadImageProps } from './index'
 
 const Component: Meta<typeof UploadImageModal> = {
   component: UploadImageModal,
-  title: "UploadImageModal",
-};
+  title: 'UploadImageModal',
+}
 
-export default Component;
+export default Component
 
 const ExampleWrapper = ({ children }: any) => {
-  return <SnackbarProvider>{children}</SnackbarProvider>;
-};
+  return <SnackbarProvider>{children}</SnackbarProvider>
+}
 
 const ExampleComponent = ({ onUpload, ...props }: UploadImageProps) => {
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
 
-  const onUploadCustom = async (
-    data: File,
-    id: string | undefined
-  ): Promise<void> => {
+  const onUploadCustom = async (data: File, id: string | undefined): Promise<void> => {
     try {
-      const file = new FormData();
-      file.append("file", data);
+      const file = new FormData()
+      file.append('file', data)
       if (!id) {
-        return;
+        return
       } else {
         // console.log({ id, file });
       }
-      enqueueSnackbar("Image updated");
+      enqueueSnackbar('Image updated')
     } catch (error: any) {
-      enqueueSnackbar("Image not updated", { variant: "error" });
+      enqueueSnackbar('Image not updated', { variant: 'error' })
     }
-  };
+  }
 
   return (
     <SnackbarProvider>
-      <UploadImageModal onUpload={onUploadCustom} {...props} />
+      <UploadImageModal
+        onUpload={onUploadCustom}
+        {...props}
+      />
     </SnackbarProvider>
-  );
-};
+  )
+}
 
 export const Default: Meta<typeof UploadImageModal> = {
   render: (args) => (
@@ -49,7 +49,7 @@ export const Default: Meta<typeof UploadImageModal> = {
     </ExampleWrapper>
   ),
   args: {
-    id: "21341",
-    color: "green",
+    id: '21341',
+    color: 'green',
   },
-};
+}

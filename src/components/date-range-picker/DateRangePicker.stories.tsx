@@ -1,17 +1,17 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
-import { DateRangePicker } from "./DateRangePicker";
-import { useDateRangePicker } from "./useDateRangePicker";
+import { DateRangePicker } from './DateRangePicker'
+import { useDateRangePicker } from './useDateRangePicker'
 
 const Component: Meta<typeof DateRangePicker> = {
   component: DateRangePicker,
-  title: "DateRangePicker",
-};
+  title: 'DateRangePicker',
+}
 
-export default Component;
+export default Component
 
 const ExampleComponent = ({ startDate, endDate, ...props }: any) => {
   const {
@@ -22,7 +22,7 @@ const ExampleComponent = ({ startDate, endDate, ...props }: any) => {
     onClose: onClosePicker,
     isError,
     shortLabel,
-  } = useDateRangePicker(startDate, endDate);
+  } = useDateRangePicker(startDate, endDate)
 
   return (
     <DateRangePicker
@@ -35,8 +35,8 @@ const ExampleComponent = ({ startDate, endDate, ...props }: any) => {
       shortLabel={shortLabel}
       {...props}
     />
-  );
-};
+  )
+}
 
 export const Default = {
   render: (args: any) => (
@@ -45,13 +45,9 @@ export const Default = {
     </LocalizationProvider>
   ),
   args: {
-    startDate: new Date(
-      "Wed Jun 28 2023 15:24:11 GMT+0300 (Eastern European Summer Time)"
-    ),
-    endDate: new Date(
-      "Wed Jul 28 2023 15:24:11 GMT+0300 (Eastern European Summer Time)"
-    ),
-    variant: "calendar",
+    startDate: new Date('Wed Jun 28 2023 15:24:11 GMT+0300 (Eastern European Summer Time)'),
+    endDate: new Date('Wed Jul 28 2023 15:24:11 GMT+0300 (Eastern European Summer Time)'),
+    variant: 'calendar',
     open: true,
   },
-};
+}

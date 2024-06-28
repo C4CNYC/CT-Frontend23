@@ -1,14 +1,14 @@
-import type { Meta } from "@storybook/react";
-import { ThemeProvider } from "@theme/index";
+import type { Meta } from '@storybook/react'
+import { ThemeProvider } from '@theme/index'
 
-import CustomTextField from "./CustomTextField";
+import CustomTextField from './CustomTextField'
 
 const Component: Meta<typeof CustomTextField> = {
   component: CustomTextField,
-  title: "CustomInput/CustomTextField",
-};
+  title: 'CustomInput/CustomTextField',
+}
 
-export default Component;
+export default Component
 
 export const Default: Meta<typeof CustomTextField> = {
   render: (args) => (
@@ -17,10 +17,10 @@ export const Default: Meta<typeof CustomTextField> = {
     </ThemeProvider>
   ),
   args: {
-    variant: "outlined",
-    margin: "normal",
+    variant: 'outlined',
+    margin: 'normal',
     focused: false,
     hiddenLabel: false,
-    placeholder: "CustomTextField",
+    placeholder: 'CustomTextField',
   },
-};
+}

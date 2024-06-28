@@ -1,14 +1,14 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import BadgeDot from "./BadgeDot";
+import BadgeDot from './BadgeDot'
 
 const Component: Meta<typeof BadgeDot> = {
   component: BadgeDot,
-  title: "Settings/BadgeDot",
-};
+  title: 'Settings/BadgeDot',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {},
-};
+}

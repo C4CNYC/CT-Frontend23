@@ -1,17 +1,17 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { ModalCodeFullscreen } from "./ModalCodeFullscreen";
+import { ModalCodeFullscreen } from './ModalCodeFullscreen'
 
 const Component: Meta<typeof ModalCodeFullscreen> = {
   component: ModalCodeFullscreen,
-  title: "ModalCodeFullscreen",
-};
+  title: 'ModalCodeFullscreen',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {
-    title: "title",
-    name: "name",
+    title: 'title',
+    name: 'name',
   },
-};
+}

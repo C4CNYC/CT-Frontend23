@@ -151,7 +151,9 @@ export const useNavPanel = (
     if (availableUsers?.data != null) {
       // TODO: siplify this with axios
       fetch(
-        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream-users-statuses?user_ids=${availableUsers.data.map((user) => user.id).join(',')}`,
+        `${
+          process.env.NEXT_PUBLIC_CODE_STREAM_API
+        }/stream-users-statuses?user_ids=${availableUsers.data.map((user) => user.id).join(',')}`,
         {
           method: 'GET',
           headers: {

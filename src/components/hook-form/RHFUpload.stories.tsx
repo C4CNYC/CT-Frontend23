@@ -1,41 +1,44 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import type { Meta } from "@storybook/react";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import type { Meta } from '@storybook/react'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { voidFunction } from "@utils";
+import { voidFunction } from '@utils'
 
-import { FormProvider } from "./FormProvider";
-import { RHFUploadAvatar } from "./RHFUpload";
+import { FormProvider } from './FormProvider'
+import { RHFUploadAvatar } from './RHFUpload'
 
 const Component: Meta<typeof RHFUploadAvatar> = {
   component: RHFUploadAvatar,
-  title: "HookForm/RHFUploadAvatar",
-};
+  title: 'HookForm/RHFUploadAvatar',
+}
 
-export default Component;
+export default Component
 
 const ExampleComponent = ({ children }: any) => {
-  const VerifyCodeSchema = Yup.object().shape({});
-  const defaultValues = {};
+  const VerifyCodeSchema = Yup.object().shape({})
+  const defaultValues = {}
 
   const methods = useForm({
-    mode: "onChange",
+    mode: 'onChange',
     resolver: yupResolver(VerifyCodeSchema),
     defaultValues,
-  });
+  })
 
   const {
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = methods;
+  } = methods
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(voidFunction)}>
+    <FormProvider
+      methods={methods}
+      onSubmit={handleSubmit(voidFunction)}
+    >
       {children}
     </FormProvider>
-  );
-};
+  )
+}
 
 export const Default: Meta<typeof RHFUploadAvatar> = {
   render: (args) => (
@@ -44,8 +47,8 @@ export const Default: Meta<typeof RHFUploadAvatar> = {
     </ExampleComponent>
   ),
   args: {
-    name: "tags",
-    helperText: "Helper text",
-    placeholder: "placeholder",
+    name: 'tags',
+    helperText: 'Helper text',
+    placeholder: 'placeholder',
   },
-};
+}

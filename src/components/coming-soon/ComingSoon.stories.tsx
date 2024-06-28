@@ -1,17 +1,17 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { ComingSoon } from "./ComingSoon";
+import { ComingSoon } from './ComingSoon'
 
 const Component: Meta<typeof ComingSoon> = {
   component: ComingSoon,
-  title: "ComingSoon",
-};
+  title: 'ComingSoon',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {
-    title: "Coming soon ...",
+    title: 'Coming soon ...',
     children: <>Example children content</>,
     sxContainer: {
       width: 100,
@@ -19,7 +19,7 @@ export const Default = {
       padding: 10,
     },
     sxBtn: {
-      background: "lightgreen",
+      background: 'lightgreen',
     },
   },
-};
+}

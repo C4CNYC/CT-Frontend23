@@ -1,52 +1,58 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material'
 
-import { fData } from "@utils";
+import { fData } from '@utils'
 
-import UploadBox from "./UploadBox";
-import { UploadProps } from "./types";
+import UploadBox from './UploadBox'
+import { UploadProps } from './types'
 
 const Component: Meta<typeof UploadBox> = {
   component: UploadBox,
-  title: "Upload/UploadBox",
-};
+  title: 'Upload/UploadBox',
+}
 
-export default Component;
+export default Component
 
 const ExampleComponent = ({ onUpload, ...props }: UploadProps) => {
-  const [value, setValue] = useState<File>();
+  const [value, setValue] = useState<File>()
 
   const onUploadCustom = async (data: File[]): Promise<void> => {
-    const file = data[0];
+    const file = data[0]
 
     // const newFile = Object.assign(file, {
     //     preview: URL.createObjectURL(file),
     // });
     if (file) {
-      setValue(file);
+      setValue(file)
     }
-  };
+  }
 
-  return <UploadBox onDrop={onUploadCustom} file={value} {...props} />;
-};
+  return (
+    <UploadBox
+      onDrop={onUploadCustom}
+      file={value}
+      {...props}
+    />
+  )
+}
 
 export const Default: Meta<typeof UploadBox> = {
   render: (args) => <ExampleComponent {...args} />,
   args: {
     multiple: false,
-    accept: { "image/*": [] },
+    accept: { 'image/*': [] },
     helperText: (
       <Typography
-        variant="caption"
+        variant='caption'
         sx={{
           mt: 2,
-          mx: "auto",
-          display: "block",
-          textAlign: "center",
-          color: "text.secondary",
+          mx: 'auto',
+          display: 'block',
+          textAlign: 'center',
+          color: 'text.secondary',
         }}
       >
         Allowed *.jpeg, *.jpg, *.png, *.gif
@@ -64,4 +70,4 @@ export const Default: Meta<typeof UploadBox> = {
     minSize: 0,
     maxFiles: 10,
   },
-};
+}

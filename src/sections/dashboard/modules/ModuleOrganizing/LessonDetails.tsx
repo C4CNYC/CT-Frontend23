@@ -94,7 +94,9 @@ export default function LessonDetails(): React.ReactElement {
         <Box sx={DETAILS_LINK_WRAPPER}>
           <Link
             component={NextLink}
-            href={`${MANAGER_PATH_DASHBOARD.lessons.root}?${new URLSearchParams({ lessonId: lesson?.id as string })}`}
+            href={`${MANAGER_PATH_DASHBOARD.lessons.root}?${new URLSearchParams({
+              lessonId: lesson?.id as string,
+            })}`}
             underline='none'
             typography='h5'
             sx={VIEW_LESSON_LINK_SX}
@@ -105,7 +107,9 @@ export default function LessonDetails(): React.ReactElement {
 
           <Link
             component={NextLink}
-            href={`${MANAGER_PATH_DASHBOARD.lessons.root}?${new URLSearchParams({ lessonId: lesson?.id as string })}`}
+            href={`${MANAGER_PATH_DASHBOARD.lessons.root}?${new URLSearchParams({
+              lessonId: lesson?.id as string,
+            })}`}
             underline='none'
             typography='h5'
             sx={ADD_SLIDE_LINK_SX}

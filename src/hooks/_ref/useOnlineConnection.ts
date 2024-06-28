@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, remove, set } from "firebase/database";
+import { initializeApp } from 'firebase/app'
+import { getDatabase, ref, remove, set } from 'firebase/database'
 
-import { useUserActivity } from "../useUserActivity";
+import { useUserActivity } from '../useUserActivity'
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,45 +13,42 @@ const app = initializeApp({
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-});
+})
 
 interface IUseOnlineConnection {
-  lastActivityAt: string;
+  lastActivityAt: string
 }
 
-const updateOnlineState = (
-  userId: string,
-  body: IUseOnlineConnection
-): void => {
-  if (!userId) return;
-  const db = getDatabase(app);
-  set(ref(db, `active/${userId}`), body);
-};
+const updateOnlineState = (userId: string, body: IUseOnlineConnection): void => {
+  if (!userId) return
+  const db = getDatabase(app)
+  set(ref(db, `active/${userId}`), body)
+}
 
 const removeOnlineState = (userId: string): void => {
-  const db = getDatabase(app);
-  if (!userId) return;
-  remove(ref(db, `active/${userId}`));
-};
+  const db = getDatabase(app)
+  if (!userId) return
+  remove(ref(db, `active/${userId}`))
+}
 
 export const useOnlineConnection = (userId: string): void => {
   useEffect(() => {
-    if (!userId) return;
-    window.addEventListener("beforeunload", () => {
-      removeOnlineState(userId);
-    });
-    updateOnlineState(userId, { lastActivityAt: new Date().toUTCString() });
+    if (!userId) return
+    window.addEventListener('beforeunload', () => {
+      removeOnlineState(userId)
+    })
+    updateOnlineState(userId, { lastActivityAt: new Date().toUTCString() })
 
     return () => {
-      removeOnlineState(userId);
-    };
-  }, [userId]);
+      removeOnlineState(userId)
+    }
+  }, [userId])
 
   useUserActivity({
     onUpdateActivity: () => {
       updateOnlineState(userId, {
         lastActivityAt: new Date().toUTCString(),
-      });
+      })
     },
-  });
-};
+  })
+}

@@ -1,15 +1,15 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { voidFunction } from "@utils";
+import { voidFunction } from '@utils'
 
-import { TablePaginationCustom } from "./TablePaginationCustom";
+import { TablePaginationCustom } from './TablePaginationCustom'
 
 const Component: Meta<typeof TablePaginationCustom> = {
   component: TablePaginationCustom,
-  title: "Table/TablePaginationCustom",
-};
+  title: 'Table/TablePaginationCustom',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {
@@ -22,4 +22,4 @@ export const Default = {
     showFirstButton: true,
     showLastButton: true,
   },
-};
+}

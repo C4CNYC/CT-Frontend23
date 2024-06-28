@@ -6,7 +6,7 @@ interface Props<
   T,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
-  FreeSolo extends boolean | undefined,
+  FreeSolo extends boolean | undefined
 > extends AutocompleteProps<T, Multiple, DisableClearable, FreeSolo> {
   name: string
   label?: string
@@ -17,7 +17,7 @@ export function RHFAutocomplete<
   T,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
-  FreeSolo extends boolean | undefined,
+  FreeSolo extends boolean | undefined
 >({
   name,
   label,

@@ -1,27 +1,27 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { ActivityStatus } from "../../types/activity-status";
-import { useRealtimeConnection } from "../useRealTimeConnection";
-import { RoomActivity } from "../../types/room-activity";
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { ActivityStatus } from '../../types/activity-status'
+import { useRealtimeConnection } from '../useRealTimeConnection'
+import { RoomActivity } from '../../types/room-activity'
 
 export function useRoomActivity(roomId?: string) {
-  const [activityStatus, setActivityStatus] = useState<RoomActivity>({});
+  const [activityStatus, setActivityStatus] = useState<RoomActivity>({})
 
-  const realtimeConnection = useRealtimeConnection();
+  const realtimeConnection = useRealtimeConnection()
 
   useEffect(() => {
     if (roomId) {
       const onActivityStatusAvailable = async (_: string, roomActivity: RoomActivity) => {
-        setActivityStatus(roomActivity);
-      };
+        setActivityStatus(roomActivity)
+      }
 
-      realtimeConnection.onActivityStatusAvailable(onActivityStatusAvailable);
+      realtimeConnection.onActivityStatusAvailable(onActivityStatusAvailable)
 
       return () => {
-        realtimeConnection.onActivityStatusAvailable(onActivityStatusAvailable);
+        realtimeConnection.onActivityStatusAvailable(onActivityStatusAvailable)
       }
     }
-    return undefined;
-  }, [realtimeConnection, roomId]);
+    return undefined
+  }, [realtimeConnection, roomId])
 
   useEffect(() => {
     if (roomId) {
@@ -29,24 +29,30 @@ export function useRoomActivity(roomId?: string) {
         setActivityStatus((prev) => ({
           ...prev,
           [userId]: activityStatus,
-        }));
-      };
+        }))
+      }
 
-      realtimeConnection.onActivityStatusChange(onActivityStatusChange);
+      realtimeConnection.onActivityStatusChange(onActivityStatusChange)
 
       return () => {
-        realtimeConnection.offActivityStatusChange(onActivityStatusChange);
+        realtimeConnection.offActivityStatusChange(onActivityStatusChange)
       }
     }
-    return undefined;
-  }, [realtimeConnection, roomId]);
+    return undefined
+  }, [realtimeConnection, roomId])
 
-  const getActivityStatus = useCallback<((socketId: string) => ActivityStatus | undefined)>((socketId) => {
-    return activityStatus[socketId];
-  }, [activityStatus]);
+  const getActivityStatus = useCallback<(socketId: string) => ActivityStatus | undefined>(
+    (socketId) => {
+      return activityStatus[socketId]
+    },
+    [activityStatus]
+  )
 
-  return useMemo(() => ({
-    getActivityStatus,
-    activityStatus
-  }), [getActivityStatus, activityStatus]);
+  return useMemo(
+    () => ({
+      getActivityStatus,
+      activityStatus,
+    }),
+    [getActivityStatus, activityStatus]
+  )
 }

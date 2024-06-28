@@ -1,17 +1,17 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { Iconify } from "./Iconify";
+import { Iconify } from './Iconify'
 
 const Component: Meta<typeof Iconify> = {
   component: Iconify,
-  title: "Iconify",
-};
+  title: 'Iconify',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {
-    icon: "devicon-plain:materialui",
+    icon: 'devicon-plain:materialui',
     width: 40,
   },
-};
+}

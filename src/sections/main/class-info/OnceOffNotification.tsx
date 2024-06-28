@@ -56,9 +56,9 @@ export default function OnceOffNotification({
     }
   }
 
-  const shareLink = `${
-    window.location.origin
-  }${STUDENT_PATH_DASHBOARD.joinTribe.id(classData?.setting.share_token)}`
+  const shareLink = `${window.location.origin}${STUDENT_PATH_DASHBOARD.joinTribe.id(
+    classData?.setting.share_token
+  )}`
 
   return (
     <Collapse in={isOpenNotification}>

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import type { Meta } from "@storybook/react";
-import { ThemeProvider } from "@theme/index";
+import type { Meta } from '@storybook/react'
+import { ThemeProvider } from '@theme/index'
 
-import IncrementerButton, { IncrementerButtonProps } from "./IncrementerButton";
+import IncrementerButton, { IncrementerButtonProps } from './IncrementerButton'
 
 const Component: Meta<typeof IncrementerButton> = {
   component: IncrementerButton,
-  title: "CustomInput/IncrementerButton",
-};
+  title: 'CustomInput/IncrementerButton',
+}
 
-export default Component;
+export default Component
 
 const ExampleComponent = ({
   quantity,
@@ -18,25 +18,25 @@ const ExampleComponent = ({
   onDecrease,
   ...props
 }: IncrementerButtonProps) => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
-    setCount(quantity);
-  }, [quantity]);
+    setCount(quantity)
+  }, [quantity])
 
   return (
     <IncrementerButton
       quantity={count}
       onIncrease={() => {
-        setCount((state) => state + 1);
+        setCount((state) => state + 1)
       }}
       onDecrease={() => {
-        setCount((state) => state - 1);
+        setCount((state) => state - 1)
       }}
       {...props}
     />
-  );
-};
+  )
+}
 
 export const Default: Meta<typeof IncrementerButton> = {
   render: (args) => (
@@ -49,4 +49,4 @@ export const Default: Meta<typeof IncrementerButton> = {
     disabledIncrease: false,
     disabledDecrease: false,
   },
-};
+}

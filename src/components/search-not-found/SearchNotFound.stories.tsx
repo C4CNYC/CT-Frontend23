@@ -1,20 +1,20 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { SearchNotFound } from "./SearchNotFound";
+import { SearchNotFound } from './SearchNotFound'
 
 const Component: Meta<typeof SearchNotFound> = {
   component: SearchNotFound,
-  title: "SearchNotFound",
-};
+  title: 'SearchNotFound',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {
-    query: "query",
+    query: 'query',
     sx: {
-      padding: "10px 0",
+      padding: '10px 0',
     },
-    variant: "outlined",
+    variant: 'outlined',
   },
-};
+}

@@ -47,7 +47,9 @@ export const useFileManager = ({
   useEffect(() => {
     if (roomId || router.query.id) {
       fetch(
-        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_file?stream_room_id=${roomId || router.query.id}`,
+        `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_file?stream_room_id=${
+          roomId || router.query.id
+        }`,
         {
           method: 'GET',
         }

@@ -25,8 +25,8 @@ export function CardModule({ type, image }: Props): React.ReactElement {
     type === CardTypes.lesson
       ? MANAGER_PATH_DASHBOARD.lessons.root
       : type === CardTypes.course
-        ? MANAGER_PATH_DASHBOARD.courses.root
-        : MANAGER_PATH_DASHBOARD.modules.root
+      ? MANAGER_PATH_DASHBOARD.courses.root
+      : MANAGER_PATH_DASHBOARD.modules.root
   return (
     <>
       <Card

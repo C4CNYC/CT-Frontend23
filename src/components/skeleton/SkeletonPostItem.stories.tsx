@@ -1,14 +1,14 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { SkeletonPostItem } from "./SkeletonPostItem";
+import { SkeletonPostItem } from './SkeletonPostItem'
 
 const Component: Meta<typeof SkeletonPostItem> = {
   component: SkeletonPostItem,
-  title: "Skeleton/SkeletonPostItem",
-};
+  title: 'Skeleton/SkeletonPostItem',
+}
 
-export default Component;
+export default Component
 
 export const Default: Meta<typeof SkeletonPostItem> = {
   args: {},
-};
+}

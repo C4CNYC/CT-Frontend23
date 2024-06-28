@@ -41,8 +41,8 @@ export const getRoadBoxSx = (
   background: lastItem
     ? ''
     : oddItem
-      ? `top 50px left 270px / 140px url(/assets/projects/roadRight${compleatedColor}.svg) no-repeat`
-      : `top 30px left 60px / 140px url(/assets/projects/roadLeft${compleatedColor}.svg) no-repeat`,
+    ? `top 50px left 270px / 140px url(/assets/projects/roadRight${compleatedColor}.svg) no-repeat`
+    : `top 30px left 60px / 140px url(/assets/projects/roadLeft${compleatedColor}.svg) no-repeat`,
 })
 
 export const PROGRES_BOX_SX = {

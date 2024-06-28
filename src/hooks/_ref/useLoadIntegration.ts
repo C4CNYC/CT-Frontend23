@@ -1,4 +1,4 @@
-const cachedRequests = new Map();
+const cachedRequests = new Map()
 
 export const useLoadIntegration = async (attrs: Record<string, string>, key: string) => {
   const href = attrs[key]

@@ -1,14 +1,14 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { InfoCourses } from "./index";
+import { InfoCourses } from './index'
 
 const Component: Meta<typeof InfoCourses> = {
   component: InfoCourses,
-  title: "InfoCourses",
-};
+  title: 'InfoCourses',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {},
-};
+}

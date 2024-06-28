@@ -1,19 +1,19 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { ConfirmDialog } from "./ConfirmDialog";
+import { ConfirmDialog } from './ConfirmDialog'
 
 const Component: Meta<typeof ConfirmDialog> = {
   component: ConfirmDialog,
-  title: "ConfirmDialog",
-};
+  title: 'ConfirmDialog',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {
-    title: "title",
+    title: 'title',
     open: true,
-    content: "Content",
-    action: "Dialog action",
+    content: 'Content',
+    action: 'Dialog action',
   },
-};
+}

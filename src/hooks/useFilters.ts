@@ -55,13 +55,10 @@ export const useFilters = <T>(filters: T, mode: FilterMode = FilterMode.local): 
         setFilter({
           ...filter,
           page: 1,
-          ...name.reduce(
-            (acc, cur) => {
-              acc[cur] = value
-              return acc
-            },
-            {} as Record<string, string | number>
-          ),
+          ...name.reduce((acc, cur) => {
+            acc[cur] = value
+            return acc
+          }, {} as Record<string, string | number>),
         })
       } else {
         setFilter({

@@ -101,9 +101,9 @@ export default function ShareGroupModal({
     }
   }
 
-  const shareLink = `${
-    window.location.origin
-  }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting.share_token)}`
+  const shareLink = `${window.location.origin}${STUDENT_PATH_DASHBOARD.joinTribe.id(
+    schoolClass.setting.share_token
+  )}`
 
   useEffect(() => {
     if (query.onBoarding) {

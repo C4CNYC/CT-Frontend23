@@ -1,24 +1,24 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from '@mui/material'
 
-import { Iconify } from "../iconify";
-import { TableSelectedAction } from "./TableSelectedAction";
+import { Iconify } from '../iconify'
+import { TableSelectedAction } from './TableSelectedAction'
 
 const Component: Meta<typeof TableSelectedAction> = {
   component: TableSelectedAction,
-  title: "Table/TableSelectedAction",
-};
+  title: 'Table/TableSelectedAction',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {
     dense: true,
     action: (
-      <Tooltip title="Delete">
-        <IconButton color="primary">
-          <Iconify icon="eva:trash-2-outline" />
+      <Tooltip title='Delete'>
+        <IconButton color='primary'>
+          <Iconify icon='eva:trash-2-outline' />
         </IconButton>
       </Tooltip>
     ),
@@ -26,4 +26,4 @@ export const Default = {
     rowCount: 10,
     useFlexGap: false,
   },
-};
+}

@@ -1,43 +1,46 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import type { Meta } from "@storybook/react";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup'
+import type { Meta } from '@storybook/react'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
 
-import { voidFunction } from "@utils";
+import { voidFunction } from '@utils'
 
-import { FormProvider } from "./FormProvider";
-import { RHFRadioGroup } from "./RHFRadioGroup";
+import { FormProvider } from './FormProvider'
+import { RHFRadioGroup } from './RHFRadioGroup'
 
 const Component: Meta<typeof RHFRadioGroup> = {
   component: RHFRadioGroup,
-  title: "HookForm/RHFRadioGroup",
-};
+  title: 'HookForm/RHFRadioGroup',
+}
 
-export default Component;
+export default Component
 
 const ExampleComponent = ({ children }: any) => {
-  const VerifyCodeSchema = Yup.object().shape({});
-  const defaultValues = {};
+  const VerifyCodeSchema = Yup.object().shape({})
+  const defaultValues = {}
 
   const methods = useForm({
-    mode: "onChange",
+    mode: 'onChange',
     resolver: yupResolver(VerifyCodeSchema),
     defaultValues,
-  });
+  })
 
   const {
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = methods;
+  } = methods
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(voidFunction)}>
+    <FormProvider
+      methods={methods}
+      onSubmit={handleSubmit(voidFunction)}
+    >
       {children}
     </FormProvider>
-  );
-};
+  )
+}
 
-const TECH_OPTIONS = ["css", "html", "js"];
+const TECH_OPTIONS = ['css', 'html', 'js']
 
 export const Default: Meta<typeof RHFRadioGroup> = {
   render: (args) => (
@@ -46,18 +49,18 @@ export const Default: Meta<typeof RHFRadioGroup> = {
     </ExampleComponent>
   ),
   args: {
-    name: "tags",
-    helperText: "Helper text",
-    label: "Num",
-    placeholder: "placeholder",
+    name: 'tags',
+    helperText: 'Helper text',
+    label: 'Num',
+    placeholder: 'placeholder',
     sx: {
-      width: "100%",
+      width: '100%',
     },
     options: [
-      { label: "label 1", value: "value 1" },
-      { label: "label 2", value: "value 2" },
-      { label: "label 3", value: "value 3" },
-      { label: "label 4", value: "value 4" },
+      { label: 'label 1', value: 'value 1' },
+      { label: 'label 2', value: 'value 2' },
+      { label: 'label 3', value: 'value 3' },
+      { label: 'label 4', value: 'value 4' },
     ],
   },
-};
+}

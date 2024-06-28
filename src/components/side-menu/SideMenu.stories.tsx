@@ -1,14 +1,14 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from '@storybook/react'
 
-import { SideMenu } from "./index";
+import { SideMenu } from './index'
 
 const Component: Meta<typeof SideMenu> = {
   component: SideMenu,
-  title: "SideMenu",
-};
+  title: 'SideMenu',
+}
 
-export default Component;
+export default Component
 
 export const Default = {
   args: {},
-};
+}
