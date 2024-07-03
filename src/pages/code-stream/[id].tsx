@@ -287,6 +287,15 @@ export default function CodePanelPage(): ReactElement | null {
             chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
             onHandleFullScreen={handle.active ? handle.exit : handle.enter}
             isFullScreenView={handle.active}
+            lessonManagerComponent={
+              <LessonsManager
+                onChooseLesson={onChooseLesson}
+                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+                data={courseContent}
+                isLoading={isLoadingCourseContent}
+              />
+            }
+            language={DEFAULT_LANGUAGE}
           />
           <CodePanelBody
             isFetchingLessonContent={isFetchingLessonContent}
@@ -296,18 +305,6 @@ export default function CodePanelPage(): ReactElement | null {
             language={DEFAULT_LANGUAGE}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
-          />
-          <CodePanelFooter
-            language={DEFAULT_LANGUAGE}
-            sliderSteps={lessonContent?.length ?? 0}
-            lessonManagerComponent={
-              <LessonsManager
-                onChooseLesson={onChooseLesson}
-                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-                data={courseContent}
-                isLoading={isLoadingCourseContent}
-              />
-            }
           />
         </Box>
       </FullScreen>
