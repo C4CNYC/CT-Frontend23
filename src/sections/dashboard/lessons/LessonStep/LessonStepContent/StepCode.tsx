@@ -62,45 +62,49 @@ export default function StepCode({
         direction='horizontal'
       >
         <Panel
-          defaultSize={15}
-          minSize={20}
-          maxSize={30}
-        ></Panel>
-        <Box position='relative'>
-          <MenuItems
-            data={data}
-            lessonId={lessonId}
-            style={{ mb: 1, mt: 1, ml: 2 }}
-          />
-          <CodeMirror
-            value={value}
-            theme={dracula}
-            height='calc(100vh - 96px)'
-            extensions={[html()]}
-            onChange={(value) => {
-              setValue(value)
-            }}
-          />
-          <SaveButton
-            onClick={() => {
-              onSubmit(JSON.stringify({ content: value }))
-            }}
-            sx={{
-              position: 'absolute',
-              top: 65,
-              right: 35,
-              color: '#7963d2',
-              border: '1px solid rgba(121, 99, 210, 0.5)',
-              borderRadius: '4px',
-              '&:hover': {
+          defaultSize={60}
+          minSize={40}
+          maxSize={80}
+        >
+          <Box
+            position='relative'
+            overflow='auto'
+          >
+            <MenuItems
+              data={data}
+              lessonId={lessonId}
+              style={{ mb: 1, mt: 1, ml: 2 }}
+            />
+            <CodeMirror
+              value={value}
+              theme={dracula}
+              height='calc(100vh - 96px)'
+              extensions={[html()]}
+              onChange={(value) => {
+                setValue(value)
+              }}
+            />
+            <SaveButton
+              onClick={() => {
+                onSubmit(JSON.stringify({ content: value }))
+              }}
+              sx={{
+                position: 'absolute',
+                top: 65,
+                right: 35,
+                color: '#7963d2',
                 border: '1px solid rgba(121, 99, 210, 0.5)',
-                backgroundColor: ' rgba(121, 99, 210, 0.1)',
-              },
-            }}
-          />
-        </Box>
+                borderRadius: '4px',
+                '&:hover': {
+                  border: '1px solid rgba(121, 99, 210, 0.5)',
+                  backgroundColor: ' rgba(121, 99, 210, 0.1)',
+                },
+              }}
+            />
+          </Box>
+        </Panel>
         <PanelResizeHandle />
-        <Panel>
+        <Panel minSize={25}>
           {isAllColumnsVisible && (
             <Box
               sx={{

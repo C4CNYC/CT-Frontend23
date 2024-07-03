@@ -237,7 +237,7 @@ export default function StepContentEditor(): React.ReactElement {
           sx={{
             position: 'relative',
             height: 'calc(100vh - 80px)',
-            overflow: 'scroll',
+            overflow: 'hidden',
           }}
         >
           {bodyType === LessonContentType.Code ? (
