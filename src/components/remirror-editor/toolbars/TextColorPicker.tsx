@@ -72,13 +72,13 @@ export default function TextColorPicker(): JSX.Element {
         <ToggleButton
           value='left'
           key='left'
-          size='small'
+          sx={{ py: '4px', px: '10px' }}
           onMouseDown={handleMouseDown}
           onClick={() => {
             setEdit(!edit)
           }}
         >
-          <MdFormatColorText size={13} />
+          <MdFormatColorText size={20} />
         </ToggleButton>
       </Tooltip>
     </Stack>

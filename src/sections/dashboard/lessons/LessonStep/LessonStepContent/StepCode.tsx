@@ -73,7 +73,7 @@ export default function StepCode({
             <MenuItems
               data={data}
               lessonId={lessonId}
-              style={{ mb: 1, mt: 1, ml: 2 }}
+              sx={{ mb: 1, mt: 1, ml: 2 }}
             />
             <CodeMirror
               value={value}
