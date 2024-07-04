@@ -29,6 +29,9 @@ export const getTribeTitleSx = (theme: Theme): SxProps => ({
   ml: 2,
   color: theme.palette.text.secondary,
   fontSize: '18px',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
 })
 
 export const getAddTribeButtonSx = (theme: Theme, isNavMini: boolean): SxProps => ({
