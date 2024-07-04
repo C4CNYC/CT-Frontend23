@@ -60,8 +60,8 @@ export default function LessonStepMain(): React.ReactElement {
             >
               <Panel
                 style={{ overflowY: 'auto' }}
-                defaultSize={15}
-                minSize={15}
+                defaultSize={20}
+                minSize={20}
                 maxSize={30}
               >
                 <LessonStepList lessonId={lessonId as string} />
