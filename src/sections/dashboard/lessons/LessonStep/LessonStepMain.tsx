@@ -54,19 +54,21 @@ export default function LessonStepMain(): React.ReactElement {
 
           <Box>
             <PanelGroup
+              style={{ position: 'absolute', height: 'calc(100vh - 48px)' }}
               autoSaveId='example'
               direction='horizontal'
             >
               <Panel
-                defaultSize={15}
+                style={{ overflowY: 'auto' }}
+                defaultSize={20}
                 minSize={20}
                 maxSize={30}
               >
                 <LessonStepList lessonId={lessonId as string} />
               </Panel>
               <PanelResizeHandle />
-              <Panel>
-                <Box marginTop={5}>{stepId ? <StepContentEditor /> : <NoSelectedStep />}</Box>
+              <Panel minSize={40}>
+                <Box marginTop={1}>{stepId ? <StepContentEditor /> : <NoSelectedStep />}</Box>
               </Panel>
             </PanelGroup>
           </Box>

@@ -25,6 +25,7 @@ export default function ClassInfoMain({ classData, teacher }: Props): React.Reac
       direction={isMobile ? 'column' : 'row'}
       alignItems='center'
       gap={2}
+      sx={{ flex: 1 }}
     >
       <Avatar
         sx={CLASS_AVATAR_SX}

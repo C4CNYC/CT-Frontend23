@@ -2,9 +2,9 @@ import { type FC, useMemo, useState, useEffect } from 'react'
 
 import { type DraggableAttributes } from '@dnd-kit/core'
 import { type SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
-import CloseIcon from '@mui/icons-material/Close'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
-import { Box, Stack, Avatar, Typography } from '@mui/material'
+import { Box, Stack, Avatar, Typography, IconButton } from '@mui/material'
+import { CgClose } from '@react-icons/all-files/cg/CgClose'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
@@ -66,6 +66,7 @@ const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, owner, 
     dispatch(
       setRoom({
         roomId,
+        avatar: owner.avatar,
         ownerId: owner.id as string,
         cursorText: owner.first_name,
         mode: EditorMode.SubOwner,
@@ -159,12 +160,24 @@ const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, owner, 
         >
           <OpenCodeIcon
             onClick={onOpenCode}
-            sx={styles.OPEN_CODE_ICON}
+            width={32}
+            height={20}
+            sx={{
+              ...styles.OPEN_CODE_ICON,
+            }}
           />
-          <CloseIcon
-            sx={styles.CLOSE_ICON_SX}
+          <IconButton
             onClick={onClose}
-          />
+            sx={{
+              mx: 1,
+              p: 0,
+            }}
+          >
+            <CgClose
+              size={24}
+              color='#fff'
+            />
+          </IconButton>
         </Stack>
       </Stack>
 

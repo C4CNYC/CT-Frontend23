@@ -5,7 +5,6 @@ import ToggleButton from '@mui/material/ToggleButton'
 import { BsEmojiSmile } from '@react-icons/all-files/bs/BsEmojiSmile'
 import { useCommands } from '@remirror/react'
 import EmojiPicker, { EmojiClickData } from 'emoji-picker-react'
-import { useDetectClickOutside } from 'react-detect-click-outside'
 
 import { MenuPopover } from '@/components'
 
@@ -34,24 +33,15 @@ export default function EmojiPickerBtn(): React.ReactElement {
     allCommand.insertText(emojiData.emoji)
   }
 
-  const ref = useDetectClickOutside({ onTriggered: handleClosePopover })
-
   return (
     <Stack sx={{ position: 'relative', alignItems: 'center' }}>
-      {/* <style>
-        {`
-            aside.EmojiPickerReact.epr-main {
-                z-index: 1000;
-            }
-        `}
-      </style> */}
-      <Tooltip title='emoji picker'>
+      <Tooltip title='Emoji picker'>
         <ToggleButton
           value='left'
           key='left'
           onMouseDown={handleMouseDown}
           onClick={handleOpenPopover}
-          sx={{ p: '5px' }}
+          sx={{ py: '4px', px: '10px' }}
         >
           <BsEmojiSmile size='20px' />
         </ToggleButton>

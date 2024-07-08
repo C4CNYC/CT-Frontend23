@@ -72,17 +72,17 @@ export default function StudentNewEditForm({
 
   const defaultValues = useMemo(
     () => ({
-      first_name: currentUser?.first_name ?? '',
-      last_name: currentUser?.last_name ?? '',
+      first_name: currentUser?.account.first_name ?? '',
+      last_name: currentUser?.account.last_name ?? '',
       email: currentUser?.account?.email ?? '',
       phone: currentUser?.phone ?? '',
       country: currentUser?.country?.toUpperCase() ?? undefined,
       city: currentUser?.city ?? '',
       post_code: currentUser?.post_code ?? '',
       about: currentUser?.about ?? '',
-      verified: currentUser?.verified,
+      verified: currentUser?.account.verified,
       cover: currentUser?.cover ?? getRandomColor(),
-      active: currentUser?.active,
+      active: currentUser?.account.active,
       password: generator.generate({
         length: 10,
         uppercase: true,

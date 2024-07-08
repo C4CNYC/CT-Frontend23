@@ -54,7 +54,7 @@ export default function CreateClass(): React.ReactElement {
   const [updateClassAvatar, { isLoading: isUpdatingAvatar }] = useUpdateClassesAvatarMutation()
   const CreateEmailSchema = Yup.object().shape({
     name: Yup.string().required(translate('required_name')),
-    description: Yup.string().required(translate('required_description')),
+    description: Yup.string(),
   })
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateEmailSchema),
@@ -66,7 +66,7 @@ export default function CreateClass(): React.ReactElement {
         const classInfo = await createClassByManager({
           schoolId,
           name: data.name,
-          description: data.description,
+          description: data.description ?? '',
           cover: choosenColor,
         }).unwrap()
         await studentJoin({
@@ -94,7 +94,7 @@ export default function CreateClass(): React.ReactElement {
         }
       }
     } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: 'error' })
+      enqueueSnackbar(error.data.message, { variant: 'error' })
     }
   }
 

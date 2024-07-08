@@ -41,7 +41,7 @@ const styles = {
   }),
   getHeaderSx: (background: string): SxProps => ({
     background,
-    height: '28px',
+    height: '35px',
     width: '100%',
     position: 'absolute',
     top: 0,

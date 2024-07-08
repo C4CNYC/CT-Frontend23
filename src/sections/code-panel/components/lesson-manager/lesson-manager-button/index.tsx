@@ -7,7 +7,7 @@ import { type ILesson } from '@/redux/interfaces/content.interface'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { ICON_BTN_SX, TYP_SX, getButtonSx } from './constants'
+import { ICON_BTN_SX, GetTypSx, getButtonSx, getSubtitleSx } from './constants'
 
 interface LessonManagerButtonProps {
   onOpen: () => void
@@ -17,6 +17,8 @@ interface LessonManagerButtonProps {
 const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson }) => {
   const theme = useTheme()
   const buttonSx = useMemo(() => getButtonSx(theme), [theme])
+  const typSx = useMemo(() => GetTypSx(theme), [theme])
+  const subTitleSx = useMemo(() => getSubtitleSx(theme), [theme])
   const translate = useTranslate()
 
   return (
@@ -48,8 +50,15 @@ const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson }) =
         >
           <Typography
             variant='body2'
+            sx={subTitleSx}
+          >
+            lesson
+          </Typography>
+
+          <Typography
+            variant='body2'
             noWrap
-            sx={TYP_SX}
+            sx={typSx}
           >
             {lesson?.name}
           </Typography>

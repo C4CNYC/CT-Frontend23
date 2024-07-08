@@ -34,7 +34,11 @@ export default function StepMultimedia({
       autoSaveId='example'
       direction='horizontal'
     >
-      <Panel defaultSize={50}>
+      <Panel
+        defaultSize={60}
+        minSize={40}
+        maxSize={80}
+      >
         <Box sx={{ bgcolor: bgColor, height: '100%' }}>
           <MyEditor
             onSubmit={() => {
@@ -52,7 +56,7 @@ export default function StepMultimedia({
         </Box>
       </Panel>
       <PanelResizeHandle />
-      <Panel>
+      <Panel minSize={25}>
         <MyEditor
           editable={false}
           multimediaValue={value}

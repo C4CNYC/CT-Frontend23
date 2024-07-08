@@ -377,6 +377,15 @@ export default function CodePanelPage(): ReactElement | null {
             chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
             onHandleFullScreen={handle.active ? handle.exit : handle.enter}
             isFullScreenView={handle.active}
+            lessonManagerComponent={
+              <LessonsManager
+                onChooseLesson={onChooseLesson}
+                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+                data={courseContent}
+                isLoading={isLoadingCourseContent}
+              />
+            }
+            language={DEFAULT_LANGUAGE}
           />
           <CodePanelBody
             isFetchingLessonContent={isLoading}

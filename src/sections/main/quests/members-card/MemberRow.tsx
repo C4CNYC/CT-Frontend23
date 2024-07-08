@@ -32,7 +32,7 @@ export default function MemberRow({
 }: IMemberRowProps): React.ReactElement | null {
   const { query } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
-  const { first_name: firstName, last_name: lastName, avatar, username, city } = row
+  const { first_name: firstName, last_name: lastName, avatar } = row.account
   const translate = useTranslate()
   const [openConfirm, setOpenConfirm] = useState(false)
 
@@ -102,10 +102,10 @@ export default function MemberRow({
           {lastName && lastName?.charAt(0).toUpperCase() + lastName?.slice(1)}
         </TableCell>
 
-        <TableCell align='left'>{username}</TableCell>
+        <TableCell align='left'>{row.username}</TableCell>
 
         {!pending ? (
-          <TableCell align='left'>{city ?? '-'}</TableCell>
+          <TableCell align='left'>{row.city ?? '-'}</TableCell>
         ) : (
           <TableCell align='left'>
             <LoadingButton
