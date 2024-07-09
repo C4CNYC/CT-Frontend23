@@ -134,7 +134,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   return (
     <CodeEditorBlockWrapper
-      className='code-editor-wrappe'
+      className='code-editor-wrapper'
       ref={editorRef}
     >
       {isLoading || collabProps.isFetching || !streamingDoc ? (
