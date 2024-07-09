@@ -49,7 +49,7 @@ export const CircularProgressWithLabel = ({
             strokeWidth='4'
           />
           <CircleBefore
-            delay={delay}
+            delay={delayAnim}
             min={min}
             pause={pause}
             onAnimationEnd={setFinish}
