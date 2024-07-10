@@ -1,18 +1,16 @@
-import { type FC, memo, useEffect, useMemo } from 'react'
+import { type FC, memo, useEffect } from 'react'
 
 import CodeMirror from '@uiw/react-codemirror'
-import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
-import { useAuthContext } from '@/auth/useAuthContext'
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
-import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
 
 import CommentPopup from './components/comment-popup'
 import { ColabContextMenu } from './components/context-menu'
 import LoadingCodeEditor from './components/loading-code-editor'
+import NoActiveFile from './components/no-active-file'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
 import { EditorMode } from './hook/constants'
 import { type File } from './hook/requests'
@@ -38,7 +36,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   onChangeCodemirrorValue?: (value: string) => void
 }
 
-const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
+const ACCEPTABLE_DOC_WAITING_TIME = 2000
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
@@ -55,38 +53,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
   ...collabProps
 }) => {
-  const { query } = useRouter()
   const dispatch = useDispatch()
-  const { user } = useAuthContext()
-
-  const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
-  const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
-
-  const localstorageCode = useMemo(() => {
-    if (mode === EditorMode.Owner) {
-      const json = localStorage.getItem(
-        getLocalStorageRoomKey(prevLessonId || `${user?.student_profile?.id}_${query?.lessonId}`)
-      )
-      if (json) {
-        try {
-          const docInfo = JSON.parse(json) as Record<string, string>
-          const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
-          if (code) {
-            return code
-          }
-        } catch (e) {}
-      }
-    }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode])
 
   const onChangeCodemirrorValue = (value: string) => {
+    onChangeStreamingDocInfoFromProps?.(value)
     onChangeCodemirrorValueFromProps(value)
     void updateCommentWidgetPosition()
-  }
-
-  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
-    onChangeStreamingDocInfoFromProps?.(doc)
-    localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
   }
 
   const {
@@ -98,7 +70,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onCreateEditor,
     commentProps: {
       onContextMenu,
-      isAddCommentDisabled,
       isAddCommentOpen,
       position,
       setIsAddCommentOpen,
@@ -112,8 +83,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     },
   } = useCodeEditorCollab({
     ...collabProps,
-    onChangeStreamingDocInfo,
-    preloadedCode: localstorageCode ?? preloadedCode,
+    preloadedCode,
     activeFile,
     mode,
     socket,
@@ -130,7 +100,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     }
   }, [])
 
-  if (!activeFile) return null
+  if (!activeFile) return <NoActiveFile />
 
   return (
     <CodeEditorBlockWrapper

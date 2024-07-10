@@ -5,7 +5,7 @@ export interface MemoizedProps {
   cursorText?: string
   withTooltip?: boolean
   preloadedCode?: string
-  onChangeStreamingDocInfo?: (doc: Record<string, string>) => void
+  onChangeStreamingDocInfo?: (doc: string) => void
   defaultFileName: string
   isFetching?: boolean
 }
@@ -38,7 +38,7 @@ export const useMemoizedProps = ({
     onChangeRef.current = onChangeStreamingDocInfo
   }, [onChangeStreamingDocInfo])
 
-  const _onChange = useCallback((code: Record<string, string>): void => {
+  const _onChange = useCallback((code: string): void => {
     onChangeRef.current?.(code)
   }, [])
 
