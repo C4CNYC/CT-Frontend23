@@ -20,13 +20,12 @@ import {
   setSolutionCode,
   toggleInstrations,
 } from '@/redux/slices/code-panel-global'
-import { useSelector } from '@/redux/store'
+import { RootState, useSelector } from '@/redux/store'
 import BrowserView, {
   CodeDocument,
 } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { useUpdateStudentLastVisitedSlideMutation } from '@root/src/redux/services/manager/lesson-student'
 
 import BaseBlock from '../base-block'
 
@@ -77,20 +76,14 @@ const SliderBlock: FC<ISliderBlock> = ({
   lessonType,
 }) => {
   const theme = useTheme()
-  const router = useRouter()
+  const query = useRouter().query
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
 
-  const roomId = useSelector((state) => state.codeEditorController.room?.roomId)
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const roomId = useSelector((state: RootState) => state.codeEditorController.room?.roomId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const unitId = useSelector((state) => state.codePanelGlobal.unitId)
-  const courseId = useSelector((state) => state.codePanelGlobal.courseId)
-
-  const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
 
   const title = translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
@@ -110,6 +103,49 @@ const SliderBlock: FC<ISliderBlock> = ({
     dispatch(setNextStepAble(false))
   }, [slideIndex])
 
+  const updateActivity = useCallback(
+    async ({
+      slide_index,
+      lesson_id,
+      course_id,
+      unit_id,
+    }: {
+      slide_index?: number
+      lesson_id?: string
+      course_id?: string
+      unit_id?: string
+    }) => {
+      try {
+        fetch(
+          `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream-activity?stream_room_id=${
+            roomId || query.room_id
+          }`,
+          {
+            method: 'POST',
+            body: JSON.stringify(
+              _.omitBy(
+                {
+                  unit_id,
+                  course_id,
+                  lesson_id,
+                  slide_index,
+                },
+                _.isUndefined
+              )
+            ),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e)
+      }
+    },
+    [roomId, query.room_id]
+  )
+
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
@@ -126,13 +162,13 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onUpdateLastSlide = (next: number) => {
-    if (socket && next !== slideIndex) {
+    if (next !== slideIndex) {
       // TODO: Sync slide index with other colaborators
     }
-    updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
   }
 
   const onBeforeChange = (_: number, next: number) => {
+    updateActivity({ slide_index: next })
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
   }
@@ -186,6 +222,7 @@ const SliderBlock: FC<ISliderBlock> = ({
               >
                 <Carousel
                   {...getCarouselSettings(onBeforeChange)}
+                  initialSlide={slideIndex}
                   asNavFor={nav2}
                   ref={carousel1}
                   afterChange={onUpdateLastSlide}

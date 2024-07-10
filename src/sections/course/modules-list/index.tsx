@@ -1,7 +1,6 @@
 import { Skeleton, Stack, useTheme } from '@mui/material'
 
 import { Unit } from '@/redux/interfaces/challenges.interface'
-import { useGetStudentLastVisitedUnitAndLessonQuery } from '@/redux/services/manager/lesson-student'
 
 import ModuleItem from './module-item'
 
@@ -10,7 +9,6 @@ interface ModulesListBlockProps {
 }
 export default function ModulesListBlock({ modules }: ModulesListBlockProps): React.ReactElement {
   const theme = useTheme()
-  const { data: lastVisitedData } = useGetStudentLastVisitedUnitAndLessonQuery()
 
   return (
     <Stack
@@ -28,7 +26,7 @@ export default function ModulesListBlock({ modules }: ModulesListBlockProps): Re
             <ModuleItem
               key={m.id}
               unit={m}
-              lastVisited={m.id === lastVisitedData?.lastVisitedUnitId}
+              lastVisited={false}
             />
           ))
         : Array.from('12345').map((el) => (

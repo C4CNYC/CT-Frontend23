@@ -27,7 +27,7 @@ import MumuSpeedDial from './elements/mumu-speed-deal'
 interface ICodeEditorBlock {
   user: AuthUserType | null
   code: string
-  onChangeStreamingDocInfo: (doc: Record<string, string>) => void
+  onChangeStreamingDocInfo: (doc: string) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
   isFetching?: boolean
@@ -45,13 +45,11 @@ const FIRST_LOADING_DELEY = 15000
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
-  user,
-  validations,
   code,
-  onChangeStreamingDocInfo,
-  preloadedCode,
-  isFetching = false,
+  user,
   contentId,
+  validations,
+  preloadedCode,
 }) => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -141,9 +139,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 
       <CodeEditorController
         preloadedCode={preloadedCode}
-        onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
-        isFetching={isFetching}
       />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>

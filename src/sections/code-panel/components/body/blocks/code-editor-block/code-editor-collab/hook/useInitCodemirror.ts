@@ -25,7 +25,6 @@ interface UseBaseInit {
   socket?: Socket
   fileExtension?: Extensions
   withTooltip: boolean
-  onChangeStreamingDocInfo?: (code: Record<string, string>) => void
   roomId: string
   mode: EditorMode
   user?: AuthUserType
@@ -48,7 +47,6 @@ export interface UseBaseInitReturn {
 export const useInitCodemirror = ({
   socket,
   withTooltip,
-  onChangeStreamingDocInfo,
   roomId,
   user,
   cursorText,
@@ -108,22 +106,12 @@ export const useInitCodemirror = ({
           : []),
       ])
 
-      onChangeStreamingDocInfo?.(docInfo)
       setStreamingDoc(doc)
 
       setKey((prev) => ++prev)
       setIsLoading(false)
     },
-    [
-      roomId,
-      cursorText,
-      withTooltip,
-      socket,
-      onChangeStreamingDocInfo,
-      defaultFileName,
-      preloadedCode,
-      fileExtension,
-    ]
+    [roomId, cursorText, withTooltip, socket, defaultFileName, preloadedCode, fileExtension]
   )
 
   return {

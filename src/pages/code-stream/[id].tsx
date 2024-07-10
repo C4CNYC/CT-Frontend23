@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Box } from '@mui/material'
 import dynamic from 'next/dynamic'
@@ -26,13 +26,14 @@ import {
   setUnitId,
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import type { BaseResponseInterface } from '@/utils'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
+import { StreamRoomDetailsResponse } from '@root/src/layouts/dashboard/nav/LestCodeBtn'
+import { setRoom } from '@root/src/redux/slices/code-editor-controller'
 
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
   ssr: false,
@@ -51,14 +52,15 @@ const CodePanelHeader = dynamic(
   }
 )
 const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
-const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/components/footer'))
 const LessonsManager = dynamic(
   async () => await import('@/sections/code-panel/components/lesson-manager')
 )
 
 const DEFAULT_LANGUAGE = 'html'
+const ACCEPTABLE_COLLAB_DOWN_TIME = 5000
 
 export default function CodePanelPage(): ReactElement | null {
+  const socketHealthInterval = useRef<NodeJS.Timeout>()
   const translate = useTranslate()
   const router = useRouter()
   const dispatch = useDispatch()
@@ -107,15 +109,27 @@ export default function CodePanelPage(): ReactElement | null {
     confetti?.reset()
   }
 
-  const onOpenLesson = (lessonId: string, unitId: string): void => {
-    void router.push(
-      STUDENT_PATH_DASHBOARD.codeStream.initWorkSpace({
-        courseId: lastCourseId!,
-        unitId,
-        lessonId,
-      })
-    )
-  }
+  const saveLessonCodeHistory = useCallback(
+    async (lesson_id: string, course_id: string, unit_id: string) => {
+      try {
+        fetch(`${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_room/${router.query.id}/history`, {
+          method: 'POST',
+          body: JSON.stringify({
+            unit_id,
+            course_id,
+            lesson_id,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e)
+      }
+    },
+    [router.query.id]
+  )
 
   const onChooseLesson = (lessonId: string, unitId: string) => {
     if (lastLessonId === lessonId) return
@@ -128,18 +142,25 @@ export default function CodePanelPage(): ReactElement | null {
         unitId,
       })
     )
-    socket?.emit(
-      'stream-activity:set-stream-activity-by-room-id',
-      roomId || router.query.id,
-      JSON.stringify({
-        unit_id: unitId,
-        slide_index: 0,
-        course_id: lastCourseId,
-        lesson_id: lessonId,
-        code: '',
-      })
-    )
-    onOpenLesson(lessonId, unitId)
+
+    saveLessonCodeHistory(lessonId, lastCourseId!, unitId)
+
+    try {
+      socket?.emit(
+        'stream-activity:set-stream-activity-by-room-id',
+        roomId || router.query.id,
+        JSON.stringify({
+          unit_id: unitId,
+          slide_index: 0,
+          course_id: lastCourseId,
+          lesson_id: lessonId,
+          code: '',
+        })
+      )
+    } catch (e: any) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+    }
   }
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
@@ -177,6 +198,8 @@ export default function CodePanelPage(): ReactElement | null {
         dispatch(setUnitId(nextLessonInfo.unitId))
         dispatch(setLessonId(nextLessonInfo.lessonId))
         dispatch(setSlideIndex(0))
+
+        saveLessonCodeHistory(lastLessonId!, lastCourseId!, lastUnitId!)
       } else {
         enqueueSnackbar(translate('messages_course_complete'))
       }
@@ -186,33 +209,15 @@ export default function CodePanelPage(): ReactElement | null {
   }
 
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
-    if (!hasSeenTour) setShowTour(true)
-    setTimeout(() => setRender(false))
-  }, [isShowTour, showTour])
-
-  useEffect(() => {
-    if (socket && router.query.id) {
-      socket.emit('stream-activity:get-stream-activity-by-room-id', roomId || router.query.id)
-
-      socket.once('stream-activity:get-stream-activity-by-room-id-response', (body: string) => {
-        const data = JSON.parse(body) as StreamActivity
-        if (data) {
-          dispatch(
-            setStudentPosition({
-              lessonId: data.lesson_id,
-              slideIndex: data.slide_index,
-              courseId: data.course_id,
-              unitId: data.unit_id,
-            })
-          )
-        } else {
-          router.push(STUDENT_PATH_DASHBOARD.page404)
-        }
-      })
-
-      socket.on('stream-activity:stream-activity-updated', (body: string) => {
-        const data = JSON.parse(body) as StreamActivity
+    if (!router.query.id && !roomId) return
+    fetch(
+      `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream_room/${roomId || router.query.id}/details`,
+      {
+        method: 'GET',
+      }
+    )
+      .then((res) => res.json())
+      .then((data: StreamRoomDetailsResponse) => {
         dispatch(
           setStudentPosition({
             lessonId: data.lesson_id,
@@ -222,9 +227,19 @@ export default function CodePanelPage(): ReactElement | null {
           })
         )
       })
+  }, [roomId, router.query.id])
+
+  useEffect(() => {
+    const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
+    if (!hasSeenTour) setShowTour(true)
+    setTimeout(() => setRender(false))
+  }, [isShowTour, showTour])
+
+  useEffect(() => {
+    if (socket && router.query.id) {
+      dispatch(setRoom({ roomId: router.query.id as string }))
 
       return () => {
-        socket.off('stream-activity:get-stream-activity-by-room-id-response')
         socket.off('stream-activity:stream-activity-updated')
       }
     }
@@ -232,7 +247,6 @@ export default function CodePanelPage(): ReactElement | null {
 
   useEffect(() => {
     let socket: Socket | undefined
-
     if (authIsInitialized) {
       socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
         path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
@@ -252,6 +266,12 @@ export default function CodePanelPage(): ReactElement | null {
 
         dispatch(setSocket(socket))
       })
+
+      socketHealthInterval.current = setInterval(() => {
+        if (socket?.connected) return
+        socket?.disconnect()
+        socket?.connect()
+      }, ACCEPTABLE_COLLAB_DOWN_TIME)
     } else {
       dispatch(setSocket(undefined))
     }

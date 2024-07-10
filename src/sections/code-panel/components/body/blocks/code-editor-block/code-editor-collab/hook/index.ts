@@ -48,8 +48,7 @@ export const useCodeEditorCollab = ({
   const editorView = useRef<EditorView | null>(null)
   const editorRef = useRef<HTMLDivElement | null>(null)
 
-  const { cursorText, withTooltip, onChangeStreamingDocInfo, defaultFileName } =
-    useMemoizedProps(propsToMemoize)
+  const { cursorText, withTooltip, defaultFileName } = useMemoizedProps(propsToMemoize)
 
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
@@ -73,7 +72,6 @@ export const useCodeEditorCollab = ({
   const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
     socket,
     withTooltip,
-    onChangeStreamingDocInfo,
     roomId,
     mode,
     user,

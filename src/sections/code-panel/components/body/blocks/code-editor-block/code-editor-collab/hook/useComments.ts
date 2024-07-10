@@ -40,7 +40,6 @@ export interface UseCommentsPropsReturn {
   isAddCommentOpen: boolean
   onContextMenu: ReactCodeMirrorProps['onContextMenu']
   setIsAddCommentOpen: (isOpen: boolean) => void
-  isAddCommentDisabled: boolean
   onAddComment: (v: string) => void
   commentEffectRef: MutableRefObject<StateEffectType<CommentEffect> | null>
   commentPopupProps: CommentPopupProps | null
@@ -179,12 +178,6 @@ export const useComments = ({
     setIsAddCommentOpen(true)
   }
 
-  const isAddCommentDisabled = useMemo(() => {
-    const selection = getSelectionRange(editorView.current)
-
-    return selection != null ? selection.from === selection.to : true
-  }, [isAddCommentOpen, editorView])
-
   const onAddComment = async (comment: string) => {
     const selection = getSelectionRange(editorView.current)
 
@@ -273,7 +266,6 @@ export const useComments = ({
     setIsAddCommentOpen,
     isAddCommentOpen,
     onContextMenu,
-    isAddCommentDisabled,
     onAddComment,
     commentEffectRef,
     isCommentPopupOpen,
