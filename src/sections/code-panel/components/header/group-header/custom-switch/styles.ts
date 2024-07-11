@@ -16,40 +16,40 @@ export const CustomSwitchWrapper = styled('div')({
   cursor: 'pointer',
   '&.is-active': {
     border: '2px solid #0198ED',
-    '& $iconWrapper': {
+    '& .iconWrapper': {
       background: '#0198ED',
       right: '1px',
     },
 
-    '& $subTextActive': {
+    '& .subTextActive': {
       opacity: 1,
     },
 
-    '& $subTextInactive': {
+    '& .subTextInactive': {
       opacity: 0,
     },
   },
 })
 
-export const SubTextActive = styled('span')({
+export const SubTextActive = styled('span')(({ theme }) => ({
   color: '#0198ED',
-  fontFamily: 'Roboto',
+  fontFamily: theme.palette.text,
   fontSize: '7px',
   fontWeight: 500,
   transition: 'opacity 150ms',
   opacity: 0,
-})
+}))
 
-export const SubTextInactive = styled('span')({
+export const SubTextInactive = styled('span')(({ theme }) => ({
   color: '#A6A6A6',
-  fontFamily: 'Roboto',
+  fontFamily: theme.palette.text,
   fontSize: '7px',
   fontWeight: 600,
   transition: 'opacity 150ms',
   marginLeft: '-10px',
   display: 'inline-block',
   opacity: 1,
-})
+}))
 
 export const IconWrapper = styled('span')({
   width: '17px',

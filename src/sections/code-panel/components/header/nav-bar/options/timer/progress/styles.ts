@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material'
 import { styled, keyframes } from '@mui/system'
 
-const circle = keyframes`
-    '0%': { strokeDashoffset: '0px' },
-    '100%': { strokeDashoffset: '126.92px' },
-`
+const circle = keyframes({
+  '0%': { strokeDashoffset: '0px' },
+  '100%': { strokeDashoffset: '126.92px' },
+})
 
 export const BoxWrapper = styled('div')(({ width, height }: { width: number; height: number }) => ({
   width: `${width}px`,

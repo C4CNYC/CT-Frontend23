@@ -146,7 +146,9 @@ const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, owner, 
           <Avatar
             sx={styles.AVATAR_SX}
             src={owner.avatar}
-          />
+          >
+            {owner.avatar}
+          </Avatar>
 
           <Typography sx={styles.TYP_NAME_SX}>
             {owner.first_name} {owner.last_name}
