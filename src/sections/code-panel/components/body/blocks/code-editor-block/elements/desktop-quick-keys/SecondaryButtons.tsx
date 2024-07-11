@@ -59,7 +59,7 @@ export default function SecondaryButtons({
         onClick={handleChangeButtons}
         sx={{ minWidth: 30 }}
       >
-        <TbTool size={26} />
+        <TbTool size={20} />
       </QuickButton>
     </Box>
   )
