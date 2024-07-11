@@ -1,7 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react'
 
 import { Box } from '@mui/material'
-import { sendGAEvent } from '@next/third-parties/google'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -188,9 +187,6 @@ export default function CodePanelPage(): ReactElement | null {
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-    sendGAEvent('event', 'Challenge_Completed', {
-      event_label: `ChallengeId ${lessonContentId}`,
-    })
   }
 
   const onSubmitLesson = async (): Promise<void> => {
