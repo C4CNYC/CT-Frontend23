@@ -33,7 +33,7 @@ const FocusOverlay: FC<IProps> = ({ title, resetRoom, avatar }) => {
           src={avatar}
           sx={OVERLAY_AVATAR_SX}
         >
-          🤖
+          {avatar ?? '🤖'}
         </Avatar>
         <IconButton sx={{ p: 0 }}>
           <FocusModeIcon
@@ -48,7 +48,7 @@ const FocusOverlay: FC<IProps> = ({ title, resetRoom, avatar }) => {
             variant='caption'
             sx={OVERLAY_GROUP_TITLE_SX}
           >
-            telepor mode
+            teleport mode
           </Typography>
 
           <Typography

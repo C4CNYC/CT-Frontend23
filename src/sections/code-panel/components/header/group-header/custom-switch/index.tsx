@@ -13,11 +13,11 @@ const CustomSwitch: FC<CustomSwithProps> = ({ onChange, isActive = false }) => {
       onClick={() => onChange?.(!isActive)}
       className={`${isActive ? 'is-active' : ''}`}
     >
-      <SubTextActive>COLLAB</SubTextActive>
+      <SubTextActive className='subTextActive'>COLLAB</SubTextActive>
 
-      <SubTextInactive>OFF</SubTextInactive>
+      <SubTextInactive className='subTextInactive'>OFF</SubTextInactive>
 
-      <IconWrapper>
+      <IconWrapper className='iconWrapper'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='13'
