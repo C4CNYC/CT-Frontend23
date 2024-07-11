@@ -38,6 +38,7 @@ interface Props {
 
 interface FormValuesProps {
   email: string
+  Feedback: string
 }
 
 const feedbackTypes = {
