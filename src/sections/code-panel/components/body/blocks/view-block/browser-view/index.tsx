@@ -57,7 +57,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document, page, isOpenHeader }) => 
     `)
   }, [document])
 
-  return document != null || !page ? (
+  return document != null || page ? (
     <iframe
       srcDoc={docSrc || page}
       style={IFRAME_STYLE}
