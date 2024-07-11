@@ -21,7 +21,16 @@ import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, useSnackbar } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
+import {
+  useSendGeneralFeedbackMutation,
+  useSendSlideFeedbackMutation,
+  useSendTrainingFeedbackMutation,
+} from '@/redux/services/feedback'
+import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetLessonQuery } from '@/redux/services/manager/lessons-manager'
+import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 
 interface Props {
   children: React.ReactElement[] | React.ReactElement
@@ -31,18 +40,39 @@ interface FormValuesProps {
   email: string
 }
 
-export default function FeedbackDialog({ children }: Props): React.ReactElement {
+const feedbackTypes = {
+  slide: 'slide',
+  general: 'general',
+  training: 'training',
+}
+
+export default function LessonFeedback({ children }: Props): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false)
   const [generalFeed, setGeneralFeed] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
-  const [rating, setRating] = useState<number>()
+  const [rating, setRating] = useState<number>(0)
+  const [feedbackType, setFeedbackType] = useState<string>(feedbackTypes.slide)
+  const { user } = useAuthContext()
   const translate = useTranslate()
-
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const codePanelState = useSelector((state) => state.codePanelGlobal)
   const { query } = useRouter()
+  const { lessonId, unitId, courseId } = query
 
-  const { lessonId } = query
+  const lessonData = useGetLessonStudentQuery({ id: lessonId as string }, { skip: !lessonId })
+  const code = codePanelState.code
+
+  const lessonDetails = useGetLessonQuery({ id: lessonId as string }, { skip: !lessonId })
+
+  const lessonName = lessonDetails.data?.name
 
   const { enqueueSnackbar } = useSnackbar()
+
+  const [sendGeneralFeedback] = useSendGeneralFeedbackMutation()
+
+  const [sendTrainingFeedback] = useSendTrainingFeedbackMutation()
+
+  const [sendSlideFeedback] = useSendSlideFeedbackMutation()
 
   const FeedbackSchema = Yup.object().shape({
     feedback: Yup.string(),
@@ -58,31 +88,115 @@ export default function FeedbackDialog({ children }: Props): React.ReactElement 
   const closeDialog = () => {
     setOpen(false)
     setGeneralFeed(false)
+    setFeedbackType(feedbackTypes.slide)
   }
 
   const openGeneralFeedback = () => {
+    setRating(0)
+    setFeedbackType(feedbackTypes.general)
     setGeneralFeed(true)
+    methods.reset((formValues) => ({
+      ...formValues,
+      Feedback: '',
+    }))
   }
 
   const closeGeneralFeedback = () => {
     setGeneralFeed(false)
+    setFeedbackType(feedbackTypes.slide)
+    setRating(0)
+  }
+
+  const openTrainingFeedback = () => {
+    setRating(0)
+    setFeedbackType(feedbackTypes.training)
+    setGeneralFeed(true)
+    methods.reset((formValues) => ({
+      ...formValues,
+      Feedback: '',
+    }))
+  }
+
+  const openSlideFeedback = () => {
+    if (!generalFeed) {
+      methods.reset((formValues) => ({
+        ...formValues,
+        Feedback: '',
+      }))
+    }
+    setGeneralFeed(true)
   }
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    setLoading(true)
-    try {
-      enqueueSnackbar(translate('messages_thanks'))
+    const feedbackSuccess = () => {
+      setRating(0)
+      setFeedbackType(feedbackTypes.slide)
       methods.reset((formValues) => ({
         ...formValues,
-        feedback: '',
+        Feedback: '',
       }))
-    } catch (error: any) {
+    }
+
+    const feedbackError = (error: any) => {
       const typedError = error as APIError
       enqueueSnackbar(typedError.data.message, {
         variant: 'error',
       })
+      openDialog()
     }
-    setLoading(false)
+
+    if (feedbackType === feedbackTypes.general) {
+      sendGeneralFeedback({
+        general_message: data.Feedback,
+        rating: rating || null,
+        userId: user?.id,
+        code: code,
+        username: user?.username,
+        email: user?.email,
+        role: user?.role,
+        lessonName: lessonName,
+      })
+        .unwrap()
+        .then(feedbackSuccess)
+        .catch(feedbackError)
+    } else if (feedbackType === feedbackTypes.training) {
+      sendTrainingFeedback({
+        general_message: data.Feedback,
+        slideId: `${slideIndex + 1}`,
+        lessonId: lessonId,
+        lessonName: lessonName,
+        unitId: unitId,
+        courseId: courseId,
+        rating: rating || null,
+        userId: user?.id,
+        code: code,
+        username: user?.username,
+        email: user?.email,
+        role: user?.role,
+      })
+        .unwrap()
+        .then(feedbackSuccess)
+        .catch(feedbackError)
+    } else if (feedbackType === feedbackTypes.slide) {
+      sendSlideFeedback({
+        general_message: data.Feedback,
+        slideId: `${slideIndex + 1}`,
+        lessonId: lessonId,
+        lessonName: lessonName,
+        unitId: unitId,
+        courseId: courseId,
+        rating: rating || null,
+        userId: user?.id,
+        code: code,
+        username: user?.username,
+        email: user?.email,
+        role: user?.role,
+      })
+        .unwrap()
+        .then(feedbackSuccess)
+        .catch(feedbackError)
+    }
+    enqueueSnackbar(translate('messages_thanks'))
     closeDialog()
   }
   return (
@@ -107,7 +221,11 @@ export default function FeedbackDialog({ children }: Props): React.ReactElement 
             variant='h5'
             sx={{ pb: 1, pt: 2, pl: 4 }}
           >
-            {translate('RATE THIS SLIDE')}
+            {feedbackType === feedbackTypes.general
+              ? translate('RATE THIS SITE')
+              : feedbackType === feedbackTypes.training
+                ? translate('RATE THIS TRAINING')
+                : translate('RATE THIS SLIDE')}
           </DialogTitle>
 
           <IconButton
@@ -123,13 +241,21 @@ export default function FeedbackDialog({ children }: Props): React.ReactElement 
               variant='body2'
               sx={{ mb: 2 }}
             >
-              Give us a rating for the slide. Tell us if you like it or not.
+              Give us a rating
+              {feedbackType === feedbackTypes.general
+                ? ` in general`
+                : feedbackType === feedbackTypes.training
+                  ? ` for the training`
+                  : ` for the slide`}
+              . Tell us if you like it or not.
             </Typography>
             <Rating
-              defaultValue={rating ?? 0}
+              value={rating}
               onChange={(e, value) => {
-                enqueueSnackbar(translate('messages_thanks'))
-                setRating(value ?? 0)
+                if (value) {
+                  setRating(value)
+                }
+                openSlideFeedback()
               }}
             />
 
@@ -187,7 +313,16 @@ export default function FeedbackDialog({ children }: Props): React.ReactElement 
                   <Button
                     variant='soft'
                     color='info'
-                    sx={{ width: '100%', mb: 2 }}
+                    sx={{ width: '100%', mb: 1 }}
+                    onClick={openTrainingFeedback}
+                  >
+                    Rate the Training
+                  </Button>
+                  <Typography>Tell us how you liked the training.</Typography>
+                  <Button
+                    variant='soft'
+                    color='info'
+                    sx={{ width: '100%', mt: 2, mb: 1 }}
                     onClick={openGeneralFeedback}
                   >
                     General Feedback

@@ -4,6 +4,7 @@ import createWebStorage from 'redux-persist/lib/storage/createWebStorage'
 // slices
 import { adminApi } from './services/admin'
 import { authApi } from './services/auth'
+import { feedbackApi } from './services/feedback'
 import { managerApi } from './services/manager'
 import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   [schoolSettingsApi.reducerPath]: schoolSettingsApi.reducer,
   [studentPublicApi.reducerPath]: studentPublicApi.reducer,
   [publicApi.reducerPath]: publicApi.reducer,
+  [feedbackApi.reducerPath]: feedbackApi.reducer,
   global: globalRducer,
   manager: managerReducer,
   lessonSteps: lessonStepsReducer,
