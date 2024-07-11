@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useRef, useCallback } from 'react'
+import { type RefObject, useEffect, useRef, useCallback, useMemo } from 'react'
 
 import type { Extension } from '@codemirror/state'
 import type { Text } from '@codemirror/state'
@@ -48,7 +48,9 @@ export const useCodeEditorCollab = ({
   const editorView = useRef<EditorView | null>(null)
   const editorRef = useRef<HTMLDivElement | null>(null)
 
-  const { cursorText, withTooltip, defaultFileName } = useMemoizedProps(propsToMemoize)
+  const { withTooltip, defaultFileName } = useMemoizedProps(propsToMemoize)
+
+  const cursorText = useMemo(() => generateTooltipName(user), [user])
 
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
@@ -132,4 +134,12 @@ export const useCodeEditorCollab = ({
     commentProps,
     ...codeMirrorProps,
   }
+}
+
+function generateTooltipName(user: AuthUserType | undefined): string {
+  if (!user) {
+    return 'Anomymus'
+  }
+
+  return `${user.first_name} ${user.last_name[0].toUpperCase()}.`
 }

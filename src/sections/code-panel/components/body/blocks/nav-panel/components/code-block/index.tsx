@@ -186,7 +186,6 @@ const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, owner, 
           roomId={roomId}
           mode={EditorMode.Watcher}
           withFileManager={false}
-          cursorText={cursorName}
           socket={socket}
           activeFile={activeFile}
         />

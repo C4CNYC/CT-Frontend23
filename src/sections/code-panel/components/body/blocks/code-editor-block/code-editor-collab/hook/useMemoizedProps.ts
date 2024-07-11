@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef } from 'react'
 
 export interface MemoizedProps {
   code?: string
-  cursorText?: string
   withTooltip?: boolean
   preloadedCode?: string
   onChangeStreamingDocInfo?: (doc: string) => void
@@ -11,12 +10,10 @@ export interface MemoizedProps {
 }
 
 interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {
-  cursorText: string
   withTooltip: boolean
 }
 
 export const useMemoizedProps = ({
-  cursorText = 'Unknown',
   withTooltip = true,
   onChangeStreamingDocInfo,
   code,
@@ -27,7 +24,6 @@ export const useMemoizedProps = ({
   const onChangeRef = useRef(onChangeStreamingDocInfo)
   const withTooltipRef = useRef(withTooltip)
   const preloadedCodeRef = useRef(preloadedCode)
-  const cursorTextRef = useRef<string>(cursorText)
   const defaultFileNameRef = useRef(defaultFileName)
 
   useEffect(() => {
@@ -44,7 +40,6 @@ export const useMemoizedProps = ({
 
   return {
     onChangeStreamingDocInfo: _onChange,
-    cursorText: cursorTextRef.current,
     withTooltip: withTooltipRef.current,
     preloadedCode: preloadedCodeRef.current,
     defaultFileName: defaultFileNameRef.current,

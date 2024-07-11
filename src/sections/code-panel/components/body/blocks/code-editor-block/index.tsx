@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux'
 import { type AuthUserType } from '@/auth/types'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { type IValidation } from '@/redux/interfaces/content.interface'
-import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
@@ -16,7 +15,6 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 
-import { EditorMode } from './code-editor-collab/hook/constants'
 import CodeEditorController from './code-editor-controller'
 import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
@@ -92,24 +90,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const symbolsHandler = useCallback((): void => {
     setCodingSymbols(!codingSymbols)
   }, [codingSymbols])
-
-  const onResetRoom = useCallback(() => {
-    if (user && lessonId && router.query.id) {
-      dispatch(
-        setRoom({
-          roomId: router.query.id as string,
-          cursorText: user?.first_name as string,
-          preloadedCode,
-          code: codeRef.current,
-          mode: EditorMode.Owner,
-        })
-      )
-    }
-  }, [user, lessonId, dispatch, preloadedCode, router.query.roomId])
-
-  useEffect(() => {
-    onResetRoom()
-  }, [onResetRoom])
 
   const selectedContent = contentValidations?.find((item) => item.contentId === contentId)
   return (

@@ -2,6 +2,7 @@ import { type SxProps } from '@mui/material'
 
 export const BOX_HEIGHT = 276
 export const BOX_WIDTH = 355
+export const HEADER_HEIGHT = 35
 
 const styles = {
   getBoxSx: (background: string): SxProps => ({
@@ -9,7 +10,6 @@ const styles = {
     height: BOX_HEIGHT,
     borderRadius: '15px',
     border: '1px solid black',
-    fontSize: 30,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -17,31 +17,25 @@ const styles = {
     boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
     position: 'relative',
     overflow: 'hidden',
-    '& .code-editor-wrapper': {
-      width: '100%',
-      height: '100%',
-      overflow: 'hidden',
-      overflowY: 'auto',
-      background,
-      '& .cm-editor': {
-        paddingTop: '26px',
-        fontSize: '18px',
-        background,
-        minHeight: '274px !important',
-        '& .cm-gutter, .cm-activeLineGutter': {
-          background,
-          color: 'rgb(248, 248, 242)',
-        },
-        '& .cm-activeLine': {
-          background,
-          color: 'rgb(248, 248, 242)',
-        },
-      },
+    '& .cm-editor': {
+      paddingTop: '44px',
+      paddingBottom: '10px',
+      width: `${BOX_WIDTH}px !important`,
+      height: `${BOX_HEIGHT}px !important`,
+    },
+    '& .cm-content': {
+      fontSize: '13px',
+    },
+    '& .cm-lineNumbers': {
+      fontSize: '13px',
+    },
+    '& .CodeMirror': {
+      fontSize: '13px',
     },
   }),
   getHeaderSx: (background: string): SxProps => ({
     background,
-    height: '35px',
+    height: `${HEADER_HEIGHT}px`,
     width: '100%',
     position: 'absolute',
     top: 0,

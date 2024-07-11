@@ -48,7 +48,7 @@ const GroupHeader: FC = () => {
     dispatch(toggleRealtimeCodeHidden(!isRealtimeCodeHidden))
   }
 
-  const isFocusMode = room == null || room.mode === EditorMode.Owner || room.mode == null
+  const isFocusMode = query.id === room?.roomId
 
   const groupTitle =
     tribe && tribe.name.length > MAX_TRIBE_NAME_LENGTH ? (

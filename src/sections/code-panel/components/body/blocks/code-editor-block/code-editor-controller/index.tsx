@@ -65,7 +65,6 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({ user, preloadedCo
       <CodeEditorCollab
         activeFile={activeFile}
         roomId={room.roomId}
-        cursorText={room.cursorText}
         preloadedCode={preloadedCode}
         code={room.code}
         mode={room.mode}

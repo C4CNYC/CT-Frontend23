@@ -9,7 +9,8 @@ export interface CodeDocument {
 }
 
 interface BrowserViewProps {
-  document: CodeDocument | null
+  page?: string
+  document?: CodeDocument | null
   isOpenHeader?: boolean
 }
 
@@ -30,11 +31,11 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
     ''
   )
 
-const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
+const BrowserView: FC<BrowserViewProps> = ({ document, page, isOpenHeader }) => {
   const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
-    if (document == null) {
+    if (document == null || !page) {
       return
     }
 
@@ -56,9 +57,9 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
     `)
   }, [document])
 
-  return document != null ? (
+  return document != null || !page ? (
     <iframe
-      srcDoc={docSrc}
+      srcDoc={docSrc || page}
       style={IFRAME_STYLE}
     />
   ) : (

@@ -36,8 +36,6 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   onChangeCodemirrorValue?: (value: string) => void
 }
 
-const ACCEPTABLE_DOC_WAITING_TIME = 2000
-
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
   activeFile,
@@ -60,7 +58,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onChangeCodemirrorValueFromProps(value)
     void updateCommentWidgetPosition()
   }
-
   const {
     editorRef,
     isLoading,

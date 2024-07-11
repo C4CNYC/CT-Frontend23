@@ -237,7 +237,7 @@ export default function CodePanelPage(): ReactElement | null {
 
   useEffect(() => {
     if (socket && router.query.id) {
-      dispatch(setRoom({ roomId: router.query.id as string }))
+      dispatch(setRoom({ roomId: roomId || (router.query.id as string) }))
 
       return () => {
         socket.off('stream-activity:stream-activity-updated')
@@ -321,7 +321,7 @@ export default function CodePanelPage(): ReactElement | null {
             isFetchingLessonContent={isFetchingLessonContent}
             lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
             lessonContents={lessonContent ?? []}
-            user={user?.student_profile}
+            user={user}
             language={DEFAULT_LANGUAGE}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
