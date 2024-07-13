@@ -94,11 +94,12 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [codingSymbols])
 
   const onResetRoom = useCallback(() => {
+    let roomId = `${user?.id as string}_${(query?.lessonId as string) ?? lessonId}`
     if (user && lessonId) {
       dispatch(
         setRoom({
           // roomId: user?.id as string,
-          roomId: `${user?.id as string}_${query?.lessonId as string}`,
+          roomId: roomId,
           cursorText: user?.first_name as string,
           preloadedCode,
           code: codeRef.current,

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Box, Divider, MenuItem, Skeleton, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, Divider, MenuItem, Stack, Tooltip, Typography } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
@@ -11,9 +11,9 @@ import { IconButtonAnimate } from '@/components/animate'
 import { CustomAvatar } from '@/components/custom-avatar'
 import { MenuPopover } from '@/components/menu-popover'
 import { useSnackbar } from '@/components/snackbar'
-import { useProfileQuery } from '@/redux/services/auth'
 import { Role } from '@/redux/services/enums/role.enum'
 import { setStudentMode } from '@/redux/slices/global'
+import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD, MANAGER_PATH_PAGE } from '@/routes/manager.paths'
 import { PATH_AUTH } from '@/routes/paths'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
@@ -29,8 +29,7 @@ export default function AccountPopover(): React.ReactElement {
   const { replace, push } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
-
-  const { data: profile, isLoading } = useProfileQuery()
+  const profile = useSelector((state) => state.global.user)
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget)
@@ -87,21 +86,15 @@ export default function AccountPopover(): React.ReactElement {
         sx={{ width: 200, p: 0 }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          {!isLoading ? (
+          {
             <Typography
               variant='subtitle2'
               noWrap
             >
-              {`${profile?.first_name} ${profile?.last_name}`}
+              {profile ? `${profile.first_name} ${profile.last_name}` : `Anonymous User`}
             </Typography>
-          ) : (
-            <Skeleton
-              variant='rectangular'
-              height='20px'
-              sx={{ mb: '4px' }}
-            />
-          )}
-          {!isLoading ? (
+          }
+          {
             <Tooltip
               title={
                 profile?.email && profile?.email.length > 21 ? (
@@ -119,12 +112,7 @@ export default function AccountPopover(): React.ReactElement {
                 {profile?.email}
               </Typography>
             </Tooltip>
-          ) : (
-            <Skeleton
-              variant='rectangular'
-              height='20px'
-            />
-          )}
+          }
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />

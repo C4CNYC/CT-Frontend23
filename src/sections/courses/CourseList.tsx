@@ -5,6 +5,7 @@ import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { ICourseSearchParams } from '@/redux/interfaces/content.interface'
 import { useGetCourseQuery } from '@/redux/services/manager/courses-student'
 import { useGetPublicCourseQuery } from '@/redux/services/public-student'
+import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 
 import CoursesItem from './course-list-item/CourseItem'
@@ -22,12 +23,16 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useGetCourseQuery({ take: 50 }, { skip: publicPage })
+  const profile = useSelector((state) => state.global.user)
+  const { data, isLoading, isFetching } = useGetCourseQuery(
+    { take: 50 },
+    { skip: publicPage || !profile }
+  )
   const {
     data: publicData,
     isLoading: publicIsLoading,
     isFetching: publicFetching,
-  } = useGetPublicCourseQuery(filters, { skip: !publicPage })
+  } = useGetPublicCourseQuery(filters, { skip: !!profile })
 
   const translate = useTranslate()
 
@@ -63,7 +68,7 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
         gap={3}
         sx={{ pb: 4 }}
       >
-        {publicPage ? (
+        {publicPage || !profile ? (
           publicFetching ? (
             <>{createSkeletonList()}</>
           ) : publicData?.data?.length ? (
