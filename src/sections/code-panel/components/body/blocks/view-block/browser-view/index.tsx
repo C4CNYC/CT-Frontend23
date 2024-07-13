@@ -35,7 +35,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document, page, isOpenHeader }) => 
   const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
-    if (document == null || !page) {
+    if (document == null) {
       return
     }
 

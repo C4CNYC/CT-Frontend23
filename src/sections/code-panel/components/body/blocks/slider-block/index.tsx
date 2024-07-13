@@ -97,7 +97,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
 
   const carousel1 = useRef<Carousel | null>(null)
-  const [nav2] = useState<Carousel>()
+  const [nav2, setNav2] = useState<Carousel>()
   const hasNextStep = slideIndex < data.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])

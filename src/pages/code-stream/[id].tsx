@@ -288,6 +288,7 @@ export default function CodePanelPage(): ReactElement | null {
     }
 
     return () => {
+      clearInterval(socketHealthInterval.current as NodeJS.Timeout)
       socket?.disconnect()
       dispatch(setSocket(undefined))
     }
