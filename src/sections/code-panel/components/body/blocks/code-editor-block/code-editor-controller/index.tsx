@@ -10,12 +10,16 @@ import { EditorMode } from '../code-editor-collab/hook/constants'
 import { useFileManager } from '../code-editor-collab/hook/file-manager'
 
 interface CodeEditorControllerProps {
-  onChangeStreamingDocInfo?: (value: Record<string, string>) => void
+  onChangeStreamingDocInfo?: (value: string) => void
   user?: AuthUserType
   preloadedCode?: string
 }
 
-const CodeEditorController: FC<CodeEditorControllerProps> = ({ user, preloadedCode }) => {
+const CodeEditorController: FC<CodeEditorControllerProps> = ({
+  user,
+  preloadedCode,
+  onChangeStreamingDocInfo,
+}) => {
   const room = useSelector((state) => state.codeEditorController.room)
   const socket = useSelector((state) => state.codePanelGlobal.socket)
 
@@ -63,6 +67,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({ user, preloadedCo
         fileList={addedFileList}
       />
       <CodeEditorCollab
+        onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         activeFile={activeFile}
         roomId={room.roomId}
         preloadedCode={preloadedCode}

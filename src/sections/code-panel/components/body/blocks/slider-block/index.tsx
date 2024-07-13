@@ -82,6 +82,9 @@ const SliderBlock: FC<ISliderBlock> = ({
   const translate = useTranslate()
 
   const roomId = useSelector((state: RootState) => state.codeEditorController.room?.roomId)
+  const lessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const courseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
+  const unitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
 
@@ -94,7 +97,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
 
   const carousel1 = useRef<Carousel | null>(null)
-  const [nav2, setNav2] = useState<Carousel>()
+  const [nav2] = useState<Carousel>()
   const hasNextStep = slideIndex < data.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
@@ -168,7 +171,12 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onBeforeChange = (_: number, next: number) => {
-    updateActivity({ slide_index: next })
+    updateActivity({
+      slide_index: next,
+      lesson_id: lessonId,
+      course_id: courseId,
+      unit_id: unitId,
+    })
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
   }

@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
-import { voidFunction } from '@/utils'
 
 import CommentPopup from './components/comment-popup'
 import { ColabContextMenu } from './components/context-menu'
@@ -33,7 +32,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   socket?: Socket
   isMultipleExtensionFiles?: boolean
   defaultFileName?: string
-  onChangeCodemirrorValue?: (value: string) => void
+  onChangeStreamingDocInfo?: (value: string) => void
 }
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
@@ -47,7 +46,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   isMultipleExtensionFiles = false,
   defaultFileName = 'index.html',
   preloadedCode,
-  onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
   ...collabProps
 }) => {
@@ -55,7 +53,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeStreamingDocInfoFromProps?.(value)
-    onChangeCodemirrorValueFromProps(value)
     void updateCommentWidgetPosition()
   }
   const {

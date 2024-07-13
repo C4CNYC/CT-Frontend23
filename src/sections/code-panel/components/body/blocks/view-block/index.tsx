@@ -11,10 +11,10 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 
-import BrowserView, { CodeDocument } from './browser-view'
+import BrowserView from './browser-view'
 
 interface IViewBlock {
-  document: CodeDocument | null
+  document: string
 }
 
 const ViewBlock: FC<IViewBlock> = ({}) => {

@@ -48,6 +48,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   contentId,
   validations,
   preloadedCode,
+  onChangeStreamingDocInfo,
 }) => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -118,6 +119,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )}
 
       <CodeEditorController
+        onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         preloadedCode={preloadedCode}
         user={user}
       />

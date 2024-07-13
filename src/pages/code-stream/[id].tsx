@@ -134,14 +134,25 @@ export default function CodePanelPage(): ReactElement | null {
   const onChooseLesson = (lessonId: string, unitId: string) => {
     if (lastLessonId === lessonId) return
 
-    dispatch(
-      setStudentPosition({
-        lessonId,
-        slideIndex: 0,
-        courseId: lastCourseId,
-        unitId,
-      })
+    fetch(
+      `${process.env.NEXT_PUBLIC_CODE_STREAM_API}/stream-activity/lesson-history?stream_room_id=${
+        roomId || router.query.id
+      }&course_id=${lastCourseId}&unit_id=${unitId}&lesson_id=${lessonId}`,
+      {
+        method: 'GET',
+      }
     )
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(
+          setStudentPosition({
+            lessonId,
+            slideIndex: data.slide_index,
+            courseId: lastCourseId,
+            unitId,
+          })
+        )
+      })
 
     saveLessonCodeHistory(lessonId, lastCourseId!, unitId)
 

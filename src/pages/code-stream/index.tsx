@@ -3,12 +3,10 @@ import { ReactElement, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import { setStudentPosition } from '@root/src/redux/slices/code-panel-global'
-import { useDispatch, useSelector } from '@root/src/redux/store'
+import { useSelector } from '@root/src/redux/store'
 
 export default function CodePanelPage(): ReactElement | null {
   const router = useRouter()
-  const dispatch = useDispatch()
 
   const user = useSelector((state) => state.global.user)
 
@@ -37,14 +35,6 @@ export default function CodePanelPage(): ReactElement | null {
         throw new Error('Failed to create stream room')
       })
       .then((data) => {
-        dispatch(
-          setStudentPosition({
-            courseId: data.course_id,
-            unitId: data.unit_id,
-            lessonId: data.lesson_id,
-            slideIndex: data.slide_index,
-          })
-        )
         void router.push(STUDENT_PATH_DASHBOARD.codeStream.workSpace(data._id))
       })
   }, [router.query, user])

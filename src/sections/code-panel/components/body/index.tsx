@@ -18,7 +18,6 @@ import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
 import NavPanel from './blocks/nav-panel'
 import SliderBlock from './blocks/slider-block'
 import ViewBlock from './blocks/view-block'
-import { CodeDocument } from './blocks/view-block/browser-view'
 
 const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
@@ -30,7 +29,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 }) => {
   const dispatch = useDispatch()
   const wrapperRef = useRef<HTMLDivElement | null>(null)
-  const [document, setDocument] = useState<CodeDocument | null>(null)
+  const [document, setDocument] = useState<string>('')
 
   const isDesktop = useIsDesktop()
 
@@ -42,7 +41,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
   const onChangeStreamingDocInfo = (code: string) => {
     try {
-      setDocument(code as CodeDocument)
+      setDocument(code)
       dispatch(setCode(code ?? ''))
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -74,7 +73,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             data={lessonContents}
             integrations={lesson?.integrations ?? []}
             isFetching={isFetchingLessonContent}
-            code={document?.htmlBody?.join('') ?? ''}
+            code={document ?? ''}
             lessonType={lesson?.type}
           />
         ) : (
@@ -88,7 +87,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         <CodeEditorBlock
           preloadedCode={lessonContents[0]?.preload_body ?? ''}
           validations={lessonContents[slideIndex]?.validations || ''}
-          code={document?.htmlBody?.join('') ?? ''}
+          code={document ?? ''}
           user={user}
           onChangeStreamingDocInfo={onChangeStreamingDocInfo}
           contentId={lessonContents[slideIndex]?.id}
@@ -126,12 +125,12 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         data={lessonContents}
         integrations={lesson?.integrations ?? []}
         isFetching={isFetchingLessonContent}
-        code={document?.htmlBody?.join('') ?? ''}
+        code={document ?? ''}
         lessonType={lesson?.type}
       />
 
       <CodeEditorBlock
-        code={document?.htmlBody?.join('') ?? ''}
+        code={document ?? ''}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
