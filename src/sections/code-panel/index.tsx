@@ -224,6 +224,9 @@ export default function CodePanelLayout(): ReactElement | null {
   }, [courseContent, router.query.courseId, router.query.unitId, router.query.lessonId])
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
+    if (!profile) {
+      return
+    }
     try {
       await completeLesson({
         id: router.query.courseId as string,
