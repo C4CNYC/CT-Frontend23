@@ -79,9 +79,9 @@ export default function CoursePage(): React.ReactElement {
               <Stack
                 sx={{
                   flexDirection: {
-                    xs: 'column-reverse',
-                    sm: 'column-reverse',
-                    md: 'column-reverse',
+                    xs: 'column',
+                    sm: 'column',
+                    md: 'column',
                     lg: 'row',
                     xl: 'row',
                   },
