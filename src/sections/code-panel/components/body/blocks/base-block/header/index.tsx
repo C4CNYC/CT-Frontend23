@@ -1,6 +1,6 @@
 import { type FC, type ReactNode, useMemo } from 'react'
 
-import { Box, Button, Stack, Typography, useTheme } from '@mui/material'
+import { Box, Button, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import { AiOutlineClose } from '@react-icons/all-files/ai/AiOutlineClose'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -23,27 +23,32 @@ const Header: FC<HeaderProps> = ({ title, icon, isLeftBtn, closeHandler, isLeftB
   const headerSx = useMemo(() => getHeaderWrapperSx(isDesktop), [isDesktop])
 
   return (
-    <Box sx={headerSx}>
-      <Stack direction='row'>
-        {icon}
+    <Tooltip
+      title={title}
+      placement='top'
+    >
+      <Box sx={headerSx}>
+        <Stack direction='row'>
+          {icon}
 
-        <Typography
-          variant='subtitle1'
-          sx={TYP_SX}
+          <Typography
+            variant='subtitle1'
+            sx={TYP_SX}
+          >
+            {title}
+          </Typography>
+        </Stack>
+
+        <Button
+          onClick={() => {
+            closeHandler()
+          }}
+          sx={BUTTON_SX}
         >
-          {title}
-        </Typography>
-      </Stack>
-
-      <Button
-        onClick={() => {
-          closeHandler()
-        }}
-        sx={BUTTON_SX}
-      >
-        <AiOutlineClose size={20} />
-      </Button>
-    </Box>
+          <AiOutlineClose size={20} />
+        </Button>
+      </Box>
+    </Tooltip>
   )
 }
 
