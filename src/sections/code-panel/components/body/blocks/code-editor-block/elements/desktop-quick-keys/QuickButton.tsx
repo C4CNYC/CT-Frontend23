@@ -21,15 +21,19 @@ export default function QuickButton({
     <Tooltip
       placement='top'
       title={
-        <>
-          <Typography
-            fontSize={12}
-            fontWeight={700}
-          >
-            {tooltipTitle}
-          </Typography>
-          <Typography fontSize={10}>{tooltipSubtitle}</Typography>
-        </>
+        tooltipTitle || tooltipSubtitle ? (
+          <>
+            <Typography
+              fontSize={12}
+              fontWeight={700}
+            >
+              {tooltipTitle}
+            </Typography>
+            <Typography fontSize={10}>{tooltipSubtitle}</Typography>
+          </>
+        ) : (
+          ''
+        )
       }
     >
       <Button

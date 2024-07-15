@@ -48,7 +48,10 @@ export default function SecondaryButtons({
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={handleChangeButtons}
+      >
         <MdKeyboardHide size={20} />
       </QuickButton>
 
