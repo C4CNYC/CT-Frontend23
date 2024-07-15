@@ -57,13 +57,15 @@ export default function StepMultimedia({
       </Panel>
       <PanelResizeHandle />
       <Panel minSize={25}>
-        <MyEditor
-          editable={false}
-          multimediaValue={value}
-          data={data}
-          lessonId={lessonId}
-          bgColor={bgColor}
-        />
+        <Box sx={{ bgcolor: bgColor, height: '100%' }}>
+          <MyEditor
+            editable={false}
+            multimediaValue={value}
+            data={data}
+            lessonId={lessonId}
+            bgColor={bgColor}
+          />
+        </Box>
       </Panel>
     </PanelGroup>
   )
