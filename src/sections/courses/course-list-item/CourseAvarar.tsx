@@ -12,7 +12,6 @@ import {
   useCourseAddRatingMutation,
   useCourseRemoveLikeMutation,
 } from '@/redux/services/manager/courses-student'
-import { useSelector } from '@/redux/store'
 
 import { COURSE_IMG_XS, COURSE_RATING_WRAPPER_SX, LIKE_BTN_WRAPPER_SX } from './constants'
 
@@ -27,7 +26,6 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
   const [addLike, { isLoading }] = useCourseAddLikeMutation()
   const [removeLike, { isLoading: isRemoving }] = useCourseRemoveLikeMutation()
   const [updateRating] = useCourseAddRatingMutation()
-  const profile = useSelector((state) => state.global.user)
 
   useEffect(() => {
     setRating(course.my_rating ?? 0)
@@ -67,28 +65,24 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
   return (
     <>
       <Box sx={{ position: 'relative', alignSelf: 'center' }}>
-        {profile ? (
-          <Box sx={LIKE_BTN_WRAPPER_SX}>
-            <IconButton
-              onClick={likeHandler}
-              disabled={isLoading || isRemoving}
-            >
-              {!liked ? (
-                <AiOutlineHeart
-                  size={26}
-                  color='#EE467A'
-                />
-              ) : (
-                <AiFillHeart
-                  size={26}
-                  color='#EE467A'
-                />
-              )}
-            </IconButton>
-          </Box>
-        ) : (
-          <></>
-        )}
+        <Box sx={LIKE_BTN_WRAPPER_SX}>
+          <IconButton
+            onClick={likeHandler}
+            disabled={isLoading || isRemoving}
+          >
+            {!liked ? (
+              <AiOutlineHeart
+                size={26}
+                color='#EE467A'
+              />
+            ) : (
+              <AiFillHeart
+                size={26}
+                color='#EE467A'
+              />
+            )}
+          </IconButton>
+        </Box>
         <Image
           alt='course cover'
           src={course.cover ?? '/assets/courses/courseImg.png'}

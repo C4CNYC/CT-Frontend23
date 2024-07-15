@@ -61,12 +61,7 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
         ...item,
         checkers: item.contentId === contentId ? checkers : item.checkers,
       }))
-      if (checkedContents?.length) {
-        // Setting content validation to an empty array here causes a React error:
-        // "Maximum update depth exceeded"
-        // Checking for an empty array solves this error
-        dispatch(setContentValidations(checkedContents))
-      }
+      dispatch(setContentValidations(checkedContents))
     }
     dispatch(setNextStepAble(allPased))
   }, [checkers])

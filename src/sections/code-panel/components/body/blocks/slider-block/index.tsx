@@ -83,7 +83,6 @@ const SliderBlock: FC<ISliderBlock> = ({
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const profile = useSelector((state) => state.global.user)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
 
@@ -92,7 +91,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     {
       id: lessonId as string,
     },
-    { skip: !lessonId || !profile }
+    { skip: !lessonId }
   )
 
   const title = translate('instructions')
@@ -120,16 +119,6 @@ const SliderBlock: FC<ISliderBlock> = ({
     dispatch(setNextStepAble(false))
   }, [slideIndex])
 
-  useEffect(() => {
-    const progress = JSON.parse(localStorage?.getItem(`${profile?.id}_progress`) || '{}')
-    if (lessonId && progress) {
-      const lastSlide: number = progress[lessonId as string]
-      if (lastSlide && carousel1.current) {
-        carousel1.current.slickGoTo(lastSlide)
-      }
-    }
-  }, [lessonId, carousel1, data])
-
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
@@ -146,20 +135,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onUpdateLastSlide = (next: number) => {
-    if (profile) {
-      updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
-    }
-    if (localStorage) {
-      const progress = localStorage.getItem(`${profile?.id}_progress`)
-      let newProgress: any = {}
-      if (progress) {
-        newProgress = JSON.parse(progress)
-      }
-      if (lessonId) {
-        newProgress[lessonId as string] = next
-      }
-      localStorage.setItem(`${profile?.id}_progress`, JSON.stringify(newProgress))
-    }
+    updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
   }
 
   const onBeforeChange = (_: number, next: number) => {

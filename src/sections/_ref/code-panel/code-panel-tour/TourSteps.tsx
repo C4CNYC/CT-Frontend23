@@ -40,7 +40,7 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.lessonsTour',
-    title: <div>Lessons list</div>,
+    title: <div>Lesons list</div>,
     content: <div>Feel free to choose lesson which you want 😉 or ...</div>,
     disableBeacon: true,
     placement: 'top' as const,
@@ -116,7 +116,7 @@ export const TOUR_STEPS_MOBILE = [
   },
   {
     target: '.lessonsTourMobile',
-    title: <div>Lessons list</div>,
+    title: <div>Lesons list</div>,
     content: <div>Feel free to choose lesson which you want 😉</div>,
     disableBeacon: true,
     placement: 'top' as const,

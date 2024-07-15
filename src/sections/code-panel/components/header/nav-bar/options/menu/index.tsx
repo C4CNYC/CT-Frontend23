@@ -37,7 +37,7 @@ interface CustomMultiEvent {
   currentTarget: HTMLElement
 }
 
-const Menu = ({ dashboardStyle = false }): React.ReactElement => {
+const Menu = (): React.ReactElement => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
@@ -82,7 +82,7 @@ const Menu = ({ dashboardStyle = false }): React.ReactElement => {
   const anchorOriginProps = isDesktop ? DESKTOP_ANCHOR_ORIGIN : MOBILE_ANCHOR_ORIGIN
 
   return (
-    <Box sx={!isDesktop && !dashboardStyle ? GLOBAL_BOX_STYLES : null}>
+    <Box sx={!isDesktop ? GLOBAL_BOX_STYLES : null}>
       <Box
         className='menuTourMobile'
         onClick={handleOpenPopover}

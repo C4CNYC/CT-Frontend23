@@ -9,9 +9,8 @@ import { useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetClassQuery } from '@/redux/services/manager/classes-student'
 import { useGetPublicTribeQuery } from '@/redux/services/public/tribe-public'
-import { useGetPublicClassQuery } from '@/redux/services/public-student'
 import { setClass } from '@/redux/slices/code-panel'
-import { useDispatch, useSelector } from '@/redux/store'
+import { useDispatch } from '@/redux/store'
 import JoinTribeModal from '@/sections/join-tribe/JoinTribeModal'
 import DefaultClassInfo from '@/sections/main/class-info/DefaultClassInfo'
 import ClassInfoTable from '@/sections/main/quests/ClassInfoTable'
@@ -25,23 +24,14 @@ export default function HomeOverview(): React.ReactElement {
   const dispatch = useDispatch()
   const { themeStretch } = useSettingsContext()
   const { query } = useRouter()
-  const profile = useSelector((state) => state.global.user)
 
   localStorage.setItem('classId', query.id as string)
   localStorage.setItem('joinCode', query.joinCode as string)
 
-  const { data: classData, isLoading: isClassLoading } = useGetClassQuery(
+  const { data, isLoading } = useGetClassQuery(
     { id: query.id as string },
-    { skip: !query.id || !!query.joinCode || !profile }
+    { skip: !query.id || !!query.joinCode }
   )
-  const { data: publicClass, isLoading: isPublicLoading } = useGetPublicClassQuery(
-    { id: query.id as string },
-    { skip: !query.id || !!query.joinCode || !!profile }
-  )
-
-  const data = classData ?? publicClass
-  const isLoading = isClassLoading ?? isPublicLoading
-
   const translate = useTranslate()
 
   const { data: classInfo } = useGetPublicTribeQuery(

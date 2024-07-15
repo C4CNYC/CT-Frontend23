@@ -5,8 +5,6 @@ import { useRouter } from 'next/router'
 import { CustomBreadcrumbs, EmptyContent, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetCoursContentQuery } from '@/redux/services/manager/courses-student'
-import { useGetPublicCourseContentQuery } from '@/redux/services/public-student'
-import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CourseSidebar from '@/sections/course/course-sidebar'
 import CourseInfo from '@/sections/course/CourseInfo'
@@ -20,23 +18,12 @@ CoursePage.getLayout = (page: React.ReactElement) => (
 export default function CoursePage(): React.ReactElement {
   const router = useRouter()
   const { themeStretch } = useSettingsContext()
-  const profile = useSelector((state) => state.global.user)
-  const { data: courseContent, isLoading: isContentLoading } = useGetCoursContentQuery(
+  const { data, isLoading } = useGetCoursContentQuery(
     {
       id: router.query.id as string,
     },
-    { skip: !router.query.id || !profile }
+    { skip: !router.query.id }
   )
-  const { data: publicContent, isLoading: isPublicLoading } = useGetPublicCourseContentQuery(
-    {
-      id: router.query.id as string,
-    },
-    { skip: !router.query.id || !!profile }
-  )
-
-  const data = courseContent ?? publicContent
-  const isLoading = isContentLoading ?? isPublicLoading
-
   const translate = useTranslate()
 
   return (

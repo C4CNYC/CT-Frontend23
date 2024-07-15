@@ -1,6 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 
-import { IClass } from '@/redux/interfaces/class.interface'
 import {
   ICourseContent,
   ICourseElement,
@@ -22,7 +21,6 @@ export const studentPublicApi = createApi({
     'LessonPublicContent',
     'CoursePublicContent',
     'Projects',
-    'ClassPublic',
   ],
   endpoints: () => ({}),
 })
@@ -73,13 +71,6 @@ const extendedApi = studentPublicApi.injectEndpoints({
       }),
       providesTags: ['Projects'],
     }),
-    getPublicClass: builder.query<IClass & BaseResponseInterface, { id: string }>({
-      query: ({ id }) => ({
-        url: `/student/public/class/${id}`,
-        method: 'GET',
-      }),
-      providesTags: ['ClassPublic'],
-    }),
   }),
 })
 
@@ -88,7 +79,6 @@ export const {
   useGetPublicCourseQuery,
   useGetPublicLessonQuery,
   useGetPublicLessonContentQuery,
-  useGetPublicClassQuery,
   // ------  projects  ---------
   useGetPublicProjectQuery,
 } = extendedApi

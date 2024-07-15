@@ -11,7 +11,6 @@ import { useResponsive } from '@/hooks/useResponsive'
 import { useSelector } from '@/redux/store'
 import { bgBlur } from '@/utils/cssStyles'
 
-import Menu from '../../../sections/code-panel/components/header/nav-bar/options/menu'
 import { HEADER_SIZES, NAV_SIZES } from '../../../theme/consts'
 
 import AccountPopover from './AccountPopover'
@@ -27,7 +26,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
   const router = useRouter()
   const user = useSelector((state) => state.global.user)
 
-  const { themeLayout, themeMode } = useSettingsContext()
+  const { themeLayout } = useSettingsContext()
 
   const isNavHorizontal = themeLayout === 'horizontal'
 
@@ -74,7 +73,8 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
       >
         <ThemeSwitcher />
         <LanguagePopover />
-        {user ? <AccountPopover /> : <Menu dashboardStyle={true} />}
+
+        <AccountPopover />
       </Stack>
     </>
   )

@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import { LoadingScreen } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-student'
-import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 ClassMain.getLayout = (page: React.ReactElement) => (
@@ -14,9 +13,7 @@ ClassMain.getLayout = (page: React.ReactElement) => (
 
 export default function ClassMain(): React.ReactElement {
   const { push } = useRouter()
-  const profile = useSelector((state) => state.global.user)
-
-  const { data: tribes, isLoading } = useGetStudentClassesQuery({}, { skip: !profile })
+  const { data: tribes, isLoading } = useGetStudentClassesQuery({})
   useEffect(() => {
     if (isLoading) return
     if (localStorage.getItem('ON-BOARDING') === 'on-boarding') {

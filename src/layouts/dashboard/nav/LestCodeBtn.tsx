@@ -7,7 +7,6 @@ import { useSnackbar } from 'notistack'
 
 import { Iconify } from '@/components/iconify'
 import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
-import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -23,10 +22,10 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
   const { enqueueSnackbar } = useSnackbar()
   const theme = useTheme()
   const letsCodeBtnSx = useMemo(() => getLetsCodeBtnSx(theme, isMini), [theme, isMini])
-  const profile = useSelector((state) => state.global.user)
+
   const { data: assigments } = useGetAssignmentListStudentQuery(
     { class_id: query.id as string },
-    { skip: !query.id || !profile }
+    { skip: !query.id }
   )
 
   return (

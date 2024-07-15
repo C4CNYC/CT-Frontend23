@@ -26,6 +26,7 @@ export default function Tribes(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
   const [currentTab, setCurrentTab] = useState(TabType.Active)
   const translate = useTranslate()
+
   const { data, isLoading } = useGetStudentClassesQuery({})
 
   if (isLoading) return <SkeletonTribes />

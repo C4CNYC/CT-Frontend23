@@ -2,12 +2,6 @@ import { axios } from '@/utils'
 
 import { PATH_AUTH } from '../routes/paths'
 
-export const isUserLoggedIn = () => {
-  const accessToken = localStorage.getItem('accessToken')
-  const isUserLoggedIn = accessToken && isValidToken(accessToken)
-  return isUserLoggedIn
-}
-
 function jwtDecode(token: string): Record<string, string> {
   const base64Url = token.split('.')[1]
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')

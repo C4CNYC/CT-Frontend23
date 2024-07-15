@@ -187,7 +187,6 @@ export const menuConfig = {
   [Role.Owner]: [admin, managment, content],
   [Role.Admin]: [admin, managment, content],
   [Role.Student]: [courses, general, apps],
-  [Role.Anonymous]: [courses, general, apps],
   [Role.Manager]: [managment, content],
   [Role.Editor]: [content],
 }

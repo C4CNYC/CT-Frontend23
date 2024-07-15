@@ -15,6 +15,7 @@ import AddComment from './components/add-comment'
 import CommentPopup from './components/comment-popup'
 import FileModal from './components/file-modal'
 import FileSwitcher from './components/file-switcher'
+import LoadingCodeEditor from './components/loading-code-editor'
 import StatusLabel, { RoomStatus } from './components/status-label'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
 import { EditorMode } from './hook/constants'
@@ -40,7 +41,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   onChangeCodemirrorValue?: (value: string) => void
 }
 
-const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
+const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
@@ -57,7 +58,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   ...collabProps
 }) => {
   const styles = useStyles()
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
   const { user, isInitialized: authIsInitialized } = useAuthContext()
@@ -65,38 +65,30 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const dispatch = useDispatch()
   const localstorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
-      const localStorageCodeValue = localStorage.getItem(
-        getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId)
+      const json = localStorage.getItem(
+        getLocalStorageRoomKey(prevLessonId || `${user?.student_profile?.id}_${query?.lessonId}`)
       )
-      if (localStorageCodeValue) {
+      if (json) {
         try {
-          const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
+          const docInfo = JSON.parse(json) as Record<string, string>
           const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
           if (code) {
             return code
           }
-        } catch (e) {
-          return localStorageCodeValue
-        }
+        } catch (e) {}
       }
     }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId])
+  }, [mode, query?.lessonId, prevLessonId, preloadedCode])
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
-    onChangeStreamingDocInfoFromProps?.(value as any)
-    localStorage.setItem(
-      getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId),
-      value
-    )
     void updateCommentWidgetPosition()
   }
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
-    if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
-      return
-    }
     onChangeStreamingDocInfoFromProps?.(doc)
+
+    localStorage.setItem(getLocalStorageRoomKey(roomId), JSON.stringify(doc))
   }
 
   const {
@@ -151,10 +143,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     defaultFileName,
   })
 
-  const codeValue = streamingDoc?.toString()?.length
-    ? streamingDoc.toString()
-    : localstorageCode ?? preloadedCode
-
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
   useEffect(() => {
@@ -162,10 +150,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       dispatch(setPrevLessonId(null))
       dispatch(setPrevLessonCode(null))
     }
-  }, [])
-
-  useEffect(() => {
-    onChangeCodemirrorValue(codeValue as string)
   }, [])
 
   return (
@@ -198,7 +182,9 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
       <StatusLabel status={roomStatus} />
 
-      {
+      {isLoading || collabProps.isFetching || !streamingDoc ? (
+        <LoadingCodeEditor />
+      ) : (
         <>
           <CodeMirror
             onContextMenu={onContextMenu}
@@ -210,7 +196,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             theme='dark'
             extensions={extensions}
             readOnly={isReadOnly}
-            value={codeValue}
+            value={streamingDoc.toString() ?? preloadedCode}
             onChange={onChangeCodemirrorValue}
           />
 
@@ -240,7 +226,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             </ClickAwayListener>
           </Popover>
         </>
-      }
+      )}
     </div>
   )
 }

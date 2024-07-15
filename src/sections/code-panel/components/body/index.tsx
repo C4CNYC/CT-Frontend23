@@ -74,7 +74,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       }, 30000) // 30 seconds
 
       setDocument(doc as CodeDocument)
-      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
+      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? ''))
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('Error: ', error)

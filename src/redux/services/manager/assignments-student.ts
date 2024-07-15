@@ -21,34 +21,12 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ['Assignment'],
     }),
-    getAssignmentStudentPublic: builder.query<
-      IAssignmentFull & BaseResponseInterface,
-      { assignmentId: string } & IAssignmetsSearchParams
-    >({
-      query: ({ assignmentId, ...params }) => ({
-        url: `/student/assignment/public/${assignmentId}`,
-        method: 'GET',
-        params,
-      }),
-      providesTags: ['Assignment'],
-    }),
     getAssignmentListStudent: builder.query<
       BaseListResponseInterface<IAssignmentReduced & BaseResponseInterface>,
       { class_id: string }
     >({
       query: ({ ...params }) => ({
         url: '/student/assignment',
-        method: 'GET',
-        params,
-      }),
-      providesTags: ['Assignments'],
-    }),
-    getAssignmentListStudentPublic: builder.query<
-      BaseListResponseInterface<IAssignmentReduced & BaseResponseInterface>,
-      { class_id: string }
-    >({
-      query: ({ ...params }) => ({
-        url: '/student/assignment/public',
         method: 'GET',
         params,
       }),
@@ -84,9 +62,7 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetAssignmentListStudentQuery,
-  useGetAssignmentListStudentPublicQuery,
   useGetAssignmentStudentQuery,
-  useGetAssignmentStudentPublicQuery,
   // -------------mutation-----------
   usePinAssignmentMutation,
   useUnpinAssignmentMutation,
