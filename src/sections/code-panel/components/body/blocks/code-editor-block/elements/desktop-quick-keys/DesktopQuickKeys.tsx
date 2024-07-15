@@ -5,12 +5,15 @@ import { MdUndo } from '@react-icons/all-files/md/MdUndo'
 import { AnimatePresence, m } from 'framer-motion'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 
+import useIsDesktop from '@root/src/hooks/useIsDesktop'
+
 import PrimaryButtons from './PrimaryButtons'
 import SecondaryButtons from './SecondaryButtons'
 
 export default function DesktopQuickKeys() {
   const [open, setOpen] = useState<boolean>(false)
   const [isOpenButtons, setIsOpenButtons] = useState<boolean>(false)
+  const isDesktop = useIsDesktop()
 
   const handleOpen = () => {
     setOpen(!open)
@@ -32,7 +35,13 @@ export default function DesktopQuickKeys() {
       <Box
         // ref={ref}
         onClick={handleOpen}
-        sx={{ position: 'absolute', zIndex: 300, bottom: 0, left: 0 }}
+        sx={{
+          position: 'absolute',
+          zIndex: 300,
+          bottom: 0,
+          left: 0,
+          display: isDesktop ? 'block' : 'none',
+        }}
       >
         <AnimatePresence>
           <m.div
