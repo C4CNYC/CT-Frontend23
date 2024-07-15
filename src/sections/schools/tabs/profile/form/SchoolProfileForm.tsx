@@ -96,7 +96,7 @@ export default function SchoolProfileForm({
       methods.reset({}, { keepValues: true, keepIsValid: true })
       enqueueSnackbar(translate('messages_update_info_success'))
     } catch (error: any) {
-      enqueueSnackbar(error.message.text, { variant: 'error' })
+      enqueueSnackbar(error.data.message, { variant: 'error' })
     }
   }
 

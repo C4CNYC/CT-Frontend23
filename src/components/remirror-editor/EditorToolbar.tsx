@@ -129,7 +129,7 @@ export default function EditorToolbar({
             },
           }}
           style={{
-            zIndex: 1500,
+            zIndex: 1300,
             padding: 10,
           }}
         >

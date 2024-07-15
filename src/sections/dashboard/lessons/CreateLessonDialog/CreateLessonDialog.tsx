@@ -156,7 +156,7 @@ export default function CreateLessonDialog({
       <Dialog
         open={open}
         onClose={handleClose}
-        sx={{ zIndex: 9999 }}
+        sx={{ zIndex: 1300 }}
       >
         <DialogTitle>
           {isEdit ? translate('lessons_edit_lesson') : translate('lessons_create_lesson')}
