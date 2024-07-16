@@ -816,6 +816,8 @@ const en = {
   open_full_catalog: 'Open Full Catalog',
 
   // code panel blocks
+  no_preview_available_title: 'Browser',
+  no_preview_available_results: 'Here you will see the results of your work in realtime',
   no_preview_available: 'No preview available?',
   means_time_to_code: 'That means it’s time to get coding.',
   code_editor: 'Code Editor',

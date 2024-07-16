@@ -811,6 +811,8 @@ const fr = {
   open_full_catalog: 'Ouvrir le catalogue complet',
 
   // code panel blocks
+  no_preview_available_title: 'Navigateur',
+  no_preview_available_results: 'Vous verrez ici les résultats de votre travail en temps réel',
   no_preview_available: 'Aucun aperçu disponible?',
   means_time_to_code: 'Cela signifie qu’il est temps de se mettre au codage.',
   code_editor: 'Éditeur de code',

@@ -815,6 +815,8 @@ const ar = {
   open_full_catalog: 'فتح الكتالوج الكامل',
 
   // code panel blocks
+  no_preview_available_title: 'المتصفح',
+  no_preview_available_results: 'هنا سترى نتائج عملك في الوقت الفعلي',
   no_preview_available: 'لا تتوفر معاينة؟',
   means_time_to_code: 'وهذا يعني أن الوقت قد حان للحصول على الترميز.',
   code_editor: 'محرر الكود',
