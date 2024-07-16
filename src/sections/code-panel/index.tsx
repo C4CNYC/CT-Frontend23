@@ -151,7 +151,10 @@ export default function CodePanelLayout(): ReactElement | null {
     { skip: !!profile || !router.query.courseId || !router.query.lessonId }
   )
 
-  const lessonContent = profile ? lessonStudentContent : publicLessonContent
+  const lessonContent = profile ? lessonStudentContent : publicLessonContent?.length ? Array.from(publicLessonContent).sort((a, b) => {
+    return a.meta.order > b.meta.order ? 1 : -1
+  }) : []
+
   const isLoadingLessonContent = profile
     ? isLoadingLessonStudentContent
     : isPublicLessonContentLoading
