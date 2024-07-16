@@ -8,6 +8,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import {
   AVAILABLE_TYP_SX,
   CODING_TYP_SX,
+  COMMONT_TEXT_SX,
   getParentStackSx,
   getSkeletonSx,
   getStackBottonSx,
@@ -73,6 +74,18 @@ const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
       <Stack sx={bottonStackSx}>
         <Typography
           sx={AVAILABLE_TYP_SX}
+          variant='subtitle1'
+        >
+          {translate('no_preview_available_title')} 🖥️
+        </Typography>
+        <Typography
+          sx={COMMONT_TEXT_SX}
+          variant='subtitle1'
+        >
+          {translate('no_preview_available_results')} 🤯
+        </Typography>
+        <Typography
+          sx={CODING_TYP_SX}
           variant='subtitle1'
         >
           {translate('no_preview_available')}

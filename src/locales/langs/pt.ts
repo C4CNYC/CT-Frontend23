@@ -809,6 +809,8 @@ const pt = {
   open_full_catalog: 'Abra o catálogo completo',
 
   // code panel blocks
+  no_preview_available_title: 'Navegador',
+  no_preview_available_results: 'Aqui verá os resultados do seu trabalho em tempo real',
   no_preview_available: 'Nenhuma visualização disponível?',
   means_time_to_code: 'Isso significa que é hora de obter codificação.',
   code_editor: 'Editor de código',
