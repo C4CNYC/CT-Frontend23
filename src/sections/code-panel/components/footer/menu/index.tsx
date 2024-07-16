@@ -54,7 +54,6 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
 
   return (
     <Box
-      className='tourBottombarMenu'
       sx={{
         width: '40px',
         display: !isDesktop ? 'none' : 'flex',

@@ -165,10 +165,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
-      <Box
-        sx={progressWrapperSx}
-        className='coursesTour'
-      >
+      <Box sx={progressWrapperSx}>
         {data.map((slide, index) => (
           <Box
             key={index}
