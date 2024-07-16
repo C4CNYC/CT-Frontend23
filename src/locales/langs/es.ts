@@ -831,7 +831,7 @@ const es = {
   are_you_sure_see_solution:
     '¿Estás seguro de que quieres ver el código de solución completo para esta lección??',
   not_available_for_this_step: 'No disponible para este paso.',
-  no_solution: 'SIN SOLUCIÓN',
+  no_solution: 'No hay solución para esta diapositiva.',
   coding_editor: 'Editor de codificación:',
   customize: 'Personalizar:',
   reset_lesson: 'Restablecer lección',

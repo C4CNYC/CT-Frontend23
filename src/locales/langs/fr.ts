@@ -835,7 +835,7 @@ const fr = {
   are_you_sure_see_solution:
     'Êtes-vous sûr de vouloir voir le code complet de la solution pour cette leçon?',
   not_available_for_this_step: 'Non disponible pour cette étape.',
-  no_solution: 'PAS DE SOLUTION',
+  no_solution: "Aucune solution n'est disponible pour cette diapositive.",
   coding_editor: 'ÉDITEUR DE CODAGE:',
   customize: 'PERSONNALISER:',
   reset_lesson: 'Réinitialiser la leçon',

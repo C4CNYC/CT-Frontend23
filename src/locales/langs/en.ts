@@ -839,7 +839,7 @@ const en = {
   full_code_solution: 'FULL CODE SOLUTION',
   are_you_sure_see_solution: 'Are you sure you want to see the full solution code for this lesson?',
   not_available_for_this_step: 'Not available for this step.',
-  no_solution: 'NO SOLUTION',
+  no_solution: 'A solution is not available for this slide.',
   coding_editor: 'CODING EDITOR:',
   customize: 'CUSTOMIZE:',
   reset_lesson: 'Reset Lesson',
