@@ -836,7 +836,7 @@ const ar = {
   full_code_solution: 'حل الكود الكامل',
   are_you_sure_see_solution: 'هل أنت متأكد أنك تريد رؤية كود الحل الكامل لهذا الدرس؟',
   not_available_for_this_step: 'غير متاح لهذه الخطوة.',
-  no_solution: 'لا حل',
+  no_solution: 'لا يتوفر حل لهذه الشريحة.',
   coding_editor: 'محرر الترميز:',
   customize: 'يعدل أو يكيف:',
   reset_lesson: 'إعادة تعيين الدرس',
