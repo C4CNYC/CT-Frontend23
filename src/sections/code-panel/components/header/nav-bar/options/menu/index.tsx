@@ -80,12 +80,7 @@ const Menu = (): React.ReactElement => {
 
   return (
     <Box sx={!isDesktop ? GLOBAL_BOX_STYLES : null}>
-      <Box
-        className='menuTourMobile'
-        onClick={handleOpenPopover}
-      >
-        {getHumburger(isDesktop)}
-      </Box>
+      <Box onClick={handleOpenPopover}>{getHumburger(isDesktop)}</Box>
 
       <MenuPopover
         open={openPopover}

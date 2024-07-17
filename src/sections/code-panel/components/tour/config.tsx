@@ -111,32 +111,11 @@ export const TOUR_STEPS_DECKTOP = [
     placement: 'top' as const,
   },
   {
-    target: '.browserTour',
-    title: <div>Browser</div>,
-    content: <div>Here you will see the results of your work in realtime 🤯</div>,
-    disableBeacon: true,
-    placement: 'left' as const,
-  },
-  {
     target: '.lessonsTour',
     title: <div>Lesons list</div>,
     content: <div>Feel free to choose lesson which you want 😉</div>,
     disableBeacon: true,
     placement: 'top' as const,
-  },
-  {
-    target: '.topBarTour',
-    title: <div>Now let`s look at this usefull part</div>,
-    content: (
-      <div>
-        <p>
-          Here we have timer, settings and... wait a minute... you're a coder, you know how to test
-          new things 😌. Don't be shy and click on each!
-        </p>
-      </div>
-    ),
-    disableBeacon: true,
-    placement: 'bottom' as const,
   },
   {
     target: '.tourStart',
@@ -214,26 +193,6 @@ export const TOUR_STEPS_MOBILE = [
     content: <div>Feel free to choose lesson which you want 😉</div>,
     disableBeacon: true,
     placement: 'top' as const,
-  },
-  {
-    target: '.coursesTour',
-    content: <div>check your learning progress </div>,
-    disableBeacon: true,
-    placement: 'top' as const,
-  },
-  {
-    target: '.menuTourMobile',
-    title: <div>Now let`s look at this usefull part</div>,
-    content: (
-      <div>
-        <p>
-          Here we have some links, settings and... wait a minute... you're a coder, you know how to
-          test new things 😌. Don't be shy and click on each!
-        </p>
-      </div>
-    ),
-    disableBeacon: true,
-    placement: 'bottom' as const,
   },
   {
     target: '.tourStart',
