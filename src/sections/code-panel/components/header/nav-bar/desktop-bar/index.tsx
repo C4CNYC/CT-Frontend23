@@ -41,7 +41,6 @@ const DesktopBar: FC<IDesktopBar> = ({
 
   return (
     <Stack
-      className='topBarTour'
       spacing={1}
       direction='row'
       alignItems='center'

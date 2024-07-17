@@ -14,10 +14,7 @@ const MobileBar: FC = () => {
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
 
   return (
-    <Stack
-      className='topBarTour'
-      sx={STACK_STYLES}
-    >
+    <Stack sx={STACK_STYLES}>
       <SmallScreenTabs
         index={activeTab}
         onChangeIndex={(value) => {

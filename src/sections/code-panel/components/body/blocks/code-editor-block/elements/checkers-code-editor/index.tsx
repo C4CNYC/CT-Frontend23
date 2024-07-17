@@ -95,34 +95,36 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
         sx={OPEN_BOX_SX}
         ref={ref}
       >
-        <AnimatePresence>
-          <m.div
-            initial='visible'
-            animate={isVisible ? 'closed' : 'open'}
-            variants={OPEN_HANDLER_ANIMATION}
-          >
-            <Box sx={OPEN_BTN_WRAPPER_SX}>
-              <Box
-                sx={BOX_SX}
-                onClick={handleCollaps}
-              >
-                <CheckerIcon
-                  width={14}
-                  height={15}
-                  color={handleIconColor(checkers)}
-                />
-              </Box>
-              <Box sx={INDICATORS_WRAPPER_SX}>
-                {checkers.map((checker, i) => (
-                  <Box
-                    key={i}
-                    sx={{ ...getIndicatorSx(checker.valid) }}
+        <div className='checkers'>
+          <AnimatePresence>
+            <m.div
+              initial='visible'
+              animate={isVisible ? 'closed' : 'open'}
+              variants={OPEN_HANDLER_ANIMATION}
+            >
+              <Box sx={OPEN_BTN_WRAPPER_SX}>
+                <Box
+                  sx={BOX_SX}
+                  onClick={handleCollaps}
+                >
+                  <CheckerIcon
+                    width={14}
+                    height={15}
+                    color={handleIconColor(checkers)}
                   />
-                ))}
+                </Box>
+                <Box sx={INDICATORS_WRAPPER_SX}>
+                  {checkers.map((checker, i) => (
+                    <Box
+                      key={i}
+                      sx={{ ...getIndicatorSx(checker.valid) }}
+                    />
+                  ))}
+                </Box>
               </Box>
-            </Box>
-          </m.div>
-        </AnimatePresence>
+            </m.div>
+          </AnimatePresence>
+        </div>
       </Box>
       <Stack sx={stackSx}>
         <AnimatePresence>

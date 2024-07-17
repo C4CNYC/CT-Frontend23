@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { Box } from '@mui/material'
 import { MdUndo } from '@react-icons/all-files/md/MdUndo'
 import { AnimatePresence, m } from 'framer-motion'
-import { useDetectClickOutside } from 'react-detect-click-outside'
 
 import useIsDesktop from '@root/src/hooks/useIsDesktop'
 
@@ -26,14 +25,9 @@ export default function DesktopQuickKeys() {
   const handleChangeButtons = () => {
     setIsOpenButtons(!isOpenButtons)
   }
-
-  // implement closing when detect click outside the buttons box
-  const ref = useDetectClickOutside({ onTriggered: handleClose })
-
   return (
     <>
       <Box
-        // ref={ref}
         onClick={handleOpen}
         sx={{
           position: 'absolute',
@@ -59,12 +53,14 @@ export default function DesktopQuickKeys() {
             }}
             style={{ display: 'flex', background: '#b36060', borderTopRightRadius: 8 }}
           >
-            <Box sx={OPEN_BTN_SX}>
-              <MdUndo
-                color='#fff'
-                size={20}
-              />
-            </Box>
+            <div className='toolbox'>
+              <Box sx={OPEN_BTN_SX}>
+                <MdUndo
+                  color='#fff'
+                  size={20}
+                />
+              </Box>
+            </div>
           </m.div>
         </AnimatePresence>
       </Box>
