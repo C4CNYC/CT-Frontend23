@@ -444,7 +444,7 @@ const es = {
   assignments_add_tags_info: 'Esto ayudará a los demás a saber cuál es el tema.',
   assignments_updated_successfuly: 'Asignación actualizada correctamente.',
   assignments_created_successfuly: '¡Asignación creada con éxito!',
-
+  assigments_onboarding_info: 'Así es como asigna un curso o módulo a su clase.',
   // Progress page
   progress: 'Progreso',
   progress_tooltip_info: 'Haga clic en una columna para ampliarla y ver los detalles',

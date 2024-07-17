@@ -449,7 +449,7 @@ const ar = {
   assignments_add_tags_info: 'وهذا سوف يساعد الآخرين على معرفة ما هو الموضوع.',
   assignments_updated_successfuly: 'تم تحديث المهمة بنجاح!',
   assignments_created_successfuly: 'تم إنشاء الواجب بنجاح!',
-
+  assigments_onboarding_info: 'هذه هي الطريقة التي تقوم بها بتعيين مقرر دراسي أو وحدة نمطية لفصلك.',
   // Progress page
   progress: 'تقدم',
   progress_tooltip_info: 'انقر على أحد الأعمدة لتوسيعه والاطلاع على التفاصيل',

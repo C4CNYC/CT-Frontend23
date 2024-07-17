@@ -445,7 +445,8 @@ const fr = {
   assignments_add_tags_info: 'Cela aidera les autres à savoir quel est le thème.',
   assignments_updated_successfuly: 'Devoir mis à jour avec succès!',
   assignments_created_successfuly: 'Devoir créé avec succès!',
-
+  assigments_onboarding_info:
+    "C'est ainsi que vous attribuez un cours ou un module à votre classe.",
   // Progress page
   progress: 'Progrès',
   progress_tooltip_info: 'Cliquez sur une colonne pour la développer et voir les détails',
