@@ -444,6 +444,7 @@ const pt = {
   assignments_add_tags_info: 'Isso ajudará os outros a saber qual é o tema.',
   assignments_updated_successfuly: 'Tarefa atualizada com sucesso!',
   assignments_created_successfuly: 'Tarefa criada com sucesso!',
+  assigments_onboarding_info: 'É assim que atribui um curso ou módulo à sua turma.',
 
   // Progress page
   progress: 'Progresso',

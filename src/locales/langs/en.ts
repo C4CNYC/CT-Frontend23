@@ -446,7 +446,7 @@ const en = {
   assignments_add_tags_info: 'This will help others know what the theme is.',
   assignments_updated_successfuly: 'Assignment updated successfully!',
   assignments_created_successfuly: 'Assignment created successfully!',
-
+  assigments_onboarding_info: 'This is how you assign a course or module to your class.',
   // Progress page
   progress: 'Progress',
   progress_tooltip_info: 'Click on a column to expand it and see details',

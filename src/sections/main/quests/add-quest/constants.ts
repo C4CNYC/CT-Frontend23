@@ -10,6 +10,8 @@ export const DAYS_TO_END = 7
 export const DAYS_TO_CLOSE = 10
 export const TOOLTIP_TEXT = `A quest is an assignment for a class.
 You can assign a part of or a full course, or you can assign any document link or open project to a class through a quest.`
+export const QUEST_BANNER = 'QUEST_BANNER'
+export const FALSY_VALLUE = 'false'
 
 export const selectStyle = (theme: Theme) => ({
   height: '41px',
@@ -47,15 +49,29 @@ export const statusSelect = (theme: Theme) => ({
   width: { xs: '100%', sm: '300px', md: '300px' },
 })
 
-export const mainContainerStyles = (theme: Theme) => ({
+export const mainContainerStyles = (theme: Theme, onboardingInfo: boolean) => ({
   px: 5,
   py: 8,
   border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
   ...bgBlur({
     color: theme.palette.mode === 'light' ? '#f3f3f3' : theme.palette.background.default,
   }),
-  borderRadius: 3,
+  borderTopLeftRadius: onboardingInfo ? 0 : 3,
+  borderTopRightRadius: onboardingInfo ? 0 : 3,
+  borderBottomLeftRadius: 3,
+  borderBottomRightRadius: 3,
 })
+
+export const COLLAPSE_INFO_BANNER_SX = {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  background: '#E9F5FC',
+  borderTopLeftRadius: '16px',
+  borderTopRightRadius: '16px',
+  px: 2,
+  py: 1,
+}
 
 export const INPUT_TEXT_SX = {
   position: 'absolute',
