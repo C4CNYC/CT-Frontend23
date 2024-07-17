@@ -150,7 +150,6 @@ export default function CreateModuleDialog({
       } else {
         const m = await createModule({
           ...data,
-          tips: data?.tips ? [data.tips] : [],
           duration: data?.duration?.trim() ?? '1 month',
         }).unwrap()
         if (query.course_id) {

@@ -57,12 +57,6 @@ const MainTab = ({ setUploadedFile, uploadedFile }: MainTabProps): React.ReactEl
         rows={3}
       />
 
-      <RHFTextField
-        name='tips'
-        placeholder='Enter tip'
-        label='Add tip'
-      />
-
       <RHFSwitch
         name='active'
         label='Module active'
