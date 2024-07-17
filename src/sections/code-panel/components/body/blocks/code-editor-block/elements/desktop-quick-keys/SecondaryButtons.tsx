@@ -6,8 +6,10 @@ import QuickButton from './QuickButton'
 
 export default function SecondaryButtons({
   handleChangeButtons,
+  handleClose,
 }: {
   handleChangeButtons: VoidFunction
+  handleClose: VoidFunction
 }) {
   return (
     <Box sx={{ height: 30, display: 'flex' }}>
@@ -48,14 +50,18 @@ export default function SecondaryButtons({
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={handleClose}
+        tooltipTitle='Compress'
+      >
         <MdKeyboardHide size={20} />
       </QuickButton>
 
       <VerticalDivider />
 
       <QuickButton
-        tooltipTitle='Close'
+        tooltipTitle='Back'
         onClick={handleChangeButtons}
         sx={{ minWidth: 30 }}
       >
