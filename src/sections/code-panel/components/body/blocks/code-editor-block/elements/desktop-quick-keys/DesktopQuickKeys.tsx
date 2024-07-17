@@ -91,7 +91,10 @@ export default function DesktopQuickKeys() {
                 handleClose={handleClose}
               />
             ) : (
-              <SecondaryButtons handleChangeButtons={handleChangeButtons} />
+              <SecondaryButtons
+                handleChangeButtons={handleChangeButtons}
+                handleClose={handleClose}
+              />
             )}
           </m.div>
         </AnimatePresence>
