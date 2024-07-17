@@ -1,5 +1,4 @@
 import { type FabProps, type SxProps } from '@mui/material'
-
 import { Theme } from '@mui/system'
 
 import { type Action } from './config'
