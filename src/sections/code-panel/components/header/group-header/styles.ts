@@ -35,7 +35,7 @@ export const AVATAR_STYLES = {
 export const STACK_GROUP_STYLES = {
   pl: 2,
   pr: 4,
-  width: '250px',
+  width: { md: '150px', lg: '200px' },
 }
 
 export const GROUP_TITLE_STYLES = {
