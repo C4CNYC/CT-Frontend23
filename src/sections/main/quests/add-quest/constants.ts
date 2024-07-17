@@ -51,7 +51,8 @@ export const statusSelect = (theme: Theme) => ({
 
 export const mainContainerStyles = (theme: Theme, onboardingInfo: boolean) => ({
   px: 5,
-  py: 8,
+  pb: 5,
+  pt: 1,
   border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
   ...bgBlur({
     color: theme.palette.mode === 'light' ? '#f3f3f3' : theme.palette.background.default,
