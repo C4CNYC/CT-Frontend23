@@ -59,6 +59,7 @@
     "@uiw/codemirror-theme-dracula": "^4.21.20",
     "@uiw/codemirror-theme-xcode": "^4.21.20",
     "@uiw/react-codemirror": "4.21.21",
+    "@uiw/react-split": "^5.9.3",
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.6.5",
     "chatgpttutor": "^0.3.0",
