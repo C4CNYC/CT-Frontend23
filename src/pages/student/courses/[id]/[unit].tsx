@@ -97,9 +97,9 @@ export default function ModulePage(): React.ReactElement {
               name: course?.name ?? translate('course'),
               href: STUDENT_PATH_DASHBOARD.courses.course(course?.id as string),
             },
-            {
-              name: module?.name ?? translate('module'),
-            },
+            // {
+            //   name: module?.name ?? translate('module'),
+            // },
           ]}
         />
         <Stack
