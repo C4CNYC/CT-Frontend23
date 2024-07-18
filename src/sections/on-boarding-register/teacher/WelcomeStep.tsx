@@ -66,6 +66,6 @@ const LAUNCH_SESSION = {
   title: 'login_launch_session_title',
   subtitle: 'login_launch_session_subtitle',
   info: 'login_launch_session_info',
-  img: '/assets/on-boarding/course.svg',
+  img: '/assets/on-boarding/course.png',
   color: '#EE467A33',
 }
