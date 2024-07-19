@@ -26,6 +26,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
 
   const [isConnected, setIsConnected] = useState(false)
   const room = useSelector((state) => state.codeEditorController.room)
+  const [randomRoom] = useState(`${Math.random()}${Date.now()}`)
 
   // const socket = useMemo(() => createSocket(user?.id || generateId(20)), [user]);
   const socket = useSelector((state) => state.codePanelGlobal.socket)
@@ -52,21 +53,16 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
     }
   }, [socket])
 
-  if (room == null /* || !isConnected */) {
-    // if (room == null  || !isConnected ) {
-    return null
-  }
-
   return (
     <>
       {!isFetching ? (
         <CodeEditorCollab
-          roomId={room.roomId}
-          cursorText={room.cursorText}
+          roomId={room?.roomId ?? randomRoom}
+          cursorText={room?.cursorText}
           preloadedCode={preloadedCode}
           onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-          code={room.code}
-          mode={room.mode}
+          code={room?.code}
+          mode={room?.mode}
           socket={socket}
           user={user}
           isFetching={isFetching}
