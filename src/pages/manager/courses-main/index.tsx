@@ -18,14 +18,12 @@ import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
 import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
-  const { isAdmin } = useIsAdmin()
   const { user } = useAuthContext()
   const { filters, setFilter } = useFilters<ICourseSearchParams>(
     {
@@ -45,7 +43,6 @@ export default function CoursesListPage(): React.ReactElement {
       />
     )
   }
-
   return (
     <>
       <Head>
@@ -65,18 +62,14 @@ export default function CoursesListPage(): React.ReactElement {
             },
           ]}
           action={
-            isAdmin ? (
-              <CreateCourseDialog id=''>
-                <Button
-                  variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
-                >
-                  {translate('courses_add')}
-                </Button>
-              </CreateCourseDialog>
-            ) : (
-              ''
-            )
+            <CreateCourseDialog id=''>
+              <Button
+                variant='contained'
+                startIcon={<Iconify icon='eva:plus-fill' />}
+              >
+                {translate('courses_add')}
+              </Button>
+            </CreateCourseDialog>
           }
         />
         <FilterCourses
