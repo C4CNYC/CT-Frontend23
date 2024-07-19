@@ -152,12 +152,12 @@ export default function CodePanelLayout(): ReactElement | null {
   )
 
   const lessonContent = profile
-      ? lessonStudentContent
-      : publicLessonContent?.length
-        ? Array.from(publicLessonContent).sort((a, b) => {
-            return a.meta.order > b.meta.order ? 1 : -1
+    ? lessonStudentContent
+    : publicLessonContent?.length
+      ? Array.from(publicLessonContent).sort((a, b) => {
+          return a.meta.order > b.meta.order ? 1 : -1
         })
-        : []
+      : []
 
   const isLoadingLessonContent = profile
     ? isLoadingLessonStudentContent
