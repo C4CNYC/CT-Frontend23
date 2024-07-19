@@ -151,7 +151,14 @@ export default function CodePanelLayout(): ReactElement | null {
     { skip: !!profile || !router.query.courseId || !router.query.lessonId }
   )
 
-  const lessonContent = profile ? lessonStudentContent : publicLessonContent
+  const lessonContent = profile
+    ? lessonStudentContent
+    : publicLessonContent?.length
+      ? Array.from(publicLessonContent).sort((a, b) => {
+          return a.meta.order > b.meta.order ? 1 : -1
+        })
+      : []
+
   const isLoadingLessonContent = profile
     ? isLoadingLessonStudentContent
     : isPublicLessonContentLoading
@@ -409,7 +416,14 @@ export default function CodePanelLayout(): ReactElement | null {
             onHandleFullScreen={handle.active ? handle.exit : handle.enter}
             isFullScreenView={handle.active}
             language={DEFAULT_LANGUAGE}
-            lessonManagerComponent={<></>}
+            lessonManagerComponent={
+              <LessonsManager
+                onChooseLesson={onChooseLesson}
+                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+                data={courseContent}
+                isLoading={isLoadingCourseContent}
+              />
+            }
           />
           <CodePanelBody
             isFetchingLessonContent={isFetchingLessonContent}
@@ -419,18 +433,6 @@ export default function CodePanelLayout(): ReactElement | null {
             language={DEFAULT_LANGUAGE}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
-          />
-          <CodePanelFooter
-            language={DEFAULT_LANGUAGE}
-            sliderSteps={lessonContent?.length ?? 0}
-            lessonManagerComponent={
-              <LessonsManager
-                onChooseLesson={onChooseLesson}
-                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-                data={courseContent}
-                isLoading={isLoadingCourseContent}
-              />
-            }
           />
         </Box>
       </FullScreen>
