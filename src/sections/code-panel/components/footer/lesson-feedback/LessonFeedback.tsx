@@ -26,16 +26,13 @@ import {
   useSendSlideFeedbackMutation,
   useSendTrainingFeedbackMutation,
 } from '@/redux/services/feedback'
-import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
-import { useGetLessonQuery } from '@/redux/services/manager/lessons-manager'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { $CombinedState } from 'redux'
 
 interface Props {
-  children: React.ReactElement[] | React.ReactElement,
   lessonName?: string
+  children: React.ReactElement[] | React.ReactElement
 }
 
 interface FormValuesProps {
