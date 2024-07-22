@@ -74,7 +74,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
       >
         <ThemeSwitcher />
         <LanguagePopover />
-        {user ? <AccountPopover /> : <Menu dashboardStyle={true} />}
+        {user ? <AccountPopover /> : <Menu />}
       </Stack>
     </>
   )
