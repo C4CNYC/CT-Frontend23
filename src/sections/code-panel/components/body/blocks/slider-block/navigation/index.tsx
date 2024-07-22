@@ -32,6 +32,7 @@ interface INavigation {
   onNext: (skip?: boolean) => void
   onPrev: () => void
   hasNextStep: boolean
+  lessonName?: string
 }
 
 const Navigation: FC<INavigation> = ({
@@ -40,6 +41,7 @@ const Navigation: FC<INavigation> = ({
   hasPrev,
   stepHasValidation,
   canMoveNext,
+  lessonName,
 }) => {
   const theme = useTheme()
   const [btnNext, setBtnNext] = useState<BtnType>(BtnType.next)
@@ -70,7 +72,7 @@ const Navigation: FC<INavigation> = ({
     <Box sx={BOX_SX}>
       <div className='controls'>
         <Box sx={nestedBox}>
-          <LessonFeedback>
+          <LessonFeedback lessonName={lessonName}>
             <Button sx={FEEDBACK_BTN_SX}>
               <FeedbackIcon
                 size={30}

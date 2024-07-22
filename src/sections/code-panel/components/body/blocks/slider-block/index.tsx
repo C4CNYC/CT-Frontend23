@@ -51,6 +51,7 @@ interface ISliderBlock {
   isFetching: boolean
   code: string
   lessonType?: string
+  lessonName?: string
 }
 
 interface IView {
@@ -77,6 +78,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   isFetching,
   code,
   lessonType,
+  lessonName,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
@@ -240,6 +242,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                 stepHasValidation={stepHasValidation}
                 canMoveNext={nextStepAble || !stepHasValidation}
                 hasNextStep={hasNextStep}
+                lessonName={lessonName}
               />
             </>
           )}

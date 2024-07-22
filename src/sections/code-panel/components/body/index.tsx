@@ -107,6 +107,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             isFetching={isFetchingLessonContent}
             code={document?.htmlBody?.join('') ?? ''}
             lessonType={lesson?.type}
+            lessonName={lesson?.name}
           />
         ) : (
           <HidedTabBtn

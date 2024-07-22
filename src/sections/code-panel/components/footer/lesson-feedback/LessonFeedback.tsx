@@ -31,9 +31,11 @@ import { useGetLessonQuery } from '@/redux/services/manager/lessons-manager'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { $CombinedState } from 'redux'
 
 interface Props {
-  children: React.ReactElement[] | React.ReactElement
+  children: React.ReactElement[] | React.ReactElement,
+  lessonName?: string
 }
 
 interface FormValuesProps {
@@ -47,7 +49,7 @@ const feedbackTypes = {
   training: 'training',
 }
 
-export default function LessonFeedback({ children }: Props): React.ReactElement {
+export default function LessonFeedback({ children, lessonName }: Props): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false)
   const [generalFeed, setGeneralFeed] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
@@ -60,12 +62,7 @@ export default function LessonFeedback({ children }: Props): React.ReactElement 
   const { query } = useRouter()
   const { lessonId, unitId, courseId } = query
 
-  const lessonData = useGetLessonStudentQuery({ id: lessonId as string }, { skip: !lessonId })
   const code = codePanelState.code
-
-  const lessonDetails = useGetLessonQuery({ id: lessonId as string }, { skip: !lessonId })
-
-  const lessonName = lessonDetails.data?.name
 
   const { enqueueSnackbar } = useSnackbar()
 
