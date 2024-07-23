@@ -72,7 +72,6 @@ export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps)
             `}
         </style>
       </Head>
-
       <body>
         <Main />
         <NextScript />
