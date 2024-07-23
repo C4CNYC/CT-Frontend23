@@ -85,10 +85,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
     onChangeStreamingDocInfoFromProps?.(value as any)
-    localStorage.setItem(
-      getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId),
-      value
-    )
+    if (value) {
+      localStorage.setItem(
+        getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId),
+        value
+      )
+    }
     void updateCommentWidgetPosition()
   }
 
@@ -151,9 +153,9 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     defaultFileName,
   })
 
-  const codeValue = streamingDoc?.toString()?.length
-    ? streamingDoc.toString()
-    : localstorageCode ?? preloadedCode
+  const codeValue =
+    localstorageCode ??
+    (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
 
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
