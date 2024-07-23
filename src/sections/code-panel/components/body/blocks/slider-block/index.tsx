@@ -86,6 +86,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const profile = useSelector((state) => state.global.user)
+  const course = useSelector((state) => state.codePanelGlobal.courseId)
+  const unit = useSelector((state) => state.codePanelGlobal.unitId)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
 
@@ -137,6 +139,12 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const handleNext = (skip = false): void => {
+    if (window.gtag) {
+      window.gtag('event', 'Slide_Swiped', {
+        event_category: `Course ${course} > Unit ${unit} > Lesson ${lessonName}`,
+        event_label: `SlideNumber ${slideIndex + 1}`,
+      })
+    }
     if (stepHasValidation && !skip) {
       onSubmitChallenge(data[slideIndex].id, code)
     }

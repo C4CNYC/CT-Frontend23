@@ -1,5 +1,11 @@
 import Script from 'next/script'
 
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
+
 export default function GoogleAnalytics(): React.ReactElement {
   return (
     <>

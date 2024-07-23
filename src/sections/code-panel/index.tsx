@@ -244,6 +244,12 @@ export default function CodePanelLayout(): ReactElement | null {
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
+    if (window.gtag) {
+      window.gtag('event', 'Challenge_Completed', {
+        event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unit_id} > Training (Lesson) ${router.query.lessonId}`,
+        event_label: lessonContentId,
+      })
+    }
   }
 
   const onSubmitLesson = async (): Promise<void> => {
