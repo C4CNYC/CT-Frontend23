@@ -70,8 +70,8 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
         // Checking for an empty array solves this error
         dispatch(setContentValidations(checkedContents))
       }
+      dispatch(setNextStepAble(allPased))
     }
-    dispatch(setNextStepAble(allPased))
   }, [checkers])
 
   const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
