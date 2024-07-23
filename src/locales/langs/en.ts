@@ -446,7 +446,7 @@ const en = {
   assignments_add_tags_info: 'This will help others know what the theme is.',
   assignments_updated_successfuly: 'Assignment updated successfully!',
   assignments_created_successfuly: 'Assignment created successfully!',
-
+  assigments_onboarding_info: 'This is how you assign a course or module to your class.',
   // Progress page
   progress: 'Progress',
   progress_tooltip_info: 'Click on a column to expand it and see details',
@@ -692,7 +692,7 @@ const en = {
   logout: 'Logout',
   login_welcome_back: 'Welcome back',
   login_hi: 'Hi',
-  sign_in: 'Sign in',
+  sign_in: 'Login',
   login_or: 'OR',
   ligin_with_google: 'Sign in with Google',
   login_email_not_found: 'Email not found',
@@ -701,7 +701,7 @@ const en = {
   login_go_back: 'GO BACK',
   login_with_email: 'Sign in with Email',
   login_lets_go: "LET'S GO!",
-  login_sign_up: 'Sign up',
+  login_sign_up: 'Register',
   login_reset_password: 'Forgot password',
   login_my_first_time: 'This is my first time here',
   login_sign_up_with_google: 'Sign up with Google',
@@ -816,6 +816,8 @@ const en = {
   open_full_catalog: 'Open Full Catalog',
 
   // code panel blocks
+  no_preview_available_title: 'Browser',
+  no_preview_available_results: 'Here you will see the results of your work in realtime',
   no_preview_available: 'No preview available?',
   means_time_to_code: 'That means it’s time to get coding.',
   code_editor: 'Code Editor',
@@ -837,7 +839,7 @@ const en = {
   full_code_solution: 'FULL CODE SOLUTION',
   are_you_sure_see_solution: 'Are you sure you want to see the full solution code for this lesson?',
   not_available_for_this_step: 'Not available for this step.',
-  no_solution: 'NO SOLUTION',
+  no_solution: 'A solution is not available for this slide.',
   coding_editor: 'CODING EDITOR:',
   customize: 'CUSTOMIZE:',
   reset_lesson: 'Reset Lesson',

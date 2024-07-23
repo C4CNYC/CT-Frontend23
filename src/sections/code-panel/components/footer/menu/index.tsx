@@ -12,9 +12,9 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import { getActions } from './config'
 import {
-  ACTION_FAB_PROPS,
   BOX_SX,
   SPEED_DIAL_SX,
+  getActionFabPropsSx,
   getChipSx,
   getSpeedDialFabProps,
 } from './constants'
@@ -39,7 +39,13 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
     setSpeedDial(false)
   }
 
-  const speedDialFabProps = useMemo(() => getSpeedDialFabProps(speedDial), [speedDial])
+  const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
+  const speedDialFabProps = useMemo(
+    () => getSpeedDialFabProps(speedDial, isDarkMode),
+    [speedDial, isDarkMode]
+  )
+  const actionFabProps = useMemo(() => getActionFabPropsSx(isDarkMode, theme), [isDarkMode, theme])
+
   const actions = useMemo(
     () =>
       getActions({
@@ -54,7 +60,6 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
 
   return (
     <Box
-      className='tourBottombarMenu'
       sx={{
         width: '40px',
         display: !isDesktop ? 'none' : 'flex',
@@ -76,7 +81,13 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
           icon={
             <IoShareOutline
               size='20px'
-              style={{ color: speedDial ? '#43D4DD' : '#637381' }}
+              style={{
+                color: isDarkMode
+                  ? theme.palette.text.secondary
+                  : speedDial
+                    ? '#43D4DD'
+                    : '#637381',
+              }}
             />
           }
         >
@@ -94,7 +105,7 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
                   <Typography variant='subtitle2'>{translate(action.name)}</Typography>
                 </Box>
               }
-              FabProps={ACTION_FAB_PROPS}
+              FabProps={actionFabProps}
             />
           ))}
         </SpeedDial>
@@ -106,7 +117,7 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
 const tooltipRewrite = makeStyles(() => ({
   tooltip: {
     color: '#364954',
-    background: 'transparent',
+    background: '#fff',
   },
 }))
 

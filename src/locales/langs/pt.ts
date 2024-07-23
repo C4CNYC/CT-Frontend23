@@ -444,6 +444,7 @@ const pt = {
   assignments_add_tags_info: 'Isso ajudará os outros a saber qual é o tema.',
   assignments_updated_successfuly: 'Tarefa atualizada com sucesso!',
   assignments_created_successfuly: 'Tarefa criada com sucesso!',
+  assigments_onboarding_info: 'É assim que atribui um curso ou módulo à sua turma.',
 
   // Progress page
   progress: 'Progresso',
@@ -809,6 +810,8 @@ const pt = {
   open_full_catalog: 'Abra o catálogo completo',
 
   // code panel blocks
+  no_preview_available_title: 'Navegador',
+  no_preview_available_results: 'Aqui verá os resultados do seu trabalho em tempo real',
   no_preview_available: 'Nenhuma visualização disponível?',
   means_time_to_code: 'Isso significa que é hora de obter codificação.',
   code_editor: 'Editor de código',
@@ -831,7 +834,7 @@ const pt = {
   are_you_sure_see_solution:
     'Tem certeza de que deseja ver o código de solução completo para esta lição?',
   not_available_for_this_step: 'Não está disponível para esta etapa.',
-  no_solution: 'Sem solução',
+  no_solution: 'Não está disponível uma solução para este diapositivo.',
   coding_editor: 'Editor de codificação:',
   customize: 'CUSTOMIZAR:',
   reset_lesson: 'Redefinir lição',

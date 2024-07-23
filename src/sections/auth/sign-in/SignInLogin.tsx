@@ -46,7 +46,7 @@ export default function SignInLogin({
     <>
       <Stack
         direction='row'
-        sx={{ alignItems: 'center', ml: { xs: 3, sm: 3, md: 0 } }}
+        sx={{ alignItems: 'center', ml: { xs: 3, sm: 3, md: 0 }, mb: 3 }}
       >
         <Typography variant='h3'>{translate('sign_in')}</Typography>
         <Typography
@@ -56,12 +56,6 @@ export default function SignInLogin({
           🫶
         </Typography>
       </Stack>
-      <Typography
-        variant='body1'
-        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 2 }}
-      >
-        Excited to LOGIN again.
-      </Typography>
       <Stack sx={{ mt: 1 }}>
         <RHFTextField
           name='email'

@@ -121,7 +121,6 @@ export interface IModuleCreate {
   active: boolean
   name: string
   description: string
-  tips: string[] | []
   initia_likes?: number
   initial_start?: number
   initial_enrolled?: number

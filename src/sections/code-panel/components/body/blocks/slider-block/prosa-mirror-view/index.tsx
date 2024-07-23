@@ -136,7 +136,10 @@ const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({
     <ThemeProvider>
       <style>{remirrorStyles}</style>
       {title && lessonType === 'open_project' && <Typography variant='h1'>{title}</Typography>}
-      <Box bgcolor={stepBgColor ?? '#F6F9FC'}>
+      <Box
+        bgcolor={stepBgColor ?? '#F6F9FC'}
+        sx={{ pb: 9 }}
+      >
         <Remirror
           editable={false}
           manager={manager}

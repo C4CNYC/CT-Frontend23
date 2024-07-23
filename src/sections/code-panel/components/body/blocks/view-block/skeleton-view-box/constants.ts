@@ -15,11 +15,18 @@ export const getStackBottonSx = (isLight: boolean, theme: Theme) => ({
 })
 
 export const AVAILABLE_TYP_SX = {
-  mt: '58px',
-  mb: '20px',
+  mt: '78px',
+  mb: '10px',
   textAlign: 'center',
   color: '#c4c4c4',
   fontSize: '1.1rem',
+}
+export const COMMONT_TEXT_SX = {
+  textAlign: 'center',
+  color: '#c4c4c4',
+  fontSize: '1.1rem',
+  maxWidth: '300px',
+  m: '25px auto',
 }
 
 export const CODING_TYP_SX = {

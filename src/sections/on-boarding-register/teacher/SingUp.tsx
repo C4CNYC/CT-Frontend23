@@ -69,17 +69,11 @@ export default function SingUp({
         <Typography variant='h3'>{translate('login_sign_up')}</Typography>
         <Typography
           variant='h3'
-          sx={{ ml: 1 }}
+          sx={{ ml: 1, mb: 3 }}
         >
           😃
         </Typography>
       </Stack>
-      <Typography
-        variant='body1'
-        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}
-      >
-        {translate('login_my_first_time')}
-      </Typography>
       <Stack
         sx={{
           mt: 1,

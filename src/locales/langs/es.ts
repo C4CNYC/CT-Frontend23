@@ -444,7 +444,7 @@ const es = {
   assignments_add_tags_info: 'Esto ayudará a los demás a saber cuál es el tema.',
   assignments_updated_successfuly: 'Asignación actualizada correctamente.',
   assignments_created_successfuly: '¡Asignación creada con éxito!',
-
+  assigments_onboarding_info: 'Así es como asigna un curso o módulo a su clase.',
   // Progress page
   progress: 'Progreso',
   progress_tooltip_info: 'Haga clic en una columna para ampliarla y ver los detalles',
@@ -807,6 +807,8 @@ const es = {
   open_full_catalog: 'Catálogo completo abierto',
 
   // code panel blocks
+  no_preview_available_title: 'Navegador',
+  no_preview_available_results: 'Aquí verás los resultados de tu trabajo en tiempo real',
   no_preview_available: '¿No hay vista previa disponible?',
   means_time_to_code: 'Eso significa que es hora de codificar.',
   code_editor: 'Editor de código',
@@ -829,7 +831,7 @@ const es = {
   are_you_sure_see_solution:
     '¿Estás seguro de que quieres ver el código de solución completo para esta lección??',
   not_available_for_this_step: 'No disponible para este paso.',
-  no_solution: 'SIN SOLUCIÓN',
+  no_solution: 'No hay solución para esta diapositiva.',
   coding_editor: 'Editor de codificación:',
   customize: 'Personalizar:',
   reset_lesson: 'Restablecer lección',

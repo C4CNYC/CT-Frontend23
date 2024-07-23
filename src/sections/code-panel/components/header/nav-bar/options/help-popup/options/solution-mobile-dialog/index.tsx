@@ -1,6 +1,5 @@
 import { type FC } from 'react'
 
-// import { CopyBlock, dracula } from "react-code-blocks";
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
 import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
 
@@ -69,7 +68,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
             component='div'
             style={COPY_BLOCK_CUSTOM_STYLES as any}
           >
-            {solutionCode || translate('no_solution')}
+            {solutionCode || <Typography>{translate('no_solution')}</Typography>}
           </Box>
         </DialogContent>
       </Dialog>

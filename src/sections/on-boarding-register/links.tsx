@@ -59,7 +59,7 @@ export function RegisterStudenTeacher({ isTeacher }: Props): React.ReactElement 
         position: 'absolute',
         right: '0px',
         top: '-80px',
-        color: '#02D3D7',
+        color: '#EE467A',
         display: 'flex',
         gap: 1,
         alignItems: 'center',

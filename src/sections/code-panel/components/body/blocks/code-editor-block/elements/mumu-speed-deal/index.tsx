@@ -3,7 +3,8 @@ import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography } from '@mui/material'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { useGetLessonContentStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetPublicLessonQuery } from '@/redux/services/public-student'
 import { useSelector } from '@/redux/store'
 import SolutionMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/solution-mobile-dialog'
 import UnstuckMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog'
@@ -34,14 +35,23 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null)
   const translate = useTranslate()
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const profile = useSelector((state) => state.global.user)
 
-  const { data, isLoading } = useGetLessonContentStudentQuery(
+  const { data: studentData, isLoading: isStudentDataLoading } = useGetLessonStudentQuery(
     { id: lessonId as string },
-    { skip: !lessonId }
+    { skip: !lessonId || !profile }
   )
 
-  const slideTips = data?.[slideIndex]?.tips
+  const { data: publicData, isLoading: isPublicDataLoading } = useGetPublicLessonQuery(
+    { id: courseId as string, lesson_id: lessonId as string },
+    { skip: !lessonId || !courseId || !!profile }
+  )
+
+  const data = studentData ?? publicData
+  const isLoading = isStudentDataLoading ?? isPublicDataLoading
+  const slideTips = data?.contents?.[slideIndex]?.tips
 
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 

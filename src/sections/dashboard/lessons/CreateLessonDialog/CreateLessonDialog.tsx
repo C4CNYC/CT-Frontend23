@@ -49,7 +49,7 @@ interface IDefaultProps {
   independent: boolean
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
-  duration: Record<string, number> | null | undefined
+  duration?: Record<string, number> | null | undefined
 }
 
 interface ICreateLessonDialogProps {
@@ -218,7 +218,6 @@ export default function CreateLessonDialog({
                   name='duration'
                   label='duration'
                   type='number'
-                  required
                   InputProps={{
                     startAdornment: <InputAdornment position='start'>min</InputAdornment>,
                   }}

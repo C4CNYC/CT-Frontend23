@@ -55,13 +55,21 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const ref = useDetectClickOutside({ onTriggered: handleClose })
 
   useEffect(() => {
+    if (nextStepAble) {
+      return
+    }
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
     if (allPased) {
       const checkedContents = contentValidations?.map((item) => ({
         ...item,
         checkers: item.contentId === contentId ? checkers : item.checkers,
       }))
-      dispatch(setContentValidations(checkedContents))
+      if (checkedContents?.length) {
+        // Setting content validation to an empty array here causes a React error:
+        // "Maximum update depth exceeded"
+        // Checking for an empty array solves this error
+        dispatch(setContentValidations(checkedContents))
+      }
     }
     dispatch(setNextStepAble(allPased))
   }, [checkers])
@@ -95,34 +103,36 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
         sx={OPEN_BOX_SX}
         ref={ref}
       >
-        <AnimatePresence>
-          <m.div
-            initial='visible'
-            animate={isVisible ? 'closed' : 'open'}
-            variants={OPEN_HANDLER_ANIMATION}
-          >
-            <Box sx={OPEN_BTN_WRAPPER_SX}>
-              <Box
-                sx={BOX_SX}
-                onClick={handleCollaps}
-              >
-                <CheckerIcon
-                  width={14}
-                  height={15}
-                  color={handleIconColor(checkers)}
-                />
-              </Box>
-              <Box sx={INDICATORS_WRAPPER_SX}>
-                {checkers.map((checker, i) => (
-                  <Box
-                    key={i}
-                    sx={{ ...getIndicatorSx(checker.valid) }}
+        <div className='checkers'>
+          <AnimatePresence>
+            <m.div
+              initial='visible'
+              animate={isVisible ? 'closed' : 'open'}
+              variants={OPEN_HANDLER_ANIMATION}
+            >
+              <Box sx={OPEN_BTN_WRAPPER_SX}>
+                <Box
+                  sx={BOX_SX}
+                  onClick={handleCollaps}
+                >
+                  <CheckerIcon
+                    width={14}
+                    height={15}
+                    color={handleIconColor(checkers)}
                   />
-                ))}
+                </Box>
+                <Box sx={INDICATORS_WRAPPER_SX}>
+                  {checkers.map((checker, i) => (
+                    <Box
+                      key={i}
+                      sx={{ ...getIndicatorSx(checker.valid) }}
+                    />
+                  ))}
+                </Box>
               </Box>
-            </Box>
-          </m.div>
-        </AnimatePresence>
+            </m.div>
+          </AnimatePresence>
+        </div>
       </Box>
       <Stack sx={stackSx}>
         <AnimatePresence>
