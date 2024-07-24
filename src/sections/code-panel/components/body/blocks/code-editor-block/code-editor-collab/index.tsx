@@ -65,6 +65,9 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const dispatch = useDispatch()
   const localstorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
+      if (prevLessonCode) {
+        return prevLessonCode
+      }
       const localStorageCodeValue = localStorage.getItem(
         getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId)
       )
@@ -154,6 +157,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   })
 
   const codeValue =
+    prevLessonCode ??
     localstorageCode ??
     (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
 
