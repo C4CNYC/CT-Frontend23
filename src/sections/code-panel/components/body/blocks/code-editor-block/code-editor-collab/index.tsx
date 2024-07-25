@@ -60,12 +60,16 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
+  console.log(prevLessonCode, 'prevLessonCode')
+  const codeState = useSelector((state) => state.codePanelGlobal.code)
   const { user, isInitialized: authIsInitialized } = useAuthContext()
   const { query } = useRouter()
   const dispatch = useDispatch()
   const localstorageCode = useMemo(() => {
     if (mode === EditorMode.Owner) {
       if (prevLessonCode) {
+        console.log('localStorageCode is prevLessonCode')
+        console.log(prevLessonCode)
         return prevLessonCode
       }
       const localStorageCodeValue = localStorage.getItem(
@@ -76,6 +80,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
           const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
           const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
           if (code) {
+            console.log('localStorageCode', code)
             return code
           }
         } catch (e) {
@@ -94,6 +99,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         value
       )
     }
+    console.log('onChangeCodemirrorValue', value)
     void updateCommentWidgetPosition()
   }
 
@@ -156,6 +162,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     defaultFileName,
   })
 
+  console.log('streamingDoc', streamingDoc && streamingDoc.toString().length ? streamingDoc.toString() : streamingDoc?.toString())
+  console.log('localstorageCode', localstorageCode)
+  console.log('preloadedCode', preloadedCode)
+
   const codeValue =
     prevLessonCode ??
     localstorageCode ??
@@ -163,8 +173,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
+  console.log('codeValue', codeValue)
+
   useEffect(() => {
     return () => {
+      console.log('prevLessonCode', prevLessonCode)
+      console.log('setting prevLessonCode to null')
       dispatch(setPrevLessonId(null))
       dispatch(setPrevLessonCode(null))
     }

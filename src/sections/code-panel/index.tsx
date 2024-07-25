@@ -233,6 +233,7 @@ export default function CodePanelLayout(): ReactElement | null {
   }, [courseContent, router.query.courseId, router.query.unitId, router.query.lessonId])
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
+    console.log('onSubmitChallenge')
     if (!profile) {
       return
     }
@@ -265,6 +266,7 @@ export default function CodePanelLayout(): ReactElement | null {
         router.query.unitId as string
       )
       dispatch(setPrevLessonCode(codeState))
+      console.log('settingprevlessoncode to ', codeState)
 
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
