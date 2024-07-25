@@ -5,3 +5,5 @@ dist
 node_modules/
 _ref/*
 **/_ref/*
+src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/index.tsx
+src/sections/code-panel/index.tsx
