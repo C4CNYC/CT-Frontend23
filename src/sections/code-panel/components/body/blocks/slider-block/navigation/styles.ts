@@ -24,8 +24,8 @@ export const stylesPrev = (theme: Theme): Record<string, unknown> => {
       pr: '30px',
     },
     [theme.breakpoints.down(450)]: {
-      width: '35%',
-      pr: '51px',
+      width: '55%',
+      pr: '11px',
     },
   }
 }
@@ -45,7 +45,7 @@ export const TOOLTIP_CONTENT_SX = {
   width: 170,
 }
 
-export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
+export const stylesNext = (btnNext: BtnType, theme: Theme): Record<string, unknown> => {
   const getColor = (): string => {
     switch (btnNext) {
       case BtnType.next:
@@ -110,8 +110,8 @@ export const stylesSkip = (theme: Theme) => {
       top: '-20px',
     },
     [theme.breakpoints.down(450)]: {
-      right: '-3px',
-      top: '-25px',
+      right: '3px',
+      top: '-22px',
     },
     border: '1px solid #fff',
     fontSize: '.7rem',

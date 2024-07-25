@@ -50,7 +50,7 @@ const Navigation: FC<INavigation> = ({
   const tooltipWrapperSx = useMemo(() => getTooltipWrapperSx(theme), [theme])
 
   const stylePrev = useMemo(() => stylesPrev(theme), [theme])
-  const styleNext = useMemo(() => stylesNext(btnNext), [btnNext])
+  const styleNext = useMemo(() => stylesNext(btnNext, theme), [btnNext])
 
   const getNextBtnType = useCallback((): void => {
     if (stepHasValidation) {
