@@ -31,6 +31,7 @@ import {
   setSocket,
   setUnitId,
   setUsersStatus,
+  setPrevLessonCode,
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -93,6 +94,7 @@ export default function CodePanelLayout(): ReactElement | null {
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
   const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
   const profile = useSelector((state) => state.global.user)
+  const codeState = useSelector((state) => state.codePanelGlobal.code)
   const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
     dispatch(setUsersStatus(cb(usersStatus)))
   }
@@ -262,6 +264,7 @@ export default function CodePanelLayout(): ReactElement | null {
         router.query.lessonId as string,
         router.query.unitId as string
       )
+      dispatch(setPrevLessonCode(codeState))
 
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
