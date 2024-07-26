@@ -3,7 +3,6 @@ import { type FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { Box, Button, Tooltip, Typography, useTheme } from '@mui/material'
 
 import { useSelector } from '@/redux/store'
-
 import { useTranslate } from '@/utils/translateHelper'
 
 import LessonFeedback from '../../../../footer/lesson-feedback/LessonFeedback'
@@ -61,7 +60,7 @@ const Navigation: FC<INavigation> = ({
     if (canMoveNext) {
       if (slideIndex === 0) {
         setSlideProgress(0)
-      } else if (slideIndex > slideProgress){
+      } else if (slideIndex > slideProgress) {
         setSlideProgress(slideIndex)
       }
     }
