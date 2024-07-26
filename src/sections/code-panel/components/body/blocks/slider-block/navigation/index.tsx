@@ -2,6 +2,7 @@ import { type FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Box, Button, Tooltip, Typography, useTheme } from '@mui/material'
 
+import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 
 import LessonFeedback from '../../../../footer/lesson-feedback/LessonFeedback'
@@ -52,9 +53,22 @@ const Navigation: FC<INavigation> = ({
   const stylePrev = useMemo(() => stylesPrev(theme), [theme])
   const styleNext = useMemo(() => stylesNext(btnNext, theme), [btnNext])
 
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const [slideProgress, setSlideProgress] = useState(slideIndex)
+
+  useEffect(() => {
+    if (canMoveNext) {
+      if (slideIndex === 0) {
+        setSlideProgress(0)
+      } else if (slideIndex > slideProgress) {
+        setSlideProgress(slideIndex)
+      }
+    }
+  }, [slideIndex])
+
   const getNextBtnType = useCallback((): void => {
     if (stepHasValidation) {
-      if (canMoveNext) {
+      if (canMoveNext || slideIndex < slideProgress) {
         setBtnNext(BtnType.compleated)
       } else {
         setBtnNext(BtnType.coding)
@@ -91,7 +105,7 @@ const Navigation: FC<INavigation> = ({
 
           <Tooltip
             title={
-              stepHasValidation && !canMoveNext ? (
+              stepHasValidation && !canMoveNext && slideIndex > slideProgress ? (
                 <Typography sx={TOOLTIP_CONTENT_SX}>{translate('btn_group_tooltip')}</Typography>
               ) : (
                 ''
@@ -111,7 +125,7 @@ const Navigation: FC<INavigation> = ({
                 }}
                 backType={btnNext}
               >
-                {stepHasValidation && !canMoveNext ? (
+                {stepHasValidation && !canMoveNext && slideIndex > slideProgress ? (
                   <Button
                     onClick={() => {
                       onNext(true)
