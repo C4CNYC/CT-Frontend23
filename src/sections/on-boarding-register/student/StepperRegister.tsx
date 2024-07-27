@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
-import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { Chip, Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { MdDone } from '@react-icons/all-files/md/MdDone'
 
 import { Iconify, RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
@@ -12,14 +13,19 @@ interface Props {
   nextStep: () => void
   isSubmiting: boolean
   isSubmitSuccessful: boolean
+  hasSixDigit: boolean
+  hasOneNumber: boolean
 }
 
 export default function StepperRegister({
   nextStep,
   isSubmiting,
   isSubmitSuccessful,
+  hasOneNumber,
+  hasSixDigit,
 }: Props): React.ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false)
+
   const translate = useTranslate()
 
   useEffect(() => {
@@ -32,13 +38,13 @@ export default function StepperRegister({
     <>
       <Stack
         direction='row'
-        sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}
+        sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 1 }}
       >
         <Typography variant='h3'>{translate('register')}</Typography>
       </Stack>
       <Typography
         variant='body1'
-        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}
+        sx={{ pb: 2, ml: { xs: 3, sm: 3, md: 0 } }}
       >
         {translate('register_name_on_certificate')}
       </Typography>
@@ -53,13 +59,18 @@ export default function StepperRegister({
           label={translate('surname')}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
-        <Divider sx={{ my: 1 }} />
-
+        <Divider />
         <RHFTextField
           name='password'
           label={translate('password')}
           type={showPassword ? 'text' : 'password'}
-          sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          error={false}
+          sx={{
+            ...(theme) => ({ ...styledRegisterInput(theme) }),
+            '& .MuiFormHelperText-root': {
+              display: 'none',
+            },
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
@@ -75,6 +86,23 @@ export default function StepperRegister({
               </InputAdornment>
             ),
           }}
+        />
+      </Stack>
+      <Stack
+        direction='row'
+        justifyContent='center'
+        pt={1}
+        gap={1}
+      >
+        <Chip
+          label='1 number'
+          icon={hasOneNumber ? <MdDone /> : <></>}
+          color={hasOneNumber ? 'success' : 'default'}
+        />
+        <Chip
+          label='6+ charakters'
+          icon={hasSixDigit ? <MdDone /> : <></>}
+          color={hasSixDigit ? 'success' : 'default'}
         />
       </Stack>
       <LoadingButton
