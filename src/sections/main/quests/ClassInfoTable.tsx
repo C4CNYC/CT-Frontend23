@@ -190,13 +190,15 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         disabledArrow
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: -5, horizontal: 5 }}
-        sx={{ p: 2 }}
+        sx={{
+          p: 2,
+        }}
       >
         <Link
           component={NextLink}
           href={addQuestPagePath}
           underline='none'
-          color='initial'
+          color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
         >
           <MenuItem>
             <SiGoogleclassroom size={10} />
@@ -208,7 +210,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             component={NextLink}
             href={addQuestOpenProjectPath}
             underline='none'
-            color='initial'
+            color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
           >
             <MenuItem>
               <AiOutlineFundProjectionScreen size={20} />

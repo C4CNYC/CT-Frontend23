@@ -8,6 +8,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 
 import { AuthProvider } from '@/auth/JwtContext'
 import { MotionLazyContainer } from '@/components/animate/MotionLazyContainer'
+import GoogleAnalytics from '@/components/google-analytics'
 import { ProgressBar } from '@/components/progress-bar'
 import { SettingsProvider, ThemeSettings } from '@/components/settings'
 import { SnackbarProviderWrapper } from '@/components/snackbar'
@@ -43,6 +44,7 @@ export default function MyApp(props: MyAppProps): React.ReactElement {
           content='initial-scale=1, width=device-width'
         />
       </Head>
+      <GoogleAnalytics></GoogleAnalytics>
       <ReduxProvider store={store}>
         <AuthProvider>
           <LocalizationProvider dateAdapter={AdapterDateFns}>

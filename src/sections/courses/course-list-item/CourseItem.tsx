@@ -37,6 +37,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
       sx={{
         background: '#ECF4FF',
         borderRadius: '25px',
+        color: '#212B36',
         p: {
           xs: '20px 20px 20px 20px',
           sm: '30px 20px 20px 20px',
@@ -59,13 +60,13 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         >
           <Typography
             variant='h4'
-            sx={{ textTransform: 'uppercase', pb: '10px' }}
+            sx={{ textTransform: 'uppercase', pb: '10px', color: 'inherit' }}
           >
             {course.name}
           </Typography>
           <Typography
             variant='body2'
-            sx={{ pb: !open ? 1 : 0 }}
+            sx={{ pb: !open ? 1 : 0, color: 'inherit' }}
           >
             {course.description.length > MAX_DESCRIPTION_LENGTH && !open
               ? `${course.description.slice(0, MAX_DESCRIPTION_LENGTH)}... `

@@ -4,11 +4,15 @@ import { Container, Link, Skeleton, SxProps, Theme, Typography, useTheme } from 
 import Head from 'next/head'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 import { Iconify, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetTeacherListQuery } from '@/redux/services/admin/school-amdin'
-import { useGetAssignmentStudentQuery } from '@/redux/services/manager/assignments-student'
+import {
+  useGetAssignmentStudentQuery,
+  useGetAssignmentStudentPublicQuery,
+} from '@/redux/services/manager/assignments-student'
 import { useGetCoursQuery } from '@/redux/services/manager/courses-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import QuestDescription from '@/sections/quest/QuestDescription'
@@ -28,7 +32,11 @@ export default function Quest(): React.ReactElement | null {
   const [hasContent, setHasContent] = useState(false)
   const containerSx = useMemo(() => getContainerSx(theme), [theme])
   const skeletonSx = useMemo(() => getSkeletonSx(theme), [theme])
-  const { data, isLoading } = useGetAssignmentStudentQuery(
+  const profile = useSelector((state: any) => state.global.user)
+  const assignmentQuery = profile
+    ? useGetAssignmentStudentQuery
+    : useGetAssignmentStudentPublicQuery
+  const { data, isLoading } = assignmentQuery(
     { assignmentId: query.id as string },
     { skip: !query.id }
   )
@@ -36,7 +44,7 @@ export default function Quest(): React.ReactElement | null {
 
   const { data: course, isLoading: isLoadingCourse } = useGetCoursQuery(
     { id: data?.course.id as string },
-    { skip: !data?.course.id }
+    { skip: !data?.course.id || !profile }
   )
 
   const { data: teachers } = useGetTeacherListQuery(

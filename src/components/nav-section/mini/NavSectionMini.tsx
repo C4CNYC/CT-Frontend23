@@ -17,7 +17,7 @@ function NavSectionMini({ data, sx, ...other }: NavSectionProps): React.ReactEle
       }}
       {...other}
     >
-      {data.map((group, index) => (
+      {data?.map((group, index) => (
         <Items
           key={group.subheader}
           items={group.items}

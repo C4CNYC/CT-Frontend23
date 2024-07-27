@@ -2,6 +2,7 @@ import { type FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Box, Button, Tooltip, Typography, useTheme } from '@mui/material'
 
+import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 
 import LessonFeedback from '../../../../footer/lesson-feedback/LessonFeedback'
@@ -32,6 +33,7 @@ interface INavigation {
   onNext: (skip?: boolean) => void
   onPrev: () => void
   hasNextStep: boolean
+  lessonName?: string
 }
 
 const Navigation: FC<INavigation> = ({
@@ -40,6 +42,7 @@ const Navigation: FC<INavigation> = ({
   hasPrev,
   stepHasValidation,
   canMoveNext,
+  lessonName,
 }) => {
   const theme = useTheme()
   const [btnNext, setBtnNext] = useState<BtnType>(BtnType.next)
@@ -48,11 +51,24 @@ const Navigation: FC<INavigation> = ({
   const tooltipWrapperSx = useMemo(() => getTooltipWrapperSx(theme), [theme])
 
   const stylePrev = useMemo(() => stylesPrev(theme), [theme])
-  const styleNext = useMemo(() => stylesNext(btnNext), [btnNext])
+  const styleNext = useMemo(() => stylesNext(btnNext, theme), [btnNext])
+
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const [slideProgress, setSlideProgress] = useState(slideIndex)
+
+  useEffect(() => {
+    if (canMoveNext) {
+      if (slideIndex === 0) {
+        setSlideProgress(0)
+      } else if (slideIndex > slideProgress) {
+        setSlideProgress(slideIndex)
+      }
+    }
+  }, [slideIndex])
 
   const getNextBtnType = useCallback((): void => {
     if (stepHasValidation) {
-      if (canMoveNext) {
+      if (canMoveNext || slideIndex < slideProgress) {
         setBtnNext(BtnType.compleated)
       } else {
         setBtnNext(BtnType.coding)
@@ -70,7 +86,7 @@ const Navigation: FC<INavigation> = ({
     <Box sx={BOX_SX}>
       <div className='controls'>
         <Box sx={nestedBox}>
-          <LessonFeedback>
+          <LessonFeedback lessonName={lessonName}>
             <Button sx={FEEDBACK_BTN_SX}>
               <FeedbackIcon
                 size={30}
@@ -89,7 +105,7 @@ const Navigation: FC<INavigation> = ({
 
           <Tooltip
             title={
-              stepHasValidation && !canMoveNext ? (
+              stepHasValidation && !canMoveNext && slideIndex > slideProgress ? (
                 <Typography sx={TOOLTIP_CONTENT_SX}>{translate('btn_group_tooltip')}</Typography>
               ) : (
                 ''
@@ -109,7 +125,7 @@ const Navigation: FC<INavigation> = ({
                 }}
                 backType={btnNext}
               >
-                {stepHasValidation && !canMoveNext ? (
+                {stepHasValidation && !canMoveNext && slideIndex > slideProgress ? (
                   <Button
                     onClick={() => {
                       onNext(true)

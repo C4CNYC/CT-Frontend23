@@ -8,7 +8,10 @@ import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
 import { Role } from '@/redux/services/enums/role.enum'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
+import {
+  useManagerGetCourseQuery,
+  useGetPublicCoursesQuery,
+} from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { CourseCard } from '@/sections/dashboard/courses/cards'
@@ -36,6 +39,11 @@ export default function CoursesListPage(): React.ReactElement {
     FilterMode.global
   )
   const { data, isLoading, isFetching } = useManagerGetCourseQuery(filters, { skip: !user?.role })
+  const {
+    data: publicCourses,
+    isLoading: isPublicLoading,
+    isFetching: isPublicFetching,
+  } = useGetPublicCoursesQuery({}, { skip: !user?.role })
 
   if (isLoading) {
     return (
@@ -100,13 +108,23 @@ export default function CoursesListPage(): React.ReactElement {
               md: 'repeat(3, 1fr)',
             }}
           >
-            {data?.data.map((course, index) => (
-              <CourseCard
-                key={index}
-                course={course}
-              />
-            ))}
-            {isFetching
+            {isAdmin
+              ? data?.data.map((course, index) => (
+                  <CourseCard
+                    key={index}
+                    course={course}
+                  />
+                ))
+              : ''}
+            {isAdmin
+              ? publicCourses?.data.map((course, index) => (
+                  <CourseCard
+                    key={index}
+                    course={course}
+                  />
+                ))
+              : ''}
+            {isFetching && isPublicFetching
               ? Array(getCountTakingElment(Number(data.meta.itemCount), Number(filters.take)))
                   .fill(null)
                   .map((v, i) => <SkeletonCourses key={i} />)

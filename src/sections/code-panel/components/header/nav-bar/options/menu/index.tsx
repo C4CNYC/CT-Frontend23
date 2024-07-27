@@ -10,10 +10,12 @@ import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { Iconify, MenuPopover } from '@/components'
+import { useSettingsContext } from '@/components/settings'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
 import { PATH_AUTH } from '@/routes/paths'
+import { palette } from '@/theme/palette'
 import { UserType } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -40,8 +42,10 @@ const Menu = (): React.ReactElement => {
   const dispatch = useDispatch()
   const { replace } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
+  const { themeMode } = useSettingsContext()
   const { isAuthenticated, logout } = useAuthContext()
   const userName = useSelector((state) => state.global.user?.first_name)
+  const userId = useSelector((state) => state.global.user?.id)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
   const handleLogout = (): void => {
@@ -80,7 +84,12 @@ const Menu = (): React.ReactElement => {
 
   return (
     <Box sx={!isDesktop ? GLOBAL_BOX_STYLES : null}>
-      <Box onClick={handleOpenPopover}>{getHumburger(isDesktop)}</Box>
+      <Box
+        onClick={handleOpenPopover}
+        sx={{ color: palette(themeMode).text.secondary }}
+      >
+        {getHumburger(isDesktop)}
+      </Box>
 
       <MenuPopover
         open={openPopover}
@@ -101,7 +110,7 @@ const Menu = (): React.ReactElement => {
 
         <Divider />
 
-        {config[isAuthenticated ? UserType.Authorized : UserType.Anonim].map((menuItem) => {
+        {config[userId ? UserType.Authorized : UserType.Anonim].map((menuItem) => {
           if (menuItem.href === ILinks.modal) {
             return menuItem.component?.(
               <MenuItem

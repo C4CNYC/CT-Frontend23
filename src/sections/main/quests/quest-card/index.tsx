@@ -4,6 +4,7 @@ import { EmptyContent, SimpleInfiniteList } from '@/components'
 import { FilterMode, useFilters } from '@/hooks'
 import { IAssignmetsSearchParams } from '@/redux/interfaces/assignment.interface'
 import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
+import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 
 import QuestItem from './QuestItem'
@@ -18,13 +19,17 @@ const DEFAULT_TAKE_PER_PAGE = 10
 
 export default function QuestsTab({ classId, schoolId, activeTab }: IQuestTabProps) {
   const { filters, setFilter } = useFilters<IAssignmetsSearchParams>({}, FilterMode.local)
+  const profile = useSelector((state) => state.global.user)
   const {
     data: assignments,
     isLoading,
     isFetching,
   } = useGetAssignmentListStudentQuery(
     { class_id: classId, ...filters },
-    { skip: !activeTab || !classId, refetchOnMountOrArgChange: true }
+    {
+      skip: !activeTab || !classId || !profile,
+      refetchOnMountOrArgChange: true,
+    }
   )
 
   const translate = useTranslate()

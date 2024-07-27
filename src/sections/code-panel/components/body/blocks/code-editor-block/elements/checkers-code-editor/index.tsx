@@ -55,15 +55,23 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const ref = useDetectClickOutside({ onTriggered: handleClose })
 
   useEffect(() => {
+    if (nextStepAble) {
+      return
+    }
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
     if (allPased) {
       const checkedContents = contentValidations?.map((item) => ({
         ...item,
         checkers: item.contentId === contentId ? checkers : item.checkers,
       }))
-      dispatch(setContentValidations(checkedContents))
+      if (checkedContents?.length) {
+        // Setting content validation to an empty array here causes a React error:
+        // "Maximum update depth exceeded"
+        // Checking for an empty array solves this error
+        dispatch(setContentValidations(checkedContents))
+      }
+      dispatch(setNextStepAble(allPased))
     }
-    dispatch(setNextStepAble(allPased))
   }, [checkers])
 
   const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
