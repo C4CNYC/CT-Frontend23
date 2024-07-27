@@ -97,6 +97,8 @@ export default function MenuTribesList(): React.ReactElement {
               sx={{
                 gap: 1,
                 height: containerHeignt,
+                maxHeight: '150px',
+                overflow: 'hidden',
                 width: 'auto',
               }}
             >
