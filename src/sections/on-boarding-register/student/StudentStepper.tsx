@@ -53,7 +53,7 @@ export default function StudentStepper(): React.ReactElement {
     lastName: Yup.string().required(translate('enter_surname')),
     password: Yup.string()
       .required()
-      .matches(/^(?=.*\d).{7,}$/),
+      .matches(/^(?=.*\d).{8,}$/),
   })
 
   const methods = useForm<FormValuesProps>({
@@ -89,7 +89,7 @@ export default function StudentStepper(): React.ReactElement {
     } else {
       setHasOneNumber(false)
     }
-    if (passwordValue?.length > 5) {
+    if (passwordValue?.length > 7) {
       setHasSixDigit(true)
     } else {
       setHasSixDigit(false)

@@ -100,7 +100,7 @@ export default function StepperRegister({
           color={hasOneNumber ? 'success' : 'default'}
         />
         <Chip
-          label='6+ charakters'
+          label='8+ charakters'
           icon={hasSixDigit ? <MdDone /> : <></>}
           color={hasSixDigit ? 'success' : 'default'}
         />
