@@ -16,6 +16,7 @@ import JoinTribeModal from '@/sections/join-tribe/JoinTribeModal'
 import DefaultClassInfo from '@/sections/main/class-info/DefaultClassInfo'
 import ClassInfoTable from '@/sections/main/quests/ClassInfoTable'
 import { useTranslate } from '@/utils/translateHelper'
+import MainPageTour from '@root/src/sections/main/tour'
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -70,13 +71,16 @@ export default function HomeOverview(): React.ReactElement {
       ) : null}
       {!(isLoading || !data) ? (
         <>
-          <DefaultClassInfo classData={data} />
-          <Container
-            maxWidth={themeStretch ? false : 'lg'}
-            disableGutters
-          >
-            <ClassInfoTable classData={data} />
-          </Container>
+          <MainPageTour />
+          <div className='tourMainStep1'>
+            <DefaultClassInfo classData={data} />
+            <Container
+              maxWidth={themeStretch ? false : 'lg'}
+              disableGutters
+            >
+              <ClassInfoTable classData={data} />
+            </Container>
+          </div>
         </>
       ) : (
         <Skeleton
