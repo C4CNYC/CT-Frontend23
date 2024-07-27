@@ -1,20 +1,23 @@
 export const NO_SOLUTION_TEXT = 'no_solution'
 
-export const DIALOG_PAPER_PROPS = {
-  sx: {
-    minWidth: {
-      xs: 'calc(90% - 32px)',
-      sm: '400px',
-      md: '400px',
-      lg: '450px',
+export const getDialogPaperProps = (isDark: boolean) => {
+  return {
+    sx: {
+      minWidth: {
+        xs: 'calc(90% - 32px)',
+        sm: '400px',
+        md: '400px',
+        lg: '450px',
+      },
+      height: {
+        xs: '50vh',
+        sm: '50vh',
+        md: '450px',
+        lg: '450px',
+      },
+      background: isDark ? '#454F5B' : '',
     },
-    height: {
-      xs: '50vh',
-      sm: '50vh',
-      md: '450px',
-      lg: '450px',
-    },
-  },
+  }
 }
 
 export const DIALOG_TITLE_SX = {

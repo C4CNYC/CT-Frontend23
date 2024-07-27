@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
 
 interface IBasePreference {
@@ -12,10 +12,11 @@ const BasePreference = ({
   children,
   abandonmentIcon,
 }: IBasePreference): React.ReactElement => {
+  const theme = useTheme()
   return (
     <Box
       p='25px 30px 30px 30px'
-      bgcolor='#F0EEEE'
+      bgcolor={theme.palette.mode === 'light' ? '#F0EEEE' : theme.palette.background.neutral}
       borderRadius='15px'
     >
       <Box

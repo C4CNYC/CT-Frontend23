@@ -7,7 +7,7 @@ import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
 import { Image } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { COURSE_INFO_IMAGE_SX, SEE_MORE_BTN_SX, getCourseInfoWrapperSx } from './constants'
+import { COURSE_INFO_IMAGE_SX, getCourseInfoWrapperSx, getSeeMoreBtnSx } from './constants'
 import CourseSummarily from './CourseSummarily.1'
 
 interface ICourseInfoProps {
@@ -34,6 +34,7 @@ export default function CourseInfo({
   const translate = useTranslate()
 
   const containerStyles = useMemo(() => getCourseInfoWrapperSx(theme), [theme])
+  const seeMoreBtnStyles = useMemo(() => getSeeMoreBtnSx(theme), [theme])
 
   return (
     <Stack sx={containerStyles}>
@@ -53,7 +54,7 @@ export default function CourseInfo({
             : description}
         </Typography>
         <Button
-          sx={SEE_MORE_BTN_SX}
+          sx={seeMoreBtnStyles}
           onClick={() => {
             setOpen(!open)
           }}
