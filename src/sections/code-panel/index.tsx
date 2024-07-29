@@ -245,7 +245,7 @@ export default function CodePanelLayout(): ReactElement | null {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
     if (window.gtag) {
-      window.gtag('event', 'Challenge_Completed', {
+      window.gtag('event', 'Lesson_Completed', {
         event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unit_id} > Training (Lesson) ${router.query.lessonId}`,
         event_label: lessonContentId,
       })

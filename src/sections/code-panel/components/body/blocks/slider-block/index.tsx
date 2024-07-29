@@ -146,6 +146,12 @@ const SliderBlock: FC<ISliderBlock> = ({
       })
     }
     if (stepHasValidation && !skip) {
+      if (window.gtag) {
+        window.gtag('event', 'Challenge_Completed', {
+          event_category: `Course ${course} > Unit (Module) ${unit} > Training (Lesson) ${lessonName}`,
+          event_label: `SlideNumber ${slideIndex + 1}`,
+        })
+      }
       onSubmitChallenge(data[slideIndex].id, code)
     }
     if (hasNextStep) {
