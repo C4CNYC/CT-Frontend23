@@ -63,16 +63,16 @@ export const mainContainerStyles = (theme: Theme, onboardingInfo: boolean) => ({
   borderBottomRightRadius: 3,
 })
 
-export const COLLAPSE_INFO_BANNER_SX = {
+export const getCollapseInfoBannerSx = (theme: Theme) => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  background: '#E9F5FC',
+  background: theme.palette.mode === 'light' ? '#E9F5FC' : theme.palette.background.paper,
   borderTopLeftRadius: '16px',
   borderTopRightRadius: '16px',
   px: 2,
   py: 1,
-}
+})
 
 export const INPUT_TEXT_SX = {
   position: 'absolute',

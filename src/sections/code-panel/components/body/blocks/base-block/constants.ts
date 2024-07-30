@@ -6,6 +6,7 @@ export const getBoxStyles = (isTabletAndMobile: boolean, theme: Theme): SxProps 
   borderStyle: isTabletAndMobile ? 'none' : 'solid',
   borderColor:
     theme.palette.mode === 'light' ? 'rgb(234, 234, 235)' : theme.palette.background.neutral,
+  background: theme.palette.mode === 'light' ? '' : '',
   overflow: 'hidden',
   position: 'relative',
   borderRadius: isTabletAndMobile ? '0 0 20px 20px' : 2,

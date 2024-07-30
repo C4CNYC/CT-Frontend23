@@ -45,13 +45,13 @@ import DetailsStepOpenProject from '@/sections/main/quests/add-quest/DetailsStep
 import { useTranslate } from '@/utils/translateHelper'
 
 import {
-  COLLAPSE_INFO_BANNER_SX,
   CONTAINER_INNER_SX,
   DATE_FORMAT,
   DATE_PARSER,
   DAYS_TO_CLOSE,
   DAYS_TO_END,
   FALSY_VALLUE,
+  getCollapseInfoBannerSx,
   mainContainerStyles,
   QUEST_BANNER,
   TABS_SX,
@@ -243,7 +243,7 @@ export default function AddQuest(): React.ReactElement {
   return (
     <>
       <Collapse in={onboardingInfo}>
-        <Stack sx={COLLAPSE_INFO_BANNER_SX}>
+        <Stack sx={getCollapseInfoBannerSx(theme)}>
           <Typography variant='subtitle2'>{translate('assigments_onboarding_info')}</Typography>
           <IconButton onClick={() => eliminateInfoBanner()}>
             <Close />
