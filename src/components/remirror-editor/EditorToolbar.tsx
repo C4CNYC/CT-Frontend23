@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { Box, Divider, Stack } from '@mui/material'
+import { Box, Divider, Stack, useTheme } from '@mui/material'
 import {
   BasicFormattingButtonGroup,
   CommandButtonGroup,
@@ -54,7 +54,7 @@ export default function EditorToolbar({
   setBgColor,
 }: Props): React.ReactElement {
   const { locked } = useContext(LessonContentContext)
-
+  const theme = useTheme()
   return (
     <ThemeProvider>
       <Toolbar
@@ -86,7 +86,6 @@ export default function EditorToolbar({
                   gap: 1,
                   alignItems: 'center',
                   p: 1,
-                  bgcolor: '#f1f1f1',
                   borderRadius: 1,
                 }}
               >
