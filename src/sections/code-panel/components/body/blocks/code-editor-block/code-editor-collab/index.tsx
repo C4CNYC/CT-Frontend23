@@ -60,6 +60,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const { user, isInitialized: authIsInitialized } = useAuthContext()
   const { query } = useRouter()
   const dispatch = useDispatch()
@@ -68,9 +69,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       if (prevLessonCode) {
         return prevLessonCode
       }
-      const localStorageCodeValue = localStorage.getItem(
-        getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId)
-      )
+      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${slideIndex}`)
+      const localStorageCodeValue = localStorage.getItem(localStorageKey)
       if (localStorageCodeValue) {
         try {
           const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
@@ -83,16 +83,14 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         }
       }
     }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId])
+  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId, slideIndex])
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
     onChangeStreamingDocInfoFromProps?.(value as any)
     if (value) {
-      localStorage.setItem(
-        getLocalStorageRoomKey(user ? `${user?.student_profile?.id}_${lessonId}` : lessonId),
-        value
-      )
+      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${slideIndex}`)
+      localStorage.setItem(localStorageKey, value)
     }
     void updateCommentWidgetPosition()
   }
