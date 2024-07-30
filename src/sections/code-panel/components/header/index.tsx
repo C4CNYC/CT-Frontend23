@@ -3,6 +3,7 @@ import { type FC, type ReactNode, useMemo } from 'react'
 import { Box, type SxProps } from '@mui/material'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
+import { useSelector } from '@/redux/store'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 import { LogoMin } from '@root/src/components'
 
@@ -29,6 +30,7 @@ const TopPanel: FC<ITopPanel> = ({
 }) => {
   const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
+  const profile = useSelector((state) => state.global.user)
 
   return (
     <Box
@@ -42,7 +44,7 @@ const TopPanel: FC<ITopPanel> = ({
         {isDesktop && <LogoMin sx={{ width: 'auto' }} />}
         {lessonManagerComponent}
       </Box>
-      <GroupHeader />
+      {profile ? <GroupHeader /> : ''}
       {isDesktop ? (
         <DesktopBar
           language={language}
