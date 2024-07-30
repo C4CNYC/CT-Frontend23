@@ -23,7 +23,6 @@ export const LIKE_BTN_WRAPPER_SX = {
   height: '40px',
   zIndex: '10',
   opacity: 0.8,
-  background: 'rgba(250, 250, 250, .5)',
   '&:hover': { opacity: 1 },
 }
 
@@ -85,19 +84,19 @@ export const ENROLL_COURSE_BTN_SX = {
   },
 }
 
-export const EXPLORE_COURSE_BTN_SX = {
+export const getExploreCourseBtnSX = (isLight: boolean) => ({
   p: '5px 15px',
   borderRadius: '25px',
   fontSize: '1rem',
-  borderColor: '#364954',
-  color: '#364954',
+  borderColor: isLight ? '#364954' : '#fff',
+  color: isLight ? '#364954' : '#fff',
   whiteSpace: 'nowrap',
   borderWidth: '2px',
   '&:hover': {
     border: '2px solid #364954',
     backgroundColor: addAlpha('#364954', 0.1),
   },
-}
+})
 
 export const COURSE_DETAILS_WRAPPER_SX = {
   gap: '15px',
