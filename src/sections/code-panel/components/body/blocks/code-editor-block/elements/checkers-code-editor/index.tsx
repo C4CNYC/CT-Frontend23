@@ -38,6 +38,7 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
+  const isActivateCompeated = useSelector((state) => state.checkersAnimation.isActivateCompeated)
   const handleCollaps = (): void => {
     if (isVisible) {
       dispatch(setIsVisible(false))
@@ -96,9 +97,8 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   }
 
   return (
-    <>
-      <CheckersCompleated />
-
+    <Box sx={{ position: 'relative' }}>
+      {isActivateCompeated ? <CheckersCompleated /> : null}
       <Box
         sx={OPEN_BOX_SX}
         ref={ref}
@@ -149,7 +149,7 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
           </m.div>
         </AnimatePresence>
       </Stack>
-    </>
+    </Box>
   )
 }
 

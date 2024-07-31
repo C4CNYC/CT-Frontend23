@@ -1,77 +1,48 @@
-import { type FC, useEffect } from 'react'
+import { type FC } from 'react'
 
-import { alpha } from '@mui/material'
-import { AnimatePresence, m, useAnimationControls } from 'framer-motion'
+import { DotLottiePlayer, PlayerEvents } from '@dotlottie/react-player'
+import { Box } from '@mui/material'
 import { useDispatch } from 'react-redux'
 
 import { setIsActivateCompeated } from '@/redux/slices/checkers-animation'
-import { useSelector } from '@/redux/store'
-
-import { DRAW, M_DIV_STYLE, VARIANTS } from './constants'
+import {
+  increaceAnimationNumber,
+  resetAnimaitonNumber,
+} from '@root/src/redux/slices/code-panel-global'
+import { useSelector } from '@root/src/redux/store'
+import '@dotlottie/react-player/dist/index.css'
 
 const CheckersCompleated: FC = () => {
   const dispatch = useDispatch()
-  const isActivateCompeated = useSelector((state) => state.checkersAnimation.isActivateCompeated)
-
-  const controls = useAnimationControls()
-
-  useEffect(() => {
-    if (isActivateCompeated) {
-      controls.start('visible').then(async () => {
-        await controls.start('hidden').then(() => {
-          dispatch(setIsActivateCompeated(false))
-        })
-      })
-    }
-  }, [isActivateCompeated, dispatch])
-
+  const animationNumber = useSelector((state) => state.codePanelGlobal.animationNumber)
   return (
-    <AnimatePresence>
-      <m.div
-        animate={isActivateCompeated ? 'open' : 'closed'}
-        variants={VARIANTS}
-        style={M_DIV_STYLE}
-      >
-        <m.svg
-          viewBox='0 0 140 140'
-          initial='hidden'
-          animate={controls}
-        >
-          <m.circle
-            cx='70'
-            cy='70'
-            r='60'
-            stroke={alpha('#75CF6D', 0.4)}
-            variants={DRAW}
-            strokeWidth={16}
-            fillOpacity={0}
-            custom={0.1}
-          />
-          <m.line
-            x1='50'
-            y1='70'
-            x2='68'
-            y2='100'
-            stroke='#75CF6D'
-            strokeLinecap='round'
-            strokeWidth={13}
-            variants={DRAW}
-            custom={0.1}
-          />
-          <m.line
-            x1='68'
-            y1='100'
-            x2='90'
-            y2='40'
-            strokeLinecap='round'
-            stroke='#75CF6D'
-            strokeWidth={13}
-            variants={DRAW}
-            custom={0.7}
-          />
-        </m.svg>
-      </m.div>
-    </AnimatePresence>
+    <Box
+      sx={{
+        position: 'absolute',
+        top: 'calc(50% + 200px)',
+        height: '300px',
+        left: '0',
+        width: '100%',
+        zIndex: 1000,
+      }}
+    >
+      <DotLottiePlayer
+        src={`/assets/code-panel/lotti-animation/anim_${animationNumber}.lottie`}
+        onEvent={(event: PlayerEvents) => {
+          if (event === PlayerEvents.Complete) {
+            dispatch(setIsActivateCompeated(false))
+          }
+          if (event === PlayerEvents.Ready) {
+            if (animationNumber < 7) {
+              dispatch(increaceAnimationNumber(animationNumber + 1))
+            } else {
+              dispatch(resetAnimaitonNumber())
+            }
+          }
+        }}
+        autoplay
+      />
+    </Box>
   )
 }
 
