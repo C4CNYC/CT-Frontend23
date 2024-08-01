@@ -12,18 +12,26 @@ import { DRAW, M_DIV_STYLE, VARIANTS } from './constants'
 const CheckersCompleated: FC = () => {
   const dispatch = useDispatch()
   const isActivateCompeated = useSelector((state) => state.checkersAnimation.isActivateCompeated)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
+  const completedSlides = useSelector((state) => state.checkersAnimation.completedSlides)
 
   const controls = useAnimationControls()
 
   useEffect(() => {
-    if (isActivateCompeated) {
+    if (
+      isActivateCompeated &&
+      !completedSlides[slideIndex + 1] &&
+      nextStepAble &&
+      slideIndex === completedSlides.length - 1
+    ) {
       controls.start('visible').then(async () => {
         await controls.start('hidden').then(() => {
           dispatch(setIsActivateCompeated(false))
         })
       })
     }
-  }, [isActivateCompeated, dispatch])
+  }, [isActivateCompeated, dispatch, completedSlides, slideIndex, nextStepAble])
 
   return (
     <AnimatePresence>
