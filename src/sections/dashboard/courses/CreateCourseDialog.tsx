@@ -48,6 +48,7 @@ interface FormValuesProps {
   description: string
   active: boolean
   public: boolean
+  catalog: boolean
   initial_enrolled: number
   initial_likes: number
   initial_stars: number
@@ -359,6 +360,10 @@ export default function CreateCourseDialog({
                   <RHFSwitch
                     name='public'
                     label={translate('public')}
+                  />
+                  <RHFSwitch
+                    name='catalog'
+                    label={translate('Catalog')}
                   />
                 </Stack>
               </Stack>
