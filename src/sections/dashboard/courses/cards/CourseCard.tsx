@@ -190,6 +190,7 @@ export default function CourseCard({ course }: ICourseCardProps): React.ReactEle
             description: course.description,
             active: course.active,
             public: course.public,
+            catalog: course.catalog,
             skills: course.skills,
             initial_likes: course.initial_likes,
             initial_stars: course.initial_stars,

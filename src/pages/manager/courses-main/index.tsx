@@ -6,7 +6,6 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
-import { Role } from '@/redux/services/enums/role.enum'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useManagerGetCourseQuery,
@@ -34,7 +33,6 @@ export default function CoursesListPage(): React.ReactElement {
     {
       name: '',
       school_id: '',
-      catalog: Boolean(user?.role === Role.Owner),
     },
     FilterMode.global
   )
