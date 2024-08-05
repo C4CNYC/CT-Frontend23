@@ -61,7 +61,10 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
   })
 
   return (
-    <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
+    <Stack
+      className='tourMainStep4'
+      sx={{ px: 2, pt: 1, flexGrow: 1 }}
+    >
       <Stack
         direction='row'
         alignItems='center'
