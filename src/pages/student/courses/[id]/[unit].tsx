@@ -100,6 +100,7 @@ export default function ModulePage(): React.ReactElement {
       refetch()
     }
   }, [query?.id, refetch, profile])
+
   return (
     <>
       <Head>
@@ -125,9 +126,9 @@ export default function ModulePage(): React.ReactElement {
               name: course?.name ?? translate('course'),
               href: STUDENT_PATH_DASHBOARD.courses.course(course?.id as string),
             },
-            // {
-            //   name: module?.name ?? translate('module'),
-            // },
+            {
+              name: unitModule?.name ?? translate('module'),
+            },
           ]}
         />
         <Stack

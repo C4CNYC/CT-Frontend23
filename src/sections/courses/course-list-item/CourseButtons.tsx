@@ -1,20 +1,29 @@
+import { useMemo } from 'react'
+
 import { Button, Link, Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { CONTINUE_COURSE_BTN_SX, ENROLL_COURSE_BTN_SX, EXPLORE_COURSE_BTN_SX } from './constants'
+import { CONTINUE_COURSE_BTN_SX, ENROLL_COURSE_BTN_SX, getExploreCourseBtnSX } from './constants'
 
 interface Props {
   redirect: () => void
   progress: number | null
   courseId: string
+  isLight: boolean
 }
 
-export default function CourseButtons({ redirect, progress, courseId }: Props): React.ReactElement {
+export default function CourseButtons({
+  redirect,
+  progress,
+  courseId,
+  isLight,
+}: Props): React.ReactElement {
   const { push } = useRouter()
   const translate = useTranslate()
+  const exploreCourseBtnSx = useMemo(() => getExploreCourseBtnSX(isLight), [isLight])
   return (
     <Stack
       direction='row'
@@ -45,7 +54,7 @@ export default function CourseButtons({ redirect, progress, courseId }: Props): 
       <Button
         onClick={redirect}
         variant='outlined'
-        sx={EXPLORE_COURSE_BTN_SX}
+        sx={exploreCourseBtnSx}
       >
         {translate('actions_explore')}
       </Button>

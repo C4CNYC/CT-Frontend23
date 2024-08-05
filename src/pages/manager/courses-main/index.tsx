@@ -43,7 +43,7 @@ export default function CoursesListPage(): React.ReactElement {
     data: publicCourses,
     isLoading: isPublicLoading,
     isFetching: isPublicFetching,
-  } = useGetPublicCoursesQuery({}, { skip: !user?.role })
+  } = useGetPublicCoursesQuery({}, { skip: user?.role })
 
   if (isLoading) {
     return (
