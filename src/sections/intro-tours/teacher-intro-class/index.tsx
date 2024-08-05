@@ -1,27 +1,21 @@
 import { useEffect, useState } from 'react'
 
-import { useTheme } from '@mui/material'
-import { differenceInSeconds } from 'date-fns'
 import JoyRide, { ACTIONS, type CallBackProps, EVENTS, STATUS } from 'react-joyride'
 import { useDispatch } from 'react-redux'
 
-import useIsDesktop from '@/hooks/useIsDesktop'
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
 
-import { TOUR_STEPS_DECKTOP, TOUR_STEPS_MOBILE } from './config'
-import TooltipTourCodePanel from './tour-tooltip'
+import TooltipTourCodePanel from '../tour-tooltip'
 
-const MS_IN_SECOND = 2592000
+import { TOUR_STEPS_CLASS } from './config'
+
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
 
-export const CodePanelTour = () => {
-  const theme = useTheme()
+export const ClassIntroTour = () => {
   const dispatch = useDispatch()
-  const isDesktop = useIsDesktop()
   const [slideIndex, setSlideIndex] = useState(0)
   const isTourStarted = useSelector((state) => state.tour.isStarted)
-  const userCreated = useSelector((state) => state.global.user?.createdAt)
 
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { action, index, status, type } = data
@@ -34,33 +28,24 @@ export const CodePanelTour = () => {
   }
 
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
+    const hasSeenTour = localStorage.getItem('HAS_SEEN_CLASS_TOUR')
 
     if (hasSeenTour) {
       return
     }
 
-    if (userCreated) {
-      const isTourShouldBeStopped =
-        differenceInSeconds(new Date(), new Date(userCreated)) / MS_IN_SECOND > 1
-
-      if (isTourShouldBeStopped) {
-        dispatch(setStartTour(false))
-      }
-    }
-
     setTimeout(() => {
       dispatch(setStartTour(true))
-      localStorage.setItem('HAS_SEEN_TOUR', 'true')
-    }, 3000)
-  }, [userCreated, isTourStarted, dispatch])
+      localStorage.setItem('HAS_SEEN_CLASS_TOUR', 'true')
+    }, 1000)
+  }, [isTourStarted, dispatch])
 
   return (
     <JoyRide
       callback={handleJoyrideCallback}
       run={isTourStarted}
       tooltipComponent={TooltipTourCodePanel}
-      steps={isDesktop ? TOUR_STEPS_DECKTOP : TOUR_STEPS_MOBILE}
+      steps={TOUR_STEPS_CLASS}
       showSkipButton={false}
       showProgress
       stepIndex={slideIndex}
@@ -71,4 +56,4 @@ export const CodePanelTour = () => {
 
 const JOY_RIDE_OPTIONS = { options: { zIndex: 10000 } }
 
-export default CodePanelTour
+export default ClassIntroTour

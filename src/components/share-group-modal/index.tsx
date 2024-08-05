@@ -29,6 +29,8 @@ import { useUpdateClassesSettingsMutation } from '@/redux/services/manager/class
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { setReadyToStartMainTour } from '@root/src/redux/slices/tour'
+import { useDispatch } from '@root/src/redux/store'
 
 import ClassroomModal from '../classroom-modal'
 import EmailAddressModal from '../email-address-domain'
@@ -61,6 +63,7 @@ export default function ShareGroupModal({
   schoolClass,
 }: IShareGroupModalProps): React.ReactElement {
   const theme = useTheme()
+  const dispatch = useDispatch()
   const isLight = theme.palette.mode === 'light'
   const { query } = useRouter()
   const { copy } = useCopyToClipboard()
@@ -71,9 +74,11 @@ export default function ShareGroupModal({
   const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation()
 
   const handleOpen = () => {
+    dispatch(setReadyToStartMainTour(false))
     setOpen(true)
   }
   const handleClose = () => {
+    dispatch(setReadyToStartMainTour(true))
     setOpen(false)
   }
 

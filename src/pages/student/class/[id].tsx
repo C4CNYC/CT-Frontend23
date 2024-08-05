@@ -16,7 +16,7 @@ import JoinTribeModal from '@/sections/join-tribe/JoinTribeModal'
 import DefaultClassInfo from '@/sections/main/class-info/DefaultClassInfo'
 import ClassInfoTable from '@/sections/main/quests/ClassInfoTable'
 import { useTranslate } from '@/utils/translateHelper'
-import MainPageTour from '@root/src/sections/main/tour'
+import MainPageTour from '@root/src/sections/intro-tours/teacher-intro-main'
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

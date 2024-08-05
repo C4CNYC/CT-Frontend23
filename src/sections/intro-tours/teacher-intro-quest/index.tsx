@@ -3,19 +3,17 @@ import { useEffect, useState } from 'react'
 import JoyRide, { ACTIONS, type CallBackProps, EVENTS, STATUS } from 'react-joyride'
 import { useDispatch } from 'react-redux'
 
-import useIsDesktop from '@/hooks/useIsDesktop'
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
 
-import TooltipTourCodePanel from '../../code-panel/components/tour/tour-tooltip'
+import TooltipTourCodePanel from '../tour-tooltip'
 
-import { TOUR_STEPS_MAIN } from './config'
+import { TOUR_STEPS_QUEST } from './config'
 
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
 
-export const MainPageTour = () => {
+export const QuestPageTour = () => {
   const dispatch = useDispatch()
-  const isDesktop = useIsDesktop()
   const [slideIndex, setSlideIndex] = useState(0)
   const isTourStarted = useSelector((state) => state.tour.isStarted)
 
@@ -30,7 +28,7 @@ export const MainPageTour = () => {
   }
 
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_MAIN_TOUR')
+    const hasSeenTour = localStorage.getItem('HAS_SEEN_QUEST_TOUR')
 
     if (hasSeenTour) {
       return
@@ -38,8 +36,8 @@ export const MainPageTour = () => {
 
     setTimeout(() => {
       dispatch(setStartTour(true))
-      localStorage.setItem('HAS_SEEN_MAIN_TOUR', 'true')
-    }, 3000)
+      localStorage.setItem('HAS_SEEN_QUEST_TOUR', 'true')
+    }, 1000)
   }, [isTourStarted, dispatch])
 
   return (
@@ -47,7 +45,7 @@ export const MainPageTour = () => {
       callback={handleJoyrideCallback}
       run={isTourStarted}
       tooltipComponent={TooltipTourCodePanel}
-      steps={TOUR_STEPS_MAIN}
+      steps={TOUR_STEPS_QUEST}
       showSkipButton={false}
       showProgress
       stepIndex={slideIndex}
@@ -58,4 +56,4 @@ export const MainPageTour = () => {
 
 const JOY_RIDE_OPTIONS = { options: { zIndex: 10000 } }
 
-export default MainPageTour
+export default QuestPageTour
