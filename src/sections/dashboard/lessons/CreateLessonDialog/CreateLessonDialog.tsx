@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, DialogActions, Stack, Tab, Tabs } from '@mui/material'
+import { Box, Button, DialogActions, Stack, Tab, Tabs, useTheme } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -66,6 +66,7 @@ export default function CreateLessonDialog({
   children,
   defaultValues,
 }: ICreateLessonDialogProps): React.ReactElement {
+  const theme = useTheme()
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -157,6 +158,11 @@ export default function CreateLessonDialog({
         open={open}
         onClose={handleClose}
         sx={{ zIndex: 9999 }}
+        PaperProps={{
+          sx: {
+            background: theme.palette.background.default,
+          },
+        }}
       >
         <DialogTitle>
           {isEdit ? translate('lessons_edit_lesson') : translate('lessons_create_lesson')}

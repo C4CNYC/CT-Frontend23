@@ -4,8 +4,8 @@ export const ACC_SUMMARY_SX = { pl: '10px' }
 export const LIST_SX = { p: 0, pl: '10px', pr: '10px' }
 export const DIVIDER_SX = { height: 2 }
 
-export const getButtonSx = (isCurrentLesson: boolean): SxProps => ({
-  background: isCurrentLesson ? '#ebe5e5' : 'inherit',
+export const getButtonSx = (isCurrentLesson: boolean, isLight: boolean): SxProps => ({
+  background: isCurrentLesson ? (isLight ? '#ebe5e5' : '#161C24') : 'inherit',
   cursor: 'pointer',
   display: 'flex',
 })

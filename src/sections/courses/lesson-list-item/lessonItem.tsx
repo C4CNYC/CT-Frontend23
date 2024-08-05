@@ -72,6 +72,7 @@ export default function LessonItem({ data }: Props): React.ReactElement {
             <CourseChip
               key={i}
               text={el}
+              isLight={theme.palette.mode === 'light'}
             />
           ))}
         </Box>
