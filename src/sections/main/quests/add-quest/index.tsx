@@ -250,7 +250,10 @@ export default function AddQuest(): React.ReactElement {
           </IconButton>
         </Stack>
       </Collapse>
-      <Stack sx={mainContainerStyles(theme, onboardingInfo)}>
+      <Stack
+        sx={mainContainerStyles(theme, onboardingInfo)}
+        className='tourQuestStep1'
+      >
         <Stack sx={CONTAINER_INNER_SX}>
           <Stack>
             <Typography variant='h2'>{translate('actions_add_quest')}</Typography>
