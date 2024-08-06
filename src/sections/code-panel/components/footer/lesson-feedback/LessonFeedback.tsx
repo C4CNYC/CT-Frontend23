@@ -257,7 +257,7 @@ export default function LessonFeedback({ children, lessonName }: Props): React.R
               }}
             />
 
-            <Divider sx={{ my: 2 }}>OR</Divider>
+            <Divider sx={{ my: 2 }}>{generalFeed ? '' : 'OR'}</Divider>
             <Box sx={{ textAlign: 'center' }}>
               {generalFeed ? (
                 <FormProvider
