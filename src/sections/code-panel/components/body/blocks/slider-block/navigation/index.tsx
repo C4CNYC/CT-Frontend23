@@ -54,7 +54,9 @@ const Navigation: FC<INavigation> = ({
   const styleNext = useMemo(() => stylesNext(btnNext, theme), [btnNext])
 
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const [slideProgress, setSlideProgress] = useState(slideIndex)
+
+  const completedSlides = useSelector((state) => state.checkersAnimation.completedSlides)
+  const [slideProgress, setSlideProgress] = useState(-1)
 
   useEffect(() => {
     if (canMoveNext) {
@@ -68,7 +70,7 @@ const Navigation: FC<INavigation> = ({
 
   const getNextBtnType = useCallback((): void => {
     if (stepHasValidation) {
-      if (canMoveNext || slideIndex < slideProgress) {
+      if (canMoveNext || completedSlides[slideIndex]) {
         setBtnNext(BtnType.compleated)
       } else {
         setBtnNext(BtnType.coding)
@@ -76,7 +78,7 @@ const Navigation: FC<INavigation> = ({
     } else {
       setBtnNext(BtnType.next)
     }
-  }, [stepHasValidation, canMoveNext])
+  }, [stepHasValidation, canMoveNext, completedSlides, slideIndex])
 
   useEffect(() => {
     getNextBtnType()
@@ -105,7 +107,7 @@ const Navigation: FC<INavigation> = ({
 
           <Tooltip
             title={
-              stepHasValidation && !canMoveNext && slideIndex > slideProgress ? (
+              stepHasValidation && !canMoveNext && !completedSlides[slideIndex] ? (
                 <Typography sx={TOOLTIP_CONTENT_SX}>{translate('btn_group_tooltip')}</Typography>
               ) : (
                 ''
@@ -125,7 +127,7 @@ const Navigation: FC<INavigation> = ({
                 }}
                 backType={btnNext}
               >
-                {stepHasValidation && !canMoveNext && slideIndex > slideProgress ? (
+                {stepHasValidation && !canMoveNext && !completedSlides[slideIndex] ? (
                   <Button
                     onClick={() => {
                       onNext(true)
