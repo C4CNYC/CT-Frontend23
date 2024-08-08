@@ -69,7 +69,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       if (prevLessonCode) {
         return prevLessonCode
       }
-      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${slideIndex}`)
+      const localStorageKey = getLocalStorageRoomKey(`${lessonId}`)
       const localStorageCodeValue = localStorage.getItem(localStorageKey)
       if (localStorageCodeValue) {
         try {
@@ -83,13 +83,13 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         }
       }
     }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId, slideIndex])
+  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId])
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
     onChangeStreamingDocInfoFromProps?.(value as any)
     if (value) {
-      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${slideIndex}`)
+      const localStorageKey = getLocalStorageRoomKey(`${lessonId}`)
       localStorage.setItem(localStorageKey, value)
     }
     void updateCommentWidgetPosition()
