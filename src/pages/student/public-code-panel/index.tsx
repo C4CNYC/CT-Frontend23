@@ -48,9 +48,12 @@ const CodePanelSignUpDialog = dynamic(
   }
 )
 
-const CodePanelTour = dynamic(async () => await import('@/sections/code-panel/components/tour'), {
-  ssr: false,
-})
+const CodePanelTour = dynamic(
+  async () => await import('@/sections/intro-tours/code-panel-intro/index'),
+  {
+    ssr: false,
+  }
+)
 
 const CodePanelHeader = dynamic(
   async () => await import('@/sections/code-panel/components/header'),

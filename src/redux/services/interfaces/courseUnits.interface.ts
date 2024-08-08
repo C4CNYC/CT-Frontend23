@@ -42,6 +42,7 @@ export interface ICourse {
   active: boolean
   cover: string
   public: boolean
+  catalog: boolean
   draft: boolean
   skills: []
   units: IModule[]

@@ -15,6 +15,7 @@ import '@dotlottie/react-player/dist/index.css'
 const CheckersCompleated: FC = () => {
   const dispatch = useDispatch()
   const animationNumber = useSelector((state) => state.codePanelGlobal.animationNumber)
+
   return (
     <Box
       sx={{

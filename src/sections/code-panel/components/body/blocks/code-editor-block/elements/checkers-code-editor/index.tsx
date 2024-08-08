@@ -6,7 +6,7 @@ import { AnimatePresence, m } from 'framer-motion'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 import { useDispatch } from 'react-redux'
 
-import { setIsVisible } from '@/redux/slices/checkers-animation'
+import { setIsVisible, setCompletedSlides } from '@/redux/slices/checkers-animation'
 import { setContentValidations, setNextStepAble } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { type IValidationMap } from '@/utils/validationMaping'
@@ -36,7 +36,8 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const dispatch = useDispatch()
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
-  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const completedSlides = useSelector((state) => state.checkersAnimation.completedSlides)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const isActivateCompeated = useSelector((state) => state.checkersAnimation.isActivateCompeated)
   const handleCollaps = (): void => {
@@ -56,9 +57,6 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const ref = useDetectClickOutside({ onTriggered: handleClose })
 
   useEffect(() => {
-    if (nextStepAble) {
-      return
-    }
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
     if (allPased) {
       const checkedContents = contentValidations?.map((item) => ({
@@ -71,9 +69,12 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
         // Checking for an empty array solves this error
         dispatch(setContentValidations(checkedContents))
       }
-      dispatch(setNextStepAble(allPased))
+      const newCompletedSlides = [...completedSlides]
+      newCompletedSlides[slideIndex] = true
+      dispatch(setCompletedSlides(newCompletedSlides))
     }
-  }, [checkers])
+    dispatch(setNextStepAble(allPased))
+  }, [checkers, slideIndex])
 
   const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
 
