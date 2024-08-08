@@ -2,8 +2,6 @@ import { type FC, memo, useCallback, useEffect, useRef, useState } from 'react'
 
 import { Box, Collapse } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
-import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
 
 import { type AuthUserType } from '@/auth/types'
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -50,18 +48,14 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   preloadedCode,
   onChangeStreamingDocInfo,
 }) => {
-  const router = useRouter()
-  const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
   const [typing, setTyping] = useState<boolean | null>(null)
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
 
-  const codeRef = useRef(code)
   const timer = useRef<NodeJS.Timeout>()
 
   const TITLE = translate('code_editor')
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
   const typingListener = (deley: number, firstLoad: boolean): void => {

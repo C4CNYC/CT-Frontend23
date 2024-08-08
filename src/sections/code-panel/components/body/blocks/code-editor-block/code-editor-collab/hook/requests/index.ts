@@ -29,6 +29,9 @@ export const getDocument = async ({
 }
 interface GetDocumentProps {
   socket?: Socket
+  lesson_id: string
+  course_id: string
+  unit_id: string
   roomId_fileId: string
   cursorName: string
 }

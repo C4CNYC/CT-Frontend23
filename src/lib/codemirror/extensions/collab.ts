@@ -110,6 +110,9 @@ async function pullUpdates(
 export async function getDocument(
   socket: Socket,
   roomIdFileId: string,
+  lessonId: string,
+  courseId: string,
+  unitId: string,
   timeout = 3000
 ): Promise<{ version: number; doc: Text }> {
   return await new Promise(function (resolve, reject) {

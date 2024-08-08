@@ -7,9 +7,11 @@ import { EditorView } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
 import { StateEffectType } from '@uiw/react-codemirror'
+import { useSelector } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@root/src/auth/types'
+import { RootState } from '@root/src/redux/store'
 
 import { BASIC_SETUP, EditorMode, Extensions } from './constants'
 import { commentExtenstion } from './extensions/comments'
@@ -61,13 +63,22 @@ export const useInitCodemirror = ({
   const [isLoading, setIsLoading] = useState(true)
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
 
+  const lesson_id = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const course_id = useSelector((state: RootState) => state.codePanelGlobal.courseId)
+  const unit_id = useSelector((state: RootState) => state.codePanelGlobal.unitId)
+
   const baseInit = useCallback(
     async (file_id: string) => {
+      if (!lesson_id || !course_id || !unit_id) return
+
       const lineWrap = new Compartment()
       const addCursor = StateEffect.define<Cursor>()
       commentEffectRef.current = StateEffect.define<CommentEffect>()
       const { version, doc, docInfo, updates } = await getDocument({
         socket,
+        lesson_id,
+        course_id,
+        unit_id,
         roomId_fileId: `${roomId}_${file_id}`,
         cursorName: user?.id ?? cursorText,
       })
@@ -111,7 +122,18 @@ export const useInitCodemirror = ({
       setKey((prev) => ++prev)
       setIsLoading(false)
     },
-    [roomId, cursorText, withTooltip, socket, defaultFileName, preloadedCode, fileExtension]
+    [
+      roomId,
+      cursorText,
+      withTooltip,
+      socket,
+      defaultFileName,
+      preloadedCode,
+      fileExtension,
+      lesson_id,
+      course_id,
+      unit_id,
+    ]
   )
 
   return {
