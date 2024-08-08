@@ -20,7 +20,7 @@ interface Props {
   course: ICourseElement
 }
 
-const MAX_DESCRIPTION_LENGTH = 250
+const MAX_DESCRIPTION_LENGTH = 80
 
 export default function CoursesItem({ course }: Props): React.ReactElement {
   const { push } = useRouter()
@@ -41,12 +41,13 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         color: isLight ? '#212B36' : theme.palette.text.primary,
         p: {
           xs: '20px 20px 20px 20px',
-          sm: '30px 20px 20px 20px',
-          md: '30px 55px 37px 40px',
+          sm: '20px 20px 20px 20px',
+          md: '20px 55px 20px 40px',
         },
       }}
     >
-      <CourseHeader progress={course.progress ?? 3} />
+      {course.progress ? <CourseHeader progress={course.progress} /> : null}
+
       <Box
         sx={{
           display: 'flex',
@@ -56,7 +57,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         <Box
           sx={{
             width: '100%',
-            maxWidth: { xs: 'none', sm: 'none', md: '600px' },
+            maxWidth: { xs: 'none', sm: 'none', md: '700px' },
           }}
         >
           <Typography
