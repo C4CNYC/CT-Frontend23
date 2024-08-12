@@ -50,18 +50,21 @@ const ViewBlock: FC<IViewBlock> = ({ document }) => {
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
-      <IconButton
-        onClick={reloadIffame}
-        sx={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          background: 'rgba(179, 96, 96, .5)',
-          borderRadius: '0 0 0 20px',
-        }}
-      >
-        <ReplayIcon />
-      </IconButton>
+      {document ? (
+        <IconButton
+          onClick={reloadIffame}
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            background: 'rgba(179, 96, 96, .5)',
+            borderRadius: '0 0 0 20px',
+          }}
+        >
+          <ReplayIcon />
+        </IconButton>
+      ) : null}
+
       <BrowserView
         document={document}
         isOpenHeader={isOpenHeader}
