@@ -1,7 +1,14 @@
-import { type FC } from 'react'
+import { useMemo, type FC } from 'react'
 
-// import { CopyBlock, dracula } from "react-code-blocks";
-import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
 
 import { Iconify } from '@/components/iconify'
@@ -11,9 +18,9 @@ import { useTranslate } from '@/utils/translateHelper'
 import {
   COPY_BLOCK_CUSTOM_STYLES,
   DIALOG_CONTENT_SX,
-  DIALOG_PAPER_PROPS,
   DIALOG_TITLE_SX,
   DIALOG_TITLE_TYP_SX,
+  getDialogPaperProps,
   ICON_BUTTON_SX,
 } from './constants'
 
@@ -23,8 +30,13 @@ interface SolutionMobileDialogProps {
 }
 
 export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onClose }) => {
+  const theme = useTheme()
   const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
   const translate = useTranslate()
+  const dialogPaperProps = useMemo(
+    () => getDialogPaperProps(theme.palette.mode === 'dark'),
+    [theme.palette.mode === 'dark']
+  )
 
   return (
     <>
@@ -32,7 +44,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
         open={open}
         onClose={onClose}
         scroll='paper'
-        PaperProps={DIALOG_PAPER_PROPS}
+        PaperProps={dialogPaperProps}
       >
         <DialogTitle sx={DIALOG_TITLE_SX}>
           <AiOutlineCode
@@ -69,7 +81,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
             component='div'
             style={COPY_BLOCK_CUSTOM_STYLES as any}
           >
-            {solutionCode || translate('no_solution')}
+            {solutionCode || <Typography>{translate('no_solution')}</Typography>}
           </Box>
         </DialogContent>
       </Dialog>

@@ -69,18 +69,20 @@ export default function SingUp({
         <Typography variant='h3'>{translate('login_sign_up')}</Typography>
         <Typography
           variant='h3'
-          sx={{ ml: 1 }}
+          sx={{ ml: 1, mb: 3 }}
         >
           😃
         </Typography>
       </Stack>
-      <Typography
-        variant='body1'
-        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}
+      <Stack
+        sx={{
+          mt: 1,
+          '& .MuiInputLabel-root': {
+            fontSize: '1.1rem',
+            color: '#637381',
+          },
+        }}
       >
-        {translate('login_my_first_time')}
-      </Typography>
-      <Stack sx={{ mt: 1 }}>
         <RHFTextField
           name='email'
           label={translate('email')}
@@ -125,7 +127,7 @@ export default function SingUp({
             py: 1.5,
             mb: 1,
             gap: 2,
-            background: theme.palette.mode === 'light' ? theme.palette.grey[200] : '',
+            background: theme.palette.mode === 'light' ? '#efefef' : '',
             fontWeight: 400,
             fontSize: '1.3em',
             '&:hover': {

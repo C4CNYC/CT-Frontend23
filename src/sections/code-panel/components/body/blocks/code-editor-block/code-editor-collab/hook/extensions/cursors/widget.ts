@@ -1,5 +1,5 @@
 import { EditorView, WidgetType } from '@uiw/react-codemirror'
-import { debounce } from 'lodash'
+import debounce from 'lodash-es/debounce'
 
 interface TooltipWidgetProps {
   id: string
@@ -36,12 +36,6 @@ export class TooltipWidget extends WidgetType {
   toDOM(view: EditorView) {
     const dom = document.createElement('div')
 
-    if (!this.withTooltip) {
-      dom.style.display = 'none'
-
-      return dom
-    }
-
     const docLength = view.state.doc.length >= this.pos ? this.pos : view.state.doc.length
     const lineNumber = view.state.doc.lineAt(docLength).number
     const isOnTheFirstLine = lineNumber === 1
@@ -63,7 +57,9 @@ export class TooltipWidget extends WidgetType {
     tooltipArrow.className = 'cm-tooltip-arrow'
 
     cursorTooltip.appendChild(tooltipArrow)
-    dom.appendChild(cursorTooltip)
+
+    if (this.withTooltip) dom.appendChild(cursorTooltip)
+
     if (this.id.split('_')[0] === this.userId) dom.appendChild(cursorCaret)
 
     debouncedHideTooltip(dom)

@@ -45,6 +45,7 @@ export const useCodeEditorCollab = ({
   socket,
   onRoomStatusChanged,
   user,
+  preloadedCode,
   ...propsToMemoize
 }: UseCodeEditorCollabProps): UseCodeEditorCollabReturn => {
   const modeRef = useRef(mode)
@@ -63,7 +64,7 @@ export const useCodeEditorCollab = ({
     setActiveFile,
     onResetFileManager,
     defaultFileName,
-    preloadedCode,
+    // preloadedCode,
   } = useMemoizedProps(propsToMemoize)
 
   const onCreateEditor = (view: EditorView): void => {

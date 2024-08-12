@@ -80,7 +80,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
           flex: 1,
         }}
       >
-        <ModuleProgress progress={unit?.progress?.toString() ?? '2'} />
+        <ModuleProgress progress={unit?.progress ? unit?.progress : 3} />
         <Box>
           <Typography
             variant='h5'

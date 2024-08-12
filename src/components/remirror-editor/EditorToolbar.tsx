@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { Divider, Stack } from '@mui/material'
+import { Box, Divider, Stack, useTheme } from '@mui/material'
 import {
   BasicFormattingButtonGroup,
   CommandButtonGroup,
@@ -14,14 +14,17 @@ import {
   ToggleSubscriptButton,
   ToggleSuperscriptButton,
   ToggleTaskListButton,
+  ToggleCodeButton,
   Toolbar,
 } from '@remirror/react'
 
 import { LessonContentContext } from '@/sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context'
+import { ThemeProvider } from '@/theme'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 
+import { MediaBtn } from './controls-btn'
 import MenuItems from './MenuItems'
 import { SaveButton } from './SaveButton'
 import {
@@ -30,20 +33,30 @@ import {
   TextBgColorPicker,
   TextCaseSelect,
   TextColorPicker,
+  TemplateSelector,
+  BgColorToggleBtn,
+  EmojiPickerBtn,
 } from './toolbars'
-import EmojiPickerBtn from './toolbars/EmojiPicker'
 
 interface Props {
   saveContent: () => void
   data: ILessonContent & BaseResponseInterface
   lessonId: string
+  bgColor: string
+  setBgColor?: (bgColor: string) => void
 }
 
-export default function EditorToolbar({ saveContent, data, lessonId }: Props): React.ReactElement {
+export default function EditorToolbar({
+  saveContent,
+  data,
+  lessonId,
+  bgColor,
+  setBgColor,
+}: Props): React.ReactElement {
   const { locked } = useContext(LessonContentContext)
-
+  const theme = useTheme()
   return (
-    <>
+    <ThemeProvider>
       <Toolbar
         style={{
           position: 'sticky',
@@ -57,7 +70,6 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
         }}
       >
         <>
-          {' '}
           <Stack
             direction='column'
             sx={{ width: '100%', gap: 1 }}
@@ -69,27 +81,41 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
             >
               <Stack
                 flexDirection='row'
-                sx={{ flexWrap: 'wrap', gap: 1, alignItems: 'center' }}
+                sx={{
+                  flexWrap: 'wrap',
+                  gap: 1,
+                  alignItems: 'center',
+                  p: 1,
+                  borderRadius: 1,
+                }}
               >
                 <ToggleBoldButton />
-                <CommandButtonGroup>
-                  <ToggleOrderedListButton />
-                </CommandButtonGroup>
+                <ToggleCodeButton />
+                <ToggleOrderedListButton />
                 <TextColorPicker />
                 <TextBgColorPicker />
-                <CommandButtonGroup>
-                  <ToggleTaskListButton />
-                </CommandButtonGroup>
+                <ToggleTaskListButton />
                 <EmojiPickerBtn />
+                <BgColorToggleBtn
+                  bgColor={bgColor}
+                  setBgColor={setBgColor}
+                />
+                <MediaBtn />
               </Stack>
 
               <SaveButton onClick={saveContent} />
             </Stack>
+            <Box
+              display='flex'
+              gap={2}
+            >
+              <TemplateSelector />
 
-            <MenuItems
-              data={data}
-              lessonId={lessonId}
-            />
+              <MenuItems
+                data={data}
+                lessonId={lessonId}
+              />
+            </Box>
           </Stack>
         </>
       </Toolbar>
@@ -102,7 +128,7 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
             },
           }}
           style={{
-            zIndex: 9999999,
+            zIndex: 1500,
             padding: 10,
           }}
         >
@@ -115,6 +141,7 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
             alignContent='center'
           >
             <BasicFormattingButtonGroup />
+            <ToggleCodeButton />
             <Divider
               sx={{ ml: 1, mr: 1, mt: 0.5, height: '70%' }}
               orientation='vertical'
@@ -156,6 +183,6 @@ export default function EditorToolbar({ saveContent, data, lessonId }: Props): R
           </Stack>
         </FloatingToolbar>
       ) : null}
-    </>
+    </ThemeProvider>
   )
 }

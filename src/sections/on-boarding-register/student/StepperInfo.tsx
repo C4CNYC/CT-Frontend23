@@ -1,21 +1,27 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Divider, Stack, TextField, Typography } from '@mui/material'
-import { DatePicker } from '@mui/x-date-pickers'
+import { Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { countries } from '@/assets/data'
 import { FormProvider, RHFSelect, useSnackbar } from '@/components'
 import { useUpdateStudentProfileMutation } from '@/redux/services/auth'
 import { useTranslate } from '@/utils/translateHelper'
+import {
+  days_list,
+  leap_years,
+  month_names_short,
+  schort_month,
+  years_list,
+} from '@root/src/assets/data/time-data'
 
 import { styledRegisterInput } from '../styles'
 
 interface FormValueProps {
-  country: string
-  birthDate: string
+  day: string
+  mounth: string
+  year: string
 }
 
 export default function StepperInfo(): React.ReactElement {
@@ -23,29 +29,45 @@ export default function StepperInfo(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const [updateUser] = useUpdateStudentProfileMutation()
   const translate = useTranslate()
-
   const CreateInfoSchema = Yup.object().shape({
-    country: Yup.string(),
-    birthDate: Yup.string(),
+    day: Yup.string().required('Please select day'),
+    mounth: Yup.string().required('Please select mounth'),
+    year: Yup.string().required('Please select year'),
   })
 
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateInfoSchema),
-    mode: 'all',
+    mode: 'onChange',
     defaultValues: {},
   })
 
   const onSubmit = async (data: FormValueProps) => {
     try {
-      await updateUser({
-        country: data.country?.toLowerCase(),
-        // birthDate: data.birthDate,
-      }).unwrap()
-
+      // await updateUser({
+      // country: data.country ? data.country.toLowerCase() : undefined,
+      // birthDate: data.birthDate,
+      // }).unwrap()
       reload()
     } catch (error: any) {
       enqueueSnackbar(error.message, { variant: 'error' })
     }
+  }
+
+  const curentMonth = methods.watch('mounth')
+  const curentYear = methods.watch('year')
+
+  const getDaysCount = () => {
+    if (schort_month.includes(curentMonth)) {
+      return days_list.slice(0, -1)
+    }
+    if (curentMonth === 'Feb') {
+      if (leap_years.includes(curentYear)) {
+        return days_list.slice(0, -2)
+      } else {
+        return days_list.slice(0, -3)
+      }
+    }
+    return days_list
   }
 
   return (
@@ -72,54 +94,78 @@ export default function StepperInfo(): React.ReactElement {
         >
           {translate('register_help_assign')}
         </Typography>
-        <Controller
-          name='birthDate'
-          control={methods.control}
-          defaultValue=''
-          render={({ field: { onChange, value, ...restField } }) => (
-            <DatePicker
-              value={value}
-              onChange={(event) => {
-                onChange(event as string | React.ChangeEvent<Element>)
-              }}
-              views={['year', 'month', 'day']}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  sx={(theme) => ({ ...styledRegisterInput(theme) })}
-                  margin='normal'
-                  fullWidth
-                  style={{ marginRight: '10px' }}
-                />
-              )}
-            />
-          )}
-        />
-        <Divider sx={{ my: 2 }}>&</Divider>
-        <RHFSelect
-          native
-          name='country'
-          label={translate('country')}
-          sx={(theme) => ({ ...styledRegisterInput(theme) })}
+        <Stack
+          direction='row'
+          py={4}
+          gap={2}
         >
-          <option
-            key={'US'}
-            value={'US'}
+          <RHFSelect
+            native
+            name='mounth'
+            label={translate('Month')}
+            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            defaultValue={'MM'}
           >
-            United States
-          </option>
-          <option disabled>─────────────────────────</option>
-          {countries
-            .filter((el) => el.code !== 'US')
-            .map((country) => (
+            <option
+              value='MM'
+              disabled
+            >
+              MM
+            </option>
+            {month_names_short.map((month) => (
               <option
-                key={country.code}
-                value={country.code}
+                key={month}
+                value={month}
               >
-                {country.label}
+                {month}
               </option>
             ))}
-        </RHFSelect>
+          </RHFSelect>
+          <RHFSelect
+            native
+            name='day'
+            label={translate('Day')}
+            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            defaultValue={'DD'}
+          >
+            <option
+              value='DD'
+              disabled
+            >
+              DD
+            </option>
+            {getDaysCount().map((day) => (
+              <option
+                key={day}
+                value={day}
+              >
+                {day}
+              </option>
+            ))}
+          </RHFSelect>
+          <RHFSelect
+            native
+            name='year'
+            label={translate('Year')}
+            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            defaultValue={'YYYY'}
+          >
+            <option
+              value='YYYY'
+              disabled
+            >
+              YYYY
+            </option>
+            {years_list.map((year) => (
+              <option
+                key={year}
+                value={year}
+              >
+                {year}
+              </option>
+            ))}
+          </RHFSelect>
+        </Stack>
         <LoadingButton
           type='submit'
           loading={methods.formState.isSubmitting}

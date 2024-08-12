@@ -5,10 +5,11 @@ import NextLink from 'next/link'
 
 import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard/StudentDashboardLayout'
-import { IGallery } from '@/redux/interfaces/gallary.interface'
+import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
 import { useGetProjectsQuery } from '@/redux/services/manager/gallery-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import FolderElement from '@/sections/dashboard/gallery/FolderElement'
+import { FilterMode, useFilters } from '@root/src/hooks'
 
 Gallery.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -23,7 +24,19 @@ export default function Gallery(): React.ReactElement {
     privatePr: 0,
   })
   const { themeStretch } = useSettingsContext()
-  const { data } = useGetProjectsQuery({})
+
+  const { filters, setFilter } = useFilters<IGallerySearchParams>(
+    {
+      title: '',
+    },
+    FilterMode.global
+  )
+
+  const { data } = useGetProjectsQuery(filters)
+
+  useEffect(() => {
+    if (data) setFilter('take', data.meta.itemCount)
+  }, [])
 
   useEffect(() => {
     if (data) {

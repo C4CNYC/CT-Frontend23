@@ -11,7 +11,11 @@ import {
   useGetCoursContentQuery,
   useGetStudentCourseModulesQuery,
 } from '@/redux/services/manager/courses-student'
-import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
+import {
+  useGetModuleWithLessonsQuery,
+  useGetPublicModuleWithLessonsQuery,
+} from '@/redux/services/manager/modules-student'
+import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import {
   CONTAINER_SX,
@@ -23,6 +27,7 @@ import LessonsList from '@/sections/module/LessonsList'
 import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetPublicCourseContentQuery } from '@root/src/redux/services/public-student'
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -35,31 +40,53 @@ export default function ModulePage(): React.ReactElement {
   const { query } = useRouter()
   const [currentModule, setCurrentModule] = useState<IModuleContent>()
   const translate = useTranslate()
+  const profile = useSelector((state) => state.global.user)
 
   const { data: modules, isLoading: isLoadingModules } = useGetStudentCourseModulesQuery(
     { id: query?.id as string },
-    { skip: !query?.id }
+    { skip: !query?.id || !profile }
   )
-  const { data: course } = useGetCoursContentQuery(
+  const { data: studentCourse } = useGetCoursContentQuery(
     {
       id: query.id as string,
     },
-    { skip: !query.id }
+    { skip: !query.id || !profile }
   )
 
-  const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
-    { id: query.unit as string },
-    { skip: !query.unit }
+  const { data: publicCourse } = useGetPublicCourseContentQuery(
+    { id: query.id as string },
+    { skip: !query.id || !!profile }
   )
+
+  const course = studentCourse ?? publicCourse
+
+  const {
+    data: lessonsModule,
+    isLoading: isLoadingLessonsModule,
+    refetch: refetchModule,
+  } = useGetModuleWithLessonsQuery({ id: query.unit as string }, { skip: !query.unit || !profile })
+
+  const {
+    data: publicModule,
+    isLoading: isLoadingPublicModule,
+    refetch: refetchPublic,
+  } = useGetPublicModuleWithLessonsQuery(
+    { id: query.unit as string },
+    { skip: !query.unit || !!profile }
+  )
+
+  const unitModule = lessonsModule ?? publicModule
+  const isLoadingModule = isLoadingLessonsModule ?? isLoadingPublicModule
+  const refetch = refetchModule ?? refetchPublic
 
   const moduleDuration = useMemo(
     () =>
-      module?.duration
-        ? Object.entries(module.duration)
+      unitModule?.duration
+        ? Object.entries(unitModule.duration)
             .map(([dataType, count]) => `${count} ${dataType}`)
             .join(' ')
         : '20 min',
-    [module]
+    [unitModule]
   )
 
   useEffect(() => {
@@ -68,10 +95,16 @@ export default function ModulePage(): React.ReactElement {
     }
   }, [isLoadingModules])
 
+  useEffect(() => {
+    if (profile) {
+      refetch()
+    }
+  }, [query?.id, refetch, profile])
+
   return (
     <>
       <Head>
-        <title>{module?.name ?? translate('module')} | CodeTribe</title>
+        <title>{unitModule?.name ?? translate('module')} | CodeTribe</title>
       </Head>
       <Container
         maxWidth={themeStretch ? false : 'xl'}
@@ -94,7 +127,7 @@ export default function ModulePage(): React.ReactElement {
               href: STUDENT_PATH_DASHBOARD.courses.course(course?.id as string),
             },
             {
-              name: module?.name ?? translate('module'),
+              name: unitModule?.name ?? translate('module'),
             },
           ]}
         />
@@ -110,12 +143,14 @@ export default function ModulePage(): React.ReactElement {
           }}
         >
           <Stack sx={CONTAINER_SX}>
-            {!isLoadingModules && !isLoadingModule && module ? (
+            {!isLoadingModules && !isLoadingModule && unitModule ? (
               <ModuleHeader
-                name={module.name}
-                lessons={module?.lessons ?? []}
-                description={module?.description ? module.description : translate('description')}
-                avatar={module.avatar}
+                name={unitModule.name}
+                lessons={unitModule?.lessons ?? []}
+                description={
+                  unitModule?.description ? unitModule.description : translate('description')
+                }
+                avatar={unitModule.avatar}
               />
             ) : (
               <Skeleton
@@ -125,7 +160,7 @@ export default function ModulePage(): React.ReactElement {
             )}
             {!isLoadingModule ? (
               <LessonsList
-                lessons={module?.lessons ?? []}
+                lessons={unitModule?.lessons ?? []}
                 unitId={query?.unit as string}
               />
             ) : (
@@ -154,15 +189,17 @@ export default function ModulePage(): React.ReactElement {
             level='Beginner'
             grade='6th-10th Grade'
             duration={moduleDuration}
-            lessonCount={`${module?.lessons?.length} ${translate('lessons')}`}
-            description={module?.description ? module.description : translate('description')}
-            certificate={module?.initial_enrolled ?? 0}
-            likes={module?.initial_likes ?? 0}
-            rated={module?.initial_stars ?? 0}
+            lessonCount={`${unitModule?.lessons?.length} ${translate('lessons')}`}
+            description={
+              unitModule?.description ? unitModule.description : translate('description')
+            }
+            certificate={unitModule?.initial_enrolled ?? 0}
+            likes={unitModule?.initial_likes ?? 0}
+            rated={unitModule?.initial_stars ?? 0}
             teacherForum={currentModule?.teacher_forum ?? ''}
             teacherSlides={currentModule?.teacher_slides}
             lessonPlans={currentModule?.lesson_plans}
-            lessons={module?.lessons}
+            lessons={unitModule?.lessons}
           />
         </Stack>
       </Container>

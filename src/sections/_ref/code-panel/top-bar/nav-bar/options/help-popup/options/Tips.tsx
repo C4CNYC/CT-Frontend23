@@ -8,7 +8,7 @@ import { globalCodePanelAtom } from '../../../../../atoms/global-code-panel.atom
 
 const Tips = (): React.ReactElement => {
   const [{ lessonId }] = useAtom(globalCodePanelAtom)
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId })
+  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId },{ skip: !lessonId})
 
   if (isLoading) {
     return (

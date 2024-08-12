@@ -449,7 +449,7 @@ const ar = {
   assignments_add_tags_info: 'وهذا سوف يساعد الآخرين على معرفة ما هو الموضوع.',
   assignments_updated_successfuly: 'تم تحديث المهمة بنجاح!',
   assignments_created_successfuly: 'تم إنشاء الواجب بنجاح!',
-
+  assigments_onboarding_info: 'هذه هي الطريقة التي تقوم بها بتعيين مقرر دراسي أو وحدة نمطية لفصلك.',
   // Progress page
   progress: 'تقدم',
   progress_tooltip_info: 'انقر على أحد الأعمدة لتوسيعه والاطلاع على التفاصيل',
@@ -815,6 +815,8 @@ const ar = {
   open_full_catalog: 'فتح الكتالوج الكامل',
 
   // code panel blocks
+  no_preview_available_title: 'المتصفح',
+  no_preview_available_results: 'هنا سترى نتائج عملك في الوقت الفعلي',
   no_preview_available: 'لا تتوفر معاينة؟',
   means_time_to_code: 'وهذا يعني أن الوقت قد حان للحصول على الترميز.',
   code_editor: 'محرر الكود',
@@ -836,7 +838,7 @@ const ar = {
   full_code_solution: 'حل الكود الكامل',
   are_you_sure_see_solution: 'هل أنت متأكد أنك تريد رؤية كود الحل الكامل لهذا الدرس؟',
   not_available_for_this_step: 'غير متاح لهذه الخطوة.',
-  no_solution: 'لا حل',
+  no_solution: 'لا يتوفر حل لهذه الشريحة.',
   coding_editor: 'محرر الترميز:',
   customize: 'يعدل أو يكيف:',
   reset_lesson: 'إعادة تعيين الدرس',

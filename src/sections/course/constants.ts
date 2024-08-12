@@ -1,14 +1,14 @@
 import { Theme } from '@mui/material'
 
-export const SEE_MORE_BTN_SX = {
+export const getSeeMoreBtnSx = (theme: Theme) => ({
   width: 130,
   justifyContent: 'start',
   fontSize: '1rem',
-  color: '#364954',
+  color: theme.palette.mode === 'light' ? '#364954' : '#FFF',
   '&:hover': {
     background: 'none',
   },
-}
+})
 
 export const COURSE_INFO_IMAGE_SX = {
   flexShrink: 0,

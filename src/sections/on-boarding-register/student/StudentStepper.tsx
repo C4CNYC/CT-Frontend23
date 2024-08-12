@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
@@ -29,6 +29,8 @@ export default function StudentStepper(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const { register } = useAuthContext()
   const [activeStep, setActiveStep] = useState(0)
+  const [hasOneNumber, setHasOneNumber] = useState<boolean>(false)
+  const [hasSixDigit, setHasSixDigit] = useState<boolean>(false)
   const translate = useTranslate()
 
   const nextStep = () => {
@@ -49,7 +51,9 @@ export default function StudentStepper(): React.ReactElement {
       .email(translate('must_be_valid_email')),
     firstName: Yup.string().required(translate('enter_name')),
     lastName: Yup.string().required(translate('enter_surname')),
-    password: Yup.string().min(8, translate('required_password_length')),
+    password: Yup.string()
+      .required()
+      .matches(/^(?=.*\d).{8,}$/),
   })
 
   const methods = useForm<FormValuesProps>({
@@ -76,6 +80,22 @@ export default function StudentStepper(): React.ReactElement {
     }
   }
 
+  const passwordValue = methods.watch('password')
+
+  useEffect(() => {
+    const includeNumbers = /\d/
+    if (includeNumbers.test(passwordValue)) {
+      setHasOneNumber(true)
+    } else {
+      setHasOneNumber(false)
+    }
+    if (passwordValue?.length > 7) {
+      setHasSixDigit(true)
+    } else {
+      setHasSixDigit(false)
+    }
+  }, [passwordValue])
+
   return (
     <Stack
       sx={{
@@ -84,7 +104,7 @@ export default function StudentStepper(): React.ReactElement {
         position: 'relative',
       }}
     >
-      <RegisterStudenTeacher />
+      {activeStep !== 2 && <RegisterStudenTeacher />}
       <FormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
@@ -109,11 +129,13 @@ export default function StudentStepper(): React.ReactElement {
             nextStep={nextStep}
             isSubmiting={methods.formState.isSubmitting}
             isSubmitSuccessful={methods.formState.isSubmitSuccessful}
+            hasOneNumber={hasOneNumber}
+            hasSixDigit={hasSixDigit}
           />
         )}
       </FormProvider>
       {activeStep === 2 && <StepperInfo />}
-      <SingLink />
+      {activeStep !== 2 ? <SingLink /> : null}
     </Stack>
   )
 }

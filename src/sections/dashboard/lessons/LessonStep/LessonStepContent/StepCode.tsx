@@ -65,13 +65,12 @@ export default function StepCode({
         <MenuItems
           data={data}
           lessonId={lessonId}
-          style={{ mb: 1, mt: 1, ml: 2 }}
+          sx={{ mb: 1, mt: 1, ml: 2 }}
         />
         <CodeMirror
           value={value}
           theme={dracula}
           height='calc(100vh - 96px)'
-          // extensions={[loadLanguage("html")]}
           extensions={[html()]}
           onChange={(value) => {
             setValue(value)

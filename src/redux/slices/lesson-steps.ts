@@ -1,6 +1,6 @@
 import { Dispatch, createSlice } from '@reduxjs/toolkit'
-import keyBy from 'lodash/keyBy'
-import omit from 'lodash/omit'
+import keyBy from 'lodash-es/keyBy'
+import omit from 'lodash-es/omit'
 
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 

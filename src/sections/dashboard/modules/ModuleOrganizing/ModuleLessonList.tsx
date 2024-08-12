@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useState } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
@@ -23,46 +23,13 @@ import CreateModuleDialog from '../CreateModuleDialog'
 import { LESSON_LIST_BLOCK_SX, getAddLessonBtnSx, getModuleBtnSx } from './constants'
 import ModuleLessonItem from './ModuleLessonItem'
 
-function parseSort(sort?: number) {
-  return sort ?? 0
-}
+// Reorder lesson in the array
+const reorderLesson = (list: ILesson[], startIndex: number, endIndex: number): ILesson[] => {
+  const result = Array.from(list)
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
 
-function getSort(result: DropResult, lessons: ILesson[]): number {
-  const { destination, draggableId } = result
-
-  // case: move to start
-  if (destination?.index === 0) {
-    return parseSort(lessons[0].sort) / 2
-  }
-
-  // case: move to end
-  if (destination?.index && destination?.index >= lessons.length - 1) {
-    const lastId = lessons.length - 1
-    return parseSort(lessons[lastId].sort) + 1
-  }
-
-  // case: when you move lesson to after next.
-  if (lessons[Number(destination?.index) - 1].id === draggableId) {
-    const prevId = Number(destination?.index)
-    const nextId = Number(destination?.index) + 1
-
-    return lessons[nextId]?.sort
-      ? (parseSort(lessons[nextId].sort) + parseSort(lessons[prevId].sort)) / 2
-      : parseSort(lessons[prevId].sort) + 1
-  }
-
-  // case: all other cases
-  const nextId = Number(destination?.index)
-  const prevId = Number(destination?.index) - 1
-
-  return lessons[nextId]?.sort
-    ? (parseSort(lessons[nextId].sort) + parseSort(lessons[prevId].sort)) / 2
-    : parseSort(lessons[prevId].sort) + 1
-}
-
-function moveItemInArray<T>(array: T[], from: number, to: number, on: number = 1): T[] {
-  // eslint-disable-next-line no-return-assign,no-sequences
-  return (array = array.slice()), array.splice(to, 0, ...array.splice(from, on)), array
+  return result.map((el, i) => ({ ...el, sort: i }))
 }
 
 interface Props {
@@ -79,7 +46,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
 
   const [lessons, setLessons] = useState<ILesson[]>([])
 
-  const { data, isLoading, isFetching } = useGetLessonsQuery({ module_id: moduleId })
+  const { data, isLoading } = useGetLessonsQuery({ module_id: moduleId })
 
   const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
     { id: moduleId },
@@ -97,28 +64,25 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
     return str
   }
 
-  const onDragEnd = useCallback(
-    (result: DropResult): void => {
-      if (!moduleId) return
+  const onDragEnd = ({ source, destination }: DropResult): void => {
+    if (!destination || source.index === destination.index) {
+      return
+    }
 
-      const { destination, source, draggableId } = result
+    const items = reorderLesson(lessons, source.index, destination.index)
 
-      if (!destination) return
+    setLessons(items)
 
-      if (destination.droppableId === source.droppableId && destination.index === source.index) {
-        return
-      }
+    if (!moduleId) return
 
-      setLessons(moveItemInArray(lessons, source.index, destination.index))
-
+    items.forEach((lesson) => {
       updateModuleLesson({
         id: moduleId,
-        lesson_id: draggableId,
-        sort: getSort(result, lessons),
+        lesson_id: lesson.id,
+        sort: lesson.sort,
       })
-    },
-    [lessons]
-  )
+    })
+  }
 
   useEffect(() => {
     setLessons(data?.data ?? [])
@@ -192,7 +156,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
         <SkeletonList />
       ) : (
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='lessons'>
+          <Droppable droppableId='droppable'>
             {(provided) => (
               <Stack
                 {...provided.droppableProps}
@@ -201,7 +165,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
                 spacing={1}
                 sx={{ py: 1 }}
               >
-                {lessons.map((lesson, index) => (
+                {lessons.map((lesson: any, index: number) => (
                   <ModuleLessonItem
                     onRemove={onRemove}
                     key={index}

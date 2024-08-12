@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 
 import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
+import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
+import { SupportedLang } from '@/sections/code-panel/lib/types'
 
 import ChatPopup from '../options/chat-popup'
 // import HelpPopup from "../options/help-popup";
@@ -17,9 +19,17 @@ interface IDesktopBar {
   chatComponent: ReactNode
   onHandleFullScreen: () => void
   isFullScreenView: boolean
+  language: SupportedLang
+  publicPage?: boolean
 }
 
-const DesktopBar: FC<IDesktopBar> = ({ chatComponent, onHandleFullScreen, isFullScreenView }) => {
+const DesktopBar: FC<IDesktopBar> = ({
+  chatComponent,
+  onHandleFullScreen,
+  isFullScreenView,
+  language,
+  publicPage,
+}) => {
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
@@ -31,7 +41,6 @@ const DesktopBar: FC<IDesktopBar> = ({ chatComponent, onHandleFullScreen, isFull
 
   return (
     <Stack
-      className='topBarTour'
       spacing={1}
       direction='row'
       alignItems='center'
@@ -43,6 +52,11 @@ const DesktopBar: FC<IDesktopBar> = ({ chatComponent, onHandleFullScreen, isFull
       <ChatPopup chatComponent={chatComponent} />
 
       <SettingDrawer />
+
+      <GalleryMenu
+        language={language}
+        publicPage={publicPage}
+      />
 
       <ViewTumbler
         onHandleFullScreen={onHandleFullScreen}

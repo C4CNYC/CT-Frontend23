@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import Close from '@mui/icons-material/Close'
 import LoadingButton from '@mui/lab/LoadingButton'
 import {
   Box,
   Button,
+  Collapse,
+  IconButton,
   Skeleton,
   Stack,
   Tab,
@@ -47,7 +50,10 @@ import {
   DATE_PARSER,
   DAYS_TO_CLOSE,
   DAYS_TO_END,
+  FALSY_VALLUE,
+  getCollapseInfoBannerSx,
   mainContainerStyles,
+  QUEST_BANNER,
   TABS_SX,
   TOOLTIP_TEXT,
 } from './constants'
@@ -59,10 +65,13 @@ import SettingsStep from './SettingsStep'
 export default function AddQuest(): React.ReactElement {
   const theme = useTheme()
   const { enqueueSnackbar } = useSnackbar()
-  const { query, push, reload } = useRouter()
+  const { query, push } = useRouter()
   const translate = useTranslate()
   const [assignmentsSkillsId, setAssignmentsSkillsId] = useState<ISkill[]>()
   const [value, setValue] = useState(0)
+  const [onboardingInfo, setOnboardingInfo] = useState(
+    localStorage.getItem(QUEST_BANNER) !== FALSY_VALLUE
+  )
   const RANDOM_NAME = uniqueNamesGenerator({
     dictionaries: [colors, animals],
     separator: ' ',
@@ -84,6 +93,11 @@ export default function AddQuest(): React.ReactElement {
   const [addAssignmentToClass] = useUpdateClassAssignmentMutation()
 
   const coursesData = useManagerGetCourseQuery({})
+
+  const eliminateInfoBanner = () => {
+    localStorage.setItem(QUEST_BANNER, FALSY_VALLUE)
+    setOnboardingInfo(false)
+  }
 
   useEffect(() => {
     if (assignment) {
@@ -228,7 +242,18 @@ export default function AddQuest(): React.ReactElement {
 
   return (
     <>
-      <Stack sx={mainContainerStyles(theme)}>
+      <Collapse in={onboardingInfo}>
+        <Stack sx={getCollapseInfoBannerSx(theme)}>
+          <Typography variant='subtitle2'>{translate('assigments_onboarding_info')}</Typography>
+          <IconButton onClick={() => eliminateInfoBanner()}>
+            <Close />
+          </IconButton>
+        </Stack>
+      </Collapse>
+      <Stack
+        sx={mainContainerStyles(theme, onboardingInfo)}
+        className='tourQuestStep1'
+      >
         <Stack sx={CONTAINER_INNER_SX}>
           <Stack>
             <Typography variant='h2'>{translate('actions_add_quest')}</Typography>
@@ -281,31 +306,30 @@ export default function AddQuest(): React.ReactElement {
               value={value}
               index={0}
             >
-              {!isLoading &&
-                ((query?.type && query?.type === OPEN_PROJECT) ||
-                assignment?.type === OPEN_PROJECT ? (
-                  <DetailsStepOpenProject
-                    methods={methods}
-                    initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
-                    initialCategory={assignment?.category}
-                    initialLanguage={assignment?.language}
-                    coursesData={{
-                      data: coursesData.data?.data,
-                      isLoading: coursesData.isLoading,
-                    }}
-                  />
-                ) : (
-                  <DetailsStep
-                    methods={methods}
-                    initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
-                    initialType={assignment?.type}
-                    initialLesson={assignment?.lessonId}
-                    coursesData={{
-                      data: coursesData.data?.data,
-                      isLoading: coursesData.isLoading,
-                    }}
-                  />
-                ))}
+              {(query?.type && query?.type === OPEN_PROJECT) ||
+              assignment?.type === OPEN_PROJECT ? (
+                <DetailsStepOpenProject
+                  methods={methods}
+                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                  initialCategory={assignment?.category}
+                  initialLanguage={assignment?.language}
+                  coursesData={{
+                    data: coursesData.data?.data,
+                    isLoading: coursesData.isLoading,
+                  }}
+                />
+              ) : (
+                <DetailsStep
+                  methods={methods}
+                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                  initialType={assignment?.type}
+                  initialLesson={assignment?.lessonId}
+                  coursesData={{
+                    data: coursesData.data?.data,
+                    isLoading: coursesData.isLoading,
+                  }}
+                />
+              )}
             </CustomTabPanel>
             <CustomTabPanel
               value={value}

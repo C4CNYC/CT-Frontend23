@@ -28,10 +28,16 @@ export const styles = {
     marginTop: '16px',
     marginBottom: '16px',
     '& input': {
-      padding: '14px 10px',
+      padding: '24px 10px 14px 10px',
     },
     '& span': {
       color: '#212B36',
+    },
+    '& .Mui-focused': {
+      color: '#000!important',
+    },
+    '& .MuiFilledInput-input': {
+      color: '#000!important',
     },
   },
   TITLE: {

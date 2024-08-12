@@ -9,9 +9,13 @@ import { HiLockClosed } from '@react-icons/all-files/hi2/HiLockClosed'
 import { TbPlayerPlay } from '@react-icons/all-files/tb/TbPlayerPlay'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { ILesson } from '@/redux/interfaces/content.interface'
+import { setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import CatalogLessonDialog from '@/sections/module/lesson-item/CatalogLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
 
 import RocketIcon from '../icons/RocketIcon'
@@ -34,6 +38,8 @@ interface ILessonItemProps {
   lesson: ILesson
   unitId: string
   locked: boolean
+  prevLesson: ILesson
+  index: number
 }
 
 const MAX_DESC = 50
@@ -42,13 +48,16 @@ export default function LessonItem({
   lesson,
   unitId,
   locked,
+  prevLesson,
+  index,
 }: ILessonItemProps): React.ReactElement {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(600))
   const [openDetails, setOpenDetails] = useState(false)
+  const { user } = useAuthContext()
   const courseId = useRouter().query.id
   const [open, setOpen] = useState(false)
-
+  const { push } = useRouter()
   const openDialog = () => {
     setOpen(true)
   }
@@ -58,6 +67,30 @@ export default function LessonItem({
   }
 
   const translate = useTranslate()
+  const dispatch = useDispatch()
+  const fetchCodeFromPrevLesson = () => {
+    dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
+    push(
+      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+        courseId: courseId as string,
+        unitId,
+        lessonId: lesson.id,
+      })
+    )
+  }
+
+  const fetchDefaultCodeFromPrevLesson = () => {
+    push(
+      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+        courseId: courseId as string,
+        unitId,
+        lessonId: lesson.id,
+      })
+    )
+  }
+
+  const lastLessonProgress = prevLesson?.progress ?? 100
+  const isLastLessonInProgress = lastLessonProgress <= 90
 
   return (
     <Stack sx={getLessonSx(theme)}>
@@ -65,6 +98,7 @@ export default function LessonItem({
         progress={lesson?.progress ?? 0}
         locked={locked}
       />
+
       <Stack sx={getLessonContentSx(isMobile)}>
         <Stack>
           <Typography
@@ -119,29 +153,58 @@ export default function LessonItem({
           </Stack>
         </Stack>
         {!locked ? (
-          <Link
-            component={NextLink}
-            href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-              courseId: courseId as string,
-              unitId,
-              lessonId: lesson.id,
-            })}
-            underline='none'
-            sx={START_LINK_SX}
-          >
-            <Typography variant='h5'> {translate('actions_start')} </Typography>
-            <Box sx={LINK_BTN_SX}>
-              <TbPlayerPlay
-                size={30}
-                style={{ color: '#364954' }}
+          !lesson.progress && index !== 0 && isLastLessonInProgress ? (
+            <>
+              <Box
+                sx={LOCKED_BTN_CONT_SX}
+                onClick={async () => {
+                  openDialog()
+                }}
+              >
+                <Typography variant='h5'>{translate('actions_start')}</Typography>
+                <Box sx={LOCKED_BTN_SX}>
+                  <HiLockClosed
+                    size={30}
+                    style={{ color: '#C4CDD5' }}
+                  />
+                </Box>
+              </Box>
+              <CatalogLessonDialog
+                open={open}
+                confirmText={'OK'}
+                closeDialog={closeDialog}
+                confirmClick={fetchCodeFromPrevLesson}
+                title='Hey, we’re building a project together.
+So pulled your code from previous lesson, so that you can keep building'
               />
-            </Box>
-          </Link>
-        ) : (
+            </>
+          ) : (
+            <>
+              <Link
+                component={NextLink}
+                href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                  courseId: courseId as string,
+                  unitId,
+                  lessonId: lesson.id,
+                })}
+                underline='none'
+                sx={START_LINK_SX}
+              >
+                <Typography variant='h5'> {translate('actions_start')} </Typography>
+                <Box sx={LINK_BTN_SX}>
+                  <TbPlayerPlay
+                    size={30}
+                    style={{ color: '#364954' }}
+                  />
+                </Box>
+              </Link>
+            </>
+          )
+        ) : !lesson.progress && isLastLessonInProgress ? (
           <>
             <Box
               sx={LOCKED_BTN_CONT_SX}
-              onClick={() => {
+              onClick={async () => {
                 openDialog()
               }}
             >
@@ -156,12 +219,29 @@ export default function LessonItem({
             <LessonDialog
               open={open}
               closeDialog={closeDialog}
-              link={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+              openLesson={fetchDefaultCodeFromPrevLesson}
+            />
+          </>
+        ) : (
+          <>
+            <Link
+              component={NextLink}
+              href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
                 courseId: courseId as string,
                 unitId,
                 lessonId: lesson.id,
               })}
-            />
+              underline='none'
+              sx={START_LINK_SX}
+            >
+              <Typography variant='h5'> {translate('actions_start')} </Typography>
+              <Box sx={LINK_BTN_SX}>
+                <TbPlayerPlay
+                  size={30}
+                  style={{ color: '#364954' }}
+                />
+              </Box>
+            </Link>
           </>
         )}
       </Stack>

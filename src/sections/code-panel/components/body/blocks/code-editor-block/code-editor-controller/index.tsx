@@ -5,6 +5,7 @@ import { Socket } from 'socket.io-client'
 import { AuthUserType } from '@/auth/types'
 import { useSelector } from '@/redux/store'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
+import LoadingCodeEditor from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/components/loading-code-editor'
 import { waitConnectSocket } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
 import { voidFunction } from '@/utils'
 
@@ -12,17 +13,20 @@ interface CodeEditorControllerProps {
   onChangeStreamingDocInfo?: (value: Record<string, string>) => void
   user?: AuthUserType
   isFetching?: boolean
+  preloadedCode?: string
 }
 
 const CodeEditorController: FC<CodeEditorControllerProps> = ({
   onChangeStreamingDocInfo = voidFunction,
   user,
   isFetching = false,
+  preloadedCode,
 }) => {
   // const { user } = useAuthContext()
 
   const [isConnected, setIsConnected] = useState(false)
   const room = useSelector((state) => state.codeEditorController.room)
+  const [randomRoom] = useState(`${Math.random()}${Date.now()}`)
 
   // const socket = useMemo(() => createSocket(user?.id || generateId(20)), [user]);
   const socket = useSelector((state) => state.codePanelGlobal.socket)
@@ -49,23 +53,24 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
     }
   }, [socket])
 
-  if (room == null /* || !isConnected */) {
-    // if (room == null  || !isConnected ) {
-    return null
-  }
-
   return (
-    <CodeEditorCollab
-      roomId={room.roomId}
-      cursorText={room.cursorText}
-      preloadedCode={room.preloadedCode}
-      onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-      code={room.code}
-      mode={room.mode}
-      socket={socket}
-      user={user}
-      isFetching={isFetching}
-    />
+    <>
+      {!isFetching ? (
+        <CodeEditorCollab
+          roomId={room?.roomId ?? randomRoom}
+          cursorText={room?.cursorText}
+          preloadedCode={preloadedCode}
+          onChangeStreamingDocInfo={onChangeStreamingDocInfo}
+          code={room?.code}
+          mode={room?.mode}
+          socket={socket}
+          user={user}
+          isFetching={isFetching}
+        />
+      ) : (
+        <LoadingCodeEditor />
+      )}
+    </>
   )
 }
 

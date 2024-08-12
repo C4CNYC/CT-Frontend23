@@ -53,7 +53,7 @@ export interface IStudent {
   first_name: string
   last_name: string
   phone: string
-  country: string
+  country: string | null
   state: string
   city: string
   post_code: string
@@ -102,7 +102,7 @@ export interface IStudentProfile {
   last_name?: string
   avatar?: string
   cover?: string
-  country?: string
+  country?: string | undefined
   birthDate?: string
   phone?: string
 }

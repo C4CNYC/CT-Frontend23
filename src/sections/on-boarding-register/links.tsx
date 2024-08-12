@@ -18,7 +18,7 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
       component={nextLink}
       href={isRegister ? PATH_AUTH.onBoardingStudent : PATH_AUTH.signIn}
       underline='none'
-      sx={{
+      sx={(theme) => ({
         display: 'flex',
         width: '100%',
         justifyContent: 'center',
@@ -26,17 +26,20 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
         color: 'inherit',
         alignItems: 'center',
         mt: 'auto',
-      }}
+        '&:hover': {
+          color: theme.palette.text.secondary,
+        },
+      })}
     >
       {isRegister ? (
         <>
-          <Typography variant='body2'>{translate('login_my_first_time')}</Typography> |{' '}
-          <Typography variant='subtitle2'>{translate('login_register')}</Typography>
+          <Typography variant='body1'>{translate('login_my_first_time')}</Typography> |{' '}
+          <Typography variant='subtitle1'>{translate('login_register')}</Typography>
         </>
       ) : (
         <>
-          <Typography variant='body2'>{translate('login_been_here')}</Typography> |{' '}
-          <Typography variant='subtitle2'>{translate('login')}</Typography>
+          <Typography variant='body1'>{translate('login_been_here')}</Typography> |{' '}
+          <Typography variant='subtitle1'>{translate('login')}</Typography>
         </>
       )}
     </Link>
@@ -56,10 +59,11 @@ export function RegisterStudenTeacher({ isTeacher }: Props): React.ReactElement 
         position: 'absolute',
         right: '0px',
         top: '-80px',
-        color: '#02D3D7',
+        color: '#EE467A',
         display: 'flex',
         gap: 1,
         alignItems: 'center',
+        fontSize: '1.1rem',
       }}
     >
       {translate('login_register_as')} {isTeacher ? translate('student') : translate('teacher')}

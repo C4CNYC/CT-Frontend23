@@ -31,7 +31,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   user,
   language,
   isFetchingLessonContent = false,
-  lastLessonCode,
 }) => {
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const isDesktop = useIsDesktop()
@@ -75,7 +74,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       }, 30000) // 30 seconds
 
       setDocument(doc as CodeDocument)
-      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? ''))
+      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('Error: ', error)
@@ -107,6 +106,8 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             integrations={lesson?.integrations ?? []}
             isFetching={isFetchingLessonContent}
             code={document?.htmlBody?.join('') ?? ''}
+            lessonType={lesson?.type}
+            lessonName={lesson?.name}
           />
         ) : (
           <HidedTabBtn
@@ -117,7 +118,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         )}
 
         <CodeEditorBlock
-          preloadedCode={(lastLessonCode ?? lessonContents[slideIndex]?.preload_body) || ''}
+          preloadedCode={lessonContents[0]?.preload_body ?? ''}
           validations={lessonContents[slideIndex]?.validations || ''}
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
@@ -159,13 +160,14 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         integrations={lesson?.integrations ?? []}
         isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
+        lessonType={lesson?.type}
       />
 
       <CodeEditorBlock
         code={document?.htmlBody?.join('') ?? ''}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
-        preloadedCode={lastLessonCode ?? lessonContents[slideIndex]?.preload_body}
+        preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations}
         isFetching={isFetchingLessonContent}
       />

@@ -29,6 +29,8 @@ import { useUpdateClassesSettingsMutation } from '@/redux/services/manager/class
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { setReadyToStartMainTour } from '@root/src/redux/slices/tour'
+import { useDispatch } from '@root/src/redux/store'
 
 import ClassroomModal from '../classroom-modal'
 import EmailAddressModal from '../email-address-domain'
@@ -41,12 +43,12 @@ import {
   DIVIDER_SX,
   EMAIL_BTN_SX,
   FORM_CONTROL_SX,
-  HEADER_SX,
   HEADER_TITLE_SX,
   LINK_TEXT_SX,
   RADIO_GROUP_SX,
   RADIO_SX,
   getCopySx,
+  getHeaderXs,
   getSubtitleFooterSx,
   getSubtitleSx,
 } from './constansts'
@@ -61,6 +63,7 @@ export default function ShareGroupModal({
   schoolClass,
 }: IShareGroupModalProps): React.ReactElement {
   const theme = useTheme()
+  const dispatch = useDispatch()
   const isLight = theme.palette.mode === 'light'
   const { query } = useRouter()
   const { copy } = useCopyToClipboard()
@@ -71,9 +74,11 @@ export default function ShareGroupModal({
   const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation()
 
   const handleOpen = () => {
+    dispatch(setReadyToStartMainTour(false))
     setOpen(true)
   }
   const handleClose = () => {
+    dispatch(setReadyToStartMainTour(true))
     setOpen(false)
   }
 
@@ -114,6 +119,7 @@ export default function ShareGroupModal({
   const subtitleSx = useMemo(() => getSubtitleSx(isLight), [isLight])
   const copySx = useMemo(() => getCopySx(isLight, theme), [isLight, theme])
   const subtitleFooterSx = useMemo(() => getSubtitleFooterSx(isLight), [isLight])
+  const headerSx = useMemo(() => getHeaderXs(schoolClass.cover), [schoolClass])
 
   return (
     <>
@@ -125,7 +131,7 @@ export default function ShareGroupModal({
         maxWidth='xs'
         scroll='body'
       >
-        <Box sx={HEADER_SX}>
+        <Box sx={headerSx}>
           <Box
             display='flex'
             justifyContent='end'

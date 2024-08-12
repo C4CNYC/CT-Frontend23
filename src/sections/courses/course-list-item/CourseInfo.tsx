@@ -27,7 +27,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         <AiOutlineClockCircle size='15px' />
         <Typography
           variant='body2'
-          sx={{ ml: 1 }}
+          sx={{ ml: 1, color: 'inherit' }}
         >
           9 Hours
         </Typography>
@@ -36,7 +36,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         <AiOutlineClockCircle size='15px' />
         <Typography
           variant='body2'
-          sx={{ ml: 1, textTransform: 'capitalize' }}
+          sx={{ ml: 1, textTransform: 'capitalize', color: 'inherit' }}
         >
           {level}
         </Typography>
@@ -45,7 +45,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         <MdCelebration size='18px' />
         <Typography
           variant='body2'
-          sx={{ ml: 1 }}
+          sx={{ ml: 1, color: 'inherit' }}
         >
           {+price.charAt(1) === 0 ? translate('free') : price}
         </Typography>
@@ -54,9 +54,9 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         <MdCelebration size='18px' />
         <Typography
           variant='body2'
-          sx={{ ml: 1 }}
+          sx={{ ml: 1, color: 'inherit' }}
         >
-          {totalLessons}
+          {totalLessons}{' '}
           {totalLessons && totalLessons > 1 ? translate('lessons') : translate('lesson')}
         </Typography>
       </Box>

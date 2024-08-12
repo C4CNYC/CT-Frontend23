@@ -4,6 +4,7 @@ import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography } from '@mui/mater
 
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetPublicLessonQuery } from '@/redux/services/public-student'
 import { useSelector } from '@/redux/store'
 import SolutionMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/solution-mobile-dialog'
 import UnstuckMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog'
@@ -21,9 +22,10 @@ import {
 
 interface MumuSpeedDialProps {
   typing: boolean | null
+  contentId?: string
 }
 
-const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
+const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
   const isDesktop = useIsDesktop()
   const [actionsList, setActionsList] = useState<Array<Record<string, any>>>(actions)
   const popperRef = useRef<null | HTMLElement>(null)
@@ -33,11 +35,29 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null)
   const translate = useTranslate()
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const profile = useSelector((state) => state.global.user)
 
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId as string })
+  const { data: studentData, isLoading: isStudentDataLoading } = useGetLessonStudentQuery(
+    { id: lessonId as string },
+    { skip: !lessonId || !profile }
+  )
 
-  const slideTips = data?.contents[slideIndex]?.tips
+  const { data: publicData, isLoading: isPublicDataLoading } = useGetPublicLessonQuery(
+    { id: courseId as string, lesson_id: lessonId as string },
+    { skip: !lessonId || !courseId || !!profile }
+  )
+
+  const data = studentData ?? publicData
+  const isLoading = isStudentDataLoading ?? isPublicDataLoading
+  const slideTips = data?.contents?.[slideIndex]?.tips
+
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
+
+  const selectedContent = contentValidations?.find((item) => item.contentId === contentId)
+
+  const isChecked = !!selectedContent?.checkers?.length
 
   const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal])
   const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop])
@@ -58,7 +78,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   }, [])
 
   useEffect(() => {
-    if (typing && slideTips) {
+    if (typing && slideTips && !isChecked) {
       setOpenPoper(true)
     }
   }, [typing])
@@ -97,8 +117,10 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
           icon={<Box sx={BOX_PROPS} />}
         >
           {actionsList.map((action) => {
-            if (action.name === 'tips' && !slideTips) {
-              return null
+            if (action.name === 'tips') {
+              if (!slideTips || isChecked) {
+                return null
+              }
             }
 
             return (

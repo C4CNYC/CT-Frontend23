@@ -4,10 +4,9 @@ import { BtnType } from '.'
 
 export const stylesPrev = (theme: Theme): Record<string, unknown> => {
   return {
-    width: '35%',
+    width: '42%',
     borderRadius: '35px',
     color: theme.palette.text.secondary,
-    pr: '51px',
     zIndex: 4,
     position: 'relative',
     background: 'rgba(196, 196, 196, .5)',
@@ -25,8 +24,8 @@ export const stylesPrev = (theme: Theme): Record<string, unknown> => {
       pr: '30px',
     },
     [theme.breakpoints.down(450)]: {
-      width: '35%',
-      pr: '51px',
+      width: '55%',
+      pr: '11px',
     },
   }
 }
@@ -46,7 +45,17 @@ export const TOOLTIP_CONTENT_SX = {
   width: 170,
 }
 
-export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
+export const stylesNext = (btnNext: BtnType, theme: Theme): Record<string, unknown> => {
+  const getColor = (): string => {
+    switch (btnNext) {
+      case BtnType.next:
+        return '#EE467A'
+      case BtnType.compleated:
+        return '#FFF'
+      default:
+        return '#43D4DD!important'
+    }
+  }
   const getBg = (hover?: boolean): string => {
     if (btnNext === BtnType.next) {
       return hover ? '#EE467A' : '#FFF'
@@ -55,7 +64,7 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
       return '#155275CC'
     }
     if (btnNext === BtnType.compleated) {
-      return '#75CF6D'
+      return hover ? '#FFF' : '#75CF6D'
     }
     return ''
   }
@@ -64,16 +73,14 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
     pl: '30px',
     width: '100%',
     height: '100%',
-    color: !(btnNext === BtnType.next || btnNext === BtnType.compleated)
-      ? '#43D4DD!important'
-      : '#EE467A',
+    color: getColor(),
     zIndex: 5,
     pointerEvents: btnNext === BtnType.coding ? 'none' : 'auto',
     position: 'relative',
     boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
     background: getBg(),
     '&:hover': {
-      color: '#FFF',
+      color: btnNext === BtnType.compleated ? '#75CF6D' : '#FFF',
       bgcolor: getBg(true),
       border: 'none',
       boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
@@ -103,8 +110,8 @@ export const stylesSkip = (theme: Theme) => {
       top: '-20px',
     },
     [theme.breakpoints.down(450)]: {
-      right: '-3px',
-      top: '-25px',
+      right: '3px',
+      top: '-22px',
     },
     border: '1px solid #fff',
     fontSize: '.7rem',
@@ -112,4 +119,20 @@ export const stylesSkip = (theme: Theme) => {
       backgroundColor: '#272727',
     },
   }
+}
+
+export const FEEDBACK_BTN_SX = {
+  zIndex: 99,
+  mr: '-50px',
+  height: '100%',
+  borderRadius: '50%',
+  minWidth: 50,
+  backgroundColor: 'rgba(196, 196, 196, .5)',
+  boxShadow: ' 0px 4px 4px rgba(0, 0, 0, 0.25)',
+  width: '50px',
+  minHeight: '50px',
+  '&:hover': {
+    background: 'rgba(196, 196, 196, .7)',
+    border: 'none',
+  },
 }

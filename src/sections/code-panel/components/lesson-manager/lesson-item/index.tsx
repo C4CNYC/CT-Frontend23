@@ -10,6 +10,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from '@mui/material'
 
 import { Accordion, AccordionDetails, AccordionSummary } from '@/components'
@@ -28,6 +29,7 @@ interface ILessonItem {
 const MAX_TEXT_LENGTH = 39
 
 const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
+  const theme = useTheme()
   const isDesktop = useIsDesktop()
   const isMobile = !isDesktop
   const typSx = useMemo(() => getTypSx(isMobile), [isMobile])
@@ -64,7 +66,7 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
                   onClick(lesson.id, module.id)
                   onClose()
                 }}
-                sx={getButtonSx(lesson.id === currentLessonId)}
+                sx={getButtonSx(lesson.id === currentLessonId, theme.palette.mode === 'light')}
               >
                 <Box display='flex'>
                   <Typography

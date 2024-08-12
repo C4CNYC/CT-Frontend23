@@ -22,6 +22,8 @@ export interface IGlobalCodePanel {
   usersStatus: ILessonUserStatus[]
   socket?: Socket | undefined
   contentValidations?: ContentValidation[]
+  prevLessonId?: string | null
+  prevLessonCode?: string | null | undefined
 }
 
 const initialState: IGlobalCodePanel = {
@@ -39,6 +41,8 @@ const initialState: IGlobalCodePanel = {
   usersStatus: [],
   socket: undefined,
   contentValidations: [],
+  prevLessonId: null,
+  prevLessonCode: null,
 }
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
@@ -70,6 +74,15 @@ export const codePanelSlice = createSlice({
       { payload }: PayloadAction<PickedStoreItem<'contentValidations'>>
     ): void => {
       state.contentValidations = payload
+    },
+    setPrevLessonId: (state, { payload }: PayloadAction<PickedStoreItem<'prevLessonId'>>): void => {
+      state.prevLessonId = payload
+    },
+    setPrevLessonCode: (
+      state,
+      { payload }: PayloadAction<PickedStoreItem<'prevLessonCode'>>
+    ): void => {
+      state.prevLessonCode = payload
     },
     toggleInstrations: (
       state,
@@ -122,6 +135,8 @@ export const {
   setUsersStatus,
   setSocket,
   setContentValidations,
+  setPrevLessonId,
+  setPrevLessonCode,
 } = codePanelSlice.actions
 
 export default codePanelSlice.reducer

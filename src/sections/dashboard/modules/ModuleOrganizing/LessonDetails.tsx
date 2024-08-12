@@ -62,11 +62,10 @@ export default function LessonDetails(): React.ReactElement {
                 description: lesson?.description,
                 active: lesson?.active,
                 head: lesson?.head || '',
-                tips: '',
                 independent: lesson?.independent,
                 type: lesson?.type,
+                duration: lesson?.duration,
               }}
-              lessonTips={lesson.tips}
             >
               <Button
                 variant='outlined'

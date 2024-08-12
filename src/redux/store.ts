@@ -9,6 +9,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 import rootReducer, { rootPersistConfig } from './rootReducer'
 import { adminApi } from './services/admin'
 import { authApi } from './services/auth'
+import { feedbackApi } from './services/feedback'
 import { managerApi } from './services/manager'
 import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
@@ -32,7 +33,8 @@ const store = configureStore({
       .concat(adminApi.middleware)
       .concat(managerApi.middleware)
       .concat(studentPublicApi.middleware)
-      .concat(publicApi.middleware),
+      .concat(publicApi.middleware)
+      .concat(feedbackApi.middleware),
 })
 
 const persistor = persistStore(store)

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { ThemeProvider, alpha, createTheme, useTheme } from '@mui/material/styles'
-import merge from 'lodash/merge'
+import merge from 'lodash-es/merge'
 
 import { useSettingsContext } from './SettingsContext'
 

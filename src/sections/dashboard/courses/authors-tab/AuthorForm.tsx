@@ -151,6 +151,7 @@ export default function AuthorForm({
           gap: 2,
           mt: 'auto',
           mb: 2,
+          pt: 2,
         }}
       >
         <Button

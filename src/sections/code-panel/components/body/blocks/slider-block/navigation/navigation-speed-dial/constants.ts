@@ -29,12 +29,15 @@ export const getSpeedDealSx = (theme: Theme): SxProps => ({
     ml: '30%',
   },
   [theme.breakpoints.down(450)]: {
-    ml: '23%',
+    ml: '36%',
   },
   '&  .MuiSpeedDial-actions': {
     flexDirection: 'row',
     gap: 2,
     pl: 20,
+    [theme.breakpoints.down(450)]: {
+      pl: 6,
+    },
   },
   background: '#fff',
   borderRadius: '50%',

@@ -23,7 +23,7 @@ export interface ILesson {
   name: string
   description: string
   head?: string
-  tips: string[] | []
+  duration: Record<string, number> | null
   meta: Record<string, Record<string, any>>
   independent: boolean
   type: 'practical' | 'exercise' | 'quiz'
@@ -42,6 +42,7 @@ export interface ICourse {
   active: boolean
   cover: string
   public: boolean
+  catalog: boolean
   draft: boolean
   skills: []
   units: IModule[]
@@ -64,6 +65,7 @@ export interface ILessonContent {
   meta: Record<string, any>
   complexity: LessonContentComplexity
   validations: Array<ILessonContentValidation & BaseResponseInterface>
+  bg_color?: string
 }
 
 export interface ILessonContentUpdate {
@@ -78,6 +80,7 @@ export interface ILessonContentUpdate {
   tags?: string[]
   meta?: Record<string, any>
   complexity?: LessonContentComplexity
+  bg_color?: string
 }
 
 export interface ILessonUpdate {
@@ -85,7 +88,7 @@ export interface ILessonUpdate {
   name: string
   description: string
   active?: boolean
-  tips?: string[] | []
+  duration: string
 }
 
 export interface IAddLessonToModule {
@@ -119,7 +122,6 @@ export interface IModuleCreate {
   active: boolean
   name: string
   description: string
-  tips: string[] | []
   initia_likes?: number
   initial_start?: number
   initial_enrolled?: number
@@ -130,6 +132,7 @@ export interface ILessonCreate {
   active: boolean
   name: string
   description: string
+  duration: string
 }
 
 export interface IModulesSearchParams extends BaseSearchInterface {
@@ -147,6 +150,7 @@ export interface ICourseSearchParams extends BaseSearchInterface {
   class_id?: string
   school_id?: string
   name?: string
+  catalog?: boolean
 }
 
 export interface ICourseCreate {

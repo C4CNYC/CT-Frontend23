@@ -1,7 +1,8 @@
 import { type FC, useMemo } from 'react'
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import { Button, type SxProps } from '@mui/material'
+import { Button, useMediaQuery, type SxProps } from '@mui/material'
+import { useTheme } from '@mui/system'
 
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -24,7 +25,9 @@ const NavigationElement: FC<INavigationElement> = ({
   direction,
   backType = '',
 }): React.ReactElement => {
-  const buttonSx = useMemo(() => getButtonSx(sx, disabled), [sx, disabled])
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const buttonSx = useMemo(() => getButtonSx(sx, disabled, isMobile), [sx, disabled])
   const translate = useTranslate()
   const directionType = direction === 'prev' ? translate('btn_group_back') : translate(backType)
 
@@ -39,17 +42,17 @@ const NavigationElement: FC<INavigationElement> = ({
           <span key={index}>{el}</span>
         ))}
 
-        {backType === BtnType.coding && <ArrowForwardIosIcon />}
+        {backType === BtnType.coding && !isMobile ? <ArrowForwardIosIcon /> : null}
       </Button>
       {children}
     </>
   )
 }
 
-const getButtonSx = (sx: SxProps, isDisabled: boolean): SxProps => ({
-  fontSize: '1rem',
+const getButtonSx = (sx: SxProps, isDisabled: boolean, isMobile: boolean): SxProps => ({
+  fontSize: isMobile ? '.8rem' : '1.1rem',
   display: 'flex',
-  gap: 2,
+  gap: '6px',
   textTransform: 'capitalize',
   alignItems: 'center',
   justifyContent: 'center',

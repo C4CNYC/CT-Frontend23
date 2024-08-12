@@ -103,6 +103,8 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     try {
       const { id: stepId } = await createLessonContent({
         lessonId,
+        draft: false,
+        active: true,
         title: translate('slide'),
         meta: { order: newContentOrder },
       }).unwrap()
@@ -176,12 +178,11 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
             name: lesson?.name as string,
             description: lesson?.description as string,
             active: lesson?.active as boolean,
-            tips: '',
             head: lesson?.head || '',
             independent: lesson?.independent ?? false,
             type: lesson?.type ?? 'practical',
+            duration: lesson?.duration,
           }}
-          lessonTips={lesson?.tips ?? []}
           isEdit
         >
           <Button

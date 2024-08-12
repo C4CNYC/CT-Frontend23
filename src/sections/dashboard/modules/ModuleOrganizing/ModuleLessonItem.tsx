@@ -58,13 +58,14 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
 
   return (
     <Draggable
+      key={lesson.id}
       draggableId={lesson.id}
-      index={index ?? 0}
+      index={index}
     >
       {(provided) => (
         <Paper
-          {...provided.draggableProps}
           ref={provided.innerRef}
+          {...provided.draggableProps}
           onClick={selectStep}
           elevation={8}
           sx={{ ...getLessonItemPaperSx(chooseBorderColor) }}
@@ -129,12 +130,11 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                   name: lesson.name,
                   description: lesson.description,
                   active: lesson.active,
-                  tips: '',
                   head: lesson?.head || '',
                   independent: lesson.independent,
                   type: lesson.type,
+                  duration: lesson.duration,
                 }}
-                lessonTips={lesson.tips}
               >
                 <IconButton>
                   <Iconify icon='ep:setting' />

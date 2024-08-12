@@ -2,11 +2,21 @@ import { Box, Button } from '@mui/material'
 import { Container } from '@mui/system'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
+import { useAuthContext } from '@/auth/useAuthContext'
+import {
+  CustomBreadcrumbs,
+  EmptyContent,
+  Iconify,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
+import {
+  useManagerGetCourseQuery,
+  useGetPublicCoursesQuery,
+} from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { CourseCard } from '@/sections/dashboard/courses/cards'
@@ -16,12 +26,15 @@ import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
 import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
+  const { isAdmin } = useIsAdmin()
+  const { user } = useAuthContext()
   const { filters, setFilter } = useFilters<ICourseSearchParams>(
     {
       name: '',
@@ -29,7 +42,12 @@ export default function CoursesListPage(): React.ReactElement {
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useManagerGetCourseQuery(filters)
+  const { data, isLoading, isFetching } = useManagerGetCourseQuery(filters, { skip: !user?.role })
+  const {
+    data: publicCourses,
+    isLoading: isPublicLoading,
+    isFetching: isPublicFetching,
+  } = useGetPublicCoursesQuery({}, { skip: user?.role })
 
   if (isLoading) {
     return (
@@ -39,6 +57,11 @@ export default function CoursesListPage(): React.ReactElement {
       />
     )
   }
+
+  if (!data?.data.length || (!publicCourses?.data.length && !user)) {
+    return <EmptyContent title='You have no courses' />
+  }
+
   return (
     <>
       <Head>
@@ -58,14 +81,18 @@ export default function CoursesListPage(): React.ReactElement {
             },
           ]}
           action={
-            <CreateCourseDialog id=''>
-              <Button
-                variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
-              >
-                {translate('courses_add')}
-              </Button>
-            </CreateCourseDialog>
+            isAdmin ? (
+              <CreateCourseDialog id=''>
+                <Button
+                  variant='contained'
+                  startIcon={<Iconify icon='eva:plus-fill' />}
+                >
+                  {translate('courses_add')}
+                </Button>
+              </CreateCourseDialog>
+            ) : (
+              ''
+            )
           }
         />
         <FilterCourses
@@ -81,21 +108,33 @@ export default function CoursesListPage(): React.ReactElement {
           loading={isLoading ?? isFetching}
         >
           <Box
-            gap={3}
-            display='grid'
-            gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
+            sx={{
+              gap: 3,
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+              },
             }}
           >
-            {data?.data.map((course, index) => (
-              <CourseCard
-                key={index}
-                course={course}
-              />
-            ))}
-            {isFetching
+            {isAdmin ? (
+              <>
+                {publicCourses?.data.map((course, index) => (
+                  <CourseCard
+                    key={index}
+                    course={course}
+                  />
+                ))}
+                {data?.data.map((course, index) => (
+                  <CourseCard
+                    key={index}
+                    course={course}
+                  />
+                ))}
+              </>
+            ) : null}
+            {isFetching && isPublicFetching
               ? Array(getCountTakingElment(Number(data.meta.itemCount), Number(filters.take)))
                   .fill(null)
                   .map((v, i) => <SkeletonCourses key={i} />)

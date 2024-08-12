@@ -25,6 +25,10 @@ import BrowserView, {
 } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import {
+  useGetStudentLastVisitedSlideQuery,
+  useUpdateStudentLastVisitedSlideMutation,
+} from '@root/src/redux/services/manager/lesson-student'
 
 import BaseBlock from '../base-block'
 
@@ -46,6 +50,8 @@ interface ISliderBlock {
   integrations: Array<IIntegration & BaseResponseInterface>
   isFetching: boolean
   code: string
+  lessonType?: string
+  lessonName?: string
 }
 
 interface IView {
@@ -53,6 +59,8 @@ interface IView {
   body: string
   connectIntegrations: (body: string) => CodeDocument | null
   title?: string
+  lessonType?: string
+  stepBgColor?: string | undefined
 }
 
 const icon = (
@@ -69,14 +77,27 @@ const SliderBlock: FC<ISliderBlock> = ({
   integrations,
   isFetching,
   code,
+  lessonType,
+  lessonName,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const profile = useSelector((state) => state.global.user)
+  const course = useSelector((state) => state.codePanelGlobal.courseId)
+  const unit = useSelector((state) => state.codePanelGlobal.unitId)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
+
+  const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
+  const { data: lastSlide } = useGetStudentLastVisitedSlideQuery(
+    {
+      id: lessonId as string,
+    },
+    { skip: !lessonId || !profile }
+  )
 
   const title = translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
@@ -89,46 +110,71 @@ const SliderBlock: FC<ISliderBlock> = ({
   const carousel1 = useRef<Carousel | null>(null)
   const [nav2, setNav2] = useState<Carousel>()
   const hasNextStep = slideIndex < data.length - 1
-  const stepHasValidation = useMemo(
-    () => !!data[slideIndex]?.validations?.length,
-    [slideIndex, data]
-  )
+  const stepHasValidation = !!data[slideIndex]?.validations?.length
   const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
 
   useEffect(() => {
-    if (lessonId) {
-      const storIndex = JSON.parse(localStorage.getItem(lessonId) ?? '0')
-      dispatch(setSlideIndex(storIndex))
-    }
-  }, [lessonId])
-
-  useEffect(() => {
-    if (lessonId) {
-      localStorage.setItem(lessonId, JSON.stringify(slideIndex))
-    }
-  }, [slideIndex, lessonId])
-
-  useEffect(() => {
-    if (carousel1.current) {
+    if (carousel1.current && lastSlide) {
       setNav2(carousel1.current)
+      carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
     }
-  }, [data])
+  }, [data, lastSlide])
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
   }, [slideIndex])
+
+  useEffect(() => {
+    const progress = JSON.parse(localStorage?.getItem(`${profile?.id}_progress`) || '{}')
+    if (lessonId && progress) {
+      const lastSlide: number = progress[lessonId as string]
+      if (lastSlide && carousel1.current) {
+        carousel1.current.slickGoTo(lastSlide)
+      }
+    }
+  }, [lessonId, carousel1, data])
+
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
   }
 
   const handleNext = (skip = false): void => {
+    if (window.gtag) {
+      window.gtag('event', 'Slide_Swiped', {
+        event_category: `Course ${course} > Unit ${unit} > Lesson ${lessonName}`,
+        event_label: `SlideNumber ${slideIndex + 1}`,
+      })
+    }
     if (stepHasValidation && !skip) {
+      if (window.gtag) {
+        window.gtag('event', 'Challenge_Completed', {
+          event_category: `Course ${course} > Unit (Module) ${unit} > Training (Lesson) ${lessonName}`,
+          event_label: `SlideNumber ${slideIndex + 1}`,
+        })
+      }
       onSubmitChallenge(data[slideIndex].id, code)
     }
     if (hasNextStep) {
       carousel1.current?.slickNext()
     } else {
       onSubmitLesson()
+    }
+  }
+
+  const onUpdateLastSlide = (next: number) => {
+    if (profile) {
+      updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
+    }
+    if (localStorage) {
+      const progress = localStorage.getItem(`${profile?.id}_progress`)
+      let newProgress: any = {}
+      if (progress) {
+        newProgress = JSON.parse(progress)
+      }
+      if (lessonId) {
+        newProgress[lessonId as string] = next
+      }
+      localStorage.setItem(`${profile?.id}_progress`, JSON.stringify(newProgress))
     }
   }
 
@@ -185,16 +231,18 @@ const SliderBlock: FC<ISliderBlock> = ({
                   {...getCarouselSettings(onBeforeChange)}
                   asNavFor={nav2}
                   ref={carousel1}
-                  initialSlide={slideIndex}
+                  afterChange={onUpdateLastSlide}
                 >
                   {data.map((step) => {
                     return (
                       <View
                         title={step.title}
+                        lessonType={lessonType}
                         key={step.id}
                         type={step.type}
                         body={step.body}
                         connectIntegrations={connectIntegrations}
+                        stepBgColor={step.bg_color}
                       />
                     )
                   })}
@@ -208,6 +256,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                 stepHasValidation={stepHasValidation}
                 canMoveNext={nextStepAble || !stepHasValidation}
                 hasNextStep={hasNextStep}
+                lessonName={lessonName}
               />
             </>
           )}
@@ -219,7 +268,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   )
 }
 
-const View: FC<IView> = ({ type, body, connectIntegrations, title }) => {
+const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType, stepBgColor }) => {
   const translate = useTranslate()
 
   switch (type) {
@@ -228,6 +277,8 @@ const View: FC<IView> = ({ type, body, connectIntegrations, title }) => {
         <ProsaMirrorView
           title={title}
           multimediaValue={body}
+          lessonType={lessonType}
+          stepBgColor={stepBgColor}
         />
       )
     case 'code':

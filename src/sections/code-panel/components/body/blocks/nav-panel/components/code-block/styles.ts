@@ -41,7 +41,7 @@ const styles = {
   }),
   getHeaderSx: (background: string): SxProps => ({
     background,
-    height: '28px',
+    height: '35px',
     width: '100%',
     position: 'absolute',
     top: 0,
@@ -65,6 +65,10 @@ const styles = {
     color: '#FFF',
     fontSize: '16px',
     marginLeft: '10px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '220px',
   },
   CLOSE_ICON_SX: {
     color: '#EAEAEB',

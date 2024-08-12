@@ -22,7 +22,7 @@ import {
   TRIBE_NAME_STYLES,
 } from './styles'
 
-const MAX_TRIBE_NAME_LENGTH = 23
+const MAX_TRIBE_NAME_LENGTH = 20
 
 const GroupHeader: FC = () => {
   const { query } = useRouter()
@@ -103,6 +103,7 @@ const GroupHeader: FC = () => {
         <FocusOverlay
           title={room?.cursorText ?? ''}
           resetRoom={resetRoom}
+          avatar={room?.avatar}
         />
       )}
 

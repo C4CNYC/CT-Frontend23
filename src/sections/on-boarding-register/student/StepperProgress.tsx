@@ -52,7 +52,12 @@ export default function StepperProgres({ prevStep, activeStep }: Props): React.R
             color: '#43D4DD',
             transition: 'all .3s linear!important',
           },
-          '& .MuiStepIcon-root': { color: theme.palette.grey[300] },
+          '& .MuiStepIcon-root': {
+            color:
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[300]
+                : theme.palette.background.neutral,
+          },
           pl: 1,
           mt: '-13px',
         })}

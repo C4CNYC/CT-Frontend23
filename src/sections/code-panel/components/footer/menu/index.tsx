@@ -3,7 +3,7 @@ import { type FC, useMemo, useState } from 'react'
 import { Chip, SpeedDial, SpeedDialAction, Typography, useTheme } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import { Box } from '@mui/system'
-import { GiSave } from '@react-icons/all-files/gi/GiSave'
+import { IoShareOutline } from '@react-icons/all-files/io5/IoShareOutline'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
@@ -12,9 +12,9 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import { getActions } from './config'
 import {
-  ACTION_FAB_PROPS,
   BOX_SX,
   SPEED_DIAL_SX,
+  getActionFabPropsSx,
   getChipSx,
   getSpeedDialFabProps,
 } from './constants'
@@ -39,7 +39,13 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
     setSpeedDial(false)
   }
 
-  const speedDialFabProps = useMemo(() => getSpeedDialFabProps(speedDial), [speedDial])
+  const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
+  const speedDialFabProps = useMemo(
+    () => getSpeedDialFabProps(speedDial, isDarkMode),
+    [speedDial, isDarkMode]
+  )
+  const actionFabProps = useMemo(() => getActionFabPropsSx(isDarkMode, theme), [isDarkMode, theme])
+
   const actions = useMemo(
     () =>
       getActions({
@@ -54,8 +60,13 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
 
   return (
     <Box
-      className='tourBottombarMenu'
-      sx={{ width: '50px', display: !isDesktop ? 'none' : 'flex' }}
+      sx={{
+        width: '40px',
+        display: !isDesktop ? 'none' : 'flex',
+        position: 'relative',
+        minWidth: 40,
+        height: 36,
+      }}
     >
       {isContentExist && (
         <SpeedDial
@@ -66,11 +77,17 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
           onOpen={openSpeedDial}
           FabProps={speedDialFabProps}
           sx={SPEED_DIAL_SX}
-          direction='up'
+          direction='down'
           icon={
-            <GiSave
+            <IoShareOutline
               size='20px'
-              style={{ color: speedDial ? '#43D4DD' : '#b3b3b3' }}
+              style={{
+                color: isDarkMode
+                  ? theme.palette.text.secondary
+                  : speedDial
+                    ? '#43D4DD'
+                    : '#637381',
+              }}
             />
           }
         >
@@ -88,7 +105,7 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
                   <Typography variant='subtitle2'>{translate(action.name)}</Typography>
                 </Box>
               }
-              FabProps={ACTION_FAB_PROPS}
+              FabProps={actionFabProps}
             />
           ))}
         </SpeedDial>
@@ -100,7 +117,7 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
 const tooltipRewrite = makeStyles(() => ({
   tooltip: {
     color: '#364954',
-    background: 'transparent',
+    background: '#fff',
   },
 }))
 

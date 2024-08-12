@@ -4,7 +4,17 @@ import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import CloseIcon from '@mui/icons-material/Close'
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, FormGroup, IconButton, Stack, Tab, Tabs, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  DialogContent,
+  FormGroup,
+  IconButton,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
@@ -38,6 +48,7 @@ interface FormValuesProps {
   description: string
   active: boolean
   public: boolean
+  catalog: boolean
   initial_enrolled: number
   initial_likes: number
   initial_stars: number
@@ -147,38 +158,30 @@ export default function CreateCourseDialog({
 
   return (
     <>
-      <Box
-        onClick={() => {
-          handleClickOpen()
-        }}
-      >
-        {children}
-      </Box>
+      <Box onClick={handleClickOpen}>{children}</Box>
       <Dialog
         open={open}
         onClose={handleClose}
       >
-        <Box
-          display='flex'
-          justifyContent='space-between'
-          alignItems='flex-end'
+        <DialogTitle
+          variant='h5'
+          sx={{
+            pb: 1,
+            pt: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
         >
-          <DialogTitle
-            variant='h5'
-            sx={{ pb: 1, pt: 2 }}
-          >
-            {isEdit ? translate('actions_edit') : translate('courses_create')}
-          </DialogTitle>
-          <IconButton
-            onClick={handleClose}
-            sx={{ mb: '5px', mr: '14px' }}
-          >
+          {isEdit ? translate('actions_edit') : translate('courses_create')}
+          <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
-        </Box>
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            {isEdit ? (
+        </DialogTitle>
+
+        <DialogContent sx={{ p: 0 }}>
+          {isEdit ? (
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={value}
                 onChange={handleChange}
@@ -201,8 +204,8 @@ export default function CreateCourseDialog({
                   />
                 ) : null}
               </Tabs>
-            ) : null}
-          </Box>
+            </Box>
+          ) : null}
           <TabPanel
             value={value}
             index={0}
@@ -211,10 +214,7 @@ export default function CreateCourseDialog({
               methods={methods}
               onSubmit={methods.handleSubmit(onSubmit)}
             >
-              <Box
-                rowGap={3}
-                display='grid'
-              >
+              <Stack gap={3}>
                 <Box sx={{ position: 'relative' }}>
                   {uploadedFile ? (
                     <IconButton
@@ -262,14 +262,12 @@ export default function CreateCourseDialog({
                   name='name'
                   label={translate('courses_course_name')}
                 />
-
                 <RHFTextField
                   sx={{ width: '100%' }}
                   name='content_id'
                   label={translate('courses_content_id')}
                   placeholder='W1'
                 />
-
                 <RHFSelect
                   native
                   name='level'
@@ -300,7 +298,6 @@ export default function CreateCourseDialog({
                     {translate('advanced')}
                   </option>
                 </RHFSelect>
-
                 <FormGroup
                   row
                   style={{ flexWrap: 'nowrap' }}
@@ -364,8 +361,12 @@ export default function CreateCourseDialog({
                     name='public'
                     label={translate('public')}
                   />
+                  <RHFSwitch
+                    name='catalog'
+                    label={translate('Catalog')}
+                  />
                 </Stack>
-              </Box>
+              </Stack>
               <Box
                 sx={{
                   display: 'flex',
@@ -403,7 +404,7 @@ export default function CreateCourseDialog({
           >
             <AuthorsTab courseId={id} />
           </TabPanel>
-        </Box>
+        </DialogContent>
       </Dialog>
     </>
   )
@@ -431,7 +432,8 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
           sx={{
             py: { xs: 1, sm: 3 },
             px: { xs: 2, sm: 3 },
-            height: '700px',
+            height: 'auto',
+            minHeight: 600,
             overflowY: 'auto',
             width: { xs: '330px', sm: '350px', md: '450px' },
           }}

@@ -90,7 +90,7 @@ const FileForm: FC<FileFormProps> = ({
     >
       <TextField
         ref={textFieldRef}
-        variant='outlined'
+        variant='filled'
         error={error != null}
         label='File name'
         sx={styles.INPUT}

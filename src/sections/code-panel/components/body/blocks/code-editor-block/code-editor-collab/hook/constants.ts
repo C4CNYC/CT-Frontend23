@@ -45,8 +45,6 @@ export enum Extensions {
   Js = 'js',
 }
 
-export const COMMENT_TYPE = 'comment'
-
 export const DEFAULT_FILE = {
   id: 'index.html',
   name: 'index.html',
@@ -59,3 +57,8 @@ export const getEmptyFileManagement = () => ({
   files: [DEFAULT_FILE],
   filesInLayout: [DEFAULT_FILE],
 })
+
+export enum EffectType {
+  SELECTION = 'selection',
+  COMMENT = 'comment',
+}

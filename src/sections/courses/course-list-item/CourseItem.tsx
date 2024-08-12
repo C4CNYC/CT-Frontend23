@@ -26,6 +26,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
   const { push } = useRouter()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isLight = theme.palette.mode === 'light'
   const [open, setOpen] = useState(false)
   const translate = useTranslate()
 
@@ -35,8 +36,9 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
   return (
     <Stack
       sx={{
-        background: '#ECF4FF',
+        background: isLight ? '#ECF4FF' : theme.palette.background.paper,
         borderRadius: '25px',
+        color: isLight ? '#212B36' : theme.palette.text.primary,
         p: {
           xs: '20px 20px 20px 20px',
           sm: '30px 20px 20px 20px',
@@ -44,7 +46,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         },
       }}
     >
-      <CourseHeader progress={course.progress} />
+      <CourseHeader progress={course.progress ?? 3} />
       <Box
         sx={{
           display: 'flex',
@@ -59,13 +61,13 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         >
           <Typography
             variant='h4'
-            sx={{ textTransform: 'uppercase', pb: '10px' }}
+            sx={{ textTransform: 'uppercase', pb: '10px', color: 'inherit' }}
           >
             {course.name}
           </Typography>
           <Typography
             variant='body2'
-            sx={{ pb: !open ? 1 : 0 }}
+            sx={{ pb: !open ? 1 : 0, color: 'inherit' }}
           >
             {course.description.length > MAX_DESCRIPTION_LENGTH && !open
               ? `${course.description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
@@ -89,6 +91,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
                 <CourseChip
                   text={el}
                   key={el}
+                  isLight={isLight}
                 />
               ))}
             </Stack>
@@ -101,7 +104,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
           <Button
             sx={{
               fontSize: '1rem',
-              color: '#364954',
+              color: isLight ? '#364954' : theme.palette.text.primary,
               '&:hover': {
                 background: 'none',
               },
@@ -121,6 +124,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
             redirect={redirect}
             progress={course.progress}
             courseId={course.id}
+            isLight={isLight}
           />
           {isMobile && (
             <Stack

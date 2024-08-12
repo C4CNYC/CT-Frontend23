@@ -76,8 +76,10 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
         lessons.map((l, i) => (
           <LessonItem
             lesson={l}
+            prevLesson={lessons[i - 1]}
             unitId={unitId}
             key={l.id}
+            index={i}
             locked={isLockedLessonCheck(i)}
           />
         ))

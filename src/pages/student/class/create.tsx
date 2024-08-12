@@ -25,6 +25,7 @@ import CreateHeader from '@/sections/main/create-class/createHeader'
 import CreatePalette, { CLASS_PALETTE } from '@/sections/main/create-class/createPalette'
 import { createRandomAvatar } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import ClassIntroTour from '@root/src/sections/intro-tours/teacher-intro-class'
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)]
@@ -54,7 +55,7 @@ export default function CreateClass(): React.ReactElement {
   const [updateClassAvatar, { isLoading: isUpdatingAvatar }] = useUpdateClassesAvatarMutation()
   const CreateEmailSchema = Yup.object().shape({
     name: Yup.string().required(translate('required_name')),
-    description: Yup.string().required(translate('required_description')),
+    description: Yup.string(),
   })
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateEmailSchema),
@@ -66,7 +67,7 @@ export default function CreateClass(): React.ReactElement {
         const classInfo = await createClassByManager({
           schoolId,
           name: data.name,
-          description: data.description,
+          description: data.description ?? '',
           cover: choosenColor,
         }).unwrap()
         await studentJoin({
@@ -94,7 +95,7 @@ export default function CreateClass(): React.ReactElement {
         }
       }
     } catch (error: any) {
-      enqueueSnackbar(error.message, { variant: 'error' })
+      enqueueSnackbar(error.data.message, { variant: 'error' })
     }
   }
 
@@ -110,6 +111,7 @@ export default function CreateClass(): React.ReactElement {
 
   return (
     <>
+      <ClassIntroTour />
       <Head>
         <title>{translate('class_create_class')} | CodeTribe</title>
       </Head>
@@ -151,6 +153,7 @@ export default function CreateClass(): React.ReactElement {
               pb: 2,
               backgroundColor: theme.palette.mode === 'light' ? '#ffffff' : 'initial',
             })}
+            className='tourClassStep1'
           >
             <Button
               size='large'
