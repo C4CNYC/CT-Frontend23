@@ -28,48 +28,28 @@ export default function CourseStatistics({
         sx={{
           display: 'flex',
           alignItems: 'flex-end',
+          gap: 1,
         }}
       >
         <TbFileCertificate
           size='30px'
           color='#43D4DD'
         />
-        <Typography
-          variant='body1'
-          sx={{
-            ml: '10px',
-          }}
-        >
-          {convertNumber(enrolledCount)}
-        </Typography>
+        <Typography variant='body1'>{convertNumber(enrolledCount)}</Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+      <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1 }}>
         <AiOutlineHeart
           size='30px'
           color='#EE467A'
         />
-        <Typography
-          variant='body1'
-          sx={{
-            ml: '10px',
-          }}
-        >
-          {convertNumber(likesCount)}
-        </Typography>
+        <Typography variant='body1'>{convertNumber(likesCount)}</Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+      <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 1 }}>
         <AiFillStar
           size='30px'
           color='#FBDD3F'
         />
-        <Typography
-          variant='body1'
-          sx={{
-            ml: '10px',
-          }}
-        >
-          {convertNumber(starsCount)}
-        </Typography>
+        <Typography variant='body1'>{convertNumber(starsCount)}</Typography>
       </Box>
     </Box>
   )

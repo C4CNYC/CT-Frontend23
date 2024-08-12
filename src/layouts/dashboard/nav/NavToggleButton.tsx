@@ -1,4 +1,4 @@
-import { IconButton, IconButtonProps } from '@mui/material'
+import { IconButton, IconButtonProps, useTheme } from '@mui/material'
 
 import { Iconify } from '@/components/iconify'
 import { useSettingsContext } from '@/components/settings'
@@ -10,8 +10,9 @@ export default function NavToggleButton({
   sx,
   ...other
 }: IconButtonProps): React.ReactElement | null {
+  const theme = useTheme()
   const { themeLayout, onToggleLayout } = useSettingsContext()
-
+  const isRTL = theme.direction === 'rtl'
   const isDesktop = useResponsive('up', 'md')
 
   if (!isDesktop) {
@@ -26,7 +27,8 @@ export default function NavToggleButton({
         p: 0.5,
         top: 32,
         position: 'fixed',
-        left: NAV_SIZES.W_DASHBOARD - 12,
+
+        left: isRTL ? `calc(100% - ${NAV_SIZES.W_DASHBOARD + 12}px)` : NAV_SIZES.W_DASHBOARD - 12,
         bgcolor: 'background.default',
         zIndex: (theme) => theme.zIndex.appBar + 1,
         border: (theme) => `dashed 1px ${theme.palette.divider}`,
@@ -40,6 +42,9 @@ export default function NavToggleButton({
       <Iconify
         width={16}
         icon={themeLayout === 'vertical' ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'}
+        sx={{
+          ...(isRTL && { transform: 'rotate(180deg)' }),
+        }}
       />
     </IconButton>
   )

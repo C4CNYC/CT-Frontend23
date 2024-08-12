@@ -23,6 +23,7 @@ import TribeListItem from './TribesListItem'
 
 export default function MenuTribesList(): React.ReactElement {
   const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
   const { themeLayout } = useSettingsContext()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const isNavMini = themeLayout === 'mini' && !isMobile
@@ -54,7 +55,8 @@ export default function MenuTribesList(): React.ReactElement {
       {!isNavMini && (
         <Divider
           sx={{
-            ml: 2,
+            ...(theme.direction === 'rtl' && { mr: 2 }),
+            ...(theme.direction !== 'rtl' && { ml: 2 }),
           }}
         />
       )}
@@ -89,7 +91,7 @@ export default function MenuTribesList(): React.ReactElement {
           <>
             <Button
               onClick={handleOpenPopover}
-              sx={(theme) => ({ ...getAddTribeButtonSx(theme, isNavMini) })}
+              sx={(theme) => ({ ...getAddTribeButtonSx(theme, isNavMini, isRTL) })}
             >
               <FaPlus size={20} />
             </Button>

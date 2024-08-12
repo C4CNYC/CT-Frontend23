@@ -30,7 +30,10 @@ export default function ProfileAbout({ data }: IProfileAboutProps): React.ReactE
         spacing={2}
         sx={{ p: 3 }}
       >
-        <Stack direction='row'>
+        <Stack
+          direction='row'
+          gap={1}
+        >
           <StyledIcon icon='eva:pin-fill' />
 
           <Typography variant='body2'>
@@ -39,7 +42,10 @@ export default function ProfileAbout({ data }: IProfileAboutProps): React.ReactE
               ?.label ?? '-'}
           </Typography>
         </Stack>
-        <Stack direction='row'>
+        <Stack
+          direction='row'
+          gap={1}
+        >
           <StyledIcon icon='eva:pin-fill' />
 
           <Typography variant='body2'>
@@ -48,14 +54,20 @@ export default function ProfileAbout({ data }: IProfileAboutProps): React.ReactE
           </Typography>
         </Stack>
 
-        <Stack direction='row'>
+        <Stack
+          direction='row'
+          gap={1}
+        >
           <StyledIcon icon='tabler:phone-filled' />
 
           <Typography variant='body2'>
             &nbsp;{data?.student_profile?.phone ?? data?.phone ?? '-'}
           </Typography>
         </Stack>
-        <Stack direction='row'>
+        <Stack
+          direction='row'
+          gap={1}
+        >
           <StyledIcon icon='mingcute:school-fill' />
 
           <Typography variant='body2'>
@@ -63,7 +75,10 @@ export default function ProfileAbout({ data }: IProfileAboutProps): React.ReactE
           </Typography>
         </Stack>
 
-        <Stack direction='row'>
+        <Stack
+          direction='row'
+          gap={1}
+        >
           <StyledIcon icon='ic:round-more-time' />
 
           <Typography variant='body2'>

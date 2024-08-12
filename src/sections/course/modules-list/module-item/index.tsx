@@ -104,6 +104,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
         <Stack
           direction={isMobile ? 'column-reverse' : 'row'}
           alignItems='center'
+          gap={isMobile ? 0 : 3}
         >
           <Button
             component={NextLink}
@@ -158,7 +159,6 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
             href={STUDENT_PATH_DASHBOARD.courses.unit(query.id as string, unit?.id as string)}
             component={NextLink}
             sx={{
-              ml: isMobile ? 0 : 3,
               mt: isMobile ? 2 : 0,
               color: 'inherit',
               alignSelf: isMobile ? 'flex-start' : 'center',

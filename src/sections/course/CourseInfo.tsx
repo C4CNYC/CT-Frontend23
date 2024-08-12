@@ -8,7 +8,7 @@ import { Image } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { COURSE_INFO_IMAGE_SX, getCourseInfoWrapperSx, getSeeMoreBtnSx } from './constants'
-import CourseSummarily from './CourseSummarily.1'
+import CourseSummarily from './CourseSummarily'
 
 interface ICourseInfoProps {
   cover?: string
@@ -60,11 +60,7 @@ export default function CourseInfo({
           }}
         >
           {open ? translate('actions_show_less') : translate('actions_see_more')}
-          {open ? (
-            <SlArrowUp style={{ marginLeft: '10px' }} />
-          ) : (
-            <SlArrowDown style={{ marginLeft: '10px' }} />
-          )}
+          {open ? <SlArrowUp /> : <SlArrowDown />}
         </Button>
         <CourseSummarily
           duration={duration}

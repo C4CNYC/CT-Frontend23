@@ -18,6 +18,7 @@ export default function TribeListItem({ active, classItem }: Props): React.React
   const { themeLayout } = useSettingsContext()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const isNavMini = themeLayout === 'mini' && !isMobile
+  const isRTL = theme.direction === 'rtl'
 
   return (
     <Tooltip
@@ -37,6 +38,7 @@ export default function TribeListItem({ active, classItem }: Props): React.React
           sx={{
             width: '40px',
             height: '40px',
+            ...(isRTL && { mr: '16px' }),
           }}
         />
         {!isNavMini && (

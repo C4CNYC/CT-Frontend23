@@ -39,6 +39,8 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
 
   const isOffset = useOffSetTop(HEADER_SIZES.H_DASHBOARD_DESKTOP) && !isNavHorizontal
 
+  const isRTL = theme.direction === 'rtl'
+
   const renderContent = (
     <>
       {isDesktop && isNavHorizontal && <Logo sx={{ mr: 2.5 }} />}
@@ -105,6 +107,10 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
           }),
           ...(isNavMini && {
             width: `calc(100% - ${NAV_SIZES.W_DASHBOARD_MINI + 1}px)`,
+          }),
+          ...(isRTL && {
+            left: 0,
+            right: 'auto',
           }),
         }),
       }}

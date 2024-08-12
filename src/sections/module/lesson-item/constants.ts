@@ -48,7 +48,7 @@ export const LINK_BTN_SX = {
   p: 1,
   boxShadow: 2,
 }
-export const LOCKED_BTN_CONT_SX = {
+export const getLockedBtnSx = (isRTL: boolean) => ({
   cursor: 'pointer',
   display: 'flex',
   gap: 3,
@@ -57,9 +57,10 @@ export const LOCKED_BTN_CONT_SX = {
   color: '#fff',
   borderRadius: '80px',
   p: 0.5,
-  pl: 2,
+  ...(isRTL && { pr: 2 }),
+  ...(!isRTL && { pl: 2 }),
   mt: 'auto',
-}
+})
 export const LOCKED_BTN_SX = {
   background: '#fff',
   borderRadius: '50%',
@@ -92,17 +93,18 @@ export const getProgressStyles = (isStarted: boolean) => ({
   background: '#fff',
 })
 
-export const START_LINK_SX = {
+export const getStartLinkSx = (isRTL: boolean) => ({
   display: 'flex',
   gap: 3,
   p: 0.5,
-  pl: 2,
+  ...(isRTL && { pr: 2 }),
+  ...(!isRTL && { pl: 2 }),
   alignItems: 'center',
   borderRadius: '80px',
   mt: 'auto',
   color: '#fff',
   background: 'linear-gradient(308.87deg, #FFF739 -19.29%, #FF6DC5 89.25%)',
-}
+})
 
 export const DIALOG_TITLE_WRAPPER_SX = {
   display: 'flex',

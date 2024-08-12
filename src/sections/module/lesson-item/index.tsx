@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Box, Button, Collapse, Link, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
@@ -23,11 +23,11 @@ import RocketIcon from '../icons/RocketIcon'
 import {
   DURATION_SX,
   LINK_BTN_SX,
-  LOCKED_BTN_CONT_SX,
+  getLockedBtnSx,
   LOCKED_BTN_SX,
   MODE_TITLE_SX,
   SEE_MORE_SX,
-  START_LINK_SX,
+  getStartLinkSx,
   getLessonContentSx,
   getLessonSx,
 } from './constants'
@@ -51,13 +51,19 @@ export default function LessonItem({
   prevLesson,
   index,
 }: ILessonItemProps): React.ReactElement {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down(600))
-  const [openDetails, setOpenDetails] = useState(false)
   const { user } = useAuthContext()
-  const courseId = useRouter().query.id
-  const [open, setOpen] = useState(false)
   const { push } = useRouter()
+
+  const courseId = useRouter().query.id
+
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
+  const isMobile = useMediaQuery(theme.breakpoints.down(600))
+  const startLinkSx = useMemo(() => getStartLinkSx(isRTL), [isRTL])
+  const locketBtnSx = useMemo(() => getLockedBtnSx(isRTL), [isRTL])
+
+  const [openDetails, setOpenDetails] = useState(false)
+  const [open, setOpen] = useState(false)
   const openDialog = () => {
     setOpen(true)
   }
@@ -156,7 +162,7 @@ export default function LessonItem({
           !lesson.progress && index !== 0 && isLastLessonInProgress ? (
             <>
               <Box
-                sx={LOCKED_BTN_CONT_SX}
+                sx={locketBtnSx}
                 onClick={async () => {
                   openDialog()
                 }}
@@ -188,7 +194,7 @@ So pulled your code from previous lesson, so that you can keep building'
                   lessonId: lesson.id,
                 })}
                 underline='none'
-                sx={START_LINK_SX}
+                sx={startLinkSx}
               >
                 <Typography variant='h5'> {translate('actions_start')} </Typography>
                 <Box sx={LINK_BTN_SX}>
@@ -203,7 +209,7 @@ So pulled your code from previous lesson, so that you can keep building'
         ) : !lesson.progress && isLastLessonInProgress ? (
           <>
             <Box
-              sx={LOCKED_BTN_CONT_SX}
+              sx={locketBtnSx}
               onClick={async () => {
                 openDialog()
               }}
@@ -232,7 +238,7 @@ So pulled your code from previous lesson, so that you can keep building'
                 lessonId: lesson.id,
               })}
               underline='none'
-              sx={START_LINK_SX}
+              sx={startLinkSx}
             >
               <Typography variant='h5'> {translate('actions_start')} </Typography>
               <Box sx={LINK_BTN_SX}>

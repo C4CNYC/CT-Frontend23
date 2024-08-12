@@ -23,38 +23,38 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         flexWrap: 'wrap',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <AiOutlineClockCircle size='15px' />
         <Typography
           variant='body2'
-          sx={{ ml: 1, color: 'inherit' }}
+          sx={{ color: 'inherit' }}
         >
           9 Hours
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <AiOutlineClockCircle size='15px' />
         <Typography
           variant='body2'
-          sx={{ ml: 1, textTransform: 'capitalize', color: 'inherit' }}
+          sx={{ textTransform: 'capitalize', color: 'inherit' }}
         >
           {level}
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <MdCelebration size='18px' />
         <Typography
           variant='body2'
-          sx={{ ml: 1, color: 'inherit' }}
+          sx={{ color: 'inherit' }}
         >
           {+price.charAt(1) === 0 ? translate('free') : price}
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <MdCelebration size='18px' />
         <Typography
           variant='body2'
-          sx={{ ml: 1, color: 'inherit' }}
+          sx={{ color: 'inherit' }}
         >
           {totalLessons}{' '}
           {totalLessons && totalLessons > 1 ? translate('lessons') : translate('lesson')}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { MenuItem, Stack } from '@mui/material'
+import { MenuItem, Stack, useTheme } from '@mui/material'
 
 import { IconButtonAnimate } from '@/components/animate'
 import { Image } from '@/components/image'
@@ -11,6 +11,7 @@ import { useLocales } from '../../../locales'
 
 export default function LanguagePopover(): React.ReactElement {
   const { allLangs, currentLang, onChangeLang } = useLocales()
+  const theme = useTheme()
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
@@ -64,7 +65,11 @@ export default function LanguagePopover(): React.ReactElement {
                 disabledEffect
                 alt={option.label}
                 src={option.icon}
-                sx={{ width: 28, mr: 2 }}
+                sx={{
+                  width: 28,
+                  ...(theme.direction !== 'rtl' && { mr: 2 }),
+                  ...(theme.direction === 'rtl' && { ml: 2 }),
+                }}
               />
 
               {option.label}

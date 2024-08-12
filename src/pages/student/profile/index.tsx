@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Box, Card, Container, Skeleton, Tab, Tabs } from '@mui/material'
+import { Box, Card, Container, Skeleton, Tab, Tabs, useTheme } from '@mui/material'
 import Head from 'next/head'
 
 import { CustomBreadcrumbs, Iconify, useSettingsContext } from '@/components'
@@ -19,16 +19,26 @@ UserProfile.getLayout = (page: React.ReactElement) => (
 
 export default function UserProfile(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
+  const translate = useTranslate()
+  const theme = useTheme()
+
+  const isRTL = theme.direction === 'rtl'
+
   const profile = useSelector((state) => state.global.user)
   const { data, isLoading } = useProfileQuery(null as unknown as void, { skip: !profile })
+
   const [currentTab, setCurrentTab] = useState('profile')
-  const translate = useTranslate()
 
   const TABS = [
     {
       value: 'profile',
       label: 'profile',
-      icon: <Iconify icon='ic:round-account-box' />,
+      icon: (
+        <Iconify
+          icon='ic:round-account-box'
+          sx={{ ...(isRTL && { ml: 1 }) }}
+        />
+      ),
       component: (
         <ProfileMain
           data={data}
@@ -40,7 +50,12 @@ export default function UserProfile(): React.ReactElement {
     {
       value: 'links',
       label: 'profile_links',
-      icon: <Iconify icon='nimbus:planet' />,
+      icon: (
+        <Iconify
+          icon='nimbus:planet'
+          sx={{ ...(isRTL && { ml: 1 }) }}
+        />
+      ),
       component: <ProfileLinks studentId={data?.student_profile?.id ?? ''} />,
     },
   ]
@@ -94,8 +109,8 @@ export default function UserProfile(): React.ReactElement {
               position: 'absolute',
               bgcolor: 'background.paper',
               '& .MuiTabs-flexContainer': {
-                pr: { xs: 0, md: 3 },
-                pl: { xs: 2, md: 0 },
+                ...(!isRTL && { pr: { xs: 0, md: 3 }, pl: { xs: 2, md: 0 } }),
+                ...(isRTL && { pl: { xs: 0, md: 3 }, pr: { xs: 2, md: 0 }, gap: 1 }),
                 justifyContent: {
                   sm: 'center',
                   md: 'flex-end',

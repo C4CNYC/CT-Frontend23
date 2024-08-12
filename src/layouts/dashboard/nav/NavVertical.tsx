@@ -32,7 +32,7 @@ export default function NavVertical({
   const user = useSelector((state: RootState) => state.global.user)
   const { pathname } = useRouter()
   const theme = useTheme()
-
+  const isRTL = theme.direction === 'rtl'
   const isDesktop = useResponsive('up', 'md')
   const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
 
@@ -84,6 +84,7 @@ export default function NavVertical({
 
       {isDesktop ? (
         <Drawer
+          anchor={isRTL ? 'right' : 'left'}
           open
           variant='permanent'
           PaperProps={{
@@ -91,7 +92,8 @@ export default function NavVertical({
               zIndex: 0,
               width: NAV_SIZES.W_DASHBOARD,
               bgcolor: 'transparent',
-              borderRightStyle: 'dashed',
+              ...(!isRTL && { borderRight: (theme) => `dashed 1px ${theme.palette.divider}` }),
+              ...(isRTL && { borderLeft: (theme) => `dashed 1px ${theme.palette.divider}` }),
             },
           }}
         >

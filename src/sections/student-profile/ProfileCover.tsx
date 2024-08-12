@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { useTheme } from '@mui/system'
 
 import { CustomAvatar } from '@/components'
 import { getLinearGradient } from '@/utils'
@@ -12,10 +13,13 @@ const StyledInfo = styled('div')(({ theme }) => ({
   position: 'absolute',
   marginTop: theme.spacing(5),
   [theme.breakpoints.up('md')]: {
-    right: 'auto',
+    ...(theme.direction === 'rtl' && { left: 'auto', rigth: theme.spacing(3) }),
+    ...(theme.direction !== 'rtl' && {
+      right: 'auto',
+      left: theme.spacing(3),
+    }),
     display: 'flex',
     alignItems: 'center',
-    left: theme.spacing(3),
     bottom: theme.spacing(3),
   },
 }))
@@ -27,6 +31,7 @@ interface IProfileCoverProps {
   avatar?: string
 }
 export default function ProfileCover({ name, lastName, cover, avatar }: IProfileCoverProps) {
+  const theme = useTheme()
   if (!cover) {
     cover = '#5be49b'
   }
@@ -53,12 +58,14 @@ export default function ProfileCover({ name, lastName, cover, avatar }: IProfile
             width: { xs: 80, md: 128 },
             height: { xs: 80, md: 128 },
             fontSize: { xs: 32, md: 64 },
+            ...(theme.direction === 'rtl' && { mr: 2 }),
           }}
         />
 
         <Box
           sx={{
-            ml: { md: 3 },
+            ...(theme.direction === 'rtl' && { mr: { md: 3 } }),
+            ...(theme.direction !== 'rtl' && { ml: { md: 3 } }),
             mt: { xs: 1, md: 0 },
             color: 'common.white',
             textAlign: { xs: 'center', md: 'left' },

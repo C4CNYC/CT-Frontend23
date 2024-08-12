@@ -4,6 +4,7 @@ export const getSeeMoreBtnSx = (theme: Theme) => ({
   width: 130,
   justifyContent: 'start',
   fontSize: '1rem',
+  gap: 1,
   color: theme.palette.mode === 'light' ? '#364954' : '#FFF',
   '&:hover': {
     background: 'none',

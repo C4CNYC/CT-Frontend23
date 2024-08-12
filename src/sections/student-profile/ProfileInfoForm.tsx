@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Card, Grid, Stack } from '@mui/material'
+import { Card, Grid, Stack, useTheme } from '@mui/material'
 import { MuiColorInput } from 'mui-color-input'
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
 import { useSnackbar } from 'notistack'
@@ -47,6 +47,7 @@ interface IProfileInfoFormProps {
 export default function ProfileInfoForm({
   data,
 }: IProfileInfoFormProps): React.ReactElement | null {
+  const theme = useTheme()
   const {
     username,
     student_profile: {
@@ -167,7 +168,9 @@ export default function ProfileInfoForm({
                 sx={{
                   flexGrow: 1,
                   gap: 3,
-                  pl: { sm: 0, md: 4 },
+                  ...(theme.direction !== 'rtl' && { pl: { sm: 0, md: 4 } }),
+                  ...(theme.direction === 'rtl' && { pr: { sm: 0, md: 4 } }),
+
                   pt: { xs: 3, sm: 3, md: 1 },
                 }}
               >
