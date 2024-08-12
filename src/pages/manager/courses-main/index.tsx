@@ -3,7 +3,13 @@ import { Container } from '@mui/system'
 import Head from 'next/head'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
+import {
+  CustomBreadcrumbs,
+  EmptyContent,
+  Iconify,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
@@ -52,6 +58,10 @@ export default function CoursesListPage(): React.ReactElement {
     )
   }
 
+  if (!data?.data.length || (!publicCourses?.data.length && !user)) {
+    return <EmptyContent title='You have no courses' />
+  }
+
   return (
     <>
       <Head>
@@ -98,30 +108,32 @@ export default function CoursesListPage(): React.ReactElement {
           loading={isLoading ?? isFetching}
         >
           <Box
-            gap={3}
-            display='grid'
-            gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
+            sx={{
+              gap: 3,
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+              },
             }}
           >
-            {isAdmin
-              ? data?.data.map((course, index) => (
+            {isAdmin ? (
+              <>
+                {publicCourses?.data.map((course, index) => (
                   <CourseCard
                     key={index}
                     course={course}
                   />
-                ))
-              : ''}
-            {isAdmin
-              ? publicCourses?.data.map((course, index) => (
+                ))}
+                {data?.data.map((course, index) => (
                   <CourseCard
                     key={index}
                     course={course}
                   />
-                ))
-              : ''}
+                ))}
+              </>
+            ) : null}
             {isFetching && isPublicFetching
               ? Array(getCountTakingElment(Number(data.meta.itemCount), Number(filters.take)))
                   .fill(null)
