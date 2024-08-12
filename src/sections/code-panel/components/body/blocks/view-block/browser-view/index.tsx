@@ -11,6 +11,7 @@ export interface CodeDocument {
 interface BrowserViewProps {
   document: CodeDocument | null
   isOpenHeader?: boolean
+  iframeKey?: number
 }
 
 enum TagNames {
@@ -30,7 +31,7 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
     ''
   )
 
-const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
+const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey }) => {
   const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
 
   return document ? (
     <iframe
+      key={iframeKey}
       srcDoc={docSrc}
       style={IFRAME_STYLE}
     />
