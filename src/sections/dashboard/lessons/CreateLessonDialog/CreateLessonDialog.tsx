@@ -127,9 +127,9 @@ export default function CreateLessonDialog({
           ...data,
           duration: `${data.duration * 60}`,
         }).unwrap()
-        if (router.query.module_id) {
+        if (router.query.module_id || router.query.moduleId) {
           addLessonToModule({
-            id: router.query.module_id as string,
+            id: (router.query.module_id || router.query.moduleId) as string,
             lesson_id: lesson.id,
           })
         }

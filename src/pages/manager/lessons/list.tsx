@@ -7,9 +7,12 @@ import Head from 'next/head'
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
+import { useGetAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
+import { Role } from '@/redux/services/enums/role.enum'
 import { ILesson, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
+import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
@@ -76,9 +79,21 @@ export default function LessonsListPage(): React.ReactElement {
     FilterMode.global
   )
 
+  const userRole = useSelector((state) => state.global?.user?.role)
+  const {
+    data: lessonsData,
+    isLoading: isLessonDataLoading,
+    isFetching: isLessonDataFetching,
+  } = useGetLessonsQuery(filters, { skip: userRole === Role.Admin })
+  const {
+    data: adminData,
+    isLoading: adminIsLoading,
+    isFetching: adminFetching,
+  } = useGetAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
   const [lessons, setLessons] = useState<ILesson[]>([])
-
-  const { data, isLoading, isFetching } = useGetLessonsQuery(filters)
+  const data = userRole === Role.Admin ? adminData : lessonsData
+  const isLoading = userRole === Role.Admin ? adminIsLoading : isLessonDataLoading
+  const isFetching = userRole === Role.Admin ? adminFetching : isLessonDataFetching
 
   useEffect(() => {
     setLessons(data?.data ?? [])

@@ -122,8 +122,8 @@ export interface IModuleCreate {
   active: boolean
   name: string
   description: string
-  initia_likes?: number
-  initial_start?: number
+  initial_likes?: number
+  initial_stars?: number
   initial_enrolled?: number
   duration?: string
 }

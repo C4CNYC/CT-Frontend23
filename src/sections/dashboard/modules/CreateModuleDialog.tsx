@@ -65,7 +65,12 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
     >
       {value === index && (
         <Box sx={TAB_SX}>
-          <Typography>{children}</Typography>
+          <Typography
+            paragraph={false}
+            component='div'
+          >
+            {children}
+          </Typography>
         </Box>
       )}
     </div>
@@ -166,7 +171,7 @@ export default function CreateModuleDialog({
       enqueueSnackbar(
         !isEdit ? translate('messages_create_success') : translate('messages_update_success')
       )
-      methods.reset()
+      methods.reset(undefined, { keepDirtyValues: true })
       handleClose()
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {

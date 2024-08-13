@@ -4,6 +4,8 @@ import Head from 'next/head'
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
+import { useIsAdmin } from '@/lib/use-is-admin'
+import { useGetAdminModulesQuery } from '@/redux/services/admin/modules-admin'
 import { IModulesSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -21,6 +23,7 @@ ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page
 export default function ModulesListPage(): React.ReactElement | string {
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
+  const { isAdmin } = useIsAdmin()
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
       name: '',
@@ -28,7 +31,19 @@ export default function ModulesListPage(): React.ReactElement | string {
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useGetModulesQuery(filters)
+  const {
+    data: teacherModuleData,
+    isLoading: teacherLoading,
+    isFetching: teacherFetching,
+  } = useGetModulesQuery(filters, { skip: isAdmin })
+  const {
+    data: adminData,
+    isLoading: adminIsLoading,
+    isFetching: adminFetching,
+  } = useGetAdminModulesQuery(filters, { skip: !isAdmin })
+  const data = isAdmin ? adminData : teacherModuleData
+  const isLoading = isAdmin ? adminIsLoading : teacherLoading
+  const isFetching = isAdmin ? adminFetching : teacherFetching
 
   if (isLoading) {
     return (
