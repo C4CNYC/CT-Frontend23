@@ -56,6 +56,7 @@ export default function AccountPopover(): React.ReactElement {
     <>
       <IconButtonAnimate
         onClick={handleOpenPopover}
+        className='defaultIntroStudentStep3'
         sx={{
           p: 0,
           ...(openPopover && {

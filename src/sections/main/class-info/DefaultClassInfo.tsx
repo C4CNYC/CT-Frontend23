@@ -32,6 +32,8 @@ import ClassPreferences from '@/sections/dashboard/classes/modal'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
+import StudentJoinIntro from '../../intro-tours/student-join-intro'
+
 import ClassInfoMain from './ClassInfoMain'
 import {
   JOIN_STACK_SX,
@@ -112,8 +114,11 @@ export default function DefaultClassInfo({
 
   return (
     <>
+      <RoleBasedGuard roles={[Role.Student]}>
+        <StudentJoinIntro />
+      </RoleBasedGuard>
       <Stack
-        className='tourMainStep3'
+        className='tourMainStep3 studentJoinStep1'
         sx={{ mx: { lg: -2 } }}
       >
         <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Editor, Role.Manager]}>
