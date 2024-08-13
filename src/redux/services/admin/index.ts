@@ -15,6 +15,9 @@ export const adminApi = createApi({
     'OrganizationContacts',
     'OrganizationSettings',
     'OrganizationCustomization',
+    'Lessons',
+    'Courses',
+    'Modules',
   ],
   endpoints: (builder) => ({}),
 })

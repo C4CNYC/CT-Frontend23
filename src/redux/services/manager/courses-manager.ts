@@ -37,6 +37,18 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['CoursesManager'],
     }),
+    getOwnCourses: builder.query<
+      BaseListResponseInterface<ICourse & BaseResponseInterface>,
+      ICourseSearchParams
+    >({
+      query: (params) => ({
+        url: '/manager/course/own',
+        method: 'GET',
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['CoursesManager'],
+    }),
     managerGetSingleCourse: builder.query<
       BaseListResponseInterface<ICourse & BaseResponseInterface>,
       ICourseSearchParams & { id: string }
@@ -117,6 +129,7 @@ const extendedApi = managerApi.injectEndpoints({
 export const {
   useManagerGetCourseQuery,
   useGetPublicCoursesQuery,
+  useGetOwnCoursesQuery,
   useManagerGetSingleCourseQuery,
   // -------------mutation-----------
   useAddModuleToCourseMutation,
