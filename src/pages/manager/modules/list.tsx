@@ -1,4 +1,4 @@
-import { Box, Button, Container } from '@mui/material'
+import { Box, Button, Container, useTheme } from '@mui/material'
 import Head from 'next/head'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
@@ -20,6 +20,8 @@ ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page
 
 export default function ModulesListPage(): React.ReactElement | string {
   const { themeStretch } = useSettingsContext()
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
   const translate = useTranslate()
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
@@ -61,7 +63,16 @@ export default function ModulesListPage(): React.ReactElement | string {
             <CreateModuleDialog>
               <Button
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={
+                  <Iconify
+                    icon='eva:plus-fill'
+                    sx={{
+                      ...(isRTL && {
+                        ml: 2,
+                      }),
+                    }}
+                  />
+                }
               >
                 {translate('modules_create_module')}
               </Button>

@@ -33,6 +33,7 @@ export default function ProfileSocialInfo({ socialLinks }: Props): React.ReactEl
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                gap: 1,
               }}
             >
               {SOCIAL_ICONS[item.type]}

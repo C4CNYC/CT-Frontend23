@@ -9,6 +9,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  useTheme,
 } from '@mui/material'
 import { Container, Stack } from '@mui/system'
 import { format } from 'date-fns'
@@ -48,6 +49,7 @@ export default function AppsPage(): React.ReactElement {
   const { data, isLoading } = useGetIntegrationsListQuery({ ...filters })
   const [removeIntegration] = useDeleteIntegrationMutation()
   const translate = useTranslate()
+  const theme = useTheme()
 
   const onDelete = async (id: string): Promise<void> => {
     try {
@@ -81,7 +83,16 @@ export default function AppsPage(): React.ReactElement {
               <ModalIntegration>
                 <Button
                   variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
+                  startIcon={
+                    <Iconify
+                      icon='eva:plus-fill'
+                      sx={{
+                        ...(theme.direction === 'rtl' && {
+                          ml: 2,
+                        }),
+                      }}
+                    />
+                  }
                 >
                   {translate('integrations_add_int')}
                 </Button>

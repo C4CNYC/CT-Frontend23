@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd'
-import { Box, Button, Container } from '@mui/material'
+import { Box, Button, Container, useTheme } from '@mui/material'
 import Head from 'next/head'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
@@ -68,6 +68,8 @@ LessonsListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page
 export default function LessonsListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
   const { filters, setFilter } = useFilters<ILessonSearchParams>(
     {
       module_id: '',
@@ -141,7 +143,16 @@ export default function LessonsListPage(): React.ReactElement {
             <CreateLessonDialog>
               <Button
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={
+                  <Iconify
+                    icon='eva:plus-fill'
+                    sx={{
+                      ...(isRTL && {
+                        ml: 2,
+                      }),
+                    }}
+                  />
+                }
                 sx={{ mr: 2 }}
               >
                 {translate('lessons_create_lesson')}

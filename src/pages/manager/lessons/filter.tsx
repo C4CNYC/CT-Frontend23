@@ -41,8 +41,7 @@ export default function FilterLessons({ filters, setFilter }: Props): React.Reac
   return (
     <>
       <Stack
-        spacing={2}
-        sx={{ mb: 4 }}
+        sx={{ mb: 4, gap: 2 }}
         alignItems='center'
         direction={{
           xs: 'column',

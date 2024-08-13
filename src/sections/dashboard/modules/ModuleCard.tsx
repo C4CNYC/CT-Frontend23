@@ -1,7 +1,16 @@
 import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
-import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { CgArrowsExchangeV } from '@react-icons/all-files/cg/CgArrowsExchangeV'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -17,6 +26,8 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
   const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
   const translate = useTranslate()
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [deleteModule] = useDeleteModuleMutation()
@@ -174,13 +185,24 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           moduleTips={module.tips}
         >
           <MenuItem>
-            <Iconify icon='eva:edit-fill' />
+            <Iconify
+              icon='eva:edit-fill'
+              sx={{
+                ...(isRTL && {
+                  ml: 2,
+                }),
+              }}
+            />
             {translate('actions_edit')}
           </MenuItem>
         </CreateModuleDialog>
 
         <MenuItem onClick={() => openContentCreationTool()}>
-          <CgArrowsExchangeV />
+          <CgArrowsExchangeV
+            style={{
+              marginLeft: '16px',
+            }}
+          />
           {translate('rearrange')}
         </MenuItem>
 
@@ -193,7 +215,14 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <Iconify
+            icon='eva:trash-2-outline'
+            sx={{
+              ...(isRTL && {
+                ml: 2,
+              }),
+            }}
+          />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

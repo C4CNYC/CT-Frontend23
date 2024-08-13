@@ -79,6 +79,8 @@ export default function CreateLessonDialog({
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
 
+  const isRTL = theme.direction === 'rtl'
+
   const timeConvertorToSeconds = (time: Record<string, number> | null | undefined) => {
     if (time) {
       return Object.entries(time).reduce((acc, [timeTipe, time]) => {
@@ -186,10 +188,20 @@ export default function CreateLessonDialog({
                   <Tab
                     label={translate('skills')}
                     {...a11yProps(1)}
+                    sx={{
+                      ...(isRTL && {
+                        ml: 3,
+                      }),
+                    }}
                   />
                   <Tab
                     label={translate('integration')}
                     {...a11yProps(2)}
+                    sx={{
+                      ...(isRTL && {
+                        ml: 3,
+                      }),
+                    }}
                   />
                 </Tabs>
               </Box>

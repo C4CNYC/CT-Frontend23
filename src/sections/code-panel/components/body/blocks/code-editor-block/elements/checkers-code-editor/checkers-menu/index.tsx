@@ -14,7 +14,10 @@ interface CheckersMenuProps {
 
 const CheckersMenu: FC<CheckersMenuProps> = ({ checkers, isCheckedOnce }) => {
   return (
-    <Box sx={BOX_SX}>
+    <Box
+      sx={BOX_SX}
+      dir='ltr'
+    >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <CheckerIcon
           width={14}

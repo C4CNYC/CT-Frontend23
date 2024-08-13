@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, FormGroup, Stack } from '@mui/material'
+import { Box, FormGroup, Stack, useTheme } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -46,6 +46,8 @@ export default function SocialItem({ schoolId, socialItem }: Props): React.React
   const [editSocial] = useUpdateSchoolSocialMutation()
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
 
   const defaultValues = {
     link: socialItem?.link ?? '',
@@ -116,11 +118,19 @@ export default function SocialItem({ schoolId, socialItem }: Props): React.React
                 sx={{
                   display: 'flex',
                   border: '1px solid #919eab42',
-                  borderRight: 'none',
                   color: '#627380',
-                  borderRadius: '8px',
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
+                  ...(!isRTL && {
+                    borderRight: 'none',
+                    borderRadius: '8px',
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                  }),
+                  ...(isRTL && {
+                    borderLeft: 'none',
+                    borderRadius: '8px',
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                  }),
                   alignItems: 'center',
                   padding: '0 10px',
                   height: '40px',
@@ -153,8 +163,15 @@ export default function SocialItem({ schoolId, socialItem }: Props): React.React
                 size='small'
                 disabled={edit ?? !isFormEdited}
                 sx={{
-                  borderTopLeftRadius: 0,
-                  borderBottomLeftRadius: 0,
+                  ...(!isRTL && {
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                  }),
+                  ...(isRTL && {
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                    ml: 2,
+                  }),
                   textTransform: 'lowercase',
                   height: '40px',
                 }}

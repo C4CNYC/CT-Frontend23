@@ -1,6 +1,15 @@
 import { useState } from 'react'
 
-import { Avatar, Button, Divider, IconButton, MenuItem, TableCell, TableRow } from '@mui/material'
+import {
+  Avatar,
+  Button,
+  Divider,
+  IconButton,
+  MenuItem,
+  TableCell,
+  TableRow,
+  useTheme,
+} from '@mui/material'
 import { BiDotsVerticalRounded } from '@react-icons/all-files/bi/BiDotsVerticalRounded'
 import { enqueueSnackbar } from 'notistack'
 
@@ -20,6 +29,8 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
   const translate = useTranslate()
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [openConfirm, setOpenConfirm] = useState(false)
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
 
   const [openDetails, setOpenDetails] = useState(false)
   const [archive] = useArchiveSchoolMutation()
@@ -109,7 +120,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow='right-top'
+        arrow={isRTL ? 'left-center' : 'right-top'}
         sx={{ width: 160 }}
       >
         <MenuItem
@@ -119,7 +130,14 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           }}
         >
           <>
-            <Iconify icon='eva:edit-fill' />
+            <Iconify
+              icon='eva:edit-fill'
+              sx={{
+                ...(isRTL && {
+                  ml: 2,
+                }),
+              }}
+            />
             {translate('actions_edit')}
           </>
         </MenuItem>
@@ -132,7 +150,14 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <Iconify
+            icon='eva:trash-2-outline'
+            sx={{
+              ...(isRTL && {
+                ml: 2,
+              }),
+            }}
+          />
           {translate('actions_archive')}
         </MenuItem>
       </MenuPopover>

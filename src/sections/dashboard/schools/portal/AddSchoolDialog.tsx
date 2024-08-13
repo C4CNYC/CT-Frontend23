@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import AddIcon from '@mui/icons-material/Add'
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, Card, Grid } from '@mui/material'
+import { Box, Button, Card, Grid, useTheme } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -25,6 +25,8 @@ interface FormValuesProps {
 
 export default function AddSchoolDialog(): React.ReactElement {
   const translate = useTranslate()
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
 
   const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation()
   const [open, setOpen] = useState(false)
@@ -76,7 +78,15 @@ export default function AddSchoolDialog(): React.ReactElement {
       <Button
         onClick={handleClickOpen}
         variant='contained'
-        startIcon={<AddIcon />}
+        startIcon={
+          <AddIcon
+            sx={{
+              ...(isRTL && {
+                ml: 1,
+              }),
+            }}
+          />
+        }
       >
         {translate('schools_add_aschool')}
       </Button>
