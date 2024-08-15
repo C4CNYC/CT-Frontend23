@@ -138,6 +138,7 @@ export interface ILessonCreate {
 export interface IModulesSearchParams extends BaseSearchInterface {
   name?: string
   course_id?: string
+  catalog?: boolean
 }
 
 export interface ILessonSearchParams extends BaseSearchInterface {
@@ -151,6 +152,7 @@ export interface ICourseSearchParams extends BaseSearchInterface {
   school_id?: string
   name?: string
   catalog?: boolean
+  public?: boolean
 }
 
 export interface ICourseCreate {

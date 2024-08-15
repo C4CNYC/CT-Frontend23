@@ -12,11 +12,9 @@ import {
 } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
+import { useGetOwnCoursesQuery } from '@/redux/services/admin/courses-admin'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import {
-  useManagerGetCourseQuery,
-  useGetPublicCoursesQuery,
-} from '@/redux/services/manager/courses-manager'
+import { useGetPublicCoursesQuery } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { CourseCard } from '@/sections/dashboard/courses/cards'
@@ -24,7 +22,6 @@ import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import FilterCourses from '@/sections/dashboard/courses/filter'
 import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
-import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
@@ -42,12 +39,12 @@ export default function CoursesListPage(): React.ReactElement {
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useManagerGetCourseQuery(filters, { skip: !user?.role })
+  const { data, isLoading, isFetching } = useGetOwnCoursesQuery({ ...filters, public: false })
   const {
     data: publicCourses,
     isLoading: isPublicLoading,
     isFetching: isPublicFetching,
-  } = useGetPublicCoursesQuery({}, { skip: user?.role })
+  } = useGetPublicCoursesQuery(filters)
 
   if (isLoading) {
     return (
@@ -58,7 +55,7 @@ export default function CoursesListPage(): React.ReactElement {
     )
   }
 
-  if (!data?.data.length || (!publicCourses?.data.length && !user)) {
+  if (!data?.data.length && !publicCourses?.data.length) {
     return <EmptyContent title='You have no courses' />
   }
 
@@ -100,12 +97,12 @@ export default function CoursesListPage(): React.ReactElement {
           setFilter={setFilter}
         />
         <SimpleInfiniteList
-          hasNextPage={data?.meta.hasNextPage ?? false}
+          hasNextPage={publicCourses?.meta.hasNextPage ?? data?.meta.hasNextPage ?? false}
           onLoadMore={() => {
-            if (data?.meta.take !== Number(filters?.take)) return
+            // if (publicCourses?.meta.take !== Number(filters?.take)) return
             setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
           }}
-          loading={isLoading ?? isFetching}
+          loading={isPublicLoading ?? isPublicFetching ?? isLoading ?? isFetching}
         >
           <Box
             sx={{
@@ -134,8 +131,8 @@ export default function CoursesListPage(): React.ReactElement {
                 ))}
               </>
             ) : null}
-            {isFetching && isPublicFetching
-              ? Array(getCountTakingElment(Number(data.meta.itemCount), Number(filters.take)))
+            {isPublicFetching
+              ? Array(24)
                   .fill(null)
                   .map((v, i) => <SkeletonCourses key={i} />)
               : null}
