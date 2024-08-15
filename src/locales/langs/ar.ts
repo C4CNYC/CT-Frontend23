@@ -50,6 +50,7 @@ const ar = {
 
   // action words
   actions_delete: 'يمسح',
+  actions_password: 'كلمة السر',
   actions_remove: 'يزيل',
   actions_edit: 'يحرر',
   actions_add: 'يضيف',
@@ -354,6 +355,8 @@ const ar = {
   send_verification_email_content: 'سيؤدي تعطيل هذا إلى إرسال رسالة تحقق للمستخدم تلقائيًا',
   verified_user_info: 'لا يستطيع المستخدمون المعوقون الوصول إلى هذا المورد',
   members_user_edit_user: 'المستخدم: تحرير المستخدم',
+
+  member_password_updated: '{{password}} كلمة المرور هي',
 
   // schools page
   schools: 'المدارس',

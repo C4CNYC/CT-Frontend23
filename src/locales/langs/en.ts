@@ -49,6 +49,7 @@ const en = {
 
   // action words
   actions_delete: 'Delete',
+  actions_password: 'Password',
   actions_remove: 'Remove',
   actions_edit: 'Edit',
   actions_add: 'Add',
@@ -355,6 +356,7 @@ const en = {
     'Disabling this will automatically send the user a verification email',
   verified_user_info: "Disabled users doesn't have access to this resource",
   members_user_edit_user: 'User: Edit user',
+  member_password_updated: 'Password is {{password}} ',
 
   //  school page
   schools: 'Schools',
