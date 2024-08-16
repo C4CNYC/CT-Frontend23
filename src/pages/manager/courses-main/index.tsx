@@ -12,7 +12,7 @@ import {
 } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
-import { useGetOwnCoursesQuery } from '@/redux/services/admin/courses-admin'
+import { useGetAdminCoursesQuery } from '@/redux/services/admin/courses-admin'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetPublicCoursesQuery } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -39,7 +39,7 @@ export default function CoursesListPage(): React.ReactElement {
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useGetOwnCoursesQuery({ ...filters, public: false })
+  const { data, isLoading, isFetching, refetch } = useGetAdminCoursesQuery(filters)
   const {
     data: publicCourses,
     isLoading: isPublicLoading,
@@ -79,7 +79,10 @@ export default function CoursesListPage(): React.ReactElement {
           ]}
           action={
             isAdmin ? (
-              <CreateCourseDialog id=''>
+              <CreateCourseDialog
+                id=''
+                refetch={refetch}
+              >
                 <Button
                   variant='contained'
                   startIcon={<Iconify icon='eva:plus-fill' />}
@@ -127,6 +130,7 @@ export default function CoursesListPage(): React.ReactElement {
                   <CourseCard
                     key={index}
                     course={course}
+                    refetch={refetch}
                   />
                 ))}
               </>
