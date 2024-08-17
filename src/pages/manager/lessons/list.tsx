@@ -84,11 +84,19 @@ export default function LessonsListPage(): React.ReactElement {
     data: lessonsData,
     isLoading: isLessonDataLoading,
     isFetching: isLessonDataFetching,
+    refetch: refetchLessons,
   } = useGetLessonsQuery(filters, { skip: userRole === Role.Admin })
+  const {
+    data: ownLessonsData,
+    isLoading: isOwnLessonDataLoading,
+    isFetching: isOwnLessonDataFetching,
+    refetch: refetchOwnLessons,
+  } = useGetOwnLessonsQuery(filters, { skip: userRole === Role.Admin })
   const {
     data: adminData,
     isLoading: adminIsLoading,
     isFetching: adminFetching,
+    refetch: refetchAdminLessons,
   } = useGetAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
   const [lessons, setLessons] = useState<ILesson[]>([])
   const data = userRole === Role.Admin ? adminData : lessonsData
@@ -98,6 +106,15 @@ export default function LessonsListPage(): React.ReactElement {
   useEffect(() => {
     setLessons(data?.data ?? [])
   }, [data])
+
+  const refetch = () => {
+    if (userRole === Role.Admin) {
+      refetchAdminLessons()
+    } else {
+      refetchLessons()
+      refetchOwnLessons()
+    }
+  }
 
   const [updateModuleLesson] = useUpdateModuleLessonMutation()
 
@@ -153,7 +170,7 @@ export default function LessonsListPage(): React.ReactElement {
             },
           ]}
           action={
-            <CreateLessonDialog>
+            <CreateLessonDialog refetch={refetch}>
               <Button
                 variant='contained'
                 startIcon={<Iconify icon='eva:plus-fill' />}
@@ -198,6 +215,7 @@ export default function LessonsListPage(): React.ReactElement {
                       key={lesson.id}
                       lesson={lesson}
                       index={index}
+                      refetch={refetch}
                     />
                   ))}
                   {isFetching

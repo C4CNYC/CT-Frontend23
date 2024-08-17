@@ -55,7 +55,7 @@ export default function CourseCard({
       setLoading(false)
       setOpenConfirm(false)
       enqueueSnackbar(translate('courses_delete_msg'))
-      refetch()
+      if (refetch) refetch()
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: 'error',
