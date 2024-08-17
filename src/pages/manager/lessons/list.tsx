@@ -10,7 +10,7 @@ import DashboardLayout from '@/layouts/dashboard'
 import { useGetAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { ILesson, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetLessonsQuery, useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
 import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -19,7 +19,6 @@ import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/
 import LessonCard from '@/sections/dashboard/lessons/LessonCard'
 import LessonStepMain from '@/sections/dashboard/lessons/LessonStep/LessonStepMain'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
-import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
 import FilterLessons from './filter'
@@ -79,6 +78,12 @@ export default function LessonsListPage(): React.ReactElement {
     FilterMode.global
   )
 
+  const filtersSet = !!(
+    filters?.module_id?.length ||
+    filters?.name?.length ||
+    filters?.module_id?.length
+  )
+
   const userRole = useSelector((state) => state.global?.user?.role)
   const {
     data: lessonsData,
@@ -99,7 +104,12 @@ export default function LessonsListPage(): React.ReactElement {
     refetch: refetchAdminLessons,
   } = useGetAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
   const [lessons, setLessons] = useState<ILesson[]>([])
-  const data = userRole === Role.Admin ? adminData : lessonsData
+  const data =
+    filtersSet || !ownLessonsData?.data.length
+      ? userRole === Role.Admin
+        ? adminData
+        : lessonsData
+      : ownLessonsData
   const isLoading = userRole === Role.Admin ? adminIsLoading : isLessonDataLoading
   const isFetching = userRole === Role.Admin ? adminFetching : isLessonDataFetching
 
@@ -219,9 +229,7 @@ export default function LessonsListPage(): React.ReactElement {
                     />
                   ))}
                   {isFetching
-                    ? Array(
-                        getCountTakingElment(Number(data?.meta?.itemCount), Number(filters.take))
-                      )
+                    ? Array(40)
                         .fill(null)
                         .map((v, i) => <DefaultSkeletonItem key={i} />)
                     : null}
