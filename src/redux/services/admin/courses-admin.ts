@@ -18,7 +18,19 @@ const extendedApi = adminApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['Courses'],
     }),
+    getOwnCourses: builder.query<
+      BaseListResponseInterface<ICourse & BaseResponseInterface>,
+      ICourseSearchParams
+    >({
+      query: (params) => ({
+        url: '/course/own',
+        method: 'GET',
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['Courses'],
+    }),
   }),
 })
 
-export const { useGetAdminCoursesQuery } = extendedApi
+export const { useGetAdminCoursesQuery, useGetOwnCoursesQuery } = extendedApi

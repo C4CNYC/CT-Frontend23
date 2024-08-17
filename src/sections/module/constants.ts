@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material'
 
-export const getPageContainerSx = (isMobile: boolean, light: boolean) =>
-  light
+export const getPageContainerSx = (isMobile: boolean, light: boolean, headerBg?: string | null) => {
+  return light
     ? {
         pt: isMobile ? 2 : 10,
         px: isMobile ? 1 : 8,
@@ -9,10 +9,20 @@ export const getPageContainerSx = (isMobile: boolean, light: boolean) =>
           ? `linear-gradient(249.57deg, rgba(255, 255, 255, 0.8) 27.55%, 
                               rgba(255, 255, 255, 0.6) 44.53%, 
                               rgba(255, 255, 255, 0.24) 63.57%), 
-              top left / contain url(/assets/projects/header_bg.png) no-repeat`
+              top left / contain url(${headerBg || '/assets/projects/header_bg.png'}) no-repeat`
           : '',
       }
-    : { pt: isMobile ? 2 : 10, px: isMobile ? 1 : 8 }
+    : {
+        pt: isMobile ? 2 : 10,
+        px: isMobile ? 1 : 8,
+        background: !isMobile
+          ? `linear-gradient(249.57deg, rgba(255, 255, 255, 0.8) 27.55%, 
+                          rgba(255, 255, 255, 0.6) 44.53%, 
+                          rgba(255, 255, 255, 0.24) 63.57%), 
+          top left / contain url(${headerBg || '/assets/projects/header_bg.png'}) no-repeat`
+          : '',
+      }
+}
 export const getBreadcrumbsSx = (isMobile: boolean, theme: Theme) => ({
   background:
     theme.palette.mode === 'light'
@@ -50,7 +60,7 @@ export const HEADER_IMG_SX = {
 export const getLessonListSx = (isMobile: boolean, theme: Theme) => ({
   gap: isMobile ? 2 : 4,
   mt: isMobile ? 2 : 6,
-  background: theme.palette.mode === 'light' ? '#FFEDF2' : theme.palette.background.neutral,
+  background: theme.palette.mode === 'light' ? '#FFEDF2' : theme.palette.background.neutral, //This is where bg is set
   px: isMobile ? 2 : 6,
   pb: isMobile ? 4 : 10,
   pt: 2,

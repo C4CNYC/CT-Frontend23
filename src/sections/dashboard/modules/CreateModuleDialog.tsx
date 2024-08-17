@@ -44,6 +44,7 @@ interface Prop {
   isEdit?: boolean
   id?: string
   moduleTips?: string[] | []
+  refetch?: () => void
 }
 
 interface TabPanelProps {
@@ -92,6 +93,7 @@ export default function CreateModuleDialog({
   children,
   defaultValues,
   moduleTips,
+  refetch,
 }: Prop): React.ReactElement {
   const { query } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
@@ -148,6 +150,7 @@ export default function CreateModuleDialog({
           tips: data.tips.trim() !== '' && moduleTips ? [...moduleTips, data.tips] : [],
           duration: data.duration?.trim(),
         }).unwrap()
+        if (refetch) refetch()
         if (uploadedFile) {
           file.append('file', uploadedFile)
           await updateAvatar({ id, file }).unwrap()
@@ -157,6 +160,7 @@ export default function CreateModuleDialog({
           ...data,
           duration: data?.duration?.trim() ?? '1 month',
         }).unwrap()
+        if (refetch) refetch()
         if (query.course_id) {
           await addToCourse({
             id: query.course_id as string,

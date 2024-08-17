@@ -18,8 +18,20 @@ const extendedApi = adminApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['Modules'],
     }),
+    getAdminOwnModules: builder.query<
+      BaseListResponseInterface<IModule & BaseResponseInterface>,
+      IModulesSearchParams
+    >({
+      query: (params) => ({
+        url: '/module/own',
+        method: 'GET',
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['Modules'],
+    }),
   }),
   overrideExisting: false,
 })
 
-export const { useGetAdminModulesQuery } = extendedApi
+export const { useGetAdminModulesQuery, useGetAdminOwnModulesQuery } = extendedApi

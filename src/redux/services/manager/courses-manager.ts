@@ -37,6 +37,18 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['CoursesManager'],
     }),
+    getCatalogCourses: builder.query<
+      BaseListResponseInterface<ICourse & BaseResponseInterface>,
+      ICourseSearchParams
+    >({
+      query: (params) => ({
+        url: '/manager/course/catalog',
+        method: 'GET',
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['CoursesManager'],
+    }),
     getOwnCourses: builder.query<
       BaseListResponseInterface<ICourse & BaseResponseInterface>,
       ICourseSearchParams
@@ -67,7 +79,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: 'CoursesManager' }],
+      invalidatesTags: [{ type: 'CoursesManager' }, { type: 'Courses' }],
     }),
     updateCourseCover: builder.mutation<
       ICourse & BaseResponseInterface,
@@ -78,7 +90,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body: file,
       }),
-      invalidatesTags: [{ type: 'CoursesManager' }],
+      invalidatesTags: [{ type: 'CoursesManager' }, { type: 'Courses' }],
     }),
     createCourse: builder.mutation<ICourseCreate & BaseResponseInterface, ICourseCreate>({
       query: ({ ...body }) => ({
@@ -86,14 +98,14 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'CoursesManager' }],
+      invalidatesTags: [{ type: 'CoursesManager' }, { type: 'Courses' }],
     }),
     deleteCourse: builder.mutation<ICourseDelete & BaseResponseInterface, ICourseDelete>({
       query: ({ id }) => ({
         url: `/manager/course/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'CoursesManager' }],
+      invalidatesTags: [{ type: 'CoursesManager' }, { type: 'Courses' }],
     }),
     addModuleToCourse: builder.mutation<void, IAddModuleToCourse>({
       query: ({ id, ...body }) => ({
@@ -129,6 +141,7 @@ const extendedApi = managerApi.injectEndpoints({
 export const {
   useManagerGetCourseQuery,
   useGetPublicCoursesQuery,
+  useGetCatalogCoursesQuery,
   useGetOwnCoursesQuery,
   useManagerGetSingleCourseQuery,
   // -------------mutation-----------

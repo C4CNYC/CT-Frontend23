@@ -12,7 +12,7 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import { useTranslate } from '@/utils/translateHelper'
 
-export default function ModuleCard({ module }: any): React.ReactElement | null {
+export default function ModuleCard({ module, refetch }: any): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
   const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -35,6 +35,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
       await deleteModule({ id: module.id }).unwrap()
       handleCloseConfirm()
       enqueueSnackbar(translate('modules_deleted_msg'))
+      if (refetch) refetch()
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: 'error',
@@ -172,6 +173,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             initial_enrolled: module.initial_enrolled as number,
           }}
           moduleTips={module.tips}
+          refetch={refetch}
         >
           <MenuItem>
             <Iconify icon='eva:edit-fill' />
