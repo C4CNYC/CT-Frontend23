@@ -272,28 +272,28 @@ export default function UserListPage(): React.ReactElement {
                     <TableBody sx={{ minHeight: 12 }}>
                       {isLoading
                         ? Array(5)
-                            .fill(null)
-                            .map((item, i) => <SkeletonMembers key={item + i} />)
+                          .fill(null)
+                          .map((item, i) => <SkeletonMembers key={item + i} />)
                         : data?.data.map((row) => (
-                            <UserTableRow
-                              loading={isDeleting}
-                              key={row.id}
-                              row={row}
-                              selected={selected.includes(row.id)}
-                              onSelectRow={() => {
-                                onSelectRow(row.id)
-                              }}
-                              onDeleteRow={() => {
-                                handleDeleteRow(row.id)
-                              }}
-                              onResetPassword={() => {
-                                handleResetPassword(row.id)
-                              }}
-                              onEditRow={() => {
-                                handleEditRow(row.id)
-                              }}
-                            />
-                          ))}
+                          <UserTableRow
+                            loading={isDeleting}
+                            key={row.id}
+                            row={row}
+                            selected={selected.includes(row.id)}
+                            onSelectRow={() => {
+                              onSelectRow(row.id)
+                            }}
+                            onDeleteRow={() => {
+                              handleDeleteRow(row.id)
+                            }}
+                            onResetPassword={() => {
+                              handleResetPassword(row.id)
+                            }}
+                            onEditRow={() => {
+                              handleEditRow(row.id)
+                            }}
+                          />
+                        ))}
                       {!isLoading && (
                         <TableEmptyRows
                           height={dense ? 52 : 72}

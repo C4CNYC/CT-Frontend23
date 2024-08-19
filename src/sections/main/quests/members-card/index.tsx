@@ -38,11 +38,13 @@ import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-stude
 import {
   useGetClassPendingQuery,
   useStudentLeftClassMutation,
+  useStudentResetPasswordMutation,
 } from '@/redux/services/manager/students-manager'
-import { useSelector } from '@/redux/store'
+import { RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import { useTranslate } from '@/utils/translateHelper'
+import { createWeakPassword } from '@root/src/auth/utils'
 
 import MemberRow from './MemberRow'
 
@@ -77,7 +79,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
 
   const { data, isLoading, isFetching } = useGetClassStudentsQuery(
     { id: query.id as string, ...filters },
-    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
+    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true },
   )
 
   const {
@@ -92,7 +94,9 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
     }
   )
 
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId)
   const [deleteFromClass, { isLoading: isDeleting }] = useStudentLeftClassMutation()
+  const [resetPassword, { isLoading: isResettingPassword }] = useStudentResetPasswordMutation()
 
   const {
     dense,
@@ -176,6 +180,17 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
     }
   }
 
+  const handleResetPassword = async (studentId: string): Promise<void> => {
+    try {
+      const password = createWeakPassword()
+      await resetPassword({ studentId, schoolId: 'schoolId', password }).unwrap()
+      enqueueSnackbar(translate('member_password_updated', { password }))
+    } catch (e: any) {
+      enqueueSnackbar(e.data.message, {
+        variant: 'error',
+      })
+    }
+  }
   const handleDeleteRows = (selectedRows: string[]): void => {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteStudent(selected[i])
@@ -198,7 +213,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
   const handleEditRow = (id: string): void => {
     push(
       `${STUDENT_PATH_DASHBOARD.class.editStudent(id)}` +
-        `?${new URLSearchParams({ schoolId: query.schoolId as string })}`
+      `?${new URLSearchParams({ schoolId: query.schoolId as string })}`
     )
   }
 
@@ -329,6 +344,9 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
                       }}
                       onEditRow={() => {
                         handleEditRow(row.id as string)
+                      }}
+                      onResetPassword={() => {
+                        handleResetPassword(row.id as string)
                       }}
                       pending={filterStatus === 'pending'}
                       loading={isDeleting}
