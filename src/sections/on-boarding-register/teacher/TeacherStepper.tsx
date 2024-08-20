@@ -9,6 +9,7 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { generateRandomEmoji } from '@root/src/utils'
 
 import { RegisterStudenTeacher, SingLink } from '../links'
 
@@ -56,6 +57,7 @@ export default function TeacherStepper(): React.ReactElement {
   })
 
   const onSubmit = async (data: FormValuesProps) => {
+    const randomEmoji = generateRandomEmoji(true)
     try {
       await register({
         email: data.email,
@@ -63,6 +65,7 @@ export default function TeacherStepper(): React.ReactElement {
         firstName: data.firstName,
         lastName: data.lastName,
         role: Role.Manager,
+        emojiAvatar: randomEmoji,
       })
     } catch (error: any) {
       methods.setError('root', {
