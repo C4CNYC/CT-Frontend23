@@ -58,10 +58,10 @@ const SettingDrawer = (): React.ReactElement => {
       >
         <Box
           width='350px'
-          p='30px 20px 40px 20px'
+          p='16px 20px 40px 20px'
         >
           <Box
-            mb='30px'
+            mb='16px'
             display='flex'
             alignItems='center'
           >
@@ -77,7 +77,7 @@ const SettingDrawer = (): React.ReactElement => {
 
           <Box
             display='grid'
-            gap='30px'
+            gap='16px'
           >
             <ResetCode onReset={onResetLesson} />
 
