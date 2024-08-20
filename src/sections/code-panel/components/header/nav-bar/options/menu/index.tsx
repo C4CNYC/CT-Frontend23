@@ -83,7 +83,10 @@ const Menu = (): React.ReactElement => {
   const anchorOriginProps = isDesktop ? DESKTOP_ANCHOR_ORIGIN : MOBILE_ANCHOR_ORIGIN
 
   return (
-    <Box sx={!isDesktop ? GLOBAL_BOX_STYLES : null}>
+    <Box
+      sx={!isDesktop ? GLOBAL_BOX_STYLES : null}
+      className='defaultIntroStudentStep3'
+    >
       <Box
         onClick={handleOpenPopover}
         sx={{ color: palette(themeMode).text.secondary }}

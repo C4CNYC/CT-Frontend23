@@ -1,3 +1,4 @@
+import { Box } from '@mui/material'
 import { AiOutlineSolution } from '@react-icons/all-files/ai/AiOutlineSolution'
 import { BiConversation } from '@react-icons/all-files/bi/BiConversation'
 import { BsFileEarmarkTextFill } from '@react-icons/all-files/bs/BsFileEarmarkTextFill'
@@ -116,7 +117,11 @@ export const courses = {
     {
       title: 'sidebar_menu_catalog',
       path: STUDENT_PATH_DASHBOARD.courses.root,
-      icon: <BsFileEarmarkTextFill size={20} />,
+      icon: (
+        <Box className='defaultIntroStudentStep2'>
+          <BsFileEarmarkTextFill size={20} />
+        </Box>
+      ),
     },
   ],
 }
