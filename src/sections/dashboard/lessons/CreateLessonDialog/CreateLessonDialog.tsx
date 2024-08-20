@@ -58,6 +58,7 @@ interface ICreateLessonDialogProps {
   isEdit?: boolean
   id?: string
   contentId?: string
+  refetch?: () => void
 }
 
 export default function CreateLessonDialog({
@@ -65,6 +66,7 @@ export default function CreateLessonDialog({
   isEdit,
   children,
   defaultValues,
+  refetch,
 }: ICreateLessonDialogProps): React.ReactElement {
   const theme = useTheme()
   const router = useRouter()
@@ -122,14 +124,16 @@ export default function CreateLessonDialog({
           ...data,
           duration: `${data.duration * 60}`,
         }).unwrap()
+        if (refetch) refetch()
       } else {
         const lesson = await createLesson({
           ...data,
           duration: `${data.duration * 60}`,
         }).unwrap()
-        if (router.query.module_id) {
+        if (refetch) refetch()
+        if (router.query.module_id || router.query.moduleId) {
           addLessonToModule({
-            id: router.query.module_id as string,
+            id: (router.query.module_id || router.query.moduleId) as string,
             lesson_id: lesson.id,
           })
         }
