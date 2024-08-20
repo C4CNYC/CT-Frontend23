@@ -18,8 +18,8 @@ export const SEE_MORE_SX = {
   color: '#454F5B',
   gap: 1,
   p: 0,
-  mt: 2,
-  mb: 3,
+  mt: 1,
+  mb: 1,
   alignItems: 'center',
   '&:hover': {
     bgcolor: 'transparent',
