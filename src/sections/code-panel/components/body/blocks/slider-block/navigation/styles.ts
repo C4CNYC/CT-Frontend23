@@ -6,15 +6,16 @@ export const stylesPrev = (theme: Theme): Record<string, unknown> => {
   return {
     width: '42%',
     borderRadius: '35px',
-    color: theme.palette.text.secondary,
+    color: '#91A5B1',
     zIndex: 4,
     position: 'relative',
     background: 'rgba(196, 196, 196, .5)',
     boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
     '&:hover': {
-      background: 'rgba(196, 196, 196, .7)',
+      background: '#fff',
       border: 'none',
-      boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+      boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px -1px 1px 0px rgba(0, 0, 0, 0.25)',
+      color: '#364954',
     },
     [theme.breakpoints.between(1000, 1100)]: {
       width: '45%',
@@ -98,10 +99,10 @@ export const stylesSkip = (theme: Theme) => {
     borderRadius: '50%',
     minWidth: 'auto',
     position: 'absolute',
-    top: '-15px',
-    right: '-13px',
+    top: '-20px',
+    right: '-8px',
     zIndex: 6,
-    [theme.breakpoints.down(1100)]: {
+    [theme.breakpoints.down(1200)]: {
       top: '-25px',
       right: '-5px',
     },
@@ -127,12 +128,14 @@ export const FEEDBACK_BTN_SX = {
   height: '100%',
   borderRadius: '50%',
   minWidth: 50,
-  backgroundColor: 'rgba(196, 196, 196, .5)',
-  boxShadow: ' 0px 4px 4px rgba(0, 0, 0, 0.25)',
+  // background: '#EAEAEB',
   width: '50px',
   minHeight: '50px',
   '&:hover': {
-    background: 'rgba(196, 196, 196, .7)',
+    background: '#0198ED',
     border: 'none',
+    '& .mainIcon': {
+      fill: '#fff',
+    },
   },
 }
