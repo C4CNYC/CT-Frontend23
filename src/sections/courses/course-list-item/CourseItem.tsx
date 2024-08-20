@@ -46,6 +46,15 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         },
       }}
     >
+      {isMobile && (
+        <Stack
+          alignItems='center'
+          mb={3}
+          mt={1}
+        >
+          <CourseAvatar course={course} />
+        </Stack>
+      )}
       {course.progress ? <CourseHeader progress={course.progress} /> : null}
 
       <Box
@@ -127,15 +136,6 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
             courseId={course.id}
             isLight={isLight}
           />
-          {isMobile && (
-            <Stack
-              alignItems='center'
-              mb={3}
-              mt={1}
-            >
-              <CourseAvatar course={course} />
-            </Stack>
-          )}
           <CourseInfo course={course} />
         </Box>
         {!isMobile && <CourseAvatar course={course} />}

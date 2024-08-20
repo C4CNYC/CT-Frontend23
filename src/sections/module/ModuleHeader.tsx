@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Chip, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Chip, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
 
 import { Image } from '@/components'
 import { ILesson, ISkill } from '@/redux/interfaces/content.interface'
@@ -30,6 +30,17 @@ export default function ModuleHeader({
 
   return (
     <Stack sx={moduleCont}>
+      {isMobile ? (
+        <Box sx={{ mx: 'auto', mb: 3 }}>
+          <ImageLightBox image={avatar ?? '/assets/courses/courseImg.png'}>
+            <Image
+              alt='module cover'
+              src={avatar ?? '/assets/courses/courseImg.png'}
+              sx={HEADER_IMG_SX}
+            />
+          </ImageLightBox>
+        </Box>
+      ) : null}
       <Stack>
         <Typography
           variant='h4'
@@ -62,13 +73,15 @@ export default function ModuleHeader({
           </Stack>
         )}
       </Stack>
-      <ImageLightBox image={avatar ?? '/assets/courses/courseImg.png'}>
-        <Image
-          alt='module cover'
-          src={avatar ?? '/assets/courses/courseImg.png'}
-          sx={HEADER_IMG_SX}
-        />
-      </ImageLightBox>
+      {!isMobile ? (
+        <ImageLightBox image={avatar ?? '/assets/courses/courseImg.png'}>
+          <Image
+            alt='module cover'
+            src={avatar ?? '/assets/courses/courseImg.png'}
+            sx={HEADER_IMG_SX}
+          />
+        </ImageLightBox>
+      ) : null}
     </Stack>
   )
 }
