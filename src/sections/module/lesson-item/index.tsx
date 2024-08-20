@@ -28,7 +28,6 @@ import {
   MODE_TITLE_SX,
   SEE_MORE_SX,
   START_LINK_SX,
-  getLessonContentSx,
   getLessonSx,
 } from './constants'
 import LessonDialog from './LessonDialog'
