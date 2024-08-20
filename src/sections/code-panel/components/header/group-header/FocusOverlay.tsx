@@ -48,7 +48,7 @@ const FocusOverlay: FC<IProps> = ({ title, resetRoom, avatar }) => {
             variant='caption'
             sx={OVERLAY_GROUP_TITLE_SX}
           >
-            telepor mode
+            teleport mode
           </Typography>
 
           <Typography
