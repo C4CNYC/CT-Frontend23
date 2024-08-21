@@ -10,11 +10,11 @@ export const stylesPrev = (theme: Theme): Record<string, unknown> => {
     zIndex: 4,
     position: 'relative',
     background: 'rgba(196, 196, 196, .5)',
-    boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+    boxShadow: ' -4px 4px 4px 0px rgba(0, 0, 0, 0.25)',
     '&:hover': {
       background: '#fff',
       border: 'none',
-      boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px -1px 1px 0px rgba(0, 0, 0, 0.25)',
+      boxShadow: ' -4px 4px 4px 0px rgba(0, 0, 0, 0.25)',
       color: '#364954',
     },
     [theme.breakpoints.between(1000, 1100)]: {
@@ -78,13 +78,13 @@ export const stylesNext = (btnNext: BtnType, theme: Theme): Record<string, unkno
     zIndex: 5,
     pointerEvents: btnNext === BtnType.coding ? 'none' : 'auto',
     position: 'relative',
-    boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+    boxShadow: ' 4px 4px 4px 0px rgba(0, 0, 0, 0.25)',
     background: getBg(),
     '&:hover': {
       color: btnNext === BtnType.compleated ? '#75CF6D' : '#FFF',
       bgcolor: getBg(true),
       border: 'none',
-      boxShadow: ' 0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+      boxShadow: ' 4px 4px 4px 0px rgba(0, 0, 0, 0.25)',
     },
   }
 }
@@ -128,7 +128,6 @@ export const FEEDBACK_BTN_SX = {
   height: '100%',
   borderRadius: '50%',
   minWidth: 50,
-  // background: '#EAEAEB',
   width: '50px',
   minHeight: '50px',
   '&:hover': {
