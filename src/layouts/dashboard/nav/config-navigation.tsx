@@ -25,6 +25,7 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import FeedbackDialog from '@/sections/feedback/FeedbackDialog'
 import InviteFriendsModal from '@/sections/invite-friends/InviteFriendsModal'
 import MenuTribesList from '@/sections/main/menu-list/MenuTribesList'
+import MyCreationsMenu from '@root/src/sections/my-creations-menu'
 
 export const admin = {
   subheader: 'sidebar_menu_administration',
@@ -165,6 +166,12 @@ export const social = {
 export const apps = {
   subheader: 'sidebar_menu_apps',
   items: [
+    {
+      path: '',
+      title: 'sidebar_menu_my_creations',
+      icon: <FaUserFriends size={20} />,
+      component: () => <MyCreationsMenu />,
+    },
     {
       title: 'sidebar_menu_gallery',
       path: STUDENT_PATH_DASHBOARD.gallery.root,
