@@ -5,12 +5,14 @@ import TextField from '@mui/material/TextField'
 import Stack from '@mui/system/Stack'
 
 import { SetFilterType, useFilters } from '@/hooks'
+import { useIsAdmin } from '@/lib/use-is-admin'
+import { useGetAdminModulesQuery } from '@/redux/services/admin/modules-admin'
 import {
   ILessonSearchParams,
   IModule,
   IModulesSearchParams,
 } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
+import { useGetCatalogModulesQuery } from '@/redux/services/manager/modules-manager'
 import SkeletonFilter from '@/sections/dashboard/skeleton/skeletonFilter'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
@@ -25,9 +27,19 @@ export default function FilterLessons({ filters, setFilter }: Props): React.Reac
     take: 50,
     name: '',
   })
-
+  const { isAdmin } = useIsAdmin()
   const translate = useTranslate()
-  const { data: modules, isLoading } = useGetModulesQuery(moduleFilters)
+  const { data: managerModules, isLoading } = useGetCatalogModulesQuery(moduleFilters, {
+    skip: isAdmin,
+  })
+
+  const {
+    data: adminData,
+    isLoading: adminIsLoading,
+    isFetching: adminFetching,
+  } = useGetAdminModulesQuery(moduleFilters, { skip: !isAdmin })
+
+  const modules = isAdmin ? adminData : managerModules
 
   if (isLoading) {
     return (

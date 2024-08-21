@@ -42,6 +42,7 @@ export interface ICourse {
   active: boolean
   cover: string
   public: boolean
+  catalog: boolean
   draft: boolean
   skills: []
   units: IModule[]
@@ -121,8 +122,8 @@ export interface IModuleCreate {
   active: boolean
   name: string
   description: string
-  initia_likes?: number
-  initial_start?: number
+  initial_likes?: number
+  initial_stars?: number
   initial_enrolled?: number
   duration?: string
 }
@@ -137,6 +138,7 @@ export interface ILessonCreate {
 export interface IModulesSearchParams extends BaseSearchInterface {
   name?: string
   course_id?: string
+  catalog?: boolean
 }
 
 export interface ILessonSearchParams extends BaseSearchInterface {
@@ -150,6 +152,7 @@ export interface ICourseSearchParams extends BaseSearchInterface {
   school_id?: string
   name?: string
   catalog?: boolean
+  public?: boolean
 }
 
 export interface ICourseCreate {

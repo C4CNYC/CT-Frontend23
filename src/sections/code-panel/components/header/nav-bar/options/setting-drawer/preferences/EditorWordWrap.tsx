@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Stack, Switch, Typography } from '@mui/material'
+import { IconButton, Stack, Switch, Typography } from '@mui/material'
 
 import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
@@ -18,10 +18,12 @@ const EditorWordWrap = ({ onUpdateWordWrap }: IEditorWordWrap): React.ReactEleme
     <BasePreference
       title={translate('word_wrap')}
       abandonmentIcon={
-        <Iconify
-          width='27px'
-          icon='material-symbols:wrap-text-rounded'
-        />
+        <IconButton sx={{ pointerEvents: 'none' }}>
+          <Iconify
+            width='27px'
+            icon='material-symbols:wrap-text-rounded'
+          />
+        </IconButton>
       }
     >
       <Stack

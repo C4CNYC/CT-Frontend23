@@ -12,6 +12,7 @@ import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+import StudentDefaultIntro from '@root/src/sections/intro-tours/student-default-intro'
 
 JoinClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -50,6 +51,7 @@ export default function JoinClass(): React.ReactElement {
 
   return (
     <Container maxWidth={themeStretch ? false : 'lg'}>
+      <StudentDefaultIntro />
       <FormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
@@ -71,6 +73,7 @@ export default function JoinClass(): React.ReactElement {
               {translate('tribes_have_you_been_invited')}
             </Typography>
             <RHFTextField
+              className='defaultIntroStudentStep1'
               required
               name='code'
               placeholder='1 2 a s d 5'

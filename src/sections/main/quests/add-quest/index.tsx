@@ -39,7 +39,7 @@ import {
   useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from '@/redux/services/manager/assignments-manager'
-import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
+import { useGetPublicCoursesQuery } from '@/redux/services/manager/courses-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import DetailsStepOpenProject from '@/sections/main/quests/add-quest/DetailsStepOpenProject'
 import { useTranslate } from '@/utils/translateHelper'
@@ -92,7 +92,8 @@ export default function AddQuest(): React.ReactElement {
     useUpdateCourseAssignmentMutation()
   const [addAssignmentToClass] = useUpdateClassAssignmentMutation()
 
-  const coursesData = useManagerGetCourseQuery({})
+  const coursesData = useGetPublicCoursesQuery({})
+  // const adminCoursesData = useAdminGetCourseQuery({})
 
   const eliminateInfoBanner = () => {
     localStorage.setItem(QUEST_BANNER, FALSY_VALLUE)
@@ -306,31 +307,30 @@ export default function AddQuest(): React.ReactElement {
               value={value}
               index={0}
             >
-              {!isLoading &&
-                ((query?.type && query?.type === OPEN_PROJECT) ||
-                assignment?.type === OPEN_PROJECT ? (
-                  <DetailsStepOpenProject
-                    methods={methods}
-                    initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
-                    initialCategory={assignment?.category}
-                    initialLanguage={assignment?.language}
-                    coursesData={{
-                      data: coursesData.data?.data,
-                      isLoading: coursesData.isLoading,
-                    }}
-                  />
-                ) : (
-                  <DetailsStep
-                    methods={methods}
-                    initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
-                    initialType={assignment?.type}
-                    initialLesson={assignment?.lessonId}
-                    coursesData={{
-                      data: coursesData.data?.data,
-                      isLoading: coursesData.isLoading,
-                    }}
-                  />
-                ))}
+              {(query?.type && query?.type === OPEN_PROJECT) ||
+              assignment?.type === OPEN_PROJECT ? (
+                <DetailsStepOpenProject
+                  methods={methods}
+                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                  initialCategory={assignment?.category}
+                  initialLanguage={assignment?.language}
+                  coursesData={{
+                    data: coursesData.data?.data,
+                    isLoading: coursesData.isLoading,
+                  }}
+                />
+              ) : (
+                <DetailsStep
+                  methods={methods}
+                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
+                  initialType={assignment?.type}
+                  initialLesson={assignment?.lessonId}
+                  coursesData={{
+                    data: coursesData.data?.data,
+                    isLoading: coursesData.isLoading,
+                  }}
+                />
+              )}
             </CustomTabPanel>
             <CustomTabPanel
               value={value}

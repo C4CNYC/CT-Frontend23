@@ -3,15 +3,18 @@ import { Container } from '@mui/system'
 import Head from 'next/head'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
+import {
+  CustomBreadcrumbs,
+  EmptyContent,
+  Iconify,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
-import { Role } from '@/redux/services/enums/role.enum'
+import { useGetAdminCoursesQuery } from '@/redux/services/admin/courses-admin'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import {
-  useManagerGetCourseQuery,
-  useGetPublicCoursesQuery,
-} from '@/redux/services/manager/courses-manager'
+// import { useGetPublicCoursesQuery } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { CourseCard } from '@/sections/dashboard/courses/cards'
@@ -19,7 +22,6 @@ import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import FilterCourses from '@/sections/dashboard/courses/filter'
 import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
-import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
@@ -34,16 +36,15 @@ export default function CoursesListPage(): React.ReactElement {
     {
       name: '',
       school_id: '',
-      catalog: Boolean(user?.role === Role.Owner),
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useManagerGetCourseQuery(filters, { skip: !user?.role })
-  const {
-    data: publicCourses,
-    isLoading: isPublicLoading,
-    isFetching: isPublicFetching,
-  } = useGetPublicCoursesQuery({}, { skip: user?.role })
+  const { data, isLoading, isFetching, refetch } = useGetAdminCoursesQuery(filters)
+  // const {
+  //   data: publicCourses,
+  //   isLoading: isPublicLoading,
+  //   isFetching: isPublicFetching,
+  // } = useGetPublicCoursesQuery(filters)
 
   if (isLoading) {
     return (
@@ -52,6 +53,10 @@ export default function CoursesListPage(): React.ReactElement {
         count={DEFAULT_TAKE_PER_PAGE}
       />
     )
+  }
+
+  if (!data?.data.length /*&& !publicCourses?.data.length*/) {
+    return <EmptyContent title='You have no courses' />
   }
 
   return (
@@ -74,7 +79,10 @@ export default function CoursesListPage(): React.ReactElement {
           ]}
           action={
             isAdmin ? (
-              <CreateCourseDialog id=''>
+              <CreateCourseDialog
+                id=''
+                refetch={refetch}
+              >
                 <Button
                   variant='contained'
                   startIcon={<Iconify icon='eva:plus-fill' />}
@@ -92,40 +100,43 @@ export default function CoursesListPage(): React.ReactElement {
           setFilter={setFilter}
         />
         <SimpleInfiniteList
-          hasNextPage={data?.meta.hasNextPage ?? false}
+          hasNextPage={/*publicCourses?.meta.hasNextPage ??*/ data?.meta.hasNextPage ?? false}
           onLoadMore={() => {
-            if (data?.meta.take !== Number(filters?.take)) return
+            // if (publicCourses?.meta.take !== Number(filters?.take)) return
             setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
           }}
-          loading={isLoading ?? isFetching}
+          loading={/*isPublicLoading ?? isPublicFetching ??*/ isLoading ?? isFetching}
         >
           <Box
-            gap={3}
-            display='grid'
-            gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
+            sx={{
+              gap: 3,
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+              },
             }}
           >
-            {isAdmin
-              ? data?.data.map((course, index) => (
+            {isAdmin ? (
+              <>
+                {/* {publicCourses?.data.map((course, index) => (
                   <CourseCard
                     key={index}
                     course={course}
                   />
-                ))
-              : ''}
-            {isAdmin
-              ? publicCourses?.data.map((course, index) => (
+                ))} */}
+                {data?.data.map((course, index) => (
                   <CourseCard
                     key={index}
                     course={course}
+                    refetch={refetch}
                   />
-                ))
-              : ''}
-            {isFetching && isPublicFetching
-              ? Array(getCountTakingElment(Number(data.meta.itemCount), Number(filters.take)))
+                ))}
+              </>
+            ) : null}
+            {isFetching
+              ? Array(24)
                   .fill(null)
                   .map((v, i) => <SkeletonCourses key={i} />)
               : null}

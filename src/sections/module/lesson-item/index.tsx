@@ -28,7 +28,6 @@ import {
   MODE_TITLE_SX,
   SEE_MORE_SX,
   START_LINK_SX,
-  getLessonContentSx,
   getLessonSx,
 } from './constants'
 import LessonDialog from './LessonDialog'
@@ -99,35 +98,39 @@ export default function LessonItem({
         locked={locked}
       />
 
-      <Stack sx={getLessonContentSx(isMobile)}>
-        <Stack>
-          <Typography
-            variant='h4'
-            mb={1}
-          >
-            {lesson.name}
-          </Typography>
-          <Typography
-            variant='body1'
-            mb={lesson?.description?.length < MAX_DESC ? 3 : 0}
-          >
-            {lesson?.description?.length < MAX_DESC
-              ? lesson?.description
-              : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`}
-          </Typography>
-          {lesson?.description?.length > MAX_DESC ? (
-            <>
-              <Collapse in={openDetails}>{lesson?.description?.slice(47)}</Collapse>
-              <Button
-                onClick={() => {
-                  setOpenDetails(!openDetails)
-                }}
-                sx={SEE_MORE_SX}
-              >
-                See more {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
-              </Button>
-            </>
-          ) : null}
+      <Stack>
+        <Typography
+          variant='h4'
+          mb={1}
+        >
+          {lesson.name}
+        </Typography>
+        <Typography
+          variant='body1'
+          mb={lesson?.description?.length < MAX_DESC ? 1 : 0}
+        >
+          {lesson?.description?.length < MAX_DESC
+            ? lesson?.description
+            : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`}
+        </Typography>
+        {lesson?.description?.length > MAX_DESC ? (
+          <>
+            <Collapse in={openDetails}>{lesson?.description?.slice(47)}</Collapse>
+            <Button
+              onClick={() => {
+                setOpenDetails(!openDetails)
+              }}
+              sx={SEE_MORE_SX}
+            >
+              See more {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
+            </Button>
+          </>
+        ) : null}
+        <Stack
+          direction='row'
+          justifyContent='space-between'
+          alignItems='flex-end'
+        >
           <Stack
             direction='row'
             gap={2}
@@ -151,9 +154,55 @@ export default function LessonItem({
               20 mins
             </Typography>
           </Stack>
-        </Stack>
-        {!locked ? (
-          !lesson.progress && index !== 0 && isLastLessonInProgress ? (
+          {!locked ? (
+            !lesson.progress && index !== 0 && isLastLessonInProgress ? (
+              <>
+                <Box
+                  sx={LOCKED_BTN_CONT_SX}
+                  onClick={async () => {
+                    openDialog()
+                  }}
+                >
+                  <Typography variant='h5'>{translate('actions_start')}</Typography>
+                  <Box sx={LOCKED_BTN_SX}>
+                    <HiLockClosed
+                      size={30}
+                      style={{ color: '#C4CDD5' }}
+                    />
+                  </Box>
+                </Box>
+                <CatalogLessonDialog
+                  open={open}
+                  confirmText={'OK'}
+                  closeDialog={closeDialog}
+                  confirmClick={fetchCodeFromPrevLesson}
+                  title='Hey, we’re building a project together.
+                        So pulled your code from previous lesson, so that you can keep building'
+                />
+              </>
+            ) : (
+              <>
+                <Link
+                  component={NextLink}
+                  href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                    courseId: courseId as string,
+                    unitId,
+                    lessonId: lesson.id,
+                  })}
+                  underline='none'
+                  sx={START_LINK_SX}
+                >
+                  <Typography variant='h5'> {translate('actions_start')} </Typography>
+                  <Box sx={LINK_BTN_SX}>
+                    <TbPlayerPlay
+                      size={30}
+                      style={{ color: '#364954' }}
+                    />
+                  </Box>
+                </Link>
+              </>
+            )
+          ) : !lesson.progress && isLastLessonInProgress ? (
             <>
               <Box
                 sx={LOCKED_BTN_CONT_SX}
@@ -169,13 +218,10 @@ export default function LessonItem({
                   />
                 </Box>
               </Box>
-              <CatalogLessonDialog
+              <LessonDialog
                 open={open}
-                confirmText={'OK'}
                 closeDialog={closeDialog}
-                confirmClick={fetchCodeFromPrevLesson}
-                title='Hey, we’re building a project together.
-So pulled your code from previous lesson, so that you can keep building'
+                openLesson={fetchDefaultCodeFromPrevLesson}
               />
             </>
           ) : (
@@ -199,51 +245,8 @@ So pulled your code from previous lesson, so that you can keep building'
                 </Box>
               </Link>
             </>
-          )
-        ) : !lesson.progress && isLastLessonInProgress ? (
-          <>
-            <Box
-              sx={LOCKED_BTN_CONT_SX}
-              onClick={async () => {
-                openDialog()
-              }}
-            >
-              <Typography variant='h5'>{translate('actions_start')}</Typography>
-              <Box sx={LOCKED_BTN_SX}>
-                <HiLockClosed
-                  size={30}
-                  style={{ color: '#C4CDD5' }}
-                />
-              </Box>
-            </Box>
-            <LessonDialog
-              open={open}
-              closeDialog={closeDialog}
-              openLesson={fetchDefaultCodeFromPrevLesson}
-            />
-          </>
-        ) : (
-          <>
-            <Link
-              component={NextLink}
-              href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-                courseId: courseId as string,
-                unitId,
-                lessonId: lesson.id,
-              })}
-              underline='none'
-              sx={START_LINK_SX}
-            >
-              <Typography variant='h5'> {translate('actions_start')} </Typography>
-              <Box sx={LINK_BTN_SX}>
-                <TbPlayerPlay
-                  size={30}
-                  style={{ color: '#364954' }}
-                />
-              </Box>
-            </Link>
-          </>
-        )}
+          )}
+        </Stack>
       </Stack>
     </Stack>
   )

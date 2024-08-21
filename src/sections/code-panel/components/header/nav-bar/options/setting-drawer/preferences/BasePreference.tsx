@@ -15,18 +15,18 @@ const BasePreference = ({
   const theme = useTheme()
   return (
     <Box
-      p='25px 30px 30px 30px'
+      p='16px 30px 16px 30px'
       bgcolor={theme.palette.mode === 'light' ? '#F0EEEE' : theme.palette.background.neutral}
       borderRadius='15px'
     >
       <Box
         mb='20px'
         display='flex'
-        justifyContent='space-between'
+        gap={1}
         alignItems='center'
       >
-        <Typography variant='subtitle1'>{title.toUpperCase()}</Typography>
         {abandonmentIcon ?? null}
+        <Typography variant='subtitle1'>{title.toUpperCase()}</Typography>
       </Box>
       {children}
     </Box>

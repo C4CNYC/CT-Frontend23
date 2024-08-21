@@ -320,6 +320,7 @@ const en = {
   sidebar_menu_catalog: 'Catalog',
   sidebar_menu_tribes: 'Tribes',
   sidebar_menu_my_notes: 'My Notes',
+  sidebar_menu_my_creations: 'My creations',
   sidebar_menu_friends: 'Friends',
   sidebar_menu_gallery: 'Gallery',
   sidebar_menu_invite_friends: 'Invite Friends',
