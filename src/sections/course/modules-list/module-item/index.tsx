@@ -87,7 +87,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
             noWrap
             gutterBottom
             sx={{
-              maxWidth: { lg: '200px', xl: '300px' },
+              maxWidth: { lg: '450px', xl: '550px' },
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               wordWrap: 'break-word',

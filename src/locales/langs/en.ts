@@ -637,7 +637,7 @@ const en = {
   tribes_sign_in_to_join: 'Sign in to join',
   tribes_join_a_tribe: 'Join a tribe',
   tribes_have_you_been_invited:
-    'Have you been invited to a tribe? Then enter your join-code below or follow the join-link. Have fun!',
+    'Have you been invited to a tribe? Then enter your join-code below or follow the join-link.',
   tribes_sign_up_to_join: 'Sign up to join',
   tribes_join_class: 'Join Class',
   tribes_enter_join_code: 'Enter your Join Code to find your class',

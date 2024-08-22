@@ -209,6 +209,9 @@ export default function LessonFeedback({ children, lessonName }: Props): React.R
       <Dialog
         open={open}
         onClose={closeDialog}
+        sx={{
+          zIndex: 12000,
+        }}
       >
         <Box
           display='flex'

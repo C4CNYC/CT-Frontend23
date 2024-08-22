@@ -245,7 +245,15 @@ export default function AddQuest(): React.ReactElement {
     <>
       <Collapse in={onboardingInfo}>
         <Stack sx={getCollapseInfoBannerSx(theme)}>
-          <Typography variant='subtitle2'>{translate('assigments_onboarding_info')}</Typography>
+          <Typography variant='body2'>
+            <Typography
+              variant='subtitle2'
+              sx={{ display: 'inline-block' }}
+            >
+              Tip:
+            </Typography>{' '}
+            {translate('assigments_onboarding_info')}
+          </Typography>
           <IconButton onClick={() => eliminateInfoBanner()}>
             <Close />
           </IconButton>
