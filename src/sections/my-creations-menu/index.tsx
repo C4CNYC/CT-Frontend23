@@ -40,7 +40,10 @@ export default function MyCreationsMenu(): React.ReactElement {
             onClick={handleOpenPopover}
           >
             <StyledIconVertical>
-              <Image src='/assets/my-creations-menu/unicorn.svg' />
+              <Image
+                src='/assets/my-creations-menu/unicorn.svg'
+                alt=''
+              />
             </StyledIconVertical>
             <ListItemText
               primary={`${translate('sidebar_menu_my_creations')}`}
@@ -62,7 +65,10 @@ export default function MyCreationsMenu(): React.ReactElement {
             onClick={handleOpenPopover}
           >
             <StyledIcon>
-              <Image src='/assets/my-creations-menu/unicorn.svg' />
+              <Image
+                src='/assets/my-creations-menu/unicorn.svg'
+                alt=''
+              />
             </StyledIcon>
             <ListItemText
               primary={`${translate('sidebar_menu_my_creations')}`}

@@ -1,11 +1,13 @@
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 
 import { Image } from '@/components'
+
+import LessonFeedback from '../../code-panel/components/footer/lesson-feedback/LessonFeedback'
 
 export const TOUR_STEPS_DECKTOP = [
   {
     target: '.tourStart',
-    title: <div>💥 Hi coder! 💥</div>,
+    title: <div>💥 The Coding Panel 👩‍💻 💥</div>,
     content: (
       <div>
         <Image
@@ -13,7 +15,7 @@ export const TOUR_STEPS_DECKTOP = [
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '290px' }}
         />
-        I'will show you what do we have here. The Code Panel consists of:
+        Here is where all the learning and building happens. 🤩
       </div>
     ),
     disableBeacon: true,
@@ -21,14 +23,19 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.instructions',
-    title: <div>Slider</div>,
-    content: <div>It's contain information 📖 from the teacher</div>,
+    title: <div>The Slides</div>,
+    content: (
+      <div>
+        Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
+        step by step.
+      </div>
+    ),
     disableBeacon: true,
     placement: 'right' as const,
   },
   {
     target: '.instructions',
-    title: <div>Challenge</div>,
+    title: <div>Challenge Slides</div>,
     content: (
       <div>
         <Image
@@ -79,7 +86,7 @@ export const TOUR_STEPS_DECKTOP = [
     placement: 'right' as const,
   },
   {
-    target: '.checkers',
+    target: '.tourStart',
     title: <div>Tests 🧪</div>,
     content: (
       <div>
@@ -92,7 +99,7 @@ export const TOUR_STEPS_DECKTOP = [
       </div>
     ),
     disableBeacon: true,
-    placement: 'left' as const,
+    placement: 'center' as const,
   },
   {
     target: '.toolbox',
@@ -104,7 +111,19 @@ export const TOUR_STEPS_DECKTOP = [
           alt='checkers preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
-        Here’s undo, redo, copy & paste. Tap on {} to see the characters.
+        Here’s undo, redo, copy & paste. <br /> Tap on{' '}
+        <Box
+          sx={{
+            display: 'inline-block',
+            fontWeight: 'bold',
+            background: 'rgba(251, 221, 63, .4)',
+            px: 1,
+            borderRadius: 1,
+          }}
+        >
+          &#123; &#125;
+        </Box>{' '}
+        see the characters.
       </div>
     ),
     disableBeacon: true,
@@ -112,15 +131,34 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.lessonsTour',
-    title: <div>Lesons list</div>,
-    content: <div>Feel free to choose lesson which you want 😉</div>,
+    title: <div>Lessons List</div>,
+    content: (
+      <div>
+        See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉
+      </div>
+    ),
     disableBeacon: true,
     placement: 'top' as const,
   },
   {
     target: '.tourStart',
     title: <div>Most important: Have fun! 🤪</div>,
-    content: <Box sx={{ py: 1 }}> And on Feedback 💬 let us know what you find 🏆 or 💩.</Box>,
+    content: (
+      <Box sx={{ py: 1 }}>
+        {' '}
+        And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2 }}>
+          <LessonFeedback lessonName={'Intro tour'}>
+            <Button
+              variant='soft'
+              sx={{ textTransform: 'uppercase' }}
+            >
+              Leave a feedback
+            </Button>
+          </LessonFeedback>
+        </Box>
+      </Box>
+    ),
     disableBeacon: true,
     placement: 'center' as const,
   },
@@ -129,7 +167,7 @@ export const TOUR_STEPS_DECKTOP = [
 export const TOUR_STEPS_MOBILE = [
   {
     target: '.tourStart',
-    title: <div>💥 Hi coder! 💥</div>,
+    title: <div>💥 The Coding Panel 👩‍💻 💥</div>,
     content: (
       <div>
         <Image
@@ -137,7 +175,7 @@ export const TOUR_STEPS_MOBILE = [
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '180px' }}
         />
-        I'will show you what do we have here. The Code Panel consists of:
+        Here is where all the learning and building happens. 🤩
       </div>
     ),
     disableBeacon: true,
@@ -145,13 +183,18 @@ export const TOUR_STEPS_MOBILE = [
   },
   {
     target: '.sliderTour',
-    title: <div>Slider</div>,
-    content: <div>It's contain information 📖 from the teacher</div>,
+    title: <div>The Slides</div>,
+    content: (
+      <div>
+        Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
+        step by step.
+      </div>
+    ),
     disableBeacon: true,
   },
   {
     target: '.sliderTour',
-    title: <div>Challenge</div>,
+    title: <div>Challenge Slides</div>,
     content: (
       <div>
         <Image
@@ -189,15 +232,29 @@ export const TOUR_STEPS_MOBILE = [
   },
   {
     target: '.lessonsTourMobile',
-    title: <div>Lessons list</div>,
-    content: <div>Feel free to choose lesson which you want 😉</div>,
+    title: <div>Lessons List</div>,
+    content: (
+      <div>
+        See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉
+      </div>
+    ),
     disableBeacon: true,
     placement: 'top' as const,
   },
   {
     target: '.tourStart',
     title: <div>Most important: Have fun! 🤪</div>,
-    content: <Box sx={{ py: 1 }}> And on Feedback 💬 let us know what you find 🏆 or 💩.</Box>,
+    content: (
+      <Box sx={{ py: 1 }}>
+        {' '}
+        And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <LessonFeedback lessonName={'Intro tour'}>
+            <Button>Feedback</Button>
+          </LessonFeedback>
+        </Box>
+      </Box>
+    ),
     disableBeacon: true,
     placement: 'center' as const,
   },
