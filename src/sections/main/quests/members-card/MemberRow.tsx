@@ -27,7 +27,7 @@ export default function MemberRow({
   loading,
   onEditRow,
   onSelectRow,
-  onDeleteRow, 
+  onDeleteRow,
   pending,
 }: IMemberRowProps): React.ReactElement | null {
   const { query } = useRouter()
@@ -155,7 +155,7 @@ export default function MemberRow({
         >
           <Iconify icon='eva:edit-fill' />
           {translate('actions_edit')}
-        </MenuItem>        
+        </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog

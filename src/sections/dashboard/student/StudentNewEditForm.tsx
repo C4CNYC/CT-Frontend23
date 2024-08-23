@@ -32,7 +32,6 @@ import { useTranslate } from '@/utils/translateHelper'
 import { createWeakPassword } from '@root/src/auth/utils'
 import { StudentChangePassword } from './StudentChangePassword'
 
-
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string }
 }
@@ -56,7 +55,7 @@ export default function StudentNewEditForm({
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
 
-  const [showPasswordPlace, showPasswordPlaceSet] = useState(false);
+  const [showPasswordPlace, showPasswordPlaceSet] = useState(false)
   const NewUserSchema = Yup.object().shape({
     first_name: Yup.string().required(translate('required_name')),
     last_name: Yup.string().required(translate('required_surname')),
@@ -74,7 +73,6 @@ export default function StudentNewEditForm({
     password: !isEdit ? Yup.string().required(translate('required_password')) : Yup.string(),
   })
 
-
   const defaultValues = useMemo(
     () => ({
       first_name: currentUser?.first_name ?? '',
@@ -88,7 +86,7 @@ export default function StudentNewEditForm({
       verified: currentUser?.verified,
       cover: currentUser?.cover ?? getRandomColor(),
       active: currentUser?.active,
-      password: createWeakPassword()
+      password: createWeakPassword(),
     }),
     [currentUser]
   )
@@ -400,14 +398,16 @@ export default function StudentNewEditForm({
                 justifyContent: 'space-between',
               }}
             >
-              {isEdit ? <LoadingButton
-                variant='contained'
-                loading={isSubmitting}
-                onClick={() => showPasswordPlaceSet(s => !s)}
-                color='secondary'
-              > {translate('actions_password')}
-              </LoadingButton>
-                : null}
+              {isEdit ? (
+                <LoadingButton
+                  variant='contained'
+                  loading={isSubmitting}
+                  onClick={() => showPasswordPlaceSet(s => !s)}
+                  color='secondary'
+                >
+                  {translate('actions_password')}
+                </LoadingButton>
+              ): null}
               <LoadingButton
                 type='submit'
                 variant='contained'
@@ -416,7 +416,9 @@ export default function StudentNewEditForm({
                 {!isEdit ? translate('actions_create_user') : translate('actions_save_changes')}
               </LoadingButton>
             </Box>
-            {showPasswordPlace && currentUser ? <StudentChangePassword currentUser={currentUser} /> : null}
+            {showPasswordPlace && currentUser ? (
+              <StudentChangePassword currentUser={currentUser} />
+            ) : null}
           </Card>
         </Grid>
       </Grid>
