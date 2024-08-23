@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, useSnackbar } from '@/components'
@@ -42,6 +43,7 @@ export default function JoinClassModal({ children }: IJoinClassModal): React.Rea
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpenDialog] = useState<boolean>(false)
   const translate = useTranslate()
+  const profile = useSelector((state) => state.global.user)
 
   const [joinClass, { isLoading }] = useJoinClassMutation()
 
@@ -49,14 +51,18 @@ export default function JoinClassModal({ children }: IJoinClassModal): React.Rea
     resolver: yupResolver(CreateClassSchema),
   })
   const onSubmit = async ({ code }: FormJoinClassProps): Promise<void> => {
-    try {
-      const { status, tribe } = await joinClass({ share_token: code }).unwrap()
-      if (status === JoinStatus.JOINED) {
-        setOpenDialog(false)
-        push(STUDENT_PATH_DASHBOARD.class.id(tribe.id))
+    if (profile) {
+      try {
+        const { status, tribe } = await joinClass({ share_token: code }).unwrap()
+        if (status === JoinStatus.JOINED) {
+          setOpenDialog(false)
+          push(STUDENT_PATH_DASHBOARD.class.id(tribe.id))
+        }
+      } catch (error: any) {
+        enqueueSnackbar(translate('messages_error'), { variant: 'error' })
       }
-    } catch (error: any) {
-      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+    } else {
+      push(STUDENT_PATH_DASHBOARD.joinTribe.id(code))
     }
   }
 
