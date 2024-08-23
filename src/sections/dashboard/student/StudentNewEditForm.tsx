@@ -29,6 +29,7 @@ import { RootState } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, createRandomAvatar, getRandomColor } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+
 import { createWeakPassword } from '@root/src/auth/utils'
 import { StudentChangePassword } from './StudentChangePassword'
 
@@ -402,12 +403,12 @@ export default function StudentNewEditForm({
                 <LoadingButton
                   variant='contained'
                   loading={isSubmitting}
-                  onClick={() => showPasswordPlaceSet(s => !s)}
+                  onClick={() => showPasswordPlaceSet((s) => !s)}
                   color='secondary'
                 >
                   {translate('actions_password')}
                 </LoadingButton>
-              ): null}
+              ) : null}
               <LoadingButton
                 type='submit'
                 variant='contained'

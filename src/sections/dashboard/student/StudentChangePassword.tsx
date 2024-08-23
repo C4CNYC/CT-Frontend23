@@ -2,11 +2,11 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Card, Stack } from '@mui/material'
+
 import { RHFTextField, useSnackbar } from '@/components'
 import { useStudentResetPasswordMutation } from '@/redux/services/manager/students-manager'
 import { useTranslate } from '@/utils/translateHelper'
 import { createWeakPassword } from '@root/src/auth/utils'
-
 import { IStudent } from '@root/src/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@root/src/utils/baseResponse.interface'
 
@@ -43,25 +43,26 @@ export function StudentChangePassword({
   if (currentUser?.account?.id == undefined) return <></>
 
   return (
-      <Card>
-        <Stack
-          alignItems='flex-end'
-          sx={{ mt: 3 }}
-        >
-          <RHFTextField
-            sx={{ mb: 3 }}
-            name='password'
-            label={translate('generated_passowrd')}
-            value={password}
-            onChange={e => passwordSet(e.currentTarget.value)}
-          />
-          {resetPasswordUpdated}
-          <LoadingButton
-            loading={isResettingPassword}
-            onClick={handleResetPassword}
-            variant='contained'>
-              {translate('actions_password')}
-          </LoadingButton>
-        </Stack>
-      </Card>)
+    <Card>
+      <Stack
+        alignItems='flex-end'
+        sx={{ mt: 3 }}
+      >
+        <RHFTextField
+          sx={{ mb: 3 }}
+          name='password'
+          label={translate('generated_passowrd')}
+          value={password}
+          onChange={e => passwordSet(e.currentTarget.value)}
+        />
+        {resetPasswordUpdated}
+        <LoadingButton
+          loading={isResettingPassword}
+          onClick={handleResetPassword}
+          variant='contained'>
+            {translate('actions_password')}
+        </LoadingButton>
+      </Stack>
+    </Card>
+    )
 }
