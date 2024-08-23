@@ -76,7 +76,7 @@ export const setSession = (accessToken: string | null, tenantName: string | null
 export const createWeakPassword = (): string => {
   let today = new Date().toJSON().replaceAll('-', '')
   let chars = 'ACDEHKMNPRSTYZ'.split('')
-  let randIndex = Math.round(Math.random() * (chars.length-1))
+  let randIndex = Math.round(Math.random() * (chars.length - 1))
   const password =
     today.slice(2, 6) +
     (chars[randIndex] + chars[randIndex].toLocaleLowerCase()) +

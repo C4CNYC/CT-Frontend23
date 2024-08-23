@@ -39,7 +39,7 @@ import {
   useGetClassPendingQuery,
   useStudentLeftClassMutation,
 } from '@/redux/services/manager/students-manager'
-import { RootState, useSelector } from '@/redux/store'
+import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import { useTranslate } from '@/utils/translateHelper'
@@ -77,7 +77,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
 
   const { data, isLoading, isFetching } = useGetClassStudentsQuery(
     { id: query.id as string, ...filters },
-    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true },
+    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
   )
 
   const {
@@ -198,7 +198,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
   const handleEditRow = (id: string): void => {
     push(
       `${STUDENT_PATH_DASHBOARD.class.editStudent(id)}` +
-      `?${new URLSearchParams({ schoolId: query.schoolId as string })}`
+        `?${new URLSearchParams({ schoolId: query.schoolId as string })}`
     )
   }
 

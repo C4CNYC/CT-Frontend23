@@ -1,21 +1,22 @@
-import { LoadingButton } from '@mui/lab'
-import { Card, Stack, } from '@mui/material'
-
-import {
-  RHFTextField,
-  useSnackbar,
-} from '@/components'
 import { useState } from 'react';
 
-import { createWeakPassword } from '@root/src/auth/utils'
+import { LoadingButton } from '@mui/lab'
+import { Card, Stack } from '@mui/material'
+
+import { RHFTextField, useSnackbar } from '@/components'
 
 import { useTranslate } from '@/utils/translateHelper'
 
 import { useStudentResetPasswordMutation } from '@/redux/services/manager/students-manager'
-import { IStudent } from '@root/src/redux/services/interfaces/user.interface';
-import { BaseResponseInterface } from '@root/src/utils/baseResponse.interface';
 
-export function StudentChangePassword({ currentUser }: {
+import { createWeakPassword } from '@root/src/auth/utils'
+
+import { IStudent } from '@root/src/redux/services/interfaces/user.interface'
+import { BaseResponseInterface } from '@root/src/utils/baseResponse.interface'
+
+export function StudentChangePassword({
+  currentUser
+  }: {
   currentUser: IStudent & BaseResponseInterface
 }) {
 
@@ -61,8 +62,11 @@ export function StudentChangePassword({ currentUser }: {
         onChange={e => passwordSet(e.currentTarget.value)}
       />
       {resetPasswordUpdated}
-      <LoadingButton loading={isResettingPassword} onClick={handleResetPassword} variant='contained'>
-        {translate('actions_password')}
+      <LoadingButton
+        loading={isResettingPassword}
+        onClick={handleResetPassword}
+        variant='contained'>
+          {translate('actions_password')}
       </LoadingButton>
     </Stack>
   </Card>

@@ -29,7 +29,7 @@ interface Props {
   loading?: boolean
   onEditRow: VoidFunction
   onSelectRow: VoidFunction
-  onDeleteRow: VoidFunction 
+  onDeleteRow: VoidFunction
 }
 
 export default function UserTableRow({
@@ -38,7 +38,7 @@ export default function UserTableRow({
   loading,
   onEditRow,
   onSelectRow,
-  onDeleteRow, 
+  onDeleteRow,
 }: Props): React.ReactElement | null {
   const {
     email,
@@ -219,7 +219,7 @@ export default function UserTableRow({
         >
           <Iconify icon='eva:edit-fill' />
           {translate('actions_edit')}
-        </MenuItem> 
+        </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
