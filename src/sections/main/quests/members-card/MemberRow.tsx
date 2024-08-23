@@ -18,7 +18,6 @@ interface IMemberRowProps {
   onEditRow: VoidFunction
   onSelectRow: VoidFunction
   onDeleteRow: VoidFunction
-  onResetPassword?: VoidFunction
   pending: boolean
 }
 
@@ -28,8 +27,7 @@ export default function MemberRow({
   loading,
   onEditRow,
   onSelectRow,
-  onDeleteRow,
-  onResetPassword,
+  onDeleteRow, 
   pending,
 }: IMemberRowProps): React.ReactElement | null {
   const { query } = useRouter()
@@ -157,18 +155,7 @@ export default function MemberRow({
         >
           <Iconify icon='eva:edit-fill' />
           {translate('actions_edit')}
-        </MenuItem>
-        {onResetPassword ? (
-          <MenuItem
-            onClick={() => {
-              onResetPassword()
-              handleClosePopover()
-            }}
-          >
-            <Iconify icon='eva:unlock-outline' />
-            {translate('actions_password')}
-          </MenuItem>
-        ) : null}
+        </MenuItem>        
       </MenuPopover>
 
       <ConfirmDialog

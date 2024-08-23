@@ -49,7 +49,7 @@ const en = {
 
   // action words
   actions_delete: 'Delete',
-  actions_password: 'Password',
+  actions_password: 'Change Password',
   actions_remove: 'Remove',
   actions_edit: 'Edit',
   actions_add: 'Add',

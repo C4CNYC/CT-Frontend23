@@ -29,8 +29,7 @@ interface Props {
   loading?: boolean
   onEditRow: VoidFunction
   onSelectRow: VoidFunction
-  onDeleteRow: VoidFunction
-  onResetPassword?: VoidFunction
+  onDeleteRow: VoidFunction 
 }
 
 export default function UserTableRow({
@@ -39,8 +38,7 @@ export default function UserTableRow({
   loading,
   onEditRow,
   onSelectRow,
-  onDeleteRow,
-  onResetPassword,
+  onDeleteRow, 
 }: Props): React.ReactElement | null {
   const {
     email,
@@ -221,18 +219,7 @@ export default function UserTableRow({
         >
           <Iconify icon='eva:edit-fill' />
           {translate('actions_edit')}
-        </MenuItem>
-        {onResetPassword ? (
-          <MenuItem
-            onClick={() => {
-              onResetPassword()
-              handleClosePopover()
-            }}
-          >
-            <Iconify icon='eva:unlock-outline' />
-            {translate('actions_password')}
-          </MenuItem>
-        ) : null}
+        </MenuItem> 
       </MenuPopover>
 
       <ConfirmDialog
