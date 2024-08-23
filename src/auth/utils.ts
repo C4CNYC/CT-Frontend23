@@ -72,3 +72,15 @@ export const setSession = (accessToken: string | null, tenantName: string | null
     delete axios.defaults.headers.common['x-tenant-id']
   }
 }
+
+export const createWeakPassword = (): string => {
+  let today = new Date().toJSON().replaceAll('-', '')
+  let chars = 'ACDEHKMNPRSTYZ'.split('')
+  let randIndex = Math.round(Math.random() * (chars.length - 1))
+  const password =
+    today.slice(2, 6) +
+    (chars[randIndex] + chars[randIndex].toLocaleLowerCase()) +
+    today.slice(15, 17) +
+    '!!'
+  return password
+}

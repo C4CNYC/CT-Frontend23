@@ -46,6 +46,7 @@ const es = {
 
   // action words
   actions_delete: 'Borrar',
+  actions_password: 'Contraseña',
   actions_remove: 'Eliminar',
   actions_edit: 'Editar',
   actions_add: 'Añadir',
@@ -411,6 +412,8 @@ const es = {
     'Al desactivar esta opción, el usuario recibirá automáticamente un correo electrónico de verificación.',
   students_new_user_notification: 'Los usuarios discapacitados no tienen acceso a este recurso',
   students_edite_student: 'Estudiante: Editar estudiante',
+
+  member_password_updated: 'La contraseña es {{password}} ',
 
   // Classes page
   classes: 'Clases',

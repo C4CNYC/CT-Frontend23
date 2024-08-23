@@ -46,6 +46,7 @@ const fr = {
 
   // action words
   actions_delete: 'Supprimer',
+  actions_password: 'Le mot de passe',
   actions_remove: 'Retirer',
   actions_edit: 'Modifier',
   actions_add: 'Ajouter',
@@ -413,6 +414,7 @@ const fr = {
   students_new_user_notification: "Les utilisateurs handicapés n'ont pas accès à cette ressource",
   students_edite_student: "Étudiant: Modifier l'élève",
 
+  member_password_updated: 'le mot de passe est {{password}} ',
   // Classes page
   classes: 'Des classes',
   classes_add_class: 'Ajouter une classe',
