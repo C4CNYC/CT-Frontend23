@@ -39,7 +39,10 @@ import {
   useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from '@/redux/services/manager/assignments-manager'
-import { useGetPublicCoursesQuery } from '@/redux/services/manager/courses-manager'
+import {
+  useGetPublicCoursesQuery,
+  useGetOwnCoursesQuery,
+} from '@/redux/services/manager/courses-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import DetailsStepOpenProject from '@/sections/main/quests/add-quest/DetailsStepOpenProject'
 import { useTranslate } from '@/utils/translateHelper'
@@ -92,9 +95,19 @@ export default function AddQuest(): React.ReactElement {
     useUpdateCourseAssignmentMutation()
   const [addAssignmentToClass] = useUpdateClassAssignmentMutation()
 
-  const coursesData = useGetPublicCoursesQuery({})
-  // const adminCoursesData = useAdminGetCourseQuery({})
+  const publicCoursesData = useGetPublicCoursesQuery({})
+  const adminCoursesData = useGetOwnCoursesQuery({})
 
+  const coursesData =
+    publicCoursesData?.data && adminCoursesData?.data
+      ? {
+          ...publicCoursesData,
+          data: {
+            ...publicCoursesData.data,
+            data: [...publicCoursesData?.data?.data, ...adminCoursesData?.data?.data],
+          },
+        }
+      : publicCoursesData
   const eliminateInfoBanner = () => {
     localStorage.setItem(QUEST_BANNER, FALSY_VALLUE)
     setOnboardingInfo(false)

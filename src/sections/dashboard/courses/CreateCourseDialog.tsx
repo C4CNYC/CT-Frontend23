@@ -146,7 +146,7 @@ export default function CreateCourseDialog({
       enqueueSnackbar(
         !isEdit ? translate('messages_create_success') : translate('messages_update_success')
       )
-      refetch()
+      if (refetch) refetch()
       methods.reset()
       setOpen(false)
     } catch (error: any) {
