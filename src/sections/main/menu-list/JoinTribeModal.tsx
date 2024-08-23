@@ -18,6 +18,7 @@ import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, useSnackbar } from '@/components'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
+import { RootState } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -43,7 +44,7 @@ export default function JoinClassModal({ children }: IJoinClassModal): React.Rea
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpenDialog] = useState<boolean>(false)
   const translate = useTranslate()
-  const profile = useSelector((state) => state.global.user)
+  const profile = useSelector((state: RootState) => state.global.user)
 
   const [joinClass, { isLoading }] = useJoinClassMutation()
 
