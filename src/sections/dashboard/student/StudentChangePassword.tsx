@@ -53,16 +53,17 @@ export function StudentChangePassword({
           name='password'
           label={translate('generated_passowrd')}
           value={password}
-          onChange={e => passwordSet(e.currentTarget.value)}
+          onChange={(e) => passwordSet(e.currentTarget.value)}
         />
         {resetPasswordUpdated}
         <LoadingButton
           loading={isResettingPassword}
           onClick={handleResetPassword}
-          variant='contained'>
-            {translate('actions_password')}
+          variant='contained'
+        >
+          {translate('actions_password')}
         </LoadingButton>
       </Stack>
     </Card>
-    )
+  )
 }

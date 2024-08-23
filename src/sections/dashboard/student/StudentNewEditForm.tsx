@@ -28,8 +28,8 @@ import {
 import { RootState } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, createRandomAvatar, getRandomColor } from '@/utils'
-import { useTranslate } from '@/utils/translateHelper'
 
+import { useTranslate } from '@/utils/translateHelper'
 import { createWeakPassword } from '@root/src/auth/utils'
 import { StudentChangePassword } from './StudentChangePassword'
 
