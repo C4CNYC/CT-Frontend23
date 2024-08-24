@@ -10,10 +10,7 @@ import {
   // useGetAdminOwnModulesQuery,
 } from '@/redux/services/admin/modules-admin'
 import { IModulesSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import {
-  useGetCatalogModulesQuery,
-  useGetOwnModulesQuery,
-} from '@/redux/services/manager/modules-manager'
+import { useGetOwnModulesQuery } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
@@ -39,26 +36,11 @@ export default function ModulesListPage(): React.ReactElement | string {
   )
 
   const {
-    data: teacherModuleData,
-    isLoading: teacherLoading,
-    isFetching: teacherFetching,
-    refetch: teacherRefetch,
-  } = useGetCatalogModulesQuery({ ...filters, catalog: true }, { skip: isAdmin })
-
-  const {
     data: ownData,
     isLoading: isOwnLoading,
     isFetching: isOwnFetching,
     refetch: ownRefetch,
   } = useGetOwnModulesQuery({ ...filters, catalog: false }, { skip: isAdmin })
-
-  // const {
-  //   data: ownAdminData,
-  //   isLoading: ownAdminLoading,
-  //   isFetching: ownAdminFetching,
-  // } = useGetAdminOwnModulesQuery(filters, { skip: !isAdmin })
-
-  // const ownData = isAdmin ? ownAdminData : ownManagerData
 
   const {
     data: adminData,
@@ -67,15 +49,14 @@ export default function ModulesListPage(): React.ReactElement | string {
     refetch: adminRefetch,
   } = useGetAdminModulesQuery(filters, { skip: !isAdmin })
 
-  const data = isAdmin ? adminData : teacherModuleData
-  const isLoading = isAdmin ? adminIsLoading : teacherLoading
-  const isFetching = isAdmin ? adminFetching : teacherFetching
+  const data = isAdmin ? adminData : ownData
+  const isLoading = isAdmin ? adminIsLoading : isOwnLoading
+  const isFetching = isAdmin ? adminFetching : isOwnFetching
 
   const refetch = () => {
     if (isAdmin) {
       adminRefetch()
     } else {
-      teacherRefetch()
       ownRefetch()
     }
   }

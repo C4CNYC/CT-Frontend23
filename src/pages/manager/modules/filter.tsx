@@ -12,7 +12,7 @@ import {
   ICourseSearchParams,
   IModulesSearchParams,
 } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetCatalogCoursesQuery } from '@/redux/services/manager/courses-manager'
+import { useGetOwnCoursesQuery } from '@/redux/services/manager/courses-manager'
 import SkeletonFilter from '@/sections/dashboard/skeleton/skeletonFilter'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
@@ -30,7 +30,7 @@ export default function FilterModules({ filters, setFilter }: Props): React.Reac
   const translate = useTranslate()
   const { isAdmin } = useIsAdmin()
 
-  const { data: courses, isLoading } = useGetCatalogCoursesQuery(courseFilters, { skip: isAdmin })
+  const { data: courses, isLoading } = useGetOwnCoursesQuery(courseFilters, { skip: isAdmin })
   const { data: adminCourses, isLoading: isLoadingAdminCourses } = useGetAdminCoursesQuery(
     courseFilters,
     { skip: !isAdmin }
