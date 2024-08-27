@@ -19,7 +19,7 @@ import StatusLabel, { RoomStatus } from './components/status-label'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
 import { EditorMode } from './hook/constants'
 import { useFileManager } from './hook/file-manager'
-import { useStyles } from './styles'
+import { useStyles } from './styles' 
 
 type ReducedFields =
   | 'activeFile'

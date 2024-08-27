@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
 import { Box } from '@mui/material'
-import { MdUndo } from '@react-icons/all-files/md/MdUndo'
 import { AnimatePresence, m } from 'framer-motion'
 
 import useIsDesktop from '@root/src/hooks/useIsDesktop'
+
+import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
 
 import PrimaryButtons from './PrimaryButtons'
 import SecondaryButtons from './SecondaryButtons'
@@ -55,7 +56,7 @@ export default function DesktopQuickKeys() {
           >
             <div className='toolbox'>
               <Box sx={OPEN_BTN_SX}>
-                <MdUndo
+                <FaAngleRight
                   color='#fff'
                   size={20}
                 />

@@ -1,13 +1,18 @@
 import { Box, Divider } from '@mui/material'
 import { FaRegClipboard } from '@react-icons/all-files/fa6/FaRegClipboard'
-import { IoCloseOutline } from '@react-icons/all-files/io5/IoCloseOutline'
+import { FaKeyboard } from '@react-icons/all-files/fa6/FaKeyboard'
+import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
 import { MdOutlineContentCopy } from '@react-icons/all-files/md/MdOutlineContentCopy'
 import { MdRedo } from '@react-icons/all-files/md/MdRedo'
 import { MdUndo } from '@react-icons/all-files/md/MdUndo'
-import { RiBracesFill } from '@react-icons/all-files/ri/RiBracesFill'
 import { TbSelectAll } from '@react-icons/all-files/tb/TbSelectAll'
 
 import QuickButton from './QuickButton'
+import {
+  UndoInitiate,
+  RedoInitiate,
+  copyPasteInitiate,
+} from '@root/src/sections/code-panel/lib/events'
 
 export default function PrimaryButtons({
   handleClose,
@@ -22,6 +27,7 @@ export default function PrimaryButtons({
         tooltipTitle='Undo'
         tooltipSubtitle='Shortcut: Ctrl + Z'
         sx={{ minWidth: 50 }}
+        onClick={UndoInitiate}
       >
         <MdUndo size={20} />
       </QuickButton>
@@ -29,6 +35,7 @@ export default function PrimaryButtons({
         tooltipTitle='Redo'
         tooltipSubtitle='Shortcut: Ctrl + Y'
         sx={{ minWidth: 50 }}
+        onClick={RedoInitiate}
       >
         <MdRedo size={20} />
       </QuickButton>
@@ -40,18 +47,21 @@ export default function PrimaryButtons({
       <QuickButton
         tooltipTitle='Select All'
         tooltipSubtitle='Shortcut: Ctrl + A'
+        onClick={copyPasteInitiate('select')}
       >
         <TbSelectAll size={20} />
       </QuickButton>
       <QuickButton
         tooltipTitle='Copy'
         tooltipSubtitle='Shortcut: Ctrl + C'
+        onClick={copyPasteInitiate('copy')}
       >
         <MdOutlineContentCopy size={20} />
       </QuickButton>
       <QuickButton
         tooltipTitle='Paste'
         tooltipSubtitle='Shortcut: Ctrl + V'
+        onClick={copyPasteInitiate('paste')}
       >
         <FaRegClipboard size={20} />
       </QuickButton>
@@ -66,14 +76,14 @@ export default function PrimaryButtons({
         tooltipTitle='Symbols'
         onClick={handleChangeButtons}
       >
-        <RiBracesFill size={20} />
+        <FaKeyboard size={20} />
       </QuickButton>
 
       <QuickButton
         tooltipTitle='Close'
         onClick={handleClose}
       >
-        <IoCloseOutline size={26} />
+        <FaAngleLeft size={26} />
       </QuickButton>
     </Box>
   )

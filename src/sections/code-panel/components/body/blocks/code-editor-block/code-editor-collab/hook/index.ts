@@ -17,6 +17,7 @@ import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
 import { useModeSubscriptions } from './useModeSubscriotions'
 import { EmitSocketEvents, unsubscribeSocket } from './utils/socket'
+import { initListeners } from '@root/src/sections/code-panel/lib/listeners'
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
@@ -64,12 +65,9 @@ export const useCodeEditorCollab = ({
     setActiveFile,
     onResetFileManager,
     defaultFileName,
-    // preloadedCode,
+    //preloadedCode,
   } = useMemoizedProps(propsToMemoize)
 
-  const onCreateEditor = (view: EditorView): void => {
-    editorView.current = view
-  }
 
   const clearSocketData = useCallback((): void => {
     if (initRoomDataRef.current.mode === EditorMode.Owner) {
@@ -103,6 +101,11 @@ export const useCodeEditorCollab = ({
     onCommentIconClick,
   })
 
+  const onCreateEditor = (view: EditorView): void => {
+    editorView.current = view
+    console.log("onCreateEditor", view ,  (preloadedCode))
+      initListeners(view, editorRef, { preloadedCode:preloadedCode??'' })
+  }
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
       if (!socket) return
