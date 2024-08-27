@@ -1,6 +1,7 @@
 import { MutableRefObject } from 'react'
 
 import { EditorView } from '@codemirror/view'
+import { Compartment } from '@uiw/react-codemirror'
 
 import {
   COPY_PASTE_EVENT,
@@ -10,11 +11,11 @@ import {
   UNDO_REDO_EVENT,
   UPDATE_COLORS,
   UPDATE_FONT_SIZE,
-  //  UPDATE_LINE_WRAP,
+  UPDATE_LINE_WRAP,
 } from '../events'
 
 import { copyPaste } from './copy-paste'
-//import { updateLineWrap } from './line-wrap'
+import { updateLineWrap } from './line-wrap'
 import { moveCursor } from './move-cursor'
 import { pasteSymbol } from './paste-symbol'
 import { resetCodemirror } from './reset-lesson'
@@ -32,15 +33,15 @@ interface ISetting {
 export function initListeners(
   view: EditorView,
   editor: MutableRefObject<any>,
-  setting: ISetting
-  // lineWrap: Compartment
+  setting: ISetting,
+  lineWrap: Compartment
 ) {
   window.addEventListener(RESET_LESSON_EVENT, () => {
     resetCodemirror(view, setting?.preloadedCode)
   })
-  // window.addEventListener(UPDATE_LINE_WRAP, (e: any) => {
-  //   updateLineWrap(view, lineWrap, e.detail.wrap)
-  // })
+  window.addEventListener(UPDATE_LINE_WRAP, (e: any) => {
+    updateLineWrap(view, lineWrap, e.detail.wrap)
+  })
   window.addEventListener(UPDATE_FONT_SIZE, (e: any) => {
     updateFontSizeCodemirror(editor, e.detail.size)
   })
