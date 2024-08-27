@@ -4,7 +4,6 @@ import { EditorView } from '@codemirror/view'
 export async function copyPaste(view: EditorView, type: string) {
   view.focus()
   const cursor = view.state.selection.ranges[0].from
-  console.log("copypaste fired", type,  await navigator.clipboard.readText())
   if (type === 'copy') {
     if (view.state.selection.ranges[0].from !== view.state.selection.ranges[0].to) {
       const text = view.state.sliceDoc(
