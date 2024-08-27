@@ -1,17 +1,26 @@
 import { MutableRefObject } from 'react'
 
-import { Compartment } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
- 
+
+import {
+  COPY_PASTE_EVENT,
+  MOVE_CURSOR_EVENT,
+  PASTE_SYMBOL_EVENT,
+  RESET_LESSON_EVENT,
+  UNDO_REDO_EVENT,
+  UPDATE_COLORS,
+  UPDATE_FONT_SIZE,
+  //  UPDATE_LINE_WRAP,
+} from '../events'
+
 import { copyPaste } from './copy-paste'
-import { updateLineWrap } from './line-wrap'
-import { moveCursor } from './move-cursor'  
+//import { updateLineWrap } from './line-wrap'
+import { moveCursor } from './move-cursor'
 import { pasteSymbol } from './paste-symbol'
-import { updateFontSizeCodemirror } from './update-font-size' 
 import { resetCodemirror } from './reset-lesson'
 import { undoRedo } from './undo-redo'
 import { updateColorsCodemirror } from './update-colors'
-import { COPY_PASTE_EVENT, MOVE_CURSOR_EVENT, PASTE_SYMBOL_EVENT, RESET_LESSON_EVENT, UNDO_REDO_EVENT, UPDATE_COLORS, UPDATE_FONT_SIZE, UPDATE_LINE_WRAP } from '../events' 
+import { updateFontSizeCodemirror } from './update-font-size'
 
 interface ISetting {
   preloadedCode: string
@@ -23,7 +32,7 @@ interface ISetting {
 export function initListeners(
   view: EditorView,
   editor: MutableRefObject<any>,
-  setting: ISetting,
+  setting: ISetting
   // lineWrap: Compartment
 ) {
   window.addEventListener(RESET_LESSON_EVENT, () => {
@@ -39,7 +48,6 @@ export function initListeners(
     updateColorsCodemirror(editor, e.detail)
   })
   window.addEventListener(PASTE_SYMBOL_EVENT, (e: any) => {
-    console.log("paste", e)
     pasteSymbol(view, e.detail)
   })
   window.addEventListener(MOVE_CURSOR_EVENT, (e: any) => {
@@ -56,8 +64,8 @@ export function initListeners(
 export function removeListeners(
   view: EditorView,
   editor: MutableRefObject<any>,
-  setting: ISetting,
-//  lineWrap: Compartment
+  setting: ISetting
+  //  lineWrap: Compartment
 ) {
   window.removeEventListener(RESET_LESSON_EVENT, () => {
     resetCodemirror(view, setting?.preloadedCode)

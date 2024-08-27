@@ -1,11 +1,10 @@
 import { useState } from 'react'
 
 import { Box } from '@mui/material'
+import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
 import { AnimatePresence, m } from 'framer-motion'
 
 import useIsDesktop from '@root/src/hooks/useIsDesktop'
-
-import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
 
 import PrimaryButtons from './PrimaryButtons'
 import SecondaryButtons from './SecondaryButtons'

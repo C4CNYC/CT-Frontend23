@@ -1,10 +1,10 @@
 import { Box, Divider } from '@mui/material'
-
 import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
 import { FaKeyboard } from '@react-icons/all-files/fa6/FaKeyboard'
 
-import QuickButton from './QuickButton'
 import { PasteInitiate } from '@root/src/sections/code-panel/lib/events'
+
+import QuickButton from './QuickButton'
 
 export default function SecondaryButtons({
   handleChangeButtons,

@@ -1,7 +1,7 @@
 import { EditorView } from '@codemirror/view'
 
 export function pasteSymbol(view: EditorView, text: string) {
-  const cursor = view.state.selection.ranges[0].from 
+  const cursor = view.state.selection.ranges[0].from
   view.focus()
   view.dispatch({
     changes: {

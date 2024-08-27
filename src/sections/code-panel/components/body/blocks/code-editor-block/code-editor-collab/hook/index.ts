@@ -7,6 +7,7 @@ import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
 import { useSelector } from '@/redux/store'
+import { initListeners } from '@root/src/sections/code-panel/lib/listeners'
 
 import { RoomStatus } from '../components/status-label'
 
@@ -17,7 +18,6 @@ import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
 import { useModeSubscriptions } from './useModeSubscriotions'
 import { EmitSocketEvents, unsubscribeSocket } from './utils/socket'
-import { initListeners } from '@root/src/sections/code-panel/lib/listeners'
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
@@ -68,7 +68,6 @@ export const useCodeEditorCollab = ({
     //preloadedCode,
   } = useMemoizedProps(propsToMemoize)
 
-
   const clearSocketData = useCallback((): void => {
     if (initRoomDataRef.current.mode === EditorMode.Owner) {
       socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId)
@@ -103,8 +102,7 @@ export const useCodeEditorCollab = ({
 
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
-    console.log("onCreateEditor", view ,  (preloadedCode))
-      initListeners(view, editorRef, { preloadedCode:preloadedCode??'' })
+    initListeners(view, editorRef, { preloadedCode: preloadedCode ?? '' })
   }
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {

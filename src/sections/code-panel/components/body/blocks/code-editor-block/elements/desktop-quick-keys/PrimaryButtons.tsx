@@ -1,18 +1,19 @@
 import { Box, Divider } from '@mui/material'
-import { FaRegClipboard } from '@react-icons/all-files/fa6/FaRegClipboard'
-import { FaKeyboard } from '@react-icons/all-files/fa6/FaKeyboard'
 import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
+import { FaKeyboard } from '@react-icons/all-files/fa6/FaKeyboard'
+import { FaRegClipboard } from '@react-icons/all-files/fa6/FaRegClipboard'
 import { MdOutlineContentCopy } from '@react-icons/all-files/md/MdOutlineContentCopy'
 import { MdRedo } from '@react-icons/all-files/md/MdRedo'
 import { MdUndo } from '@react-icons/all-files/md/MdUndo'
 import { TbSelectAll } from '@react-icons/all-files/tb/TbSelectAll'
 
-import QuickButton from './QuickButton'
 import {
   UndoInitiate,
   RedoInitiate,
   copyPasteInitiate,
 } from '@root/src/sections/code-panel/lib/events'
+
+import QuickButton from './QuickButton'
 
 export default function PrimaryButtons({
   handleClose,
