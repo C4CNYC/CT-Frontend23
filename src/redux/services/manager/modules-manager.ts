@@ -26,6 +26,30 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['Modules'],
     }),
+    getCatalogModules: builder.query<
+      BaseListResponseInterface<IModule & BaseResponseInterface>,
+      IModulesSearchParams
+    >({
+      query: (params) => ({
+        url: '/manager/module/catalog',
+        method: 'GET',
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['Modules'],
+    }),
+    getOwnModules: builder.query<
+      BaseListResponseInterface<IModule & BaseResponseInterface>,
+      IModulesSearchParams
+    >({
+      query: (params) => ({
+        url: '/manager/module/own',
+        method: 'GET',
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['Modules'],
+    }),
     updateModule: builder.mutation<
       IModule & BaseResponseInterface,
       { id: string; tips: string[] | []; duration: string }
@@ -93,6 +117,8 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetModulesQuery,
+  useGetCatalogModulesQuery,
+  useGetOwnModulesQuery,
   // -------------mutation-----------
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,

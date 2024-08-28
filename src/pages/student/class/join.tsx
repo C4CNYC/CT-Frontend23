@@ -12,6 +12,7 @@ import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+import StudentDefaultIntro from '@root/src/sections/intro-tours/student-default-intro'
 
 JoinClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -50,6 +51,7 @@ export default function JoinClass(): React.ReactElement {
 
   return (
     <Container maxWidth={themeStretch ? false : 'lg'}>
+      <StudentDefaultIntro />
       <FormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
@@ -57,13 +59,13 @@ export default function JoinClass(): React.ReactElement {
         <Stack
           sx={{
             flexDirection: 'row',
-            flexWrap: { xs: 'wrap', sm: 'wrap' },
+            flexWrap: { xs: 'wrap', sm: 'wrap', md: 'wrap', lg: 'no-wrap' },
             gap: 7,
             justifyContent: 'center',
           }}
         >
           <Stack sx={{ pt: 4 }}>
-            <Typography variant='h2'>{translate('tribes_join_a_tribe')}</Typography>
+            <Typography variant='h3'>{translate('tribes_join_a_tribe')}</Typography>
             <Typography
               variant='body1'
               sx={{ maxWidth: '350px', mt: 3 }}
@@ -71,6 +73,7 @@ export default function JoinClass(): React.ReactElement {
               {translate('tribes_have_you_been_invited')}
             </Typography>
             <RHFTextField
+              className='defaultIntroStudentStep1'
               required
               name='code'
               placeholder='1 2 a s d 5'
@@ -126,7 +129,7 @@ export default function JoinClass(): React.ReactElement {
                 href={STUDENT_PATH_DASHBOARD.courses.root}
                 underline='none'
               >
-                “Click here”
+                “Open Catalog”
               </Link>{' '}
               to see the courses available
             </Typography>

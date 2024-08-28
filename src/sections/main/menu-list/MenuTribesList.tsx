@@ -50,7 +50,10 @@ export default function MenuTribesList(): React.ReactElement {
     }
   }, [isLoading])
   return (
-    <Stack sx={{ width: '100%' }}>
+    <Stack
+      sx={{ width: '100%' }}
+      className='studentJoinStep2'
+    >
       {!isNavMini && (
         <Divider
           sx={{
@@ -90,6 +93,7 @@ export default function MenuTribesList(): React.ReactElement {
             <Button
               onClick={handleOpenPopover}
               sx={(theme) => ({ ...getAddTribeButtonSx(theme, isNavMini) })}
+              className='studentJoinStep3'
             >
               <FaPlus size={20} />
             </Button>

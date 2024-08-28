@@ -33,12 +33,12 @@ export const COURSE_IMG_XS = {
   width: {
     xs: '200px',
     sm: '180px',
-    md: '250px',
+    md: '220px',
   },
   height: {
     xs: '200px',
     sm: '180px',
-    md: '250px',
+    md: '220px',
   },
 }
 

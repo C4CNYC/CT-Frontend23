@@ -24,6 +24,7 @@ export interface IGlobalCodePanel {
   contentValidations?: ContentValidation[]
   prevLessonId?: string | null
   prevLessonCode?: string | null | undefined
+  animationNumber: number
 }
 
 const initialState: IGlobalCodePanel = {
@@ -43,6 +44,7 @@ const initialState: IGlobalCodePanel = {
   contentValidations: [],
   prevLessonId: null,
   prevLessonCode: null,
+  animationNumber: 1,
 }
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
@@ -117,6 +119,12 @@ export const codePanelSlice = createSlice({
     setSocket: (state, action: PayloadAction<Socket | undefined>) => {
       state.socket = action.payload as any
     },
+    increaceAnimationNumber: (state, action: PayloadAction<number>) => {
+      state.animationNumber = action.payload
+    },
+    resetAnimaitonNumber: (state) => {
+      state.animationNumber = 1
+    },
   },
 })
 
@@ -137,6 +145,8 @@ export const {
   setContentValidations,
   setPrevLessonId,
   setPrevLessonCode,
+  increaceAnimationNumber,
+  resetAnimaitonNumber,
 } = codePanelSlice.actions
 
 export default codePanelSlice.reducer

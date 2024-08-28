@@ -13,6 +13,7 @@ import {
   useRemoveLessonFromModuleMutation,
   useUpdateModuleLessonMutation,
 } from '@/redux/services/manager/modules-manager'
+import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
 import { useGetModuleWithLessonsQuery } from 'src/redux/services/manager/modules-student'
@@ -112,44 +113,49 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           {module?.name}
         </Typography>
 
-        <CreateModuleDialog
-          isEdit
-          id={module?.id}
-          defaultValues={{
-            name: module?.name ?? '-',
-            description: module?.description ?? '-',
-            active: module?.active as boolean,
-            tips: '',
-            duration: module?.duration ? getDurationString(module.duration) : '',
-            teacher_slides: module?.teacher_slides ?? '-',
-            teacher_forum: module?.teacher_forum ?? '-',
-            lesson_plans: module?.lesson_plans ?? '-',
-            initial_likes: module?.initial_likes ?? 5,
-            initial_stars: module?.initial_stars ?? 10,
-            initial_enrolled: module?.initial_enrolled ?? 15,
-          }}
-          moduleTips={module?.tips}
-        >
-          <Button
-            variant='outlined'
-            sx={moduleBtnSx}
+        {module ? (
+          <CreateModuleDialog
+            isEdit
+            id={module.id}
+            defaultValues={{
+              name: module.name,
+              description: module.description as string,
+              active: module.active as boolean,
+              tips: '',
+              duration: module.duration ? getDurationString(module.duration) : '',
+              teacher_slides: module.teacher_slides as string,
+              teacher_forum: module.teacher_forum as string,
+              lesson_plans: module.lesson_plans as string,
+              initial_likes: module.initial_likes as number,
+              initial_stars: module.initial_stars as number,
+              initial_enrolled: module.initial_enrolled as number,
+            }}
+            moduleTips={module.tips}
           >
-            <FiSettings size='20px' />
-            {translate('modules_settings').toUpperCase()}
-          </Button>
-        </CreateModuleDialog>
-
-        <LoadingButton
-          loading={isLoadingModule}
-          variant='outlined'
-          fullWidth
-          sx={addLessonBtnSx}
-          //   onClick={() => createNewContent()}
-          disabled={isLoadingModule}
-        >
-          <ImPlus size='22px' />
-          <Typography variant='subtitle1'>{translate('modules_add_lesson')}</Typography>
-        </LoadingButton>
+            <Button
+              variant='outlined'
+              sx={moduleBtnSx}
+            >
+              <FiSettings size='20px' />
+              {translate('modules_settings').toUpperCase()}
+            </Button>
+          </CreateModuleDialog>
+        ) : (
+          ''
+        )}
+        <CreateLessonDialog>
+          <LoadingButton
+            loading={isLoadingModule}
+            variant='outlined'
+            fullWidth
+            sx={addLessonBtnSx}
+            // onClick={() => createNewContent()}
+            disabled={isLoadingModule}
+          >
+            <ImPlus size='22px' />
+            <Typography variant='subtitle1'>{translate('modules_add_lesson')}</Typography>
+          </LoadingButton>
+        </CreateLessonDialog>
       </Stack>
 
       {isLoading ? (

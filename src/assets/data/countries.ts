@@ -1,10 +1,11 @@
 export const countries = [
-  { code: 'AD', label: 'Andorra', phone: '376' },
   {
-    code: 'AE',
-    label: 'United Arab Emirates',
-    phone: '971',
+    code: 'US',
+    label: 'United States',
+    phone: '1',
+    suggested: true,
   },
+  { code: 'AD', label: 'Andorra', phone: '376' },
   { code: 'AF', label: 'Afghanistan', phone: '93' },
   {
     code: 'AG',
@@ -381,13 +382,13 @@ export const countries = [
     phone: '255',
   },
   { code: 'UA', label: 'Ukraine', phone: '380' },
-  { code: 'UG', label: 'Uganda', phone: '256' },
   {
-    code: 'US',
-    label: 'United States',
-    phone: '1',
-    suggested: true,
+    code: 'AE',
+    label: 'United Arab Emirates',
+    phone: '971',
   },
+  { code: 'UG', label: 'Uganda', phone: '256' },
+
   { code: 'UY', label: 'Uruguay', phone: '598' },
   { code: 'UZ', label: 'Uzbekistan', phone: '998' },
   {

@@ -7,16 +7,18 @@ import Head from 'next/head'
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
+import { useGetAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
+import { Role } from '@/redux/services/enums/role.enum'
 import { ILesson, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
+import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import LessonCard from '@/sections/dashboard/lessons/LessonCard'
 import LessonStepMain from '@/sections/dashboard/lessons/LessonStep/LessonStepMain'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
-import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
 import FilterLessons from './filter'
@@ -76,13 +78,35 @@ export default function LessonsListPage(): React.ReactElement {
     FilterMode.global
   )
 
+  const userRole = useSelector((state) => state.global?.user?.role)
+  const {
+    data: ownLessonsData,
+    isLoading: isOwnLessonDataLoading,
+    isFetching: isOwnLessonDataFetching,
+    refetch: refetchOwnLessons,
+  } = useGetOwnLessonsQuery(filters, { skip: userRole === Role.Admin })
+  const {
+    data: adminData,
+    isLoading: adminIsLoading,
+    isFetching: adminFetching,
+    refetch: refetchAdminLessons,
+  } = useGetAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
   const [lessons, setLessons] = useState<ILesson[]>([])
-
-  const { data, isLoading, isFetching } = useGetLessonsQuery(filters)
+  const data = userRole === Role.Admin ? adminData : ownLessonsData
+  const isLoading = userRole === Role.Admin ? adminIsLoading : isOwnLessonDataLoading
+  const isFetching = userRole === Role.Admin ? adminFetching : isOwnLessonDataFetching
 
   useEffect(() => {
     setLessons(data?.data ?? [])
   }, [data])
+
+  const refetch = () => {
+    if (userRole === Role.Admin) {
+      refetchAdminLessons()
+    } else {
+      refetchOwnLessons()
+    }
+  }
 
   const [updateModuleLesson] = useUpdateModuleLessonMutation()
 
@@ -138,7 +162,7 @@ export default function LessonsListPage(): React.ReactElement {
             },
           ]}
           action={
-            <CreateLessonDialog>
+            <CreateLessonDialog refetch={refetch}>
               <Button
                 variant='contained'
                 startIcon={<Iconify icon='eva:plus-fill' />}
@@ -183,12 +207,11 @@ export default function LessonsListPage(): React.ReactElement {
                       key={lesson.id}
                       lesson={lesson}
                       index={index}
+                      refetch={refetch}
                     />
                   ))}
                   {isFetching
-                    ? Array(
-                        getCountTakingElment(Number(data?.meta?.itemCount), Number(filters.take))
-                      )
+                    ? Array(40)
                         .fill(null)
                         .map((v, i) => <DefaultSkeletonItem key={i} />)
                     : null}

@@ -20,6 +20,7 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
+import { createWeakPassword } from '@/auth/utils'
 import {
   ConfirmDialog,
   CustomAutocomplete,
@@ -40,6 +41,7 @@ import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout
 import {
   useDeleteStudentMutation,
   useGetStudentsQuery,
+  useStudentResetPasswordMutation,
 } from '@/redux/services/manager/students-manager'
 import { RootState } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -96,6 +98,7 @@ export default function UserListPage(): React.ReactElement {
     class_id: '',
   })
   const [deleteStudent, { isLoading: isDeleting }] = useDeleteStudentMutation()
+  const [resetPassword, { isLoading: isResettingPassword }] = useStudentResetPasswordMutation()
 
   const { data, isLoading } = useGetStudentsQuery({ schoolId, ...filters }, { skip: !schoolId })
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
@@ -117,7 +120,17 @@ export default function UserListPage(): React.ReactElement {
     enqueueSnackbar(translate('member_actions_deleted'))
     setSelected([])
   }
-
+  const handleResetPassword = async (studentId: string): Promise<void> => {
+    try {
+      const password = createWeakPassword()
+      await resetPassword({ studentId, schoolId, password }).unwrap()
+      enqueueSnackbar(translate('member_password_updated', { password }))
+    } catch (e: any) {
+      enqueueSnackbar(e.data.message, {
+        variant: 'error',
+      })
+    }
+  }
   const handleDeleteRows = (selected: string[]): void => {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteMember(selected[i])
