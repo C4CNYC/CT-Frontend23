@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Stack, Typography } from '@mui/material'
+import { MenuItem, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -100,69 +100,100 @@ export default function StepperInfo(): React.ReactElement {
           gap={2}
         >
           <RHFSelect
-            native
+            native={false}
             name='mounth'
             label={translate('Month')}
-            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            sx={(theme) => ({
+              ...styledRegisterInput(theme, {
+                '& .MuiInputBase-root': {
+                  height: '52px',
+                  background: theme.palette.mode === 'light' ? '#efefef' : 'initial',
+                  fontSize: '1.2rem',
+                },
+              }),
+            })}
             defaultValue={'MM'}
           >
-            <option
+            <MenuItem
               value='MM'
               disabled
+              sx={{ '&.MuiMenuItem-root': { fontSize: '1.1rem!important' } }}
             >
               MM
-            </option>
+            </MenuItem>
             {month_names_short.map((month) => (
-              <option
+              <MenuItem
+                sx={{ '&.MuiMenuItem-root': { fontSize: '1.1rem!important' } }}
                 key={month}
                 value={month}
               >
                 {month}
-              </option>
+              </MenuItem>
             ))}
           </RHFSelect>
           <RHFSelect
-            native
             name='day'
             label={translate('Day')}
-            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            sx={(theme) => ({
+              ...styledRegisterInput(theme, {
+                '& .MuiInputBase-root': {
+                  height: '52px',
+                  background: theme.palette.mode === 'light' ? '#efefef' : 'initial',
+                  fontSize: '1.2rem',
+                },
+              }),
+            })}
             defaultValue={'DD'}
+            native={false}
           >
-            <option
+            <MenuItem
               value='DD'
               disabled
+              sx={{ '&.MuiMenuItem-root': { fontSize: '1.2rem!important' } }}
             >
               DD
-            </option>
+            </MenuItem>
             {getDaysCount().map((day) => (
-              <option
+              <MenuItem
+                sx={{ '&.MuiMenuItem-root': { fontSize: '1.2rem!important' } }}
                 key={day}
                 value={day}
               >
                 {day}
-              </option>
+              </MenuItem>
             ))}
           </RHFSelect>
           <RHFSelect
-            native
+            native={false}
             name='year'
             label={translate('Year')}
-            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            sx={(theme) => ({
+              ...styledRegisterInput(theme, {
+                '& .MuiInputBase-root': {
+                  height: '52px',
+                  background: theme.palette.mode === 'light' ? '#efefef' : 'initial',
+                  fontSize: '1.2rem',
+                },
+              }),
+            })}
             defaultValue={'YYYY'}
           >
-            <option
-              value='YYYY'
+            <MenuItem
+              value={'YYYY'}
+              sx={{ '&.MuiMenuItem-root': { fontSize: '1.1rem!important' } }}
               disabled
             >
               YYYY
-            </option>
-            {years_list.map((year) => (
-              <option
+            </MenuItem>
+
+            {years_list.reverse().map((year) => (
+              <MenuItem
+                sx={{ '&.MuiMenuItem-root': { fontSize: '1.2rem!important' } }}
                 key={year}
                 value={year}
               >
                 {year}
-              </option>
+              </MenuItem>
             ))}
           </RHFSelect>
         </Stack>
