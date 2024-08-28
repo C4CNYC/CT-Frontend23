@@ -56,7 +56,7 @@ export function SessionType({
       <Stack sx={{ pl: 2 }}>
         {disabled ? (
           <Badge
-            sx={{ '& .MuiBadge-anchorOriginTopRight': { top: -10 } }}
+            sx={{ '& .MuiBadge-anchorOriginTopRight': { top: 0 } }}
             badgeContent={translate('coming_soon')}
             color='success'
           >

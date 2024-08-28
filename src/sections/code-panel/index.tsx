@@ -159,9 +159,7 @@ export default function CodePanelLayout(): ReactElement | null {
   const lessonContent = profile
     ? lessonStudentContent
     : publicLessonContent?.length
-      ? Array.from(publicLessonContent).sort((a, b) => {
-          return a.meta.order > b.meta.order ? 1 : -1
-        })
+      ? Array.from(publicLessonContent).sort((a, b) => (a.meta.order > b.meta.order ? 1 : -1))
       : []
 
   const isLoadingLessonContent = profile
@@ -210,9 +208,22 @@ export default function CodePanelLayout(): ReactElement | null {
       (router.query.courseId === lastCourseId && lastUnitId
         ? lastUnitId
         : courseContent.units[0].id)
+
+    if (
+      !courseContent.units ||
+      !courseContent.units.length ||
+      !courseContent.units[0].lessons ||
+      !courseContent.units[0].lessons.length
+    ) {
+      void router.replace(STUDENT_PATH_DASHBOARD.class.root)
+      return
+    }
+
     const lessonId =
       router.query.lessonId ??
-      (unitId === lastUnitId && lastLessonId ? lastLessonId : courseContent.units[0].lessons[0].id)
+      (unitId === lastUnitId && lastLessonId
+        ? lastLessonId
+        : courseContent.units[0].lessons[0].id ?? false)
 
     if (!courseId || !unitId || !lessonId) {
       void router.replace(STUDENT_PATH_DASHBOARD.page404)

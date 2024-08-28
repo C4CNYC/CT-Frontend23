@@ -50,6 +50,7 @@ const ar = {
 
   // action words
   actions_delete: 'يمسح',
+  actions_password: 'كلمة السر',
   actions_remove: 'يزيل',
   actions_edit: 'يحرر',
   actions_add: 'يضيف',
@@ -317,6 +318,11 @@ const ar = {
   // sidebar menu locales
   sidebar_menu_code_btn: 'دعونا رمز',
   sidebar_menu_catalog: 'فهرس',
+  sidebar_menu_catalog_tooltip: 'All the official courses are listed here.',
+  sidebar_menu_market: 'Market',
+  sidebar_menu_market_tooltip: 'Content created by community and partners here.',
+  sidebar_menu_sandbox: 'Sandbox',
+  sidebar_menu_sandbox_tooltip: 'It’s an open code editor. Build anything you want here.',
   sidebar_menu_tribes: 'القبائل',
   sidebar_menu_my_notes: 'ملاحظاتي',
   sidebar_menu_friends: 'أصدقاء',
@@ -354,6 +360,8 @@ const ar = {
   send_verification_email_content: 'سيؤدي تعطيل هذا إلى إرسال رسالة تحقق للمستخدم تلقائيًا',
   verified_user_info: 'لا يستطيع المستخدمون المعوقون الوصول إلى هذا المورد',
   members_user_edit_user: 'المستخدم: تحرير المستخدم',
+
+  member_password_updated: '{{password}} كلمة المرور هي',
 
   // schools page
   schools: 'المدارس',

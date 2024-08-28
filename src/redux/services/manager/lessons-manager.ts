@@ -25,6 +25,18 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['Lessons'],
     }),
+    getOwnLessons: builder.query<
+      BaseListResponseInterface<ILesson & BaseResponseInterface>,
+      ILessonSearchParams
+    >({
+      query: (params) => ({
+        url: '/manager/lesson/own',
+        method: 'GET',
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['Lessons'],
+    }),
     getLesson: builder.query<ILesson & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
@@ -89,6 +101,7 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetLessonsQuery,
+  useGetOwnLessonsQuery,
   useGetLessonQuery,
   useGetLessonIntegrationsQuery,
   // -------------mutation-----------

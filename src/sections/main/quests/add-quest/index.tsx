@@ -39,7 +39,10 @@ import {
   useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from '@/redux/services/manager/assignments-manager'
-import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
+import {
+  useGetPublicCoursesQuery,
+  useGetOwnCoursesQuery,
+} from '@/redux/services/manager/courses-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import DetailsStepOpenProject from '@/sections/main/quests/add-quest/DetailsStepOpenProject'
 import { useTranslate } from '@/utils/translateHelper'
@@ -92,8 +95,19 @@ export default function AddQuest(): React.ReactElement {
     useUpdateCourseAssignmentMutation()
   const [addAssignmentToClass] = useUpdateClassAssignmentMutation()
 
-  const coursesData = useManagerGetCourseQuery({})
+  const publicCoursesData = useGetPublicCoursesQuery({})
+  const adminCoursesData = useGetOwnCoursesQuery({})
 
+  const coursesData =
+    publicCoursesData?.data && adminCoursesData?.data
+      ? {
+          ...publicCoursesData,
+          data: {
+            ...publicCoursesData.data,
+            data: [...publicCoursesData?.data?.data, ...adminCoursesData?.data?.data],
+          },
+        }
+      : publicCoursesData
   const eliminateInfoBanner = () => {
     localStorage.setItem(QUEST_BANNER, FALSY_VALLUE)
     setOnboardingInfo(false)
@@ -244,7 +258,15 @@ export default function AddQuest(): React.ReactElement {
     <>
       <Collapse in={onboardingInfo}>
         <Stack sx={getCollapseInfoBannerSx(theme)}>
-          <Typography variant='subtitle2'>{translate('assigments_onboarding_info')}</Typography>
+          <Typography variant='body2'>
+            <Typography
+              variant='subtitle2'
+              sx={{ display: 'inline-block' }}
+            >
+              Tip:
+            </Typography>{' '}
+            {translate('assigments_onboarding_info')}
+          </Typography>
           <IconButton onClick={() => eliminateInfoBanner()}>
             <Close />
           </IconButton>

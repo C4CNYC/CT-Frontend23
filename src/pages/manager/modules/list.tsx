@@ -4,8 +4,13 @@ import Head from 'next/head'
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
+import { useIsAdmin } from '@/lib/use-is-admin'
+import {
+  useGetAdminModulesQuery,
+  // useGetAdminOwnModulesQuery,
+} from '@/redux/services/admin/modules-admin'
 import { IModulesSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
+import { useGetOwnModulesQuery } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
@@ -23,6 +28,7 @@ export default function ModulesListPage(): React.ReactElement | string {
   const theme = useTheme()
   const isRTL = theme.direction === 'rtl'
   const translate = useTranslate()
+  const { isAdmin } = useIsAdmin()
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
       name: '',
@@ -30,7 +36,32 @@ export default function ModulesListPage(): React.ReactElement | string {
     },
     FilterMode.global
   )
-  const { data, isLoading, isFetching } = useGetModulesQuery(filters)
+
+  const {
+    data: ownData,
+    isLoading: isOwnLoading,
+    isFetching: isOwnFetching,
+    refetch: ownRefetch,
+  } = useGetOwnModulesQuery({ ...filters, catalog: false }, { skip: isAdmin })
+
+  const {
+    data: adminData,
+    isLoading: adminIsLoading,
+    isFetching: adminFetching,
+    refetch: adminRefetch,
+  } = useGetAdminModulesQuery(filters, { skip: !isAdmin })
+
+  const data = isAdmin ? adminData : ownData
+  const isLoading = isAdmin ? adminIsLoading : isOwnLoading
+  const isFetching = isAdmin ? adminFetching : isOwnFetching
+
+  const refetch = () => {
+    if (isAdmin) {
+      adminRefetch()
+    } else {
+      ownRefetch()
+    }
+  }
 
   if (isLoading) {
     return (
@@ -60,7 +91,7 @@ export default function ModulesListPage(): React.ReactElement | string {
             },
           ]}
           action={
-            <CreateModuleDialog>
+            <CreateModuleDialog refetch={refetch}>
               <Button
                 variant='contained'
                 startIcon={
@@ -92,30 +123,59 @@ export default function ModulesListPage(): React.ReactElement | string {
             md: 'repeat(3, 1fr)',
           }}
         >
-          <SimpleInfiniteList
-            hasNextPage={data?.meta.hasNextPage ?? false}
-            onLoadMore={() => {
-              if (data?.meta.take !== Number(filters?.take)) return
-              setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
-            }}
-            loading={isLoading ?? isFetching}
-          >
-            {data?.data.map((module, index) => (
-              <ModuleCard
-                key={index}
-                module={module}
-              />
-            ))}
-            {isFetching
-              ? Array(3)
-                  // getCountTakingElment(
-                  //   Number(data.meta.itemCount),
-                  //   Number(filters.take)
-                  // )
-                  .fill(null)
-                  .map((v, i) => <DefaultSkeletonItem key={i} />)
-              : null}
-          </SimpleInfiniteList>
+          {filters?.course_id?.length || isAdmin ? (
+            <SimpleInfiniteList
+              hasNextPage={data?.meta.hasNextPage ?? false}
+              onLoadMore={() => {
+                if (data?.meta.take !== Number(filters?.take)) return
+                setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
+              }}
+              loading={isLoading ?? isFetching}
+            >
+              {data?.data.map((module, index) => (
+                <ModuleCard
+                  key={index}
+                  module={module}
+                  refetch={refetch}
+                />
+              ))}
+              {isFetching
+                ? Array(3)
+                    // getCountTakingElment(
+                    //   Number(data.meta.itemCount),
+                    //   Number(filters.take)
+                    // )
+                    .fill(null)
+                    .map((v, i) => <DefaultSkeletonItem key={i} />)
+                : null}
+            </SimpleInfiniteList>
+          ) : (
+            <SimpleInfiniteList
+              hasNextPage={ownData?.meta.hasNextPage ?? false}
+              onLoadMore={() => {
+                if (ownData?.meta.take !== Number(filters?.take)) return
+                setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
+              }}
+              loading={isLoading ?? isFetching}
+            >
+              {ownData?.data?.map((module, index) => (
+                <ModuleCard
+                  key={index}
+                  module={module}
+                  refetch={refetch}
+                />
+              ))}
+              {isFetching
+                ? Array(3)
+                    // getCountTakingElment(
+                    //   Number(data.meta.itemCount),
+                    //   Number(filters.take)
+                    // )
+                    .fill(null)
+                    .map((v, i) => <DefaultSkeletonItem key={i} />)
+                : null}
+            </SimpleInfiniteList>
+          )}
         </Box>
         <ModuleOrganizing />
       </Container>

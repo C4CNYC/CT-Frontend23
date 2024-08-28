@@ -5,12 +5,14 @@ import TextField from '@mui/material/TextField'
 import Stack from '@mui/system/Stack'
 
 import { SetFilterType, useFilters } from '@/hooks'
+import { useIsAdmin } from '@/lib/use-is-admin'
+import { useGetAdminCoursesQuery } from '@/redux/services/admin/courses-admin'
 import {
   ICourse,
   ICourseSearchParams,
   IModulesSearchParams,
 } from '@/redux/services/interfaces/courseUnits.interface'
-import { useManagerGetCourseQuery } from '@/redux/services/manager/courses-manager'
+import { useGetOwnCoursesQuery } from '@/redux/services/manager/courses-manager'
 import SkeletonFilter from '@/sections/dashboard/skeleton/skeletonFilter'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
@@ -26,10 +28,17 @@ export default function FilterModules({ filters, setFilter }: Props): React.Reac
     name: '',
   })
   const translate = useTranslate()
+  const { isAdmin } = useIsAdmin()
 
-  const { data: courses, isLoading } = useManagerGetCourseQuery(courseFilters)
+  const { data: courses, isLoading } = useGetOwnCoursesQuery(courseFilters, { skip: isAdmin })
+  const { data: adminCourses, isLoading: isLoadingAdminCourses } = useGetAdminCoursesQuery(
+    courseFilters,
+    { skip: !isAdmin }
+  )
+  const courseList = isAdmin ? adminCourses : courses
+  const isCourseListLoading = isAdmin ? isLoadingAdminCourses : isLoading
 
-  if (isLoading) {
+  if (isCourseListLoading) {
     return (
       <Box sx={{ display: 'flex' }}>
         <SkeletonFilter />
@@ -69,7 +78,7 @@ export default function FilterModules({ filters, setFilter }: Props): React.Reac
           }}
         ></TextField>
         <Autocomplete<ICourse & BaseResponseInterface>
-          options={courses?.data ?? []}
+          options={courseList?.data ?? []}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -79,7 +88,7 @@ export default function FilterModules({ filters, setFilter }: Props): React.Reac
           onInputChange={(e, value) => {
             setCourseFilters('name', value)
           }}
-          defaultValue={courses?.data.filter((m) => m.id === filters.course_id)[0]}
+          defaultValue={courseList?.data.filter((m) => m.id === filters.course_id)[0]}
           onChange={(event, value, reason, details) => {
             setFilter('course_id', details?.option.id ?? '')
           }}

@@ -46,6 +46,7 @@ const fr = {
 
   // action words
   actions_delete: 'Supprimer',
+  actions_password: 'Le mot de passe',
   actions_remove: 'Retirer',
   actions_edit: 'Modifier',
   actions_add: 'Ajouter',
@@ -314,6 +315,11 @@ const fr = {
   // sidebar menu locales
   sidebar_menu_code_btn: 'Codons',
   sidebar_menu_catalog: 'Catalogue',
+  sidebar_menu_catalog_tooltip: 'All the official courses are listed here.',
+  sidebar_menu_market: 'Market',
+  sidebar_menu_market_tooltip: 'Content created by community and partners here.',
+  sidebar_menu_sandbox: 'Sandbox',
+  sidebar_menu_sandbox_tooltip: 'It’s an open code editor. Build anything you want here.',
   sidebar_menu_tribes: 'Tribus',
   sidebar_menu_my_notes: 'Mes notes',
   sidebar_menu_friends: 'Amis',
@@ -413,6 +419,7 @@ const fr = {
   students_new_user_notification: "Les utilisateurs handicapés n'ont pas accès à cette ressource",
   students_edite_student: "Étudiant: Modifier l'élève",
 
+  member_password_updated: 'le mot de passe est {{password}} ',
   // Classes page
   classes: 'Des classes',
   classes_add_class: 'Ajouter une classe',

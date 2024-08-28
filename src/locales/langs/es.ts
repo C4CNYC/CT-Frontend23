@@ -46,6 +46,7 @@ const es = {
 
   // action words
   actions_delete: 'Borrar',
+  actions_password: 'Contraseña',
   actions_remove: 'Eliminar',
   actions_edit: 'Editar',
   actions_add: 'Añadir',
@@ -314,6 +315,11 @@ const es = {
   // sidebar menu locales
   sidebar_menu_code_btn: 'Codifiquemos',
   sidebar_menu_catalog: 'Catálogo',
+  sidebar_menu_catalog_tooltip: 'All the official courses are listed here.',
+  sidebar_menu_market: 'Market',
+  sidebar_menu_market_tooltip: 'Content created by community and partners here.',
+  sidebar_menu_sandbox: 'Sandbox',
+  sidebar_menu_sandbox_tooltip: 'It’s an open code editor. Build anything you want here.',
   sidebar_menu_tribes: 'Tribus',
   sidebar_menu_my_notes: 'Mis notas',
   sidebar_menu_friends: 'Amigos',
@@ -411,6 +417,8 @@ const es = {
     'Al desactivar esta opción, el usuario recibirá automáticamente un correo electrónico de verificación.',
   students_new_user_notification: 'Los usuarios discapacitados no tienen acceso a este recurso',
   students_edite_student: 'Estudiante: Editar estudiante',
+
+  member_password_updated: 'La contraseña es {{password}} ',
 
   // Classes page
   classes: 'Clases',

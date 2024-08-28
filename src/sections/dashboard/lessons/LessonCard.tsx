@@ -24,9 +24,10 @@ import { useTranslate } from '@/utils/translateHelper'
 interface Props {
   lesson: ILesson
   index?: number
+  refetch?: () => void
 }
 
-export default function LessonCard({ lesson, index }: Props): React.ReactElement | null {
+export default function LessonCard({ lesson, index, refetch }: Props): React.ReactElement | null {
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -42,6 +43,7 @@ export default function LessonCard({ lesson, index }: Props): React.ReactElement
     if (lesson.id) {
       try {
         await deleteLesson({ id: lesson.id }).unwrap()
+        if (refetch) refetch()
         enqueueSnackbar(translate('lessons_deleted_msg'))
       } catch (e: any) {
         enqueueSnackbar(e.data.message, {
@@ -202,6 +204,7 @@ export default function LessonCard({ lesson, index }: Props): React.ReactElement
             type: lesson.type,
             duration: lesson.duration,
           }}
+          refetch={refetch}
         >
           <MenuItem>
             <Iconify

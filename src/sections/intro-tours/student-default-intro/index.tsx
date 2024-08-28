@@ -8,11 +8,11 @@ import { useSelector } from '@/redux/store'
 
 import TooltipTourCodePanel from '../tour-tooltip'
 
-import { TOUR_STEPS_QUEST } from './config'
+import { STUDENT_DEFAULT_INTRO } from './config'
 
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
 
-export const QuestPageTour = () => {
+export const StudentDefaultIntro = () => {
   const dispatch = useDispatch()
   const [slideIndex, setSlideIndex] = useState(0)
   const isTourStarted = useSelector((state) => state.tour.isStarted)
@@ -28,7 +28,7 @@ export const QuestPageTour = () => {
   }
 
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_QUEST_TOUR')
+    const hasSeenTour = localStorage.getItem('HAS_SEEN_STUDENT_DEFAULT_INTRO')
 
     if (hasSeenTour) {
       return
@@ -36,7 +36,7 @@ export const QuestPageTour = () => {
 
     setTimeout(() => {
       dispatch(setStartTour(true))
-      localStorage.setItem('HAS_SEEN_QUEST_TOUR', 'true')
+      localStorage.setItem('HAS_SEEN_STUDENT_DEFAULT_INTRO', 'true')
     }, 1000)
   }, [isTourStarted, dispatch])
 
@@ -45,7 +45,7 @@ export const QuestPageTour = () => {
       callback={handleJoyrideCallback}
       run={isTourStarted}
       tooltipComponent={TooltipTourCodePanel}
-      steps={TOUR_STEPS_QUEST}
+      steps={STUDENT_DEFAULT_INTRO}
       showSkipButton={false}
       showProgress
       stepIndex={slideIndex}
@@ -56,4 +56,4 @@ export const QuestPageTour = () => {
 
 const JOY_RIDE_OPTIONS = { options: { zIndex: 10000 } }
 
-export default QuestPageTour
+export default StudentDefaultIntro

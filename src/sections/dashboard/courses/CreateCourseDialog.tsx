@@ -61,6 +61,7 @@ interface Prop {
   children: React.ReactElement
   isEdit?: boolean
   id: string
+  refetch: () => void
 }
 
 export default function CreateCourseDialog({
@@ -68,6 +69,7 @@ export default function CreateCourseDialog({
   isEdit = false,
   children,
   defaultValues,
+  refetch,
 }: Prop): React.ReactElement {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
@@ -147,6 +149,7 @@ export default function CreateCourseDialog({
       enqueueSnackbar(
         !isEdit ? translate('messages_create_success') : translate('messages_update_success')
       )
+      if (refetch) refetch()
       methods.reset()
       setOpen(false)
     } catch (error: any) {

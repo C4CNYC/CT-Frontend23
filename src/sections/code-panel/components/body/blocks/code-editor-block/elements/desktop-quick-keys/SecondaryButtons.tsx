@@ -1,6 +1,8 @@
 import { Box, Divider } from '@mui/material'
-import { MdKeyboardHide } from '@react-icons/all-files/md/MdKeyboardHide'
-import { TbTool } from '@react-icons/all-files/tb/TbTool'
+import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
+import { FaKeyboard } from '@react-icons/all-files/fa6/FaKeyboard'
+
+import { PasteInitiate } from '@root/src/sections/code-panel/lib/events'
 
 import QuickButton from './QuickButton'
 
@@ -13,40 +15,120 @@ export default function SecondaryButtons({
 }) {
   return (
     <Box sx={{ height: 30, display: 'flex' }}>
-      <QuickButton sx={{ minWidth: 30 }}> {'<'} </QuickButton>
-      <QuickButton sx={{ minWidth: 30 }}> {'>'} </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate('<')}
+      >
+        {' '}
+        {'<'}{' '}
+      </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate('>')}
+      >
+        {' '}
+        {'>'}{' '}
+      </QuickButton>
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}> {'/'} </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate('/')}
+      >
+        {' '}
+        {'/'}{' '}
+      </QuickButton>
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}> {'{ }'} </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate('{ }')}
+      >
+        {' '}
+        {'{ }'}{' '}
+      </QuickButton>
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}> = </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate('( )')}
+      >
+        {' '}
+        {'( )'}{' '}
+      </QuickButton>
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}> + </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate('=')}
+      >
+        {' '}
+        ={' '}
+      </QuickButton>
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}> " </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate('+')}
+      >
+        {' '}
+        +{' '}
+      </QuickButton>
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}> ' </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate('"')}
+      >
+        {' '}
+        "{' '}
+      </QuickButton>
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}> : </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate("'")}
+      >
+        {' '}
+        '{' '}
+      </QuickButton>
 
       <VerticalDivider />
 
-      <QuickButton sx={{ minWidth: 30 }}> ; </QuickButton>
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate(':')}
+      >
+        {' '}
+        :{' '}
+      </QuickButton>
+
+      <VerticalDivider />
+
+      <QuickButton
+        sx={{ minWidth: 30 }}
+        onClick={PasteInitiate(';')}
+      >
+        {' '}
+        ;{' '}
+      </QuickButton>
+
+      <VerticalDivider />
+
+      <QuickButton
+        tooltipTitle='Functions'
+        onClick={handleChangeButtons}
+        sx={{ minWidth: 30 }}
+      >
+        <FaKeyboard size={20} />
+      </QuickButton>
 
       <VerticalDivider />
 
@@ -55,17 +137,7 @@ export default function SecondaryButtons({
         onClick={handleClose}
         tooltipTitle='Compress'
       >
-        <MdKeyboardHide size={20} />
-      </QuickButton>
-
-      <VerticalDivider />
-
-      <QuickButton
-        tooltipTitle='Back'
-        onClick={handleChangeButtons}
-        sx={{ minWidth: 30 }}
-      >
-        <TbTool size={20} />
+        <FaAngleLeft size={20} />
       </QuickButton>
     </Box>
   )

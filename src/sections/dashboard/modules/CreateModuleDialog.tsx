@@ -44,6 +44,7 @@ interface Prop {
   isEdit?: boolean
   id?: string
   moduleTips?: string[] | []
+  refetch?: () => void
 }
 
 interface TabPanelProps {
@@ -65,7 +66,12 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
     >
       {value === index && (
         <Box sx={TAB_SX}>
-          <Typography>{children}</Typography>
+          <Typography
+            paragraph={false}
+            component='div'
+          >
+            {children}
+          </Typography>
         </Box>
       )}
     </div>
@@ -87,6 +93,7 @@ export default function CreateModuleDialog({
   children,
   defaultValues,
   moduleTips,
+  refetch,
 }: Prop): React.ReactElement {
   const { query } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
@@ -145,6 +152,7 @@ export default function CreateModuleDialog({
           tips: data.tips.trim() !== '' && moduleTips ? [...moduleTips, data.tips] : [],
           duration: data.duration?.trim(),
         }).unwrap()
+        if (refetch) refetch()
         if (uploadedFile) {
           file.append('file', uploadedFile)
           await updateAvatar({ id, file }).unwrap()
@@ -154,6 +162,7 @@ export default function CreateModuleDialog({
           ...data,
           duration: data?.duration?.trim() ?? '1 month',
         }).unwrap()
+        if (refetch) refetch()
         if (query.course_id) {
           await addToCourse({
             id: query.course_id as string,
@@ -168,7 +177,7 @@ export default function CreateModuleDialog({
       enqueueSnackbar(
         !isEdit ? translate('messages_create_success') : translate('messages_update_success')
       )
-      methods.reset()
+      methods.reset(undefined, { keepDirtyValues: true })
       handleClose()
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {

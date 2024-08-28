@@ -95,7 +95,7 @@ const Navigation: FC<INavigation> = ({
             <Button sx={FEEDBACK_BTN_SX}>
               <FeedbackIcon
                 size={30}
-                color={theme.palette.text.secondary}
+                color={'#91A5B1'}
               />
             </Button>
           </LessonFeedback>

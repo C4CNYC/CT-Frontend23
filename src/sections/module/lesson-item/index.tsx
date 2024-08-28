@@ -28,7 +28,6 @@ import {
   MODE_TITLE_SX,
   SEE_MORE_SX,
   getStartLinkSx,
-  getLessonContentSx,
   getLessonSx,
 } from './constants'
 import LessonDialog from './LessonDialog'
@@ -105,35 +104,39 @@ export default function LessonItem({
         locked={locked}
       />
 
-      <Stack sx={getLessonContentSx(isMobile)}>
-        <Stack>
-          <Typography
-            variant='h4'
-            mb={1}
-          >
-            {lesson.name}
-          </Typography>
-          <Typography
-            variant='body1'
-            mb={lesson?.description?.length < MAX_DESC ? 3 : 0}
-          >
-            {lesson?.description?.length < MAX_DESC
-              ? lesson?.description
-              : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`}
-          </Typography>
-          {lesson?.description?.length > MAX_DESC ? (
-            <>
-              <Collapse in={openDetails}>{lesson?.description?.slice(47)}</Collapse>
-              <Button
-                onClick={() => {
-                  setOpenDetails(!openDetails)
-                }}
-                sx={SEE_MORE_SX}
-              >
-                See more {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
-              </Button>
-            </>
-          ) : null}
+      <Stack>
+        <Typography
+          variant='h4'
+          mb={1}
+        >
+          {lesson.name}
+        </Typography>
+        <Typography
+          variant='body1'
+          mb={lesson?.description?.length < MAX_DESC ? 1 : 0}
+        >
+          {lesson?.description?.length < MAX_DESC
+            ? lesson?.description
+            : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`}
+        </Typography>
+        {lesson?.description?.length > MAX_DESC ? (
+          <>
+            <Collapse in={openDetails}>{lesson?.description?.slice(47)}</Collapse>
+            <Button
+              onClick={() => {
+                setOpenDetails(!openDetails)
+              }}
+              sx={SEE_MORE_SX}
+            >
+              See more {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
+            </Button>
+          </>
+        ) : null}
+        <Stack
+          direction='row'
+          justifyContent='space-between'
+          alignItems='flex-end'
+        >
           <Stack
             direction='row'
             gap={2}

@@ -24,9 +24,13 @@ import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface
+  refetch: () => void
 }
 
-export default function CourseCard({ course }: ICourseCardProps): React.ReactElement | null {
+export default function CourseCard({
+  course,
+  refetch,
+}: ICourseCardProps): React.ReactElement | null {
   const { name, level, price, description, active, cover } = course
   const { enqueueSnackbar } = useSnackbar()
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -62,6 +66,7 @@ export default function CourseCard({ course }: ICourseCardProps): React.ReactEle
       setLoading(false)
       setOpenConfirm(false)
       enqueueSnackbar(translate('courses_delete_msg'))
+      if (refetch) refetch()
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: 'error',
@@ -207,6 +212,7 @@ export default function CourseCard({ course }: ICourseCardProps): React.ReactEle
             initial_stars: course.initial_stars,
             initial_enrolled: course.initial_enrolled,
           }}
+          refetch={refetch}
         >
           <MenuItem>
             <Iconify
