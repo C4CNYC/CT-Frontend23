@@ -7,6 +7,7 @@ import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
 import { useSelector } from '@/redux/store'
+import { initListeners } from '@root/src/sections/code-panel/lib/listeners'
 
 import { RoomStatus } from '../components/status-label'
 
@@ -64,12 +65,8 @@ export const useCodeEditorCollab = ({
     setActiveFile,
     onResetFileManager,
     defaultFileName,
-    // preloadedCode,
+    //preloadedCode,
   } = useMemoizedProps(propsToMemoize)
-
-  const onCreateEditor = (view: EditorView): void => {
-    editorView.current = view
-  }
 
   const clearSocketData = useCallback((): void => {
     if (initRoomDataRef.current.mode === EditorMode.Owner) {
@@ -103,6 +100,10 @@ export const useCodeEditorCollab = ({
     onCommentIconClick,
   })
 
+  const onCreateEditor = (view: EditorView): void => {
+    editorView.current = view
+    initListeners(view, editorRef, { preloadedCode: preloadedCode ?? '' }, codeMirrorProps.lineWrap)
+  }
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
       if (!socket) return

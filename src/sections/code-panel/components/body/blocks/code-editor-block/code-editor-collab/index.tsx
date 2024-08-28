@@ -18,7 +18,7 @@ import FileModal from './components/file-modal'
 import FileSwitcher from './components/file-switcher'
 import StatusLabel, { RoomStatus } from './components/status-label'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
-import { EditorMode } from './hook/constants'
+import { BASIC_SETUP, EditorMode } from './hook/constants'
 import { useFileManager } from './hook/file-manager'
 import { useStyles } from './styles'
 
@@ -237,7 +237,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             key={key}
             className={className}
             height='100%'
-            basicSetup={false}
+            basicSetup={BASIC_SETUP}
             theme='dark'
             extensions={extensions}
             readOnly={isReadOnly}

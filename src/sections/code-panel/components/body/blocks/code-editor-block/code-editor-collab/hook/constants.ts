@@ -1,12 +1,14 @@
-export const BASIC_SETUP = {
+import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup'
+
+export const BASIC_SETUP: BasicSetupOptions = {
   highlightActiveLineGutter: true,
   foldGutter: true,
   dropCursor: true,
   allowMultipleSelections: true,
-  indentOnInput: true,
+  indentOnInput: false,
   bracketMatching: true,
   closeBrackets: true,
-  autocompletion: true,
+  autocompletion: false,
   rectangularSelection: true,
   crosshairCursor: true,
   highlightActiveLine: true,
