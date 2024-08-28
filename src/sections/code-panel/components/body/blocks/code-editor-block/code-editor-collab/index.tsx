@@ -1,5 +1,6 @@
-import { type FC, memo, useEffect, useMemo } from 'react'
+import { type FC, memo, useEffect, useMemo, useState } from 'react'
 
+import { Text } from '@codemirror/state'
 import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
 import { useRouter } from 'next/router'
@@ -64,36 +65,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const { user, isInitialized: authIsInitialized } = useAuthContext()
   const { query } = useRouter()
   const dispatch = useDispatch()
-  const localstorageCode = useMemo(() => {
-    if (mode === EditorMode.Owner) {
-      if (prevLessonCode) {
-        return prevLessonCode
-      }
-      const localStorageKey = getLocalStorageRoomKey(`${lessonId}`)
-      const localStorageCodeValue = localStorage.getItem(localStorageKey)
-      if (localStorageCodeValue) {
-        try {
-          const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
-          const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
-          if (code) {
-            return code
-          }
-        } catch (e) {
-          return localStorageCodeValue
-        }
-      }
-    }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId])
-
-  const onChangeCodemirrorValue = (value: string) => {
-    onChangeCodemirrorValueFromProps(value)
-    onChangeStreamingDocInfoFromProps?.(value as any)
-    if (value) {
-      const localStorageKey = getLocalStorageRoomKey(`${lessonId}`)
-      localStorage.setItem(localStorageKey, value)
-    }
-    void updateCommentWidgetPosition()
-  }
+  const [codeValue, setCodeValue] = useState<string | undefined>('')
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
@@ -101,6 +73,16 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     }
     onChangeStreamingDocInfoFromProps?.(doc)
   }
+
+  const preloadMemo = useMemo(() => {
+    if (preloadedCode) {
+      return preloadedCode
+    }
+    if (prevLessonCode && prevLessonId === lessonId) {
+      return prevLessonCode
+    }
+    return ''
+  }, [lessonId, preloadedCode])
 
   const {
     activeFile,
@@ -120,11 +102,43 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     mode,
   })
 
+  const localstorageCode = useMemo(() => {
+    if (mode === EditorMode.Owner) {
+      if (prevLessonCode) {
+        return prevLessonCode
+      }
+      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${activeFile}`)
+      const localStorageCodeValue = localStorage.getItem(localStorageKey)
+      if (localStorageCodeValue) {
+        try {
+          const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
+          const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
+          if (code) {
+            return code
+          }
+        } catch (e) {
+          return localStorageCodeValue
+        }
+      }
+    }
+  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId, activeFile])
+
+  const onChangeCodemirrorValue = (value: string) => {
+    onChangeCodemirrorValueFromProps(value)
+    onChangeStreamingDocInfoFromProps?.(value as any)
+    if (value) {
+      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${activeFile}`)
+      localStorage.setItem(localStorageKey, value)
+    }
+    void updateCommentWidgetPosition()
+  }
+
   const {
     editorRef,
     isLoading,
     extensions,
     streamingDoc,
+    setStreamingDoc,
     key,
     onCreateEditor,
     roomStatus,
@@ -154,11 +168,13 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     defaultFileName,
   })
 
-  const codeValue =
-    prevLessonCode ??
-    localstorageCode ??
-    (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
-
+  useEffect(() => {
+    setCodeValue(
+      prevLessonCode ??
+        localstorageCode ??
+        (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
+    )
+  }, [preloadedCode, localstorageCode, streamingDoc, onChangeCodemirrorValue])
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
   useEffect(() => {
@@ -171,6 +187,17 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   useEffect(() => {
     onChangeCodemirrorValue(codeValue as string)
   }, [])
+
+  useEffect(() => {
+    if (!preloadedCode) return
+    window.addEventListener('reset-lesson-event', (event) => {
+      if (preloadedCode) {
+        onChangeCodemirrorValue(preloadedCode as string)
+        setCodeValue(preloadedCode as string)
+        setStreamingDoc(Text.of([preloadedCode]))
+      }
+    })
+  }, [preloadedCode])
 
   return (
     <div
