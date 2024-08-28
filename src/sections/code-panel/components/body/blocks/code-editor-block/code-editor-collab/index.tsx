@@ -195,6 +195,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         onChangeCodemirrorValue(preloadedCode as string)
         setCodeValue(preloadedCode as string)
         setStreamingDoc(Text.of([preloadedCode]))
+      } else {
+        onChangeCodemirrorValue('')
+        setCodeValue('')
+        setStreamingDoc(Text.of(['']))
       }
     })
   }, [preloadedCode])

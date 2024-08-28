@@ -17,6 +17,7 @@ import {
   useCreateModuleMutation,
   useUpdateModuleAvatarMutation,
   useUpdateModuleMutation,
+  useUpdateBackgroundImageMutation,
 } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -101,11 +102,13 @@ export default function CreateModuleDialog({
   const [open, setOpen] = useState(false)
   const [value, setValue] = React.useState(0)
   const [uploadedFile, setUploadedFile] = useState<null | File>(null)
+  const [uploadedBackground, setUploadedBackground] = useState<null | File>(null)
 
   const [addToCourse, { isLoading: isAddToCourseLoading }] = useAddModuleToCourseMutation()
   const [editModule, { isLoading: isEditLoading }] = useUpdateModuleMutation()
   const [createModule, { isLoading: isCreateLoading }] = useCreateModuleMutation()
   const [updateAvatar] = useUpdateModuleAvatarMutation()
+  const [updateBackgroundImage] = useUpdateBackgroundImageMutation()
   const translate = useTranslate()
 
   const handleClickOpen = (): void => {
@@ -143,6 +146,7 @@ export default function CreateModuleDialog({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       const file = new FormData()
+      const background = new FormData()
       if (isEdit && id) {
         await editModule({
           id,
@@ -150,17 +154,20 @@ export default function CreateModuleDialog({
           tips: data.tips.trim() !== '' && moduleTips ? [...moduleTips, data.tips] : [],
           duration: data.duration?.trim(),
         }).unwrap()
-        if (refetch) refetch()
         if (uploadedFile) {
           file.append('file', uploadedFile)
           await updateAvatar({ id, file }).unwrap()
         }
+        if (uploadedBackground) {
+          background.append('background', uploadedBackground)
+          await updateBackgroundImage({ id, background }).unwrap()
+        }
+        if (refetch) refetch()
       } else {
         const m = await createModule({
           ...data,
           duration: data?.duration?.trim() ?? '1 month',
         }).unwrap()
-        if (refetch) refetch()
         if (query.course_id) {
           await addToCourse({
             id: query.course_id as string,
@@ -171,6 +178,11 @@ export default function CreateModuleDialog({
           file.append('file', uploadedFile)
           await updateAvatar({ id: m.id, file }).unwrap()
         }
+        if (uploadedBackground) {
+          background.append('background', uploadedBackground)
+          await updateBackgroundImage({ id: m.id, background }).unwrap()
+        }
+        if (refetch) refetch()
       }
       enqueueSnackbar(
         !isEdit ? translate('messages_create_success') : translate('messages_update_success')
@@ -248,6 +260,8 @@ export default function CreateModuleDialog({
                     <MainTab
                       uploadedFile={uploadedFile}
                       setUploadedFile={setUploadedFile}
+                      uploadedBackground={uploadedBackground}
+                      setUploadedBackground={setUploadedBackground}
                     />
                   </Box>
                 </Grid>
