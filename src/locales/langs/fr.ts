@@ -315,6 +315,11 @@ const fr = {
   // sidebar menu locales
   sidebar_menu_code_btn: 'Codons',
   sidebar_menu_catalog: 'Catalogue',
+  sidebar_menu_catalog_tooltip: 'All the official courses are listed here.',
+  sidebar_menu_market: 'Market',
+  sidebar_menu_market_tooltip: 'Content created by community and partners here.',
+  sidebar_menu_sandbox: 'Sandbox',
+  sidebar_menu_sandbox_tooltip: 'It’s an open code editor. Build anything you want here.',
   sidebar_menu_tribes: 'Tribus',
   sidebar_menu_my_notes: 'Mes notes',
   sidebar_menu_friends: 'Amis',
