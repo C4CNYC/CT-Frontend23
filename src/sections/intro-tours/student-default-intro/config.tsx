@@ -11,7 +11,7 @@ export const STUDENT_DEFAULT_INTRO = [
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '290px' }}
         />
-        Enter a join code from jour teatcher
+        Enter a join-code from your teacher.
       </div>
     ),
     disableBeacon: true,
@@ -19,15 +19,15 @@ export const STUDENT_DEFAULT_INTRO = [
   },
   {
     target: '.defaultIntroStudentStep2',
-    title: <div>Menu</div>,
-    content: <div>From here you can travel on the platform</div>,
+    title: <div>Catalog</div>,
+    content: <div>This is where you choose your adventure and start coding.</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },
   {
     target: '.defaultIntroStudentStep3',
-    title: <div>Profile</div>,
-    content: <div>Here you can edit your profile</div>,
+    title: <div>Register</div>,
+    content: <div>Register here or login to save your progress.</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },

@@ -117,6 +117,17 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['Students', 'ClassesStudent'],
     }),
+    studentResetPassword: builder.mutation<
+      void,
+      { schoolId: string; studentId: string; password: string }
+    >({
+      query: ({ schoolId, studentId, password }) => ({
+        url: `/manager/school/${schoolId}/student/${studentId}/password`,
+        method: 'PATCH',
+        body: { password },
+      }),
+      invalidatesTags: ['Students'],
+    }),
     deleteStudent: builder.mutation<void, { schoolId: string; studentId: string }>({
       query: ({ schoolId, studentId }) => ({
         url: `/manager/school/${schoolId}/student/${studentId}`,
@@ -154,4 +165,5 @@ export const {
   useUpdateStudentMutation,
   useUpdateStudentAvatarMutation,
   useInviteStudentMutation,
+  useStudentResetPasswordMutation,
 } = extendedApi

@@ -55,9 +55,9 @@ export default function CoursesListPage(): React.ReactElement {
     )
   }
 
-  if (!data?.data.length /*&& !publicCourses?.data.length*/) {
-    return <EmptyContent title='You have no courses' />
-  }
+  // if (!data?.data.length /*&& !publicCourses?.data.length*/) {
+  //   return <EmptyContent title='You have no courses' />
+  // }
 
   return (
     <>
@@ -99,49 +99,53 @@ export default function CoursesListPage(): React.ReactElement {
           filters={filters}
           setFilter={setFilter}
         />
-        <SimpleInfiniteList
-          hasNextPage={/*publicCourses?.meta.hasNextPage ??*/ data?.meta.hasNextPage ?? false}
-          onLoadMore={() => {
-            // if (publicCourses?.meta.take !== Number(filters?.take)) return
-            setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
-          }}
-          loading={/*isPublicLoading ?? isPublicFetching ??*/ isLoading ?? isFetching}
-        >
-          <Box
-            sx={{
-              gap: 3,
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(2, 1fr)',
-                md: 'repeat(3, 1fr)',
-              },
+        {!data?.data.length ? (
+          <EmptyContent title='You have no courses' />
+        ) : (
+          <SimpleInfiniteList
+            hasNextPage={/*publicCourses?.meta.hasNextPage ??*/ data?.meta.hasNextPage ?? false}
+            onLoadMore={() => {
+              // if (publicCourses?.meta.take !== Number(filters?.take)) return
+              setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
             }}
+            loading={/*isPublicLoading ?? isPublicFetching ??*/ isLoading ?? isFetching}
           >
-            {isAdmin ? (
-              <>
-                {/* {publicCourses?.data.map((course, index) => (
+            <Box
+              sx={{
+                gap: 3,
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: 'repeat(1, 1fr)',
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)',
+                },
+              }}
+            >
+              {isAdmin ? (
+                <>
+                  {/* {publicCourses?.data.map((course, index) => (
                   <CourseCard
                     key={index}
                     course={course}
                   />
                 ))} */}
-                {data?.data.map((course, index) => (
-                  <CourseCard
-                    key={index}
-                    course={course}
-                    refetch={refetch}
-                  />
-                ))}
-              </>
-            ) : null}
-            {isFetching
-              ? Array(24)
-                  .fill(null)
-                  .map((v, i) => <SkeletonCourses key={i} />)
-              : null}
-          </Box>
-        </SimpleInfiniteList>
+                  {data?.data.map((course, index) => (
+                    <CourseCard
+                      key={index}
+                      course={course}
+                      refetch={refetch}
+                    />
+                  ))}
+                </>
+              ) : null}
+              {isFetching
+                ? Array(24)
+                    .fill(null)
+                    .map((v, i) => <SkeletonCourses key={i} />)
+                : null}
+            </Box>
+          </SimpleInfiniteList>
+        )}
       </Container>
     </>
   )

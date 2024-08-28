@@ -1,6 +1,5 @@
 import { AiOutlineSolution } from '@react-icons/all-files/ai/AiOutlineSolution'
 import { BiConversation } from '@react-icons/all-files/bi/BiConversation'
-import { BsFileEarmarkTextFill } from '@react-icons/all-files/bs/BsFileEarmarkTextFill'
 import { FaRegStickyNote } from '@react-icons/all-files/fa/FaRegStickyNote'
 import { FaSchool } from '@react-icons/all-files/fa/FaSchool'
 import { FaTasks } from '@react-icons/all-files/fa/FaTasks'
@@ -24,6 +23,10 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import FeedbackDialog from '@/sections/feedback/FeedbackDialog'
 import InviteFriendsModal from '@/sections/invite-friends/InviteFriendsModal'
 import MenuTribesList from '@/sections/main/menu-list/MenuTribesList'
+import CatalogMenuItem from '@root/src/sections/menu-items-components/catalog-item'
+import MarketMenuItem from '@root/src/sections/menu-items-components/market-item'
+import SandboxMenuItem from '@root/src/sections/menu-items-components/sandbox-item'
+import MyCreationsMenu from '@root/src/sections/my-creations-menu'
 
 export const admin = {
   subheader: 'sidebar_menu_administration',
@@ -114,9 +117,22 @@ export const courses = {
   subheader: '',
   items: [
     {
-      title: 'sidebar_menu_catalog',
       path: STUDENT_PATH_DASHBOARD.courses.root,
-      icon: <BsFileEarmarkTextFill size={20} />,
+      title: 'sidebar_menu_catalog',
+      icon: <FaUserFriends size={20} />,
+      component: () => <CatalogMenuItem />,
+    },
+    {
+      path: '',
+      title: 'sidebar_menu_market',
+      icon: <FaUserFriends size={20} />,
+      component: () => <MarketMenuItem />,
+    },
+    {
+      path: '',
+      title: 'sidebar_menu_my_sandbox',
+      icon: <FaUserFriends size={20} />,
+      component: () => <SandboxMenuItem />,
     },
   ],
 }
@@ -160,6 +176,12 @@ export const social = {
 export const apps = {
   subheader: 'sidebar_menu_apps',
   items: [
+    {
+      path: '',
+      title: 'sidebar_menu_my_creations',
+      icon: <FaUserFriends size={20} />,
+      component: () => <MyCreationsMenu />,
+    },
     {
       title: 'sidebar_menu_gallery',
       path: STUDENT_PATH_DASHBOARD.gallery.root,

@@ -49,6 +49,7 @@ const en = {
 
   // action words
   actions_delete: 'Delete',
+  actions_password: 'Change Password',
   actions_remove: 'Remove',
   actions_edit: 'Edit',
   actions_add: 'Add',
@@ -317,8 +318,14 @@ const en = {
   // sidebar menu locales
   sidebar_menu_code_btn: "Let's code",
   sidebar_menu_catalog: 'Catalog',
+  sidebar_menu_catalog_tooltip: 'All the official courses are listed here.',
+  sidebar_menu_market: 'Market',
+  sidebar_menu_market_tooltip: 'Content created by community and partners here.',
+  sidebar_menu_sandbox: 'Sandbox',
+  sidebar_menu_sandbox_tooltip: 'It’s an open code editor. Build anything you want here.',
   sidebar_menu_tribes: 'Tribes',
   sidebar_menu_my_notes: 'My Notes',
+  sidebar_menu_my_creations: 'My creations',
   sidebar_menu_friends: 'Friends',
   sidebar_menu_gallery: 'Gallery',
   sidebar_menu_invite_friends: 'Invite Friends',
@@ -355,6 +362,7 @@ const en = {
     'Disabling this will automatically send the user a verification email',
   verified_user_info: "Disabled users doesn't have access to this resource",
   members_user_edit_user: 'User: Edit user',
+  member_password_updated: 'Password is {{password}} ',
 
   //  school page
   schools: 'Schools',
@@ -636,7 +644,7 @@ const en = {
   tribes_sign_in_to_join: 'Sign in to join',
   tribes_join_a_tribe: 'Join a tribe',
   tribes_have_you_been_invited:
-    'Have you been invited to a tribe? Then enter your join-code below or follow the join-link. Have fun!',
+    'Have you been invited to a tribe? Then enter your join-code below or follow the join-link.',
   tribes_sign_up_to_join: 'Sign up to join',
   tribes_join_class: 'Join Class',
   tribes_enter_join_code: 'Enter your Join Code to find your class',

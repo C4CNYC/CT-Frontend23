@@ -59,13 +59,13 @@ export default function JoinClass(): React.ReactElement {
         <Stack
           sx={{
             flexDirection: 'row',
-            flexWrap: { xs: 'wrap', sm: 'wrap' },
+            flexWrap: { xs: 'wrap', sm: 'wrap', md: 'wrap', lg: 'no-wrap' },
             gap: 7,
             justifyContent: 'center',
           }}
         >
           <Stack sx={{ pt: 4 }}>
-            <Typography variant='h2'>{translate('tribes_join_a_tribe')}</Typography>
+            <Typography variant='h3'>{translate('tribes_join_a_tribe')}</Typography>
             <Typography
               variant='body1'
               sx={{ maxWidth: '350px', mt: 3 }}
@@ -129,7 +129,7 @@ export default function JoinClass(): React.ReactElement {
                 href={STUDENT_PATH_DASHBOARD.courses.root}
                 underline='none'
               >
-                “Click here”
+                “Open Catalog”
               </Link>{' '}
               to see the courses available
             </Typography>
