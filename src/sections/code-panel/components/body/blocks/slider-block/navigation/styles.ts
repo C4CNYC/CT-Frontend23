@@ -12,7 +12,7 @@ export const stylesPrev = (theme: Theme): Record<string, unknown> => {
     background: 'rgba(196, 196, 196, .5)',
     boxShadow: ' -4px 4px 4px 0px rgba(0, 0, 0, 0.25)',
     '&:hover': {
-      background: '#fff',
+      background: '#ced3d6',
       border: 'none',
       boxShadow: ' -4px 4px 4px 0px rgba(0, 0, 0, 0.25)',
       color: '#364954',

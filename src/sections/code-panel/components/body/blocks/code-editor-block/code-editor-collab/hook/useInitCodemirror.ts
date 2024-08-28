@@ -1,4 +1,4 @@
-import { type MutableRefObject, useCallback, useState } from 'react'
+import { type MutableRefObject, useCallback, useState, useMemo } from 'react'
 
 import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect, Text } from '@codemirror/state'
@@ -43,6 +43,8 @@ export interface UseBaseInitReturn {
   extensions?: Extension[]
   baseInit: (fileName: File) => Promise<void>
   setIsLoading: (isLoading: boolean) => void
+  setStreamingDoc: (streamingDoc: Text) => void
+  lineWrap: Compartment
 }
 
 export const useInitCodemirror = ({
@@ -66,9 +68,10 @@ export const useInitCodemirror = ({
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
   const prevLessonJson = localStorage.getItem(getLocalStorageRoomKey(prevLessonId as string))
+  const lineWrap = useMemo(() => new Compartment(), [])
+
   const baseInit = useCallback(
     async (fileName: File) => {
-      const lineWrap = new Compartment()
       const addCursor = StateEffect.define<Cursor>()
       commentEffectRef.current = StateEffect.define<CommentEffect>()
       const { version, doc, cursorName, docInfo, updates } = await getDocument({
@@ -138,8 +141,10 @@ export const useInitCodemirror = ({
     key,
     extensions,
     streamingDoc,
+    setStreamingDoc,
     isLoading,
     baseInit,
     setIsLoading,
+    lineWrap,
   }
 }
