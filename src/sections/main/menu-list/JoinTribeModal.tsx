@@ -23,7 +23,7 @@ import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 
-import { enqueueSnackbar, FormProvider, RHFTextField, useSnackbar } from '@/components'
+import { enqueueSnackbar, FormProvider, RHFTextField } from '@/components'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { RootState } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
