@@ -109,7 +109,7 @@ export default function ModulePage(): React.ReactElement {
       <Container
         maxWidth={themeStretch ? false : 'xl'}
         disableGutters
-        sx={getPageContainerSx(isMobile, theme.palette.mode === 'light', currentModule?.avatar)}
+        sx={getPageContainerSx(isMobile, theme.palette.mode === 'light', currentModule?.background)}
       >
         <CustomBreadcrumbs
           sx={getBreadcrumbsSx(isMobile, theme)}

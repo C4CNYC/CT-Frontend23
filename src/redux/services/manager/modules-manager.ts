@@ -72,6 +72,17 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Modules' }],
     }),
+    updateBackgroundImage: builder.mutation<
+      IModule & BaseResponseInterface,
+      { id: string; background: FormData }
+    >({
+      query: ({ id, background }) => ({
+        url: `/manager/module/${id}/background`,
+        method: 'PATCH',
+        body: background,
+      }),
+      invalidatesTags: [{ type: 'Modules' }],
+    }),
     createModule: builder.mutation<IModuleCreate & BaseResponseInterface, IModuleCreate>({
       query: ({ ...body }) => ({
         url: '/manager/module',
@@ -127,4 +138,5 @@ export const {
   useDeleteModuleMutation,
   useUpdateModuleMutation,
   useUpdateModuleAvatarMutation,
+  useUpdateBackgroundImageMutation,
 } = extendedApi
