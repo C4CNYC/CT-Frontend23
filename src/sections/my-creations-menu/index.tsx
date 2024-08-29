@@ -12,6 +12,7 @@ import {
 import { useResponsive } from '@root/src/hooks'
 import { useLocales } from '@root/src/locales'
 import { Role } from '@root/src/redux/services/enums/role.enum'
+import CreateLessonDialog from '@root/src/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 
 import DiamondFeatureModal from './diamond-feature-modal'
 
@@ -33,7 +34,7 @@ export default function MyCreationsMenu(): React.ReactElement {
 
   return (
     <>
-      <RoleBasedGuard roles={[Role.Admin]}>
+      <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
         {themeLayout === 'vertical' || !isDesktop ? (
           <StyledItemVertical
             depth={1}
@@ -92,7 +93,9 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
-          <MenuItem>Add New Lesson</MenuItem>
+          <CreateLessonDialog isEdit={false}>
+            <MenuItem>Add New Lesson</MenuItem>
+          </CreateLessonDialog>
           <MenuItem>My Lessons</MenuItem>
           <MenuItem>My Modules</MenuItem>
           <DiamondFeatureModal>
