@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { MenuItem, Stack, Typography } from '@mui/material'
+import { FormControlLabel, MenuItem, Stack, Switch, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -213,6 +213,18 @@ export default function StepperInfo(): React.ReactElement {
         >
           {translate('register_all_done')}
         </LoadingButton>
+        <Stack
+          pt={4}
+          pr={2}
+          alignItems='flex-start'
+        >
+          <FormControlLabel
+            sx={{ width: '100%', justifyContent: 'space-between' }}
+            control={<Switch />}
+            label='Send welcome emails'
+            labelPlacement='start'
+          />
+        </Stack>
       </FormProvider>
     </>
   )

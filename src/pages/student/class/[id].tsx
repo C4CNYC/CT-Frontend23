@@ -76,7 +76,7 @@ export default function HomeOverview(): React.ReactElement {
           <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
             <MainPageTour />
           </RoleBasedGuard>
-          <div className='tourMainStep1'>
+          <div>
             <DefaultClassInfo classData={data} />
             <Container
               maxWidth={themeStretch ? false : 'lg'}

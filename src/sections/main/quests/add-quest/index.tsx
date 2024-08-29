@@ -258,7 +258,7 @@ export default function AddQuest(): React.ReactElement {
     <>
       <Collapse in={onboardingInfo}>
         <Stack sx={getCollapseInfoBannerSx(theme)}>
-          <Typography variant='body2'>
+          <Typography variant='subtitle2'>
             <Typography
               variant='subtitle2'
               sx={{ display: 'inline-block' }}
