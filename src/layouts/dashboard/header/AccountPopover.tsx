@@ -128,7 +128,7 @@ export default function AccountPopover(): React.ReactElement {
           </MenuItem>
         </Stack>
 
-        <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
+        <RoleBasedGuard roles={[Role.Owner, Role.Admin]}>
           <Stack sx={{ p: 1 }}>
             <MenuItem
               onClick={() => {

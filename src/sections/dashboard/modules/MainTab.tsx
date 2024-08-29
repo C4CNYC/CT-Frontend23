@@ -8,9 +8,16 @@ import { HELPER_IMG_TEXT, INPUT_SX, UPLOAD_IMG_BTN } from './constants'
 interface MainTabProps {
   uploadedFile: File | null
   setUploadedFile: (file: null | File) => void
+  uploadedBackground: File | null
+  setUploadedBackground: (file: null | File) => void
 }
 
-const MainTab = ({ setUploadedFile, uploadedFile }: MainTabProps): React.ReactElement => {
+const MainTab = ({
+  setUploadedFile,
+  uploadedFile,
+  uploadedBackground,
+  setUploadedBackground,
+}: MainTabProps): React.ReactElement => {
   return (
     <>
       <Box sx={{ position: 'relative' }}>
@@ -41,6 +48,37 @@ const MainTab = ({ setUploadedFile, uploadedFile }: MainTabProps): React.ReactEl
           }
         />
         <SingleFilePreview file={uploadedFile ? URL.createObjectURL(uploadedFile) : null} />
+      </Box>
+      <Box sx={{ position: 'relative' }}>
+        {uploadedBackground ? (
+          <IconButton
+            sx={UPLOAD_IMG_BTN}
+            onClick={() => {
+              setUploadedBackground(null)
+            }}
+          >
+            <IoMdClose size='20px' />
+          </IconButton>
+        ) : null}
+        <RHFUpload
+          name='module_bg_img'
+          onDrop={(files: File[]) => {
+            setUploadedBackground(files[0])
+          }}
+          helperText={
+            <Typography
+              variant='caption'
+              noWrap
+              width='90px'
+              sx={HELPER_IMG_TEXT}
+            >
+              {uploadedBackground?.name}
+            </Typography>
+          }
+        />
+        <SingleFilePreview
+          file={uploadedBackground ? URL.createObjectURL(uploadedBackground) : null}
+        />
       </Box>
       <RHFTextField
         sx={INPUT_SX}

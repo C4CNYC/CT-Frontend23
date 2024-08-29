@@ -8,7 +8,6 @@ import { useRouter } from 'next/router'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { useDeleteModuleMutation } from '@/redux/services/manager/modules-manager'
-import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -73,7 +72,7 @@ export default function ModuleCard({ module, refetch }: any): React.ReactElement
     <>
       <Card
         component={Link}
-        href={`${MANAGER_PATH_DASHBOARD.lessons.root}?module_id=${module.id}`}
+        href={`${router.pathname}?${new URLSearchParams({ moduleId: module.id })}`}
         sx={{
           textDecoration: 'none',
           p: 2.5,

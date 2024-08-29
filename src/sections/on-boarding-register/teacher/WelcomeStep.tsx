@@ -34,6 +34,14 @@ export default function WelcomeStep({ nextStep }: { nextStep: () => void }): Rea
         {translate('login_lets_start_learning')}
       </Typography>
       <Button
+        onClick={() => {
+          nextStep()
+        }}
+        sx={LAUNCH_SESSION_BTN_SX}
+      >
+        <SessionType {...LAUNCH_SESSION} />
+      </Button>
+      <Button
         disabled={true}
         onClick={() => {}}
         sx={POPUP_SESION_BTN_SX}
@@ -42,14 +50,6 @@ export default function WelcomeStep({ nextStep }: { nextStep: () => void }): Rea
           {...POPUP_SESSION}
           disabled={true}
         />
-      </Button>
-      <Button
-        onClick={() => {
-          nextStep()
-        }}
-        sx={LAUNCH_SESSION_BTN_SX}
-      >
-        <SessionType {...LAUNCH_SESSION} />
       </Button>
     </>
   )

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { IconButton, SwipeableDrawer, Typography } from '@mui/material'
+import { IconButton, Stack, SwipeableDrawer, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { useDispatch } from 'react-redux'
 
@@ -8,6 +8,7 @@ import { Iconify } from '@/components/iconify'
 import { setSlideIndex } from '@/redux/slices/code-panel-global'
 import { setStartTour } from '@/redux/slices/tour'
 import { useTranslate } from '@/utils/translateHelper'
+import ThemeSwitcher from '@root/src/components/theme-switcher'
 import {
   resetLessonEvent,
   updateColorsEvent,
@@ -60,20 +61,27 @@ const SettingDrawer = (): React.ReactElement => {
           width='350px'
           p='16px 20px 40px 20px'
         >
-          <Box
-            mb='16px'
-            display='flex'
+          <Stack
+            justifyContent='space-between'
+            direction='row'
             alignItems='center'
+            mb='16px'
           >
-            <Iconify
-              mr='10px'
-              width='35px'
-              height='30px'
-              icon='ep:setting'
-            />
+            <Box
+              display='flex'
+              alignItems='center'
+            >
+              <Iconify
+                mr='10px'
+                width='35px'
+                height='30px'
+                icon='ep:setting'
+              />
 
-            <Typography variant='h5'>{translate('settings')}</Typography>
-          </Box>
+              <Typography variant='h5'>{translate('settings')}</Typography>
+            </Box>
+            <ThemeSwitcher />
+          </Stack>
 
           <Box
             display='grid'

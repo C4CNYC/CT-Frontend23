@@ -10,7 +10,7 @@ import DashboardLayout from '@/layouts/dashboard'
 import { useGetAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { ILesson, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetLessonsQuery, useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
 import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -78,19 +78,7 @@ export default function LessonsListPage(): React.ReactElement {
     FilterMode.global
   )
 
-  const filtersSet = !!(
-    filters?.module_id?.length ||
-    filters?.name?.length ||
-    filters?.module_id?.length
-  )
-
   const userRole = useSelector((state) => state.global?.user?.role)
-  const {
-    data: lessonsData,
-    isLoading: isLessonDataLoading,
-    isFetching: isLessonDataFetching,
-    refetch: refetchLessons,
-  } = useGetLessonsQuery(filters, { skip: userRole === Role.Admin })
   const {
     data: ownLessonsData,
     isLoading: isOwnLessonDataLoading,
@@ -104,14 +92,9 @@ export default function LessonsListPage(): React.ReactElement {
     refetch: refetchAdminLessons,
   } = useGetAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
   const [lessons, setLessons] = useState<ILesson[]>([])
-  const data =
-    filtersSet || !ownLessonsData?.data.length
-      ? userRole === Role.Admin
-        ? adminData
-        : lessonsData
-      : ownLessonsData
-  const isLoading = userRole === Role.Admin ? adminIsLoading : isLessonDataLoading
-  const isFetching = userRole === Role.Admin ? adminFetching : isLessonDataFetching
+  const data = userRole === Role.Admin ? adminData : ownLessonsData
+  const isLoading = userRole === Role.Admin ? adminIsLoading : isOwnLessonDataLoading
+  const isFetching = userRole === Role.Admin ? adminFetching : isOwnLessonDataFetching
 
   useEffect(() => {
     setLessons(data?.data ?? [])
@@ -121,7 +104,6 @@ export default function LessonsListPage(): React.ReactElement {
     if (userRole === Role.Admin) {
       refetchAdminLessons()
     } else {
-      refetchLessons()
       refetchOwnLessons()
     }
   }

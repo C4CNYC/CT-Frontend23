@@ -93,37 +93,26 @@ export default function LessonListItem({
           >
             <RxDragHandleDots2 size='24px' />
           </IconButton>
-          <Stack sx={{ width: '100%', alignItems: 'flex-end' }}>
+          <Stack sx={{ width: 'calc(100% - 50px)' }}>
             <Stack
               direction='row'
               justifyContent='space-between'
               alignItems='flex-start'
-              sx={{ width: '100%' }}
             >
               <Box
                 sx={{
-                  width: '100%',
-                  maxWidth: '160px',
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 <Typography
                   variant='subtitle1'
-                  sx={{
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    mb: 0,
-                  }}
-                  gutterBottom
+                  noWrap
                 >
                   {_.toUpper(step.title)}
                 </Typography>
                 <Typography
-                  sx={{
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                  }}
                   noWrap
                   variant='body2'
                 >
@@ -142,6 +131,7 @@ export default function LessonListItem({
 
             <Stack
               direction='row'
+              alignSelf='flex-end'
               gap={1}
               onClick={(e) => {
                 e.stopPropagation()

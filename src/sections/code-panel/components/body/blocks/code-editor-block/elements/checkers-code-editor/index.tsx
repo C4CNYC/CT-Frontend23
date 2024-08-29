@@ -39,6 +39,7 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const completedSlides = useSelector((state) => state.checkersAnimation.completedSlides)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
+  const isActivateCompeated = useSelector((state) => state.checkersAnimation.isActivateCompeated)
   const handleCollaps = (): void => {
     if (isVisible) {
       dispatch(setIsVisible(false))
@@ -97,14 +98,13 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   }
 
   return (
-    <>
-      <CheckersCompleated />
-
+    <Box sx={{ position: 'relative' }}>
+      {isActivateCompeated ? <CheckersCompleated /> : null}
       <Box
         sx={OPEN_BOX_SX}
         ref={ref}
       >
-        <div className='checkers'>
+        <div>
           <AnimatePresence>
             <m.div
               initial='visible'
@@ -150,7 +150,7 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
           </m.div>
         </AnimatePresence>
       </Stack>
-    </>
+    </Box>
   )
 }
 

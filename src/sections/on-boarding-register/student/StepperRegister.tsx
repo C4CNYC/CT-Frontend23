@@ -95,12 +95,12 @@ export default function StepperRegister({
         gap={1}
       >
         <Chip
-          label='1 number'
+          label='1 Number'
           icon={hasOneNumber ? <MdDone /> : <></>}
           color={hasOneNumber ? 'success' : 'default'}
         />
         <Chip
-          label='8+ charakters'
+          label='8+ Characters'
           icon={hasSixDigit ? <MdDone /> : <></>}
           color={hasSixDigit ? 'success' : 'default'}
         />

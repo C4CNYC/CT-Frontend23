@@ -72,7 +72,7 @@ export const anonimUserConfig: IMenuConfigItem[] = [
     title: 'i_brand_new',
     subTitle: 'register',
     icon: 'icon-park-outline:baby',
-    href: PATH_AUTH.onBoardingTeacher,
+    href: PATH_AUTH.onBoardingStudent,
   },
   {
     title: 'login_been_here',
