@@ -28,16 +28,18 @@ export default function DefaultMenuItem({
     <Tooltip
       title={`${translate(tooltip)}`}
       placement='right'
+      enterDelay={1500}
+      enterNextDelay={1500}
       componentsProps={{
         tooltip: {
           sx: {
-            bgcolor: '#000',
-            fontSize: '17px',
+            bgcolor: 'rgba(0, 0, 0, .8)',
+            fontSize: '14px',
             fontWeight: 700,
             color: '#fff',
-            p: 2,
             borderRadius: 2,
-            maxWidth: '280px',
+            p: 1,
+            maxWidth: '250px',
           },
         },
       }}
