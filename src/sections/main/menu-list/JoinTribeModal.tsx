@@ -13,24 +13,27 @@ import {
   FormGroup,
   IconButton,
   InputAdornment,
-  Theme,
   Typography,
   useTheme,
 } from '@mui/material'
 import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 
-import { enqueueSnackbar, FormProvider, RHFTextField } from '@/components'
+import { FormProvider, RHFTextField } from '@/components'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { RootState } from '@/redux/store'
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+import { IClass } from '@root/src/redux/interfaces/class.interface'
+import { PATH_AUTH } from '@root/src/routes/paths'
+
+import { AVATAR_SX, getButtonSx, inputNameStyles } from './constants'
+import SuccessJoin from './SuccessJoin'
 
 const CreateClassSchema = Yup.object().shape({
-  code: Yup.string().required('code is required'),
+  code: Yup.string().required('code is required').min(10),
 })
 
 export interface FormJoinClassProps {
@@ -46,75 +49,32 @@ enum JoinStatus {
   PENDING = 'pending',
 }
 
-export const AVATAR_SX = {
-  position: 'absolute',
-  left: {
-    xs: 'calc(50% - 20px)',
-    sm: 'calc(50% - 25px)',
-    md: 'calc(50% - 35px)',
-  },
-  top: 0,
-  width: { xs: '40px', sm: '60px', md: '80px', lg: '100px' },
-  height: { xs: '40px', sm: '60px', md: '80px', lg: '100px' },
-  background: '#1ACB7F',
-  fontSize: { xs: '35px', sm: '40px', md: '60px', lg: '70px' },
-  zIndex: 15,
-}
-
-export const inputNameStyles = (theme: Theme) => ({
-  background: theme.palette.mode === 'light' ? '#fff' : '',
-  border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
-  pt: 4,
-  pb: 3,
-  px: { xs: 0, sm: 3 },
-  maxWidth: { xs: '300px', sm: '400px', md: '550px' },
-
-  borderRadius: 2,
-  '& fieldset': { border: 'none' },
-  '.MuiInputBase-input': {
-    fontSize: { sm: '30px', md: '30px', lg: '80px' },
-    letterSpacing: '28px',
-    fontWeight: '700',
-  },
-})
-export const getButtonSx = (theme: Theme) => ({
-  background: '#43D4DD33',
-  color: '#43D4DD',
-  fontSize: '1.5rem',
-  m: '0 auto 24px',
-  minWidth: '300px',
-  '&:hover': {
-    background: theme.palette.mode === 'light' ? '' : '#fff',
-  },
-})
-
 export default function JoinClassModal({ children }: IJoinClassModal): React.ReactElement {
-  const { push } = useRouter()
   const [open, setOpenDialog] = useState<boolean>(false)
+  const [tribeInfo, setTribeInfo] = useState<null | IClass>(null)
   const translate = useTranslate()
   const profile = useSelector((state: RootState) => state.global.user)
   const theme = useTheme()
 
-  const [joinClass, { isLoading, isError, isSuccess }] = useJoinClassMutation()
+  const [joinClass, { isError, isSuccess }] = useJoinClassMutation()
   const buttonSx = useMemo(() => getButtonSx(theme), [theme])
   const methods = useForm<FormJoinClassProps>({
     resolver: yupResolver(CreateClassSchema),
+    mode: 'onChange',
   })
+  const isValid = methods.formState.isValid
+
   const onSubmit = async ({ code }: FormJoinClassProps): Promise<void> => {
     if (profile) {
       try {
         const { status, tribe } = await joinClass({ share_token: code }).unwrap()
         if (status === JoinStatus.JOINED) {
-          setOpenDialog(false)
-          push(STUDENT_PATH_DASHBOARD.class.id(tribe.id))
+          setTribeInfo(tribe)
         }
-      } catch (error: any) {
-        enqueueSnackbar(translate('messages_error'), { variant: 'error' })
-      }
-    } else {
-      push(STUDENT_PATH_DASHBOARD.joinTribe.id(code))
+      } catch (error: any) {}
     }
   }
+
   return (
     <>
       <Box
@@ -130,88 +90,80 @@ export default function JoinClassModal({ children }: IJoinClassModal): React.Rea
         onClose={() => {
           setOpenDialog(false)
         }}
+        PaperProps={{
+          sx: {
+            minWidth: { xs: '300px', sm: '300px', md: '500px', lg: '550px' },
+          },
+        }}
       >
-        <DialogTitle
-          variant='h3'
-          textAlign='center'
-        >
-          {!isError ? 'I got a join-code' : 'We can’t find this tribe or quest'}
-          <Typography
-            textAlign='center'
-            variant='body1'
-            maxWidth={500}
-          >
-            {!isError
-              ? 'Enter your join-code below'
-              : 'Either you typed it wrong or this tribe is no longer available. Ask your lead or teacher.'}
-          </Typography>
-        </DialogTitle>
-        <FormProvider
-          methods={methods}
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <DialogContent>
-            <FormGroup sx={{ position: 'relative', pt: 4 }}>
-              <Avatar sx={AVATAR_SX}>{!isError ? '🤩' : '🤔'}</Avatar>
-              <RHFTextField
-                sx={inputNameStyles(theme)}
-                required
-                name='code'
-                placeholder={translate('tribes_code_example')}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton
-                        edge='end'
-                        type='submit'
-                      >
-                        <FaArrowRight
-                          color={'#43D4DD'}
-                          size={40}
-                        />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </FormGroup>
-          </DialogContent>
-          <Divider sx={{ m: '34px auto 0', maxWidth: '300px' }}>OR</Divider>
-          <DialogActions>
-            <LoadingButton
-              disabled={false}
-              loading={false}
-              sx={buttonSx}
+        {!isSuccess ? (
+          <>
+            <DialogTitle
+              variant='h3'
+              textAlign='center'
             >
-              LOGIN
-            </LoadingButton>
-          </DialogActions>
-          {/* <DialogActions>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                gap: 2,
-              }}
+              {!isError ? 'I got a join-code' : 'We can’t find this tribe or quest'}
+              <Typography
+                textAlign='center'
+                variant='body1'
+                maxWidth={500}
+              >
+                {!isError
+                  ? 'Enter your join-code below'
+                  : 'Either you typed it wrong or this tribe is no longer available. Ask your lead or teacher.'}
+              </Typography>
+            </DialogTitle>
+            <FormProvider
+              methods={methods}
+              onSubmit={methods.handleSubmit(onSubmit)}
             >
-              <Button
-                color='error'
-                onClick={() => {
-                  setOpenDialog(false)
-                }}
-              >
-                {translate('actions_cancel')}
-              </Button>
-              <LoadingButton
-                type='submit'
-                variant='contained'
-                loading={isLoading}
-              >
-                {translate('actions_lets_go')}
-              </LoadingButton>
-            </Box>
-          </DialogActions> */}
-        </FormProvider>
+              <DialogContent>
+                <FormGroup sx={{ position: 'relative', pt: 4 }}>
+                  <Avatar sx={AVATAR_SX}>{!isError ? '🤩' : '🤔'}</Avatar>
+                  <RHFTextField
+                    sx={inputNameStyles(theme, isValid)}
+                    required
+                    name='code'
+                    placeholder={translate('tribes_code_example')}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <IconButton
+                            edge='end'
+                            type='submit'
+                          >
+                            <FaArrowRight
+                              color={isValid ? '#75CF6D' : '#43D4DD'}
+                              size={40}
+                            />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </FormGroup>
+              </DialogContent>
+              <Divider sx={{ m: '34px auto 0', maxWidth: '300px' }}>OR</Divider>
+              <DialogActions>
+                <LoadingButton
+                  sx={buttonSx}
+                  LinkComponent={Link}
+                  href={PATH_AUTH.signIn}
+                >
+                  LOGIN
+                </LoadingButton>
+              </DialogActions>
+            </FormProvider>
+          </>
+        ) : (
+          <SuccessJoin
+            name={tribeInfo?.mentors && tribeInfo?.mentors[0].first_name}
+            icon={tribeInfo?.avatar}
+            location={'Bali, Indonesia'}
+            title={tribeInfo?.name}
+            handleCloseModal={() => setOpenDialog(false)}
+          />
+        )}
       </Dialog>
     </>
   )
