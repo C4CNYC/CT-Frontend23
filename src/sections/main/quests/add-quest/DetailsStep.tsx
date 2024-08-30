@@ -8,7 +8,7 @@ import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
 import { FilterMode, useFilters } from '@/hooks'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { ICourse, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { InitialDescriptionValueType } from '@/types'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
@@ -52,7 +52,7 @@ export default function DetailsStep({
     data: lessons,
     isLoading: lessonLoading,
     isFetching: lessonFetching,
-  } = useGetLessonsQuery(filters)
+  } = useGetOwnLessonsQuery(filters)
 
   useEffect(() => {
     setCourse(methods.getValues('course') ?? data?.[0]?.id)
