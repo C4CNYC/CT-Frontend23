@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
+import { useRouter } from 'next/router'
 
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
@@ -12,6 +13,8 @@ import {
 import { useResponsive } from '@root/src/hooks'
 import { useLocales } from '@root/src/locales'
 import { Role } from '@root/src/redux/services/enums/role.enum'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
+import CreateLessonDialog from '@root/src/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 
 import DiamondFeatureModal from './diamond-feature-modal'
 
@@ -20,6 +23,7 @@ export default function MyCreationsMenu(): React.ReactElement {
   const { themeLayout } = useSettingsContext()
   const isDesktop = useResponsive('up', 'md')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const router = useRouter()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -33,7 +37,7 @@ export default function MyCreationsMenu(): React.ReactElement {
 
   return (
     <>
-      <RoleBasedGuard roles={[Role.Admin]}>
+      <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
         {themeLayout === 'vertical' || !isDesktop ? (
           <StyledItemVertical
             depth={1}
@@ -92,9 +96,29 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
-          <MenuItem>Add New Lesson</MenuItem>
-          <MenuItem>My Lessons</MenuItem>
-          <MenuItem>My Modules</MenuItem>
+          <CreateLessonDialog isEdit={false}>
+            <MenuItem>Add New Lesson</MenuItem>
+          </CreateLessonDialog>
+          <MenuItem
+            onClick={() => {
+              router.push(STUDENT_PATH_DASHBOARD.myLessons, undefined, {
+                shallow: true,
+              })
+              handleClosePopover()
+            }}
+          >
+            My Lessons
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              router.push(STUDENT_PATH_DASHBOARD.myModules, undefined, {
+                shallow: true,
+              })
+              handleClosePopover()
+            }}
+          >
+            My Modules
+          </MenuItem>
           <DiamondFeatureModal>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
               My Courses

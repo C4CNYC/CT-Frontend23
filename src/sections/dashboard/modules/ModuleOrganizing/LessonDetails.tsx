@@ -6,7 +6,7 @@ import { RiShareBoxFill } from '@react-icons/all-files/ri/RiShareBoxFill'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
-import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetLessonQuery } from 'src/redux/services/manager/lessons-manager'
 
@@ -94,8 +94,9 @@ export default function LessonDetails(): React.ReactElement {
         <Box sx={DETAILS_LINK_WRAPPER}>
           <Link
             component={NextLink}
-            href={`${MANAGER_PATH_DASHBOARD.lessons.root}?${new URLSearchParams({ lessonId: lesson?.id as string })}`}
+            href={`${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: lesson?.id as string })}`}
             underline='none'
+            shallow={true}
             typography='h5'
             sx={VIEW_LESSON_LINK_SX}
           >
@@ -105,7 +106,8 @@ export default function LessonDetails(): React.ReactElement {
 
           <Link
             component={NextLink}
-            href={`${MANAGER_PATH_DASHBOARD.lessons.root}?${new URLSearchParams({ lessonId: lesson?.id as string })}`}
+            href={`${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: lesson?.id as string })}`}
+            shallow={true}
             underline='none'
             typography='h5'
             sx={ADD_SLIDE_LINK_SX}
