@@ -33,7 +33,7 @@ export default function DetailsStep({
 }): React.ReactElement {
   const theme = useTheme()
   const { data, isLoading } = coursesData
-  const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.COURSE)
+  const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.MY_CREATIONS)
   const [course, setCourse] = useState<string | null>()
   const [lesson, setLesson] = useState<string | undefined>(initialLesson || undefined)
   const translate = useTranslate()
@@ -168,7 +168,7 @@ export default function DetailsStep({
           width: '100%',
         }}
       >
-        {type === AssignmentTypes.CUSTOM_CONTENT ? (
+        {type === AssignmentTypes.MY_CREATIONS ? (
           <>
             <Typography
               variant='h5'
