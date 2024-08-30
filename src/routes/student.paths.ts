@@ -90,6 +90,7 @@ export const STUDENT_PATH_DASHBOARD = {
   },
   myNotes: '/student/my-notes',
   myLessons: '/student/my-lessons',
+  myModules: '/student/my-modules',
   gallery: {
     root: '/student/gallery',
     publicProject: '/student/gallery/public-projects',

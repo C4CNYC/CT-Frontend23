@@ -109,7 +109,16 @@ export default function MyCreationsMenu(): React.ReactElement {
           >
             My Lessons
           </MenuItem>
-          <MenuItem>My Modules</MenuItem>
+          <MenuItem
+            onClick={() => {
+              router.push(STUDENT_PATH_DASHBOARD.myModules, undefined, {
+                shallow: true,
+              })
+              handleClosePopover()
+            }}
+          >
+            My Modules
+          </MenuItem>
           <DiamondFeatureModal>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
               My Courses
