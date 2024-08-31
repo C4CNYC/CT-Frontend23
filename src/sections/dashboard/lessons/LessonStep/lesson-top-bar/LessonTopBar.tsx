@@ -19,7 +19,7 @@ export default function LessonTopBar(): React.ReactElement {
   const { push, pathname } = useRouter()
 
   const onClose = (): void => {
-    push(pathname, undefined, { shallow: true })
+    push(`${pathname}?lessonId=`, undefined, { shallow: true })
   }
 
   return (
