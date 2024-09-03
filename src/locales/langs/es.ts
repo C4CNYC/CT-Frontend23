@@ -904,6 +904,14 @@ const es = {
   save_to_folder: "Guardar en 'mi carpeta'",
   open_folder: "Abra 'mi carpeta'",
 
+  // CreateLesson
+  default_values: {
+    createLesson: {
+      name: 'Mi nueva lección',
+      description: 'Descripción de mi lección',
+      isEdit: false,
+    }
+  },
   organizations: {
     dashboard_title: 'Panel',
     title: 'Organizaciones',

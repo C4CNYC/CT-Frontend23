@@ -10,18 +10,18 @@ import DashboardLayout from '@/layouts/dashboard'
 import { useGetAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { ILesson, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetOwnLessonsQuery, useCreateByCloningLessonMutation } from '@/redux/services/manager/lessons-manager'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
 import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import LessonCard from '@/sections/dashboard/lessons/LessonCard'
 import LessonStepMain from '@/sections/dashboard/lessons/LessonStep/LessonStepMain'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
 
 import FilterLessons from './filter'
+import { useRouter } from 'next/router'
 
 function moveItemInArray<T>(array: T[], from: number, to: number, on: number = 1): T[] {
   // eslint-disable-next-line no-return-assign,no-sequences
@@ -67,7 +67,8 @@ function getSort(result: DropResult, lessons: ILesson[]): number {
 
 LessonsListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
-export default function LessonsListPage(): React.ReactElement {
+export default function LessonsListPage(): React.ReactElement {  
+  const router = useRouter()
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
   const { filters, setFilter } = useFilters<ILessonSearchParams>(
@@ -110,6 +111,7 @@ export default function LessonsListPage(): React.ReactElement {
   }
 
   const [updateModuleLesson] = useUpdateModuleLessonMutation()
+  const [createByCloningLesson, {isLoading:isCreateBCLLoading}  ] = useCreateByCloningLessonMutation()
 
   const onDragEnd = useCallback(
     (result: DropResult): void => {
@@ -142,6 +144,16 @@ export default function LessonsListPage(): React.ReactElement {
       />
     )
   }
+  async function createByCloningLessonHandler() {
+    let data  = await createByCloningLesson();    
+    if ('data' in data  && data.data?.id) {
+      router.push(`${router.pathname}?${new URLSearchParams({ lessonId: data.data.id })}`, undefined, {
+        shallow: true,
+      })
+    } else {
+      console.log("yaratirken hata oldu", data)
+    }
+  }
 
   return (
     <>
@@ -163,15 +175,22 @@ export default function LessonsListPage(): React.ReactElement {
             },
           ]}
           action={
-            <CreateLessonDialog refetch={refetch}>
-              <Button
-                variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 1,
+                flexDirection: { xs: 'column', sm: 'row' },
+              }}
+            >
+            <Button
+              variant='contained'
+              startIcon={<Iconify icon='eva:plus-fill' />}
                 sx={{ mr: 2 }}
-              >
-                {translate('lessons_create_lesson')}
-              </Button>
-            </CreateLessonDialog>
+                onClick={createByCloningLessonHandler}
+            >
+              {translate('lessons_create_lesson')}
+            </Button>
+            </Box>
           }
         />
 

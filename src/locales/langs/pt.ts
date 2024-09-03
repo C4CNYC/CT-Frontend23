@@ -904,6 +904,16 @@ const pt = {
   save_to_folder: "Salvar para 'minha pasta'",
   open_folder: "Abra 'minha pasta'",
 
+
+  // CreateLesson
+  default_values: {
+    createLesson: {
+      name: 'Moja nowa lekcja',
+      description: 'Opis mojej lekcji',
+      isEdit: false,
+    }
+  },
+
   organizations: {
     dashboard_title: 'Painel',
     title: 'Organizações',

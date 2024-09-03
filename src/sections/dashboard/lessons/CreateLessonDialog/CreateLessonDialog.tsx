@@ -91,9 +91,11 @@ export default function CreateLessonDialog({
       }, 0)
     }
     return 0
-  }
-
+  } 
   const defaultLessonValue = {
+      name: translate('default_values.createLesson.name'),
+      description:translate('default_values.createLesson.description'),    
+      isEdit:translate('default_values.createLesson.isEdit'),    
     ...defaultValues,
     duration: timeConvertorToSeconds(defaultValues?.duration),
   }
