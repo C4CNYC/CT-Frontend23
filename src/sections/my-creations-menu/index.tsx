@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useRouter } from 'next/router'
 
+import { useCreateLessonMutation } from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
@@ -14,7 +15,6 @@ import { useResponsive } from '@root/src/hooks'
 import { useLocales } from '@root/src/locales'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
-import CreateLessonDialog from '@root/src/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 
 import DiamondFeatureModal from './diamond-feature-modal'
 
@@ -24,6 +24,7 @@ export default function MyCreationsMenu(): React.ReactElement {
   const isDesktop = useResponsive('up', 'md')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const router = useRouter()
+  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -33,6 +34,16 @@ export default function MyCreationsMenu(): React.ReactElement {
 
   const handleClosePopover = (): void => {
     setOpenPopover(null)
+  }
+
+  const createNewLesson = async () => {
+    const lesson = await createLesson({
+      name: translate('my_new_lesson') as string,
+      description: translate('my_lesson_description') as string,
+      active: true,
+      duration: '60',
+    }).unwrap()
+    return lesson
   }
 
   return (
@@ -96,9 +107,20 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
-          <CreateLessonDialog isEdit={false}>
-            <MenuItem>Add New Lesson</MenuItem>
-          </CreateLessonDialog>
+          <MenuItem
+            onClick={async () => {
+              const lesson = await createNewLesson()
+              router.push(
+                `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: lesson.id })}`,
+                undefined,
+                {
+                  shallow: true,
+                }
+              )
+            }}
+          >
+            Add New Lesson
+          </MenuItem>
           <MenuItem
             onClick={() => {
               router.push(STUDENT_PATH_DASHBOARD.myLessons, undefined, {
