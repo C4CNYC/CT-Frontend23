@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 import { useTranslate } from '@/utils/translateHelper'
 
-export default function QuestHeader(): React.ReactElement {
+export default function QuestHeader({ type }): React.ReactElement {
   const { back } = useRouter()
   const translate = useTranslate()
 
@@ -41,7 +41,7 @@ export default function QuestHeader(): React.ReactElement {
             {translate("actions_share")}
           </Typography>
         </Button> */}
-        <Typography variant='button'>{translate('quest_type')}</Typography>
+        <Typography variant='button'>{translate(type)}</Typography>
       </Stack>
     </Stack>
   )
