@@ -42,6 +42,7 @@ export interface IModule {
   active?: boolean
   key: any
   avatar: string | null
+  background?: string | null
   duration: Record<string, number>
   name: string
   type: string
@@ -61,6 +62,7 @@ export interface IModule {
 export interface IModuleContent {
   active: boolean
   avatar: string | null
+  background?: string | null
   description: string
   id: string
   name: string

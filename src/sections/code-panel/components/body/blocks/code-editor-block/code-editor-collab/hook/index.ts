@@ -85,7 +85,7 @@ export const useCodeEditorCollab = ({
     activeFile: activeFile.id,
   })
 
-  const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
+  const { baseInit, setIsLoading, setStreamingDoc, ...codeMirrorProps } = useInitCodemirror({
     socket,
     withTooltip,
     onChangeStreamingDocInfo,
@@ -271,6 +271,7 @@ export const useCodeEditorCollab = ({
     onCreateEditor,
     roomStatus,
     commentProps,
+    setStreamingDoc,
     ...codeMirrorProps,
   }
 }

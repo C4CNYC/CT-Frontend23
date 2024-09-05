@@ -177,7 +177,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                 href={
                   assignment?.courseid
                     ? assignment.lessonid &&
-                      (assignment.type === AssignmentTypes.CUSTOM_CONTENT ||
+                      (assignment.type === AssignmentTypes.MY_CREATIONS ||
                         assignment.type === AssignmentTypes.OPEN_PROJECT)
                       ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({
                           courseId: assignment.courseid,

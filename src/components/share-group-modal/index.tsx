@@ -10,6 +10,7 @@ import {
   IconButton,
   Radio,
   RadioGroup,
+  Switch,
   Typography,
   useTheme,
 } from '@mui/material'
@@ -255,6 +256,22 @@ export default function ShareGroupModal({
                   />
                 </RadioGroup>
               </FormControl>
+            </Stack>
+            <Divider
+              variant='middle'
+              orientation='horizontal'
+              sx={DIVIDER_SX}
+            />
+            <Stack
+              pr={4}
+              alignItems='flex-start'
+            >
+              <FormControlLabel
+                sx={{ width: '100%', justifyContent: 'space-between' }}
+                control={<Switch />}
+                label={<Typography variant='h6'>Send welcome emails</Typography>}
+                labelPlacement='start'
+              />
             </Stack>
             <Divider
               variant='middle'
