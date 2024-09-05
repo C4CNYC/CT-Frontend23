@@ -55,7 +55,7 @@ export default function DetailsStep({
   } = useGetOwnLessonsQuery(filters)
 
   useEffect(() => {
-    setCourse(methods.getValues('course') ?? data?.[0]?.id)
+    setCourse(methods.getValues('course'))
   }, [data])
 
   return (

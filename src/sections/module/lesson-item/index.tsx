@@ -35,10 +35,10 @@ import TrainingProgress from './LessonProgress'
 
 interface ILessonItemProps {
   lesson: ILesson
-  unitId: string
+  unitId?: string
   locked: boolean
-  prevLesson: ILesson
-  index: number
+  prevLesson?: ILesson
+  index?: number
 }
 
 export default function LessonItem({
@@ -119,9 +119,11 @@ export default function LessonItem({
           variant='body1'
           mb={lesson?.description?.length < maxDesc ? 1 : 0}
         >
-          {lesson?.description?.length < maxDesc
-            ? lesson?.description
-            : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`}
+          {lesson?.description
+            ? lesson?.description?.length < MAX_DESC
+              ? lesson?.description
+              : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`
+            : ''}
         </Typography>
         {lesson?.description?.length > maxDesc ? (
           <>

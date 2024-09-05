@@ -130,11 +130,11 @@ export default function AddQuest(): React.ReactElement {
     }
   }, [isAssignmentLoading, assignment])
 
-  useEffect(() => {
-    if (coursesData?.data?.data[0]?.id && !methods.getValues().course) {
-      methods.setValue('course', coursesData.data?.data[0]?.id)
-    }
-  }, [coursesData])
+  // useEffect(() => {
+  //   if (coursesData?.data?.data[0]?.id && !methods.getValues().course) {
+  //     methods.setValue('course', coursesData.data?.data[0]?.id)
+  //   }
+  // }, [coursesData])
 
   const methods = useForm<FormQuestProps>({
     resolver: yupResolver(CreateQuestSchema),
@@ -145,7 +145,7 @@ export default function AddQuest(): React.ReactElement {
       type: assignment?.type ?? AssignmentTypes.COURSE,
       category: assignment?.category ?? AssignmentProjectCategories.CREATIVE_PROJECT,
       language: assignment?.language ?? AssignmentProjectLanguages.HTML_CSS_JSS,
-      course: assignment?.course?.id ?? coursesData.data?.data[0]?.id,
+      course: assignment?.course?.id,
       startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
       dueDate: format(DATE_PARSER(assignment?.end_date, DAYS_TO_END), DATE_FORMAT),
       closeDate: format(DATE_PARSER(assignment?.close_date, DAYS_TO_CLOSE), DATE_FORMAT),
@@ -183,11 +183,13 @@ export default function AddQuest(): React.ReactElement {
           schoolId: query.schoolId as string,
           class_id: query.id as string,
         }).unwrap()
-        await addCourseToAssignment({
-          assignmentId: assignment.id,
-          schoolId: query.schoolId as string,
-          course_id: formData.course,
-        }).unwrap()
+        if (formData.course) {
+          await addCourseToAssignment({
+            assignmentId: assignment.id,
+            schoolId: query.schoolId as string,
+            course_id: formData.course,
+          }).unwrap()
+        }
         enqueueSnackbar(translate('assignments_updated_successfuly'))
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
@@ -224,11 +226,13 @@ export default function AddQuest(): React.ReactElement {
           schoolId: query.schoolId as string,
           class_id: query.id as string,
         }).unwrap()
-        await addCourseToAssignment({
-          assignmentId: newAssignment.id,
-          schoolId: query.schoolId as string,
-          course_id: formData.course,
-        })
+        if (formData.course) {
+          await addCourseToAssignment({
+            assignmentId: newAssignment.id,
+            schoolId: query.schoolId as string,
+            course_id: formData.course,
+          })
+        }
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,

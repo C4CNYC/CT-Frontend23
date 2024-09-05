@@ -603,6 +603,9 @@ const en = {
 
   // quest
   quest_type: 'Type: Course/Module',
+  creative_project: 'Creative Project',
+  research_project: 'Research Project',
+  team_project: 'Team Project',
   quest_whats_quest: "What's a quest?",
   quest_select_type: 'Select type',
   quest_select_course: 'Select a course',
