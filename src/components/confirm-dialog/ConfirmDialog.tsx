@@ -10,6 +10,7 @@ export function ConfirmDialog({
   action,
   open,
   onClose,
+  actionsProps,
   ...other
 }: ConfirmDialogProps): React.ReactElement | null {
   const translate = useTranslate()
@@ -26,7 +27,7 @@ export function ConfirmDialog({
 
       {content && <DialogContent sx={{ typography: 'body2' }}> {content} </DialogContent>}
 
-      <DialogActions>
+      <DialogActions sx={actionsProps}>
         {action}
 
         <Button
