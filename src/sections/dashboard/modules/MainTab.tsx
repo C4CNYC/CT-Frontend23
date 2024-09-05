@@ -20,65 +20,85 @@ const MainTab = ({
 }: MainTabProps): React.ReactElement => {
   return (
     <>
-      <Box sx={{ position: 'relative' }}>
-        {uploadedFile ? (
-          <IconButton
-            sx={UPLOAD_IMG_BTN}
-            onClick={() => {
-              setUploadedFile(null)
-            }}
-          >
-            <IoMdClose size='20px' />
-          </IconButton>
-        ) : null}
-        <RHFUpload
-          name='module_img'
-          onDrop={(files: File[]) => {
-            setUploadedFile(files[0])
-          }}
-          helperText={
-            <Typography
-              variant='caption'
-              noWrap
-              width='90px'
-              sx={HELPER_IMG_TEXT}
+      <Box>
+        <Typography
+          variant='body1'
+          pb={1}
+          pl={1}
+          mt={-3}
+        >
+          Module image
+        </Typography>
+        <Box sx={{ position: 'relative' }}>
+          {uploadedFile ? (
+            <IconButton
+              sx={UPLOAD_IMG_BTN}
+              onClick={() => {
+                setUploadedFile(null)
+              }}
             >
-              {uploadedFile?.name}
-            </Typography>
-          }
-        />
-        <SingleFilePreview file={uploadedFile ? URL.createObjectURL(uploadedFile) : null} />
+              <IoMdClose size='20px' />
+            </IconButton>
+          ) : null}
+          <RHFUpload
+            name='module_img'
+            onDrop={(files: File[]) => {
+              setUploadedFile(files[0])
+            }}
+            helperText={
+              <Typography
+                variant='caption'
+                noWrap
+                width='90px'
+                sx={HELPER_IMG_TEXT}
+              >
+                {uploadedFile?.name}
+              </Typography>
+            }
+          />
+          <SingleFilePreview file={uploadedFile ? URL.createObjectURL(uploadedFile) : null} />
+        </Box>
       </Box>
-      <Box sx={{ position: 'relative' }}>
-        {uploadedBackground ? (
-          <IconButton
-            sx={UPLOAD_IMG_BTN}
-            onClick={() => {
-              setUploadedBackground(null)
-            }}
-          >
-            <IoMdClose size='20px' />
-          </IconButton>
-        ) : null}
-        <RHFUpload
-          name='module_bg_img'
-          onDrop={(files: File[]) => {
-            setUploadedBackground(files[0])
-          }}
-          helperText={
-            <Typography
-              variant='caption'
-              noWrap
-              width='90px'
-              sx={HELPER_IMG_TEXT}
+      <Box>
+        <Typography
+          variant='body1'
+          pb={1}
+          pl={1}
+          mt={-1}
+        >
+          Module background
+        </Typography>
+        <Box sx={{ position: 'relative' }}>
+          {uploadedBackground ? (
+            <IconButton
+              sx={UPLOAD_IMG_BTN}
+              onClick={() => {
+                setUploadedBackground(null)
+              }}
             >
-              {uploadedBackground?.name}
-            </Typography>
-          }
-        />
-        <SingleFilePreview
-          file={uploadedBackground ? URL.createObjectURL(uploadedBackground) : null}
-        />
+              <IoMdClose size='20px' />
+            </IconButton>
+          ) : null}
+          <RHFUpload
+            name='module_bg_img'
+            onDrop={(files: File[]) => {
+              setUploadedBackground(files[0])
+            }}
+            helperText={
+              <Typography
+                variant='caption'
+                noWrap
+                width='90px'
+                sx={HELPER_IMG_TEXT}
+              >
+                {uploadedBackground?.name}
+              </Typography>
+            }
+          />
+          <SingleFilePreview
+            file={uploadedBackground ? URL.createObjectURL(uploadedBackground) : null}
+          />
+        </Box>
       </Box>
       <RHFTextField
         sx={INPUT_SX}

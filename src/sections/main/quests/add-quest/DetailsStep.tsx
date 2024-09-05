@@ -8,7 +8,7 @@ import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
 import { FilterMode, useFilters } from '@/hooks'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { ICourse, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { InitialDescriptionValueType } from '@/types'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
@@ -33,7 +33,7 @@ export default function DetailsStep({
 }): React.ReactElement {
   const theme = useTheme()
   const { data, isLoading } = coursesData
-  const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.COURSE)
+  const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.MY_CREATIONS)
   const [course, setCourse] = useState<string | null>()
   const [lesson, setLesson] = useState<string | undefined>(initialLesson || undefined)
   const translate = useTranslate()
@@ -52,7 +52,7 @@ export default function DetailsStep({
     data: lessons,
     isLoading: lessonLoading,
     isFetching: lessonFetching,
-  } = useGetLessonsQuery(filters)
+  } = useGetOwnLessonsQuery(filters)
 
   useEffect(() => {
     setCourse(methods.getValues('course') ?? data?.[0]?.id)
@@ -168,7 +168,7 @@ export default function DetailsStep({
           width: '100%',
         }}
       >
-        {type === AssignmentTypes.CUSTOM_CONTENT ? (
+        {type === AssignmentTypes.MY_CREATIONS ? (
           <>
             <Typography
               variant='h5'

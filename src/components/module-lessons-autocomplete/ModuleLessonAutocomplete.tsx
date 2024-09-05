@@ -19,7 +19,7 @@ import { useSnackbar } from 'notistack'
 import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import {
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
@@ -41,8 +41,8 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
 
   const [addLesson] = useAddLessonToModuleMutation()
   const [removeLesson] = useRemoveLessonFromModuleMutation()
-  const { data: addedLessons } = useGetLessonsQuery({ module_id: id, take: 50 }, { skip: !id })
-  const { data: lessons } = useGetLessonsQuery({ ...filters }, { skip: !id })
+  const { data: addedLessons } = useGetOwnLessonsQuery({ module_id: id, take: 50 }, { skip: !id })
+  const { data: lessons } = useGetOwnLessonsQuery({ ...filters }, { skip: !id })
 
   if (!lessons?.data || !addedLessons?.data) {
     return (
