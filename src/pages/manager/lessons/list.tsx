@@ -76,6 +76,7 @@ export default function LessonsListPage(): React.ReactElement {
     {
       module_id: '',
       name: '',
+      lessonId: '',
     },
     FilterMode.global
   )

@@ -58,7 +58,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
       <Typography
         variant='h4'
         sx={{
-          color: 'rgba(54, 73, 84, 1)',
+          color: themeMode === 'light' ? 'rgba(54, 73, 84, 1)' : 'auto',
           display: 'flex',
           gap: 2,
           alignItems: 'center',

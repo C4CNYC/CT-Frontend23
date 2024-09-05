@@ -26,7 +26,6 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
 
   return (
     <Box
-      className='tourMainStep2'
       component='nav'
       sx={{
         flexShrink: { md: 0 },

@@ -89,6 +89,8 @@ export const STUDENT_PATH_DASHBOARD = {
     friend: (id: string) => path('/student/friends/', `${id}`),
   },
   myNotes: '/student/my-notes',
+  myLessons: '/student/my-lessons',
+  myModules: '/student/my-modules',
   gallery: {
     root: '/student/gallery',
     publicProject: '/student/gallery/public-projects',

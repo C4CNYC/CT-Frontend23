@@ -43,6 +43,7 @@ export interface UseBaseInitReturn {
   extensions?: Extension[]
   baseInit: (fileName: File) => Promise<void>
   setIsLoading: (isLoading: boolean) => void
+  setStreamingDoc: (streamingDoc: Text) => void
   lineWrap: Compartment
 }
 
@@ -140,6 +141,7 @@ export const useInitCodemirror = ({
     key,
     extensions,
     streamingDoc,
+    setStreamingDoc,
     isLoading,
     baseInit,
     setIsLoading,

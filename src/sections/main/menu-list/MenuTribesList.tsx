@@ -53,7 +53,7 @@ export default function MenuTribesList(): React.ReactElement {
   return (
     <Stack
       sx={{ width: '100%' }}
-      className='studentJoinStep2'
+      className='studentJoinStep2 tourMainStep2'
     >
       {!isNavMini && (
         <Divider

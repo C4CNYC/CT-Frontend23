@@ -67,7 +67,7 @@ export const getCollapseInfoBannerSx = (theme: Theme) => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  background: theme.palette.mode === 'light' ? '#7ee7ed' : theme.palette.background.paper,
+  background: theme.palette.mode === 'light' ? '#E6F5FD' : theme.palette.background.paper,
   borderTopLeftRadius: '16px',
   borderTopRightRadius: '16px',
   px: 2,

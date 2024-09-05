@@ -25,7 +25,6 @@ import CreateHeader from '@/sections/main/create-class/createHeader'
 import CreatePalette, { CLASS_PALETTE } from '@/sections/main/create-class/createPalette'
 import { createRandomAvatar } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import ClassIntroTour from '@root/src/sections/intro-tours/teacher-intro-class'
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)]
@@ -111,7 +110,6 @@ export default function CreateClass(): React.ReactElement {
 
   return (
     <>
-      <ClassIntroTour />
       <Head>
         <title>{translate('class_create_class')} | CodeTribe</title>
       </Head>
