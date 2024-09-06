@@ -120,7 +120,7 @@ export default function LessonItem({
           mb={lesson?.description?.length < maxDesc ? 1 : 0}
         >
           {lesson?.description
-            ? lesson?.description?.length < MAX_DESC
+            ? lesson?.description?.length < maxDesc
               ? lesson?.description
               : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`
             : ''}
