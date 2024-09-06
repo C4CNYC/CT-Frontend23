@@ -45,7 +45,7 @@ export default function QuestHeader({
             {translate("actions_share")}
           </Typography>
         </Button> */}
-        <Typography variant='button'>{translate(type)}</Typography>
+        <Typography variant='button'>{translate(type as string)}</Typography>
       </Stack>
     </Stack>
   )
