@@ -349,7 +349,7 @@ export default function AddQuest(): React.ReactElement {
                 <DetailsStep
                   methods={methods}
                   initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
-                  initialType={assignment?.type ?? query?.type}
+                  initialType={assignment?.type ?? (query?.type as AssignmentTypes)}
                   initialLesson={assignment?.lessonId}
                   coursesData={{
                     data: coursesData.data?.data,

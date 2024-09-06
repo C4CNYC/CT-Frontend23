@@ -138,8 +138,8 @@ export default function Quest(): React.ReactElement | null {
           component={NextLink}
           href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
             courseId: course?.id,
-            unitId: data.courseUnitId,
-            lessonId: data.lessonId,
+            unitId: data?.courseUnitId,
+            lessonId: data?.lessonId,
           })}
           underline='none'
           sx={KEEP_CODING_LINK_SX}
