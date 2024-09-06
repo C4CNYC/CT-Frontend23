@@ -66,6 +66,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const { query } = useRouter()
   const dispatch = useDispatch()
   const [codeValue, setCodeValue] = useState<string | undefined>('')
+  const lessonIdFromQuery = query?.lessonId
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
@@ -107,7 +108,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       if (prevLessonCode) {
         return prevLessonCode
       }
-      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${activeFile}`)
+      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${lessonIdFromQuery}${activeFile?.id}`)
       const localStorageCodeValue = localStorage.getItem(localStorageKey)
       if (localStorageCodeValue) {
         try {
@@ -127,7 +128,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onChangeCodemirrorValueFromProps(value)
     onChangeStreamingDocInfoFromProps?.(value as any)
     if (value) {
-      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${activeFile}`)
+      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${lessonIdFromQuery}${activeFile?.id}`)
       localStorage.setItem(localStorageKey, value)
     }
     void updateCommentWidgetPosition()
