@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 import { useTranslate } from '@/utils/translateHelper'
 
-export default function QuestHeader({ type }): React.ReactElement {
+export default function QuestHeader({ type }: { type: string }): React.ReactElement {
   const { back } = useRouter()
   const translate = useTranslate()
 
