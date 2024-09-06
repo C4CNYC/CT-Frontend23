@@ -115,10 +115,11 @@ export default function AddQuest(): React.ReactElement {
 
   useEffect(() => {
     if (assignment) {
+      const type = query?.type ?? AssignmentTypes.COURSE
       methods.reset({
         name: assignment?.name,
         description: JSON.parse(assignment?.description ?? '{}'),
-        type: assignment?.type ?? AssignmentTypes.COURSE,
+        type: assignment?.type ?? type,
         module: assignment?.courseUnit?.id,
         lesson: assignment?.lessonId,
         course: assignment?.course?.id,
@@ -142,7 +143,7 @@ export default function AddQuest(): React.ReactElement {
     defaultValues: {
       name: assignment?.name ?? RANDOM_NAME,
       description: JSON.parse(assignment?.description ?? '{}'),
-      type: assignment?.type ?? AssignmentTypes.COURSE,
+      type: assignment?.type ?? (query?.type as AssignmentTypes) ?? AssignmentTypes.COURSE,
       category: assignment?.category ?? AssignmentProjectCategories.CREATIVE_PROJECT,
       language: assignment?.language ?? AssignmentProjectLanguages.HTML_CSS_JSS,
       course: assignment?.course?.id,
@@ -348,7 +349,7 @@ export default function AddQuest(): React.ReactElement {
                 <DetailsStep
                   methods={methods}
                   initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
-                  initialType={assignment?.type}
+                  initialType={assignment?.type ?? query?.type}
                   initialLesson={assignment?.lessonId}
                   coursesData={{
                     data: coursesData.data?.data,
