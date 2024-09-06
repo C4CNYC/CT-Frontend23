@@ -193,8 +193,13 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                           })
                         : STUDENT_PATH_DASHBOARD.codePanel.workSpace({
                             courseId: assignment.courseid,
+                            lessonId: assignment.lessonid || courseUnit?.lessons[0]?.id,
+                            unitId: assignment.courseunitid,
                           })
-                    : '#'
+                    : STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                        lessonId: assignment.lessonid,
+                        unitId: assignment.courseunitid,
+                      })
                 }
                 underline='none'
                 sx={{

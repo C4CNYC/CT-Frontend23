@@ -36,6 +36,7 @@ export default function DetailsStep({
   const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.COURSE)
   const [course, setCourse] = useState<string | null>()
   const [lesson, setLesson] = useState<string | undefined>(initialLesson || undefined)
+  const [module, setModule] = useState<string | undefined>()
   const translate = useTranslate()
 
   const selectedModules = useMemo(() => data?.find((c) => c.id === course)?.units, [data, course])
@@ -250,6 +251,10 @@ export default function DetailsStep({
                   '& fieldset': { border: 'none' },
                   background: theme.palette.mode === 'light' ? '#fff' : '',
                   border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
+                }}
+                onChange={(event: any) => {
+                  setModule(event.target.value)
+                  methods.setValue('module', event.target.value)
                 }}
               >
                 {!selectedModules?.length && (
