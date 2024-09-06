@@ -253,7 +253,6 @@ export default function DetailsStep({
                   border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
                 }}
                 onChange={(event: any) => {
-                  console.log(event)
                   setModule(event.target.value)
                   methods.setValue('module', event.target.value)
                 }}
