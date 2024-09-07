@@ -59,6 +59,10 @@ export default function DetailsStep({
     setCourse(methods.getValues('course'))
   }, [data])
 
+  if (!course && data) {
+    setCourse(data[0]?.id)
+  }
+
   return (
     <Stack sx={{ gap: 4, minHeight: '630px' }}>
       <Stack
