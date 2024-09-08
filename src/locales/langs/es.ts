@@ -910,7 +910,7 @@ const es = {
       name: 'Mi nueva lección',
       description: 'Descripción de mi lección',
       isEdit: false,
-    }
+    },
   },
   organizations: {
     dashboard_title: 'Panel',

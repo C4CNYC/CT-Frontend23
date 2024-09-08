@@ -53,14 +53,14 @@ const cn = {
   other_cases: '其他情况',
   item_by_roles: '按角色逐项',
   only_admin_can_see_this_item: '只有管理员可以看到这个项目',
-  
+
   // CreateLesson
   default_values: {
     createLesson: {
       name: '我的新课程',
       description: '我的课程描述',
       isEdit: false,
-    }
+    },
   },
   organizations: {
     dashboard_title: 'Dashboard',

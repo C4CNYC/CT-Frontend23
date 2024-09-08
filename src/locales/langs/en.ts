@@ -921,7 +921,7 @@ const en = {
       name: 'My New Lesson',
       description: 'My Lesson Description',
       isEdit: false,
-    }
+    },
   },
   organizations: {
     dashboard_title: 'Dashboard',

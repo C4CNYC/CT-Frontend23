@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd'
 import { Box, Button, Container } from '@mui/material'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
@@ -10,7 +11,10 @@ import DashboardLayout from '@/layouts/dashboard'
 import { useGetAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { ILesson, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetOwnLessonsQuery, useCreateByCloningLessonMutation } from '@/redux/services/manager/lessons-manager'
+import {
+  useGetOwnLessonsQuery,
+  useCreateByCloningLessonMutation,
+} from '@/redux/services/manager/lessons-manager'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
 import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -21,7 +25,6 @@ import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton
 import { useTranslate } from '@/utils/translateHelper'
 
 import FilterLessons from './filter'
-import { useRouter } from 'next/router'
 
 function moveItemInArray<T>(array: T[], from: number, to: number, on: number = 1): T[] {
   // eslint-disable-next-line no-return-assign,no-sequences
@@ -67,7 +70,7 @@ function getSort(result: DropResult, lessons: ILesson[]): number {
 
 LessonsListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
-export default function LessonsListPage(): React.ReactElement {  
+export default function LessonsListPage(): React.ReactElement {
   const router = useRouter()
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
@@ -111,7 +114,8 @@ export default function LessonsListPage(): React.ReactElement {
   }
 
   const [updateModuleLesson] = useUpdateModuleLessonMutation()
-  const [createByCloningLesson, {isLoading:isCreateBCLLoading}  ] = useCreateByCloningLessonMutation()
+  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
+    useCreateByCloningLessonMutation()
 
   const onDragEnd = useCallback(
     (result: DropResult): void => {
@@ -145,13 +149,15 @@ export default function LessonsListPage(): React.ReactElement {
     )
   }
   async function createByCloningLessonHandler() {
-    let data  = await createByCloningLesson();    
-    if ('data' in data  && data.data?.id) {
-      router.push(`${router.pathname}?${new URLSearchParams({ lessonId: data.data.id })}`, undefined, {
-        shallow: true,
-      })
-    } else {
-      console.log("yaratirken hata oldu", data)
+    let data = await createByCloningLesson()
+    if ('data' in data && data.data?.id) {
+      router.push(
+        `${router.pathname}?${new URLSearchParams({ lessonId: data.data.id })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
     }
   }
 
@@ -182,14 +188,14 @@ export default function LessonsListPage(): React.ReactElement {
                 flexDirection: { xs: 'column', sm: 'row' },
               }}
             >
-            <Button
-              variant='contained'
-              startIcon={<Iconify icon='eva:plus-fill' />}
+              <Button
+                variant='contained'
+                startIcon={<Iconify icon='eva:plus-fill' />}
                 sx={{ mr: 2 }}
                 onClick={createByCloningLessonHandler}
-            >
-              {translate('lessons_create_lesson')}
-            </Button>
+              >
+                {translate('lessons_create_lesson')}
+              </Button>
             </Box>
           }
         />

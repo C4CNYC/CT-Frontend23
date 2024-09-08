@@ -909,14 +909,13 @@ const fr = {
   save_to_folder: "Enregistrer dans 'Mon dossier'",
   open_folder: "Ouvrez 'Mon dossier'",
 
-
   // CreateLesson
   default_values: {
     createLesson: {
       name: 'Ma nouvelle leçon',
       description: 'Description de ma leçon',
       isEdit: false,
-    }
+    },
   },
 
   organizations: {
