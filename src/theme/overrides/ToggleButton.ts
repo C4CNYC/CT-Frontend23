@@ -56,7 +56,7 @@ export default function ToggleButton(theme: Theme): unknown {
         grouped: {
           margin: 4,
           borderColor: 'transparent !important',
-          borderRadius: `${theme.shape.borderRadius}px !important`,
+          borderRadius: `${theme.shape.borderRadius}px `,
         },
       },
     },

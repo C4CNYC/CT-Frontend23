@@ -1,4 +1,31 @@
-import { SxProps } from '@mui/system'
+import { styled, SxProps } from '@mui/system'
+
+import { bgBlur } from '@root/src/utils'
+
+export const StyledContentTeacher = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'isAigenerated',
+})<{ isAigenerated: boolean }>(({ theme, isAigenerated }) => ({
+  width: '100%',
+  margin: 'auto',
+  display: 'flex',
+  borderRadius: '8px',
+  justifyContent: 'center',
+  padding: theme.spacing(3),
+  ...bgBlur({ color: theme.palette.background.default }),
+  [theme.breakpoints.up('sm')]: {
+    maxWidth: isAigenerated ? 'auto' : '460px',
+  },
+  [theme.breakpoints.up('md')]: {
+    flexShrink: 0,
+    padding: theme.spacing(5),
+    width: isAigenerated ? 500 : 480,
+  },
+  [theme.breakpoints.up('lg')]: {
+    flexShrink: 0,
+    padding: theme.spacing(5),
+    width: isAigenerated ? 800 : 480,
+  },
+}))
 
 export const WELCOM_STEP_WRAPPER_SX = {
   ml: { xs: 3, sm: 3, md: 0 },
@@ -24,6 +51,7 @@ export const LAUNCH_SESSION_BTN_SX = {
   py: 2,
   borderRadius: '15px',
   width: '100%',
+  justifyContent: 'space-between',
 }
 
 export const getImageWrapperSx = (color: string): SxProps => ({

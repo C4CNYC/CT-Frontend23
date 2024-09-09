@@ -10,7 +10,15 @@ import {
 } from './constants'
 import { SessionType } from './SessionType'
 
-export default function WelcomeStep({ nextStep }: { nextStep: () => void }): React.ReactElement {
+type IWelcomeStepProps = {
+  selectLaunchCourse: () => void
+  selectAIGenerate: () => void
+}
+
+export default function WelcomeStep({
+  selectLaunchCourse,
+  selectAIGenerate,
+}: IWelcomeStepProps): React.ReactElement {
   const translate = useTranslate()
 
   return (
@@ -35,11 +43,22 @@ export default function WelcomeStep({ nextStep }: { nextStep: () => void }): Rea
       </Typography>
       <Button
         onClick={() => {
-          nextStep()
+          selectLaunchCourse()
         }}
         sx={LAUNCH_SESSION_BTN_SX}
       >
         <SessionType {...LAUNCH_SESSION} />
+      </Button>
+      <Button
+        onClick={() => {
+          selectAIGenerate()
+        }}
+        sx={LAUNCH_SESSION_BTN_SX}
+      >
+        <SessionType
+          {...AI_GENERATE_SESSION}
+          isNew
+        />
       </Button>
       <Button
         disabled={true}
@@ -61,6 +80,13 @@ const POPUP_SESSION = {
   info: 'login_popup_session_info',
   img: '/assets/on-boarding/live.svg',
   color: '#43D4DD33',
+}
+const AI_GENERATE_SESSION = {
+  title: 'login_ai_generate_session_title',
+  subtitle: 'login_ai_generate_session_subtitle',
+  info: 'login_ai_generate_session_info',
+  img: '/assets/on-boarding/ai.svg',
+  color: '#43D4DD',
 }
 const LAUNCH_SESSION = {
   title: 'login_launch_session_title',

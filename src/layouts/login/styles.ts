@@ -48,7 +48,6 @@ export const StyledContent = styled('div')(({ theme }) => ({
     maxWidth: '460px',
   },
   [theme.breakpoints.up('md')]: {
-    maxWidth: 'none',
     flexShrink: 0,
     padding: theme.spacing(5),
     width: 480,

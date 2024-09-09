@@ -22,17 +22,17 @@ export default function StepperProgress({ prevStep, activeStep }: Props): React.
   const [stepperActive, setStepperActive] = useState(0)
 
   useEffect(() => {
-    if (activeStep === 2) {
+    if (activeStep === 1) {
       setStepperActive(0)
     }
-    if (activeStep === 3) {
+    if (activeStep === 2) {
       setStepperActive(1)
     }
   }, [activeStep])
 
   return (
     <>
-      {activeStep === 2 && (
+      {activeStep === 1 && (
         <IconButton
           onClick={prevStep}
           sx={{ position: 'absolute', top: '-22px', left: '-30px' }}

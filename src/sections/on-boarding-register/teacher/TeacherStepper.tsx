@@ -1,121 +1,50 @@
 import { useState } from 'react'
 
-import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
-import { useForm } from 'react-hook-form'
-import * as Yup from 'yup'
 
-import { useAuthContext } from '@/auth/useAuthContext'
-import { FormProvider, useSnackbar } from '@/components'
-import { Role } from '@/redux/services/enums/role.enum'
-import { useTranslate } from '@/utils/translateHelper'
-import { generateRandomEmoji } from '@root/src/utils'
+import { RegisterStudenTeacher } from '../links'
 
-import { RegisterStudenTeacher, SingLink } from '../links'
-
-import AddSchool from './AddSchool'
-import AddTeacher from './AddTeacher'
-import SingUp from './SingUp'
-import StepperProgress from './StepperProgress'
+import AIGenerateStepper from './ai-generete-stepper'
+import { StyledContentTeacher } from './constants'
+import LaunchCourseStepper from './launch-course-stepper'
 import WelcomeStep from './WelcomeStep'
 
-interface FormValuesProps {
-  email: string
-  firstName: string
-  lastName: string
-  password: string
+enum TEACHER_REGISTE_ENUM {
+  launchCourse = 'COURSE',
+  aiGenerate = 'AIGENERATE',
 }
 
 export default function TeacherStepper(): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar()
-  const [activeStep, setActiveStep] = useState(0)
-  const { register } = useAuthContext()
-  const translate = useTranslate()
+  const [actitiveRoad, setActiveRoad] = useState<TEACHER_REGISTE_ENUM | null>(null)
 
-  const CreateEmailSchema = Yup.object().shape({
-    email: Yup.string()
-      .required(translate('required_email'))
-      .email(translate('must_be_valid_email')),
-    firstName: Yup.string().required(translate('enter_name')),
-    lastName: Yup.string().required(translate('enter_surname')),
-    password: Yup.string().min(8, translate('required_password_length')),
-  })
-
-  const nextStep = () => {
-    setActiveStep(activeStep + 1)
-  }
-  const prevStep = () => {
-    setActiveStep(activeStep - 1)
-  }
-  const goToStep = (step: number) => {
-    setActiveStep(step)
-  }
-
-  const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(CreateEmailSchema),
-    mode: 'all',
-  })
-
-  const onSubmit = async (data: FormValuesProps) => {
-    const randomEmoji = generateRandomEmoji(true)
-    try {
-      await register({
-        email: data.email,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        role: Role.Manager,
-        emojiAvatar: randomEmoji,
-      })
-    } catch (error: any) {
-      methods.setError('root', {
-        ...error,
-        message: error.message,
-      })
-      enqueueSnackbar(error.message, { variant: 'error' })
-    }
-  }
-
+  const selectLaunchCourse = () => setActiveRoad(TEACHER_REGISTE_ENUM.launchCourse)
+  const selectAIGenerate = () => setActiveRoad(TEACHER_REGISTE_ENUM.aiGenerate)
+  const resetRoad = () => setActiveRoad(null)
   return (
-    <Stack
-      sx={{
-        minHeight: '460px',
-        justifyContent: 'center',
-        position: 'relative',
-      }}
-    >
-      <RegisterStudenTeacher isTeacher />
-      <FormProvider
-        methods={methods}
-        onSubmit={methods.handleSubmit(onSubmit)}
+    <StyledContentTeacher isAigenerated={actitiveRoad === TEACHER_REGISTE_ENUM.aiGenerate}>
+      <Stack
+        sx={{
+          width: '100%',
+          minHeight: '460px',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
       >
-        {activeStep === 0 && <WelcomeStep nextStep={nextStep} />}
-        {activeStep === 1 && (
-          <SingUp
-            goToStep={goToStep}
-            nextStep={nextStep}
-            prevStep={prevStep}
-            isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
-            isTeacher={true}
+        {actitiveRoad === TEACHER_REGISTE_ENUM.launchCourse && <RegisterStudenTeacher isTeacher />}
+        {!actitiveRoad && (
+          <WelcomeStep
+            selectLaunchCourse={selectLaunchCourse}
+            selectAIGenerate={selectAIGenerate}
           />
         )}
-        {(activeStep === 2 || activeStep === 3) && (
-          <StepperProgress
-            prevStep={prevStep}
-            activeStep={activeStep}
-          />
-        )}
-        {activeStep === 2 && (
-          <AddTeacher
-            nextStep={nextStep}
-            isSubmiting={methods.formState.isSubmitting}
-            isSubmitSuccessful={methods.formState.isSubmitSuccessful}
-          />
-        )}
-      </FormProvider>
-
-      {activeStep === 3 && <AddSchool />}
-      <SingLink />
-    </Stack>
+        {actitiveRoad ? (
+          actitiveRoad === TEACHER_REGISTE_ENUM.launchCourse ? (
+            <LaunchCourseStepper resetRoad={resetRoad} />
+          ) : (
+            <AIGenerateStepper resetRoad={resetRoad} />
+          )
+        ) : null}
+      </Stack>
+    </StyledContentTeacher>
   )
 }

@@ -12,6 +12,7 @@ import { FormProvider } from '@/components'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 import { SingLink } from '@/sections/on-boarding-register/links'
 import { useTranslate } from '@/utils/translateHelper'
+import { StyledContent } from '@root/src/layouts/login/styles'
 
 import EmailNotFound from './EmailNotFound'
 import SignInLogin from './SignInLogin'
@@ -49,32 +50,35 @@ export default function SignInMain(): React.ReactElement {
   }
 
   return (
-    <Stack
-      sx={{
-        minHeight: '400px',
-        justifyContent: 'center',
-        position: 'relative',
-      }}
-    >
-      <FormProvider
-        methods={methods}
-        onSubmit={methods.handleSubmit(onSubmit)}
+    <StyledContent>
+      <Stack
+        sx={{
+          width: '100%',
+          minHeight: '400px',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
       >
-        <StepWizard transitions={custom}>
-          <SignInLogin
-            isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
-            stepName='email'
-          />
-          <SignInPassword
-            isSubmiting={methods.formState.isSubmitting}
-            isError={isError}
-            stepName='password'
-          />
-          <EmailNotFound setError={setError} />
-        </StepWizard>
-      </FormProvider>
-      <SingLink isRegister />
-    </Stack>
+        <FormProvider
+          methods={methods}
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          <StepWizard transitions={custom}>
+            <SignInLogin
+              isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
+              stepName='email'
+            />
+            <SignInPassword
+              isSubmiting={methods.formState.isSubmitting}
+              isError={isError}
+              stepName='password'
+            />
+            <EmailNotFound setError={setError} />
+          </StepWizard>
+        </FormProvider>
+        <SingLink isRegister />
+      </Stack>
+    </StyledContent>
   )
 }
 const custom = {}
