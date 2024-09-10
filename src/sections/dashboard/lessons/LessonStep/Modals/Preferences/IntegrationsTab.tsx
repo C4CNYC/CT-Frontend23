@@ -156,8 +156,6 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
               sx={{
                 p: '12px !important',
                 pointerEvents: selected ? 'none' : 'auto',
-                backgroundColor: 'purple',
-                // zIndex: 100,
               }}
               {...props}
               key={name}
