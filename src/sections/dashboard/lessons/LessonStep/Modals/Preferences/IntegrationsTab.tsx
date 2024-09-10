@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 
 import { Iconify, SearchNotFound } from '@/components'
@@ -25,7 +25,7 @@ import {
   useGetLessonIntegrationsQuery,
   useRemoveIntegrationMutation,
 } from '@/redux/services/manager/lessons-manager'
-import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+// import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -94,17 +94,17 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
     }
   }
 
-  if (!integrations.data.length) {
-    return (
-      <Box>
-        <Typography>{translate('integrations_empty')}</Typography>
-        <Typography>
-          {translate('integrations_lets_create')}{' '}
-          <Link href={MANAGER_PATH_DASHBOARD.apps.root}>{translate('here')}</Link>
-        </Typography>
-      </Box>
-    )
-  }
+  // if (!integrations.data.length) {
+  //   return (
+  //     <Box>
+  //       <Typography>{translate('integrations_empty')}</Typography>
+  //       <Typography>
+  //         {translate('integrations_lets_create')}{' '}
+  //         <Link href={MANAGER_PATH_DASHBOARD.apps.root}>{translate('here')}</Link>
+  //       </Typography>
+  //     </Box>
+  //   )
+  // }
 
   return (
     <>
