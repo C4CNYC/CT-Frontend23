@@ -53,6 +53,16 @@ const vn = {
   other_cases: 'Trường hợp khác',
   item_by_roles: 'mục theo vai trò',
   only_admin_can_see_this_item: 'Chỉ có quản trị viên mới có thể nhìn thấy mục này',
+
+  // CreateLesson
+  default_values: {
+    createLesson: {
+      name: 'Bài học mới của tôi',
+      description: 'Mô tả bài học của tôi',
+      isEdit: false,
+    },
+  },
+
   organizations: {
     dashboard_title: 'Dashboard',
     title: 'Organizations',

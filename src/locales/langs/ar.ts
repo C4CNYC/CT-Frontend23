@@ -912,6 +912,15 @@ const ar = {
 
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: 'مرحبًا، أنا مومو. أنا هنا للمساعدة عندما تتعثر.',
+
+  // CreateLesson
+  default_values: {
+    createLesson: {
+      name: 'درسي الجديد',
+      description: 'وصف درسي',
+      isEdit: false,
+    },
+  },
 }
 
 export default ar
