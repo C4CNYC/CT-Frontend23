@@ -1,7 +1,8 @@
 import GuestGuard from '@/auth/GuestGuard'
 import LoginLayout from '@/layouts/login/LoginLayout'
 import { useTranslate } from '@/utils/translateHelper'
-import TeacherStepper from '@root/src/sections/on-boarding-register/teacher/TeacherStepper'
+import { StyledContentTeacher } from '@root/src/sections/on-boarding-register/teacher/constants'
+import LaunchCourseStepper from '@root/src/sections/on-boarding-register/teacher/launch-course-stepper'
 
 export default function TeacherOnBoarding(): React.ReactElement {
   const translate = useTranslate()
@@ -12,7 +13,9 @@ export default function TeacherOnBoarding(): React.ReactElement {
         title={translate('login_mumu', { name: 'Mumu' })}
         subtitle={translate('login_mumu_glad')}
       >
-        <TeacherStepper />
+        <StyledContentTeacher>
+          <LaunchCourseStepper />
+        </StyledContentTeacher>
       </LoginLayout>
     </GuestGuard>
   )

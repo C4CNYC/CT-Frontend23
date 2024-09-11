@@ -4,7 +4,7 @@ import { bgBlur } from '@root/src/utils'
 
 export const StyledContentTeacher = styled('div', {
   shouldForwardProp: (prop) => prop !== 'isAigenerated',
-})<{ isAigenerated: boolean }>(({ theme, isAigenerated }) => ({
+})<{ isAigenerated?: boolean }>(({ theme, isAigenerated }) => ({
   width: '100%',
   margin: 'auto',
   display: 'flex',

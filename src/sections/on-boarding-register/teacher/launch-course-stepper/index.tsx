@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
@@ -9,6 +10,7 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { PATH_AUTH } from '@root/src/routes/paths'
 import { generateRandomEmoji } from '@root/src/utils'
 
 import { RegisterStudenTeacher, SingLink } from '../../links'
@@ -25,11 +27,8 @@ interface FormValuesProps {
   password: string
 }
 
-type ILaunchCourseStepperProps = {
-  resetRoad: () => void
-}
-
-export default function LaunchCourseStepper({ resetRoad }: ILaunchCourseStepperProps) {
+export default function LaunchCourseStepper() {
+  const { push } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [activeStep, setActiveStep] = useState(0)
   const { register } = useAuthContext()
@@ -85,6 +84,7 @@ export default function LaunchCourseStepper({ resetRoad }: ILaunchCourseStepperP
         minHeight: '460px',
         justifyContent: 'center',
         position: 'relative',
+        width: '100%',
       }}
     >
       <RegisterStudenTeacher isTeacher />
@@ -97,7 +97,7 @@ export default function LaunchCourseStepper({ resetRoad }: ILaunchCourseStepperP
           <SingUp
             goToStep={goToStep}
             nextStep={nextStep}
-            resetRoad={resetRoad}
+            resetRoad={() => push(PATH_AUTH.onBoardingTeacher.root)}
             isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
             isTeacher={true}
           />

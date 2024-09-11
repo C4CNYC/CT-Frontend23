@@ -1,0 +1,29 @@
+import { Stack } from '@mui/material'
+import { useRouter } from 'next/router'
+
+import { PATH_AUTH } from '@root/src/routes/paths'
+
+import { StyledContentTeacher } from './constants'
+import WelcomeStep from './WelcomeStep'
+
+export default function TeacherOnboardingIntro(): React.ReactElement {
+  const { push } = useRouter()
+
+  return (
+    <StyledContentTeacher>
+      <Stack
+        sx={{
+          width: '100%',
+          minHeight: '460px',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
+      >
+        <WelcomeStep
+          selectLaunchCourse={() => push(PATH_AUTH.onBoardingTeacher.launchCourse)}
+          selectAIGenerate={() => push(PATH_AUTH.aiGenerate)}
+        />
+      </Stack>
+    </StyledContentTeacher>
+  )
+}

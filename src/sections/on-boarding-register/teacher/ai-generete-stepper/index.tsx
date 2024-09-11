@@ -2,12 +2,14 @@ import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider, useSnackbar } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { PATH_AUTH } from '@root/src/routes/paths'
 
 import { AIPersonaInfo } from './AIPersonaInfo'
 import { GeneralInfo } from './GeneralInfo'
@@ -20,13 +22,8 @@ interface FormValuesProps {
   password: string
 }
 
-type IAIGenerateStepperProps = {
-  resetRoad: () => void
-}
-
-export default function AIGenerateStepper({
-  resetRoad,
-}: IAIGenerateStepperProps): React.ReactElement {
+export default function AIGenerateStepper(): React.ReactElement {
+  const { push } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [activeStep, setActiveStep] = useState(0)
   const { register } = useAuthContext()
@@ -65,34 +62,45 @@ export default function AIGenerateStepper({
   return (
     <Stack
       sx={{
+        width: '100%',
         minHeight: '460px',
         justifyContent: 'center',
         position: 'relative',
       }}
     >
-      <FormProvider
-        methods={methods}
-        onSubmit={methods.handleSubmit(onSubmit)}
+      <Stack
+        sx={{
+          minHeight: '460px',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
       >
-        {activeStep === 0 && (
-          <GeneralInfo
-            nextStep={nextStep}
-            resetRoad={resetRoad}
-          />
-        )}
-        {activeStep === 1 && (
-          <LessonPrompt
-            nextStep={nextStep}
-            prevStep={prevStep}
-          />
-        )}
-        {activeStep === 2 && (
-          <AIPersonaInfo
-            nextStep={nextStep}
-            prevStep={prevStep}
-          />
-        )}
-      </FormProvider>
+        <FormProvider
+          methods={methods}
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          {activeStep === 0 && (
+            <GeneralInfo
+              nextStep={nextStep}
+              resetRoad={() => {
+                push(PATH_AUTH.onBoardingTeacher.root)
+              }}
+            />
+          )}
+          {activeStep === 1 && (
+            <LessonPrompt
+              nextStep={nextStep}
+              prevStep={prevStep}
+            />
+          )}
+          {activeStep === 2 && (
+            <AIPersonaInfo
+              nextStep={nextStep}
+              prevStep={prevStep}
+            />
+          )}
+        </FormProvider>
+      </Stack>
     </Stack>
   )
 }

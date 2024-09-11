@@ -11,7 +11,11 @@ export const PATH_AUTH = {
   resetPassword: path(ROOTS_AUTH, '/reset-password'),
   newPassword: path(ROOTS_AUTH, '/new-password'),
   submitPassword: path(ROOTS_AUTH, '/submit-password'),
-  onBoardingTeacher: path(ROOTS_AUTH, '/on-boarding/teacher'),
+  onBoardingTeacher: {
+    root: path(ROOTS_AUTH, '/on-boarding/teacher'),
+    launchCourse: path(ROOTS_AUTH, '/on-boarding/teacher/launch-course'),
+  },
+  aiGenerate: path(ROOTS_AUTH, '/ai-generate'),
   onBoardingStudent: path(ROOTS_AUTH, '/on-boarding/student'),
   signIn: path(ROOTS_AUTH, '/signIn'),
 }
