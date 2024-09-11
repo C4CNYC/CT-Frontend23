@@ -1,12 +1,18 @@
 import { useState } from 'react'
 
-import { Button, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import {
+  Button,
+  IconButton,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material'
 
-import { RHFTextField } from '@root/src/components'
+import { Iconify, RHFTextField } from '@root/src/components'
 
 import {
   LANGUAGE,
-  LESSON_DURARION,
   NEXT_BUTTON_STYLES,
   SKIP_BUTTON_STYLES,
   styledAIRoadInput,
@@ -17,12 +23,12 @@ import {
 
 type ILessonPromptProps = {
   nextStep: () => void
+  prevStep: () => void
 }
 
-export default function LessonPrompt({ nextStep }: ILessonPromptProps) {
-  const [language, setLanguage] = useState(LANGUAGE[0].key)
-  const [track, setTrack] = useState(TRACK[0].key)
-  const [duration, setDuration] = useState(LESSON_DURARION[0].key)
+export default function LessonPrompt({ nextStep, prevStep }: ILessonPromptProps) {
+  const [language, setLanguage] = useState<null | string>(null)
+  const [track, setTrack] = useState<null | string>(null)
 
   const handleChangeLanguage = (event: React.MouseEvent<HTMLElement>, newLanguage: string) => {
     setLanguage(newLanguage)
@@ -30,12 +36,21 @@ export default function LessonPrompt({ nextStep }: ILessonPromptProps) {
   const handleChangeTrack = (event: React.MouseEvent<HTMLElement>, newTrack: string) => {
     setTrack(newTrack)
   }
-  const handleChangeDuration = (event: React.MouseEvent<HTMLElement>, newDuration: string) => {
-    setDuration(newDuration)
-  }
+
   return (
     <Stack gap={2}>
-      <Typography variant='h3'>My Lesson Prompt 💬 😍‍</Typography>
+      <Stack
+        direction='row'
+        gap={2}
+      >
+        <IconButton onClick={prevStep}>
+          <Iconify
+            icon='ion:chevron-back'
+            width='30px'
+          />
+        </IconButton>
+        <Typography variant='h3'>My Lesson Prompt 💬 😍‍</Typography>
+      </Stack>
       <RHFTextField
         name='lessonPrompt'
         label={'If/else statements within functions'}
@@ -97,33 +112,6 @@ export default function LessonPrompt({ nextStep }: ILessonPromptProps) {
           ))}
         </ToggleButtonGroup>
       </Stack>
-      <Stack>
-        <Typography
-          variant='h4'
-          color='#A6A6A6'
-          pl={2}
-          gutterBottom
-        >
-          Track (Optional)
-        </Typography>
-        <ToggleButtonGroup
-          value={duration}
-          exclusive
-          onChange={handleChangeDuration}
-          aria-label='course_duration'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {LESSON_DURARION.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
-      </Stack>
       <RHFTextField
         name='honeypotField'
         label={'Add invisible honeypot field'}
@@ -143,7 +131,7 @@ export default function LessonPrompt({ nextStep }: ILessonPromptProps) {
           sx={SKIP_BUTTON_STYLES}
           onClick={nextStep}
         >
-          Skip
+          Surprise Me
         </Button>
         <Button
           variant='contained'

@@ -96,6 +96,15 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
+          <MenuItem sx={{ justifyContent: 'space-between' }}>
+            Mumu AI Creator
+            <ListItemIcon sx={{ pl: 2, mr: -2 }}>
+              <Iconify
+                icon='mingcute:ai-line'
+                color='#FBDD3F'
+              />
+            </ListItemIcon>
+          </MenuItem>
           <CreateLessonDialog isEdit={false}>
             <MenuItem>Add New Lesson</MenuItem>
           </CreateLessonDialog>

@@ -35,10 +35,9 @@ export default function AIGenerateStepper({
   const generateAICourseSchema = Yup.object().shape({
     level: Yup.string(),
     grade: Yup.string(),
-    courseDuration: Yup.string(),
+    lessonDuration: Yup.string(),
     lessonPrompt: Yup.string(),
     lessonLanguage: Yup.string(),
-    lessonDuration: Yup.string(),
     honeypotField: Yup.string(),
     track: Yup.string(),
     persona: Yup.string(),
@@ -75,9 +74,24 @@ export default function AIGenerateStepper({
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        {activeStep === 0 && <GeneralInfo nextStep={nextStep} />}
-        {activeStep === 1 && <LessonPrompt nextStep={nextStep} />}
-        {activeStep === 2 && <AIPersonaInfo nextStep={nextStep} />}
+        {activeStep === 0 && (
+          <GeneralInfo
+            nextStep={nextStep}
+            resetRoad={resetRoad}
+          />
+        )}
+        {activeStep === 1 && (
+          <LessonPrompt
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        )}
+        {activeStep === 2 && (
+          <AIPersonaInfo
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        )}
       </FormProvider>
     </Stack>
   )

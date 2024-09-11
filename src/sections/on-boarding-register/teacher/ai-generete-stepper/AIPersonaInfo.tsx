@@ -1,6 +1,15 @@
 import { useState } from 'react'
 
-import { Button, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import {
+  Button,
+  IconButton,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material'
+
+import { Iconify } from '@root/src/components'
 
 import {
   NEXT_BUTTON_STYLES,
@@ -14,9 +23,10 @@ import {
 
 type IAIPersonaInfoProps = {
   nextStep: () => void
+  prevStep: () => void
 }
 
-export function AIPersonaInfo({ nextStep }: IAIPersonaInfoProps) {
+export function AIPersonaInfo({ nextStep, prevStep }: IAIPersonaInfoProps) {
   const [persona, setPersona] = useState(PERSONA[0].key)
   const [tone, setTone] = useState(TONE[0].key)
   const [typeProject, setTypeProject] = useState(TYPE_PROJECT[0].key)
@@ -33,7 +43,18 @@ export function AIPersonaInfo({ nextStep }: IAIPersonaInfoProps) {
 
   return (
     <Stack gap={2}>
-      <Typography variant='h3'>Let’s have some fun ! 😂‍ 🥳</Typography>
+      <Stack
+        direction='row'
+        gap={2}
+      >
+        <IconButton onClick={prevStep}>
+          <Iconify
+            icon='ion:chevron-back'
+            width='30px'
+          />
+        </IconButton>
+        <Typography variant='h3'>Let’s have some fun ! 😂‍ 🥳</Typography>
+      </Stack>
       <Stack>
         <Typography
           variant='h4'

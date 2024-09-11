@@ -1,10 +1,19 @@
 import { useState } from 'react'
 
-import { Button, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import {
+  Button,
+  IconButton,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material'
+
+import { Iconify } from '@root/src/components'
 
 import {
-  COURSE_DURARION,
   GRADES,
+  LESSON_DURARION,
   LEVELS,
   NEXT_BUTTON_STYLES,
   SKIP_BUTTON_STYLES,
@@ -14,12 +23,13 @@ import {
 
 type IGeneralInfoProps = {
   nextStep: () => void
+  resetRoad: () => void
 }
 
-export function GeneralInfo({ nextStep }: IGeneralInfoProps) {
+export function GeneralInfo({ nextStep, resetRoad }: IGeneralInfoProps) {
   const [level, setLevel] = useState(LEVELS[0].key)
   const [grade, setGrade] = useState(GRADES[0].key)
-  const [duration, setDuration] = useState(COURSE_DURARION[0].key)
+  const [duration, setDuration] = useState(LESSON_DURARION[0].key)
 
   const handleChangeLevel = (event: React.MouseEvent<HTMLElement>, newLevel: string) => {
     setLevel(newLevel)
@@ -33,7 +43,18 @@ export function GeneralInfo({ nextStep }: IGeneralInfoProps) {
 
   return (
     <Stack gap={2}>
-      <Typography variant='h3'>Who’s it for? 🤷🏽‍</Typography>
+      <Stack
+        direction='row'
+        gap={2}
+      >
+        <IconButton onClick={resetRoad}>
+          <Iconify
+            icon='ion:chevron-back'
+            width='30px'
+          />
+        </IconButton>
+        <Typography variant='h3'>Who’s it for? 🤷🏽‍</Typography>
+      </Stack>
       <Stack>
         <Typography
           variant='h4'
@@ -101,10 +122,10 @@ export function GeneralInfo({ nextStep }: IGeneralInfoProps) {
           value={duration}
           exclusive
           onChange={handleChangeDuration}
-          aria-label='course_duration'
+          aria-label='lesson_duration'
           sx={TOGGLE_BUTTON_GROUP_STYLES}
         >
-          {COURSE_DURARION.map((el) => (
+          {LESSON_DURARION.map((el) => (
             <ToggleButton
               sx={TOGGLE_BUTTON_STYLES}
               value={el.key}
