@@ -3,6 +3,8 @@ import { forwardRef } from 'react'
 import { Box, BoxProps, Link } from '@mui/material'
 import NextLink from 'next/link'
 
+import { useTenantConfig } from '@root/src/hooks/useTenantConfig'
+
 interface LogoProps extends BoxProps {
   disabledLink?: boolean
 }
@@ -10,6 +12,15 @@ interface LogoProps extends BoxProps {
 // eslint-disable-next-line react/display-name
 export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
   ({ disabledLink = false, sx, ...other }, ref): React.ReactElement | null => {
+    const { data } = useTenantConfig()
+
+    if (!data) {
+      return null
+    }
+
+    // if data.tenant === 'codejika' set codejika logo url or svg
+    // else set default logo url or svg
+
     const logo = (
       <Box
         ref={ref}
