@@ -12,7 +12,7 @@ interface BrowserViewProps {
   document: CodeDocument | null
   isOpenHeader?: boolean
   iframeKey?: number
-  stepBgColor?:string
+  stepBgColor?: string
 }
 
 enum TagNames {
@@ -32,8 +32,7 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
     ''
   )
 
-const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey, 
-  stepBgColor }) => {
+const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey, stepBgColor }) => {
   const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
@@ -52,7 +51,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey,
           ${getBody(cssBody, TagNames.Style)}
         </head>
         <body style="height: 100%; margin: 0;" id="pageLesson">
-        <div class="lesson-page " style=${stepBgColor?'background-color:'+stepBgColor :''}>
+        <div class="lesson-page " style=${stepBgColor ? 'background-color:' + stepBgColor : ''}>
           ${(document as any).length ? document : htmlBody.join('\n')}
         </div>
           ${getBody(jsBody, TagNames.Script)}
