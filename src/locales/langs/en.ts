@@ -918,6 +918,14 @@ const en = {
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: "Hi, I'm Mumu. I'm here to help when you get stuck.",
 
+  // CreateLesson
+  default_values: {
+    createLesson: {
+      name: 'My New Lesson',
+      description: 'My Lesson Description',
+      isEdit: false,
+    },
+  },
   organizations: {
     dashboard_title: 'Dashboard',
     title: 'Organizations',
