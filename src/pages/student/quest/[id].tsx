@@ -14,7 +14,10 @@ import {
   useGetAssignmentStudentPublicQuery,
 } from '@/redux/services/manager/assignments-student'
 import { useGetCoursQuery } from '@/redux/services/manager/courses-student'
+import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import LessonItem from '@/sections/module/lesson-item'
 import QuestDescription from '@/sections/quest/QuestDescription'
 import QuestHeader from '@/sections/quest/QuestHeader'
 import QuestMain from '@/sections/quest/QuestMain'
@@ -43,8 +46,18 @@ export default function Quest(): React.ReactElement | null {
   const translate = useTranslate()
 
   const { data: course, isLoading: isLoadingCourse } = useGetCoursQuery(
-    { id: data?.course.id as string },
-    { skip: !data?.course.id || !profile }
+    { id: data?.course?.id as string },
+    { skip: !data?.course?.id || !profile }
+  )
+
+  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
+    { id: data?.lessonId as string },
+    { skip: !data?.lessonId }
+  )
+
+  const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
+    { id: data?.courseUnitId as string },
+    { skip: !data?.courseUnitId }
   )
 
   const { data: teachers } = useGetTeacherListQuery(
@@ -79,7 +92,7 @@ export default function Quest(): React.ReactElement | null {
         maxWidth={themeStretch ? false : 'lg'}
         sx={containerSx}
       >
-        <QuestHeader />
+        <QuestHeader type={data?.category} />
         <QuestMain
           teachers={teachers}
           questName={data.name}
@@ -95,23 +108,39 @@ export default function Quest(): React.ReactElement | null {
           </Typography>
         )}
 
+        {lesson ? (
+          <>
+            <LessonItem
+              lesson={lesson}
+              unitId={data?.courseUnitId ?? ''}
+              locked={false}
+            />
+          </>
+        ) : (
+          ''
+        )}
+
         {isLoadingCourse ? (
           <Skeleton
             variant='rounded'
             sx={skeletonSx}
           />
-        ) : (
+        ) : course ? (
           <QuestRating
             courseId={course?.id ?? ''}
             courseName={course?.name ?? ''}
             progress={course?.progress ?? 0}
           />
+        ) : (
+          ''
         )}
         <Link
           component={NextLink}
-          href={
-            course?.id ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({ courseId: course.id }) : '#'
-          }
+          href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+            courseId: course?.id,
+            unitId: data?.courseUnitId,
+            lessonId: data?.lessonId,
+          })}
           underline='none'
           sx={KEEP_CODING_LINK_SX}
         >

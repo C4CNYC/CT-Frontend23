@@ -1,6 +1,8 @@
+import { ReactElement } from 'react'
+
 import { ListItemText, Tooltip } from '@mui/material'
 
-import { Image, useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
 import {
   StyledIcon as StyledIconVertical,
@@ -10,7 +12,7 @@ import { useResponsive } from '@root/src/hooks'
 import { useLocales } from '@root/src/locales'
 
 type IDefaultMenuItemProps = {
-  icon: string
+  icon: ReactElement
   title: string
   tooltip: string
 }
@@ -47,18 +49,15 @@ export default function DefaultMenuItem({
       {themeLayout === 'vertical' || !isDesktop ? (
         <StyledItemVertical depth={1}>
           <StyledIconVertical>
-            <Image
-              src={icon}
-              alt=''
-            />
+            {' '}
+            <StyledIcon>{icon}</StyledIcon>
           </StyledIconVertical>
           <ListItemText
             primary={`${translate(title)}`}
             primaryTypographyProps={{
               noWrap: true,
               component: 'span',
-              fontSize: 20,
-              color: '#364954',
+              fontSize: 18,
             }}
             secondaryTypographyProps={{
               noWrap: true,
@@ -68,12 +67,7 @@ export default function DefaultMenuItem({
         </StyledItemVertical>
       ) : (
         <StyledItem depth={1}>
-          <StyledIcon>
-            <Image
-              src={icon}
-              alt=''
-            />
-          </StyledIcon>
+          <StyledIcon>{icon}</StyledIcon>
           <ListItemText
             primary={`${translate(title)}`}
             primaryTypographyProps={{

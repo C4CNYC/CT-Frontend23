@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 
 import { Iconify, SearchNotFound } from '@/components'
@@ -25,7 +25,7 @@ import {
   useGetLessonIntegrationsQuery,
   useRemoveIntegrationMutation,
 } from '@/redux/services/manager/lessons-manager'
-import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+// import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -51,6 +51,17 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
     )
   }
 
+  async function selectOption(integrationId?: string, optionName?: string) {
+    await addIntegration({
+      lessonId: contentId,
+      integration_id: integrationId || '',
+    }).unwrap()
+    enqueueSnackbar(
+      translate('messages_sth_added', {
+        name: optionName ?? '',
+      })
+    )
+  }
   const onChange = async (
     _event: React.SyntheticEvent<any>,
     _newValue: Array<IIntegration & BaseResponseInterface>,
@@ -64,12 +75,7 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
       }
       switch (reason) {
         case 'selectOption': {
-          await addIntegration(payload).unwrap()
-          enqueueSnackbar(
-            translate('messages_sth_added', {
-              name: details?.option.name ?? '',
-            })
-          )
+          await selectOption(details?.option?.id, details?.option?.name)
           return
         }
         case 'removeOption': {
@@ -88,121 +94,143 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
     }
   }
 
-  if (!integrations.data.length) {
-    return (
-      <Box>
-        <Typography>{translate('integrations_empty')}</Typography>
-        <Typography>
-          {translate('integrations_lets_create')}{' '}
-          <Link href={MANAGER_PATH_DASHBOARD.apps.root}>{translate('here')}</Link>
-        </Typography>
-      </Box>
-    )
-  }
+  // if (!integrations.data.length) {
+  //   return (
+  //     <Box>
+  //       <Typography>{translate('integrations_empty')}</Typography>
+  //       <Typography>
+  //         {translate('integrations_lets_create')}{' '}
+  //         <Link href={MANAGER_PATH_DASHBOARD.apps.root}>{translate('here')}</Link>
+  //       </Typography>
+  //     </Box>
+  //   )
+  // }
 
   return (
-    <Autocomplete<IIntegration & BaseResponseInterface, true>
-      multiple
-      loading={isFetching || addLoading || removeLoading}
-      value={data}
-      onChange={onChange}
-      options={integrations?.data}
-      popupIcon={null}
-      onLoadStart={voidFunction}
-      noOptionsText={
-        <SearchNotFound
-          sx={{ p: '20px 0' }}
-          query={filters.name}
-        />
-      }
-      onInputChange={(event, value) => {
-        setFilter('name', value)
-      }}
-      getOptionLabel={(option) => option.name}
-      renderTags={(tagValue, getTagProps): React.ReactElement[] =>
-        tagValue.map((option, index) => (
-          <Chip
-            label={option.name}
-            {...getTagProps({ index })}
-            key={option.name}
+    <>
+      <Autocomplete<IIntegration & BaseResponseInterface, true>
+        multiple
+        id='integratioons-tab-autocomplete'
+        loading={isFetching || addLoading || removeLoading}
+        value={data}
+        onChange={onChange}
+        options={integrations.data}
+        popupIcon={null}
+        onLoadStart={voidFunction}
+        noOptionsText={
+          <SearchNotFound
+            sx={{ p: '20px 0' }}
+            query={filters.name}
           />
-        ))
-      }
-      style={{ width: '100%' }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          placeholder={translate('integrations')}
-        />
-      )}
-      renderOption={(props, recipient, { inputValue }) => {
-        const { name } = recipient
-        const matches = match(name, inputValue)
-        const parts = parse(name, matches)
+        }
+        onInputChange={(event, value) => {
+          setFilter('name', value)
+        }}
+        getOptionLabel={(option) => JSON.stringify(option)}
+        renderTags={(tagValue, getTagProps): React.ReactElement[] =>
+          tagValue.map((option, index) => (
+            <Chip
+              label={option.name}
+              {...getTagProps({ index })}
+              key={option.name}
+            />
+          ))
+        }
+        style={{ width: '100%', display: 'block', overflow: 'visible' }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            placeholder={translate('integrations')}
+          />
+        )}
+        renderOption={(props, recipient, { inputValue }) => {
+          const { name } = recipient
+          const matches = match(name, inputValue)
+          const parts = parse(name, matches)
 
-        const selected = data.find((c) => c.name === name)
+          const selected = data?.find((c) => c.name === name)
 
-        return (
-          <Box
-            component='li'
-            sx={{
-              p: '12px !important',
-              pointerEvents: selected ? 'none' : 'auto',
-            }}
-            {...props}
-          >
+          return (
             <Box
+              component='li'
               sx={{
-                mr: 1.5,
-                width: 32,
-                height: 32,
-                overflow: 'hidden',
-                borderRadius: '50%',
-                position: 'relative',
+                p: '12px !important',
+                pointerEvents: selected ? 'none' : 'auto',
               }}
+              {...props}
+              key={name}
             >
               <Box
                 sx={{
-                  top: 0,
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  position: 'absolute',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
-                  transition: (theme) =>
-                    theme.transitions.create('opacity', {
-                      easing: theme.transitions.easing.easeInOut,
-                      duration: theme.transitions.duration.shorter,
-                    }),
-                  ...{
-                    color: 'primary.main',
-                  },
+                  mr: 1.5,
+                  width: 32,
+                  height: 32,
+                  overflow: 'hidden',
+                  borderRadius: '50%',
+                  position: 'relative',
                 }}
               >
-                <Iconify
-                  icon={
-                    selected
-                      ? 'material-symbols:check-box-outline-rounded'
-                      : 'material-symbols:check-box-outline-blank'
-                  }
-                />
+                <Box
+                  sx={{
+                    top: 0,
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    position: 'absolute',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
+                    transition: (theme) =>
+                      theme.transitions.create('opacity', {
+                        easing: theme.transitions.easing.easeInOut,
+                        duration: theme.transitions.duration.shorter,
+                      }),
+                    ...(selected && {
+                      opacity: 1,
+                      color: 'primary.main',
+                    }),
+                  }}
+                >
+                  <Iconify
+                    icon={
+                      selected
+                        ? 'material-symbols:check-box-outline-rounded'
+                        : 'material-symbols:check-box-outline-blank'
+                    }
+                  />
+                </Box>
               </Box>
-            </Box>
 
-            {parts.map((part, index) => (
-              <Typography
-                key={index}
-                variant='subtitle2'
-                color={part.highlight ? 'primary' : 'textPrimary'}
-              >
-                {part.text}
-              </Typography>
-            ))}
-          </Box>
+              {parts.map((part, index) => (
+                <Typography
+                  key={index}
+                  variant='subtitle2'
+                  color={part.highlight ? 'primary' : 'textPrimary'}
+                >
+                  {part.text}
+                </Typography>
+              ))}
+            </Box>
+          )
+        }}
+      />
+      {integrations.data?.map((integration) => {
+        return (
+          <button
+            key={integration.id}
+            onClick={() => {
+              selectOption(integration.id, integration.name)
+            }}
+          >
+            <Typography
+              variant='subtitle2'
+              color='primary'
+            >
+              {integration.name}
+            </Typography>
+          </button>
         )
-      }}
-    />
+      })}
+    </>
   )
 }

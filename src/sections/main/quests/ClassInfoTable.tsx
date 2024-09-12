@@ -17,7 +17,7 @@ import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { MenuPopover } from '@/components'
 import CustomTabPanel, { customTabProps } from '@/components/custom-tab-panel'
-import { OPEN_PROJECT } from '@/redux/enums/assignment-types.enum'
+import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { Role } from '@/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -57,7 +57,12 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
   })
   const addQuestOpenProjectPath = STUDENT_PATH_DASHBOARD.class.addQuest(classData.id, {
     schoolId: classData?.school?.id as string,
-    type: OPEN_PROJECT,
+    type: AssignmentTypes.OPEN_PROJECT,
+  })
+
+  const addQuestMyCreationsPath = STUDENT_PATH_DASHBOARD.class.addQuest(classData.id, {
+    schoolId: classData?.school?.id as string,
+    type: AssignmentTypes.MY_CREATIONS,
   })
 
   return (
@@ -205,7 +210,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         >
           <MenuItem>
             <SiGoogleclassroom size={10} />
-            {translate('home_assign_course')}
+            {translate('Assign from Catalog')}
           </MenuItem>
         </Link>
         <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
@@ -217,7 +222,20 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           >
             <MenuItem>
               <AiOutlineFundProjectionScreen size={20} />
-              {translate('home_assign_project')}
+              {translate('Create Pop-Up Lesson')}
+            </MenuItem>
+          </Link>
+        </RoleBasedGuard>
+        <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+          <Link
+            component={NextLink}
+            href={addQuestMyCreationsPath}
+            underline='none'
+            color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
+          >
+            <MenuItem>
+              <AiOutlineFundProjectionScreen size={20} />
+              {translate('Assign from My Creations')}
             </MenuItem>
           </Link>
         </RoleBasedGuard>

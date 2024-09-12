@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Box, Button, Collapse, Link, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
@@ -35,13 +35,11 @@ import TrainingProgress from './LessonProgress'
 
 interface ILessonItemProps {
   lesson: ILesson
-  unitId: string
+  unitId?: string
   locked: boolean
-  prevLesson: ILesson
-  index: number
+  prevLesson?: ILesson
+  index?: number
 }
-
-const MAX_DESC = 50
 
 export default function LessonItem({
   lesson,
@@ -51,11 +49,14 @@ export default function LessonItem({
   index,
 }: ILessonItemProps): React.ReactElement {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down(600))
   const [openDetails, setOpenDetails] = useState(false)
   const { user } = useAuthContext()
   const courseId = useRouter().query.id
   const [open, setOpen] = useState(false)
+  const [maxDesc, setMaxDesc] = useState(50)
+  const isTablet = useMediaQuery(theme.breakpoints.up('xl'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
+
   const { push } = useRouter()
   const openDialog = () => {
     setOpen(true)
@@ -88,6 +89,15 @@ export default function LessonItem({
     )
   }
 
+  useEffect(() => {
+    if (isTablet) {
+      setMaxDesc(200)
+    }
+    if (isDesktop) {
+      setMaxDesc(400)
+    }
+  }, [])
+
   const lastLessonProgress = prevLesson?.progress ?? 100
   const isLastLessonInProgress = lastLessonProgress <= 90
 
@@ -107,13 +117,15 @@ export default function LessonItem({
         </Typography>
         <Typography
           variant='body1'
-          mb={lesson?.description?.length < MAX_DESC ? 1 : 0}
+          mb={lesson?.description?.length < maxDesc ? 1 : 0}
         >
-          {lesson?.description?.length < MAX_DESC
-            ? lesson?.description
-            : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`}
+          {lesson?.description
+            ? lesson?.description?.length < maxDesc
+              ? lesson?.description
+              : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`
+            : ''}
         </Typography>
-        {lesson?.description?.length > MAX_DESC ? (
+        {lesson?.description?.length > maxDesc ? (
           <>
             <Collapse in={openDetails}>{lesson?.description?.slice(47)}</Collapse>
             <Button
