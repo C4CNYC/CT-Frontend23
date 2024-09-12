@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { html } from '@codemirror/lang-html'
 import { Box } from '@mui/system'
 import { dracula } from '@uiw/codemirror-theme-dracula'
-import CodeMirror from '@uiw/react-codemirror'
+import CodeMirror, { EditorView } from '@uiw/react-codemirror'
 import { useAtom } from 'jotai'
 
 import { ResizerUi } from '@/components'
@@ -68,10 +68,11 @@ export default function StepCode({
           sx={{ mb: 1, mt: 1, ml: 2 }}
         />
         <CodeMirror
+          
           value={value}
           theme={dracula}
           height='calc(100vh - 96px)'
-          extensions={[html()]}
+          extensions={[html(), EditorView.lineWrapping ]}
           onChange={(value) => {
             setValue(value)
           }}
