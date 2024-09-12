@@ -282,7 +282,7 @@ const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType, s
         />
       )
     case 'code':
-      return <BrowserView document={connectIntegrations(body)} />
+      return <BrowserView document={connectIntegrations(body)} stepBgColor={stepBgColor} />
     default:
       return <>{translate('messages_content_type_not_supported')}</>
   }
