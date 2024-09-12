@@ -3,7 +3,10 @@ import { useState } from 'react'
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { useCreateLessonMutation } from '@/redux/services/manager/lessons-manager'
+import {
+  useCreateLessonMutation,
+  useCreateByCloningLessonMutation,
+} from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
@@ -25,6 +28,8 @@ export default function MyCreationsMenu(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const router = useRouter()
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
+  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
+    useCreateByCloningLessonMutation()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -44,6 +49,19 @@ export default function MyCreationsMenu(): React.ReactElement {
       duration: '60',
     }).unwrap()
     return lesson
+  }
+
+  async function createByCloningLessonHandler() {
+    let data = await createByCloningLesson()
+    if ((data as any)?.data?.id) {
+      router.push(
+        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: (data as any).data.id })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    }
   }
 
   return (
@@ -109,14 +127,7 @@ export default function MyCreationsMenu(): React.ReactElement {
         >
           <MenuItem
             onClick={async () => {
-              const lesson = await createNewLesson()
-              router.push(
-                `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: lesson.id })}`,
-                undefined,
-                {
-                  shallow: true,
-                }
-              )
+              await createByCloningLessonHandler()
             }}
           >
             Add New Lesson
