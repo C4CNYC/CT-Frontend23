@@ -1,16 +1,7 @@
-import { DialogAnimate } from '@root/src/components'
-import {
-  useAskAIMutation,
-  useCreateByAIMutation,
-  useCreateByCloningLessonMutation,
-} from '@root/src/redux/services/manager/lessons-manager'
-import { MANAGER_PATH_DASHBOARD } from '@root/src/routes/manager.paths'
-import { useRouter } from 'next/router'
 import { FormEvent, useState } from 'react'
 
 import {
   Stack,
-  TextField,
   Select,
   MenuItem,
   Button,
@@ -18,7 +9,15 @@ import {
   FormControl,
   TextareaAutosize,
 } from '@mui/material'
+import { useRouter } from 'next/router'
+
+import { DialogAnimate } from '@root/src/components'
 import { useCreateLessonContentMutation } from '@root/src/redux/services/manager/lesson-content-manager'
+import {
+  useAskAIMutation,
+  useCreateByCloningLessonMutation,
+} from '@root/src/redux/services/manager/lessons-manager'
+import { MANAGER_PATH_DASHBOARD } from '@root/src/routes/manager.paths'
 
 export function AiLessonCreateDialogFe({
   open,
@@ -34,28 +33,28 @@ export function AiLessonCreateDialogFe({
   const [aiThinking, aiThinkingSet] = useState(false)
 
   const router = useRouter()
-  async function createLesson(  contents: any[]) {
+  async function createLesson(contents: any[]) {
     let newlesson = await createByCloningLesson()
-    let lessonId = newlesson.data.id;
-    contents.map((content) => createLessonContent({ lessonId , ...content }))
-    Promise.allSettled(contents).then(() => {
-      aiThinkingSet(false)
+    if ('data' in newlesson) {
+      let lessonId = newlesson.data.id
+      contents.map((content) => createLessonContent({ lessonId, ...content }))
+      Promise.allSettled(contents).then(() => {
+        aiThinkingSet(false)
         router.push(
-          MANAGER_PATH_DASHBOARD.lessons.root +
-            '?' +
-            new URLSearchParams({ lessonId }),
+          MANAGER_PATH_DASHBOARD.lessons.root + '?' + new URLSearchParams({ lessonId }),
           undefined,
           {
             shallow: true,
           }
-        ) 
-    })
+        )
+      })
+    } //@todo else error
   }
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     let formdata = ''
-    
-    new FormData(e.currentTarget).forEach((v, k) => formdata += '\n' + `${k} = ${v} `)
+
+    new FormData(e.currentTarget).forEach((v, k) => (formdata += '\n' + `${k} = ${v} `))
     aiThinkingSet(true)
     let response = await askAI({
       prompt: `
@@ -100,16 +99,21 @@ export function AiLessonCreateDialogFe({
         No need explanations, return only json.
         `,
     })
-    let newLesson = JSON.parse(response.error.data.slice(7, -3))
-    console.log('newLesson', newLesson)
-    createLesson(newLesson)
+    if ('error' in response) {
+      // error means we cant parse openai response since it starts with formatting= ```
+      if ('data' in response.error) {
+        let data = response.error.data as string
+        let newLesson = JSON.parse(data.slice(7, -3))
+        createLesson(newLesson)
+      }
+    } //@todo handle lesson didnt create case
   }
   if (!open) return <></>
 
   return (
     <>
       <DialogAnimate open={open}>
-        {(isLoading || aiThinking ) ? (
+        {isLoading || aiThinking ? (
           <div>
             <img src='https://avatars.githubusercontent.com/u/19434091?v=4' />
             <div> {isLoading ? 'Ai is preparing your lesson' : 'Saving prepared lesson'} </div>

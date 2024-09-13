@@ -8,12 +8,7 @@ import {
   useCreateByCloningLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
-import {
-  Iconify,
-  Image,
-  MenuPopover,
-  useSettingsContext,
-} from '@root/src/components'
+import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
 import {
   StyledIcon as StyledIconVertical,
@@ -24,9 +19,9 @@ import { useLocales } from '@root/src/locales'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
-import DiamondFeatureModal from './diamond-feature-modal'
 import { AiLessonCreateDialog } from './ai-lesson-create-dialog'
 import { AiLessonCreateDialogFe } from './ai-lesson-create-dialog-fe'
+import DiamondFeatureModal from './diamond-feature-modal'
 
 export default function MyCreationsMenu(): React.ReactElement {
   const { translate } = useLocales()
@@ -192,8 +187,14 @@ export default function MyCreationsMenu(): React.ReactElement {
           </DiamondFeatureModal>
         </MenuPopover>
       </RoleBasedGuard>
-      <AiLessonCreateDialog open={aiDialog} closeTrigger={ ()=>aiDialogSet(false) } />
-      <AiLessonCreateDialogFe open={aiDialogFe} closeTrigger={ ()=>aiDialogFeSet(false) } />
+      <AiLessonCreateDialog
+        open={aiDialog}
+        closeTrigger={() => aiDialogSet(false)}
+      />
+      <AiLessonCreateDialogFe
+        open={aiDialogFe}
+        closeTrigger={() => aiDialogFeSet(false)}
+      />
     </>
   )
 }

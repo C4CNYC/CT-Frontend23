@@ -1,10 +1,10 @@
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { AiLessonGenerate } from '../interfaces/ai.interface'
 import {
   ILesson,
   ILessonCreate,
   ILessonDelete,
-  ILessonGenerate,
   ILessonSearchParams,
   ILessonUpdate,
   IOpenAiRequest,
@@ -12,7 +12,6 @@ import {
 import { IIntegration } from '../interfaces/integration.interface'
 
 import { managerApi } from '.'
-import { AiLessonGenerate } from '../interfaces/ai.interface'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -72,19 +71,19 @@ const extendedApi = managerApi.injectEndpoints({
       invalidatesTags: [{ type: 'Lessons' }],
     }),
     createByAI: builder.mutation<ILessonCreate & BaseResponseInterface, AiLessonGenerate>({
-      query: ({...body}) => ({
+      query: ({ ...body }) => ({
         url: '/manager/lesson/generate',
         method: 'POST',
-        body
+        body,
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
-    askAI: builder.mutation<IOpenAiRequest & BaseResponseInterface, {prompt:string}>({
-      query: ({prompt}) => ({
+    askAI: builder.mutation<IOpenAiRequest & BaseResponseInterface, { prompt: string }>({
+      query: ({ prompt }) => ({
         url: '/manager/lesson/openAiRequest',
         method: 'POST',
-        body:{prompt}
-      }), 
+        body: { prompt },
+      }),
     }),
     deleteLesson: builder.mutation<ILessonDelete & BaseResponseInterface, ILessonDelete>({
       query: ({ id }) => ({
