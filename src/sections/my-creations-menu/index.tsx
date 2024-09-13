@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import {
   useCreateLessonMutation,
   useCreateByCloningLessonMutation,
+  useGenerateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
@@ -30,6 +31,7 @@ export default function MyCreationsMenu(): React.ReactElement {
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
     useCreateByCloningLessonMutation()
+  const [generateLesson, { isLoading: isLoadingGenerate }] = useGenerateLessonMutation()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -125,6 +127,34 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
+          <MenuItem
+            onClick={async () => {
+              // generate new lesson, redirect to lesson creation page
+              const prompt = window.prompt('What kind of lesson do you want?')
+              const lesson = await generateLesson({
+                lessonPrompt: prompt ?? '',
+                // lessonDuration: '30min',
+                // proficiencyLevel: 'beginner',
+                // lessonType: 'any',
+                // programmingLanguage: 'JavaScript',
+                // track: 'Web Development',
+                // persona: 'Mumu',
+              })
+              console.log(lesson, 'Lesson result')
+              if (lesson.data) {
+                router.push(
+                  `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: lesson.data?.id })}`,
+                  undefined,
+                  {
+                    shallow: true,
+                  }
+                )
+              }
+              handleClosePopover()
+            }}
+          >
+            Mumu AI Creator
+          </MenuItem>
           <MenuItem
             onClick={async () => {
               await createByCloningLessonHandler()

@@ -4,6 +4,7 @@ import {
   ILesson,
   ILessonCreate,
   ILessonDelete,
+  ILessonGenerate,
   ILessonSearchParams,
   ILessonUpdate,
 } from '../interfaces/courseUnits.interface'
@@ -68,6 +69,14 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
+    generateLesson: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generate',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
     deleteLesson: builder.mutation<ILessonDelete & BaseResponseInterface, ILessonDelete>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
@@ -114,6 +123,7 @@ export const {
   // -------------mutation-----------
   useCreateLessonMutation,
   useCreateByCloningLessonMutation,
+  useGenerateLessonMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
   useAddIntegrationMutation,
