@@ -19,6 +19,8 @@ import { useLocales } from '@root/src/locales'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import { AiLessonCreateDialog } from './ai-lesson-create-dialog'
+import { AiLessonCreateDialogFe } from './ai-lesson-create-dialog-fe'
 import DiamondFeatureModal from './diamond-feature-modal'
 
 export default function MyCreationsMenu(): React.ReactElement {
@@ -30,6 +32,8 @@ export default function MyCreationsMenu(): React.ReactElement {
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
     useCreateByCloningLessonMutation()
+  const [aiDialog, aiDialogSet] = useState(false)
+  const [aiDialogFe, aiDialogFeSet] = useState(false)
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -132,6 +136,8 @@ export default function MyCreationsMenu(): React.ReactElement {
           >
             Add New Lesson
           </MenuItem>
+          <MenuItem onClick={() => aiDialogSet(true)}>New Ai Lesson</MenuItem>
+          <MenuItem onClick={() => aiDialogFeSet(true)}>New Ai Lesson Fe</MenuItem>
           <MenuItem
             onClick={() => {
               router.push(STUDENT_PATH_DASHBOARD.myLessons, undefined, {
@@ -181,6 +187,14 @@ export default function MyCreationsMenu(): React.ReactElement {
           </DiamondFeatureModal>
         </MenuPopover>
       </RoleBasedGuard>
+      <AiLessonCreateDialog
+        open={aiDialog}
+        closeTrigger={() => aiDialogSet(false)}
+      />
+      <AiLessonCreateDialogFe
+        open={aiDialogFe}
+        closeTrigger={() => aiDialogFeSet(false)}
+      />
     </>
   )
 }
