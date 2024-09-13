@@ -7,6 +7,7 @@ import {
   ILessonGenerate,
   ILessonSearchParams,
   ILessonUpdate,
+  IOpenAiRequest,
 } from '../interfaces/courseUnits.interface'
 import { IIntegration } from '../interfaces/integration.interface'
 
@@ -78,6 +79,13 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
+    askAI: builder.mutation<IOpenAiRequest & BaseResponseInterface, {prompt:string}>({
+      query: ({prompt}) => ({
+        url: '/manager/lesson/openAiRequest',
+        method: 'POST',
+        body:{prompt}
+      }), 
+    }),
     deleteLesson: builder.mutation<ILessonDelete & BaseResponseInterface, ILessonDelete>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
@@ -125,6 +133,7 @@ export const {
   useCreateLessonMutation,
   useCreateByCloningLessonMutation,
   useCreateByAIMutation,
+  useAskAIMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
   useAddIntegrationMutation,

@@ -134,6 +134,9 @@ export interface ILessonCreate {
   description: string
   duration: string
 }
+export interface IOpenAiRequest {
+  prompt: string
+}
 
 export interface IModulesSearchParams extends BaseSearchInterface {
   name?: string

@@ -10,7 +10,8 @@ export function AiLessonCreateDialog({ open, closeTrigger }: { open: boolean, cl
   const [createByAi, { isLoading, isSuccess }] = useCreateByAIMutation()
   const router = useRouter()
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    async function onSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
     let data = new FormData(e.currentTarget)
     let newLesson = await createByAi({
       lessonDuration: data.get('lessonDuration') as string,
@@ -33,15 +34,13 @@ export function AiLessonCreateDialog({ open, closeTrigger }: { open: boolean, cl
   if (!open) return <></>
 
   return (
-    <>
+    <DialogAnimate open={open}>
       {isLoading ? (
         <div>
           <img src='https://avatars.githubusercontent.com/u/19434091?v=4' />
           <div> Ai is preparing your lesson </div>
         </div>
       ) : (
-        <DialogAnimate open={open}>
-
 <Stack spacing={2} sx={{ padding: '1rem' }}>
   <form onSubmit={(e) => onSubmit(e)}>
     {/* Lesson Duration */}
@@ -112,14 +111,17 @@ export function AiLessonCreateDialog({ open, closeTrigger }: { open: boolean, cl
     />
 
     {/* Submit Button */}
-    <Button type="submit" variant="contained" color="primary" fullWidth>
+    <Button type="submit" variant="contained" color="primary" >
       Submit
-    </Button>
+                              </Button>
+                              <Button  variant="contained" color="primary" onClick={closeTrigger} >
+      Close
+                              </Button>
+                              
   </form>
 </Stack>
 
-        </DialogAnimate>
       )}
-    </>
+        </DialogAnimate>
   )
 }
