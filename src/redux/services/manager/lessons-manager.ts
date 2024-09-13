@@ -10,6 +10,7 @@ import {
 import { IIntegration } from '../interfaces/integration.interface'
 
 import { managerApi } from '.'
+import { AiLessonGenerate } from '../interfaces/ai.interface'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -68,6 +69,14 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
+    createByAI: builder.mutation<ILessonCreate & BaseResponseInterface, AiLessonGenerate>({
+      query: ({...body}) => ({
+        url: '/manager/lesson/generate',
+        method: 'POST',
+        body
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
     deleteLesson: builder.mutation<ILessonDelete & BaseResponseInterface, ILessonDelete>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
@@ -114,6 +123,7 @@ export const {
   // -------------mutation-----------
   useCreateLessonMutation,
   useCreateByCloningLessonMutation,
+  useCreateByAIMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
   useAddIntegrationMutation,

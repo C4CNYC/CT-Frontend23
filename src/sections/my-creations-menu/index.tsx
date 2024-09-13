@@ -8,7 +8,12 @@ import {
   useCreateByCloningLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
-import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
+import {
+  Iconify,
+  Image,
+  MenuPopover,
+  useSettingsContext,
+} from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
 import {
   StyledIcon as StyledIconVertical,
@@ -20,6 +25,7 @@ import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import DiamondFeatureModal from './diamond-feature-modal'
+import { AiLessonCreateDialog } from './ai-lesson-create-dialog'
 
 export default function MyCreationsMenu(): React.ReactElement {
   const { translate } = useLocales()
@@ -30,6 +36,7 @@ export default function MyCreationsMenu(): React.ReactElement {
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
     useCreateByCloningLessonMutation()
+  const [aiDialog, aiDialogSet] = useState(false)
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -132,6 +139,7 @@ export default function MyCreationsMenu(): React.ReactElement {
           >
             Add New Lesson
           </MenuItem>
+          <MenuItem onClick={() => aiDialogSet(true)}>New Ai Lesson</MenuItem>
           <MenuItem
             onClick={() => {
               router.push(STUDENT_PATH_DASHBOARD.myLessons, undefined, {
@@ -181,6 +189,7 @@ export default function MyCreationsMenu(): React.ReactElement {
           </DiamondFeatureModal>
         </MenuPopover>
       </RoleBasedGuard>
+      <AiLessonCreateDialog open={aiDialog} />
     </>
   )
 }
