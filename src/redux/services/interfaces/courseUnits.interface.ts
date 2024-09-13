@@ -148,6 +148,16 @@ export interface ILessonSearchParams extends BaseSearchInterface {
   lessonId?: string
 }
 
+export interface ILessonGenerate {
+  lessonPrompt: string
+  lessonDuration?: string
+  proficiencyLevel?: string
+  lessonType?: string
+  programmingLanguage?: string
+  track?: string
+  persona?: string
+}
+
 export interface ICourseSearchParams extends BaseSearchInterface {
   class_id?: string
   school_id?: string

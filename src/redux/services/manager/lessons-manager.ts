@@ -4,6 +4,7 @@ import {
   ILesson,
   ILessonCreate,
   ILessonDelete,
+  ILessonGenerate,
   ILessonSearchParams,
   ILessonUpdate,
 } from '../interfaces/courseUnits.interface'
