@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 
 import { PATH_AUTH } from '@root/src/routes/paths'
 
+import { RegisterStudenTeacher, SingLink } from '../links'
+
 import { StyledContentTeacher } from './constants'
 import WelcomeStep from './WelcomeStep'
 
@@ -19,10 +21,12 @@ export default function TeacherOnboardingIntro(): React.ReactElement {
           position: 'relative',
         }}
       >
+        <RegisterStudenTeacher />
         <WelcomeStep
           selectLaunchCourse={() => push(PATH_AUTH.onBoardingTeacher.launchCourse)}
           selectAIGenerate={() => push(PATH_AUTH.aiGenerate)}
         />
+        <SingLink />
       </Stack>
     </StyledContentTeacher>
   )
