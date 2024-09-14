@@ -46,7 +46,7 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
   )
 }
 
-export function RegisterStudenTeacher({ isTeacher }: Props): React.ReactElement {
+export function RegisterStudentTeacher({ isTeacher }: Props): React.ReactElement {
   const translate = useTranslate()
 
   return (

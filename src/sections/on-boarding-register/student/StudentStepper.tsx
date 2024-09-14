@@ -12,7 +12,7 @@ import { generateRandomEmoji } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { StyledContent } from '@root/src/layouts/login/styles'
 
-import { RegisterStudenTeacher, SingLink } from '../links'
+import { RegisterStudentTeacher, SingLink } from '../links'
 import SingUp from '../teacher/SingUp'
 
 import StepperInfo from './StepperInfo'
@@ -107,7 +107,7 @@ export default function StudentStepper(): React.ReactElement {
           position: 'relative',
         }}
       >
-        {activeStep !== 2 && <RegisterStudenTeacher />}
+        {activeStep !== 2 && <RegisterStudentTeacher />}
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
