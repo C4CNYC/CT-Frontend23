@@ -1,11 +1,13 @@
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { AiLessonGenerate } from '../interfaces/ai.interface'
 import {
   ILesson,
   ILessonCreate,
   ILessonDelete,
   ILessonSearchParams,
   ILessonUpdate,
+  IOpenAiRequest,
 } from '../interfaces/courseUnits.interface'
 import { IIntegration } from '../interfaces/integration.interface'
 
@@ -61,6 +63,28 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
+    createByCloningLesson: builder.mutation<ILessonCreate & BaseResponseInterface, void>({
+      query: () => ({
+        url: '/manager/lesson/createByCloningLesson',
+        method: 'POST',
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    createByAI: builder.mutation<ILessonCreate & BaseResponseInterface, AiLessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generate',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    askAI: builder.mutation<IOpenAiRequest & BaseResponseInterface, { prompt: string }>({
+      query: ({ prompt }) => ({
+        url: '/manager/lesson/openAiRequest',
+        method: 'POST',
+        body: { prompt },
+      }),
+    }),
     deleteLesson: builder.mutation<ILessonDelete & BaseResponseInterface, ILessonDelete>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
@@ -106,6 +130,9 @@ export const {
   useGetLessonIntegrationsQuery,
   // -------------mutation-----------
   useCreateLessonMutation,
+  useCreateByCloningLessonMutation,
+  useCreateByAIMutation,
+  useAskAIMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
   useAddIntegrationMutation,

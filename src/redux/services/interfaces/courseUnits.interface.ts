@@ -134,6 +134,9 @@ export interface ILessonCreate {
   description: string
   duration: string
 }
+export interface IOpenAiRequest {
+  prompt: string
+}
 
 export interface IModulesSearchParams extends BaseSearchInterface {
   name?: string
@@ -146,6 +149,16 @@ export interface ILessonSearchParams extends BaseSearchInterface {
   module_id?: string
   assignment_id?: string
   lessonId?: string
+}
+
+export interface ILessonGenerate {
+  lessonPrompt: string
+  lessonDuration?: string
+  proficiencyLevel?: string
+  lessonType?: string
+  programmingLanguage?: string
+  track?: string
+  persona?: string
 }
 
 export interface ICourseSearchParams extends BaseSearchInterface {
