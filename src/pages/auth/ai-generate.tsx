@@ -14,7 +14,7 @@ export default function TeacherOnBoarding(): React.ReactElement {
         subtitle={translate('login_mumu_glad')}
       >
         <StyledContentTeacher isAigenerated={true}>
-          <AIGenerateStepper />
+          <AIGenerateStepper isModal={false} />
         </StyledContentTeacher>
       </LoginLayout>
     </GuestGuard>

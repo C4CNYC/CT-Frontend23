@@ -28,7 +28,11 @@ export interface FormAIGenerateProps {
   projectType: string
 }
 
-export default function AIGenerateStepper(): React.ReactElement {
+interface AIGenerateStepperProps {
+  isModal: boolean
+}
+
+export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
   const [activeStep, setActiveStep] = useState(0)
 
@@ -97,6 +101,7 @@ export default function AIGenerateStepper(): React.ReactElement {
         >
           {activeStep === 0 && (
             <GeneralInfo
+              isModal={isModal}
               nextStep={nextStep}
               resetRoad={() => {
                 push(PATH_AUTH.onBoardingTeacher.root)

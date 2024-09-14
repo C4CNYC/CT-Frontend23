@@ -16,21 +16,25 @@ import {
 type IGeneralInfoProps = {
   nextStep: () => void
   resetRoad: () => void
+  isModal: boolean
 }
 
-export function GeneralInfo({ nextStep, resetRoad }: IGeneralInfoProps) {
+export function GeneralInfo({ nextStep, resetRoad, isModal }: IGeneralInfoProps) {
   return (
     <Stack gap={2}>
       <Stack
         direction='row'
         gap={2}
+        pl={isModal ? 1 : 0}
       >
-        <IconButton onClick={resetRoad}>
-          <Iconify
-            icon='ion:chevron-back'
-            width='30px'
-          />
-        </IconButton>
+        {!isModal ? (
+          <IconButton onClick={resetRoad}>
+            <Iconify
+              icon='ion:chevron-back'
+              width='30px'
+            />
+          </IconButton>
+        ) : null}
         <Typography variant='h3'>Who’s it for? 🤷🏽‍</Typography>
       </Stack>
       <Stack>
