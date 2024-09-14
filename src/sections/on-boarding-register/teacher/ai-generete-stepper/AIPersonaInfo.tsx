@@ -1,15 +1,8 @@
-import { useState } from 'react'
-
-import {
-  Button,
-  IconButton,
-  Stack,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material'
+import { Button, IconButton, Stack, Typography } from '@mui/material'
+import { useRouter } from 'next/router'
 
 import { Iconify } from '@root/src/components'
+import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 
 import {
   NEXT_BUTTON_STYLES,
@@ -27,19 +20,7 @@ type IAIPersonaInfoProps = {
 }
 
 export function AIPersonaInfo({ nextStep, prevStep }: IAIPersonaInfoProps) {
-  const [persona, setPersona] = useState(PERSONA[0].key)
-  const [tone, setTone] = useState(TONE[0].key)
-  const [typeProject, setTypeProject] = useState(TYPE_PROJECT[0].key)
-
-  const handleChangePersona = (event: React.MouseEvent<HTMLElement>, newPersona: string) => {
-    setPersona(newPersona)
-  }
-  const handleChangeTone = (event: React.MouseEvent<HTMLElement>, newTone: string) => {
-    setTone(newTone)
-  }
-  const handleChangeTypeProject = (event: React.MouseEvent<HTMLElement>, newType: string) => {
-    setTypeProject(newType)
-  }
+  const { push } = useRouter()
 
   return (
     <Stack gap={2}>
@@ -64,23 +45,12 @@ export function AIPersonaInfo({ nextStep, prevStep }: IAIPersonaInfoProps) {
         >
           Persona (Optional)
         </Typography>
-        <ToggleButtonGroup
-          value={persona}
-          exclusive
-          onChange={handleChangePersona}
-          aria-label='level'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {PERSONA.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <RHFToggleButtonGroup
+          name='persona'
+          options={PERSONA}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
       </Stack>
       <Stack>
         <Typography
@@ -91,23 +61,12 @@ export function AIPersonaInfo({ nextStep, prevStep }: IAIPersonaInfoProps) {
         >
           Tone (Optional)
         </Typography>
-        <ToggleButtonGroup
-          value={tone}
-          exclusive
-          onChange={handleChangeTone}
-          aria-label='grades'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {TONE.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <RHFToggleButtonGroup
+          name='tone'
+          options={TONE}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
       </Stack>
       <Stack>
         <Typography
@@ -118,23 +77,12 @@ export function AIPersonaInfo({ nextStep, prevStep }: IAIPersonaInfoProps) {
         >
           Type (Optional)
         </Typography>
-        <ToggleButtonGroup
-          value={typeProject}
-          exclusive
-          onChange={handleChangeTypeProject}
-          aria-label='course_duration'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {TYPE_PROJECT.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <RHFToggleButtonGroup
+          name='projectType'
+          options={TYPE_PROJECT}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
       </Stack>
       <Stack
         direction='row'
@@ -151,6 +99,7 @@ export function AIPersonaInfo({ nextStep, prevStep }: IAIPersonaInfoProps) {
           Surprise Me
         </Button>
         <Button
+          type='submit'
           variant='contained'
           sx={NEXT_BUTTON_STYLES}
           onClick={() => {}}

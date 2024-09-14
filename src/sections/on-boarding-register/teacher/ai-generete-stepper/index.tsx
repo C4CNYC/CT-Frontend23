@@ -6,28 +6,43 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { useAuthContext } from '@/auth/useAuthContext'
-import { FormProvider, useSnackbar } from '@/components'
-import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@/components'
 import { PATH_AUTH } from '@root/src/routes/paths'
 
 import { AIPersonaInfo } from './AIPersonaInfo'
+import { GRADES, LESSON_DURARION, LEVELS, PERSONA, TONE, TYPE_PROJECT } from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
 
-interface FormValuesProps {
-  email: string
-  firstName: string
-  lastName: string
-  password: string
+export interface FormAIGenerateProps {
+  level: string
+  grade: string
+  lessonDuration: string
+  lessonPrompt: string
+  lessonLanguage: string
+  honeypotField: string
+  track: string
+  persona: string
+  tone: string
+  projectType: string
 }
 
 export default function AIGenerateStepper(): React.ReactElement {
   const { push } = useRouter()
-  const { enqueueSnackbar } = useSnackbar()
   const [activeStep, setActiveStep] = useState(0)
-  const { register } = useAuthContext()
-  const translate = useTranslate()
+
+  const defaultValues = {
+    level: LEVELS[0].value,
+    grades: GRADES[1].value,
+    lessonDuration: LESSON_DURARION[2].value,
+    lessonPrompt: '',
+    lessonLanguage: '',
+    honeypotField: '',
+    track: '',
+    persona: PERSONA[0].value,
+    tone: TONE[1].value,
+    projectType: TYPE_PROJECT[1].value,
+  }
 
   const generateAICourseSchema = Yup.object().shape({
     level: Yup.string(),
@@ -48,16 +63,14 @@ export default function AIGenerateStepper(): React.ReactElement {
   const prevStep = () => {
     setActiveStep(activeStep - 1)
   }
-  const goToStep = (step: number) => {
-    setActiveStep(step)
-  }
 
-  const methods = useForm<FormValuesProps>({
+  const methods = useForm<FormAIGenerateProps>({
     resolver: yupResolver(generateAICourseSchema),
     mode: 'all',
+    defaultValues: defaultValues,
   })
 
-  const onSubmit = async (data: FormValuesProps) => {}
+  const onSubmit = async (data: FormAIGenerateProps) => {}
 
   return (
     <Stack

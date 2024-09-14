@@ -1,15 +1,7 @@
-import { useState } from 'react'
-
-import {
-  Button,
-  IconButton,
-  Stack,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material'
+import { Button, IconButton, Stack, Typography } from '@mui/material'
 
 import { Iconify, RHFTextField } from '@root/src/components'
+import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 
 import {
   LANGUAGE,
@@ -27,16 +19,6 @@ type ILessonPromptProps = {
 }
 
 export default function LessonPrompt({ nextStep, prevStep }: ILessonPromptProps) {
-  const [language, setLanguage] = useState<null | string>(null)
-  const [track, setTrack] = useState<null | string>(null)
-
-  const handleChangeLanguage = (event: React.MouseEvent<HTMLElement>, newLanguage: string) => {
-    setLanguage(newLanguage)
-  }
-  const handleChangeTrack = (event: React.MouseEvent<HTMLElement>, newTrack: string) => {
-    setTrack(newTrack)
-  }
-
   return (
     <Stack gap={2}>
       <Stack
@@ -67,23 +49,12 @@ export default function LessonPrompt({ nextStep, prevStep }: ILessonPromptProps)
         >
           Language (Optional)
         </Typography>
-        <ToggleButtonGroup
-          value={language}
-          exclusive
-          onChange={handleChangeLanguage}
-          aria-label='level'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {LANGUAGE.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <RHFToggleButtonGroup
+          name='lessonLanguage'
+          options={LANGUAGE}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
       </Stack>
       <Stack>
         <Typography
@@ -94,23 +65,12 @@ export default function LessonPrompt({ nextStep, prevStep }: ILessonPromptProps)
         >
           Lesson Duration (Optional)
         </Typography>
-        <ToggleButtonGroup
-          value={track}
-          exclusive
-          onChange={handleChangeTrack}
-          aria-label='grades'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {TRACK.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <RHFToggleButtonGroup
+          name='track'
+          options={TRACK}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
       </Stack>
       <RHFTextField
         name='honeypotField'

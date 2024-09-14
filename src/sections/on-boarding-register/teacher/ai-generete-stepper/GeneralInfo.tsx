@@ -1,15 +1,7 @@
-import { useState } from 'react'
-
-import {
-  Button,
-  IconButton,
-  Stack,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material'
+import { Button, IconButton, Stack, Typography } from '@mui/material'
 
 import { Iconify } from '@root/src/components'
+import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 
 import {
   GRADES,
@@ -27,20 +19,6 @@ type IGeneralInfoProps = {
 }
 
 export function GeneralInfo({ nextStep, resetRoad }: IGeneralInfoProps) {
-  const [level, setLevel] = useState(LEVELS[0].key)
-  const [grade, setGrade] = useState(GRADES[0].key)
-  const [duration, setDuration] = useState(LESSON_DURARION[0].key)
-
-  const handleChangeLevel = (event: React.MouseEvent<HTMLElement>, newLevel: string) => {
-    setLevel(newLevel)
-  }
-  const handleChangeGrade = (event: React.MouseEvent<HTMLElement>, newGrade: string) => {
-    setGrade(newGrade)
-  }
-  const handleChangeDuration = (event: React.MouseEvent<HTMLElement>, newDuration: string) => {
-    setDuration(newDuration)
-  }
-
   return (
     <Stack gap={2}>
       <Stack
@@ -64,23 +42,12 @@ export function GeneralInfo({ nextStep, resetRoad }: IGeneralInfoProps) {
         >
           Level
         </Typography>
-        <ToggleButtonGroup
-          value={level}
-          exclusive
-          onChange={handleChangeLevel}
-          aria-label='level'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {LEVELS.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <RHFToggleButtonGroup
+          name='level'
+          options={LEVELS}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
       </Stack>
       <Stack>
         <Typography
@@ -91,23 +58,12 @@ export function GeneralInfo({ nextStep, resetRoad }: IGeneralInfoProps) {
         >
           Grade/Age
         </Typography>
-        <ToggleButtonGroup
-          value={grade}
-          exclusive
-          onChange={handleChangeGrade}
-          aria-label='grades'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {GRADES.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <RHFToggleButtonGroup
+          name='grades'
+          options={GRADES}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
       </Stack>
       <Stack>
         <Typography
@@ -118,23 +74,12 @@ export function GeneralInfo({ nextStep, resetRoad }: IGeneralInfoProps) {
         >
           Lesson Duration
         </Typography>
-        <ToggleButtonGroup
-          value={duration}
-          exclusive
-          onChange={handleChangeDuration}
-          aria-label='lesson_duration'
-          sx={TOGGLE_BUTTON_GROUP_STYLES}
-        >
-          {LESSON_DURARION.map((el) => (
-            <ToggleButton
-              sx={TOGGLE_BUTTON_STYLES}
-              value={el.key}
-              key={el.key}
-            >
-              {el.value}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <RHFToggleButtonGroup
+          name='lessonDuration'
+          options={LESSON_DURARION}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
       </Stack>
       <Stack
         direction='row'
@@ -154,6 +99,7 @@ export function GeneralInfo({ nextStep, resetRoad }: IGeneralInfoProps) {
           variant='contained'
           sx={NEXT_BUTTON_STYLES}
           onClick={nextStep}
+          type='submit'
         >
           Next
         </Button>
