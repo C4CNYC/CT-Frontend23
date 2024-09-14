@@ -19,6 +19,7 @@ import { useLocales } from '@root/src/locales'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import AiGenerateLessonDialog from './ai-generate-lesson-dialog'
 import { AiLessonCreateDialog } from './ai-lesson-create-dialog'
 import { AiLessonCreateDialogFe } from './ai-lesson-create-dialog-fe'
 import DiamondFeatureModal from './diamond-feature-modal'
@@ -129,15 +130,17 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
-          <MenuItem sx={{ justifyContent: 'space-between' }}>
-            Mumu AI Creator
-            <ListItemIcon sx={{ pl: 2, mr: -2 }}>
-              <Iconify
-                icon='mingcute:ai-line'
-                color='#FBDD3F'
-              />
-            </ListItemIcon>
-          </MenuItem>
+          <AiGenerateLessonDialog>
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
+              Mumu AI Creator
+              <ListItemIcon sx={{ pl: 2, mr: -2 }}>
+                <Iconify
+                  icon='mingcute:ai-line'
+                  color='#FBDD3F'
+                />
+              </ListItemIcon>
+            </MenuItem>
+          </AiGenerateLessonDialog>
           <MenuItem
             onClick={async () => {
               await createByCloningLessonHandler()
