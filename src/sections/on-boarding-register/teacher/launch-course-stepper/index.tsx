@@ -13,7 +13,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { generateRandomEmoji } from '@root/src/utils'
 
-import { RegisterStudenTeacher, SingLink } from '../../links'
+import { RegisterStudentTeacher, SingLink } from '../../links'
 import SingUp from '../SingUp'
 
 import AddSchool from './AddSchool'
@@ -87,7 +87,7 @@ export default function LaunchCourseStepper() {
         width: '100%',
       }}
     >
-      <RegisterStudenTeacher isTeacher />
+      <RegisterStudentTeacher isTeacher />
 
       <FormProvider
         methods={methods}
