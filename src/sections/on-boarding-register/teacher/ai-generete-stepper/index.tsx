@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 
 import { FormProvider } from '@/components'
 import { PATH_AUTH } from '@root/src/routes/paths'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import { AIPersonaInfo } from './AIPersonaInfo'
 import { GRADES, LESSON_DURARION, LEVELS, PERSONA, TONE, TYPE_PROJECT } from './constants'
@@ -70,7 +71,9 @@ export default function AIGenerateStepper(): React.ReactElement {
     defaultValues: defaultValues,
   })
 
-  const onSubmit = async (data: FormAIGenerateProps) => {}
+  const onSubmit = async (data: FormAIGenerateProps) => {
+    push({ pathname: STUDENT_PATH_DASHBOARD.codePanel.root, query: { ai: 'true' } })
+  }
 
   return (
     <Stack

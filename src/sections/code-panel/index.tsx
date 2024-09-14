@@ -44,6 +44,8 @@ import { type BaseResponseInterface } from '@/utils'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
 
+import AIGeneratorTour from '../intro-tours/ai-generator-intro'
+
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
   ssr: false,
 })
@@ -425,7 +427,11 @@ export default function CodePanelLayout(): ReactElement | null {
       </Head>
 
       <FullScreen handle={handle}>
-        {showTour || isShowTour ? <CodePanelTour /> : null}
+        {router.query.ai ? (
+          <AIGeneratorTour withModals />
+        ) : showTour || isShowTour ? (
+          <CodePanelTour />
+        ) : null}
         <Box
           sx={{
             bgcolor: (theme) =>

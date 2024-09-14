@@ -729,7 +729,8 @@ const en = {
   login_popup_session_info: 'Real-time view of all participants while broadcasting code & voice.',
   login_ai_generate_session_title: 'A.I. Generate',
   login_ai_generate_session_subtitle: 'Create a new lesson with A.I.',
-  login_ai_generate_session_info: '',
+  login_ai_generate_session_info:
+    'Generate awesome new lessons, exercises or quizzes with AI - It’s fun and simple. Give it a try.',
   login_launch_session_title: 'Launch Course',
   login_launch_session_subtitle: 'Teacher-led or self-paced modules assigned to class or group.',
   login_launch_session_info: 'Real-time view of all participants while broadcasting code & voice.',

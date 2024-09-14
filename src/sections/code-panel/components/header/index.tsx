@@ -34,7 +34,7 @@ const TopPanel: FC<ITopPanel> = ({
 
   return (
     <Box
-      className='tourStart'
+      className='tourStart aiGeneratorTour1'
       sx={boxStyles}
     >
       <Box
