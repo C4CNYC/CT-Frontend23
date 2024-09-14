@@ -18,13 +18,13 @@ interface Props {
   isValid?: boolean
   isTeacher: boolean
   nextStep: () => void
-  prevStep?: () => void
+  resetRoad?: () => void
   goToStep: (s: number) => void
 }
 
 export default function SingUp({
   nextStep,
-  prevStep,
+  resetRoad,
   isValid,
   isTeacher,
   goToStep,
@@ -40,11 +40,8 @@ export default function SingUp({
       try {
         const role = isTeacher ? Role.Manager : Role.Student
         await registerWithGoogle(token, role)
-        if (isTeacher) {
-          goToStep(3)
-        } else {
-          goToStep(2)
-        }
+
+        goToStep(2)
       } catch (error: any) {
         enqueueSnackbar(error.message, { variant: 'error' })
       }
@@ -56,7 +53,7 @@ export default function SingUp({
     <>
       {isTeacher && (
         <IconButton
-          onClick={prevStep}
+          onClick={resetRoad}
           sx={{ ml: '-30px', mt: '-30px' }}
         >
           <MdArrowBackIosNew />

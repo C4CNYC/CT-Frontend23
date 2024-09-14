@@ -52,7 +52,7 @@ export function RegisterStudenTeacher({ isTeacher }: Props): React.ReactElement 
   return (
     <Link
       component={nextLink}
-      href={isTeacher ? PATH_AUTH.onBoardingStudent : PATH_AUTH.onBoardingTeacher}
+      href={isTeacher ? PATH_AUTH.onBoardingStudent : PATH_AUTH.onBoardingTeacher.root}
       underline='none'
       typography='subtitle1'
       sx={{

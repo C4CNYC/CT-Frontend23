@@ -27,16 +27,12 @@ export default function SignUpDialog(): React.ReactElement | null {
   return (
     <Dialog
       open={open}
-      fullWidth
       onClose={handleClose}
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
+      PaperProps={{ sx: { background: '#E6FBFC', px: 2, pb: 3, pt: 7 } }}
     >
-      <Box
-        sx={{
-          p: 5,
-        }}
-      >
+      <Box>
         <IconButton
           aria-label='close'
           onClick={handleClose}
