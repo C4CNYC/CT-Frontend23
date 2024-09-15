@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Container, Link, Skeleton, SxProps, Theme, Typography, useTheme } from '@mui/material'
+import { Container, Link, Skeleton, SxProps, Theme, useTheme } from '@mui/material'
 import Head from 'next/head'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -97,16 +97,7 @@ export default function Quest(): React.ReactElement | null {
           teachers={teachers}
           questName={data.name}
         />
-        {hasContent ? (
-          <QuestDescription description={data?.description} />
-        ) : (
-          <Typography
-            variant='h4'
-            pt={3}
-          >
-            {translate('quest_no_descr')}
-          </Typography>
-        )}
+        {hasContent ? <QuestDescription description={data?.description} /> : null}
 
         {lesson ? (
           <>
