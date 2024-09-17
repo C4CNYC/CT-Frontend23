@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export interface ITenantConfig {
   tenant: string
   logoUrl: string
+  logoNormalUrl: string
 }
 
 export const tenantConfigApi = createApi({
