@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider } from '@/components'
+import { useGenerateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
+import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
@@ -35,6 +37,8 @@ interface AIGenerateStepperProps {
 export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
   const [activeStep, setActiveStep] = useState(0)
+  const profile = useSelector((state) => state.global.user)
+  const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
 
   const defaultValues = {
     level: LEVELS[0].value,
@@ -76,7 +80,23 @@ export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): 
   })
 
   const onSubmit = async (data: FormAIGenerateProps) => {
-    push({ pathname: STUDENT_PATH_DASHBOARD.codePanel.root, query: { ai: 'true' } })
+    const newLesson = await generateLesson(data)
+    if (newLesson && newLesson.data) {
+      if (profile) {
+        push(
+          `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: newLesson.data?.id })}`,
+          undefined,
+          {
+            shallow: true,
+          }
+        )
+      } else {
+        push({
+          pathname: STUDENT_PATH_DASHBOARD.codePanel.root,
+          query: { ai: 'true', lessonId: newLesson.data?.id },
+        })
+      }
+    }
   }
 
   return (
