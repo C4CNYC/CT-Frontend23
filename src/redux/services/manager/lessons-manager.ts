@@ -1,6 +1,6 @@
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-// import { AiLessonGenerate } from '../interfaces/ai.interface'
+import { AiLessonGenerate } from '../interfaces/ai.interface'
 import {
   ILesson,
   ILessonCreate,
@@ -76,6 +76,14 @@ const extendedApi = managerApi.injectEndpoints({
       query: () => ({
         url: '/manager/lesson/createByCloningLesson',
         method: 'POST',
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    createByAI: builder.mutation<ILessonCreate & BaseResponseInterface, AiLessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generate',
+        method: 'POST',
+        body,
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
