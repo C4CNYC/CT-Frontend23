@@ -12,12 +12,13 @@ import {
   ToggleButtonGroup,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { BsClipboard } from '@react-icons/all-files/bs/BsClipboard'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
 import { MdOutlinePermMedia } from '@react-icons/all-files/md/MdOutlinePermMedia'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
- 
+
 import {
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
@@ -25,18 +26,15 @@ import {
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
 import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
+import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import Preferences from '../Modals/Preferences'
 
+import { EditorSelector } from './EditorSelector'
 import { LessonContentContext } from './LessonContent.context'
 import SkeletonContentCode from './SkeletonContentCode'
 import SkeletonContentMulti from './SkeletonContentMulti'
-import StepCode from './StepCode'
-import StepMultimedia from './StepMultimedia'
-import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
-import { EditorSelector } from './EditorSelector'
-import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
-import { BsClipboard } from '@react-icons/all-files/bs/BsClipboard'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   '& .MuiToggleButton-root': {
@@ -87,7 +85,7 @@ export default function StepContentEditor(): React.ReactElement {
       await updateContent({
         lessonId: lessonId as string,
         id: stepId as string,
-        type: bodyType=='editable'?bodyType:'code',
+        type: bodyType == 'editable' ? bodyType : 'code',
         bg_color: bgColor,
         body,
       }).unwrap()
@@ -192,8 +190,10 @@ export default function StepContentEditor(): React.ReactElement {
               exclusive
               value={bodyType}
               onChange={(_, newValue) => {
-                if (false &&
-                  (newValue === LessonContentType.Code || newValue === LessonContentType.Editable))
+                if (
+                  false &&
+                  (newValue === LessonContentType.Code || newValue === LessonContentType.Editable)
+                )
                   setOpen(true)
                 else setBodyType(newValue)
               }}
@@ -243,9 +243,8 @@ export default function StepContentEditor(): React.ReactElement {
             }}
           >
             <CgScreen size='30px' />
-            <Link   
-              href={STUDENT_PATH_DASHBOARD.codePanel.root + "?lessonId="+lessonId} >
-                { translate('preview') } 
+            <Link href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}>
+              {translate('preview')}
             </Link>
           </div>
         </Box>
@@ -257,15 +256,15 @@ export default function StepContentEditor(): React.ReactElement {
           }}
         >
           <EditorSelector
-              bodyType={bodyType}
-              content={data?.body || ''}
-              integrations={integrations ?? []}
-              onSubmit={onSubmit}
-              data={data!}
-              lessonId={lessonId as string}
-              bgColor={bgColor}
-              setBgColor={setBgColor}
-            />
+            bodyType={bodyType}
+            content={data?.body || ''}
+            integrations={integrations ?? []}
+            onSubmit={onSubmit}
+            data={data!}
+            lessonId={lessonId as string}
+            bgColor={bgColor}
+            setBgColor={setBgColor}
+          />
         </Box>
       </Box>
     </LessonContentContext.Provider>

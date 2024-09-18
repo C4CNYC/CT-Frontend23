@@ -1,11 +1,15 @@
+import { useEffect, useState } from 'react'
+
 import { Box } from '@mui/system'
-import { EditorSelectorProps } from './EditorSelector'
 import { Editor } from '@tinymce/tinymce-react'
-import { StepPreview } from './StepPreview'
-import { ResizerUi } from '@root/src/components'
 import { useAtom } from 'jotai/react'
+
+import { ResizerUi } from '@root/src/components'
+
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
-import { useEffect,  useState } from 'react'
+
+import { EditorSelectorProps } from './EditorSelector'
+import { StepPreview } from './StepPreview'
 
 export function StepTinyMce(props: EditorSelectorProps) {
   const [editorContent, editorContentSet] = useState<string>('')
@@ -14,22 +18,22 @@ export function StepTinyMce(props: EditorSelectorProps) {
   let initialValue = content?.content ?? content?.doc ?? ''
   useEffect(() => {
     let content = JSON.parse(props.content)
-    editorContentSet( content?.content ?? content?.doc ?? '' )
-  },[props.content])
-  
+    editorContentSet(content?.content ?? content?.doc ?? '')
+  }, [props.content])
+
   const integrationStyleRegex = /<style[^>]*?>([\s\S]*?)<\/style>/gms
 
   const integrationStyles = props.integrations.reduce((acc, curr) => {
-    let matches;
+    let matches
     while ((matches = integrationStyleRegex.exec(curr.head)) !== null) {
       acc += '\n' + matches[1]
     }
     return acc
   }, '')
   function onSave() {
-    editorContentSet(editorContent => {
+    editorContentSet((editorContent) => {
       props.onSubmit(JSON.stringify({ content: editorContent }))
-      return editorContent;
+      return editorContent
     })
   }
   return (
@@ -38,7 +42,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
         split='vertical'
         defaultSize={isAllColumnsVisible ? '70%' : '100%'}
         allowResize={false}
-      > 
+      >
         <Box>
           <Editor
             apiKey='wjum8aydb5rkk8rllsf0bq34f95asla4z3qjo32ot4xndo9k'
@@ -83,7 +87,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
                 'typography',
                 'inlinecss',
                 'markdown',
-                'autoresize'
+                'autoresize',
               ],
               toolbar:
                 'customSaveButton | undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat ',
@@ -92,11 +96,11 @@ export function StepTinyMce(props: EditorSelectorProps) {
                   text: 'Save',
                   icon: 'save',
                   onAction: onSave,
-                });
+                })
               },
               tinycomments_mode: 'embedded',
               tinycomments_author: 'Author name',
-              content_style:integrationStyles,
+              content_style: integrationStyles,
               mergetags_list: [
                 { value: 'First.Name', title: 'First Name' },
                 { value: 'Email', title: 'Email' },
@@ -104,7 +108,6 @@ export function StepTinyMce(props: EditorSelectorProps) {
             }}
             onEditorChange={(v, _e) => {
               editorContentSet(v)
-              console.log("echange", v)
             }}
             initialValue={initialValue}
           />

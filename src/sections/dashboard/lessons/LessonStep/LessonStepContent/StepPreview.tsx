@@ -1,14 +1,11 @@
-
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
-import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 
 interface Props {
-    integrations: IIntegration[]
-    staticValue: string
+  integrations: IIntegration[]
+  staticValue: string
 }
-  
-export function StepPreview({integrations, staticValue}:Props) {
-    
+
+export function StepPreview({ integrations, staticValue }: Props) {
   const pageSkeleton = (userContent: string): string | undefined => {
     if (integrations) {
       return `<head>${integrations.reduce(
@@ -18,13 +15,15 @@ export function StepPreview({integrations, staticValue}:Props) {
         return ac + cur.scripts
       }, '')}</main>`
     }
-  } 
-    return <iframe
-    style={{
-      border: 0,
-      width: '100%',
-      height: '100%',
-    }}
-    src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
-  />
+  }
+  return (
+    <iframe
+      style={{
+        border: 0,
+        width: '100%',
+        height: '100%',
+      }}
+      src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
+    />
+  )
 }

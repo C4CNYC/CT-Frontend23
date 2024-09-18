@@ -1,8 +1,7 @@
-import { IIntegration } from '@/redux/services/interfaces/integration.interface'
-
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
-import { BaseResponseInterface } from '@root/src/utils'
+import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { BaseResponseInterface } from '@root/src/utils'
 
 import StepCode from './StepCode'
 import StepMultimedia from './StepMultimedia'

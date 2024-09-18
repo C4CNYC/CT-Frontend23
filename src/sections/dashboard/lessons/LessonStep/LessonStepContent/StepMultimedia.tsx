@@ -1,12 +1,13 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { Box } from '@mui/material'
 
 import { ResizerUi } from '@/components'
 import { MyEditor } from '@/components/remirror-editor/MyEditor'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+
 import { LessonContentContext } from './LessonContent.context'
 import { StepPreview } from './StepPreview'
 
@@ -31,8 +32,7 @@ export default function StepMultimedia({
 }: Props): React.ReactElement {
   const { locked } = useContext(LessonContentContext)
   const [value, setValue] = useState<string>('')
-  useEffect(()=>{console.log(value)},[value])
-  
+
   return (
     <ResizerUi
       split='vertical'
@@ -54,7 +54,7 @@ export default function StepMultimedia({
           bgColor={bgColor}
           setBgColor={setBgColor}
         />
-      </Box> 
+      </Box>
       <Box sx={{ bgcolor: bgColor, height: '100%' }}>
         <StepPreview
           integrations={integrations}

@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react'
 
+import { prosemirrorNodeToHtml } from '@remirror/core-utils'
 import { Remirror, OnChangeHTML, ThemeProvider, useRemirror } from '@remirror/react'
 // import { useS3Upload } from "next-s3-upload";
 import { ImageAttributes, ImageExtension } from 'remirror/extensions'
 import 'remirror/styles/all.css'
-import { prosemirrorNodeToHtml } from '@remirror/core-utils'
+
 import { useCreateMediaMutation } from '@/redux/services/manager/media-manager'
 import { BaseResponseInterface, isJson } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { IIntegration } from '@root/src/redux/services/interfaces/integration.interface'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 
 import EditorToolbar from './EditorToolbar'
-import { extensions } from './extensions-template' 
-import { IIntegration } from '@root/src/redux/services/interfaces/integration.interface'
+import { extensions } from './extensions-template'
 
 interface FileWithProgress {
   file: File
@@ -102,12 +103,12 @@ function Editor({
   const integrationStyleRegex = /<style[^>]*?>\s*[^{}]*?\{([^}]*)\}[^<]*?<\/style>/g
 
   const integrationStyles = integrations.reduce((acc, curr) => {
-    let matches;
+    let matches
     while ((matches = integrationStyleRegex.exec(curr.head)) !== null) {
       acc += '\n' + matches[1]
     }
     return acc
-  },'')
+  }, '')
 
   const { manager, state, setState, onChange } = useRemirror({
     extensions: newExtentions,
@@ -185,7 +186,6 @@ function Editor({
         autoRender='end'
         onChange={(parameter) => {
           onChange(parameter)
-          console.log('remirror editor onchange ama baskasi', parameter)
           setMultimediaValue(prosemirrorNodeToHtml(parameter.state.doc))
           // if (setMultimediaValue) {
           //   // @ts-expect-error
@@ -213,7 +213,6 @@ function Editor({
         )}
         <OnChangeHTML
           onChange={(html) => {
-            console.log('remirror editor state html', html)
             setMultimediaValue(html)
           }}
         />
