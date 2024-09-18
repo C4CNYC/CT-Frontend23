@@ -85,7 +85,7 @@ export default function StepContentEditor(): React.ReactElement {
       await updateContent({
         lessonId: lessonId as string,
         id: stepId as string,
-        type: bodyType == 'editable' ? bodyType : 'code',
+        type: bodyType == 'editable' ? bodyType : LessonContentType.Code,
         bg_color: bgColor,
         body,
       }).unwrap()
