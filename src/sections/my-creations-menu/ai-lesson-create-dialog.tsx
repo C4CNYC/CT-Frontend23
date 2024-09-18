@@ -12,7 +12,10 @@ import {
 import { useRouter } from 'next/router'
 
 import { DialogAnimate } from '@root/src/components'
-import { useCreateByAIMutation } from '@root/src/redux/services/manager/lessons-manager'
+import {
+  useCreateByAIMutation,
+  useGenerateLessonMutation,
+} from '@root/src/redux/services/manager/lessons-manager'
 import { MANAGER_PATH_DASHBOARD } from '@root/src/routes/manager.paths'
 
 export function AiLessonCreateDialog({
@@ -23,6 +26,7 @@ export function AiLessonCreateDialog({
   closeTrigger: () => void
 }) {
   const [createByAi, { isLoading, isSuccess }] = useCreateByAIMutation()
+  const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
   const router = useRouter()
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
