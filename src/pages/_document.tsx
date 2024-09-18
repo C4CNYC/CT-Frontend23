@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { DocumentHeadTags, DocumentHeadTagsProps } from '@mui/material-nextjs/v14-pagesRouter'
 import { DocumentProps, Head, Html, Main, NextScript } from 'next/document'
@@ -6,7 +6,65 @@ import { DocumentProps, Head, Html, Main, NextScript } from 'next/document'
 import { palette } from '@/theme/palette'
 import { primaryFont } from '@/theme/typography'
 
-export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps) {
+const icons: Record<string, Record<string, string>> = {
+  codetribe: {
+    favicon16x16: '/favicon/favicon-16x16.png',
+    appleTouchIconUrl: '/favicon/apple-touch-icon.png',
+    favicon32x32: '/favicon/favicon-32x32.png',
+  },
+  codejika: {
+    favicon16x16: '/favicon/favicon_jika.ico',
+    appleTouchIconUrl: '/favicon/favicon_jika.ico',
+    favicon32x32: '/favicon/favicon_jika.ico',
+  },
+  localhost: {
+    favicon16x16: '/favicon/favicon_jika.ico',
+    appleTouchIconUrl: '/favicon/favicon_jika.ico',
+    favicon32x32: '/favicon/favicon_jika.ico',
+  },
+}
+
+const MyDocument = (props: DocumentProps & DocumentHeadTagsProps & { host: string }) => {
+  const route = props.host
+  // TODO: Update Logic to get subdomain properly
+  const subdomain = useMemo(() => {
+    const hostname = route.split('.')[0]
+    const parts = hostname.split('.')
+    if (parts.length > 2) {
+      return parts[0]
+    }
+
+    return 'codetribe'
+  }, [route])
+
+  const favicon = useMemo(() => {
+    if (!subdomain) {
+      return null
+    }
+
+    return (
+      <>
+        <link
+          rel='apple-touch-icon'
+          sizes='180x180'
+          href={icons[subdomain].appleTouchIconUrl}
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='32x32'
+          href={icons[subdomain].favicon32x32}
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='16x16'
+          href={icons[subdomain].favicon16x16}
+        />
+      </>
+    )
+  }, [subdomain])
+
   return (
     <Html
       lang='en'
@@ -28,23 +86,7 @@ export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps)
         />
 
         {/* Favicon */}
-        <link
-          rel='apple-touch-icon'
-          sizes='180x180'
-          href='/favicon/apple-touch-icon.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='32x32'
-          href='/favicon/favicon-32x32.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='16x16'
-          href='/favicon/favicon-16x16.png'
-        />
+        {favicon}
 
         {/* Meta */}
         <meta
@@ -79,3 +121,14 @@ export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps)
     </Html>
   )
 }
+
+MyDocument.getInitialProps = async (ctx: any) => {
+  const initialProps = await ctx.defaultGetInitialProps(ctx)
+  const req = ctx.req
+
+  const host = req ? req.headers.host : ''
+
+  return { ...initialProps, host }
+}
+
+export default MyDocument
