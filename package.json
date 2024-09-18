@@ -55,6 +55,7 @@
     "@remirror/extension-file": "^1.0.18",
     "@remirror/pm": "^2.0.8",
     "@remirror/react": "^2.0.35",
+    "@tinymce/tinymce-react": "^5.1.1",
     "@types/react-dom": "^18.2.19",
     "@uiw/codemirror-extensions-basic-setup": "^4.21.3",
     "@uiw/codemirror-extensions-langs": "^4.21.3",

@@ -8,7 +8,7 @@ import * as _ from 'lodash-es'
 import { useRouter } from 'next/router'
 
 import { Iconify, MenuPopover } from '@/components'
-import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
+import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'

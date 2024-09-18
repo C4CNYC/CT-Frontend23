@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 
-import { Remirror, ThemeProvider, useRemirror } from '@remirror/react'
+import { Remirror, OnChangeHTML, ThemeProvider, useRemirror } from '@remirror/react'
 // import { useS3Upload } from "next-s3-upload";
 import { ImageAttributes, ImageExtension } from 'remirror/extensions'
 import 'remirror/styles/all.css'
-
+import { prosemirrorNodeToHtml } from '@remirror/core-utils'
 import { useCreateMediaMutation } from '@/redux/services/manager/media-manager'
 import { BaseResponseInterface, isJson } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
@@ -12,7 +12,8 @@ import { useTranslate } from '@/utils/translateHelper'
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 
 import EditorToolbar from './EditorToolbar'
-import { extensions } from './extensions-template'
+import { extensions } from './extensions-template' 
+import { IIntegration } from '@root/src/redux/services/interfaces/integration.interface'
 
 interface FileWithProgress {
   file: File
@@ -26,7 +27,8 @@ declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>
 interface Props {
   editable?: boolean
   multimediaValue: string
-  setMultimediaValue?: (value: string) => void
+  setMultimediaValue: (value: string) => void
+  integrations: IIntegration[]
   onSubmit?: () => void
   locked?: boolean
   data: ILessonContent & BaseResponseInterface
@@ -39,6 +41,7 @@ function Editor({
   editable = true,
   locked,
   onSubmit,
+  integrations,
   multimediaValue,
   setMultimediaValue,
   data,
@@ -96,10 +99,21 @@ function Editor({
     ...extensions(),
     new ImageExtension({ enableResizing: true, uploadHandler }),
   ]
+  const integrationStyleRegex = /<style[^>]*?>\s*[^{}]*?\{([^}]*)\}[^<]*?<\/style>/g
+
+  const integrationStyles = integrations.reduce((acc, curr) => {
+    let matches;
+    while ((matches = integrationStyleRegex.exec(curr.head)) !== null) {
+      acc += '\n' + matches[1]
+    }
+    return acc
+  },'')
 
   const { manager, state, setState, onChange } = useRemirror({
     extensions: newExtentions,
-    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : '',
+    content: isJson(multimediaValue)
+      ? JSON.parse(multimediaValue)?.doc ?? JSON.parse(multimediaValue)?.content ?? ''
+      : '',
     stringHandler: 'html',
   })
 
@@ -158,6 +172,7 @@ function Editor({
             padding: 0.1rem;
             vertical-align: middle;
           }
+          ${integrationStyles}
         `}
       </style>
       <Remirror
@@ -170,10 +185,12 @@ function Editor({
         autoRender='end'
         onChange={(parameter) => {
           onChange(parameter)
-          if (setMultimediaValue) {
-            // @ts-expect-error
-            setMultimediaValue(parameter.state)
-          }
+          console.log('remirror editor onchange ama baskasi', parameter)
+          setMultimediaValue(prosemirrorNodeToHtml(parameter.state.doc))
+          // if (setMultimediaValue) {
+          //   // @ts-expect-error
+          //   setMultimediaValue(parameter.state)
+          // }
         }}
       >
         {typeof locked === 'undefined' ? (
@@ -194,6 +211,12 @@ function Editor({
             setBgColor={setBgColor}
           />
         )}
+        <OnChangeHTML
+          onChange={(html) => {
+            console.log('remirror editor state html', html)
+            setMultimediaValue(html)
+          }}
+        />
       </Remirror>
     </ThemeProvider>
   )
