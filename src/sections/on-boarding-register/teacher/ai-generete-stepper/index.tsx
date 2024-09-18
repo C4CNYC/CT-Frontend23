@@ -81,7 +81,7 @@ export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): 
 
   const onSubmit = async (data: FormAIGenerateProps) => {
     const newLesson = await generateLesson(data)
-    if (newLesson && newLesson.data) {
+    if ('data' in newLesson && newLesson.data) {
       if (profile) {
         push(
           `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: newLesson.data?.id })}`,
