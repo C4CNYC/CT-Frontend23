@@ -32,7 +32,10 @@ export default function AiGenerateLessonDialog({ children }: Props): React.React
         onClose={closeDialog}
       >
         <DialogContent sx={{ p: 2 }}>
-          <AIGenerateStepper isModal />
+          <AIGenerateStepper
+            isModal
+            closeModal={closeDialog}
+          />
         </DialogContent>
       </Dialog>
     </>
