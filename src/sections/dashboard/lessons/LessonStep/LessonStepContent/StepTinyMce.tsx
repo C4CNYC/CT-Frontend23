@@ -44,8 +44,8 @@ export function StepTinyMce(props: EditorSelectorProps) {
         allowResize={false}
       >
         <Box>
+          <style>{`.tox-promotion{filter:opacity(0)}`}</style>
           <Editor
-            apiKey='wjum8aydb5rkk8rllsf0bq34f95asla4z3qjo32ot4xndo9k'
             init={{
               plugins: [
                 // Core editing features
@@ -64,29 +64,29 @@ export function StepTinyMce(props: EditorSelectorProps) {
                 'wordcount',
                 // Your account includes a free trial of TinyMCE premium features
                 // Try the most popular premium features until Oct 1, 2024:
-                'checklist',
-                'mediaembed',
-                'casechange',
-                'export',
-                'formatpainter',
-                'pageembed',
-                'a11ychecker',
-                'tinymcespellchecker',
-                'permanentpen',
-                'powerpaste',
-                'advtable',
-                'advcode',
-                'editimage',
-                'advtemplate',
-                'mentions',
-                'tinycomments',
-                'tableofcontents',
-                'footnotes',
-                'mergetags',
-                'autocorrect',
-                'typography',
-                'inlinecss',
-                'markdown',
+                // 'checklist',
+                // 'mediaembed',
+                // 'casechange',
+                // 'export',
+                // 'formatpainter',
+                // 'pageembed',
+                // 'a11ychecker',
+                // 'tinymcespellchecker',
+                // 'permanentpen',
+                // 'powerpaste',
+                // 'advtable',
+                // 'advcode',
+                // 'editimage',
+                // 'advtemplate',
+                // 'mentions',
+                // 'tinycomments',
+                // 'tableofcontents',
+                // 'footnotes',
+                // 'mergetags',
+                // 'autocorrect',
+                // 'typography',
+                // 'inlinecss',
+                // 'markdown',
                 'autoresize',
               ],
               toolbar:
@@ -101,11 +101,14 @@ export function StepTinyMce(props: EditorSelectorProps) {
               tinycomments_mode: 'embedded',
               tinycomments_author: 'Author name',
               content_style: integrationStyles,
+
               mergetags_list: [
                 { value: 'First.Name', title: 'First Name' },
                 { value: 'Email', title: 'Email' },
               ],
             }}
+            licenseKey='gpl'
+            tinymceScriptSrc='https://cdn.jsdelivr.net/npm/tinymce@7.3.0/tinymce.min.js'
             onEditorChange={(v, _e) => {
               editorContentSet(v)
             }}
