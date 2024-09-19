@@ -17,7 +17,7 @@ import {
 type IAIPersonaInfoProps = {
   nextStep: () => void
   prevStep: () => void
-  closeModal: () => void
+  closeModal?: () => void
 }
 
 export function AIPersonaInfo({ nextStep, prevStep, closeModal }: IAIPersonaInfoProps) {
@@ -36,15 +36,17 @@ export function AIPersonaInfo({ nextStep, prevStep, closeModal }: IAIPersonaInfo
           />
         </IconButton>
         <Typography variant='h3'>Let’s have some fun ! 😂‍ 🥳</Typography>
-        <IconButton
-          onClick={closeModal}
-          sx={{ margin: '0px 0px 0px auto' }}
-        >
-          <Iconify
-            icon='ion:close'
-            width='30px'
-          />
-        </IconButton>
+        {closeModal ? (
+          <IconButton
+            onClick={closeModal}
+            sx={{ margin: '0px 0px 0px auto' }}
+          >
+            <Iconify
+              icon='ion:close'
+              width='30px'
+            />
+          </IconButton>
+        ) : null}
       </Stack>
       <Stack>
         <Typography

@@ -17,7 +17,7 @@ type IGeneralInfoProps = {
   nextStep: () => void
   resetRoad: () => void
   isModal: boolean
-  closeModal: () => void
+  closeModal?: () => void
 }
 
 export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGeneralInfoProps) {
@@ -37,15 +37,17 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
           </IconButton>
         ) : null}
         <Typography variant='h3'>Who’s it for? 🤷🏽‍</Typography>
-        <IconButton
-          onClick={closeModal}
-          sx={{ margin: '0px 0px 0px auto' }}
-        >
-          <Iconify
-            icon='ion:close'
-            width='30px'
-          />
-        </IconButton>
+        {isModal ? (
+          <IconButton
+            onClick={closeModal}
+            sx={{ margin: '0px 0px 0px auto' }}
+          >
+            <Iconify
+              icon='ion:close'
+              width='30px'
+            />
+          </IconButton>
+        ) : null}
       </Stack>
       <Stack>
         <Typography

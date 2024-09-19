@@ -32,7 +32,7 @@ export interface FormAIGenerateProps {
 
 interface AIGenerateStepperProps {
   isModal: boolean
-  closeModal: () => void
+  closeModal?: () => void
 }
 
 export default function AIGenerateStepper({
@@ -86,7 +86,7 @@ export default function AIGenerateStepper({
   const onSubmit = async (data: FormAIGenerateProps) => {
     const newLesson = await generateLesson(data)
     if ('data' in newLesson && newLesson.data) {
-      closeModal()
+      if (closeModal) closeModal()
       if (profile) {
         push(
           `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: newLesson.data?.id })}`,
