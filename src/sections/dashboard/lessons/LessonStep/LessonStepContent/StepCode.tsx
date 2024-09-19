@@ -71,11 +71,10 @@ export default function StepCode({
           sx={{ mb: 1, mt: 1, ml: 2 }}
         />
         <CodeMirror
-          
           value={value}
           theme={dracula}
           height='calc(100vh - 96px)'
-          extensions={[html(), EditorView.lineWrapping ]}
+          extensions={[html(), EditorView.lineWrapping]}
           onChange={(value) => {
             setValue(value)
           }}
