@@ -32,9 +32,13 @@ export interface FormAIGenerateProps {
 
 interface AIGenerateStepperProps {
   isModal: boolean
+  closeModal?: () => void
 }
 
-export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): React.ReactElement {
+export default function AIGenerateStepper({
+  isModal,
+  closeModal,
+}: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
   const [activeStep, setActiveStep] = useState(0)
   const profile = useSelector((state) => state.global.user)
@@ -82,6 +86,7 @@ export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): 
   const onSubmit = async (data: FormAIGenerateProps) => {
     const newLesson = await generateLesson(data)
     if ('data' in newLesson && newLesson.data) {
+      if (closeModal) closeModal()
       if (profile) {
         push(
           `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: newLesson.data?.id })}`,
@@ -115,32 +120,39 @@ export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): 
           position: 'relative',
         }}
       >
-        <FormProvider
-          methods={methods}
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          {activeStep === 0 && (
-            <GeneralInfo
-              isModal={isModal}
-              nextStep={nextStep}
-              resetRoad={() => {
-                push(PATH_AUTH.onBoardingTeacher.root)
-              }}
-            />
-          )}
-          {activeStep === 1 && (
-            <LessonPrompt
-              nextStep={nextStep}
-              prevStep={prevStep}
-            />
-          )}
-          {activeStep === 2 && (
-            <AIPersonaInfo
-              nextStep={nextStep}
-              prevStep={prevStep}
-            />
-          )}
-        </FormProvider>
+        {generateLessonLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            {activeStep === 0 && (
+              <GeneralInfo
+                isModal={isModal}
+                nextStep={nextStep}
+                resetRoad={() => {
+                  push(PATH_AUTH.onBoardingTeacher.root)
+                }}
+                closeModal={closeModal}
+              />
+            )}
+            {activeStep === 1 && (
+              <LessonPrompt
+                nextStep={nextStep}
+                prevStep={prevStep}
+                closeModal={closeModal}
+              />
+            )}
+            {activeStep === 2 && (
+              <AIPersonaInfo
+                nextStep={nextStep}
+                prevStep={prevStep}
+                closeModal={closeModal}
+              />
+            )}
+          </FormProvider>
+        )}
       </Stack>
     </Stack>
   )
