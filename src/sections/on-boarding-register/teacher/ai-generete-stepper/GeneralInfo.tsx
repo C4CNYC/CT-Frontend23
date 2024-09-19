@@ -17,9 +17,10 @@ type IGeneralInfoProps = {
   nextStep: () => void
   resetRoad: () => void
   isModal: boolean
+  closeModal: () => void
 }
 
-export function GeneralInfo({ nextStep, resetRoad, isModal }: IGeneralInfoProps) {
+export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGeneralInfoProps) {
   return (
     <Stack gap={2}>
       <Stack
@@ -36,6 +37,15 @@ export function GeneralInfo({ nextStep, resetRoad, isModal }: IGeneralInfoProps)
           </IconButton>
         ) : null}
         <Typography variant='h3'>Who’s it for? 🤷🏽‍</Typography>
+        <IconButton
+          onClick={closeModal}
+          sx={{ margin: '0px 0px 0px auto' }}
+        >
+          <Iconify
+            icon='ion:close'
+            width='30px'
+          />
+        </IconButton>
       </Stack>
       <Stack>
         <Typography

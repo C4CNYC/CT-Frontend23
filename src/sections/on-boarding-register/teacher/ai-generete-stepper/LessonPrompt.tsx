@@ -16,9 +16,10 @@ import {
 type ILessonPromptProps = {
   nextStep: () => void
   prevStep: () => void
+  closeModal: () => void
 }
 
-export default function LessonPrompt({ nextStep, prevStep }: ILessonPromptProps) {
+export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILessonPromptProps) {
   return (
     <Stack gap={2}>
       <Stack
@@ -32,6 +33,15 @@ export default function LessonPrompt({ nextStep, prevStep }: ILessonPromptProps)
           />
         </IconButton>
         <Typography variant='h3'>My Lesson Prompt 💬 😍‍</Typography>
+        <IconButton
+          onClick={closeModal}
+          sx={{ margin: '0px 0px 0px auto' }}
+        >
+          <Iconify
+            icon='ion:close'
+            width='30px'
+          />
+        </IconButton>
       </Stack>
       <RHFTextField
         name='lessonPrompt'
