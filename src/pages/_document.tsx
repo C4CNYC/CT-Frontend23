@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { DocumentHeadTags, DocumentHeadTagsProps } from '@mui/material-nextjs/v14-pagesRouter'
 import { DocumentProps, Head, Html, Main, NextScript } from 'next/document'
@@ -6,65 +6,7 @@ import { DocumentProps, Head, Html, Main, NextScript } from 'next/document'
 import { palette } from '@/theme/palette'
 import { primaryFont } from '@/theme/typography'
 
-const icons: Record<string, Record<string, string>> = {
-  codetribe: {
-    favicon16x16: '/favicon/favicon-16x16.png',
-    appleTouchIconUrl: '/favicon/apple-touch-icon.png',
-    favicon32x32: '/favicon/favicon-32x32.png',
-  },
-  codejika: {
-    favicon16x16: '/favicon/favicon_jika.ico',
-    appleTouchIconUrl: '/favicon/favicon_jika.ico',
-    favicon32x32: '/favicon/favicon_jika.ico',
-  },
-  localhost: {
-    favicon16x16: '/favicon/favicon_jika.ico',
-    appleTouchIconUrl: '/favicon/favicon_jika.ico',
-    favicon32x32: '/favicon/favicon_jika.ico',
-  },
-}
-
-const MyDocument = (props: DocumentProps & DocumentHeadTagsProps & { host: string }) => {
-  const route = props.host
-  // TODO: Update Logic to get subdomain properly
-  const subdomain = useMemo(() => {
-    const hostname = route.split('.')[0]
-    const parts = hostname.split('.')
-    if (parts.length > 2) {
-      return parts[0]
-    }
-
-    return 'codetribe'
-  }, [route])
-
-  const favicon = useMemo(() => {
-    if (!subdomain) {
-      return null
-    }
-
-    return (
-      <>
-        <link
-          rel='apple-touch-icon'
-          sizes='180x180'
-          href={icons[subdomain].appleTouchIconUrl}
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='32x32'
-          href={icons[subdomain].favicon32x32}
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='16x16'
-          href={icons[subdomain].favicon16x16}
-        />
-      </>
-    )
-  }, [subdomain])
-
+const MyDocument = (props: DocumentProps & DocumentHeadTagsProps) => {
   return (
     <Html
       lang='en'
@@ -84,9 +26,24 @@ const MyDocument = (props: DocumentProps & DocumentHeadTagsProps & { host: strin
           name='theme-color'
           content={palette('light').primary.main}
         />
-
-        {/* Favicon */}
-        {favicon}
+        {/* should be improved */}
+        <link
+          rel='apple-touch-icon'
+          sizes='180x180'
+          href='/favicon/favicon_jika.ico'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='32x32'
+          href='/favicon/favicon_jika.ico'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='16x16'
+          href='/favicon/favicon_jika.ico'
+        />
 
         {/* Meta */}
         <meta
