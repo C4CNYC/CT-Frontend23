@@ -108,7 +108,8 @@ export function StepTinyMce(props: EditorSelectorProps) {
               ],
             }}
             licenseKey='gpl'
-            tinymceScriptSrc='https://cdn.jsdelivr.net/npm/tinymce@7.3.0/tinymce.min.js'
+            //tinymceScriptSrc='https://cdn.jsdelivr.net/npm/tinymce@7.3.0/tinymce.min.js'
+            tinymceScriptSrc='/api/tinymce/tinymce.min.js'
             onEditorChange={(v, _e) => {
               editorContentSet(v)
             }}
