@@ -56,7 +56,12 @@ export default function MyApp(props: MyAppProps): React.ReactElement {
 
   const subdomain = useMemo(() => {
     if (typeof window === 'object') {
-      return window.location.hostname.split('.')[0]
+      let subdomain = window.location.hostname.split('.')[0]
+      if (subdomain in icons) {
+        return subdomain
+      } else {
+        return 'codetribe'
+      }
     }
 
     return 'codetribe'
