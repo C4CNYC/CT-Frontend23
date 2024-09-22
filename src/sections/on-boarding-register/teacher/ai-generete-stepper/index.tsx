@@ -13,21 +13,32 @@ import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import { AIPersonaInfo } from './AIPersonaInfo'
-import { GRADES, LESSON_DURARION, LEVELS, PERSONA, TONE, TYPE_PROJECT } from './constants'
+import {
+  GRADES,
+  LESSON_DURARION,
+  LEVELS,
+  PERSONA,
+  PROGRAMMING_LANGUAGE,
+  TONE,
+  TYPE_LESSON,
+} from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
+import LoaderStep from './LoaderStep'
 
 export interface FormAIGenerateProps {
-  level: string
-  grade: string
-  lessonDuration: string
-  lessonPrompt: string
-  lessonLanguage: string
-  honeypotField: string
-  track: string
-  persona: string
-  tone: string
-  projectType: string
+  RlevelR: string
+  RgradesR: string
+  RlessonDurationR: string
+  RlessonLanguageR: string
+  RprogrammingLanguageR: string
+  RtrackR: string
+  RpersonaR: string
+  RtoneR: string
+  RtypeLessonR: string
+  RlanguageR: string
+  name: string | null
+  email: string | null
 }
 
 interface AIGenerateStepperProps {
@@ -44,30 +55,33 @@ export default function AIGenerateStepper({
   const profile = useSelector((state) => state.global.user)
   const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
 
+  //@names according to avoid bots spam
+
   const defaultValues = {
-    level: LEVELS[0].value,
-    grades: GRADES[1].value,
-    lessonDuration: LESSON_DURARION[2].value,
-    lessonPrompt: '',
-    lessonLanguage: '',
-    honeypotField: '',
-    track: '',
-    persona: PERSONA[0].value,
-    tone: TONE[1].value,
-    projectType: TYPE_PROJECT[1].value,
+    RlevelR: LEVELS[0].value,
+    RgradesR: GRADES[1].value,
+    RlessonDurationR: LESSON_DURARION[2].value,
+    RlessonLanguageR: 'English',
+    RtrackR: '',
+    RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
+    RpersonaR: PERSONA[0].value,
+    RtoneR: TONE[1].value,
+    RtypeLessonR: TYPE_LESSON[1].value,
+    name: null,
+    email: null,
   }
 
   const generateAICourseSchema = Yup.object().shape({
-    level: Yup.string(),
-    grade: Yup.string(),
-    lessonDuration: Yup.string(),
-    lessonPrompt: Yup.string(),
-    lessonLanguage: Yup.string(),
-    honeypotField: Yup.string(),
-    track: Yup.string(),
-    persona: Yup.string(),
-    tone: Yup.string(),
-    type: Yup.string(),
+    RlevelR: Yup.string(),
+    RgradeR: Yup.string(),
+    RlessonDurationR: Yup.string(),
+    RlessonLanguageR: Yup.string(),
+    RprogrammingLanguageR: Yup.string(),
+    RtrackR: Yup.string(),
+    RpersonaR: Yup.string(),
+    RtoneR: Yup.string(),
+    RtypeLessonR: Yup.string(),
+    RlanguageR: Yup.string(),
   })
 
   const nextStep = () => {
@@ -84,7 +98,18 @@ export default function AIGenerateStepper({
   })
 
   const onSubmit = async (data: FormAIGenerateProps) => {
-    const newLesson = await generateLesson(data)
+    if (data.email || data.name) {
+      return
+    }
+    const newLesson = await generateLesson({
+      lessonPrompt: '', //@ deleted by john from design
+      lessonDuration: data.RlessonDurationR,
+      proficiencyLevel: data.RlevelR,
+      lessonType: data.RtypeLessonR,
+      programmingLanguage: data.RprogrammingLanguageR,
+      track: data.RtrackR,
+      persona: data.RpersonaR,
+    })
     if ('data' in newLesson && newLesson.data) {
       if (closeModal) closeModal()
       if (profile) {
@@ -107,53 +132,42 @@ export default function AIGenerateStepper({
   return (
     <Stack
       sx={{
-        width: '100%',
-        minHeight: '460px',
-        justifyContent: 'center',
         position: 'relative',
       }}
     >
-      <Stack
-        sx={{
-          minHeight: '460px',
-          justifyContent: 'center',
-          position: 'relative',
-        }}
-      >
-        {generateLessonLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <FormProvider
-            methods={methods}
-            onSubmit={methods.handleSubmit(onSubmit)}
-          >
-            {activeStep === 0 && (
-              <GeneralInfo
-                isModal={isModal}
-                nextStep={nextStep}
-                resetRoad={() => {
-                  push(PATH_AUTH.onBoardingTeacher.root)
-                }}
-                closeModal={closeModal}
-              />
-            )}
-            {activeStep === 1 && (
-              <LessonPrompt
-                nextStep={nextStep}
-                prevStep={prevStep}
-                closeModal={closeModal}
-              />
-            )}
-            {activeStep === 2 && (
-              <AIPersonaInfo
-                nextStep={nextStep}
-                prevStep={prevStep}
-                closeModal={closeModal}
-              />
-            )}
-          </FormProvider>
-        )}
-      </Stack>
+      {generateLessonLoading ? (
+        <LoaderStep isLoading={generateLessonLoading} />
+      ) : (
+        <FormProvider
+          methods={methods}
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          {activeStep === 0 && (
+            <GeneralInfo
+              isModal={isModal}
+              nextStep={nextStep}
+              resetRoad={() => {
+                push(PATH_AUTH.onBoardingTeacher.root)
+              }}
+              closeModal={closeModal}
+            />
+          )}
+          {activeStep === 1 && (
+            <LessonPrompt
+              nextStep={nextStep}
+              prevStep={prevStep}
+              closeModal={closeModal}
+            />
+          )}
+          {activeStep === 2 && (
+            <AIPersonaInfo
+              nextStep={nextStep}
+              prevStep={prevStep}
+              closeModal={closeModal}
+            />
+          )}
+        </FormProvider>
+      )}
     </Stack>
   )
 }

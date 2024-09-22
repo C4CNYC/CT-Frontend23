@@ -4,16 +4,27 @@ export const TOGGLE_BUTTON_STYLES = {
   background: '#F0EEEE80',
   color: '#616161',
   borderRadius: '50px !important',
-  height: '40px',
+  height: '35px',
   '&.Mui-selected, &.Mui-selected:hover': {
     color: 'white',
     backgroundColor: '#0198ED',
   },
+  '&.MuiToggleButton-root': {
+    display: 'flex!important',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 'max-content!important',
+    whiteSpace: 'nowrap',
+    minWidth: '100px',
+  },
 }
+
 export const TOGGLE_BUTTON_GROUP_STYLES = {
   border: 'none',
   background: 'transparent',
   flexWrap: 'wrap',
+
+  maxWidth: { xs: '400px', sm: 'none' },
 }
 
 export const SKIP_BUTTON_STYLES = {
@@ -35,6 +46,30 @@ export const NEXT_BUTTON_STYLES = {
   },
 }
 
+export const OPTIONAL_TYPO_STYLES = {
+  pl: 2,
+  color: '#A6A6A6',
+  display: 'flex',
+  alignItems: 'baseline',
+  gap: 2,
+  fontWeight: 400,
+}
+
+export const STEP_TYTLE_STYLES = { fontSize: { xs: '1.3rem', md: '1.85rem' } }
+
+export const STEP_CONTAINER_STYLES = {
+  minHeight: '770px',
+  width: { xs: '300px', sm: '400px', md: '550px' },
+}
+
+export const BTN_CONTAINER_STYLES = {
+  marginTop: 'auto',
+  gap: 3,
+  pr: { xs: 0, sm: 3 },
+  flexDirection: { xs: 'column', sm: 'row' },
+  justifyContent: 'flex-end',
+}
+
 export const styledAIRoadInput = (theme: Theme, sx?: SxProps): SxProps => ({
   color: theme.palette.mode === 'light' ? '#000' : '#fff',
   '& .MuiInputBase-root': {
@@ -48,6 +83,45 @@ export const styledAIRoadInput = (theme: Theme, sx?: SxProps): SxProps => ({
   ...sx,
 })
 
+export const TYPE_LESSON = [
+  {
+    key: 'Simple Lesson ',
+    value: 'Simple Lesson',
+    tooltip: 'An engaging, single-page lesson with coding exercises.',
+  },
+  {
+    key: 'Concept & Exercises',
+    value: 'Concept & Exercises',
+    tooltip: 'Learn a concept, then immediately practice it in different ways.',
+  },
+  {
+    key: 'Practical Project',
+    value: 'Practical Project',
+    tooltip: 'Building a project line by line with explanations and step-by-step guidance.',
+  },
+]
+
+export const PROGRAMMING_LANGUAGE = [
+  { key: 'Javascript', value: 'Javascript' },
+  { key: 'Python (Brython)', value: 'Python (Brython)' },
+  { key: 'HTML/CSS', value: 'HTML/CSS' },
+  { key: 'HTML/CSS/JS', value: 'HTML/CSS/JS' },
+  { key: 'Kaboom.js', value: 'Kaboom.js' },
+]
+
+export const TRACK = [
+  { key: 'AI & API', value: 'AI & API' },
+  { key: 'Game-Dev', value: 'Game-Dev' },
+  { key: 'Web-Dev', value: 'Web-Dev' },
+  { key: 'Data Science', value: 'Data Science' },
+  { key: 'Programming Logic', value: 'Programming Logic' },
+  { key: 'Math Class', value: 'Math Class' },
+  { key: 'History Class', value: 'History Class' },
+  { key: 'English Class', value: 'English Class' },
+  { key: 'Dance Class', value: 'Dance Class' },
+  { key: 'Hour of Code', value: 'Hour of Code' },
+]
+
 export const LEVELS = [
   { key: 'Beginner', value: 'Beginner' },
   { key: 'Novice', value: 'Novice' },
@@ -55,6 +129,7 @@ export const LEVELS = [
   { key: 'Intermediate', value: 'Intermediate' },
   { key: 'Advanced', value: 'Advanced' },
 ]
+
 export const GRADES = [
   { key: 'Grades 3-4', value: 'Grades 3-4' },
   { key: 'Grades 5-6', value: 'Grades 5-6' },
@@ -64,13 +139,6 @@ export const GRADES = [
   { key: '18 +', value: '18 +' },
 ]
 
-export const LANGUAGE = [
-  { key: 'Javascript', value: 'Javascript' },
-  { key: 'Python (Brython)', value: 'Python (Brython)' },
-  { key: 'HTML/CSS', value: 'HTML/CSS' },
-  { key: 'HTML/CSS/JS', value: 'HTML/CSS/JS' },
-  { key: 'Kaboom.js', value: 'Kaboom.js' },
-]
 export const LESSON_DURARION = [
   { key: '20 Mins', value: '20 Mins' },
   { key: '40 Mins', value: '40 Mins' },
@@ -78,17 +146,7 @@ export const LESSON_DURARION = [
   { key: '90 Mins', value: '90 Mins' },
   { key: '120 Mins', value: '120 Mins' },
 ]
-export const TRACK = [
-  { key: 'AI & API', value: 'AI & API' },
-  { key: 'Game-Dev', value: 'Game-Dev' },
-  { key: 'Web-Dev', value: 'Web-Dev' },
-  { key: 'Data Science', value: 'Data Science' },
-  { key: 'Science Class', value: 'Science Class' },
-  { key: 'Math Class', value: 'Math Class' },
-  { key: 'History Class', value: 'History Class' },
-  { key: 'English Class', value: 'English Class' },
-  { key: 'Other', value: 'Other' },
-]
+
 export const PERSONA = [
   { key: 'Mumu', value: 'Mumu' },
   { key: 'Winnie the Pooh', value: 'Winnie the Pooh' },
@@ -97,15 +155,19 @@ export const PERSONA = [
   { key: 'Buddha', value: 'Buddha' },
   { key: 'Pirate', value: 'Pirate' },
 ]
+
 export const TONE = [
   { key: 'Silly', value: 'Silly' },
   { key: 'Grumpy', value: 'Grumpy' },
   { key: 'Lively', value: 'Lively' },
   { key: 'Boring', value: 'Boring' },
 ]
-export const TYPE_PROJECT = [
-  { key: 'Logic', value: 'Logic' },
-  { key: 'Practical Project', value: 'Practical Project' },
-  { key: 'Exersize', value: 'Exersize' },
-  { key: 'Quiz', value: 'Quiz' },
+
+export const LOADING_STEPS = [
+  'Compiling request',
+  'Sending request',
+  'Confirming receipt',
+  'Building the lesson',
+  'Receiving the lesson',
+  'Finishing up',
 ]

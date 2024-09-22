@@ -1,16 +1,21 @@
 import { Button, IconButton, Stack, Typography } from '@mui/material'
 
-import { Iconify } from '@root/src/components'
+import { languages, LanguageType } from '@root/src/assets/data/languages'
+import { Iconify, RHFSelect } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 
 import {
-  GRADES,
-  LESSON_DURARION,
-  LEVELS,
+  BTN_CONTAINER_STYLES,
   NEXT_BUTTON_STYLES,
+  OPTIONAL_TYPO_STYLES,
+  PROGRAMMING_LANGUAGE,
   SKIP_BUTTON_STYLES,
+  STEP_CONTAINER_STYLES,
+  STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
   TOGGLE_BUTTON_STYLES,
+  TRACK,
+  TYPE_LESSON,
 } from './constants'
 
 type IGeneralInfoProps = {
@@ -21,12 +26,24 @@ type IGeneralInfoProps = {
 }
 
 export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGeneralInfoProps) {
+  const modifyLanguagesArray = (code: string): LanguageType[] => {
+    const index = [...languages].findIndex((lang) => lang.code === code)
+
+    if (index === -1) return languages
+
+    const [selectedLanguage] = languages.splice(index, 1)
+
+    return [selectedLanguage, ...languages]
+  }
+
   return (
-    <Stack gap={2}>
+    <Stack
+      gap={2}
+      sx={STEP_CONTAINER_STYLES}
+    >
       <Stack
         direction='row'
-        gap={2}
-        pl={isModal ? 1 : 0}
+        sx={{ gap: 2, pl: isModal ? 1 : 0, alignItems: 'center' }}
       >
         {!isModal ? (
           <IconButton onClick={resetRoad}>
@@ -36,7 +53,12 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
             />
           </IconButton>
         ) : null}
-        <Typography variant='h3'>Who’s it for? 🤷🏽‍</Typography>
+        <Typography
+          variant='h3'
+          sx={STEP_TYTLE_STYLES}
+        >
+          Lesson Basics 💬 😍‍
+        </Typography>
         {isModal ? (
           <IconButton
             onClick={closeModal}
@@ -52,15 +74,30 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
       <Stack>
         <Typography
           variant='h4'
-          color='#A6A6A6'
-          pl={2}
+          sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          Level
+          Type <Typography variant='body2'>Select one or more</Typography>
         </Typography>
         <RHFToggleButtonGroup
-          name='level'
-          options={LEVELS}
+          name='RtypeLessonR'
+          options={TYPE_LESSON}
+          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxButton={TOGGLE_BUTTON_STYLES}
+        />
+      </Stack>
+
+      <Stack>
+        <Typography
+          variant='h4'
+          sx={OPTIONAL_TYPO_STYLES}
+          gutterBottom
+        >
+          Programming Language <Typography variant='body2'>Optional</Typography>
+        </Typography>
+        <RHFToggleButtonGroup
+          name='RprogrammingLanguageR'
+          options={PROGRAMMING_LANGUAGE}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
           sxButton={TOGGLE_BUTTON_STYLES}
         />
@@ -68,42 +105,41 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
       <Stack>
         <Typography
           variant='h4'
-          color='#A6A6A6'
-          pl={2}
+          sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          Grade/Age
+          Track <Typography variant='body2'>Optional</Typography>
         </Typography>
         <RHFToggleButtonGroup
-          name='grades'
-          options={GRADES}
+          name='RtrackR'
+          options={TRACK}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
           sxButton={TOGGLE_BUTTON_STYLES}
         />
       </Stack>
       <Stack>
         <Typography
-          variant='h4'
-          color='#A6A6A6'
-          pl={2}
+          variant='body2'
+          sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          Lesson Duration
+          Select from list or type the name of any language
         </Typography>
-        <RHFToggleButtonGroup
-          name='lessonDuration'
-          options={LESSON_DURARION}
-          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-          sxButton={TOGGLE_BUTTON_STYLES}
-        />
+        <RHFSelect
+          name='RlessonLanguageR'
+          native
+        >
+          {modifyLanguagesArray('en').map((el) => (
+            <option
+              key={el.code}
+              value={el.language}
+            >
+              {el.language}
+            </option>
+          ))}
+        </RHFSelect>
       </Stack>
-      <Stack
-        direction='row'
-        justifyContent='flex-end'
-        pt={8}
-        pr={3}
-        gap={3}
-      >
+      <Stack sx={BTN_CONTAINER_STYLES}>
         <Button
           variant='text'
           sx={SKIP_BUTTON_STYLES}
