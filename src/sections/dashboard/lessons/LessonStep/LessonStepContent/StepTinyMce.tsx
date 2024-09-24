@@ -14,11 +14,15 @@ import { StepPreview } from './StepPreview'
 export function StepTinyMce(props: EditorSelectorProps) {
   const [editorContent, editorContentSet] = useState<string>('')
   const [{ isAllColumnsVisible }] = useAtom(lessonViewAtom)
-  let content = JSON.parse(props.content)
+  let content = props.content?.length ? JSON.parse(props.content) : ''
   let initialValue = content?.content ?? content?.doc ?? ''
   useEffect(() => {
-    let content = JSON.parse(props.content)
-    editorContentSet(content?.content ?? content?.doc ?? '')
+    if (props.content?.length) {
+      let content = JSON.parse(props.content)
+      editorContentSet(content?.content ?? content?.doc)
+    } else {
+      editorContentSet('')
+    }
   }, [props.content])
 
   const integrationStyleRegex = /<style[^>]*?>([\s\S]*?)<\/style>/gms
