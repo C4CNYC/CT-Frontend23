@@ -7,7 +7,10 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider } from '@/components'
-import { useGenerateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
+import {
+  useGenerateLessonMutation,
+  useGenerateLessonMultiMutation,
+} from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -43,6 +46,8 @@ export default function AIGenerateStepper({
   const [activeStep, setActiveStep] = useState(0)
   const profile = useSelector((state) => state.global.user)
   const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
+  const [generateMultiLesson, { isLoading: generateMultiLessonLoading }] =
+    useGenerateLessonMultiMutation()
 
   const defaultValues = {
     level: LEVELS[0].value,
@@ -84,7 +89,8 @@ export default function AIGenerateStepper({
   })
 
   const onSubmit = async (data: FormAIGenerateProps) => {
-    const newLesson = await generateLesson(data)
+    const newLesson =
+      data.projectType === 'simple' ? await generateLesson(data) : await generateMultiLesson(data)
     if ('data' in newLesson && newLesson.data) {
       if (closeModal) closeModal()
       if (profile) {

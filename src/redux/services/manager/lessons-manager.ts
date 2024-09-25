@@ -72,6 +72,14 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
+    generateLessonMulti: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generateMulti',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
     createByCloningLesson: builder.mutation<ILessonCreate & BaseResponseInterface, void>({
       query: () => ({
         url: '/manager/lesson/createByCloningLesson',
@@ -142,6 +150,7 @@ export const {
   useCreateByCloningLessonMutation,
   useCreateByAIMutation,
   useGenerateLessonMutation,
+  useGenerateLessonMultiMutation,
   useAskAIMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
