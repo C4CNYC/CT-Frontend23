@@ -7,6 +7,11 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider } from '@/components'
+import {
+  useGenerateLessonMutation,
+  useGenerateLessonMultiMutation,
+} from '@root/src/redux/services/manager/lessons-manager'
+import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
@@ -30,11 +35,19 @@ export interface FormAIGenerateProps {
 
 interface AIGenerateStepperProps {
   isModal: boolean
+  closeModal?: () => void
 }
 
-export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): React.ReactElement {
+export default function AIGenerateStepper({
+  isModal,
+  closeModal,
+}: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
   const [activeStep, setActiveStep] = useState(0)
+  const profile = useSelector((state) => state.global.user)
+  const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
+  const [generateMultiLesson, { isLoading: generateMultiLessonLoading }] =
+    useGenerateLessonMultiMutation()
 
   const defaultValues = {
     level: LEVELS[0].value,
@@ -76,7 +89,25 @@ export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): 
   })
 
   const onSubmit = async (data: FormAIGenerateProps) => {
-    push({ pathname: STUDENT_PATH_DASHBOARD.codePanel.root, query: { ai: 'true' } })
+    const newLesson =
+      data.projectType === 'simple' ? await generateLesson(data) : await generateMultiLesson(data)
+    if ('data' in newLesson && newLesson.data) {
+      if (closeModal) closeModal()
+      if (profile) {
+        push(
+          `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: newLesson.data?.id })}`,
+          undefined,
+          {
+            shallow: true,
+          }
+        )
+      } else {
+        push({
+          pathname: STUDENT_PATH_DASHBOARD.codePanel.root,
+          query: { ai: 'true', lessonId: newLesson.data?.id },
+        })
+      }
+    }
   }
 
   return (
@@ -95,32 +126,39 @@ export default function AIGenerateStepper({ isModal }: AIGenerateStepperProps): 
           position: 'relative',
         }}
       >
-        <FormProvider
-          methods={methods}
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          {activeStep === 0 && (
-            <GeneralInfo
-              isModal={isModal}
-              nextStep={nextStep}
-              resetRoad={() => {
-                push(PATH_AUTH.onBoardingTeacher.root)
-              }}
-            />
-          )}
-          {activeStep === 1 && (
-            <LessonPrompt
-              nextStep={nextStep}
-              prevStep={prevStep}
-            />
-          )}
-          {activeStep === 2 && (
-            <AIPersonaInfo
-              nextStep={nextStep}
-              prevStep={prevStep}
-            />
-          )}
-        </FormProvider>
+        {generateLessonLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            {activeStep === 0 && (
+              <GeneralInfo
+                isModal={isModal}
+                nextStep={nextStep}
+                resetRoad={() => {
+                  push(PATH_AUTH.onBoardingTeacher.root)
+                }}
+                closeModal={closeModal}
+              />
+            )}
+            {activeStep === 1 && (
+              <LessonPrompt
+                nextStep={nextStep}
+                prevStep={prevStep}
+                closeModal={closeModal}
+              />
+            )}
+            {activeStep === 2 && (
+              <AIPersonaInfo
+                nextStep={nextStep}
+                prevStep={prevStep}
+                closeModal={closeModal}
+              />
+            )}
+          </FormProvider>
+        )}
       </Stack>
     </Stack>
   )

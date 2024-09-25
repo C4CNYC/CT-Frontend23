@@ -10,6 +10,7 @@ import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
 import { studentAuthApi } from './services/student-auth'
+import { tenantConfigApi } from './services/tenant-configs'
 import chatHandlerReducer from './slices/chat-handler'
 import checkersAnimationReducer from './slices/checkers-animation'
 import codeEditorCollabController from './slices/code-editor-controller'
@@ -59,6 +60,7 @@ const rootReducer = combineReducers({
   [studentPublicApi.reducerPath]: studentPublicApi.reducer,
   [publicApi.reducerPath]: publicApi.reducer,
   [feedbackApi.reducerPath]: feedbackApi.reducer,
+  [tenantConfigApi.reducerPath]: tenantConfigApi.reducer,
   global: globalRducer,
   manager: managerReducer,
   lessonSteps: lessonStepsReducer,

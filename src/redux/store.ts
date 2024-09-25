@@ -15,6 +15,7 @@ import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
 import { studentAuthApi } from './services/student-auth'
+import { tenantConfigApi } from './services/tenant-configs'
 
 export type RootState = ReturnType<typeof rootReducer>
 
@@ -34,7 +35,8 @@ const store = configureStore({
       .concat(managerApi.middleware)
       .concat(studentPublicApi.middleware)
       .concat(publicApi.middleware)
-      .concat(feedbackApi.middleware),
+      .concat(feedbackApi.middleware)
+      .concat(tenantConfigApi.middleware),
 })
 
 const persistor = persistStore(store)

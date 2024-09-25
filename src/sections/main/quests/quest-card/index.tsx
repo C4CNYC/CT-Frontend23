@@ -39,7 +39,10 @@ export default function QuestsTab({ classId, schoolId, activeTab }: IQuestTabPro
   }
 
   return (
-    <Stack sx={{ flexDirection: { lg: 'row' } }}>
+    <Stack
+      sx={{ flexDirection: { lg: 'row' } }}
+      className='studentJoinStep4'
+    >
       <Stack
         gap={2}
         flexGrow={1}

@@ -8,6 +8,7 @@ import {
   ILessonSearchParams,
   ILessonUpdate,
   IOpenAiRequest,
+  ILessonGenerate,
 } from '../interfaces/courseUnits.interface'
 import { IIntegration } from '../interfaces/integration.interface'
 
@@ -58,6 +59,22 @@ const extendedApi = managerApi.injectEndpoints({
     createLesson: builder.mutation<ILessonCreate & BaseResponseInterface, ILessonCreate>({
       query: ({ ...body }) => ({
         url: '/manager/lesson',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    generateLesson: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generate',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    generateLessonMulti: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generateMulti',
         method: 'POST',
         body,
       }),
@@ -132,6 +149,8 @@ export const {
   useCreateLessonMutation,
   useCreateByCloningLessonMutation,
   useCreateByAIMutation,
+  useGenerateLessonMutation,
+  useGenerateLessonMultiMutation,
   useAskAIMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
