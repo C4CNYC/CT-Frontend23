@@ -60,6 +60,7 @@ export default function StepContentEditor(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const [locked, setLocked] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [proposal, setProposal] = useState<string>('')
   const [bgColor, setBgColor] = useState<string>(DEFAULT_COLOR)
   const translate = useTranslate()
   const [updateContent] = useUpdateLessonContentMutation()
@@ -128,7 +129,7 @@ export default function StepContentEditor(): React.ReactElement {
           typography='h5'
           color='error'
         >
-          Any content in the current editor can be deleted if you switch now
+          Any unsaved edit in the current editor can be deleted if you switch
         </DialogTitle>
         <DialogTitle
           textAlign='center'
@@ -138,7 +139,10 @@ export default function StepContentEditor(): React.ReactElement {
         </DialogTitle>
         <DialogActions sx={{ gap: 2, justifyContent: 'center' }}>
           <Button
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false)
+              setProposal(bodyType)
+            }}
             variant='outlined'
             color='error'
           >
@@ -147,11 +151,7 @@ export default function StepContentEditor(): React.ReactElement {
           <Button
             onClick={() => {
               setOpen(false)
-              setBodyType(
-                bodyType === LessonContentType.Editable
-                  ? LessonContentType.Code
-                  : LessonContentType.Editable
-              )
+              setBodyType(proposal as LessonContentType)
             }}
             variant='outlined'
             color='success'
@@ -190,12 +190,9 @@ export default function StepContentEditor(): React.ReactElement {
               exclusive
               value={bodyType}
               onChange={(_, newValue) => {
-                if (
-                  false &&
-                  (newValue === LessonContentType.Code || newValue === LessonContentType.Editable)
-                )
-                  setOpen(true)
-                else setBodyType(newValue)
+                if (bodyType === newValue) return
+                setProposal(newValue)
+                setOpen(true)
               }}
               aria-label='select slide type'
             >
