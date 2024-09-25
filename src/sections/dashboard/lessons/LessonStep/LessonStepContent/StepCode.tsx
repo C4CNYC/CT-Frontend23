@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { html } from '@codemirror/lang-html'
@@ -52,9 +52,12 @@ export default function StepCode({
     }
   }
 
-  useState(() => {
-    if (content) setValue(JSON.parse(content).content)
-  })
+  useEffect(() => {
+    if (content) {
+      let contentParsed = JSON.parse(content)
+      setValue(contentParsed.content ?? '')
+    }
+  }, [content])
   return (
     <ResizerUi
       split='vertical'

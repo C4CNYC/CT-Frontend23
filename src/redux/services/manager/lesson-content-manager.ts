@@ -32,7 +32,7 @@ const extendedApi = managerApi.injectEndpoints({
 
     createLessonContent: builder.mutation<
       ILessonContent,
-      { lessonId: string } & Omit<ILessonContentUpdate, 'body' | 'type' | 'cover'>
+      { lessonId: string } & Omit<ILessonContentUpdate, 'cover'>
     >({
       query: ({ lessonId, ...body }) => ({
         url: `/manager/lesson/${lessonId}/content`,

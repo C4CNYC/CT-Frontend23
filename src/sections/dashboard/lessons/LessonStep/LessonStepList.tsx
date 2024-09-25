@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
@@ -26,6 +26,7 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 
+import { CreateLessonContent } from './CreateLessonContent'
 import LessonListItem from './LesonListItem'
 import SkeletonList from './Modals/SkeletonList'
 
@@ -38,9 +39,9 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const { enqueueSnackbar } = useSnackbar()
   const router = useRouter()
   const translate = useTranslate()
-
   const [updateLessonContent] = useUpdateLessonContentMutation()
   const [createLessonContent, { isLoading: createLessonLoading }] = useCreateLessonContentMutation()
+  const [createLessonContentDialogOpen, setCreateLessonContentDialogOpen] = useState(false)
   const [removeLessonContent] = useRemoveLessonContentMutation()
   const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
     { id: lessonId },
@@ -220,6 +221,25 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
           <ImPlus size='22px' />
           <Typography variant='subtitle1'>{translate('slide_add')}</Typography>
         </LoadingButton>
+
+        <LoadingButton
+          loading={createLessonContentDialogOpen}
+          variant='outlined'
+          fullWidth
+          sx={{
+            mb: 1,
+            p: 2,
+            gap: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onClick={() => setCreateLessonContentDialogOpen(true)}
+          disabled={createLessonLoading}
+        >
+          <ImPlus size='22px' />
+          <Typography variant='subtitle1'>{translate('slide_add')}</Typography>
+        </LoadingButton>
       </Stack>
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -252,6 +272,13 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
         spacing={3}
         sx={{ p: 2 }}
       ></Stack>
+      <CreateLessonContent
+        open={createLessonContentDialogOpen}
+        onClose={() => setCreateLessonContentDialogOpen(false)}
+        key={lessonId}
+        lessonName={lesson?.name ?? ''}
+        lessonId={lessonId}
+      />
     </Box>
   )
 }
