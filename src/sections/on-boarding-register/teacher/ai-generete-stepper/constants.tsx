@@ -104,8 +104,8 @@ export const TONE = [
   { key: 'Boring', value: 'Boring' },
 ]
 export const TYPE_PROJECT = [
-  { key: 'Logic', value: 'Logic' },
-  { key: 'Practical Project', value: 'Practical Project' },
+  { key: 'simple', value: 'Mini Lesson (1 slide)' },
+  { key: 'full', value: 'Complete Lesson' },
   { key: 'Exersize', value: 'Exersize' },
   { key: 'Quiz', value: 'Quiz' },
 ]
