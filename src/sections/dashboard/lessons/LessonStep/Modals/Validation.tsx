@@ -76,6 +76,7 @@ export default function Validation({
         onClick={() => {
           setOpenDialog(true)
         }}
+        title='Validation Rules'
       >
         {children}
       </Box>
