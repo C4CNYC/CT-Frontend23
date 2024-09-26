@@ -17,7 +17,18 @@ const extendedApi = adminApi.injectEndpoints({
       }),
       providesTags: ['Lessons'],
     }),
+    getAllAdminLessons: builder.query<
+      BaseListResponseInterface<ILesson & BaseResponseInterface>,
+      ILessonSearchParams
+    >({
+      query: (params) => ({
+        url: '/lesson/all',
+        method: 'GET',
+        params,
+      }),
+      providesTags: ['Lessons'],
+    }),
   }),
 })
 
-export const { useGetAdminLessonsQuery } = extendedApi
+export const { useGetAdminLessonsQuery, useGetAllAdminLessonsQuery } = extendedApi
