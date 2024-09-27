@@ -108,6 +108,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             code={document?.htmlBody?.join('') ?? ''}
             lessonType={lesson?.type}
             lessonName={lesson?.name}
+            lessonId={lesson?.id || lessonId}
           />
         ) : (
           <HidedTabBtn
@@ -161,6 +162,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
         lessonType={lesson?.type}
+        lessonId={lesson?.id || lessonId}
       />
 
       <CodeEditorBlock
