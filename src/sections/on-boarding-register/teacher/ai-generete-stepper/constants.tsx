@@ -71,6 +71,7 @@ export const LANGUAGE = [
   { key: 'HTML/CSS/JS', value: 'HTML/CSS/JS' },
   { key: 'Kaboom.js', value: 'Kaboom.js' },
 ]
+
 export const LESSON_DURARION = [
   { key: '20 Mins', value: '20 Mins' },
   { key: '40 Mins', value: '40 Mins' },
@@ -106,6 +107,7 @@ export const TONE = [
 export const TYPE_PROJECT = [
   { key: 'simple', value: 'Mini Lesson (1 slide)' },
   { key: 'full', value: 'Complete Lesson' },
-  { key: 'Exersize', value: 'Exersize' },
+  { key: 'Concept & Exercises', value: 'Concept & Exercises' },
+  { key: 'Practical Project', value: 'Practical Project' },
   { key: 'Quiz', value: 'Quiz' },
 ]

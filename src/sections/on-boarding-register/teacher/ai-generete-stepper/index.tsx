@@ -10,6 +10,7 @@ import { FormProvider } from '@/components'
 import {
   useGenerateLessonMutation,
   useGenerateLessonMultiMutation,
+  useCreateLessonUsingOpenAIAssistantMutation,
 } from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
@@ -48,6 +49,8 @@ export default function AIGenerateStepper({
   const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
   const [generateMultiLesson, { isLoading: generateMultiLessonLoading }] =
     useGenerateLessonMultiMutation()
+  const [createLessonUsingOpenAIAssistant, { isLoading: createLessonUsingOpenAIAssistantLoading }] =
+    useCreateLessonUsingOpenAIAssistantMutation()
 
   const defaultValues = {
     level: LEVELS[0].value,
@@ -89,8 +92,26 @@ export default function AIGenerateStepper({
   })
 
   const onSubmit = async (data: FormAIGenerateProps) => {
-    const newLesson =
-      data.projectType === 'simple' ? await generateLesson(data) : await generateMultiLesson(data)
+    let newLesson
+    switch (data.projectType as (typeof TYPE_PROJECT)[number]['value']) {
+      case 'simple':
+        newLesson = await generateLesson(data)
+        break
+      default:
+      case 'multi':
+      case 'full':
+        newLesson = await generateMultiLesson(data)
+        break
+      case 'Practical Project':
+      case 'Concept & Exercises':
+        newLesson = await createLessonUsingOpenAIAssistant({
+          ...data,
+          proficiencyLevel: data.grade,
+          programmingLanguage: data.lessonLanguage,
+        })
+        break
+    }
+
     if ('data' in newLesson && newLesson.data) {
       if (closeModal) closeModal()
       if (profile) {
