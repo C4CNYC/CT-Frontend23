@@ -45,6 +45,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   const [document, setDocument] = useState<CodeDocument | null>(null)
+  const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
@@ -79,6 +80,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       // eslint-disable-next-line no-console
       console.log('Error: ', error)
     }
+  }
+
+  const reloadBrowserView = () => {
+    setBrowserView(document)
   }
 
   const openInstruction = () => {
@@ -128,7 +133,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         />
 
         {!isBrowserHidden ? (
-          <ViewBlock document={document} />
+          <ViewBlock
+            document={browserView}
+            reloadBrowserView={reloadBrowserView}
+          />
         ) : (
           <HidedTabBtn
             title={TAB_TITLES.browser_preview}
