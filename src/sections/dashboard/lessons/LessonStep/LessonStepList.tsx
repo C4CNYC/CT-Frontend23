@@ -46,13 +46,30 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     { id: lessonId },
     { skip: !lessonId }
   )
-  const { data, isLoading } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
+  const {
+    data,
+    isLoading,
+    refetch: lessonContentsRefetch,
+  } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
 
   const { board } = useSelector((state: RootState) => state.lessonSteps)
 
   useEffect(() => {
     if (!data) return
     dispatch(getBoard(data))
+    if (data.length !== 0 && !router.query.stepId) {
+      router.push(
+        `${router.pathname}?${new URLSearchParams({
+          ...router.query,
+          stepId: data[0].id,
+        })}`,
+        undefined,
+        { shallow: true }
+      )
+    }
+    let interval: NodeJS.Timeout
+    if (data.length === 0) interval = setInterval(lessonContentsRefetch, 10000)
+    return () => clearInterval(interval)
   }, [data])
 
   const onDragEnd = (result: DropResult): void => {
