@@ -1,41 +1,42 @@
-import { Button, IconButton, Stack, Typography } from '@mui/material'
+import { useMemo } from 'react'
 
-import { languages, LanguageType } from '@root/src/assets/data/languages'
+import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
+
+import { languages } from '@root/src/assets/data/languages'
 import { Iconify, RHFSelect } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 
 import {
   BTN_CONTAINER_STYLES,
+  getToggleBtnGroupSx,
   NEXT_BUTTON_STYLES,
   OPTIONAL_TYPO_STYLES,
   PROGRAMMING_LANGUAGE,
-  SKIP_BUTTON_STYLES,
+  getSkipBtnSx,
   STEP_CONTAINER_STYLES,
   STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
-  TOGGLE_BUTTON_STYLES,
   TRACK,
   TYPE_LESSON,
 } from './constants'
 
 type IGeneralInfoProps = {
   nextStep: () => void
-  resetRoad: () => void
   isModal: boolean
   closeModal?: () => void
+  prevStep: () => void
 }
 
-export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGeneralInfoProps) {
-  const modifyLanguagesArray = (code: string): LanguageType[] => {
-    const index = [...languages].findIndex((lang) => lang.code === code)
-
-    if (index === -1) return languages
-
-    const [selectedLanguage] = languages.splice(index, 1)
-
-    return [selectedLanguage, ...languages]
-  }
-
+export function GeneralInfo({ nextStep, prevStep, isModal, closeModal }: IGeneralInfoProps) {
+  const theme = useTheme()
+  const toggleButtonStyles = useMemo(
+    () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+  const skipBtnStyles = useMemo(
+    () => getSkipBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
   return (
     <Stack
       gap={2}
@@ -46,7 +47,7 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
         sx={{ gap: 2, pl: isModal ? 1 : 0, alignItems: 'center' }}
       >
         {!isModal ? (
-          <IconButton onClick={resetRoad}>
+          <IconButton onClick={prevStep}>
             <Iconify
               icon='ion:chevron-back'
               width='30px'
@@ -83,7 +84,8 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
           name='RtypeLessonR'
           options={TYPE_LESSON}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-          sxButton={TOGGLE_BUTTON_STYLES}
+          sxButton={toggleButtonStyles}
+          tooltip
         />
       </Stack>
 
@@ -99,7 +101,7 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
           name='RprogrammingLanguageR'
           options={PROGRAMMING_LANGUAGE}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-          sxButton={TOGGLE_BUTTON_STYLES}
+          sxButton={toggleButtonStyles}
         />
       </Stack>
       <Stack>
@@ -114,7 +116,7 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
           name='RtrackR'
           options={TRACK}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-          sxButton={TOGGLE_BUTTON_STYLES}
+          sxButton={toggleButtonStyles}
         />
       </Stack>
       <Stack>
@@ -129,7 +131,7 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
           name='RlessonLanguageR'
           native
         >
-          {modifyLanguagesArray('en').map((el) => (
+          {languages.map((el) => (
             <option
               key={el.code}
               value={el.language}
@@ -142,7 +144,7 @@ export function GeneralInfo({ nextStep, resetRoad, isModal, closeModal }: IGener
       <Stack sx={BTN_CONTAINER_STYLES}>
         <Button
           variant='text'
-          sx={SKIP_BUTTON_STYLES}
+          sx={skipBtnStyles}
           onClick={nextStep}
         >
           Skip

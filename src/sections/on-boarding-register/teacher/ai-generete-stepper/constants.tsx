@@ -1,13 +1,50 @@
 import { SxProps, Theme } from '@mui/material'
 
-export const TOGGLE_BUTTON_STYLES = {
-  background: '#F0EEEE80',
+export interface FormAIGenerateProps {
+  RlevelR: string
+  RgradesR: string
+  RlessonDurationR: string
+  RlessonLanguageR: string
+  RprogrammingLanguageR: string
+  RtrackR: string
+  RpersonaR: string
+  RtoneR: string
+  RtypeLessonR: string
+  RlanguageR: string
+  name: string | null
+  email: string | null
+}
+
+export interface AIGenerateStepperProps {
+  isModal: boolean
+  closeModal?: () => void
+}
+
+export interface IAddAddonsProps {
+  closeModal?: () => void
+  resetRoad: () => void
+  onSubmitAddons: (addons: IAddons) => void
+}
+
+export interface IAddons {
+  quiz: boolean
+  autoGrading: boolean
+  lessonPlan: boolean
+  revision: boolean
+}
+
+export const getToggleBtnGroupSx = (isDark: boolean) => ({
+  background: isDark ? '#fff' : '#F0EEEE80',
   color: '#616161',
   borderRadius: '50px !important',
   height: '35px',
+  '&>svg': { color: '#616161', marginLeft: '6px' },
   '&.Mui-selected, &.Mui-selected:hover': {
     color: 'white',
     backgroundColor: '#0198ED',
+    '&>svg': {
+      color: '#FBDD3F !important',
+    },
   },
   '&.MuiToggleButton-root': {
     display: 'flex!important',
@@ -17,7 +54,7 @@ export const TOGGLE_BUTTON_STYLES = {
     whiteSpace: 'nowrap',
     minWidth: '100px',
   },
-}
+})
 
 export const TOGGLE_BUTTON_GROUP_STYLES = {
   border: 'none',
@@ -27,14 +64,15 @@ export const TOGGLE_BUTTON_GROUP_STYLES = {
   maxWidth: { xs: '400px', sm: 'none' },
 }
 
-export const SKIP_BUTTON_STYLES = {
+export const getSkipBtnSx = (isDark: boolean) => ({
   color: '#616161',
+  background: isDark ? '#fff' : '',
   borderRadius: '50px',
   fontSize: '1.2rem',
   '&:hover': {
     background: '#F0EEEE80',
   },
-}
+})
 
 export const NEXT_BUTTON_STYLES = {
   color: 'white',
@@ -59,7 +97,7 @@ export const STEP_TYTLE_STYLES = { fontSize: { xs: '1.3rem', md: '1.85rem' } }
 
 export const STEP_CONTAINER_STYLES = {
   minHeight: '770px',
-  width: { xs: '300px', sm: '400px', md: '550px' },
+  width: { xs: '300px', sm: '400px', md: 'auto' },
 }
 
 export const BTN_CONTAINER_STYLES = {
@@ -83,21 +121,70 @@ export const styledAIRoadInput = (theme: Theme, sx?: SxProps): SxProps => ({
   ...sx,
 })
 
+export const NOTE_DIAMOND_SX = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  background: '#0198ED1A',
+  borderRadius: '20px',
+  py: 1,
+  px: 2,
+}
+
+export const SIMPLE_GENERATE_TOGLE = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  textAlign: 'left',
+  gap: 1,
+  '&.Mui-selected, &.Mui-selected:hover': {
+    color: 'white',
+    backgroundColor: '#0198ED',
+  },
+  '&.MuiToggleButton-root': {
+    border: '2px solid #616161!important',
+    fontWeight: 400,
+    borderRadius: '20px',
+  },
+}
+export const SIMPLE_GENERATE_TOGLE_GROUP = {
+  background: 'transparent',
+  border: 'none',
+  flexWrap: { xs: 'wrap', md: 'nowrap' },
+}
+
+export const PROMTS_VARIANTS = [
+  { text: 'Python variables with exercises in Armenian', icon: 'mdi:console', color: '#FBDD3F' },
+  { text: '6th graders build weather app with api', icon: 'tabler:user-screen', color: '#d901ed' },
+  {
+    text: 'Nested functions in javascript with exercises and quiz',
+    icon: 'mdi:question-box-multiple-outline',
+    color: '#EE467A',
+  },
+  {
+    text: 'Auto-graded infinite loop exercises',
+    icon: 'material-symbols:info-outline',
+    color: '#FBDD3F',
+  },
+]
+
 export const TYPE_LESSON = [
   {
     key: 'Simple Lesson ',
     value: 'Simple Lesson',
     tooltip: 'An engaging, single-page lesson with coding exercises.',
+    icon: 'material-symbols:info-outline',
   },
   {
     key: 'Concept & Exercises',
     value: 'Concept & Exercises',
     tooltip: 'Learn a concept, then immediately practice it in different ways.',
+    icon: 'material-symbols:info-outline',
   },
   {
     key: 'Practical Project',
     value: 'Practical Project',
     tooltip: 'Building a project line by line with explanations and step-by-step guidance.',
+    icon: 'material-symbols:info-outline',
   },
 ]
 

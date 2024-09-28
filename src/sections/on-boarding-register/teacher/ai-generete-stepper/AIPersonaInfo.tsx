@@ -1,43 +1,54 @@
-import { Button, IconButton, Stack, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
+import { useMemo } from 'react'
+
+import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
 import { Iconify } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 
 import {
   BTN_CONTAINER_STYLES,
+  getToggleBtnGroupSx,
   NEXT_BUTTON_STYLES,
   OPTIONAL_TYPO_STYLES,
   PERSONA,
-  SKIP_BUTTON_STYLES,
+  getSkipBtnSx,
   STEP_CONTAINER_STYLES,
   STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
-  TOGGLE_BUTTON_STYLES,
   TONE,
 } from './constants'
 
 type IAIPersonaInfoProps = {
-  nextStep: () => void
   prevStep: () => void
   closeModal?: () => void
 }
 
-export function AIPersonaInfo({ nextStep, prevStep, closeModal }: IAIPersonaInfoProps) {
-  const { push } = useRouter()
+export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
+  const theme = useTheme()
+
+  const toggleButtonStyles = useMemo(
+    () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+  const skipBtnStyles = useMemo(
+    () => getSkipBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
 
   return (
     <>
       <style>
-        {` .ohnohoney{
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 0;
-        width: 0;
-        z-index: -1;
-    }`}
+        {` 
+        .ohnohoney {
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 0;
+          width: 0;
+          z-index: -1;
+          }
+        `}
       </style>
       <Stack
         gap={2}
@@ -84,7 +95,7 @@ export function AIPersonaInfo({ nextStep, prevStep, closeModal }: IAIPersonaInfo
             name='RpersonaR'
             options={PERSONA}
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-            sxButton={TOGGLE_BUTTON_STYLES}
+            sxButton={toggleButtonStyles}
           />
         </Stack>
         <Stack>
@@ -99,7 +110,7 @@ export function AIPersonaInfo({ nextStep, prevStep, closeModal }: IAIPersonaInfo
             name='RtoneR'
             options={TONE}
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-            sxButton={TOGGLE_BUTTON_STYLES}
+            sxButton={toggleButtonStyles}
           />
         </Stack>
 
@@ -130,7 +141,7 @@ export function AIPersonaInfo({ nextStep, prevStep, closeModal }: IAIPersonaInfo
         <Stack sx={BTN_CONTAINER_STYLES}>
           <Button
             variant='text'
-            sx={SKIP_BUTTON_STYLES}
+            sx={skipBtnStyles}
             onClick={() => {}}
           >
             Surprise Me

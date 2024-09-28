@@ -6,6 +6,8 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupProps,
+  Tooltip,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
@@ -14,6 +16,7 @@ import Carousel from 'react-slick'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { Iconify } from '../iconify'
 import CarouselArrows from '../slider/CarouselArrows'
 
 type Props = ToggleButtonGroupProps & {
@@ -21,8 +24,10 @@ type Props = ToggleButtonGroupProps & {
   helperText?: string
   sxGroup?: SxProps
   sxButton?: SxProps
-  options: Array<{ key: string; value: string }>
+  options: Array<{ key: string; value: string; tooltip?: string; icon?: string }>
   error?: FieldError
+  tooltip?: boolean
+  tooltipSx?: SxProps
 }
 
 export function RHFToggleButtonGroup({
@@ -32,6 +37,8 @@ export function RHFToggleButtonGroup({
   sxGroup,
   sxButton,
   error,
+  tooltip,
+  tooltipSx,
   ...other
 }: Props): React.ReactElement | null {
   const { control } = useFormContext()
@@ -84,7 +91,12 @@ export function RHFToggleButtonGroup({
             {isMobile ? (
               <Card
                 elevation={0}
-                sx={{ boxShadow: 'none', borderRadius: '8px', position: 'relative' }}
+                sx={{
+                  boxShadow: 'none',
+                  borderRadius: '8px',
+                  position: 'relative',
+                  background: 'transparent ',
+                }}
               >
                 <Carousel
                   ref={carouselRef}
@@ -113,15 +125,38 @@ export function RHFToggleButtonGroup({
                 />
               </Card>
             ) : (
-              options.map((el) => (
-                <ToggleButton
-                  sx={sxButton}
-                  value={el.key}
-                  key={el.key}
-                >
-                  {el.value}
-                </ToggleButton>
-              ))
+              options.map((el) =>
+                tooltip ? (
+                  <Tooltip
+                    sx={tooltipSx}
+                    key={el.key}
+                    title={
+                      <Typography
+                        variant='body2'
+                        p={1}
+                      >
+                        {el.tooltip}
+                      </Typography>
+                    }
+                  >
+                    <ToggleButton
+                      sx={sxButton}
+                      value={el.key}
+                    >
+                      {el.value}
+                      <Iconify icon={el.icon ?? ''} />
+                    </ToggleButton>
+                  </Tooltip>
+                ) : (
+                  <ToggleButton
+                    sx={sxButton}
+                    value={el.key}
+                    key={el.key}
+                  >
+                    {el.value}
+                  </ToggleButton>
+                )
+              )
             )}
           </ToggleButtonGroup>
         )}

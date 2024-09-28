@@ -4,6 +4,7 @@ export type LanguageType = {
 }
 
 export const languages: LanguageType[] = [
+  { code: 'en', language: 'English' },
   { code: 'ab', language: 'Abkhazian' },
   { code: 'aa', language: 'Afar' },
   { code: 'af', language: 'Afrikaans' },
@@ -46,7 +47,6 @@ export const languages: LanguageType[] = [
   { code: 'dv', language: 'Divehi, Dhivehi, Maldivian' },
   { code: 'nl', language: 'Dutch, Flemish' },
   { code: 'dz', language: 'Dzongkha' },
-  { code: 'en', language: 'English' },
   { code: 'eo', language: 'Esperanto' },
   { code: 'et', language: 'Estonian' },
   { code: 'ee', language: 'Ewe' },

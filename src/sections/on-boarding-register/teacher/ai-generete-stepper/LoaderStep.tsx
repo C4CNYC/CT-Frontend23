@@ -1,6 +1,6 @@
 import { Stack, Typography } from '@mui/material'
 
-import { LOADING_STEPS, STEP_CONTAINER_STYLES } from './constants'
+import { LOADING_STEPS } from './constants'
 import LoadingItem from './LoadingItem'
 
 interface ILoaderStep {
@@ -11,7 +11,8 @@ const LoaderStep = ({ isLoading }: ILoaderStep) => {
   return (
     <Stack
       gap={2}
-      sx={STEP_CONTAINER_STYLES}
+      minHeight='770px'
+      width={{ xs: '300px', sm: '400px', md: '560px' }}
     >
       <Typography variant='h3'>Hang tight... ⌛ 👀 💗</Typography>
       <Typography

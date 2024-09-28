@@ -1,4 +1,6 @@
-import { Button, IconButton, Stack, Typography } from '@mui/material'
+import { useMemo } from 'react'
+
+import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
 import { Iconify } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
@@ -10,11 +12,11 @@ import {
   LEVELS,
   NEXT_BUTTON_STYLES,
   OPTIONAL_TYPO_STYLES,
-  SKIP_BUTTON_STYLES,
+  getSkipBtnSx,
   STEP_CONTAINER_STYLES,
   STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
-  TOGGLE_BUTTON_STYLES,
+  getToggleBtnGroupSx,
 } from './constants'
 
 type ILessonPromptProps = {
@@ -24,6 +26,17 @@ type ILessonPromptProps = {
 }
 
 export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILessonPromptProps) {
+  const theme = useTheme()
+
+  const toggleButtonStyles = useMemo(
+    () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+  const skipBtnStyles = useMemo(
+    () => getSkipBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+
   return (
     <Stack
       gap={2}
@@ -70,7 +83,7 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           name='RlevelR'
           options={LEVELS}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-          sxButton={TOGGLE_BUTTON_STYLES}
+          sxButton={toggleButtonStyles}
         />
       </Stack>
       <Stack>
@@ -86,7 +99,7 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           name='RgradesR'
           options={GRADES}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-          sxButton={TOGGLE_BUTTON_STYLES}
+          sxButton={toggleButtonStyles}
         />
       </Stack>
       <Stack>
@@ -101,13 +114,13 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           name='RlessonDurationR'
           options={LESSON_DURARION}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-          sxButton={TOGGLE_BUTTON_STYLES}
+          sxButton={toggleButtonStyles}
         />
       </Stack>
       <Stack sx={BTN_CONTAINER_STYLES}>
         <Button
           variant='text'
-          sx={SKIP_BUTTON_STYLES}
+          sx={skipBtnStyles}
           onClick={nextStep}
         >
           Surprise Me
