@@ -55,7 +55,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const { board } = useSelector((state: RootState) => state.lessonSteps)
 
   useEffect(() => {
-    if (!data) return
+    if (!data || !lesson) return
     dispatch(getBoard(data))
     if (data.length !== 0 && !router.query.stepId) {
       router.push(
@@ -67,8 +67,10 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
         { shallow: true }
       )
     }
-    let interval: NodeJS.Timeout
-    if (data.length === 0) interval = setInterval(lessonContentsRefetch, 10000)
+    let interval: NodeJS.Timeout | undefined
+    if ((new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 10)
+      //pull lessons within 10 minutes after creation
+      interval = setInterval(lessonContentsRefetch, 10000)
     return () => clearInterval(interval)
   }, [data])
 
