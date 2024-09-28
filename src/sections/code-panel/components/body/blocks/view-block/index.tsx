@@ -1,7 +1,7 @@
 import { type FC, useState } from 'react'
 
 import ReplayIcon from '@mui/icons-material/Replay'
-import { IconButton } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
 import { CgBrowser } from '@react-icons/all-files/cg/CgBrowser'
 import { TbArrowBarToRight } from '@react-icons/all-files/tb/TbArrowBarToRight'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,9 +15,10 @@ import BaseBlock from '../base-block'
 import BrowserView, { CodeDocument } from './browser-view'
 interface IViewBlock {
   document: CodeDocument | null
+  reloadBrowserView?: () => void
 }
 
-const ViewBlock: FC<IViewBlock> = ({ document }) => {
+const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView }) => {
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state: RootState) => state.codePanelGlobal.isBrowserHidden)
   const translate = useTranslate()
@@ -33,6 +34,9 @@ const ViewBlock: FC<IViewBlock> = ({ document }) => {
 
   const reloadIffame = () => {
     setIframeKey(iframeKey + 1)
+    if (reloadBrowserView) {
+      reloadBrowserView()
+    }
   }
 
   if (isBrowserHidden) {
@@ -50,20 +54,19 @@ const ViewBlock: FC<IViewBlock> = ({ document }) => {
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
-      {document ? (
-        <IconButton
-          onClick={reloadIffame}
-          sx={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            background: 'rgba(179, 96, 96, .5)',
-            borderRadius: '0 0 0 20px',
-          }}
-        >
-          <ReplayIcon />
-        </IconButton>
-      ) : null}
+      <IconButton
+        onClick={reloadIffame}
+        sx={{
+          position: 'absolute',
+          top: '5%',
+          right: 0,
+          background: 'rgba(179, 96, 96, .5)',
+          borderRadius: '0 0 0 20px',
+        }}
+      >
+        <ReplayIcon />
+        <Typography variant='caption'>Run Code</Typography>
+      </IconButton>
 
       <BrowserView
         document={document}

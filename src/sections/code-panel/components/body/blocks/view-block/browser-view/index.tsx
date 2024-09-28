@@ -12,6 +12,7 @@ interface BrowserViewProps {
   document: CodeDocument | null
   isOpenHeader?: boolean
   iframeKey?: number
+  stepBgColor?: string
 }
 
 enum TagNames {
@@ -31,7 +32,7 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
     ''
   )
 
-const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey }) => {
+const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey, stepBgColor }) => {
   const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
@@ -49,9 +50,10 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey }
           ${fontCssLink}
           ${getBody(cssBody, TagNames.Style)}
         </head>
-        <body style="height: 100%; margin: 0;">
-        <script src="https://unpkg.com/kaboom@2000.2.9/dist/kaboom.js"></script>
+        <body style="height: 100%; margin: 0;" id="pageLesson">
+        <div class="lesson-page " style=${stepBgColor ? 'background-color:' + stepBgColor : ''}>
           ${(document as any).length ? document : htmlBody.join('\n')}
+        </div>
           ${getBody(jsBody, TagNames.Script)}
         </body>
       </html>

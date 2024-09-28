@@ -258,3 +258,10 @@ export const LOADING_STEPS = [
   'Receiving the lesson',
   'Finishing up',
 ]
+
+export const TYPE_PROJECT = [
+  { key: 'simple', value: 'Mini Lesson (1 slide)' },
+  { key: 'full', value: 'Complete Lesson' },
+  { key: 'Exersize', value: 'Exersize' },
+  { key: 'Quiz', value: 'Quiz' },
+]

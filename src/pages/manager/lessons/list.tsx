@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
-import { useGetAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
+import { useGetAllAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { ILesson, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import {
@@ -95,7 +95,7 @@ export default function LessonsListPage(): React.ReactElement {
     isLoading: adminIsLoading,
     isFetching: adminFetching,
     refetch: refetchAdminLessons,
-  } = useGetAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
+  } = useGetAllAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
   const [lessons, setLessons] = useState<ILesson[]>([])
   const data = userRole === Role.Admin ? adminData : ownLessonsData
   const isLoading = userRole === Role.Admin ? adminIsLoading : isOwnLessonDataLoading
