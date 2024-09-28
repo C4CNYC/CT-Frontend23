@@ -81,7 +81,16 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
       >
         Add any of the following to your lesson?
       </Typography>
-      <Stack sx={{ background: '#F0EEEE80', borderRadius: '20px', py: 3, px: 2, gap: 2 }}>
+      <Stack
+        sx={{
+          background:
+            theme.palette.mode === 'dark' ? theme.palette.background.neutral : '#F0EEEE80',
+          borderRadius: '20px',
+          py: 3,
+          px: 2,
+          gap: 2,
+        }}
+      >
         <FormControlLabel
           control={
             <Checkbox
