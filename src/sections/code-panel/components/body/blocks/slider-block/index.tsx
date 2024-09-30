@@ -153,7 +153,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         })
       }
       onSubmitChallenge(data[slideIndex].id, code)
-    }
+    } 
     if (hasNextStep) {
       carousel1.current?.slickNext()
     } else {
@@ -233,8 +233,8 @@ const SliderBlock: FC<ISliderBlock> = ({
                   ref={carousel1}
                   afterChange={onUpdateLastSlide}
                 >
-                  {data.map((step) => {
-                    return (
+                  {data.map((step, stepSlideIndex) => {
+                    return slideIndex==stepSlideIndex?(
                       <View
                         title={step.title}
                         lessonType={lessonType}
@@ -244,7 +244,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                         connectIntegrations={connectIntegrations}
                         stepBgColor={step.bg_color}
                       />
-                    )
+                    ):<></>
                   })}
                 </Carousel>
               </Box>
