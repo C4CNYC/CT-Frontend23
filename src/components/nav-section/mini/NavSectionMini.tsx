@@ -19,7 +19,7 @@ function NavSectionMini({ data, sx, ...other }: NavSectionProps): React.ReactEle
     >
       {data?.map((group, index) => (
         <Items
-          key={group.subheader}
+          key={index}
           items={group.items}
           isLastGroup={index + 1 === data.length}
         />
