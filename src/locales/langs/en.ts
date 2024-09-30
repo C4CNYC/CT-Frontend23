@@ -652,7 +652,7 @@ const en = {
   tribes_sign_up_to_join: 'Sign up to join',
   tribes_join_class: 'Join Class',
   tribes_enter_join_code: 'Enter your Join Code to find your class',
-  tribes_code_example: 'Example: atVID13',
+  tribes_code_example: '12asd5',
   tribes_want_leave: 'Are you sure you \n want to leave tribe?',
   tribes_you_left_tribe: 'You left the tribe',
 
