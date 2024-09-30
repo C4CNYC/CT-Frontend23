@@ -9,6 +9,7 @@ import {
   FormControl,
   TextareaAutosize,
 } from '@mui/material'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { DialogAnimate } from '@root/src/components'
@@ -115,7 +116,12 @@ export function AiLessonCreateDialogFe({
       <DialogAnimate open={open}>
         {isLoading || aiThinking ? (
           <div>
-            <img src='https://avatars.githubusercontent.com/u/19434091?v=4' />
+            <Image
+              src='https://avatars.githubusercontent.com/u/19434091?v=4'
+              height={200}
+              width={200}
+              alt=''
+            />
             <div> {isLoading ? 'Ai is preparing your lesson' : 'Saving prepared lesson'} </div>
           </div>
         ) : (
