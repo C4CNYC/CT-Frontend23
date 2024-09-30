@@ -153,7 +153,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         })
       }
       onSubmitChallenge(data[slideIndex].id, code)
-    } 
+    }
     if (hasNextStep) {
       carousel1.current?.slickNext()
     } else {
