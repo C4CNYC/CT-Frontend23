@@ -69,9 +69,8 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     }
     let interval: NodeJS.Timeout | undefined
     if ((new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 10)
-      //pull lessons within 10 minutes after creation
-      interval = setInterval(lessonContentsRefetch, 10000)
-    console.log('interval', interval)
+      //pull lessons for 10 minutes after creation
+      interval = setInterval(lessonContentsRefetch, 10000) 
     return () => clearInterval(interval)
   }, [data, lesson])
 
