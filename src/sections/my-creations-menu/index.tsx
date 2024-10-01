@@ -20,8 +20,6 @@ import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import AiGenerateLessonDialog from './ai-generate-lesson-dialog'
-import { AiLessonCreateDialog } from './ai-lesson-create-dialog'
-import { AiLessonCreateDialogFe } from './ai-lesson-create-dialog-fe'
 import DiamondFeatureModal from './diamond-feature-modal'
 
 export default function MyCreationsMenu(): React.ReactElement {
@@ -33,8 +31,6 @@ export default function MyCreationsMenu(): React.ReactElement {
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
     useCreateByCloningLessonMutation()
-  const [aiDialog, aiDialogSet] = useState(false)
-  const [aiDialogFe, aiDialogFeSet] = useState(false)
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
