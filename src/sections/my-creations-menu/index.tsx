@@ -148,8 +148,6 @@ export default function MyCreationsMenu(): React.ReactElement {
           >
             Add New Lesson
           </MenuItem>
-          <MenuItem onClick={() => aiDialogSet(true)}>New Ai Lesson</MenuItem>
-          <MenuItem onClick={() => aiDialogFeSet(true)}>New Ai Lesson Fe</MenuItem>
           <MenuItem
             onClick={() => {
               router.push(STUDENT_PATH_DASHBOARD.myLessons, undefined, {
@@ -199,14 +197,6 @@ export default function MyCreationsMenu(): React.ReactElement {
           </DiamondFeatureModal>
         </MenuPopover>
       </RoleBasedGuard>
-      <AiLessonCreateDialog
-        open={aiDialog}
-        closeTrigger={() => aiDialogSet(false)}
-      />
-      <AiLessonCreateDialogFe
-        open={aiDialogFe}
-        closeTrigger={() => aiDialogFeSet(false)}
-      />
     </>
   )
 }

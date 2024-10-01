@@ -1,4 +1,8 @@
+import { Link } from '@mui/material'
+import NextLink from 'next/link'
+
 import { Iconify } from '@root/src/components'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import DefaultMenuItem from './default-item'
 
@@ -15,5 +19,6 @@ export default function SandboxMenuItem(): React.ReactElement {
         icon={<Iconify icon='tabler:sandbox' />}
         tooltip='sidebar_menu_sandbox_tooltip'
       />
+    </Link>
   )
 }
