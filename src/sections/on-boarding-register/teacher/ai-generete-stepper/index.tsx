@@ -49,6 +49,7 @@ const defaultValues = {
   RtypeLessonR: TYPE_LESSON[1].value,
   name: null,
   email: null,
+  RpromptR: '',
 }
 const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
   level: d.RlevelR,
@@ -92,6 +93,7 @@ export default function AIGenerateStepper({
     RtoneR: Yup.string(),
     RtypeLessonR: Yup.string(),
     RlanguageR: Yup.string(),
+    RpromptR: Yup.string(),
   })
 
   const methods = useForm<FormAIGenerateProps>({
@@ -112,23 +114,30 @@ export default function AIGenerateStepper({
   }
 
   const onSubmit = async (data: FormAIGenerateProps) => {
-    if (data.email || data.name) {
-      return
+    const lessonData = {
+      lessonPrompt: data.RpromptR,
+      lessonDuration: data.RlessonDurationR,
+      proficiencyLevel: data.RlevelR,
+      lessonType: data.RtypeLessonR,
+      programmingLanguage: data.RprogrammingLanguageR,
+      track: data.RtrackR,
+      persona: data.RpersonaR,
     }
+
     let newLesson
     switch (data.RtypeLessonR as (typeof TYPE_PROJECT)[number]['value']) {
       case 'simple':
-        newLesson = await generateLesson(SpamBotPreventerToNormal(data))
+        newLesson = await generateLesson(lessonData)
         break
       default:
       case 'multi':
       case 'full':
-        newLesson = await generateMultiLesson(SpamBotPreventerToNormal(data))
+        newLesson = await generateMultiLesson(lessonData)
         break
       case 'Practical Project':
       case 'Concept & Exercises':
         newLesson = await createLessonUsingOpenAIAssistant({
-          ...SpamBotPreventerToNormal(data),
+          ...lessonData,
           proficiencyLevel: data.RgradesR,
           programmingLanguage: data.RlessonLanguageR,
         })
@@ -137,27 +146,14 @@ export default function AIGenerateStepper({
 
     if ('data' in newLesson && newLesson.data) {
       if (closeModal) closeModal()
-      if (profile) {
-        push(
-          `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: newLesson.data?.id })}`,
-          undefined,
-          {
-            shallow: true,
-          }
-        )
-      } else {
-        push({
-          pathname: STUDENT_PATH_DASHBOARD.codePanel.root,
-          query: { ai: 'true', lessonId: newLesson.data?.id },
-        })
-      }
+      redirectAfterCompleate(newLesson.data.id)
     }
   }
 
-  const redirectAfterCompleate = () => {
+  const redirectAfterCompleate = (newLessonId: string) => {
     if (profile) {
       push(
-        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: lessonId ?? '' })}`,
+        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: newLessonId ?? '' })}`,
         undefined,
         {
           shallow: true,
@@ -166,13 +162,12 @@ export default function AIGenerateStepper({
     } else {
       push({
         pathname: STUDENT_PATH_DASHBOARD.codePanel.root,
-        query: { ai: 'true', lessonId: lessonId ?? '' },
+        query: { ai: 'true', lessonId: newLessonId ?? '' },
       })
     }
   }
   const onSubmitAddons = (addons: IAddons) => {
-    // console.log(addons)
-    redirectAfterCompleate()
+    redirectAfterCompleate(lessonId ?? '')
   }
 
   return (
@@ -190,6 +185,8 @@ export default function AIGenerateStepper({
               nextStep={nextStep}
               resetRoad={resetRoad}
               closeModal={closeModal}
+              updateForm={methods.setValue as any}
+              redirectAfterComplete={redirectAfterCompleate}
             />
           )}
           {activeStep === 1 && (

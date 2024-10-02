@@ -4,7 +4,6 @@ import {
   Button,
   IconButton,
   Stack,
-  TextField,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
@@ -12,6 +11,8 @@ import {
 } from '@mui/material'
 
 import { Iconify } from '@root/src/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { useGenerateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 
 import {
   BTN_CONTAINER_STYLES,
@@ -29,27 +30,45 @@ type ISimpleAiGenerateProps = {
   resetRoad: () => void
   isModal: boolean
   closeModal?: () => void
+  updateForm: (name: string, value: string) => void
+  redirectAfterComplete: (lessonId: string) => void
 }
 
-const SimpleAiGenerate = ({ nextStep, resetRoad, isModal, closeModal }: ISimpleAiGenerateProps) => {
+const SimpleAiGenerate = ({
+  nextStep,
+  resetRoad,
+  isModal,
+  closeModal,
+  updateForm,
+  redirectAfterComplete,
+}: ISimpleAiGenerateProps) => {
   const theme = useTheme()
   const [textFieldValue, setTextFieldValue] = useState<null | string>(null)
   const skipBtnStyles = useMemo(
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
+  const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
 
   const handleChangeTextField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setTextFieldValue(event.target.value)
+    setPromt(event.target.value)
+    updateForm('RpromptR', event.target.value)
   }
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newPromt: string) => {
+  const handlePresetChange = (event: React.MouseEvent<HTMLElement>, newPromt: string) => {
+    setPromt(newPromt)
     setTextFieldValue(newPromt)
   }
 
-  const onSubmit = () => {
-    // send promt || textFieldValue
+  const onSubmit = async () => {
+    if (!textFieldValue) return
+    const lesson = await generateLesson({ lessonPrompt: textFieldValue })
+    if ('data' in lesson) {
+      redirectAfterComplete(lesson.data.id)
+      if (closeModal) closeModal()
+    }
   }
 
   return (
@@ -93,7 +112,7 @@ const SimpleAiGenerate = ({ nextStep, resetRoad, isModal, closeModal }: ISimpleA
         <Stack sx={{ gap: { xs: 1, sm: 1, md: 4 } }}>
           <ToggleButtonGroup
             size='large'
-            onChange={handleChange}
+            onChange={handlePresetChange}
             aria-label='promt variants'
             exclusive
             sx={SIMPLE_GENERATE_TOGLE_GROUP}
@@ -114,12 +133,16 @@ const SimpleAiGenerate = ({ nextStep, resetRoad, isModal, closeModal }: ISimpleA
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-          <TextField
+          <RHFTextField
             placeholder='Enter prompt or select from above'
             multiline
+            name='RpromptR'
             minRows={4}
             value={textFieldValue}
-            onChange={handleChangeTextField}
+            required
+            onChange={(e) => {
+              handleChangeTextField(e)
+            }}
           />
         </Stack>
         <Stack sx={BTN_CONTAINER_STYLES}>
@@ -127,6 +150,7 @@ const SimpleAiGenerate = ({ nextStep, resetRoad, isModal, closeModal }: ISimpleA
             variant='text'
             sx={skipBtnStyles}
             onClick={nextStep}
+            disabled={!textFieldValue}
           >
             Advanced
           </Button>
@@ -134,6 +158,7 @@ const SimpleAiGenerate = ({ nextStep, resetRoad, isModal, closeModal }: ISimpleA
             variant='contained'
             sx={NEXT_BUTTON_STYLES}
             onClick={onSubmit}
+            disabled={!textFieldValue}
           >
             Generate ✨
           </Button>

@@ -113,7 +113,7 @@ function Editor({
   const { manager, state, setState, onChange } = useRemirror({
     extensions: newExtentions,
     content: isJson(multimediaValue)
-      ? JSON.parse(multimediaValue)?.doc ?? JSON.parse(multimediaValue)?.content ?? ''
+      ? (JSON.parse(multimediaValue)?.doc ?? JSON.parse(multimediaValue)?.content ?? '')
       : '',
     stringHandler: 'html',
   })
