@@ -76,6 +76,7 @@ export default function LessonListItem({
     <Draggable
       draggableId={step.id}
       index={index}
+      key={step.id}
     >
       {(provided) => (
         <Paper

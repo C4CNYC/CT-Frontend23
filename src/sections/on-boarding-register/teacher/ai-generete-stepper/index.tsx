@@ -47,6 +47,7 @@ const defaultValues = {
   RtypeLessonR: TYPE_LESSON[1].value,
   name: null,
   email: null,
+  RpromptR: '',
 }
 
 export default function AIGenerateStepper({
@@ -75,6 +76,7 @@ export default function AIGenerateStepper({
     RtoneR: Yup.string(),
     RtypeLessonR: Yup.string(),
     RlanguageR: Yup.string(),
+    RpromptR: Yup.string(),
   })
 
   const methods = useForm<FormAIGenerateProps>({
@@ -95,31 +97,26 @@ export default function AIGenerateStepper({
   }
 
   const onSubmit = async (data: FormAIGenerateProps) => {
-    if (data.email || data.name) {
-      return
+    const lessonData = {
+      lessonPrompt: data.RpromptR,
+      lessonDuration: data.RlessonDurationR,
+      proficiencyLevel: data.RlevelR,
+      lessonType: data.RtypeLessonR,
+      programmingLanguage: data.RprogrammingLanguageR,
+      track: data.RtrackR,
+      persona: data.RpersonaR,
     }
-    // const newLesson =
-    // data.projectType === 'simple'
-    // ? await generateLesson({
-    // lessonPrompt: '', //@ deleted by john from design
-    // lessonDuration: data.RlessonDurationR,
-    // proficiencyLevel: data.RlevelR,
-    // lessonType: data.RtypeLessonR,
-    // programmingLanguage: data.RprogrammingLanguageR,
-    // track: data.RtrackR,
-    // persona: data.RpersonaR,
-    // })
-    // : await generateMultiLesson(data)
-    // if ('data' in newLesson && newLesson.data) {
-    // setLessonId(newLesson.data?.id)
-    setActiveStep(4)
-    // }
+    const newLesson = await generateMultiLesson(lessonData)
+    if ('data' in newLesson && newLesson.data) {
+      if (closeModal) closeModal()
+      redirectAfterCompleate(newLesson.data.id)
+    }
   }
 
-  const redirectAfterCompleate = () => {
+  const redirectAfterCompleate = (newLessonId: string) => {
     if (profile) {
       push(
-        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: lessonId ?? '' })}`,
+        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: newLessonId ?? '' })}`,
         undefined,
         {
           shallow: true,
@@ -128,14 +125,14 @@ export default function AIGenerateStepper({
     } else {
       push({
         pathname: STUDENT_PATH_DASHBOARD.codePanel.root,
-        query: { ai: 'true', lessonId: lessonId ?? '' },
+        query: { ai: 'true', lessonId: newLessonId ?? '' },
       })
     }
   }
 
   const onSubmitAddons = (addons: IAddons) => {
     // console.log(addons)
-    redirectAfterCompleate()
+    redirectAfterCompleate(lessonId ?? '')
   }
 
   return (
@@ -153,6 +150,8 @@ export default function AIGenerateStepper({
               nextStep={nextStep}
               resetRoad={resetRoad}
               closeModal={closeModal}
+              updateForm={methods.setValue as any}
+              redirectAfterComplete={redirectAfterCompleate}
             />
           )}
           {activeStep === 1 && (
