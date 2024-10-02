@@ -52,6 +52,7 @@ interface ISliderBlock {
   code: string
   lessonType?: string
   lessonName?: string
+  lessonId?: string
 }
 
 interface IView {
@@ -79,12 +80,12 @@ const SliderBlock: FC<ISliderBlock> = ({
   code,
   lessonType,
   lessonName,
+  lessonId,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const profile = useSelector((state) => state.global.user)
   const course = useSelector((state) => state.codePanelGlobal.courseId)
   const unit = useSelector((state) => state.codePanelGlobal.unitId)
@@ -125,7 +126,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [slideIndex])
 
   useEffect(() => {
-    const progress = JSON.parse(localStorage?.getItem(`${profile?.id}_progress`) || '{}')
+    const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
     if (lessonId && progress) {
       const lastSlide: number = progress[lessonId as string]
       if (lastSlide && carousel1.current) {
@@ -166,7 +167,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
     }
     if (localStorage) {
-      const progress = localStorage.getItem(`${profile?.id}_progress`)
+      const progress = localStorage.getItem(`${lessonId}_progress`)
       let newProgress: any = {}
       if (progress) {
         newProgress = JSON.parse(progress)
@@ -174,7 +175,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       if (lessonId) {
         newProgress[lessonId as string] = next
       }
-      localStorage.setItem(`${profile?.id}_progress`, JSON.stringify(newProgress))
+      localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
   }
 
@@ -234,7 +235,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                   afterChange={onUpdateLastSlide}
                 >
                   {data.map((step, stepSlideIndex) => {
-                    return slideIndex==stepSlideIndex?(
+                    return slideIndex == stepSlideIndex ? (
                       <View
                         title={step.title}
                         lessonType={lessonType}
@@ -244,7 +245,9 @@ const SliderBlock: FC<ISliderBlock> = ({
                         connectIntegrations={connectIntegrations}
                         stepBgColor={step.bg_color}
                       />
-                    ):<></>
+                    ) : (
+                      <></>
+                    )
                   })}
                 </Carousel>
               </Box>

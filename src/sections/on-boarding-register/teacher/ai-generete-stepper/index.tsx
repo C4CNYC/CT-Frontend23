@@ -16,66 +16,88 @@ import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import AddAddons from './AddAddons'
 import { AIPersonaInfo } from './AIPersonaInfo'
-import { GRADES, LESSON_DURARION, LEVELS, PERSONA, TONE, TYPE_PROJECT } from './constants'
+import {
+  AIGenerateStepperProps,
+  FormAIGenerateProps,
+  GRADES,
+  IAddons,
+  LESSON_DURARION,
+  LEVELS,
+  PERSONA,
+  PROGRAMMING_LANGUAGE,
+  TONE,
+  TYPE_LESSON,
+  TYPE_PROJECT,
+} from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
+import LoaderStep from './LoaderStep'
+import SimpleAiGenerate from './SimpleAiGenerate'
 
-export interface FormAIGenerateProps {
-  level: string
-  grade: string
-  lessonDuration: string
-  lessonPrompt: string
-  lessonLanguage: string
-  honeypotField: string
-  track: string
-  persona: string
-  tone: string
-  projectType: string
+//@names according to avoid bots spam
+const defaultValues = {
+  RlevelR: LEVELS[0].value,
+  RgradesR: GRADES[1].value,
+  RlessonDurationR: LESSON_DURARION[2].value,
+  RlessonLanguageR: 'English',
+  RtrackR: '',
+  RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
+  RpersonaR: PERSONA[0].value,
+  RtoneR: TONE[1].value,
+  RtypeLessonR: TYPE_LESSON[1].value,
+  name: null,
+  email: null,
 }
-
-interface AIGenerateStepperProps {
-  isModal: boolean
-  closeModal?: () => void
-}
+const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
+  level: d.RlevelR,
+  grades: d.RgradesR,
+  lessonDuration: d.RlessonDurationR,
+  lessonLanguage: d.RlessonLanguageR,
+  track: d.RtrackR,
+  programmingLanguage: d.RprogrammingLanguageR,
+  persona: d.RpersonaR,
+  tone: d.RtoneR,
+  typeLesson: d.RtypeLessonR,
+  language: d.RlanguageR,
+  lessonPrompt: '',
+})
 
 export default function AIGenerateStepper({
   isModal,
   closeModal,
 }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
+
   const [activeStep, setActiveStep] = useState(0)
+  const [lessonId, setLessonId] = useState<null | string>(null)
+
   const profile = useSelector((state) => state.global.user)
+
   const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
   const [generateMultiLesson, { isLoading: generateMultiLessonLoading }] =
     useGenerateLessonMultiMutation()
   const [createLessonUsingOpenAIAssistant, { isLoading: createLessonUsingOpenAIAssistantLoading }] =
     useCreateLessonUsingOpenAIAssistantMutation()
 
-  const defaultValues = {
-    level: LEVELS[0].value,
-    grades: GRADES[1].value,
-    lessonDuration: LESSON_DURARION[2].value,
-    lessonPrompt: '',
-    lessonLanguage: '',
-    honeypotField: '',
-    track: '',
-    persona: PERSONA[0].value,
-    tone: TONE[1].value,
-    projectType: TYPE_PROJECT[1].value,
-  }
-
   const generateAICourseSchema = Yup.object().shape({
-    level: Yup.string(),
-    grade: Yup.string(),
-    lessonDuration: Yup.string(),
-    lessonPrompt: Yup.string(),
-    lessonLanguage: Yup.string(),
-    honeypotField: Yup.string(),
-    track: Yup.string(),
-    persona: Yup.string(),
-    tone: Yup.string(),
-    type: Yup.string(),
+    RlevelR: Yup.string(),
+    RgradeR: Yup.string(),
+    RlessonDurationR: Yup.string(),
+    RlessonLanguageR: Yup.string(),
+    RprogrammingLanguageR: Yup.string(),
+    RtrackR: Yup.string(),
+    RpersonaR: Yup.string(),
+    RtoneR: Yup.string(),
+    RtypeLessonR: Yup.string(),
+    RlanguageR: Yup.string(),
+  })
+
+  const methods = useForm<FormAIGenerateProps>({
+    resolver: yupResolver(generateAICourseSchema),
+    mode: 'all',
+    defaultValues: defaultValues,
   })
 
   const nextStep = () => {
@@ -85,29 +107,30 @@ export default function AIGenerateStepper({
     setActiveStep(activeStep - 1)
   }
 
-  const methods = useForm<FormAIGenerateProps>({
-    resolver: yupResolver(generateAICourseSchema),
-    mode: 'all',
-    defaultValues: defaultValues,
-  })
+  const resetRoad = () => {
+    push(PATH_AUTH.onBoardingTeacher.root)
+  }
 
   const onSubmit = async (data: FormAIGenerateProps) => {
+    if (data.email || data.name) {
+      return
+    }
     let newLesson
-    switch (data.projectType as (typeof TYPE_PROJECT)[number]['value']) {
+    switch (data.RtypeLessonR as (typeof TYPE_PROJECT)[number]['value']) {
       case 'simple':
-        newLesson = await generateLesson(data)
+        newLesson = await generateLesson(SpamBotPreventerToNormal(data))
         break
       default:
       case 'multi':
       case 'full':
-        newLesson = await generateMultiLesson(data)
+        newLesson = await generateMultiLesson(SpamBotPreventerToNormal(data))
         break
       case 'Practical Project':
       case 'Concept & Exercises':
         newLesson = await createLessonUsingOpenAIAssistant({
-          ...data,
-          proficiencyLevel: data.grade,
-          programmingLanguage: data.lessonLanguage,
+          ...SpamBotPreventerToNormal(data),
+          proficiencyLevel: data.RgradesR,
+          programmingLanguage: data.RlessonLanguageR,
         })
         break
     }
@@ -131,56 +154,74 @@ export default function AIGenerateStepper({
     }
   }
 
+  const redirectAfterCompleate = () => {
+    if (profile) {
+      push(
+        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: lessonId ?? '' })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    } else {
+      push({
+        pathname: STUDENT_PATH_DASHBOARD.codePanel.root,
+        query: { ai: 'true', lessonId: lessonId ?? '' },
+      })
+    }
+  }
+  const onSubmitAddons = (addons: IAddons) => {
+    // console.log(addons)
+    redirectAfterCompleate()
+  }
+
   return (
-    <Stack
-      sx={{
-        width: '100%',
-        minHeight: '460px',
-        justifyContent: 'center',
-        position: 'relative',
-      }}
-    >
-      <Stack
-        sx={{
-          minHeight: '460px',
-          justifyContent: 'center',
-          position: 'relative',
-        }}
-      >
-        {generateLessonLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <FormProvider
-            methods={methods}
-            onSubmit={methods.handleSubmit(onSubmit)}
-          >
-            {activeStep === 0 && (
-              <GeneralInfo
-                isModal={isModal}
-                nextStep={nextStep}
-                resetRoad={() => {
-                  push(PATH_AUTH.onBoardingTeacher.root)
-                }}
-                closeModal={closeModal}
-              />
-            )}
-            {activeStep === 1 && (
-              <LessonPrompt
-                nextStep={nextStep}
-                prevStep={prevStep}
-                closeModal={closeModal}
-              />
-            )}
-            {activeStep === 2 && (
-              <AIPersonaInfo
-                nextStep={nextStep}
-                prevStep={prevStep}
-                closeModal={closeModal}
-              />
-            )}
-          </FormProvider>
-        )}
-      </Stack>
+    <Stack position='relative'>
+      {generateLessonLoading ? (
+        <LoaderStep isLoading={generateLessonLoading} />
+      ) : (
+        <FormProvider
+          methods={methods}
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          {activeStep === 0 && (
+            <SimpleAiGenerate
+              isModal={isModal}
+              nextStep={nextStep}
+              resetRoad={resetRoad}
+              closeModal={closeModal}
+            />
+          )}
+          {activeStep === 1 && (
+            <GeneralInfo
+              isModal={isModal}
+              nextStep={nextStep}
+              prevStep={prevStep}
+              closeModal={closeModal}
+            />
+          )}
+          {activeStep === 2 && (
+            <LessonPrompt
+              nextStep={nextStep}
+              prevStep={prevStep}
+              closeModal={closeModal}
+            />
+          )}
+          {activeStep === 3 && (
+            <AIPersonaInfo
+              prevStep={prevStep}
+              closeModal={closeModal}
+            />
+          )}
+        </FormProvider>
+      )}
+      {activeStep === 4 && (
+        <AddAddons
+          closeModal={closeModal}
+          onSubmitAddons={onSubmitAddons}
+          resetRoad={resetRoad}
+        />
+      )}
     </Stack>
   )
 }
