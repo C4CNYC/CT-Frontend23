@@ -54,12 +54,10 @@ const SimpleAiGenerate = ({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setTextFieldValue(event.target.value)
-    setPromt(event.target.value)
     updateForm('RpromptR', event.target.value)
   }
-  const handlePresetChange = (event: React.MouseEvent<HTMLElement>, newPromt: string) => {
-    setPromt(newPromt)
-    setTextFieldValue(newPromt)
+  const handlePresetChange = (event: React.MouseEvent<HTMLElement>, newPrompt: string) => {
+    setTextFieldValue(newPrompt)
   }
 
   const onSubmit = async () => {
