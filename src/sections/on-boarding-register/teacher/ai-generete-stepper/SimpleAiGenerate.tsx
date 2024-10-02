@@ -32,7 +32,7 @@ type ISimpleAiGenerateProps = {
 }
 
 const SimpleAiGenerate = ({ nextStep, resetRoad, isModal, closeModal }: ISimpleAiGenerateProps) => {
-  const theme = useTheme() 
+  const theme = useTheme()
   const [textFieldValue, setTextFieldValue] = useState<null | string>(null)
   const skipBtnStyles = useMemo(
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
@@ -44,7 +44,7 @@ const SimpleAiGenerate = ({ nextStep, resetRoad, isModal, closeModal }: ISimpleA
   ) => {
     setTextFieldValue(event.target.value)
   }
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newPromt: string) => { 
+  const handleChange = (event: React.MouseEvent<HTMLElement>, newPromt: string) => {
     setTextFieldValue(newPromt)
   }
 
@@ -93,8 +93,8 @@ const SimpleAiGenerate = ({ nextStep, resetRoad, isModal, closeModal }: ISimpleA
         <Stack sx={{ gap: { xs: 1, sm: 1, md: 4 } }}>
           <ToggleButtonGroup
             size='large'
-            onChange={handleChange}            
-            aria-label='promt variants' 
+            onChange={handleChange}
+            aria-label='promt variants'
             exclusive
             sx={SIMPLE_GENERATE_TOGLE_GROUP}
           >
