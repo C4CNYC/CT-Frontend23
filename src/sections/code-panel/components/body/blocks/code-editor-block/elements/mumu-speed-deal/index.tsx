@@ -1,6 +1,7 @@
 import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography } from '@mui/material'
+import { useSearchParams } from 'next/navigation'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
@@ -38,6 +39,15 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
   const courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const profile = useSelector((state) => state.global.user)
+  const searchParams = useSearchParams()
+
+  if (!lessonId) {
+    lessonId = searchParams.get('lessonId') || undefined
+  }
+
+  if (!courseId) {
+    courseId = searchParams.get('courseId') || undefined
+  }
 
   const { data: studentData, isLoading: isStudentDataLoading } = useGetLessonStudentQuery(
     { id: lessonId as string },

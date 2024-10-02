@@ -140,9 +140,9 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
         />
         <Stack sx={BTN_CONTAINER_STYLES}>
           <Button
+            type='submit'
             variant='text'
             sx={skipBtnStyles}
-            onClick={() => {}}
           >
             Surprise Me
           </Button>
@@ -150,7 +150,6 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
             type='submit'
             variant='contained'
             sx={NEXT_BUTTON_STYLES}
-            onClick={() => {}}
           >
             Generate ✨
           </Button>
