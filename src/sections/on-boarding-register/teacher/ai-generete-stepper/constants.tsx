@@ -200,6 +200,7 @@ export const TRACK = [
   { key: 'AI & API', value: 'AI & API' },
   { key: 'Game-Dev', value: 'Game-Dev' },
   { key: 'Web-Dev', value: 'Web-Dev' },
+  { key: 'Science Class', value: 'Science Class' },
   { key: 'Data Science', value: 'Data Science' },
   { key: 'Programming Logic', value: 'Programming Logic' },
   { key: 'Math Class', value: 'Math Class' },
@@ -237,10 +238,17 @@ export const LESSON_DURARION = [
 export const PERSONA = [
   { key: 'Mumu', value: 'Mumu' },
   { key: 'Winnie the Pooh', value: 'Winnie the Pooh' },
-  { key: 'Cow', value: 'Cow' },
-  { key: 'Jesus', value: 'Jesus' },
-  { key: 'Buddha', value: 'Buddha' },
-  { key: 'Pirate', value: 'Pirate' },
+  //{ key: 'Pirate', value: 'Pirate' },
+  { key: 'Benny the Bunny', value: 'Benny the Bunny' },
+  { key: 'Lulu the Lamb', value: 'Lulu the Lamb' },
+  { key: 'Daisy the Duckling', value: 'Daisy the Duckling' },
+  //{ key: "Ollie the Owl", value: "Ollie the Owl" },
+  { key: 'Pip the Penguin', value: 'Pip the Penguin' },
+  //{ key: "Fuzzy the Bear Cub", value: "Fuzzy the Bear Cub" },
+  { key: 'Milo the Mouse', value: 'Milo the Mouse' },
+  //{ key: "Tilly the Tortoise", value: "Tilly the Tortoise" },
+  { key: 'Nina the Squirrel', value: 'Nina the Squirrel' },
+  { key: 'Charlie the Cat', value: 'Charlie the Cat' },
 ]
 
 export const TONE = [
