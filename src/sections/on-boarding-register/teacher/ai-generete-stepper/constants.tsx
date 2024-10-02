@@ -13,6 +13,7 @@ export interface FormAIGenerateProps {
   RlanguageR: string
   name: string | null
   email: string | null
+  RpromptR: string
 }
 
 export interface AIGenerateStepperProps {
