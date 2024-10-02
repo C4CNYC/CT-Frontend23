@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Tab, Tabs, TextField } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { useSnackbar } from '@root/src/components/snackbar'
@@ -10,7 +10,7 @@ import {
   useGetLessonContentQuery,
 } from '@root/src/redux/services/manager/lesson-content-manager'
 import { useAskAIMutation } from '@root/src/redux/services/manager/lessons-manager'
-import { useTranslate } from '@root/src/utils/translateHelper'
+import { useTranslate } from '@root/src/utils/translateHelper' 
 
 type Props = {
   open: boolean
@@ -82,7 +82,7 @@ export function CreateLessonContent({ open, onClose, lessonId, lessonName }: Pro
   }
   function getLessonOptions() {
     if (!aiLessonContentTemplates || aiLessonContentTemplates.length === 0) {
-      return null
+      return []
     }
     return aiLessonContentTemplates.map((content) => (
       <option
@@ -135,28 +135,35 @@ export function CreateLessonContent({ open, onClose, lessonId, lessonName }: Pro
           <Tab label='Create with AI' />
         </Tabs>
         {activeTab === 0 && (
-          <input
-            type='button'
-            value='Create Empty Slide'
+          <Button
+            variant='contained'
             onClick={createNewContent}
-          />
+          >
+            Create Empty Slide
+          </Button>
         )}
         {activeTab === 1 && aiLessonContentTemplates && (
           <div>
             <form ref={formRef}>
               <p>Create with AI content</p>
-              <select name='template'>{getLessonOptions()}</select>
-              <input
-                type='text'
+              <Select name='template'>
+                {aiLessonContentTemplates.map((content, index) => (
+                  <MenuItem
+                    key={content.id}
+                    value={content.id}
+                  >
+                    {content.title}
+                  </MenuItem>
+                ))}
+              </Select>
+              <TextField
                 value={aiprompt}
                 onChange={(e) => setAiprompt(e.target.value)}
                 placeholder='Prompt for AI'
               />
-              <input
-                onClick={handleSubmit}
-                type='submit'
-                value='Create'
-              />
+              <Button variant="contained" onClick={handleSubmit}>
+                Create
+              </Button> 
             </form>
           </div>
         )}
