@@ -22,8 +22,10 @@ import {
   SIMPLE_GENERATE_TOGLE,
   SIMPLE_GENERATE_TOGLE_GROUP,
   STEP_CONTAINER_STYLES,
+  OPTIONAL_TYPO_STYLES,
   STEP_TYTLE_STYLES,
 } from './constants'
+import LoaderStep from './LoaderStep'
 
 type ISimpleAiGenerateProps = {
   nextStep: () => void
@@ -75,93 +77,107 @@ const SimpleAiGenerate = ({
       sx={STEP_CONTAINER_STYLES}
       justifyContent='space-between'
     >
-      <Stack
-        direction='row'
-        sx={{ gap: 2, pl: isModal ? 1 : 0, alignItems: 'center' }}
-      >
-        {!isModal ? (
-          <IconButton onClick={resetRoad}>
-            <Iconify
-              icon='ion:chevron-back'
-              width='30px'
-            />
-          </IconButton>
-        ) : null}
-        <Typography
-          variant='h3'
-          sx={STEP_TYTLE_STYLES}
-          color={theme.palette.mode === 'dark' ? '#616161' : '#333'}
-        >
-          Create beautiful coding lessons with Mumu 🐯
-        </Typography>
-        {isModal ? (
-          <IconButton
-            onClick={closeModal}
-            sx={{ margin: '0px 0px 0px auto' }}
+      {generateLessonLoading ? (
+        <LoaderStep isLoading={generateLessonLoading} />
+      ) : (
+        <>
+          <Stack
+            direction='row'
+            sx={{ gap: 2, pl: isModal ? 1 : 0, alignItems: 'center' }}
           >
-            <Iconify
-              icon='ion:close'
-              width='30px'
-            />
-          </IconButton>
-        ) : null}
-      </Stack>
-      <Stack gap={{ xs: 2, sm: 2, md: 8 }}>
-        <Stack sx={{ gap: { xs: 1, sm: 1, md: 4 } }}>
-          <ToggleButtonGroup
-            size='large'
-            onChange={handlePresetChange}
-            aria-label='promt variants'
-            exclusive
-            sx={SIMPLE_GENERATE_TOGLE_GROUP}
-          >
-            {PROMTS_VARIANTS.map((el) => (
-              <ToggleButton
-                value={el.text}
-                key={el.icon}
-                sx={SIMPLE_GENERATE_TOGLE}
+            {!isModal ? (
+              <IconButton onClick={resetRoad}>
+                <Iconify
+                  icon='ion:chevron-back'
+                  width='30px'
+                />
+              </IconButton>
+            ) : null}
+            <Typography
+              variant='h3'
+              sx={STEP_TYTLE_STYLES}
+              color={theme.palette.mode === 'dark' ? '#616161' : '#333'}
+            >
+              Create beautiful coding lessons with Mumu 🐯
+            </Typography>
+            {isModal ? (
+              <IconButton
+                onClick={closeModal}
+                sx={{ margin: '0px 0px 0px auto' }}
               >
                 <Iconify
-                  icon={el.icon}
-                  color={el.color}
-                  width={22}
-                  height={22}
+                  icon='ion:close'
+                  width='30px'
                 />
-                {el.text}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-          <RHFTextField
-            placeholder='Enter prompt or select from above'
-            multiline
-            name='RpromptR'
-            minRows={4}
-            value={textFieldValue}
-            required
-            onChange={(e) => {
-              handleChangeTextField(e)
-            }}
-          />
-        </Stack>
-        <Stack sx={BTN_CONTAINER_STYLES}>
-          <Button
-            variant='text'
-            sx={skipBtnStyles}
-            onClick={nextStep}
-            disabled={!textFieldValue}
-          >
-            Advanced
-          </Button>
-          <Button
-            variant='contained'
-            sx={NEXT_BUTTON_STYLES}
-            onClick={onSubmit}
-            disabled={!textFieldValue}
-          >
-            Generate ✨
-          </Button>
-        </Stack>
-      </Stack>
+              </IconButton>
+            ) : null}
+          </Stack>
+          <Stack gap={{ xs: 2, sm: 2, md: 8 }}>
+            <Stack sx={{ gap: { xs: 1, sm: 1, md: 4 } }}>
+              <ToggleButtonGroup
+                size='large'
+                onChange={handlePresetChange}
+                aria-label='promt variants'
+                exclusive
+                sx={SIMPLE_GENERATE_TOGLE_GROUP}
+              >
+                {PROMTS_VARIANTS.map((el) => (
+                  <ToggleButton
+                    value={el.text}
+                    key={el.icon}
+                    sx={SIMPLE_GENERATE_TOGLE}
+                  >
+                    <Iconify
+                      icon={el.icon}
+                      color={el.color}
+                      width={22}
+                      height={22}
+                    />
+                    {el.text}
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+              <RHFTextField
+                placeholder='Enter prompt or select from above'
+                multiline
+                name='RpromptR'
+                minRows={4}
+                value={textFieldValue}
+                required
+                onChange={(e) => {
+                  handleChangeTextField(e)
+                }}
+              />
+              {!textFieldValue ? (
+                <Typography
+                  color={theme.palette.mode === 'dark' ? '#616161' : '#333'}
+                  sx={OPTIONAL_TYPO_STYLES}
+                >
+                  Please provide a subject for the lesson
+                </Typography>
+              ) : null}
+            </Stack>
+            <Stack sx={BTN_CONTAINER_STYLES}>
+              <Button
+                variant='text'
+                sx={skipBtnStyles}
+                onClick={nextStep}
+                disabled={!textFieldValue}
+              >
+                Advanced
+              </Button>
+              <Button
+                variant='contained'
+                sx={NEXT_BUTTON_STYLES}
+                onClick={onSubmit}
+                disabled={!textFieldValue}
+              >
+                Generate ✨
+              </Button>
+            </Stack>
+          </Stack>
+        </>
+      )}
     </Stack>
   )
 }

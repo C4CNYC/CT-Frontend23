@@ -170,19 +170,19 @@ export const PROMTS_VARIANTS = [
 
 export const TYPE_LESSON = [
   {
-    key: 'Simple Lesson ',
+    key: 'simple',
     value: 'Simple Lesson',
     tooltip: 'An engaging, single-page lesson with coding exercises.',
     icon: 'material-symbols:info-outline',
   },
   {
-    key: 'Concept & Exercises',
+    key: 'exercises',
     value: 'Concept & Exercises',
     tooltip: 'Learn a concept, then immediately practice it in different ways.',
     icon: 'material-symbols:info-outline',
   },
   {
-    key: 'Practical Project',
+    key: 'project',
     value: 'Practical Project',
     tooltip: 'Building a project line by line with explanations and step-by-step guidance.',
     icon: 'material-symbols:info-outline',

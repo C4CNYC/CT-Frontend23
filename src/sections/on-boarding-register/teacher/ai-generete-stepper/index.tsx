@@ -132,10 +132,10 @@ export default function AIGenerateStepper({
       default:
       case 'multi':
       case 'full':
+      case 'exercises':
         newLesson = await generateMultiLesson(lessonData)
         break
-      case 'Practical Project':
-      case 'Concept & Exercises':
+      case 'project':
         newLesson = await createLessonUsingOpenAIAssistant({
           ...lessonData,
           proficiencyLevel: data.RgradesR,
