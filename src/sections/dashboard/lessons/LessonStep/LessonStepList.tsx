@@ -50,6 +50,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     data,
     isLoading,
     refetch: lessonContentsRefetch,
+    isUninitialized: lessonContentsUninitialized,
   } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
 
   const { board } = useSelector((state: RootState) => state.lessonSteps)
@@ -71,10 +72,12 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     if ((new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 10)
       interval = setInterval(() => {
         if (!lessonContentsUninitialized) {
-      //pull lessons for 10 minutes after creation
-      interval = setInterval(lessonContentsRefetch, 10000)
+          //pull lessons for 10 minutes after creation
+          lessonContentsRefetch()
+        }
+      }, 10000)
     return () => clearInterval(interval)
-  }, [data, lesson])
+  }, [data, lesson, lessonContentsUninitialized])
 
   const onDragEnd = (result: DropResult): void => {
     const { destination, source, draggableId } = result
@@ -258,7 +261,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
                   onRemove={onRemove}
                   onDublicate={onDublicate}
                   lessonId={lessonId}
-                  key={board.cards[el]?.meta?.order + i}
+                  key={board.cards[el]?.meta?.order ? +board.cards[el]?.meta?.order + i : i}
                   step={board.cards[el]}
                   index={i}
                 />
