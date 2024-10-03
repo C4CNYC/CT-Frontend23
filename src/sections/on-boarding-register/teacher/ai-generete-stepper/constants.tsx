@@ -170,19 +170,19 @@ export const PROMTS_VARIANTS = [
 
 export const TYPE_LESSON = [
   {
-    key: 'Simple Lesson ',
+    key: 'simple',
     value: 'Simple Lesson',
     tooltip: 'An engaging, single-page lesson with coding exercises.',
     icon: 'material-symbols:info-outline',
   },
   {
-    key: 'Concept & Exercises',
+    key: 'exercises',
     value: 'Concept & Exercises',
     tooltip: 'Learn a concept, then immediately practice it in different ways.',
     icon: 'material-symbols:info-outline',
   },
   {
-    key: 'Practical Project',
+    key: 'project',
     value: 'Practical Project',
     tooltip: 'Building a project line by line with explanations and step-by-step guidance.',
     icon: 'material-symbols:info-outline',
@@ -201,6 +201,7 @@ export const TRACK = [
   { key: 'AI & API', value: 'AI & API' },
   { key: 'Game-Dev', value: 'Game-Dev' },
   { key: 'Web-Dev', value: 'Web-Dev' },
+  { key: 'Science Class', value: 'Science Class' },
   { key: 'Data Science', value: 'Data Science' },
   { key: 'Programming Logic', value: 'Programming Logic' },
   { key: 'Math Class', value: 'Math Class' },
@@ -238,10 +239,17 @@ export const LESSON_DURARION = [
 export const PERSONA = [
   { key: 'Mumu', value: 'Mumu' },
   { key: 'Winnie the Pooh', value: 'Winnie the Pooh' },
-  { key: 'Cow', value: 'Cow' },
-  { key: 'Jesus', value: 'Jesus' },
-  { key: 'Buddha', value: 'Buddha' },
-  { key: 'Pirate', value: 'Pirate' },
+  //{ key: 'Pirate', value: 'Pirate' },
+  { key: 'Benny the Bunny', value: 'Benny the Bunny' },
+  { key: 'Lulu the Lamb', value: 'Lulu the Lamb' },
+  { key: 'Daisy the Duckling', value: 'Daisy the Duckling' },
+  //{ key: "Ollie the Owl", value: "Ollie the Owl" },
+  { key: 'Pip the Penguin', value: 'Pip the Penguin' },
+  //{ key: "Fuzzy the Bear Cub", value: "Fuzzy the Bear Cub" },
+  { key: 'Milo the Mouse', value: 'Milo the Mouse' },
+  //{ key: "Tilly the Tortoise", value: "Tilly the Tortoise" },
+  { key: 'Nina the Squirrel', value: 'Nina the Squirrel' },
+  { key: 'Charlie the Cat', value: 'Charlie the Cat' },
 ]
 
 export const TONE = [
@@ -263,6 +271,7 @@ export const LOADING_STEPS = [
 export const TYPE_PROJECT = [
   { key: 'simple', value: 'Mini Lesson (1 slide)' },
   { key: 'full', value: 'Complete Lesson' },
-  { key: 'Exersize', value: 'Exersize' },
+  { key: 'Concept & Exercises', value: 'Concept & Exercises' },
+  { key: 'Practical Project', value: 'Practical Project' },
   { key: 'Quiz', value: 'Quiz' },
 ]

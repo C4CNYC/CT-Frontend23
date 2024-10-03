@@ -102,6 +102,16 @@ const extendedApi = managerApi.injectEndpoints({
         body: { prompt },
       }),
     }),
+    createLessonUsingOpenAIAssistant: builder.mutation<
+      IOpenAiRequest & BaseResponseInterface,
+      AiLessonGenerate
+    >({
+      query: (body) => ({
+        url: '/manager/lesson/createLessonUsingOpenAIAssistant',
+        method: 'POST',
+        body,
+      }),
+    }),
     deleteLesson: builder.mutation<ILessonDelete & BaseResponseInterface, ILessonDelete>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
@@ -152,6 +162,7 @@ export const {
   useGenerateLessonMutation,
   useGenerateLessonMultiMutation,
   useAskAIMutation,
+  useCreateLessonUsingOpenAIAssistantMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
   useAddIntegrationMutation,
