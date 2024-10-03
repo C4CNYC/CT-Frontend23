@@ -172,7 +172,9 @@ export default function AIGenerateStepper({
 
   return (
     <Stack position='relative'>
-      {generateLessonLoading ? (
+      {generateLessonLoading ||
+      generateMultiLessonLoading ||
+      createLessonUsingOpenAIAssistantLoading ? (
         <LoaderStep isLoading={generateLessonLoading} />
       ) : (
         <FormProvider
