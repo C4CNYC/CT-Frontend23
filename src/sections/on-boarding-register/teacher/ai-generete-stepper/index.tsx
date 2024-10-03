@@ -10,6 +10,7 @@ import { FormProvider } from '@/components'
 import {
   useGenerateLessonMutation,
   useGenerateLessonMultiMutation,
+  useCreateLessonUsingOpenAIAssistantMutation,
 } from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
@@ -28,6 +29,7 @@ import {
   PROGRAMMING_LANGUAGE,
   TONE,
   TYPE_LESSON,
+  TYPE_PROJECT,
 } from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
@@ -49,6 +51,19 @@ const defaultValues = {
   email: null,
   RpromptR: '',
 }
+const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
+  level: d.RlevelR,
+  grades: d.RgradesR,
+  lessonDuration: d.RlessonDurationR,
+  lessonLanguage: d.RlessonLanguageR,
+  track: d.RtrackR,
+  programmingLanguage: d.RprogrammingLanguageR,
+  persona: d.RpersonaR,
+  tone: d.RtoneR,
+  typeLesson: d.RtypeLessonR,
+  language: d.RlanguageR,
+  lessonPrompt: '',
+})
 
 export default function AIGenerateStepper({
   isModal,
@@ -64,6 +79,8 @@ export default function AIGenerateStepper({
   const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
   const [generateMultiLesson, { isLoading: generateMultiLessonLoading }] =
     useGenerateLessonMultiMutation()
+  const [createLessonUsingOpenAIAssistant, { isLoading: createLessonUsingOpenAIAssistantLoading }] =
+    useCreateLessonUsingOpenAIAssistantMutation()
 
   const generateAICourseSchema = Yup.object().shape({
     RlevelR: Yup.string(),
@@ -106,7 +123,27 @@ export default function AIGenerateStepper({
       track: data.RtrackR,
       persona: data.RpersonaR,
     }
-    const newLesson = await generateMultiLesson(lessonData)
+
+    let newLesson
+    switch (data.RtypeLessonR as (typeof TYPE_PROJECT)[number]['value']) {
+      case 'simple':
+        newLesson = await generateLesson(lessonData)
+        break
+      default:
+      case 'multi':
+      case 'full':
+      case 'exercises':
+        newLesson = await generateMultiLesson(lessonData)
+        break
+      case 'project':
+        newLesson = await createLessonUsingOpenAIAssistant({
+          ...lessonData,
+          proficiencyLevel: data.RgradesR,
+          programmingLanguage: data.RlessonLanguageR,
+        })
+        break
+    }
+
     if ('data' in newLesson && newLesson.data) {
       if (closeModal) closeModal()
       redirectAfterCompleate(newLesson.data.id)
@@ -129,15 +166,15 @@ export default function AIGenerateStepper({
       })
     }
   }
-
   const onSubmitAddons = (addons: IAddons) => {
-    // console.log(addons)
     redirectAfterCompleate(lessonId ?? '')
   }
 
   return (
     <Stack position='relative'>
-      {generateLessonLoading ? (
+      {generateLessonLoading ||
+      generateMultiLessonLoading ||
+      createLessonUsingOpenAIAssistantLoading ? (
         <LoaderStep isLoading={generateLessonLoading} />
       ) : (
         <FormProvider
