@@ -1,6 +1,17 @@
 import React, { useRef, useState } from 'react'
 
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Tab, Tabs, TextField } from '@mui/material'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  Select,
+  Tab,
+  Tabs,
+  TextField,
+} from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { useSnackbar } from '@root/src/components/snackbar'
@@ -10,7 +21,7 @@ import {
   useGetLessonContentQuery,
 } from '@root/src/redux/services/manager/lesson-content-manager'
 import { useAskAIMutation } from '@root/src/redux/services/manager/lessons-manager'
-import { useTranslate } from '@root/src/utils/translateHelper' 
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 type Props = {
   open: boolean
@@ -161,9 +172,12 @@ export function CreateLessonContent({ open, onClose, lessonId, lessonName }: Pro
                 onChange={(e) => setAiprompt(e.target.value)}
                 placeholder='Prompt for AI'
               />
-              <Button variant="contained" onClick={handleSubmit}>
+              <Button
+                variant='contained'
+                onClick={handleSubmit}
+              >
                 Create
-              </Button> 
+              </Button>
             </form>
           </div>
         )}
