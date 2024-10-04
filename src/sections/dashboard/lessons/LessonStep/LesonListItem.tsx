@@ -76,6 +76,7 @@ export default function LessonListItem({
     <Draggable
       draggableId={step.id}
       index={index}
+      key={step.id}
     >
       {(provided) => (
         <Paper
@@ -141,6 +142,7 @@ export default function LessonListItem({
                 onClick={() => {
                   onDublicate(step)
                 }}
+                title='Duplicate'
               >
                 <Iconify icon='material-symbols:content-copy-outline' />
               </IconButton>

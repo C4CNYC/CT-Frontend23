@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { html } from '@codemirror/lang-html'
 import { Box } from '@mui/system'
 import { dracula } from '@uiw/codemirror-theme-dracula'
-import CodeMirror from '@uiw/react-codemirror'
+import CodeMirror, { EditorView } from '@uiw/react-codemirror'
 import { useAtom } from 'jotai'
 
 import { ResizerUi } from '@/components'
@@ -25,6 +25,9 @@ interface Props {
   lessonId: string
 }
 
+/**
+   @todo: this component should be removed and BrowserView '@root/src/sections/code-panel/components/body/blocks/view-block/browser-view'  be used 
+**/
 export default function StepCode({
   content,
   integrations,
@@ -74,7 +77,7 @@ export default function StepCode({
           value={value}
           theme={dracula}
           height='calc(100vh - 96px)'
-          extensions={[html()]}
+          extensions={[html(), EditorView.lineWrapping]}
           onChange={(value) => {
             setValue(value)
           }}

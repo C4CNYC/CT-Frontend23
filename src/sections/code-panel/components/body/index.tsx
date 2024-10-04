@@ -45,6 +45,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   const [document, setDocument] = useState<CodeDocument | null>(null)
+  const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
@@ -81,6 +82,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
     }
   }
 
+  const reloadBrowserView = () => {
+    setBrowserView(document)
+  }
+
   const openInstruction = () => {
     dispatch(toggleInstrations(false))
   }
@@ -108,6 +113,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             code={document?.htmlBody?.join('') ?? ''}
             lessonType={lesson?.type}
             lessonName={lesson?.name}
+            lessonId={lesson?.id || lessonId}
           />
         ) : (
           <HidedTabBtn
@@ -128,7 +134,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         />
 
         {!isBrowserHidden ? (
-          <ViewBlock document={document} />
+          <ViewBlock
+            document={browserView}
+            reloadBrowserView={reloadBrowserView}
+          />
         ) : (
           <HidedTabBtn
             title={TAB_TITLES.browser_preview}
@@ -161,6 +170,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
         lessonType={lesson?.type}
+        lessonId={lesson?.id || lessonId}
       />
 
       <CodeEditorBlock

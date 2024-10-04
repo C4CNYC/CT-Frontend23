@@ -47,14 +47,38 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     { id: lessonId },
     { skip: !lessonId }
   )
-  const { data, isLoading } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
+  const {
+    data,
+    isLoading,
+    refetch: lessonContentsRefetch,
+    isUninitialized: lessonContentsUninitialized,
+  } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
 
   const { board } = useSelector((state: RootState) => state.lessonSteps)
 
   useEffect(() => {
-    if (!data) return
+    if (!data || !lesson) return
     dispatch(getBoard(data))
-  }, [data])
+    if (data.length !== 0 && !router.query.stepId) {
+      router.push(
+        `${router.pathname}?${new URLSearchParams({
+          ...router.query,
+          stepId: data[0].id,
+        })}`,
+        undefined,
+        { shallow: true }
+      )
+    }
+    let interval: NodeJS.Timeout | undefined
+    if ((new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 10)
+      interval = setInterval(() => {
+        if (!lessonContentsUninitialized) {
+          //pull lessons for 10 minutes after creation
+          lessonContentsRefetch()
+        }
+      }, 10000)
+    return () => clearInterval(interval)
+  }, [data, lesson, lessonContentsUninitialized])
 
   const onDragEnd = (result: DropResult): void => {
     const { destination, source, draggableId } = result
@@ -257,7 +281,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
                   onRemove={onRemove}
                   onDublicate={onDublicate}
                   lessonId={lessonId}
-                  key={board.cards[el]?.meta?.order + i}
+                  key={board.cards[el]?.meta?.order ? +board.cards[el]?.meta?.order + i : i}
                   step={board.cards[el]}
                   index={i}
                 />

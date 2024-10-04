@@ -138,6 +138,7 @@ export default function Preferences({
         onClick={() => {
           setOpenDialog(true)
         }}
+        title={translate('lesson_step_preferences')}
       >
         {children}
       </Box>
