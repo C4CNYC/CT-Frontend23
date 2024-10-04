@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect } from 'react'
 
 import { useRouter } from 'next/router'
@@ -27,6 +28,8 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
       } else {
         push(STUDENT_PATH_PAGE.home)
       }
+    } else {
+      console.log('not authenticated')
     }
   }, [isAuthenticated])
 
