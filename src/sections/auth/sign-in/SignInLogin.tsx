@@ -42,6 +42,8 @@ export default function SignInLogin({
     },
   })
 
+  console.log('SignInLogin')
+
   return (
     <>
       <Stack
