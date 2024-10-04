@@ -14,7 +14,7 @@ interface GuestGuardProps {
 export default function GuestGuard({ children }: GuestGuardProps): React.ReactElement | null {
   const { push, route, asPath } = useRouter()
 
-  const { isAuthenticated, isInitialized } = useAuthContext()
+  const { isAuthenticated } = useAuthContext()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -28,9 +28,10 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
     }
   }, [isAuthenticated])
 
-  if (!isAuthenticated) {
-    return <LoadingScreen />
-  }
+// This is breaking, We need a better way to set this loading state
+//   if (!isAuthenticated && isInitialized) {
+//     return <LoadingScreen />
+//   }
 
   return <> {children} </>
 }
