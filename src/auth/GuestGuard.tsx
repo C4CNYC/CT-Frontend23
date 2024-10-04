@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect } from 'react'
 
 import { useRouter } from 'next/router'
@@ -16,13 +17,19 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
 
   const { isAuthenticated, isInitialized } = useAuthContext()
 
+  console.log('GuestGuard')
   useEffect(() => {
     if (isAuthenticated) {
-      if (route.includes('public')) {
+      console.log(isAuthenticated, 'isAuthenticated')
+      console.log(route, 'is route')
+      console.log(asPath, ' asPath')
+      if (route.includes('public') || route.includes('auth')) {
         push(asPath)
       } else {
         push(STUDENT_PATH_PAGE.home)
       }
+    } else {
+      console.log('not authenticated')
     }
   }, [isAuthenticated])
 
