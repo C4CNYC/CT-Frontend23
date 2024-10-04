@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect } from 'react'
 
 import { useRouter } from 'next/router'
@@ -17,12 +16,8 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
 
   const { isAuthenticated, isInitialized } = useAuthContext()
 
-  console.log('GuestGuard')
   useEffect(() => {
     if (isAuthenticated) {
-      console.log(isAuthenticated, 'isAuthenticated')
-      console.log(route, 'is route')
-      console.log(asPath, ' asPath')
       if (route.includes('public') || route.includes('auth')) {
         push(asPath)
       } else {
@@ -33,7 +28,7 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
     }
   }, [isAuthenticated])
 
-  if (isInitialized === isAuthenticated) {
+  if (!isAuthenticated) {
     return <LoadingScreen />
   }
 
