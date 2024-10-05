@@ -11,24 +11,15 @@ interface GuestGuardProps {
 }
 
 export default function GuestGuard({ children }: GuestGuardProps): React.ReactElement | null {
-  const { push, route, asPath } = useRouter()
+  const { push, route } = useRouter()
 
   const { isAuthenticated } = useAuthContext()
 
   useEffect(() => {
-    if (isAuthenticated) {
-      if (route.includes('public') || route.includes('auth')) {
-        push(asPath)
-      } else {
-        push(STUDENT_PATH_PAGE.home)
-      }
+    if (isAuthenticated && route.includes('auth')) {
+      push(STUDENT_PATH_PAGE.home)
     }
   }, [isAuthenticated])
-
-  // This is breaking, We need a better way to set this loading state
-  //   if (!isAuthenticated && isInitialized) {
-  //     return <LoadingScreen />
-  //   }
 
   return <> {children} </>
 }
