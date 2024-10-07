@@ -32,6 +32,9 @@ export function StepTinyMce(props: EditorSelectorProps) {
     while ((matches = integrationStyleRegex.exec(curr.head)) !== null) {
       acc += '\n' + matches[1]
     }
+    if (!curr.head.startsWith('<style>')) {
+      acc += '\n' + curr.head
+    }
     return acc
   }, '')
   function onSave() {
