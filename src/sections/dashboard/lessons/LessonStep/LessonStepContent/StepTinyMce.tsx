@@ -47,7 +47,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
         defaultSize={isAllColumnsVisible ? '70%' : '100%'}
         allowResize={false}
       >
-        <Box>
+        <Box sx={{ height: '100%' }}>
           <style>{`.tox-promotion{filter:opacity(0)}`}</style>
           <Editor
             init={{
