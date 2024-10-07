@@ -94,10 +94,12 @@ export function StepTinyMce(props: EditorSelectorProps) {
                 // 'typography',
                 // 'inlinecss',
                 // 'markdown',
-                'autoresize',
+                'autoresize', 
               ],
               toolbar:
                 'customSaveButton | addClassPopup |  undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat ',
+              block_formats: 'Paragraph=div; Header 1=h1; Header 2=h2; Header 3=h3',
+              autoresize_bottom_margin: 0,
               setup: (editor) => {
                 editor.ui.registry.addButton('customSaveButton', {
                   text: 'Save',
@@ -271,15 +273,26 @@ export function StepTinyMce(props: EditorSelectorProps) {
                           data.borderWidth,
                           data.borderStyle,
                           data.backgroundColor,
+                          data.padding,
+                          data.margin,
+                          data.custom,                          
                         ]
                           .filter(Boolean)
                           .join(' ')
 
                         // Apply the classes to the selected element
                         const selectedNode = editor.selection.getNode()
-                        if (selectedNode && selectedNode.nodeName === 'DIV') {
-                          selectedNode.className = classes // Update the class attribute
+                        if(selectedNode){
+                          if (selectedNode.nodeName === 'DIV') {
+                            selectedNode.className = classes // Update the class attribute
+                          } else if (selectedNode.parentElement &&
+                            (selectedNode.parentElement?.nodeName === 'DIV')) {
+                              selectedNode.parentElement.className = classes
+                            }else if (selectedNode?.parentElement?.parentElement &&(selectedNode.parentElement.parentElement?.nodeName === 'DIV')) {
+                              selectedNode.parentElement.className = classes
+                          }
                         }
+                        
 
                         // Close the dialog
                         api.close()
