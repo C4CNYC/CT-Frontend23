@@ -47,7 +47,7 @@ export default function StepCode({
   const pageSkeleton = (userContent: string): string | undefined => {
     if (integrations) {
       return `<head>${integrations.reduce(
-        (ac, cur) => ac + cur.head,
+        (ac, cur) => (ac + (cur.head.startsWith('<') ? cur.head : `<style>${cur.head}</style>`)),
         ''
       )}</head><main>${userContent}${integrations.reduce((ac, cur) => {
         return ac + cur.scripts
