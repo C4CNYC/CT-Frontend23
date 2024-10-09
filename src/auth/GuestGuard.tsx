@@ -13,10 +13,9 @@ interface GuestGuardProps {
 export default function GuestGuard({ children }: GuestGuardProps): React.ReactElement | null {
   const { push, route } = useRouter()
 
-  const { isAuthenticated } = useAuthContext()
-
+  const { isAuthenticated, user } = useAuthContext()
   useEffect(() => {
-    if (isAuthenticated && route.includes('auth')) {
+    if (isAuthenticated && user && route.includes('auth')) {
       push(STUDENT_PATH_PAGE.home)
     }
   }, [isAuthenticated])
