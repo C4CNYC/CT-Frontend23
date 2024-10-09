@@ -58,6 +58,7 @@ interface ISliderBlock {
 interface IView {
   type: LessonContentType
   body: string
+  integrations: IIntegration[]
   connectIntegrations: (body: string) => CodeDocument | null
   title?: string
   lessonType?: string
@@ -242,6 +243,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                         key={step.id}
                         type={step.type}
                         body={step.body}
+                        integrations={integrations}
                         connectIntegrations={connectIntegrations}
                         stepBgColor={step.bg_color}
                       />
@@ -271,7 +273,15 @@ const SliderBlock: FC<ISliderBlock> = ({
   )
 }
 
-const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType, stepBgColor }) => {
+const View: FC<IView> = ({
+  type,
+  body,
+  connectIntegrations,
+  title,
+  lessonType,
+  stepBgColor,
+  integrations,
+}) => {
   const translate = useTranslate()
 
   switch (type) {
@@ -287,6 +297,7 @@ const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType, s
     case 'code':
       return (
         <BrowserView
+          integrations={integrations}
           document={connectIntegrations(body)}
           stepBgColor={stepBgColor}
         />

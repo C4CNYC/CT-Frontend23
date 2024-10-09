@@ -1,5 +1,7 @@
 import { type FC, useEffect, useState } from 'react'
 
+import { IIntegration } from '@/redux/services/interfaces/integration.interface'
+
 import SkeletonViewBlock from '../skeleton-view-box'
 
 export interface CodeDocument {
@@ -10,6 +12,7 @@ export interface CodeDocument {
 
 interface BrowserViewProps {
   document: CodeDocument | null
+  integrations: IIntegration[]
   isOpenHeader?: boolean
   iframeKey?: number
   stepBgColor?: string
@@ -32,7 +35,13 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
     ''
   )
 
-const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey, stepBgColor }) => {
+const BrowserView: FC<BrowserViewProps> = ({
+  document,
+  isOpenHeader,
+  iframeKey,
+  stepBgColor,
+  integrations,
+}) => {
   const [docSrc, setDocSrc] = useState('')
 
   useEffect(() => {
@@ -43,18 +52,22 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey, 
     const fontPath = '/fonts/index.css'
     const fontCssLink = `<link rel="stylesheet" href="${fontPath}">`
     const { htmlBody = [], cssBody = [], jsBody = [] } = document
+    let integrationsScripts = integrations
+      .map((integration) => integration.scripts)
+      .filter(Boolean)
+      .join('\n')
 
     setDocSrc(`
       <html style="height: 100%">
         <head>
           ${fontCssLink}
           ${getBody(cssBody, TagNames.Style)}
+          ${integrationsScripts}
         </head>
         <body style="height: 100%; margin: 0;" id="pageLesson">
         <div class="lesson-page " style=${stepBgColor ? 'background-color:' + stepBgColor : ''}>
           ${(document as any).length ? document : htmlBody.join('\n')}
         </div>
-          ${getBody(jsBody, TagNames.Script)}
         </body>
       </html>
     `)
