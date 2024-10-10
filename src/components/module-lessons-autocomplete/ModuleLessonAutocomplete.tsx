@@ -26,6 +26,8 @@ import {
 } from '@/redux/services/manager/modules-manager'
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { useIsAdmin } from '@root/src/lib/use-is-admin'
+import { useGetAllAdminLessonsQuery } from '@root/src/redux/services/admin/lessons-admin'
 
 type LessonType = ILesson & BaseResponseInterface
 
@@ -38,12 +40,13 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
 
   const { filters, setFilter } = useFilters({ name: '', take: 50 })
   const translate = useTranslate()
+  const { isAdmin } = useIsAdmin()
 
   const [addLesson] = useAddLessonToModuleMutation()
   const [removeLesson] = useRemoveLessonFromModuleMutation()
   const { data: addedLessons } = useGetOwnLessonsQuery({ module_id: id, take: 50 }, { skip: !id })
   const { data: lessons } = useGetOwnLessonsQuery({ ...filters }, { skip: !id })
-
+  const { data: adminLessons } = useGetAllAdminLessonsQuery({ ...filters }, { skip: !isAdmin })
   if (!lessons?.data || !addedLessons?.data) {
     return (
       <Skeleton
@@ -98,7 +101,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
       id='add-user-input'
       value={addedLessons.data}
       onChange={onChange}
-      options={lessons.data}
+      options={isAdmin && adminLessons ? adminLessons.data : lessons.data}
       popupIcon={null}
       onLoadStart={voidFunction}
       noOptionsText={
