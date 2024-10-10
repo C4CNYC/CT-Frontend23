@@ -196,7 +196,9 @@ export const apps = {
       title: 'sidebar_menu_feedback',
       path: '#',
       icon: <BiConversation size={20} />,
-      component: (children: React.ReactElement) => <LessonFeedback>{children}</LessonFeedback>,
+      component: (children: React.ReactElement) => (
+        <LessonFeedback sidebar={true}>{children}</LessonFeedback>
+      ),
     },
   ],
 }
