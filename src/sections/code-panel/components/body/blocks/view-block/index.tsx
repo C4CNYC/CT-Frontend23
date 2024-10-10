@@ -6,6 +6,7 @@ import { CgBrowser } from '@react-icons/all-files/cg/CgBrowser'
 import { TbArrowBarToRight } from '@react-icons/all-files/tb/TbArrowBarToRight'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { toggleBrowser } from '@/redux/slices/code-panel-global'
 import { type RootState } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
@@ -13,12 +14,14 @@ import { useTranslate } from '@/utils/translateHelper'
 import BaseBlock from '../base-block'
 
 import BrowserView, { CodeDocument } from './browser-view'
+
 interface IViewBlock {
   document: CodeDocument | null
   reloadBrowserView?: () => void
+  integrations: IIntegration[]
 }
 
-const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView }) => {
+const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }) => {
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state: RootState) => state.codePanelGlobal.isBrowserHidden)
   const translate = useTranslate()
@@ -70,6 +73,7 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView }) => {
 
       <BrowserView
         document={document}
+        integrations={integrations}
         isOpenHeader={isOpenHeader}
         iframeKey={iframeKey}
       />

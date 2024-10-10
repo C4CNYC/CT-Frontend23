@@ -94,6 +94,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
     dispatch(toggleBrowser(false))
   }
 
+  // eslint-disable-next-line no-console
+  console.log('CodePanel Body => browserView', browserView)
+
   if (isDesktop) {
     return (
       <Stack
@@ -135,6 +138,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
         {!isBrowserHidden ? (
           <ViewBlock
+            integrations={lesson?.integrations ?? []}
             document={browserView}
             reloadBrowserView={reloadBrowserView}
           />
@@ -182,7 +186,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         isFetching={isFetchingLessonContent}
       />
 
-      <ViewBlock document={document} />
+      <ViewBlock
+        document={document}
+        integrations={lesson?.integrations ?? []}
+      />
     </SwipeableViews>
   )
 }
