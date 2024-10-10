@@ -30,7 +30,7 @@ const MenuItems = ({ data, lessonId, sx = {} }: IMenuItems) => {
   const handleCloseChallengeManu = (): void => {
     setOpen(null)
   }
-
+  if (!data) return null
   return (
     <>
       <Button

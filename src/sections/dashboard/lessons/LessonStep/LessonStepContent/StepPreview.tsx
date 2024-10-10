@@ -11,7 +11,7 @@ export function StepPreview({ integrations, staticValue }: Props) {
       return `<head>${integrations.reduce(
         (ac, cur) => ac + cur.head,
         ''
-      )}</head><main>${userContent}${integrations.reduce((ac, cur) => {
+      )}<meta charset="utf-8"></head><main>${userContent}${integrations.reduce((ac, cur) => {
         return ac + cur.scripts
       }, '')}</main>`
     }

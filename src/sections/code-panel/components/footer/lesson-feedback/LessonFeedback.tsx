@@ -33,6 +33,7 @@ import { useAuthContext } from '@root/src/auth/useAuthContext'
 interface Props {
   lessonName?: string
   children: React.ReactElement[] | React.ReactElement
+  sidebar?: boolean
 }
 
 interface FormValuesProps {
@@ -46,12 +47,18 @@ const feedbackTypes = {
   training: 'training',
 }
 
-export default function LessonFeedback({ children, lessonName }: Props): React.ReactElement {
+export default function LessonFeedback({
+  children,
+  lessonName,
+  sidebar,
+}: Props): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false)
-  const [generalFeed, setGeneralFeed] = useState<boolean>(false)
+  const [generalFeed, setGeneralFeed] = useState<boolean>(!!sidebar)
   const [loading, setLoading] = useState(false)
   const [rating, setRating] = useState<number>(0)
-  const [feedbackType, setFeedbackType] = useState<string>(feedbackTypes.slide)
+  const [feedbackType, setFeedbackType] = useState<string>(
+    sidebar ? feedbackTypes.general : feedbackTypes.slide
+  )
   const { user } = useAuthContext()
   const translate = useTranslate()
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
@@ -82,8 +89,10 @@ export default function LessonFeedback({ children, lessonName }: Props): React.R
   }
   const closeDialog = () => {
     setOpen(false)
-    setGeneralFeed(false)
-    setFeedbackType(feedbackTypes.slide)
+    if (!sidebar) {
+      setGeneralFeed(false)
+      setFeedbackType(feedbackTypes.slide)
+    }
   }
 
   const openGeneralFeedback = () => {
@@ -97,6 +106,7 @@ export default function LessonFeedback({ children, lessonName }: Props): React.R
   }
 
   const closeGeneralFeedback = () => {
+    if (sidebar) return
     setGeneralFeed(false)
     setFeedbackType(feedbackTypes.slide)
     setRating(0)
@@ -256,7 +266,7 @@ export default function LessonFeedback({ children, lessonName }: Props): React.R
                 if (value) {
                   setRating(value)
                 }
-                openSlideFeedback()
+                if (!sidebar) openSlideFeedback()
               }}
             />
 
@@ -297,7 +307,13 @@ export default function LessonFeedback({ children, lessonName }: Props): React.R
                           mt: 2,
                         }}
                       >
-                        <Button onClick={closeGeneralFeedback}>{translate('actions_close')}</Button>
+                        {sidebar ? (
+                          <></>
+                        ) : (
+                          <Button onClick={closeGeneralFeedback}>
+                            {translate('actions_close')}
+                          </Button>
+                        )}
                         <LoadingButton
                           type='submit'
                           variant='contained'

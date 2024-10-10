@@ -12,10 +12,10 @@ import {
   ToggleButtonGroup,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { BsAspectRatio } from '@react-icons/all-files/bs/BsAspectRatio'
 import { BsClipboard } from '@react-icons/all-files/bs/BsClipboard'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
-import { MdOutlinePermMedia } from '@react-icons/all-files/md/MdOutlinePermMedia'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
@@ -74,7 +74,7 @@ export default function StepContentEditor(): React.ReactElement {
   )
 
   const [bodyType, setBodyType] = useState<LessonContentType>(
-    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.Editable
+    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.TinyMce
   )
 
   useEffect(() => {
@@ -196,17 +196,17 @@ export default function StepContentEditor(): React.ReactElement {
               }}
               aria-label='select slide type'
             >
-              <ToggleButton
-                value={LessonContentType.Editable}
-                aria-label='Standard'
-                sx={{ gap: 1 }}
-              >
-                <MdOutlinePermMedia size='20px' /> {translate('slide_standard')}
-              </ToggleButton>
               <Divider
                 orientation='vertical'
                 flexItem
               />
+              <ToggleButton
+                value={LessonContentType.TinyMce}
+                aria-label='TinyMce'
+                sx={{ gap: 1 }}
+              >
+                <BsAspectRatio size='20px' /> Standard
+              </ToggleButton>
               <ToggleButton
                 value={LessonContentType.Code}
                 aria-label='HTML'
@@ -215,11 +215,11 @@ export default function StepContentEditor(): React.ReactElement {
                 <BsCodeSlash size='20px' /> HTML
               </ToggleButton>
               <ToggleButton
-                value={LessonContentType.TinyMce}
-                aria-label='TinyMce'
+                value={LessonContentType.Editable}
+                aria-label='Remirror'
                 sx={{ gap: 1 }}
               >
-                <BsClipboard size='20px' /> TinyMCE
+                <BsClipboard size='20px' /> Remirror
               </ToggleButton>
             </StyledToggleButtonGroup>
             <Preferences
