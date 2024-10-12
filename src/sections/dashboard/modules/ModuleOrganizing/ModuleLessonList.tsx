@@ -213,17 +213,10 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           }}
           sx={MENU_ITEM_SX}
         >
-          Insert Existing Lesson
+          {translate('modules_add_lesson_existing')}
         </MenuItem>
         <CreateLessonDialog>
-          <MenuItem
-            sx={MENU_ITEM_SX}
-            // onClick={() => {
-            //   popover.onClose()
-            // }}
-          >
-            Add New Lesson
-          </MenuItem>
+          <MenuItem sx={MENU_ITEM_SX}>{translate('modules_add_lesson_new_lesson')}</MenuItem>
         </CreateLessonDialog>
         <MenuItem
           onClick={() => {
@@ -231,7 +224,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           }}
           sx={MENU_ITEM_SX}
         >
-          Add New Quiz
+          {translate('modules_add_lesson_new_quiz')}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -239,7 +232,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           }}
           sx={MENU_ITEM_SX}
         >
-          Add New Exercises
+          {translate('modules_add_lesson_new_exircises')}
         </MenuItem>
       </CustomPopover>
     </>
