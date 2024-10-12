@@ -525,7 +525,7 @@ const fr = {
   modules_lesson_plans_link: 'Lien vers les plans de cours',
   modules_completed: '{{percentage}}% terminé',
   modules_settings: 'Paramètres des modules',
-  modules_add_lesson: 'Ajouter une leçon',
+  modules_add_lesson: 'Ajouter une leçon, un quiz ou une activité',
   modules_view_lesson: 'Voir la leçon',
   modules_add_lesson_slide_link: 'Ajouter/Modifier des diapositives de cours',
   modules_pls_select_lesson: 'SVP SÉLECTIONNER LA LEÇON',

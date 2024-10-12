@@ -528,7 +528,7 @@ const ar = {
   modules_lesson_plans_link: 'رابط خطط الدروس',
   modules_completed: '{{percentage}}% مكتمل',
   modules_settings: 'إعدادات الوحدة',
-  modules_add_lesson: 'أضف الدرس',
+  modules_add_lesson: 'أضف درسًا أو اختبارًا أو نشاطًا',
   modules_view_lesson: 'عرض الدرس',
   modules_add_lesson_slide_link: 'إضافة/تحرير شرائح الدرس',
   modules_pls_select_lesson: 'الرجاء اختيار الدرس',

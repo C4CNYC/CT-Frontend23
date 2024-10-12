@@ -524,7 +524,7 @@ const es = {
   modules_lesson_plans_link: 'Enlace a los planes de estudio',
   modules_completed: '{{porcentaje}}% Completo',
   modules_settings: 'Configuración del módulo',
-  modules_add_lesson: 'Agregar lección',
+  modules_add_lesson: 'Agregar lección, prueba o actividad',
   modules_view_lesson: 'Ver lección',
   modules_add_lesson_slide_link: 'Agregar/editar diapositivas de lecciones',
   modules_pls_select_lesson: 'POR FAVOR SELECCIONE LA LECCIÓN',

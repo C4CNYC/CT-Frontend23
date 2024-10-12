@@ -522,7 +522,7 @@ const pt = {
   modules_lesson_plans_link: 'Link para planos de aula',
   modules_completed: '{{percentage}}% Completa',
   modules_settings: 'Configurações do módulo',
-  modules_add_lesson: 'Adicionar lição',
+  modules_add_lesson: 'Adicionar lição, questionário ou atividade',
   modules_view_lesson: 'Ver lição',
   modules_add_lesson_slide_link: 'Adicionar/editar slides de aula',
   modules_pls_select_lesson: 'POR FAVOR, SELECIONE A LIÇÃO',

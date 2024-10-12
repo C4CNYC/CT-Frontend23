@@ -527,7 +527,7 @@ const en = {
   modules_lesson_plans_link: 'Lesson plans link',
   modules_completed: '{{percentage}}% Complete',
   modules_settings: 'Module Settings',
-  modules_add_lesson: 'Add Lesson',
+  modules_add_lesson: 'Add Lesson, Quiz or Activity',
   modules_view_lesson: 'View Lesson',
   modules_add_lesson_slide_link: 'Add/Edit Lesson Slides',
   modules_pls_select_lesson: 'PLS SELECT LESSON',
