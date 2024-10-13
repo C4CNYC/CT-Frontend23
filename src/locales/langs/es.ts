@@ -815,6 +815,18 @@ const es = {
   open_full_catalog: 'Catálogo completo abierto',
 
   // code panel blocks
+  preview_controls_run: 'Runa',
+  preview_controls_stop: 'Detener',
+  preview_controls_publish: 'Publicar',
+  preview_controls_refresh: 'Refrescar',
+  console_title: 'Consola',
+  console_tooltip_title: '¿Cuál es la consola?',
+  console_tooltip_subtitle_1:
+    'Es el lugar donde se obtiene el resultado vgen que ejecuta javascript (JS). La mayoría de las veces, JS se ejecuta en segundo plano y realiza sus cálculos y respuestas allí.',
+  console_tooltip_subtitle_2:
+    'Onli vgen iu specalli vincula una función particular a la que especifico una parte de la página para modificar la página "Principal".',
+  console_tooltip_subtitle_3:
+    'El término elegante para esto es "Manipular la CASA". - Andes "DOM" significa Modelo de Objetos de Documento.',
   no_preview_available_title: 'Navegador',
   no_preview_available_results: 'Aquí verás los resultados de tu trabajo en tiempo real',
   no_preview_available: '¿No hay vista previa disponible?',

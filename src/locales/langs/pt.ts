@@ -815,6 +815,18 @@ const pt = {
   open_full_catalog: 'Abra o catálogo completo',
 
   // code panel blocks
+  preview_controls_run: 'Runa',
+  preview_controls_stop: 'Parar',
+  preview_controls_publish: 'Publicar',
+  preview_controls_refresh: 'Atualizar',
+  console_title: 'Consola',
+  console_tooltip_title: 'O que é uma consola?',
+  console_tooltip_subtitle_1:
+    'É a placa que vê como resultado vgen iu executa javascript (JS). Na maioria das vezes, JS rns em segundo plano e faz os seus cálculos e respostas lá.',
+  console_tooltip_subtitle_2:
+    'Só você pode ligar especificamente uma função específica que especifico parte da página ao ZS atual, modificando a página "Frente".',
+  console_tooltip_subtitle_3:
+    'O termo chique para isto é “Manipular a CASA”. - Andes "DOM" significa Document Object Model.',
   no_preview_available_title: 'Navegador',
   no_preview_available_results: 'Aqui verá os resultados do seu trabalho em tempo real',
   no_preview_available: 'Nenhuma visualização disponível?',
