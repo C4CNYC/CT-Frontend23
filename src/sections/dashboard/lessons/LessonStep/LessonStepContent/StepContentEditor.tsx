@@ -15,7 +15,6 @@ import { styled } from '@mui/material/styles'
 import { BsClipboard } from '@react-icons/all-files/bs/BsClipboard'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
-import { MdOutlinePermMedia } from '@react-icons/all-files/md/MdOutlinePermMedia'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
@@ -196,13 +195,6 @@ export default function StepContentEditor(): React.ReactElement {
               }}
               aria-label='select slide type'
             >
-              <ToggleButton
-                value={LessonContentType.Editable}
-                aria-label='Standard'
-                sx={{ gap: 1 }}
-              >
-                <MdOutlinePermMedia size='20px' /> {translate('slide_standard')}
-              </ToggleButton>
               <Divider
                 orientation='vertical'
                 flexItem

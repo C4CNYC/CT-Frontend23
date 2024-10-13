@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
-import { LoadingScreen } from '@/components'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 
 import { useAuthContext } from './useAuthContext'
@@ -12,23 +11,14 @@ interface GuestGuardProps {
 }
 
 export default function GuestGuard({ children }: GuestGuardProps): React.ReactElement | null {
-  const { push, route, asPath } = useRouter()
+  const { push, route } = useRouter()
 
-  const { isAuthenticated, isInitialized } = useAuthContext()
-
+  const { isAuthenticated, user } = useAuthContext()
   useEffect(() => {
-    if (isAuthenticated) {
-      if (route.includes('public')) {
-        push(asPath)
-      } else {
-        push(STUDENT_PATH_PAGE.home)
-      }
+    if (isAuthenticated && user && route.includes('auth')) {
+      push(STUDENT_PATH_PAGE.home)
     }
   }, [isAuthenticated])
-
-  if (isInitialized === isAuthenticated) {
-    return <LoadingScreen />
-  }
 
   return <> {children} </>
 }
