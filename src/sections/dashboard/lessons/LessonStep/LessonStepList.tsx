@@ -31,6 +31,7 @@ import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 
 import LessonListItem from './LesonListItem'
 import SkeletonList from './Modals/SkeletonList'
+import SlideTemplateDialog from './slide-templates'
 
 interface Props {
   lessonId: string
@@ -309,13 +310,9 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
           {translate('slide_add_blank')}
         </MenuItem>
 
-        <MenuItem
-          onClick={() => {
-            popover.onClose()
-          }}
-        >
-          {translate('slide_add_normal')}
-        </MenuItem>
+        <SlideTemplateDialog>
+          <MenuItem>{translate('slide_add_normal')}</MenuItem>
+        </SlideTemplateDialog>
 
         <MenuItem
           onClick={() => {
