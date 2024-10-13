@@ -94,7 +94,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
                 // 'typography',
                 // 'inlinecss',
                 // 'markdown',
-                'autoresize', 
+                'autoresize',
               ],
               toolbar:
                 'customSaveButton | addClassPopup |  undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat ',
@@ -275,24 +275,28 @@ export function StepTinyMce(props: EditorSelectorProps) {
                           data.backgroundColor,
                           data.padding,
                           data.margin,
-                          data.custom,                          
+                          data.custom,
                         ]
                           .filter(Boolean)
                           .join(' ')
 
                         // Apply the classes to the selected element
                         const selectedNode = editor.selection.getNode()
-                        if(selectedNode){
+                        if (selectedNode) {
                           if (selectedNode.nodeName === 'DIV') {
                             selectedNode.className = classes // Update the class attribute
-                          } else if (selectedNode.parentElement &&
-                            (selectedNode.parentElement?.nodeName === 'DIV')) {
-                              selectedNode.parentElement.className = classes
-                            }else if (selectedNode?.parentElement?.parentElement &&(selectedNode.parentElement.parentElement?.nodeName === 'DIV')) {
-                              selectedNode.parentElement.className = classes
+                          } else if (
+                            selectedNode.parentElement &&
+                            selectedNode.parentElement?.nodeName === 'DIV'
+                          ) {
+                            selectedNode.parentElement.className = classes
+                          } else if (
+                            selectedNode?.parentElement?.parentElement &&
+                            selectedNode.parentElement.parentElement?.nodeName === 'DIV'
+                          ) {
+                            selectedNode.parentElement.className = classes
                           }
                         }
-                        
 
                         // Close the dialog
                         api.close()
