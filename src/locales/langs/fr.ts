@@ -855,6 +855,7 @@ const fr = {
   enable: 'Activer:',
   editor_colors: "Couleurs de l'éditeur",
   bg_color: "Couleur de l'arrière plan:",
+  slide_bg_color: 'Couleur de fond',
   text_color: 'Couleur du texte:',
   btn_group_next: 'SUIVANT 👀',
   btn_group_you_did_it: "VOUS L'AVEZ FAIT 🙌",

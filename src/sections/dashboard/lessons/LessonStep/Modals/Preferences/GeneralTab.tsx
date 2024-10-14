@@ -37,7 +37,7 @@ export const GeneralTab = (): React.ReactElement => {
 
           <RHFColorPicker
             name='bg_color'
-            label={translate('bg_color')}
+            label={translate('slide_bg_color')}
           />
           <RHFSelect
             native

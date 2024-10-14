@@ -851,6 +851,7 @@ const pt = {
   enable: 'Habilitar:',
   editor_colors: 'Cores do editor',
   bg_color: 'Cor de fundo:',
+  slide_bg_color: 'Cor de slide',
   text_color: 'Cor do texto:',
   btn_group_next: 'Próximo 👀',
   btn_group_you_did_it: 'Você fez isso 🙌',

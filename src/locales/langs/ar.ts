@@ -858,6 +858,7 @@ const ar = {
   enable: 'يُمكَِن:',
   editor_colors: 'ألوان المحرر',
   bg_color: 'لون الخلفية:',
+  slide_bg_color: 'لون خلفية الشريحة:',
   text_color: 'لون الخط:',
   btn_group_next: 'التالي 👀',
   btn_group_you_did_it: 'لقد فعلتها 🙌',

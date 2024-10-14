@@ -867,6 +867,7 @@ const en = {
   enable: 'Enable:',
   editor_colors: 'Editor colors',
   bg_color: 'Background Color:',
+  slide_bg_color: 'Slide Color',
   text_color: 'Text Color:',
   btn_group_next: 'NEXT 👀',
   btn_group_you_did_it: 'YOU DID IT 🙌',
