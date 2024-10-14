@@ -99,7 +99,7 @@ const extendedApi = managerApi.injectEndpoints({
       IOpenAiRequest & BaseResponseInterface,
       { prompt: string; add_response_format: string }
     >({
-      query: ({ prompt, add_response_format }) => ({
+      query: ({ prompt, add_response_format = 'true' }) => ({
         url: '/manager/lesson/openAiRequest',
         method: 'POST',
         body: {
