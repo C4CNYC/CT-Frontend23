@@ -26,7 +26,7 @@ export const GeneralTab = (): React.ReactElement => {
           display='grid'
           sx={{ mb: 3 }}
           gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)', 
+            xs: 'repeat(1, 1fr)',
             lg: 'repeat(3, 1fr)',
           }}
         >
@@ -34,10 +34,10 @@ export const GeneralTab = (): React.ReactElement => {
             name='slug'
             label={translate('slug')}
           />
-          
+
           <RHFColorPicker
             name='bg_color'
-            label={translate('bg_color')} 
+            label={translate('bg_color')}
           />
           <RHFSelect
             native
