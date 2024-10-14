@@ -4,6 +4,7 @@ import { Box, Stack } from '@mui/system'
 import { RHFSelect, RHFSwitch, RHFTextField } from '@/components'
 import { LessonContentComplexity } from '@/redux/services/enums/lesson-content-complexity.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFColorPicker } from '@root/src/components/hook-form/RHFColorPicker'
 
 export const GeneralTab = (): React.ReactElement => {
   const translate = useTranslate()
@@ -25,13 +26,18 @@ export const GeneralTab = (): React.ReactElement => {
           display='grid'
           sx={{ mb: 3 }}
           gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)',
-            sm: 'repeat(2, 1fr)',
+            xs: 'repeat(1, 1fr)', 
+            lg: 'repeat(3, 1fr)',
           }}
         >
           <RHFTextField
             name='slug'
             label={translate('slug')}
+          />
+          
+          <RHFColorPicker
+            name='bg_color'
+            label={translate('bg_color')} 
           />
           <RHFSelect
             native
