@@ -823,6 +823,18 @@ const ar = {
   open_full_catalog: 'فتح الكتالوج الكامل',
 
   // code panel blocks
+  preview_controls_run: 'رون',
+  preview_controls_stop: 'قف',
+  preview_controls_publish: 'نشر',
+  preview_controls_refresh: 'ينعش',
+  console_title: 'تسونسول',
+  console_tooltip_title: 'ما هي وحدة التحكم؟',
+  console_tooltip_subtitle_1:
+    'إنها plache iu se a نتيجة vgen iu run javascript (JS) Betsause في معظم الأوقات JS rns في الخلفية وتقوم بإجراء العمليات الحسابية والاستجابة هناك.',
+  console_tooltip_subtitle_2:
+    'تقوم Onli vgen iu تحديدًا بربط وظيفة جزئية أقوم بتخصيص جزء من الصفحة بها لتعديل ZS الفعلي للصفحة "الأمامية".',
+  console_tooltip_subtitle_3:
+    'المصطلح الرائع لـ tis هو "التلاعب بالمنزل". - يرمز Andes "DOM" إلى Document Object Model.',
   no_preview_available_title: 'المتصفح',
   no_preview_available_results: 'هنا سترى نتائج عملك في الوقت الفعلي',
   no_preview_available: 'لا تتوفر معاينة؟',
