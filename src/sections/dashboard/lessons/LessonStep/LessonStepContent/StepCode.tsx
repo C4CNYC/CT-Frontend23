@@ -49,7 +49,7 @@ export default function StepCode({
       return `<head>${integrations.reduce(
         (ac, cur) => ac + (cur.head.startsWith('<') ? cur.head : `<style>${cur.head}</style>`),
         ''
-      )}</head><main>${userContent}${integrations.reduce((ac, cur) => {
+      )}<meta charset="utf-8"></head><main>${userContent}${integrations.reduce((ac, cur) => {
         return ac + cur.scripts
       }, '')}</main>`
     }
