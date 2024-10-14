@@ -31,6 +31,7 @@ const MenuItems = ({ data, lessonId, sx = {} }: IMenuItems) => {
     setOpen(null)
   }
   if (!data) return null
+
   return (
     <>
       <Button

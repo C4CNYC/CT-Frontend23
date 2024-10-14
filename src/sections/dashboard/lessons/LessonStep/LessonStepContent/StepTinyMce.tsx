@@ -32,6 +32,9 @@ export function StepTinyMce(props: EditorSelectorProps) {
     while ((matches = integrationStyleRegex.exec(curr.head)) !== null) {
       acc += '\n' + matches[1]
     }
+    if (!curr.head.startsWith('<style>')) {
+      acc += '\n' + curr.head
+    }
     return acc
   }, '')
   function onSave() {
@@ -94,12 +97,212 @@ export function StepTinyMce(props: EditorSelectorProps) {
                 'autoresize',
               ],
               toolbar:
-                'customSaveButton | undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat ',
+                'customSaveButton | addClassPopup |  undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat ',
+              block_formats: 'Paragraph=div; Header 1=h1; Header 2=h2; Header 3=h3',
+              autoresize_bottom_margin: 0,
               setup: (editor) => {
                 editor.ui.registry.addButton('customSaveButton', {
                   text: 'Save',
                   icon: 'save',
                   onAction: onSave,
+                })
+
+                editor.ui.registry.addButton('addClassPopup', {
+                  text: 'Add Class',
+                  onAction: function () {
+                    const selectedNode = editor.selection.getNode()
+                    const existingClasses = selectedNode ? selectedNode.className.split(/\s+/) : []
+
+                    // Map existing classes to dialog defaults
+                    const dialogDefaults = {
+                      fontSize: existingClasses.find((c) => c.startsWith('font-')) || '',
+                      color: existingClasses.find((c) => c.startsWith('text-')) || '',
+                      borderWidth:
+                        existingClasses.find(
+                          (c) =>
+                            c.startsWith('border-') &&
+                            !c.includes('round') &&
+                            !c.includes('pointy') &&
+                            !c.includes('circle')
+                        ) || '',
+                      borderStyle:
+                        existingClasses.find(
+                          (c) =>
+                            c.startsWith('border-') &&
+                            (c.includes('round') || c.includes('pointy') || c.includes('circle'))
+                        ) || '',
+                      backgroundColor: existingClasses.find((c) => c.startsWith('bg-')) || '',
+                      custom: '',
+                      padding: existingClasses.find((c) => c.startsWith('padding-')) || '',
+                      margin: existingClasses.find((c) => c.startsWith('margin-')) || '',
+                    }
+                    dialogDefaults.custom = existingClasses
+                      .filter((existing) =>
+                        Object.keys(dialogDefaults).every(
+                          (dialogDefaultKeys) =>
+                            existing !==
+                            dialogDefaults[dialogDefaultKeys as keyof typeof dialogDefaults]
+                        )
+                      )
+                      .join(' ')
+                    // Create the dialog
+                    editor.windowManager.open({
+                      title: 'Insert Class',
+                      body: {
+                        type: 'panel',
+                        items: [
+                          {
+                            type: 'selectbox',
+                            name: 'fontSize',
+                            label: 'Font Size',
+                            items: [
+                              { text: 'Default', value: '' },
+                              { text: 'Small', value: 'font-small' },
+                              { text: 'Normal', value: 'font-normal' },
+                              { text: 'Large', value: 'font-large' },
+                              { text: 'XX-Large', value: 'font-xxlarge' },
+                            ],
+                          },
+                          {
+                            type: 'selectbox',
+                            name: 'color',
+                            label: 'Text Color',
+                            items: [
+                              { text: 'Default', value: '' },
+                              { text: 'Red', value: 'text-red' },
+                              { text: 'Blue', value: 'text-blue' },
+                              { text: 'Green', value: 'text-green' },
+                              { text: 'Yellow', value: 'text-yellow' },
+                              { text: 'Purple', value: 'text-purple' },
+                              { text: 'Black', value: 'text-black' },
+                              { text: 'White', value: 'text-white' },
+                              { text: 'Orange', value: 'text-orange' },
+                              { text: 'Gray', value: 'text-gray' },
+                              { text: 'Brown', value: 'text-brown' },
+                            ],
+                          },
+                          {
+                            type: 'selectbox',
+                            name: 'borderWidth',
+                            label: 'Border Width',
+                            items: [
+                              { text: 'None', value: '' },
+                              { text: 'Thin', value: 'border-thin' },
+                              { text: 'Bold', value: 'border-bold' },
+                            ],
+                          },
+                          {
+                            type: 'selectbox',
+                            name: 'borderStyle',
+                            label: 'Border Style',
+                            items: [
+                              { text: 'None', value: '' },
+                              { text: 'Pointy', value: 'border-pointy' },
+                              { text: 'Round', value: 'border-round' },
+                              { text: 'Circle', value: 'border-circle' },
+                            ],
+                          },
+                          {
+                            type: 'selectbox',
+                            name: 'backgroundColor',
+                            label: 'Background Color',
+                            items: [
+                              { text: 'None', value: '' },
+                              { text: 'Red', value: 'bg-red' },
+                              { text: 'Blue', value: 'bg-blue' },
+                              { text: 'Green', value: 'bg-green' },
+                              { text: 'Yellow', value: 'bg-yellow' },
+                              { text: 'Purple', value: 'bg-purple' },
+                              { text: 'Black', value: 'bg-black' },
+                              { text: 'White', value: 'bg-white' },
+                              { text: 'Orange', value: 'bg-orange' },
+                              { text: 'Gray', value: 'bg-gray' },
+                              { text: 'Brown', value: 'bg-brown' },
+                            ],
+                          },
+                          {
+                            type: 'selectbox',
+                            name: 'padding',
+                            label: 'Padding',
+                            items: [
+                              { text: 'None', value: '' },
+                              { text: 'Small', value: 'padding-small' },
+                              { text: 'Normal', value: 'padding-normal' },
+                              { text: 'Large', value: 'padding-large' },
+                              { text: 'XX-Large', value: 'padding-xxlarge' },
+                            ],
+                          },
+                          {
+                            type: 'selectbox',
+                            name: 'margin',
+                            label: 'Margin',
+                            items: [
+                              { text: 'None', value: '' },
+                              { text: 'Small', value: 'margin-small' },
+                              { text: 'Normal', value: 'margin-normal' },
+                              { text: 'Large', value: 'margin-large' },
+                              { text: 'XX-Large', value: 'margin-xxlarge' },
+                            ],
+                          },
+                          {
+                            type: 'input',
+                            name: 'custom',
+                            label: 'Custom',
+                          },
+                        ],
+                      },
+                      initialData: dialogDefaults,
+                      buttons: [
+                        {
+                          type: 'cancel',
+                          text: 'Cancel',
+                        },
+                        {
+                          type: 'submit',
+                          text: 'Insert',
+                          primary: true,
+                        },
+                      ],
+                      onSubmit: function (api) {
+                        const data = api.getData()
+
+                        // Construct class string based on user selection
+                        const classes = [
+                          data.fontSize,
+                          data.color,
+                          data.borderWidth,
+                          data.borderStyle,
+                          data.backgroundColor,
+                          data.padding,
+                          data.margin,
+                          data.custom,
+                        ]
+                          .filter(Boolean)
+                          .join(' ')
+
+                        // Apply the classes to the selected element
+                        const selectedNode = editor.selection.getNode()
+                        if (selectedNode) {
+                          if (selectedNode.nodeName === 'DIV') {
+                            selectedNode.className = classes // Update the class attribute
+                          } else if (
+                            selectedNode.parentElement &&
+                            selectedNode.parentElement?.nodeName === 'DIV'
+                          ) {
+                            selectedNode.parentElement.className = classes
+                          } else if (
+                            selectedNode?.parentElement?.parentElement &&
+                            selectedNode.parentElement.parentElement?.nodeName === 'DIV'
+                          ) {
+                            selectedNode.parentElement.className = classes
+                          }
+                        }
+
+                        // Close the dialog
+                        api.close()
+                      },
+                    })
+                  },
                 })
               },
               tinycomments_mode: 'embedded',

@@ -347,6 +347,8 @@ export default function CodePanelLayout(): ReactElement | null {
       socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
         path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
         auth: { userId: user?.id ?? generateId(20) },
+        reconnectionDelay: 1000 * 60,
+        reconnectionDelayMax: 1000 * 60 * 60,
       })
       socket.on('connect_error', (error) => {
         // eslint-disable-next-line no-console
