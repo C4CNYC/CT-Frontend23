@@ -35,7 +35,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
     event.stopPropagation()
     event.preventDefault()
     let selection = editorState.selection.main
-    if (!selection) return 
+    if (!selection) return
     const selectedText = editorState.sliceDoc(selection.from, selection.to)
     const escapedText = selectedText
       .replace(/&/g, '&amp;')
