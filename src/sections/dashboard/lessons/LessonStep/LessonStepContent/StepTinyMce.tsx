@@ -24,7 +24,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
       editorContentSet('')
     }
   }, [props.content])
-
+  // @ts-ignore This regular expression flag is only available when targeting 'es2018' or later.ts(1501)
   const integrationStyleRegex = /<style[^>]*?>([\s\S]*?)<\/style>/gms
 
   const integrationStyles = props.integrations.reduce((acc, curr) => {
@@ -323,13 +323,12 @@ export function StepTinyMce(props: EditorSelectorProps) {
             initialValue={initialValue}
           />
         </Box>
-        <Box sx={{ bgcolor: props.bgColor, height: '100%' }}>
-          <StepPreview
-            integrations={props.integrations}
-            staticValue={editorContent}
-            key={editorContent}
-          />
-        </Box>
+        <StepPreview
+          integrations={props.integrations}
+          staticValue={editorContent}
+          key={editorContent}
+          bgColor={props.bgColor}
+        />
       </ResizerUi>
     </>
   )

@@ -1,11 +1,14 @@
+import { Box } from '@mui/material'
+
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 
 interface Props {
   integrations: IIntegration[]
   staticValue: string
+  bgColor: string
 }
 
-export function StepPreview({ integrations, staticValue }: Props) {
+export function StepPreview({ integrations, staticValue, bgColor }: Props) {
   const pageSkeleton = (userContent: string): string | undefined => {
     if (integrations) {
       return `<head>${integrations.reduce(
@@ -17,13 +20,15 @@ export function StepPreview({ integrations, staticValue }: Props) {
     }
   }
   return (
-    <iframe
-      style={{
-        border: 0,
-        width: '100%',
-        height: '100%',
-      }}
-      src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
-    />
+    <Box sx={{ bgcolor: bgColor, height: '100%' }}>
+      <iframe
+        style={{
+          border: 0,
+          width: '100%',
+          height: '100%',
+        }}
+        src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
+      />
+    </Box>
   )
 }
