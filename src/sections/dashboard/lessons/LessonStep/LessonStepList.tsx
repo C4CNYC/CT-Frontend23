@@ -360,6 +360,5 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
         </MenuItem>
       </CustomPopover>
     </>
-
   )
 }
