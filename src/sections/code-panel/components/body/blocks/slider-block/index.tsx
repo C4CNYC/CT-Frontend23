@@ -1,12 +1,13 @@
 import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Box, useTheme } from '@mui/material'
+import { Box, TextField, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import * as _ from 'lodash-es'
 import dynamic from 'next/dynamic'
 import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
+import { useSearchParams } from 'next/navigation'
 
 import { EmptyContent, LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -92,6 +93,10 @@ const SliderBlock: FC<ISliderBlock> = ({
   const unit = useSelector((state) => state.codePanelGlobal.unitId)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
+  const searchParams = useSearchParams()
+  const sandbox = searchParams.get('sandbox')
+
+  const [noteText, setNoteText] = useState(localStorage.getItem(`sandboxNotes${profile?.id}`) ?? '')
 
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
   const { data: lastSlide } = useGetStudentLastVisitedSlideQuery(
@@ -101,7 +106,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     { skip: !lessonId || !profile }
   )
 
-  const title = translate('instructions')
+  const title = sandbox ? translate('Notes') : translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
     setIsOpenHeader(isOpen)
   }, [])
@@ -221,7 +226,20 @@ const SliderBlock: FC<ISliderBlock> = ({
       {!isFetching ? (
         <>
           {_.isEmpty(data) ? (
-            <EmptyContent title={translate('messages_no_data')} />
+            sandbox ? (
+              <TextField
+                fullWidth
+                multiline
+                minRows='12'
+                value={noteText}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setNoteText(event.target.value)
+                  localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
+                }}
+              />
+            ) : (
+              <EmptyContent title={translate('messages_no_data')} />
+            )
           ) : (
             <>
               <Box
