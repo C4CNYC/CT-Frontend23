@@ -29,10 +29,10 @@ import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 
-import CloneSlideDialogs from './CreateSlide/CloneSlideDialogs'
-import { DialogTypes } from './CreateSlide/CreateSlideTypes'
+// import CloneSlideDialogs from './CreateSlide/CloneSlideDialogs'
+// import { DialogTypes } from './CreateSlide/CreateSlideTypes'
 import LessonListItem from './LesonListItem'
-import CloneExistingSlide from './Modals/CloneExistingSlideMenu'
+// import CloneExistingSlide from './Modals/CloneExistingSlideMenu'
 import SkeletonList from './Modals/SkeletonList'
 import SlideTemplateDialog from './slide-templates'
 
@@ -314,7 +314,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
       >
         <MenuItem
           onClick={() => {
-            createNewContent()
+            createEmptySlide()
             popover.onClose()
           }}
         >
