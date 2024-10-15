@@ -35,6 +35,7 @@ export default function StepCode({
   data,
   lessonId,
 }: Props): React.ReactElement {
+  const editorRef = React.useRef(null)
   const [value, setValue] = useState<string>('')
   const [staticValue, setStaticValue] = useState<string>('')
   const handleDebouncedCallback = useDebounceCallback(1500)
@@ -50,7 +51,7 @@ export default function StepCode({
         (ac, cur) => ac + (cur.head.startsWith('<') ? cur.head : `<style>${cur.head}</style>`),
         ''
       )}<meta charset="utf-8"></head><main>${userContent}${integrations.reduce((ac, cur) => {
-        return ac + cur.scripts
+        return cur.scripts ? ac + cur.scripts : ac
       }, '')}</main>`
     }
   }
@@ -72,8 +73,10 @@ export default function StepCode({
           data={data}
           lessonId={lessonId}
           sx={{ mb: 1, mt: 1, ml: 2 }}
+          editorInstance={editorRef.current}
         />
         <CodeMirror
+          ref={editorRef}
           value={value}
           theme={dracula}
           height='calc(100vh - 96px)'

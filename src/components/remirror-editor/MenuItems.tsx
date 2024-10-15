@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import { Button, SxProps } from '@mui/material'
 import { LuCheckCircle } from '@react-icons/all-files/lu/LuCheckCircle'
+import { LuRemoveFormatting } from '@react-icons/all-files/lu/LuRemoveFormatting'
+import { EditorView, ReactCodeMirrorRef } from '@uiw/react-codemirror'
 
 import Preferences from '@/sections/dashboard/lessons/LessonStep/Modals/Preferences'
 import Validation from '@/sections/dashboard/lessons/LessonStep/Modals/Validation'
@@ -16,15 +18,38 @@ interface IMenuItems {
   data: ILessonContent & BaseResponseInterface
   lessonId: string
   sx?: SxProps
+  editorInstance?: ReactCodeMirrorRef | null
 }
 
-const MenuItems = ({ data, lessonId, sx = {} }: IMenuItems) => {
+const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
   const [open, setOpen] = useState<HTMLElement | null>(null)
 
   const handleOpenChallengeMenu = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
     event.preventDefault()
     setOpen(event.currentTarget)
+  }
+  const handleEscapeHtml = (event: React.MouseEvent<HTMLElement>): void => {
+    if (!editorInstance || !editorInstance.view) return
+    let editorState = (editorInstance.view as EditorView).state
+    event.stopPropagation()
+    event.preventDefault()
+    let selection = editorState.selection.main
+    if (!selection) return 
+    const selectedText = editorState.sliceDoc(selection.from, selection.to)
+    const escapedText = selectedText
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+    editorInstance.view.dispatch({
+      changes: {
+        from: selection.from,
+        to: selection.to,
+        insert: escapedText,
+      },
+    })
   }
 
   const handleCloseChallengeManu = (): void => {
@@ -34,22 +59,30 @@ const MenuItems = ({ data, lessonId, sx = {} }: IMenuItems) => {
 
   return (
     <>
-      <Button
-        onClick={handleOpenChallengeMenu}
-        sx={{
-          display: 'flex',
-          gap: 1,
-          width: 140,
-          fontSize: '1.1rem',
-          color: '#364954',
-          fontWeight: 400,
-          ...sx,
-        }}
-      >
-        <LuCheckCircle size={20} />
-        Challenge
-      </Button>
-
+      <div style={{ display: 'flex' }}>
+        <Button
+          onClick={handleOpenChallengeMenu}
+          sx={{
+            display: 'flex',
+            gap: 1,
+            width: 140,
+            fontSize: '1.1rem',
+            color: '#364954',
+            fontWeight: 400,
+            ...sx,
+          }}
+        >
+          <LuCheckCircle size={20} />
+          Challenge
+        </Button>
+        <Button
+          onClick={handleEscapeHtml}
+          title='Escapes HTML in the selection'
+        >
+          <LuRemoveFormatting size={20} />
+          Escape HTML
+        </Button>{' '}
+      </div>
       <MenuPopover
         open={open}
         onClose={handleCloseChallengeManu}
