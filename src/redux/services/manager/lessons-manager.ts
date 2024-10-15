@@ -95,11 +95,17 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
-    askAI: builder.mutation<IOpenAiRequest & BaseResponseInterface, { prompt: string }>({
-      query: ({ prompt }) => ({
+    askAI: builder.mutation<
+      IOpenAiRequest & BaseResponseInterface,
+      { prompt: string; add_response_format: string }
+    >({
+      query: ({ prompt, add_response_format = 'true' }) => ({
         url: '/manager/lesson/openAiRequest',
         method: 'POST',
-        body: { prompt },
+        body: {
+          prompt,
+          add_response_format: add_response_format ? add_response_format : 'true',
+        },
       }),
     }),
     createLessonUsingOpenAIAssistant: builder.mutation<

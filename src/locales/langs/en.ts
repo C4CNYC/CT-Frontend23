@@ -841,6 +841,18 @@ const en = {
   open_full_catalog: 'Open Full Catalog',
 
   // code panel blocks
+  preview_controls_run: 'Run',
+  preview_controls_stop: 'Stop',
+  preview_controls_publish: 'Publish',
+  preview_controls_refresh: 'Refresh',
+  console_title: 'Console',
+  console_tooltip_title: 'What is a console?',
+  console_tooltip_subtitle_1:
+    ' It’s the place you see a result when you run javascript (JS).Because most times JS runs in the background and does it’s calculations and response there.',
+  console_tooltip_subtitle_2:
+    'Only when you specifically link a particular function to a specific part of the page do you actually see JS modifying the “Front” page.',
+  console_tooltip_subtitle_3:
+    'The fancy term for this is “Manipulating the DOM”. - And “DOM” stands for Document Object Model.',
   no_preview_available_title: 'Browser',
   no_preview_available_results: 'Here you will see the results of your work in realtime',
   no_preview_available: 'No preview available?',
@@ -876,6 +888,7 @@ const en = {
   enable: 'Enable:',
   editor_colors: 'Editor colors',
   bg_color: 'Background Color:',
+  slide_bg_color: 'Slide Color',
   text_color: 'Text Color:',
   btn_group_next: 'NEXT 👀',
   btn_group_you_did_it: 'YOU DID IT 🙌',

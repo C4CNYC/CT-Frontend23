@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
@@ -29,10 +29,19 @@ import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 
+import CloneSlideDialogs from './CreateSlide/CloneSlideDialogs'
+import { DialogTypes } from './CreateSlide/CreateSlideTypes'
 import LessonListItem from './LesonListItem'
+import CloneExistingSlide from './Modals/CloneExistingSlideMenu'
 import SkeletonList from './Modals/SkeletonList'
 import SlideTemplateDialog from './slide-templates'
 
+type cloneExistingSlideDialogTypes =
+  | ''
+  | 'Empty Slide'
+  | 'HTML Template'
+  | 'Normal Template'
+  | 'With AI'
 interface Props {
   lessonId: string
 }
@@ -46,6 +55,9 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
 
   const [updateLessonContent] = useUpdateLessonContentMutation()
   const [createLessonContent, { isLoading: createLessonLoading }] = useCreateLessonContentMutation()
+  const [cloneExistingSlideMenu, setcloneExistingSlideMenu] = useState(false)
+  const [cloneExistingSlideDialogs, setcloneExistingSlideDialogs] =
+    useState<cloneExistingSlideDialogTypes>('')
   const [removeLessonContent] = useRemoveLessonContentMutation()
   const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
     { id: lessonId },
@@ -57,7 +69,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     refetch: lessonContentsRefetch,
     isUninitialized: lessonContentsUninitialized,
   } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
-
+  const slideAddButtonRef = useRef<HTMLButtonElement>(null)
   const { board } = useSelector((state: RootState) => state.lessonSteps)
 
   useEffect(() => {
@@ -128,7 +140,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     ? parseFloat(board.cards[idCardWithMaxOrder].meta.order as string) + 1
     : 1
 
-  const createNewContent = async (): Promise<void> => {
+  const createEmptySlide = async (): Promise<void> => {
     try {
       const { id: stepId } = await createLessonContent({
         lessonId,
@@ -252,7 +264,6 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
             <FaChevronDown size={25} />
           </LoadingButton>
         </Stack>
-
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId='contents'>
             {(provided) => (
@@ -349,5 +360,6 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
         </MenuItem>
       </CustomPopover>
     </>
+
   )
 }
