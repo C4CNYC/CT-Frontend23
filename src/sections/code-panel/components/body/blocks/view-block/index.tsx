@@ -1,7 +1,5 @@
 import { type FC, useState } from 'react'
 
-import ReplayIcon from '@mui/icons-material/Replay'
-import { IconButton, Typography } from '@mui/material'
 import { CgBrowser } from '@react-icons/all-files/cg/CgBrowser'
 import { TbArrowBarToRight } from '@react-icons/all-files/tb/TbArrowBarToRight'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +12,8 @@ import { useTranslate } from '@/utils/translateHelper'
 import BaseBlock from '../base-block'
 
 import BrowserView, { CodeDocument } from './browser-view'
+import PreviewControls from './browser-view/preview-controls'
+import ConsoleBlock from './console-block'
 
 interface IViewBlock {
   document: CodeDocument | null
@@ -35,7 +35,7 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
     setIsOpenHeader(isOpen)
   }
 
-  const reloadIffame = () => {
+  const reloadIframe = () => {
     setIframeKey(iframeKey + 1)
     if (reloadBrowserView) {
       reloadBrowserView()
@@ -57,26 +57,14 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
-      <IconButton
-        onClick={reloadIffame}
-        sx={{
-          position: 'absolute',
-          top: '5%',
-          right: 0,
-          background: 'rgba(179, 96, 96, .5)',
-          borderRadius: '0 0 0 20px',
-        }}
-      >
-        <ReplayIcon />
-        <Typography variant='caption'>Run Code</Typography>
-      </IconButton>
-
+      <PreviewControls reloadIframe={reloadIframe} />
       <BrowserView
         document={document}
         integrations={integrations}
         isOpenHeader={isOpenHeader}
         iframeKey={iframeKey}
       />
+      <ConsoleBlock />
     </BaseBlock>
   )
 }

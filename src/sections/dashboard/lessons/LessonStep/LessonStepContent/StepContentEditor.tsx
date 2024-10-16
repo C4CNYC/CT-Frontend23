@@ -53,7 +53,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }))
 
-const DEFAULT_COLOR = '#F6F9FC'
+const DEFAULT_COLOR = '' // '#F6F9FC'
 
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query

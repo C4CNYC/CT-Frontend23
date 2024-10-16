@@ -1,12 +1,15 @@
 import { useContext, useState } from 'react'
 
 import { Box } from '@mui/material'
+import { useAtom } from 'jotai'
 
 import { ResizerUi } from '@/components'
 import { MyEditor } from '@/components/remirror-editor/MyEditor'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+
+import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
 
 import { LessonContentContext } from './LessonContent.context'
 import { StepPreview } from './StepPreview'
@@ -31,13 +34,14 @@ export default function StepMultimedia({
   setBgColor,
 }: Props): React.ReactElement {
   const { locked } = useContext(LessonContentContext)
+  const [{ isAllColumnsVisible }] = useAtom(lessonViewAtom)
   const [value, setValue] = useState<string>('')
 
   return (
     <ResizerUi
       split='vertical'
       primary='first'
-      defaultSize={800}
+      defaultSize={isAllColumnsVisible ? '100%' : 800}
     >
       <Box sx={{ bgcolor: bgColor, height: '100%' }}>
         <MyEditor
@@ -55,12 +59,11 @@ export default function StepMultimedia({
           setBgColor={setBgColor}
         />
       </Box>
-      <Box sx={{ bgcolor: bgColor, height: '100%' }}>
-        <StepPreview
-          integrations={integrations}
-          staticValue={value}
-        />
-      </Box>
+      <StepPreview
+        integrations={integrations}
+        staticValue={value}
+        bgColor={bgColor}
+      />
     </ResizerUi>
   )
 }

@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, Stack, Typography, useTheme } from '@mui/material'
+import { Box, Button, MenuItem, Stack, Typography, useTheme } from '@mui/material'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
 import { ImPlus } from '@react-icons/all-files/im/ImPlus'
 import { useSnackbar } from 'notistack'
@@ -15,13 +15,14 @@ import {
 } from '@/redux/services/manager/modules-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
 import { useGetModuleWithLessonsQuery } from 'src/redux/services/manager/modules-student'
 
 import SkeletonList from '../../lessons/LessonStep/Modals/SkeletonList'
 import CreateModuleDialog from '../CreateModuleDialog'
 
-import { LESSON_LIST_BLOCK_SX, getAddLessonBtnSx, getModuleBtnSx } from './constants'
+import { LESSON_LIST_BLOCK_SX, MENU_ITEM_SX, getAddLessonBtnSx, getModuleBtnSx } from './constants'
 import ModuleLessonItem from './ModuleLessonItem'
 
 // Reorder lesson in the array
@@ -41,6 +42,8 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
   const theme = useTheme()
+
+  const popover = usePopover()
 
   const moduleBtnSx = useMemo(() => getModuleBtnSx(theme), [theme])
   const addLessonBtnSx = useMemo(() => getAddLessonBtnSx(theme), [theme])
@@ -104,87 +107,134 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
   }
 
   return (
-    <Box sx={LESSON_LIST_BLOCK_SX}>
-      <Stack sx={{ gap: 2 }}>
-        <Typography
-          variant='subtitle1'
-          sx={{ pl: 1, fontWeight: 500, fontSize: '1.1rem' }}
-        >
-          {module?.name}
-        </Typography>
-
-        {module ? (
-          <CreateModuleDialog
-            isEdit
-            id={module.id}
-            defaultValues={{
-              name: module.name,
-              description: module.description as string,
-              active: module.active as boolean,
-              tips: '',
-              duration: module.duration ? getDurationString(module.duration) : '',
-              teacher_slides: module.teacher_slides as string,
-              teacher_forum: module.teacher_forum as string,
-              lesson_plans: module.lesson_plans as string,
-              initial_likes: module.initial_likes as number,
-              initial_stars: module.initial_stars as number,
-              initial_enrolled: module.initial_enrolled as number,
-            }}
-            moduleTips={module.tips}
+    <>
+      <Box sx={LESSON_LIST_BLOCK_SX}>
+        <Stack sx={{ gap: 2 }}>
+          <Typography
+            variant='subtitle1'
+            sx={{ pl: 1, fontWeight: 500, fontSize: '1.1rem' }}
           >
-            <Button
-              variant='outlined'
-              sx={moduleBtnSx}
+            {module?.name}
+          </Typography>
+
+          {module ? (
+            <CreateModuleDialog
+              isEdit
+              id={module.id}
+              defaultValues={{
+                name: module.name,
+                description: module.description as string,
+                active: module.active as boolean,
+                tips: '',
+                duration: module.duration ? getDurationString(module.duration) : '',
+                teacher_slides: module.teacher_slides as string,
+                teacher_forum: module.teacher_forum as string,
+                lesson_plans: module.lesson_plans as string,
+                initial_likes: module.initial_likes as number,
+                initial_stars: module.initial_stars as number,
+                initial_enrolled: module.initial_enrolled as number,
+              }}
+              moduleTips={module.tips}
             >
-              <FiSettings size='20px' />
-              {translate('modules_settings').toUpperCase()}
-            </Button>
-          </CreateModuleDialog>
-        ) : (
-          ''
-        )}
-        <CreateLessonDialog>
+              <Button
+                variant='outlined'
+                sx={moduleBtnSx}
+              >
+                <FiSettings size='20px' />
+                {translate('modules_settings').toUpperCase()}
+              </Button>
+            </CreateModuleDialog>
+          ) : (
+            ''
+          )}
+
           <LoadingButton
             loading={isLoadingModule}
             variant='outlined'
             fullWidth
             sx={addLessonBtnSx}
-            // onClick={() => createNewContent()}
+            onClick={popover.onOpen}
             disabled={isLoadingModule}
           >
             <ImPlus size='22px' />
             <Typography variant='subtitle1'>{translate('modules_add_lesson')}</Typography>
           </LoadingButton>
-        </CreateLessonDialog>
-      </Stack>
+        </Stack>
 
-      {isLoading ? (
-        <SkeletonList />
-      ) : (
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='droppable'>
-            {(provided) => (
-              <Stack
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                direction='column'
-                spacing={1}
-                sx={{ py: 1 }}
-              >
-                {lessons.map((lesson: any, index: number) => (
-                  <ModuleLessonItem
-                    onRemove={onRemove}
-                    key={index}
-                    lesson={lesson}
-                    index={index}
-                  />
-                ))}
-                {provided.placeholder}
-              </Stack>
-            )}
-          </Droppable>
-        </DragDropContext>
-      )}
-    </Box>
+        {isLoading ? (
+          <SkeletonList />
+        ) : (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId='droppable'>
+              {(provided) => (
+                <Stack
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  direction='column'
+                  spacing={1}
+                  sx={{ py: 1 }}
+                >
+                  {lessons.map((lesson: any, index: number) => (
+                    <ModuleLessonItem
+                      onRemove={onRemove}
+                      key={index}
+                      lesson={lesson}
+                      index={index}
+                    />
+                  ))}
+                  {provided.placeholder}
+                </Stack>
+              )}
+            </Droppable>
+          </DragDropContext>
+        )}
+      </Box>
+      <CustomPopover
+        open={popover.open}
+        onClose={popover.onClose}
+        hiddenArrow
+        sx={{
+          p: 1,
+          border: '1px solid #C4C4C4',
+          background: '#F4F1F1',
+        }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            popover.onClose()
+          }}
+          sx={MENU_ITEM_SX}
+        >
+          {translate('modules_add_lesson_existing')}
+        </MenuItem>
+        <CreateLessonDialog>
+          <MenuItem sx={MENU_ITEM_SX}>{translate('modules_add_lesson_new_lesson')}</MenuItem>
+        </CreateLessonDialog>
+        <MenuItem
+          onClick={() => {
+            popover.onClose()
+          }}
+          sx={MENU_ITEM_SX}
+        >
+          {translate('modules_add_lesson_new_quiz')}
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            popover.onClose()
+          }}
+          sx={MENU_ITEM_SX}
+        >
+          {translate('modules_add_lesson_new_exircises')}
+        </MenuItem>
+      </CustomPopover>
+    </>
   )
 }

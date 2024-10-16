@@ -191,6 +191,22 @@ export default function MyCreationsMenu(): React.ReactElement {
               </ListItemIcon>
             </MenuItem>
           </DiamondFeatureModal>
+          <DiamondFeatureModal>
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
+              Templates
+              <ListItemIcon
+                sx={{
+                  pl: 2,
+                  mr: -2,
+                }}
+              >
+                <Iconify
+                  icon='ion:diamond-outline'
+                  color='#43D4DD'
+                />
+              </ListItemIcon>
+            </MenuItem>
+          </DiamondFeatureModal>
         </MenuPopover>
       </RoleBasedGuard>
     </>

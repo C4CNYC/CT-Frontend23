@@ -58,6 +58,7 @@ export function AiLessonCreateDialogFe({
     new FormData(e.currentTarget).forEach((v, k) => (formdata += '\n' + `${k} = ${v} `))
     aiThinkingSet(true)
     let response = await askAI({
+      add_response_format: 'true',
       prompt: `
             make an lesson with those properties : 
             ${formdata}

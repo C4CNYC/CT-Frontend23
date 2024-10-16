@@ -16,6 +16,7 @@ interface BrowserViewProps {
   isOpenHeader?: boolean
   iframeKey?: number
   stepBgColor?: string
+  reloadIframe?: () => void
 }
 
 enum TagNames {
@@ -41,8 +42,16 @@ const BrowserView: FC<BrowserViewProps> = ({
   iframeKey,
   stepBgColor,
   integrations,
+  reloadIframe,
 }) => {
   const [docSrc, setDocSrc] = useState('')
+
+  const IFRAME_STYLE = {
+    border: 0,
+    width: '100%',
+    height: iframeKey ? 'calc(100% - 32px)' : '100%',
+    background: '#fff',
+  }
 
   useEffect(() => {
     if (document == null) {
@@ -82,13 +91,6 @@ const BrowserView: FC<BrowserViewProps> = ({
   ) : (
     <SkeletonViewBlock isOpenHeader={isOpenHeader} />
   )
-}
-
-const IFRAME_STYLE = {
-  border: 0,
-  width: '100%',
-  height: '100%',
-  background: '#fff',
 }
 
 export default BrowserView

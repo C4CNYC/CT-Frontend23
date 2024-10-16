@@ -56,6 +56,7 @@ export interface ILessonContent {
   slug: string
   title: string
   description: string
+  cover: string
   active: boolean
   draft: boolean
   tags: string[]

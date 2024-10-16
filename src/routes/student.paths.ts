@@ -48,6 +48,7 @@ export const STUDENT_PATH_DASHBOARD = {
   },
   codePanel: {
     root: '/student/code-panel',
+    sandbox: '/student/code-panel?sandbox=true',
     workSpace: ({
       courseId,
       unitId,

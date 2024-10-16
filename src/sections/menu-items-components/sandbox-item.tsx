@@ -10,7 +10,7 @@ export default function SandboxMenuItem(): React.ReactElement {
   return (
     <Link
       component={NextLink}
-      href={STUDENT_PATH_DASHBOARD.codePanel.root}
+      href={STUDENT_PATH_DASHBOARD.codePanel.sandbox}
       underline='none'
       className='defaultIntroStudentStep2 studentJoinStep3'
     >

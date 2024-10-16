@@ -2,6 +2,7 @@ import { type MutableRefObject, useCallback, useState, useMemo } from 'react'
 
 import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect, Text } from '@codemirror/state'
+import { EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
@@ -89,9 +90,9 @@ export const useInitCodemirror = ({
         indentUnit.of('\t'),
         basicSetup(BASIC_SETUP),
         ...language(fileName),
+        EditorState.lineSeparator.of('\\n'),
         dracula,
         lineWrap.of(EditorView.lineWrapping),
-
         ...(socket
           ? [
               peerExtension({
