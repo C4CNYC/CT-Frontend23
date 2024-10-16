@@ -92,15 +92,15 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
         sx={{ p: 0, width: 140, bgcolor: '#D9F6F8' }}
       >
         <Validation
-          stepId={data.id}
-          stepTitle={data.title}
+          stepId={data?.id}
+          stepTitle={data?.title}
           setHasValidation={() => {}}
         >
           <ChallengeBtn />
         </Validation>
         <Preferences
           defaultValues={{ ...data }}
-          contentId={data.id}
+          contentId={data?.id}
           lessonId={lessonId}
           defaultTab={3}
         >
@@ -108,7 +108,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
         </Preferences>
         <Preferences
           defaultValues={{ ...data }}
-          contentId={data.id}
+          contentId={data?.id}
           lessonId={lessonId}
           defaultTab={1}
         >
@@ -116,7 +116,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
         </Preferences>
         <Preferences
           defaultValues={{ ...data }}
-          contentId={data.id}
+          contentId={data?.id}
           lessonId={lessonId}
           defaultTab={2}
         >
