@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal'
 import { Stack } from '@mui/system'
 import { useCommands } from '@remirror/react'
 import { useSnackbar } from 'notistack'
+import { ImageAttributes } from 'remirror/extensions'
 
 import { CustomBreadcrumbs } from '@/components'
 import FileManagerFileItem from '@/components/file-manager/file-manager-file-item'
@@ -27,9 +28,10 @@ import { useTranslate } from '@/utils/translateHelper'
 
 export interface MediaModalProps {
   children: React.ReactElement
+  insertImage?: (attributes: ImageAttributes) => void
 }
 
-export function MediaModal({ children }: MediaModalProps): React.ReactElement | null {
+export function MediaModal({ children, insertImage }: MediaModalProps): React.ReactElement | null {
   const { copy } = useCopyToClipboard()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -53,14 +55,16 @@ export function MediaModal({ children }: MediaModalProps): React.ReactElement | 
   const [deleteMedia] = useDeleteMediaMutation()
   const [createMedia] = useCreateMediaMutation()
   const [uploadMediaFile] = useUploadMediaFileMutation()
-  let insertImage: any
+
   try {
     const commands = useCommands()
     insertImage = commands.insertImage
   } catch (e: any) {
-    insertImage = ({ src }: { src: string }) => {
-      copy(src)
-      enqueueSnackbar(translate('image_url_copied_msg'))
+    if (!insertImage) {
+      insertImage = ({ src }: { src: string }) => {
+        copy(src)
+        enqueueSnackbar(translate('image_url_copied_msg'))
+      }
     }
   }
 
