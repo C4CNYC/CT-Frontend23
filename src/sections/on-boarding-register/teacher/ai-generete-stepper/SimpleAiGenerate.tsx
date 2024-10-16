@@ -45,7 +45,7 @@ const SimpleAiGenerate = ({
   redirectAfterComplete,
 }: ISimpleAiGenerateProps) => {
   const theme = useTheme()
-  const [textFieldValue, setTextFieldValue] = useState<null | string>(null)
+  const [textFieldValue, setTextFieldValue] = useState<string>('')
   const skipBtnStyles = useMemo(
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]

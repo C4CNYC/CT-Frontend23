@@ -196,7 +196,6 @@ const remirrorStyles = `
 }
 
 .remirror-theme code {
-  background-color: #f5f4f4;
   border: .1rem solid rgba(0, 0, 0, .1);
   border-radius: 0.4rem;
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;

@@ -525,7 +525,11 @@ const fr = {
   modules_lesson_plans_link: 'Lien vers les plans de cours',
   modules_completed: '{{percentage}}% terminé',
   modules_settings: 'Paramètres des modules',
-  modules_add_lesson: 'Ajouter une leçon',
+  modules_add_lesson: 'Ajouter une leçon, un quiz ou une activité',
+  modules_add_lesson_existing: 'Insérer une leçon existante',
+  modules_add_lesson_new_lesson: 'Ajouter une nouvelle leçon',
+  modules_add_lesson_new_quiz: 'Ajouter un nouveau quiz',
+  modules_add_lesson_new_exircises: 'Ajouter de nouveaux exercices',
   modules_view_lesson: 'Voir la leçon',
   modules_add_lesson_slide_link: 'Ajouter/Modifier des diapositives de cours',
   modules_pls_select_lesson: 'SVP SÉLECTIONNER LA LEÇON',
@@ -777,6 +781,11 @@ const fr = {
   step_cant_removed: 'Désolé, nous ne pouvons pas supprimer pour le moment',
   lesson_settup_settings: 'CONFIGURATION ET PARAMÈTRES DE LA LEÇON',
   slide_add: 'AJOUTER UNE DIAPOSITIVE',
+  slide_add_blank: 'Nouvelle diapositive vierge',
+  slide_add_normal: 'Utiliser un modèle normal',
+  slide_add_html: 'Utiliser le modèle HTML',
+  slide_add_promt_ai: 'Invite avec IA',
+  slide_add_ai_templates: 'Modèles IA',
   slide_content_updated: 'Contenu mis à jour',
   slide_standard: 'Standard',
   slide_select_format: 'Sélectionnez le format de la diapositive',
@@ -819,6 +828,18 @@ const fr = {
   open_full_catalog: 'Ouvrir le catalogue complet',
 
   // code panel blocks
+  preview_controls_run: 'Rune',
+  preview_controls_stop: 'Arrêt',
+  preview_controls_publish: 'Publier',
+  preview_controls_refresh: 'Rafraîchir',
+  console_title: 'Console',
+  console_tooltip_title: "Qu'est-ce que la console?",
+  console_tooltip_subtitle_1:
+    "C'est la plaque que je vois comme résultat lorsque j'exécute Javascript (JS) la plupart du temps, JS rns en arrière-plan et y fait ses calculs et sa réponse.",
+  console_tooltip_subtitle_2:
+    'En ligne, vous pouvez lier spécifiquement une fonction particulière à une partie spécifique de la page vers le ZS actuel qui modifie la page "Front".',
+  console_tooltip_subtitle_3:
+    'Le terme sophistiqué pour le désigner est « Manipuler la MAISON ». - Andes "DOM" signifie Document Object Model.',
   no_preview_available_title: 'Navigateur',
   no_preview_available_results: 'Vous verrez ici les résultats de votre travail en temps réel',
   no_preview_available: 'Aucun aperçu disponible?',

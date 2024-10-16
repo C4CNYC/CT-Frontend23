@@ -27,8 +27,8 @@ export const getModuleBtnSx = (theme: Theme): SxProps => ({
 export const getAddLessonBtnSx = (theme: Theme): SxProps => ({
   mb: 1,
   p: 2,
-  gap: 1,
-  flexDirection: 'column',
+  gap: 3,
+  flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   bgcolor: theme.palette.background.default,
@@ -102,3 +102,5 @@ export const ADD_SLIDE_LINK_SX = {
   alignItems: 'center',
   gap: 1,
 }
+
+export const MENU_ITEM_SX = { fontWeight: 700, color: '#4D4D4D' }
