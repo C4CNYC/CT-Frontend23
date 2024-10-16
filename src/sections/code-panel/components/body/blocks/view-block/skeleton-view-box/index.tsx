@@ -5,8 +5,6 @@ import { Stack } from '@mui/system'
 
 import { useTranslate } from '@/utils/translateHelper'
 
-import PreviewControls from '../browser-view/preview-controls'
-
 import {
   AVAILABLE_TYP_SX,
   CODING_TYP_SX,
@@ -35,7 +33,6 @@ const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
 
   return (
     <>
-      <PreviewControls disabled />
       <Stack sx={parentStackSx}>
         <Stack sx={HEADER_SKELETON_SX}>
           <Skeleton

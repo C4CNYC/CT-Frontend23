@@ -57,7 +57,7 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
-      {document && <PreviewControls reloadIframe={reloadIframe} />}
+      <PreviewControls reloadIframe={reloadIframe} />
       <BrowserView
         document={document}
         integrations={integrations}

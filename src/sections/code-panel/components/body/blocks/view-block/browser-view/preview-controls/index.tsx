@@ -32,10 +32,10 @@ const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsP
   return (
     <Stack sx={PREVIEW_CONT_SX}>
       <Button
-        disabled={disabled}
         sx={btnStartStop}
+        onClick={reloadIframe}
       >
-        {isRunning ? translate('preview_controls_run') : translate('preview_controls_stop')}
+        {isRunning ? translate('preview_controls_stop') : translate('preview_controls_run')}
         <Iconify
           icon='solar:play-bold'
           width={18}
@@ -47,16 +47,17 @@ const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsP
         sx={btnRefresh}
         onClick={reloadIframe}
       >
-        {translate('preview_controls_publish')}
+        {translate('preview_controls_refresh')}
         <Iconify icon='ic:round-refresh' />
       </Button>
+      {/* TODO:
       <Button
         disabled={disabled}
         sx={{ ...btnPublish, ml: 'auto' }}
       >
-        {translate('preview_controls_refresh')}
+        {translate('preview_controls_publish')}
         <Iconify icon='mage:megaphone-a' />
-      </Button>
+      </Button> */}
     </Stack>
   )
 }
