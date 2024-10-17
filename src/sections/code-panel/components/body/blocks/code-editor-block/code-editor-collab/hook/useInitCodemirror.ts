@@ -90,7 +90,7 @@ export const useInitCodemirror = ({
         indentUnit.of('\t'),
         basicSetup(BASIC_SETUP),
         ...language(fileName),
-        EditorState.lineSeparator.of('\\n'),
+        EditorState.lineSeparator.of('\n'),
         dracula,
         lineWrap.of(EditorView.lineWrapping),
         ...(socket
