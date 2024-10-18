@@ -3,6 +3,7 @@ import { type FC, memo, useEffect, useMemo, useState } from 'react'
 import { Text } from '@codemirror/state'
 import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
+import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
@@ -67,6 +68,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const dispatch = useDispatch()
   const [codeValue, setCodeValue] = useState<string | undefined>('')
   const lessonIdFromQuery = query?.lessonId
+  const searchParams = useSearchParams()
+  const sandbox = searchParams.get('sandbox')
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
@@ -104,6 +107,11 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   })
 
   const localstorageCode = useMemo(() => {
+    if (!lessonId && !lessonIdFromQuery) {
+      if (!sandbox) {
+        return
+      }
+    }
     if (mode === EditorMode.Owner) {
       if (prevLessonCode) {
         return prevLessonCode
@@ -174,11 +182,11 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   })
 
   useEffect(() => {
-    setCodeValue(
+    const newCodeValue =
       prevLessonCode ??
-        localstorageCode ??
-        (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
-    )
+      localstorageCode ??
+      (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
+    setCodeValue(newCodeValue)
   }, [preloadedCode, localstorageCode, streamingDoc, onChangeCodemirrorValue])
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
