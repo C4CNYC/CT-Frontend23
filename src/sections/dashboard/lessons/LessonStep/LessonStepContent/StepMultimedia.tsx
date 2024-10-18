@@ -46,7 +46,7 @@ export default function StepMultimedia({
       <Box sx={{ bgcolor: bgColor, height: '100%' }}>
         <MyEditor
           onSubmit={() => {
-            onSubmit(JSON.stringify(value))
+            onSubmit(JSON.stringify({ doc: value }))
           }}
           integrations={integrations}
           multimediaValue={content}
