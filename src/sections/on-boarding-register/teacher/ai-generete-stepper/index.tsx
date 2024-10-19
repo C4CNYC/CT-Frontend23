@@ -81,6 +81,10 @@ export default function AIGenerateStepper({
     useGenerateLessonMultiMutation()
   const [createLessonUsingOpenAIAssistant, { isLoading: createLessonUsingOpenAIAssistantLoading }] =
     useCreateLessonUsingOpenAIAssistantMutation()
+  const [
+    createLessonUsingOpenAIAssistantBeta,
+    { isLoading: createLessonUsingOpenAIAssistantBetaLoading },
+  ] = useCreateLessonUsingOpenAIAssistantBetaMutation()
 
   const generateAICourseSchema = Yup.object().shape({
     RlevelR: Yup.string(),
@@ -137,6 +141,13 @@ export default function AIGenerateStepper({
         break
       case 'project':
         newLesson = await createLessonUsingOpenAIAssistant({
+          ...lessonData,
+          proficiencyLevel: data.RgradesR,
+          programmingLanguage: data.RlessonLanguageR,
+        })
+        break
+      case 'beta':
+        newLesson = await createLessonUsingOpenAIAssistantBeta({
           ...lessonData,
           proficiencyLevel: data.RgradesR,
           programmingLanguage: data.RlessonLanguageR,
