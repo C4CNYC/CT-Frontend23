@@ -11,6 +11,7 @@ import {
   useGenerateLessonMutation,
   useGenerateLessonMultiMutation,
   useCreateLessonUsingOpenAIAssistantMutation,
+  useCreateLessonUsingOpenAIAssistantBetaMutation,
 } from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
@@ -81,6 +82,10 @@ export default function AIGenerateStepper({
     useGenerateLessonMultiMutation()
   const [createLessonUsingOpenAIAssistant, { isLoading: createLessonUsingOpenAIAssistantLoading }] =
     useCreateLessonUsingOpenAIAssistantMutation()
+  const [
+    createLessonUsingOpenAIAssistantBeta,
+    { isLoading: createLessonUsingOpenAIAssistantBetaLoading },
+  ] = useCreateLessonUsingOpenAIAssistantBetaMutation()
 
   const generateAICourseSchema = Yup.object().shape({
     RlevelR: Yup.string(),
@@ -137,6 +142,13 @@ export default function AIGenerateStepper({
         break
       case 'project':
         newLesson = await createLessonUsingOpenAIAssistant({
+          ...lessonData,
+          proficiencyLevel: data.RgradesR,
+          programmingLanguage: data.RlessonLanguageR,
+        })
+        break
+      case 'beta':
+        newLesson = await createLessonUsingOpenAIAssistantBeta({
           ...lessonData,
           proficiencyLevel: data.RgradesR,
           programmingLanguage: data.RlessonLanguageR,
