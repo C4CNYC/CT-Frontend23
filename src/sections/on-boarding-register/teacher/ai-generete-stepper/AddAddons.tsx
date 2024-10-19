@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   IconButton,
   Stack,
+  TextField,
   Typography,
   useTheme,
 } from '@mui/material'
@@ -17,7 +18,7 @@ import {
   getSkipBtnSx,
   IAddAddonsProps,
   IAddons,
-  NEXT_BUTTON_STYLES,
+  getNextBtnSx,
   NOTE_DIAMOND_SX,
   STEP_CONTAINER_STYLES,
   STEP_TYTLE_STYLES,
@@ -39,6 +40,10 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
+  const nextBtnStyles = useMemo(
+    () => getNextBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddons({
@@ -48,10 +53,7 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
   }
 
   return (
-    <Stack
-      gap={2}
-      sx={STEP_CONTAINER_STYLES}
-    >
+    <Stack sx={STEP_CONTAINER_STYLES}>
       <Stack
         direction='row'
         gap={2}
@@ -176,6 +178,10 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
             </Typography>
           }
         />
+        <TextField
+          name=''
+          placeholder='Additional Request'
+        />
       </Stack>
       <Stack sx={NOTE_DIAMOND_SX}>
         <Iconify
@@ -200,7 +206,7 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
         </Button>
         <Button
           variant='contained'
-          sx={NEXT_BUTTON_STYLES}
+          sx={nextBtnStyles}
           onClick={() => {
             onSubmitAddons(addons)
           }}

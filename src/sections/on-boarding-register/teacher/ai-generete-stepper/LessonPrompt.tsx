@@ -10,13 +10,13 @@ import {
   GRADES,
   LESSON_DURARION,
   LEVELS,
-  NEXT_BUTTON_STYLES,
   OPTIONAL_TYPO_STYLES,
   getSkipBtnSx,
   STEP_CONTAINER_STYLES,
   STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
   getToggleBtnGroupSx,
+  getNextBtnSx,
 } from './constants'
 
 type ILessonPromptProps = {
@@ -36,12 +36,13 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
+  const nextBtnStyles = useMemo(
+    () => getNextBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
 
   return (
-    <Stack
-      gap={2}
-      sx={STEP_CONTAINER_STYLES}
-    >
+    <Stack sx={STEP_CONTAINER_STYLES}>
       <Stack
         direction='row'
         gap={2}
@@ -73,7 +74,7 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
       </Stack>
       <Stack>
         <Typography
-          variant='h4'
+          variant='h6'
           sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
@@ -88,12 +89,12 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
       </Stack>
       <Stack>
         <Typography
-          variant='h4'
+          variant='h6'
           color=''
           gutterBottom
           sx={OPTIONAL_TYPO_STYLES}
         >
-          Grade/Age <Typography variant='body2'>Optional</Typography>
+          Grade/Age <Typography variant='caption'>Optional</Typography>
         </Typography>
         <RHFToggleButtonGroup
           name='RgradesR'
@@ -104,11 +105,11 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
       </Stack>
       <Stack>
         <Typography
-          variant='h4'
+          variant='h6'
           gutterBottom
           sx={OPTIONAL_TYPO_STYLES}
         >
-          Lesson Duration <Typography variant='body2'>Optional</Typography>
+          Lesson Duration <Typography variant='caption'>Optional</Typography>
         </Typography>
         <RHFToggleButtonGroup
           name='RlessonDurationR'
@@ -127,7 +128,7 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
         </Button>
         <Button
           variant='contained'
-          sx={NEXT_BUTTON_STYLES}
+          sx={nextBtnStyles}
           onClick={nextStep}
         >
           Next

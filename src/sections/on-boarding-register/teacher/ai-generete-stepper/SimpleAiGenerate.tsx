@@ -17,12 +17,11 @@ import { useGenerateLessonMutation } from '@root/src/redux/services/manager/less
 import {
   BTN_CONTAINER_STYLES,
   getSkipBtnSx,
-  NEXT_BUTTON_STYLES,
+  getNextBtnSx,
   PROMTS_VARIANTS,
   SIMPLE_GENERATE_TOGLE,
   SIMPLE_GENERATE_TOGLE_GROUP,
   STEP_CONTAINER_STYLES,
-  OPTIONAL_TYPO_STYLES,
   STEP_TYTLE_STYLES,
 } from './constants'
 import LoaderStep from './LoaderStep'
@@ -50,6 +49,10 @@ const SimpleAiGenerate = ({
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
+  const nextBtnStyles = useMemo(
+    () => getNextBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
   const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
 
   const handleChangeTextField = (
@@ -73,7 +76,6 @@ const SimpleAiGenerate = ({
 
   return (
     <Stack
-      gap={2}
       sx={STEP_CONTAINER_STYLES}
       justifyContent='space-between'
     >
@@ -96,18 +98,18 @@ const SimpleAiGenerate = ({
             <Typography
               variant='h3'
               sx={STEP_TYTLE_STYLES}
-              color={theme.palette.mode === 'dark' ? '#616161' : '#333'}
+              color={theme.palette.mode === 'dark' ? '#B5B5B5' : '#333'}
             >
               Create beautiful coding lessons with Mumu 🐯
             </Typography>
             {isModal ? (
               <IconButton
                 onClick={closeModal}
-                sx={{ margin: '0px 0px 0px auto' }}
+                sx={{ position: 'absolute', top: '-12px', right: '-12px' }}
               >
                 <Iconify
                   icon='ion:close'
-                  width='30px'
+                  width='20px'
                 />
               </IconButton>
             ) : null}
@@ -141,18 +143,24 @@ const SimpleAiGenerate = ({
                 placeholder='Enter prompt or select from above'
                 multiline
                 name='RpromptR'
-                minRows={4}
+                minRows={3}
                 value={textFieldValue}
                 required
                 onChange={(e) => {
                   handleChangeTextField(e)
                 }}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: theme.palette.mode === 'dark' ? '#fff' : '#616161',
+                      borderWidth: '2px',
+                    },
+                    background: theme.palette.mode === 'dark' ? '#1a2029' : '',
+                  },
+                }}
               />
               {!textFieldValue ? (
-                <Typography
-                  color={theme.palette.mode === 'dark' ? '#616161' : '#333'}
-                  sx={OPTIONAL_TYPO_STYLES}
-                >
+                <Typography sx={{ color: '#616161', pl: 2, mt: { xs: 0, md: -2 } }}>
                   Please provide a subject for the lesson
                 </Typography>
               ) : null}
@@ -168,7 +176,7 @@ const SimpleAiGenerate = ({
               </Button>
               <Button
                 variant='contained'
-                sx={NEXT_BUTTON_STYLES}
+                sx={nextBtnStyles}
                 onClick={onSubmit}
                 disabled={!textFieldValue}
               >

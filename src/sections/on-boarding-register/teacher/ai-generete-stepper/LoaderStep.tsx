@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material'
+import { Stack, Typography, useTheme } from '@mui/material'
 
 import { LOADING_STEPS } from './constants'
 import LoadingItem from './LoadingItem'
@@ -8,6 +8,7 @@ interface ILoaderStep {
 }
 
 const LoaderStep = ({ isLoading }: ILoaderStep) => {
+  const theme = useTheme()
   return (
     <Stack
       gap={2}
@@ -22,7 +23,16 @@ const LoaderStep = ({ isLoading }: ILoaderStep) => {
       >
         We are building 🏗️ your lesson...
       </Typography>
-      <Stack sx={{ background: '#F0EEEE80', gap: 2, py: 2, px: 3, borderRadius: '18px' }}>
+      <Stack
+        sx={{
+          background:
+            theme.palette.mode === 'dark' ? theme.palette.background.neutral : '#F0EEEE80',
+          gap: 2,
+          py: 2,
+          px: 3,
+          borderRadius: '18px',
+        }}
+      >
         {LOADING_STEPS.map((el, index) => (
           <LoadingItem
             key={index}

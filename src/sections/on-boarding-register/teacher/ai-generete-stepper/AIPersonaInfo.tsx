@@ -2,13 +2,12 @@ import { useMemo } from 'react'
 
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
-import { Iconify } from '@root/src/components'
+import { Iconify, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 
 import {
   BTN_CONTAINER_STYLES,
   getToggleBtnGroupSx,
-  NEXT_BUTTON_STYLES,
   OPTIONAL_TYPO_STYLES,
   PERSONA,
   getSkipBtnSx,
@@ -16,22 +15,33 @@ import {
   STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
   TONE,
+  getNextBtnSx,
 } from './constants'
 
 type IAIPersonaInfoProps = {
   prevStep: () => void
   closeModal?: () => void
+  customPersona: boolean
+  customTone: boolean
 }
 
-export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
+export function AIPersonaInfo({
+  prevStep,
+  closeModal,
+  customPersona,
+  customTone,
+}: IAIPersonaInfoProps) {
   const theme = useTheme()
-
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
   const skipBtnStyles = useMemo(
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+  const nextBtnStyles = useMemo(
+    () => getNextBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
 
@@ -50,10 +60,7 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
           }
         `}
       </style>
-      <Stack
-        gap={2}
-        sx={STEP_CONTAINER_STYLES}
-      >
+      <Stack sx={STEP_CONTAINER_STYLES}>
         <Stack
           direction='row'
           gap={2}
@@ -85,35 +92,59 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
         </Stack>
         <Stack>
           <Typography
-            variant='h4'
+            variant='h6'
             sx={OPTIONAL_TYPO_STYLES}
             gutterBottom
           >
-            Persona <Typography variant='body2'>Optional</Typography>
+            Persona <Typography variant='caption'>Optional</Typography>
           </Typography>
           <RHFToggleButtonGroup
             name='RpersonaR'
             options={PERSONA}
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
             sxButton={toggleButtonStyles}
+            disabled={customPersona}
+          />
+          <RHFTextField
+            sx={{ maxWidth: '400px', mt: 2 }}
+            name='RcustomPersonaR'
+            placeholder='Other'
           />
         </Stack>
         <Stack>
           <Typography
-            variant='h4'
+            variant='h6'
             sx={OPTIONAL_TYPO_STYLES}
             gutterBottom
           >
-            Tone <Typography variant='body2'>Optional</Typography>
+            Tone <Typography variant='caption'>Optional</Typography>
           </Typography>
           <RHFToggleButtonGroup
             name='RtoneR'
             options={TONE}
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
             sxButton={toggleButtonStyles}
+            disabled={customTone}
+          />
+          <RHFTextField
+            sx={{ maxWidth: '400px', mt: 2 }}
+            name='RcustomToneR'
+            placeholder='Other'
           />
         </Stack>
-
+        <Stack>
+          <Typography
+            variant='h6'
+            sx={OPTIONAL_TYPO_STYLES}
+            gutterBottom
+          >
+            Context <Typography variant='caption'>Optional</Typography>
+          </Typography>
+          <RHFTextField
+            name='RcontextR'
+            placeholder='Any additional context or preferences within the prompt.'
+          />
+        </Stack>
         <label
           className='ohnohoney'
           htmlFor='name'
@@ -138,6 +169,18 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
           name='email'
           placeholder='Your e-mail here'
         />
+        <label
+          className='ohnohoney'
+          htmlFor='state'
+        />
+        <input
+          className='ohnohoney'
+          autoComplete='off'
+          type='state'
+          id='state'
+          name='state'
+          placeholder='Your State here'
+        />
         <Stack sx={BTN_CONTAINER_STYLES}>
           <Button
             type='submit'
@@ -149,7 +192,7 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
           <Button
             type='submit'
             variant='contained'
-            sx={NEXT_BUTTON_STYLES}
+            sx={nextBtnStyles}
           >
             Generate ✨
           </Button>
