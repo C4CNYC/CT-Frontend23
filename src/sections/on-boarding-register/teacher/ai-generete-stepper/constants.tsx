@@ -187,6 +187,12 @@ export const TYPE_LESSON = [
     tooltip: 'Building a project line by line with explanations and step-by-step guidance.',
     icon: 'material-symbols:info-outline',
   },
+  {
+    key: 'Beta',
+    value: 'beta',
+    tooltip: 'Experimental Lesson Generator',
+    icon: 'material-symbols:info-outline',
+  },
 ]
 
 export const PROGRAMMING_LANGUAGE = [
