@@ -11,6 +11,7 @@ import {
   useGenerateLessonMutation,
   useGenerateLessonMultiMutation,
   useCreateLessonUsingOpenAIAssistantMutation,
+  useCreateLessonUsingOpenAIAssistantBetaMutation,
 } from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
