@@ -13,6 +13,7 @@ import {
 import { Iconify } from '@root/src/components'
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { useGenerateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   BTN_CONTAINER_STYLES,
@@ -44,7 +45,10 @@ const SimpleAiGenerate = ({
   redirectAfterComplete,
 }: ISimpleAiGenerateProps) => {
   const theme = useTheme()
+  const translate = useTranslate()
+
   const [textFieldValue, setTextFieldValue] = useState<string>('')
+
   const skipBtnStyles = useMemo(
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
@@ -100,7 +104,7 @@ const SimpleAiGenerate = ({
               sx={STEP_TYTLE_STYLES}
               color={theme.palette.mode === 'dark' ? '#B5B5B5' : '#333'}
             >
-              Create beautiful coding lessons with Mumu 🐯
+              {translate('ai_gen_simple_step_title')}
             </Typography>
             {isModal ? (
               <IconButton
@@ -125,8 +129,8 @@ const SimpleAiGenerate = ({
               >
                 {PROMTS_VARIANTS.map((el) => (
                   <ToggleButton
-                    value={el.text}
-                    key={el.icon}
+                    value={el.key}
+                    key={el.key}
                     sx={SIMPLE_GENERATE_TOGLE}
                   >
                     <Iconify
@@ -135,12 +139,12 @@ const SimpleAiGenerate = ({
                       width={22}
                       height={22}
                     />
-                    {el.text}
+                    {translate(el.text)}
                   </ToggleButton>
                 ))}
               </ToggleButtonGroup>
               <RHFTextField
-                placeholder='Enter prompt or select from above'
+                placeholder={translate('ai_gen_simple_step_placeholder')}
                 multiline
                 name='RpromptR'
                 minRows={3}
@@ -161,7 +165,7 @@ const SimpleAiGenerate = ({
               />
               {!textFieldValue ? (
                 <Typography sx={{ color: '#616161', pl: 2, mt: { xs: 0, md: -2 } }}>
-                  Please provide a subject for the lesson
+                  {translate('ai_gen_simple_step_error_text')}
                 </Typography>
               ) : null}
             </Stack>
@@ -172,7 +176,7 @@ const SimpleAiGenerate = ({
                 onClick={nextStep}
                 disabled={!textFieldValue}
               >
-                Advanced
+                {translate('ai_gen_advanced_btn')}
               </Button>
               <Button
                 variant='contained'
@@ -180,7 +184,7 @@ const SimpleAiGenerate = ({
                 onClick={onSubmit}
                 disabled={!textFieldValue}
               >
-                Generate ✨
+                {translate('ai_gen_generate_btn')}
               </Button>
             </Stack>
           </Stack>

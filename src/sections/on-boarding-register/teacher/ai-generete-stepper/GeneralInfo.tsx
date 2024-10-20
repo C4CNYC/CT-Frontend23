@@ -5,6 +5,7 @@ import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { languages } from '@root/src/assets/data/languages'
 import { Iconify, RHFSelect, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   BTN_CONTAINER_STYLES,
@@ -37,6 +38,8 @@ export function GeneralInfo({
   isCustomLang,
 }: IGeneralInfoProps) {
   const theme = useTheme()
+  const translate = useTranslate()
+
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
@@ -65,7 +68,7 @@ export function GeneralInfo({
           variant='h3'
           sx={STEP_TYTLE_STYLES}
         >
-          Lesson Basics 💬 😍‍
+          {translate('ai_gen_step_1_title')}
         </Typography>
         {isModal ? (
           <IconButton
@@ -85,7 +88,8 @@ export function GeneralInfo({
           sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          Type <Typography variant='caption'>Select one or more</Typography>
+          {translate('ai_gen_type_1_title')}
+          <Typography variant='caption'>{translate('ai_gen_type_1_subtitle')}</Typography>
         </Typography>
         <RHFToggleButtonGroup
           name='RtypeLessonR'
@@ -102,7 +106,8 @@ export function GeneralInfo({
           sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          Programming Language <Typography variant='caption'>Optional</Typography>
+          {translate('ai_gen_progr_lng_title')}
+          <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
         </Typography>
         <RHFToggleButtonGroup
           name='RprogrammingLanguageR'
@@ -117,7 +122,8 @@ export function GeneralInfo({
           sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          Track <Typography variant='caption'>Optional</Typography>
+          {translate('ai_gen_track_title')}
+          <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
         </Typography>
         <RHFToggleButtonGroup
           name='RtrackR'
@@ -132,7 +138,7 @@ export function GeneralInfo({
           sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          Select from list or type the name of any language
+          {translate('ai_gen_lng_select_title')}
         </Typography>
         <Stack sx={LANG_CONT_SX}>
           <RHFSelect
@@ -153,7 +159,7 @@ export function GeneralInfo({
           <RHFTextField
             sx={{ maxWidth: '300px' }}
             name='RcustomLanguageR'
-            placeholder='Other'
+            placeholder={translate('ai_gen_lng_placeholder')}
           />
         </Stack>
       </Stack>
@@ -163,7 +169,7 @@ export function GeneralInfo({
           sx={skipBtnStyles}
           onClick={nextStep}
         >
-          Skip
+          {translate('ai_gen_skip_btn')}
         </Button>
         <Button
           variant='contained'
@@ -171,7 +177,7 @@ export function GeneralInfo({
           onClick={nextStep}
           type='submit'
         >
-          Next
+          {translate('ai_gen_next_btn')}
         </Button>
       </Stack>
     </Stack>

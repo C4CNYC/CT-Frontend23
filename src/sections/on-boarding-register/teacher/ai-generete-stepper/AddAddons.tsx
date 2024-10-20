@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 
 import { Iconify } from '@root/src/components'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   BTN_CONTAINER_STYLES,
@@ -26,6 +27,7 @@ import {
 
 const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) => {
   const theme = useTheme()
+  const translate = useTranslate()
 
   const [addons, setAddons] = useState<IAddons>({
     quiz: false,
@@ -63,7 +65,7 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
           variant='h3'
           sx={STEP_TYTLE_STYLES}
         >
-          Shiny New Things 💍 🤩
+          {translate('ai_gen_addon_title')}
         </Typography>
         {closeModal ? (
           <IconButton
@@ -81,7 +83,7 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
         variant='h4'
         color='#A6A6A6'
       >
-        Add any of the following to your lesson?
+        {translate('ai_gen_addons_title')}
       </Typography>
       <Stack
         sx={{
@@ -108,9 +110,9 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
                 display='inline-block'
                 mr={1}
               >
-                Quiz |
+                {translate('ai_gen_addons_text_main_1')}
               </Typography>
-              Multiple-choice, matching or fill-in-the-blanks
+              {translate('ai_gen_addons_text_sub_1')}
             </Typography>
           }
         />
@@ -129,9 +131,9 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
                 display='inline-block'
                 mr={1}
               >
-                Auto-grading |
+                {translate('ai_gen_addons_text_main_2')}
               </Typography>
-              Using regex: Create tests which check if the correct solution code was typed.
+              {translate('ai_gen_addons_text_sub_2')}
             </Typography>
           }
         />
@@ -150,9 +152,9 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
                 display='inline-block'
                 mr={1}
               >
-                Lesson Plan |
+                {translate('ai_gen_addons_text_main_3')}
               </Typography>
-              Ice-breakers, lesson overview, group discussion, synthesizing and more.
+              {translate('ai_gen_addons_text_sub_3')}
             </Typography>
           }
         />
@@ -171,16 +173,15 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
                 display='inline-block'
                 mr={1}
               >
-                Revision & Improvement |
+                {translate('ai_gen_addons_text_main_4')}
               </Typography>
-              Request a full review and stress testing to ensure the lesson content and flow is
-              accurate, relevant and lively.
+              {translate('ai_gen_addons_text_sub_4')}
             </Typography>
           }
         />
         <TextField
           name=''
-          placeholder='Additional Request'
+          placeholder={translate('ai_gen_addons_additional')}
         />
       </Stack>
       <Stack sx={NOTE_DIAMOND_SX}>
@@ -193,7 +194,9 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
           ml={2}
           variant='body2'
         >
-          Note: This feature may be limited to <i>DIAMOND</i> accounts.
+          {translate('ai_gen_addons_diamond_1')}
+          <i> {translate('ai_gen_addons_diamond_2')}</i>
+          {translate('ai_gen_addons_diamond_3')}
         </Typography>
       </Stack>
       <Stack sx={BTN_CONTAINER_STYLES}>
@@ -202,7 +205,7 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
           sx={skipBtnStyles}
           onClick={resetRoad}
         >
-          Decline
+          {translate('ai_gen_decline_btn')}
         </Button>
         <Button
           variant='contained'
@@ -211,7 +214,7 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
             onSubmitAddons(addons)
           }}
         >
-          Request Add-ons
+          {translate('ai_gen_addons_btn')}
         </Button>
       </Stack>
     </Stack>

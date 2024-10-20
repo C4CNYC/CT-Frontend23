@@ -4,6 +4,7 @@ import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
 import { Iconify, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   BTN_CONTAINER_STYLES,
@@ -32,6 +33,8 @@ export function AIPersonaInfo({
   customTone,
 }: IAIPersonaInfoProps) {
   const theme = useTheme()
+  const translate = useTranslate()
+
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
@@ -76,7 +79,7 @@ export function AIPersonaInfo({
             variant='h3'
             sx={STEP_TYTLE_STYLES}
           >
-            Let’s have some fun ! 😂‍ 🥳
+            {translate('ai_gen_step_3_title')}
           </Typography>
           {closeModal ? (
             <IconButton
@@ -96,7 +99,8 @@ export function AIPersonaInfo({
             sx={OPTIONAL_TYPO_STYLES}
             gutterBottom
           >
-            Persona <Typography variant='caption'>Optional</Typography>
+            {translate('ai_gen_persona_title')}
+            <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
           </Typography>
           <RHFToggleButtonGroup
             name='RpersonaR'
@@ -108,7 +112,7 @@ export function AIPersonaInfo({
           <RHFTextField
             sx={{ maxWidth: '400px', mt: 2 }}
             name='RcustomPersonaR'
-            placeholder='Other'
+            placeholder={translate('ai_gen_other_placeholder')}
           />
         </Stack>
         <Stack>
@@ -117,7 +121,8 @@ export function AIPersonaInfo({
             sx={OPTIONAL_TYPO_STYLES}
             gutterBottom
           >
-            Tone <Typography variant='caption'>Optional</Typography>
+            {translate('ai_gen_persona_tone_title')}
+            <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
           </Typography>
           <RHFToggleButtonGroup
             name='RtoneR'
@@ -129,7 +134,7 @@ export function AIPersonaInfo({
           <RHFTextField
             sx={{ maxWidth: '400px', mt: 2 }}
             name='RcustomToneR'
-            placeholder='Other'
+            placeholder={translate('ai_gen_other_placeholder')}
           />
         </Stack>
         <Stack>
@@ -138,11 +143,13 @@ export function AIPersonaInfo({
             sx={OPTIONAL_TYPO_STYLES}
             gutterBottom
           >
-            Context <Typography variant='caption'>Optional</Typography>
+            {translate('ai_gen_persona_context_title')}
+
+            <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
           </Typography>
           <RHFTextField
             name='RcontextR'
-            placeholder='Any additional context or preferences within the prompt.'
+            placeholder={translate('ai_gen_persona_context_placeholder')}
           />
         </Stack>
         <label
@@ -187,14 +194,14 @@ export function AIPersonaInfo({
             variant='text'
             sx={skipBtnStyles}
           >
-            Surprise Me
+            {translate('ai_gen_surprise_btn')}
           </Button>
           <Button
             type='submit'
             variant='contained'
             sx={nextBtnStyles}
           >
-            Generate ✨
+            {translate('ai_gen_generate_btn')}
           </Button>
         </Stack>
       </Stack>

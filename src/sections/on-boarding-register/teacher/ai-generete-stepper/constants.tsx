@@ -165,15 +165,27 @@ export const SIMPLE_GENERATE_TOGLE_GROUP = {
 export const LANG_CONT_SX = { flexDirection: 'row', gap: 2, px: 2, pt: 1 }
 
 export const PROMTS_VARIANTS = [
-  { text: 'Python variables with exercises in Armenian', icon: 'mdi:console', color: '#FBDD3F' },
-  { text: '6th graders build weather app with api', icon: 'tabler:user-screen', color: '#d901ed' },
   {
-    text: 'Nested functions in javascript with exercises and quiz',
+    text: 'ai_gen_simple_step_prompt_1',
+    key: 'Python variables with exercises in Armenian',
+    icon: 'mdi:console',
+    color: '#FBDD3F',
+  },
+  {
+    text: 'ai_gen_simple_step_prompt_2',
+    key: '6th graders build weather app with api',
+    icon: 'tabler:user-screen',
+    color: '#d901ed',
+  },
+  {
+    text: 'ai_gen_simple_step_prompt_3',
+    key: 'Nested functions in javascript with exercises and quiz',
     icon: 'mdi:question-box-multiple-outline',
     color: '#EE467A',
   },
   {
-    text: 'Auto-graded infinite loop exercises',
+    text: 'ai_gen_simple_step_prompt_4',
+    key: 'Auto-graded infinite loop exercises',
     icon: 'material-symbols:info-outline',
     color: '#FBDD3F',
   },
@@ -182,107 +194,107 @@ export const PROMTS_VARIANTS = [
 export const TYPE_LESSON = [
   {
     key: 'simple',
-    value: 'Simple Lesson',
-    tooltip: 'An engaging, single-page lesson with coding exercises.',
+    value: 'ai_gen_type_1_value',
+    tooltip: 'ai_gen_type_1_tooltip',
     icon: 'material-symbols:info-outline',
   },
   {
     key: 'exercises',
-    value: 'Concept & Exercises',
-    tooltip: 'Learn a concept, then immediately practice it in different ways.',
+    value: 'ai_gen_type_2_value',
+    tooltip: 'ai_gen_type_2_tooltip',
     icon: 'material-symbols:info-outline',
   },
   {
     key: 'project',
-    value: 'Practical Project',
-    tooltip: 'Building a project line by line with explanations and step-by-step guidance.',
+    value: 'ai_gen_type_3_value',
+    tooltip: 'ai_gen_type_3_tooltip',
     icon: 'material-symbols:info-outline',
   },
   {
     key: 'Beta',
-    value: 'beta',
-    tooltip: 'Building a project line by line with explanations and step-by-step guidance.',
+    value: 'ai_gen_type_4_value',
+    tooltip: 'ai_gen_type_5_tooltip',
     icon: 'material-symbols:info-outline',
   },
 ]
 
 export const PROGRAMMING_LANGUAGE = [
-  { key: 'Javascript', value: 'Javascript' },
-  { key: 'Python (Brython)', value: 'Python (Brython)' },
-  { key: 'HTML/CSS', value: 'HTML/CSS' },
-  { key: 'HTML/CSS/JS', value: 'HTML/CSS/JS' },
-  { key: 'Kaboom.js', value: 'Kaboom.js' },
+  { key: 'Javascript', value: 'ai_gen_progr_lng_opt_1' },
+  { key: 'Python (Brython)', value: 'ai_gen_progr_lng_opt_2' },
+  { key: 'HTML/CSS', value: 'ai_gen_progr_lng_opt_3' },
+  { key: 'HTML/CSS/JS', value: 'ai_gen_progr_lng_opt_4' },
+  { key: 'Kaboom.js', value: 'ai_gen_progr_lng_opt_5' },
 ]
 
 export const TRACK = [
-  { key: 'AI & API', value: 'AI & API' },
-  { key: 'Game-Dev', value: 'Game-Dev' },
-  { key: 'Web-Dev', value: 'Web-Dev' },
-  { key: 'Science Class', value: 'Science Class' },
-  { key: 'Data Science', value: 'Data Science' },
-  { key: 'Programming Logic', value: 'Programming Logic' },
-  { key: 'Math Class', value: 'Math Class' },
-  { key: 'History Class', value: 'History Class' },
-  { key: 'English Class', value: 'English Class' },
-  { key: 'Dance Class', value: 'Dance Class' },
-  { key: 'Hour of Code', value: 'Hour of Code' },
+  { key: 'AI & API', value: 'ai_gen_track_option_1' },
+  { key: 'Game-Dev', value: 'ai_gen_track_option_2' },
+  { key: 'Web-Dev', value: 'ai_gen_track_option_3' },
+  { key: 'Science Class', value: 'ai_gen_track_option_11' },
+  { key: 'Data Science', value: 'ai_gen_track_option_4' },
+  { key: 'Programming Logic', value: 'ai_gen_track_option_5' },
+  { key: 'Math Class', value: 'ai_gen_track_option_6' },
+  { key: 'History Class', value: 'ai_gen_track_option_7' },
+  { key: 'English Class', value: 'ai_gen_track_option_8' },
+  { key: 'Dance Class', value: 'ai_gen_track_option_9' },
+  { key: 'Hour of Code', value: 'ai_gen_track_option_10' },
 ]
 
 export const LEVELS = [
-  { key: 'Beginner', value: 'Beginner' },
-  { key: 'Novice', value: 'Novice' },
-  { key: 'Amateur', value: 'Amateur' },
-  { key: 'Intermediate', value: 'Intermediate' },
-  { key: 'Advanced', value: 'Advanced' },
+  { key: 'Beginner', value: 'ai_gen_level_1' },
+  { key: 'Novice', value: 'ai_gen_level_2' },
+  { key: 'Amateur', value: 'ai_gen_level_3' },
+  { key: 'Intermediate', value: 'ai_gen_level_4' },
+  { key: 'Advanced', value: 'ai_gen_level_5' },
 ]
 
 export const GRADES = [
-  { key: 'Grades 3-4', value: 'Grades 3-4' },
-  { key: 'Grades 5-6', value: 'Grades 5-6' },
-  { key: 'Grades 7-8', value: 'Grades 7-8' },
-  { key: 'Grades 9-10', value: 'Grades 9-10' },
-  { key: 'Grades 11-12', value: 'Grades 11-12' },
-  { key: '18 +', value: '18 +' },
+  { key: 'Grades 3-4', value: 'ai_gen_grade_1' },
+  { key: 'Grades 5-6', value: 'ai_gen_grade_2' },
+  { key: 'Grades 7-8', value: 'ai_gen_grade_3' },
+  { key: 'Grades 9-10', value: 'ai_gen_grade_4' },
+  { key: 'Grades 11-12', value: 'ai_gen_grade_5' },
+  { key: '18 +', value: 'ai_gen_grade_6' },
 ]
 
 export const LESSON_DURARION = [
-  { key: '20 Mins', value: '20 Mins' },
-  { key: '40 Mins', value: '40 Mins' },
-  { key: '60 Mins', value: '60 Mins' },
-  { key: '90 Mins', value: '90 Mins' },
-  { key: '120 Mins', value: '120 Mins' },
+  { key: '20 Mins', value: 'ai_gen_duration_1' },
+  { key: '40 Mins', value: 'ai_gen_duration_2' },
+  { key: '60 Mins', value: 'ai_gen_duration_3' },
+  { key: '90 Mins', value: 'ai_gen_duration_4' },
+  { key: '120 Mins', value: 'ai_gen_duration_5' },
 ]
 
 export const PERSONA = [
-  { key: 'Mumu', value: 'Mumu' },
-  { key: 'Winnie the Pooh', value: 'Winnie the Pooh' },
+  { key: 'Mumu', value: 'ai_gen_persona_1' },
+  { key: 'Winnie the Pooh', value: 'ai_gen_persona_2' },
   //{ key: 'Pirate', value: 'Pirate' },
-  { key: 'Benny the Bunny', value: 'Benny the Bunny' },
-  { key: 'Lulu the Lamb', value: 'Lulu the Lamb' },
-  { key: 'Daisy the Duckling', value: 'Daisy the Duckling' },
+  { key: 'Benny the Bunny', value: 'ai_gen_persona_3' },
+  { key: 'Lulu the Lamb', value: 'ai_gen_persona_4' },
+  { key: 'Daisy the Duckling', value: 'ai_gen_persona_5' },
   //{ key: "Ollie the Owl", value: "Ollie the Owl" },
-  { key: 'Pip the Penguin', value: 'Pip the Penguin' },
+  { key: 'Pip the Penguin', value: 'ai_gen_persona_6' },
   //{ key: "Fuzzy the Bear Cub", value: "Fuzzy the Bear Cub" },
-  { key: 'Milo the Mouse', value: 'Milo the Mouse' },
+  { key: 'Milo the Mouse', value: 'ai_gen_persona_7' },
   //{ key: "Tilly the Tortoise", value: "Tilly the Tortoise" },
-  { key: 'Nina the Squirrel', value: 'Nina the Squirrel' },
-  { key: 'Charlie the Cat', value: 'Charlie the Cat' },
+  { key: 'Nina the Squirrel', value: 'ai_gen_persona_8' },
+  { key: 'Charlie the Cat', value: 'ai_gen_persona_9' },
 ]
 
 export const TONE = [
-  { key: 'Silly', value: 'Silly' },
-  { key: 'Grumpy', value: 'Grumpy' },
-  { key: 'Lively', value: 'Lively' },
-  { key: 'Boring', value: 'Boring' },
+  { key: 'Silly', value: 'ai_gen_persona_tone_1' },
+  { key: 'Grumpy', value: 'ai_gen_persona_tone_2' },
+  { key: 'Lively', value: 'ai_gen_persona_tone_3' },
+  { key: 'Boring', value: 'ai_gen_persona_tone_4' },
 ]
 
 export const LOADING_STEPS = [
-  'Compiling request',
-  'Sending request',
-  'Confirming receipt',
-  'Building the lesson',
-  'Receiving the lesson',
-  'Finishing up',
+  'ai_gen_loading_state_1',
+  'ai_gen_loading_state_2',
+  'ai_gen_loading_state_3',
+  'ai_gen_loading_state_4',
+  'ai_gen_loading_state_5',
+  'ai_gen_loading_state_6',
 ]
 
 export const TYPE_PROJECT = [

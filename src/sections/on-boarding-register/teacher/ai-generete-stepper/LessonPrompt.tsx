@@ -4,6 +4,7 @@ import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
 import { Iconify } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   BTN_CONTAINER_STYLES,
@@ -27,6 +28,7 @@ type ILessonPromptProps = {
 
 export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILessonPromptProps) {
   const theme = useTheme()
+  const translate = useTranslate()
 
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
@@ -58,7 +60,7 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           variant='h3'
           sx={STEP_TYTLE_STYLES}
         >
-          Who’s it for? 🤷🏽‍
+          {translate('ai_gen_step_2_title')}
         </Typography>
         {closeModal ? (
           <IconButton
@@ -78,7 +80,7 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          Level
+          {translate('ai_gen_level_title')}
         </Typography>
         <RHFToggleButtonGroup
           name='RlevelR'
@@ -94,7 +96,8 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           gutterBottom
           sx={OPTIONAL_TYPO_STYLES}
         >
-          Grade/Age <Typography variant='caption'>Optional</Typography>
+          {translate('ai_gen_grade_title')}
+          <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
         </Typography>
         <RHFToggleButtonGroup
           name='RgradesR'
@@ -109,7 +112,8 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           gutterBottom
           sx={OPTIONAL_TYPO_STYLES}
         >
-          Lesson Duration <Typography variant='caption'>Optional</Typography>
+          {translate('ai_gen_duration_title')}
+          <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
         </Typography>
         <RHFToggleButtonGroup
           name='RlessonDurationR'
@@ -124,14 +128,14 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           sx={skipBtnStyles}
           onClick={nextStep}
         >
-          Surprise Me
+          {translate('ai_gen_surprise_btn')}
         </Button>
         <Button
           variant='contained'
           sx={nextBtnStyles}
           onClick={nextStep}
         >
-          Next
+          {translate('ai_gen_next_btn')}
         </Button>
       </Stack>
     </Stack>
