@@ -4,6 +4,7 @@ import { Button, SxProps } from '@mui/material'
 import { LuCheckCircle } from '@react-icons/all-files/lu/LuCheckCircle'
 import { LuRemoveFormatting } from '@react-icons/all-files/lu/LuRemoveFormatting'
 import { LuScrollText } from '@react-icons/all-files/lu/LuScrollText'
+import { TbIroning1 } from '@react-icons/all-files/tb/TbIroning1'
 import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
 import { EditorView, ReactCodeMirrorRef } from '@uiw/react-codemirror'
 
@@ -81,6 +82,42 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
       },
     })
   }
+  const formatHTML = (htmlString: string) => {
+    let formatted = ''
+    let pad = 0
+
+    // Split the HTML content based on tags and filter out empty elements
+    htmlString.split(/>\s*</).forEach((element, index, array) => {
+      if (element.match(/^\/\w/)) pad-- // Decrease indent if it's a closing tag
+
+      // Add the '<' at the beginning of the first element and '>' at the end of the last element
+      if (index === 0) {
+        formatted += '' + element + '>\n'
+      } else if (index === array.length - 1) {
+        formatted += '  '.repeat(pad) + '<' + element + '\n'
+      } else {
+        formatted += '  '.repeat(pad) + '<' + element + '>\n'
+      }
+
+      if (element.match(/^<?\w[^>]*[^/]$/)) pad++ // Increase indent for opening tags
+    })
+
+    return formatted.trim()
+  }
+
+  const handleAutoFormat = () => {
+    const editorView = editorInstance?.view
+    if (!editorView) return
+
+    const { state, dispatch } = editorView
+
+    let fullText = state.doc.toString()
+    let formattedText = formatHTML(fullText)
+    dispatch({
+      changes: { from: 0, to: state.doc.length, insert: formattedText },
+    })
+  }
+
   const handleCloseChallengeManu = (): void => {
     setOpen(null)
   }
@@ -130,8 +167,18 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
             <MediaModal insertImage={insertImage}>
               <Button sx={sxSmall}>
                 <TbPhoto size={20} />
+                Insert Media
               </Button>
             </MediaModal>
+
+            <Button
+              sx={sxSmall}
+              onClick={handleAutoFormat}
+              title='Format code'
+            >
+              <TbIroning1 size={20} />
+              Format
+            </Button>
           </>
         ) : null}
       </div>
