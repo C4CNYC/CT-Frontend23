@@ -23,6 +23,7 @@ import {
   useUpdateLessonContentValidationManagerMutation,
 } from '@/redux/services/manager/lesson-content-validation-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { isValidRegex } from '@root/src/utils/isValidRegex'
 
 interface FormValuesProps {
   regex: string
@@ -64,6 +65,10 @@ export default function CreateEditValidation({
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    if (!isValidRegex(data.regex)) {
+      enqueueSnackbar(translate('invalid_regex'), { variant: 'error' })
+      return
+    }
     try {
       if (isEdit) {
         await updateRule({
