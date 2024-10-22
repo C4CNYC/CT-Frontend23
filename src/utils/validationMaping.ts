@@ -11,12 +11,27 @@ export function mapValidations(
   validations: Array<ILessonContentValidation & BaseResponseInterface>
 ): IValidationMap[] {
   if (!validations) return []
+  let noNLCode = code.replaceAll('\n', ' ')
+  let valResults = validations.map((validator) => {
+    let valid = true //in case of error in regex, we pass this test
+    try {
+      let reg = validator.regex.startsWith('/')
+        ? eval(validator.regex)
+        : new RegExp(validator.regex)
+      valid =
+        reg.test(code) ||
+        reg.test(noNLCode) ||
+        !!code.match(reg) ||
+        code.replace(/\s/g, '') === validator.regex.replace(/\s/g, '')
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('error oldu', e)
+    }
 
-  return validations.map((validator) => ({
-    text: validator.name,
-    valid:
-      new RegExp(validator.regex).test(code) ||
-      !!code.match(validator.regex) ||
-      code.replace(/\s/g, '') === validator.regex.replace(/\s/g, ''),
-  }))
+    return {
+      text: validator.name,
+      valid,
+    }
+  })
+  return valResults
 }
