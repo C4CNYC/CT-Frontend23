@@ -37,7 +37,7 @@ const initialState: IGlobalCodePanel = {
   code: '',
   isInstructionsHidden: false,
   isBrowserHidden: false,
-  isRealtimeCodeEnabled: true,
+  isRealtimeCodeEnabled: false,
   isRealtimeCodeHidden: true,
   usersStatus: [],
   socket: undefined,
