@@ -29,10 +29,9 @@ import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 
-// import CloneSlideDialogs from './CreateSlide/CloneSlideDialogs'
-// import { DialogTypes } from './CreateSlide/CreateSlideTypes'
+import { HTMLTemplate } from './CreateSlide/HTMLTemplate'
+import { WithAIDialog } from './CreateSlide/WithAIDialog'
 import LessonListItem from './LesonListItem'
-// import CloneExistingSlide from './Modals/CloneExistingSlideMenu'
 import SkeletonList from './Modals/SkeletonList'
 import SlideTemplateDialog from './slide-templates'
 
@@ -55,9 +54,8 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
 
   const [updateLessonContent] = useUpdateLessonContentMutation()
   const [createLessonContent, { isLoading: createLessonLoading }] = useCreateLessonContentMutation()
-  const [cloneExistingSlideMenu, setcloneExistingSlideMenu] = useState(false)
-  const [cloneExistingSlideDialogs, setcloneExistingSlideDialogs] =
-    useState<cloneExistingSlideDialogTypes>('')
+  const [withAIDialogOpen, setWithAIDialogOpen] = useState(false)
+  const [dialogHtmlTemplate, setDialogHtmlTemplate] = useState(false)
   const [removeLessonContent] = useRemoveLessonContentMutation()
   const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
     { id: lessonId },
@@ -327,14 +325,14 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
 
         <MenuItem
           onClick={() => {
-            popover.onClose()
+            setDialogHtmlTemplate(true)
           }}
         >
           {translate('slide_add_html')}
         </MenuItem>
         <MenuItem
           onClick={() => {
-            popover.onClose()
+            setWithAIDialogOpen(true)
           }}
         >
           {translate('slide_add_promt_ai')}
@@ -359,6 +357,26 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
           </ListItemIcon>
         </MenuItem>
       </CustomPopover>
+      <WithAIDialog
+        open={withAIDialogOpen}
+        onClose={() => {
+          setWithAIDialogOpen(false)
+          popover.onClose()
+        }}
+        lessonId={lessonId}
+        lessonName={lesson?.name || ''}
+      />
+      {dialogHtmlTemplate ? (
+        <HTMLTemplate
+          open={true}
+          onClose={() => {
+            setDialogHtmlTemplate(false)
+            popover.onClose()
+          }}
+          lessonId={lessonId}
+          lessonName={lesson?.name || ''}
+        />
+      ) : null}
     </>
   )
 }

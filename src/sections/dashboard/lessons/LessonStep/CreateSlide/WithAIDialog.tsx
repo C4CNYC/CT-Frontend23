@@ -19,6 +19,7 @@ import {
   useGetLessonContentQuery,
 } from '@root/src/redux/services/manager/lesson-content-manager'
 import { useAskAIMutation } from '@root/src/redux/services/manager/lessons-manager'
+import { stripQuotesFromAiResponse } from '@root/src/utils/stripQuotesFromAiResponse'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { SlideType } from './CreateSlideTypes'
@@ -55,11 +56,11 @@ export function WithAIDialog({ open, onClose, lessonId, lessonName }: Props) {
     let start = body.match(/Ai\ start/i)
     let end = body.match(/Ai\ end/i)
     if (start && end && start.index && end.index) {
-      content = body.slice(start.index + 7, end.index) ?? ''
+      content = body.slice(start.index + 8, end.index) ?? ''
       let aiResponse = await askAI({
         prompt: `
             change this content:  \`\`\`${content}\`\`\`  
-            according to ${aiprompt}
+            according to \`${aiprompt}\`
             Return in exact format of content
             `,
         add_response_format: 'false',
@@ -67,10 +68,10 @@ export function WithAIDialog({ open, onClose, lessonId, lessonName }: Props) {
 
       if ('error' in aiResponse && 'data' in aiResponse.error) {
         let newLesson =
-          body.slice(0, start.index) +
-          (aiResponse.error.data as string).slice(0, -3) +
+          body.slice(0, start.index - 3) +
+          stripQuotesFromAiResponse(aiResponse.error.data as string) +
           body.slice(end.index + 7)
-        newLesson = aiResponse.error.data as string
+
         let { id: stepId } = await createLessonContent({
           lessonId,
           draft: false,
