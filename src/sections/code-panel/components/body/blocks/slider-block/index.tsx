@@ -266,7 +266,7 @@ const SliderBlock: FC<ISliderBlock> = ({
                         stepBgColor={step.bg_color}
                       />
                     ) : (
-                      <></>
+                      <div key={step.id}></div>
                     )
                   })}
                 </Carousel>
