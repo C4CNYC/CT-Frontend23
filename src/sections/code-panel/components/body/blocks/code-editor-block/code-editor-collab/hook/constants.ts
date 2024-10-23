@@ -2,7 +2,7 @@ import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup'
 
 export const BASIC_SETUP: BasicSetupOptions = {
   highlightActiveLineGutter: true,
-  foldGutter: true,
+  foldGutter: false,
   dropCursor: true,
   allowMultipleSelections: true,
   indentOnInput: false,
