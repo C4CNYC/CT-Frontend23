@@ -72,6 +72,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const sandbox = searchParams.get('sandbox')
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
+    if (!doc) return
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
       return
     }

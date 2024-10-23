@@ -144,7 +144,7 @@ export const useCodeEditorCollab = ({
       firstInit.current = false
       setRoomStatus(RoomStatus.Active)
 
-      const fileInfo = await getFileInfo(roomId, socket)
+      const fileInfo = socket ? await getFileInfo(roomId, socket) : null
 
       if (!isFirstInit || fileInfo == null) {
         await baseInit(activeFile)
@@ -248,7 +248,6 @@ export const useCodeEditorCollab = ({
 
     if (!socket) {
       setIsLoading(false)
-      return
     }
 
     if (initializeBlockedRef.current) {
