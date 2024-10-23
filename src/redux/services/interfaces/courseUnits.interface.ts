@@ -150,6 +150,7 @@ export interface ILessonSearchParams extends BaseSearchInterface {
   module_id?: string
   assignment_id?: string
   lessonId?: string
+  slug?: string
 }
 
 export interface ILessonGenerate {
