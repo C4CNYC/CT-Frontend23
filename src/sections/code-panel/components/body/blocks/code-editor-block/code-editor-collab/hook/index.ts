@@ -124,11 +124,11 @@ export const useCodeEditorCollab = ({
         return
       }
 
-      const fileInfo = await getFileInfo(roomId, socket)
+      const fileInfo = socket ? await getFileInfo(roomId, socket) : undefined
 
       onResetFileManager(fileInfo)
 
-      if (fileInfo.activeFile === activeFile) {
+      if (fileInfo?.activeFile === activeFile) {
         await runInitSubOwner(false)
       }
     },
@@ -160,7 +160,7 @@ export const useCodeEditorCollab = ({
     if (!socket) return
 
     firstInit.current = false
-    const isRoom = await isRoomExist(roomId, socket)
+    const isRoom = socket ? await isRoomExist(roomId, socket) : false
 
     if (!isRoom) {
       initializeBlockedRef.current = true
@@ -173,7 +173,7 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active)
 
     let _activeFile = activeFile
-    const fileInfo = await getFileInfo(roomId, socket)
+    const fileInfo = socket ? await getFileInfo(roomId, socket) : undefined
 
     if (fileInfo != null) {
       const shouldChangeFile =
