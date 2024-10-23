@@ -106,8 +106,6 @@ export const useCodeEditorCollab = ({
   }
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
-      if (!socket) return
-
       firstInit.current = false
       const isRoom = await isRoomExist(roomId, socket)
 
@@ -139,8 +137,6 @@ export const useCodeEditorCollab = ({
 
   const runInitOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
-      if (!socket) return
-
       firstInit.current = false
       setRoomStatus(RoomStatus.Active)
 
