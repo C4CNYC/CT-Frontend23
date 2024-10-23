@@ -103,6 +103,9 @@ export const useCodeEditorCollab = ({
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
     initListeners(view, editorRef, { preloadedCode: preloadedCode ?? '' }, codeMirrorProps.lineWrap)
+    if (editorRef?.current) {
+      editorRef.current.style.fontSize = `14px`
+    }
   }
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
