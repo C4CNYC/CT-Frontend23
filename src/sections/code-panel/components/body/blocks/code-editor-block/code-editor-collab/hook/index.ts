@@ -107,7 +107,7 @@ export const useCodeEditorCollab = ({
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
       firstInit.current = false
-      const isRoom = await isRoomExist(roomId, socket)
+      const isRoom = socket ? await isRoomExist(roomId, socket) : false
 
       if (!isRoom) {
         initializeBlockedRef.current = true
