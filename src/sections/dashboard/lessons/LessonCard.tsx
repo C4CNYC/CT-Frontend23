@@ -128,6 +128,23 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
             >
               {lesson.active ? translate('active') : translate('not_active')}
             </Label>
+            {lesson.id.endsWith('000000000000') ? (
+              <Label
+                variant='soft'
+                color={'error'}
+                sx={{
+                  textTransform: 'uppercase',
+                  mr: 'auto',
+                  position: 'absolute',
+                  top: 10,
+                  left: 80,
+                }}
+              >
+                Special
+              </Label>
+            ) : (
+              ''
+            )}
             <Box
               component='img'
               src='/assets/icons/files/ic_file.svg'
@@ -192,6 +209,7 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
             independent: lesson.independent,
             type: lesson.type,
             duration: lesson.duration,
+            slug: lesson.slug,
           }}
           refetch={refetch}
         >
@@ -202,17 +220,20 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
         </CreateLessonDialog>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <MenuItem
-          onClick={() => {
-            handleOpenConfirm()
-            handleClosePopover()
-          }}
-          sx={{ color: 'error.main' }}
-        >
-          <Iconify icon='eva:trash-2-outline' />
-          {translate('actions_delete')}
-        </MenuItem>
+        {lesson.id.endsWith('000000000000') ? (
+          <></>
+        ) : (
+          <MenuItem
+            onClick={() => {
+              handleOpenConfirm()
+              handleClosePopover()
+            }}
+            sx={{ color: 'error.main' }}
+          >
+            <Iconify icon='eva:trash-2-outline' />
+            {translate('actions_delete')}
+          </MenuItem>
+        )}
       </MenuPopover>
 
       <ConfirmDialog

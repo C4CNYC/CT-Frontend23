@@ -40,6 +40,7 @@ interface FormValuesProps {
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
   duration: number
+  slug: string
 }
 
 interface IDefaultProps {
@@ -50,6 +51,7 @@ interface IDefaultProps {
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
   duration?: Record<string, number> | null | undefined
+  slug?: string
 }
 
 interface ICreateLessonDialogProps {
@@ -118,16 +120,17 @@ export default function CreateLessonDialog({
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    let lesson
     try {
       if (isEdit && id) {
-        await editLesson({
+        lesson = await editLesson({
           id,
           ...data,
           duration: `${data.duration * 60}`,
         }).unwrap()
         if (refetch) refetch()
       } else {
-        const lesson = await createLesson({
+        lesson = await createLesson({
           ...data,
           duration: `${data.duration * 60}`,
         }).unwrap()
@@ -140,9 +143,7 @@ export default function CreateLessonDialog({
         }
         methods.reset()
       }
-      enqueueSnackbar(
-        !isEdit ? translate('messages_create_success') : translate('messages_update_success')
-      )
+      enqueueSnackbar(translate(!isEdit ? 'messages_create_success' : 'messages_update_success'))
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: 'error',
@@ -155,7 +156,6 @@ export default function CreateLessonDialog({
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue)
   }
-
   return (
     <>
       <Box onClick={handleClickOpen}>{children}</Box>
@@ -224,47 +224,56 @@ export default function CreateLessonDialog({
                   height='180px'
                   extensions={[javascript({ jsx: true })]}
                 />
-
-                <RHFTextField
-                  name='duration'
-                  label='duration'
-                  type='number'
-                  InputProps={{
-                    startAdornment: <InputAdornment position='start'>min</InputAdornment>,
-                  }}
-                />
-
-                <RHFSelect
-                  native
-                  name='type'
-                  size='small'
-                  label='Lesson type'
+                <Stack
+                  direction='row'
+                  gap={2}
                 >
-                  <option
-                    key='practical'
-                    value='practical'
+                  <RHFTextField
+                    name='duration'
+                    label='Duration'
+                    size='small'
+                    type='number'
+                    InputProps={{
+                      startAdornment: <InputAdornment position='start'>min</InputAdornment>,
+                    }}
+                  />
+
+                  <RHFSelect
+                    native
+                    name='type'
+                    size='small'
+                    label='Lesson type'
                   >
-                    {translate('lessons_practical')}
-                  </option>
-                  <option
-                    key='exercise'
-                    value='exercise'
-                  >
-                    {translate('lessons_exercise')}
-                  </option>
-                  <option
-                    key='exercise1'
-                    value='exercise1'
-                  >
-                    {translate('Lesson type 2')}
-                  </option>
-                  <option
-                    key='exercise2'
-                    value='exercise2'
-                  >
-                    {translate('Lesson type 3')}
-                  </option>
-                </RHFSelect>
+                    <option
+                      key='practical'
+                      value='practical'
+                    >
+                      {translate('lessons_practical')}
+                    </option>
+                    <option
+                      key='exercise'
+                      value='exercise'
+                    >
+                      {translate('lessons_exercise')}
+                    </option>
+                    <option
+                      key='exercise1'
+                      value='exercise1'
+                    >
+                      {translate('Lesson type 2')}
+                    </option>
+                    <option
+                      key='exercise2'
+                      value='exercise2'
+                    >
+                      {translate('Lesson type 3')}
+                    </option>
+                  </RHFSelect>
+                </Stack>
+                <RHFTextField
+                  name='slug'
+                  label='Slug'
+                />
                 <RHFSwitch
                   name='active'
                   label={translate('lessons_active')}
