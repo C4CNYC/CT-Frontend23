@@ -26,19 +26,15 @@ const MAX_TRIBE_NAME_LENGTH = 20
 
 const GroupHeader: FC = () => {
   const { query } = useRouter()
-  const dispatch = useDispatch()
-  const isDesktop = useIsDesktop()
 
-  const user = useSelector((state) => state.global.user)
+  const isDesktop = useIsDesktop()
   const tribe = useSelector((state) => state.codePanel.class)
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const room = useSelector((state) => state.codeEditorController.room)
+  const dispatch = useDispatch()
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
+  const room = useSelector((state) => state.codeEditorController.room)
+  const user = useSelector((state) => state.global.user)
 
   const resetRoom = useCallback(() => {
-    if (socket) {
-      socket?.emit('leaveRoom', room?.roomId)
-    }
     return dispatch(
       setRoom({
         roomId: `${user?.student_profile?.id ?? ''}_${query?.lessonId as string}`,
@@ -111,12 +107,10 @@ const GroupHeader: FC = () => {
         />
       )}
 
-      {user?.role !== 'student' && (
-        <CustomSwitch
-          isActive={!isRealtimeCodeHidden}
-          onChange={onChange}
-        />
-      )}
+      <CustomSwitch
+        isActive={!isRealtimeCodeHidden}
+        onChange={onChange}
+      />
     </Stack>
   )
 }

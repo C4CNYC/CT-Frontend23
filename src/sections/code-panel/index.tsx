@@ -172,7 +172,7 @@ export default function CodePanelLayout(): ReactElement | null {
     : isPublicFetchingLessonContent
   const fulfilledTimeStamp = profile ? fulfilledStudentTimeStamp : fulfilledPublicTimeStamp
 
-  useGetContentCheckersQuery(undefined, {
+  const { data: checkers } = useGetContentCheckersQuery(undefined, {
     skip: !fulfilledTimeStamp || !profile,
   })
 
@@ -307,6 +307,7 @@ export default function CodePanelLayout(): ReactElement | null {
 
   const lessonIdFromRoute = router.query.lessonId
   const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   const [showTour, setShowTour] = useState(false)
   const [render, setRender] = useState(true)
   const isLoadingComplete =
@@ -342,7 +343,7 @@ export default function CodePanelLayout(): ReactElement | null {
   useEffect(() => {
     let socket: Socket | undefined
 
-    if (authIsInitialized) {
+    if (isRealtimeCodeEnabled && authIsInitialized) {
       socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
         path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
         auth: { userId: user?.id ?? generateId(20) },
@@ -355,6 +356,9 @@ export default function CodePanelLayout(): ReactElement | null {
       })
 
       socket.on('connect', () => {
+        // eslint-disable-next-line no-console
+        console.log('Connected to socket server')
+
         if (!socket) return
 
         socket.on('joinLesson', (data: { lesson: string; user: string }) => {
@@ -387,6 +391,16 @@ export default function CodePanelLayout(): ReactElement | null {
           ])
         })
 
+        // socket.onAnyOutgoing((e) => {
+        //   // eslint-disable-next-line no-console
+        //   console.log('out:', e)
+        // })
+        //
+        // socket.onAny((e) => {
+        //   // eslint-disable-next-line no-console
+        //   console.log('in:', e)
+        // })
+
         dispatch(setSocket(socket))
       })
     } else {
@@ -402,9 +416,9 @@ export default function CodePanelLayout(): ReactElement | null {
       socket?.disconnect()
       dispatch(setSocket(undefined))
     }
-  }, [authIsInitialized, user, lessonIdFromRoute])
+  }, [isRealtimeCodeEnabled, authIsInitialized, user, lessonIdFromRoute])
 
-  if (!isLoadingComplete && render && isFetchingLessonContent) {
+  if (!isLoadingComplete && render) {
     return <SkeletonCodePanel />
   }
 
@@ -429,7 +443,7 @@ export default function CodePanelLayout(): ReactElement | null {
           }}
         >
           <CodePanelHeader
-            chatComponent={<CodePanelChat />}
+            chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
             onHandleFullScreen={handle.active ? handle.exit : handle.enter}
             isFullScreenView={handle.active}
             language={DEFAULT_LANGUAGE}
@@ -443,6 +457,7 @@ export default function CodePanelLayout(): ReactElement | null {
             }
           />
           <CodePanelBody
+            isFetchingLessonContent={isFetchingLessonContent}
             lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
             lessonContents={lessonContent ?? []}
             user={user?.student_profile}

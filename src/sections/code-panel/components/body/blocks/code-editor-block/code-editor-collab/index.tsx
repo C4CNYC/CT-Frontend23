@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
@@ -58,18 +59,34 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   ...collabProps
 }) => {
   const styles = useStyles()
-  const { query } = useRouter()
-  const dispatch = useDispatch()
-  const searchParams = useSearchParams()
-
-  const [codeValue, setCodeValue] = useState<string | undefined>('')
-
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
-
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const { user, isInitialized: authIsInitialized } = useAuthContext()
+  const { query } = useRouter()
+  const dispatch = useDispatch()
+  const [codeValue, setCodeValue] = useState<string | undefined>('')
   const lessonIdFromQuery = query?.lessonId
+  const searchParams = useSearchParams()
   const sandbox = searchParams.get('sandbox')
+
+  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
+    if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
+      return
+    }
+    onChangeStreamingDocInfoFromProps?.(doc)
+  }
+
+  const preloadMemo = useMemo(() => {
+    if (preloadedCode) {
+      return preloadedCode
+    }
+    if (prevLessonCode && prevLessonId === lessonId) {
+      return prevLessonCode
+    }
+    return ''
+  }, [lessonId, preloadedCode])
 
   const {
     activeFile,
@@ -88,25 +105,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     roomId,
     mode,
   })
-
-  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
-    if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
-      return
-    }
-    onChangeStreamingDocInfoFromProps?.(doc)
-  }
-
-  const onChangeCodemirrorValue = (value: string) => {
-    onChangeCodemirrorValueFromProps(value)
-    onChangeStreamingDocInfoFromProps?.(value as any)
-    if (value) {
-      const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}`
-      )
-      localStorage.setItem(localStorageKey, value)
-    }
-    void updateCommentWidgetPosition()
-  }
 
   const localstorageCode = useMemo(() => {
     if (!lessonId && !lessonIdFromQuery) {
@@ -134,10 +132,23 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         }
       }
     }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode, lessonId, activeFile])
+  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId, activeFile])
+
+  const onChangeCodemirrorValue = (value: string) => {
+    onChangeCodemirrorValueFromProps(value)
+    onChangeStreamingDocInfoFromProps?.(value as any)
+    if (value) {
+      const localStorageKey = getLocalStorageRoomKey(
+        `${lessonId}${lessonIdFromQuery}${activeFile?.id}`
+      )
+      localStorage.setItem(localStorageKey, value)
+    }
+    void updateCommentWidgetPosition()
+  }
 
   const {
     editorRef,
+    isLoading,
     extensions,
     streamingDoc,
     setStreamingDoc,
@@ -172,21 +183,22 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   useEffect(() => {
     const newCodeValue =
-      localstorageCode ??
       prevLessonCode ??
+      localstorageCode ??
       (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
-
     setCodeValue(newCodeValue)
-  }, [preloadedCode, localstorageCode, streamingDoc])
-
+  }, [preloadedCode, localstorageCode, streamingDoc, onChangeCodemirrorValue])
   const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
 
   useEffect(() => {
-    onChangeCodemirrorValue(codeValue as string)
     return () => {
       dispatch(setPrevLessonId(null))
       dispatch(setPrevLessonCode(null))
     }
+  }, [])
+
+  useEffect(() => {
+    onChangeCodemirrorValue(codeValue as string)
   }, [])
 
   useEffect(() => {

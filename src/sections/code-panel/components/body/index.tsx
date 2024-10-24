@@ -30,20 +30,22 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   lessonContents,
   user,
   language,
+  isFetchingLessonContent = false,
 }) => {
-  const dispatch = useDispatch()
-  const isDesktop = useIsDesktop()
-
-  const wrapperRef = useRef<HTMLDivElement | null>(null)
-  const [document, setDocument] = useState<CodeDocument | null>(null)
-  const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
-
   const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const isDesktop = useIsDesktop()
+  const dispatch = useDispatch()
+  const wrapperRef = useRef<HTMLDivElement | null>(null)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
+
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
+
+  const [document, setDocument] = useState<CodeDocument | null>(null)
+  const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
@@ -92,6 +94,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
     dispatch(toggleBrowser(false))
   }
 
+  // eslint-disable-next-line no-console
+  console.log('CodePanel Body => browserView', browserView)
+
   if (isDesktop) {
     return (
       <Stack
@@ -107,6 +112,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             onSubmitLesson={onSubmitLesson}
             data={lessonContents}
             integrations={lesson?.integrations ?? []}
+            isFetching={isFetchingLessonContent}
             code={document?.htmlBody?.join('') ?? ''}
             lessonType={lesson?.type}
             lessonName={lesson?.name}
@@ -126,6 +132,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
           onChangeStreamingDocInfo={onChangeStreamingDocInfo}
+          isFetching={isFetchingLessonContent}
           contentId={lessonContents[slideIndex]?.id}
         />
 
@@ -164,6 +171,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         onSubmitChallenge={onSubmitChallenge}
         data={lessonContents}
         integrations={lesson?.integrations ?? []}
+        isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
         lessonType={lesson?.type}
         lessonId={lesson?.id || lessonId}
@@ -175,6 +183,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations}
+        isFetching={isFetchingLessonContent}
       />
 
       <ViewBlock

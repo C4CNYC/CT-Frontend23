@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 import { Box } from '@mui/material'
 import dynamic from 'next/dynamic'
@@ -40,6 +40,13 @@ import {
 const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'), {
   ssr: false,
 })
+
+const CodePanelSignUpDialog = dynamic(
+  async () => await import('@/sections/code-panel/components/sign-up-dialog'),
+  {
+    ssr: false,
+  }
+)
 
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
@@ -88,22 +95,43 @@ const RANDOM_NAME = uniqueNamesGenerator({
 const DEFAULT_LANGUAGE = 'html'
 
 export default function CodePanelPage(): ReactElement | null {
-  const dispatch = useDispatch()
   const translate = useTranslate()
-  const handle = useFullScreenHandle()
-  const { enqueueSnackbar } = useSnackbar()
   const { query, push, replace } = useRouter()
+  const dispatch = useDispatch()
+  const { enqueueSnackbar } = useSnackbar()
 
-  const lessonIdFromRoute = query.lessonId
-
-  const [render, setRender] = useState(true)
   const [user, setUser] = useState<ILocalUser>()
-  const [showTour, setShowTour] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
 
-  const isShowTour = useSelector((state) => state.tour.isStarted)
+  useEffect(() => {
+    const user = localStorage.getItem('user')
+
+    if (user) {
+      setUser(JSON.parse(user))
+    } else {
+      const newUser = {
+        id: generateId(20),
+        first_name: RANDOM_NAME,
+        student_profile: {
+          id: generateId(20),
+          first_name: RANDOM_NAME,
+        },
+      }
+      setUser(newUser)
+      localStorage.setItem('user', JSON.stringify(newUser))
+    }
+  }, [])
+
+  // const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
+  // const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
+  // const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
   const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
+    dispatch(setUsersStatus(cb(usersStatus)))
+  }
+
+  const handle = useFullScreenHandle()
+
+  const [showConfetti, setShowConfetti] = useState(false)
 
   const { data: courseContent, isLoading: isLoadingCourseContent } = useGetPublicCourseContentQuery(
     { id: query.courseId as string },
@@ -120,10 +148,7 @@ export default function CodePanelPage(): ReactElement | null {
     lesson_id: query.lessonId as string,
   })
 
-  const isLoadingComplete = useMemo(
-    () => !!lesson && !isLoadingCourseContent && !isLoading && query.courseId !== null && render,
-    [lesson, isLoadingCourseContent, isLoading, query.courseId, render]
-  )
+  // const [completeLesson] = useCompleteLessonMutation()
 
   const onConfettiComplete = (confetti?: ConfettiType) => {
     setShowConfetti(false)
@@ -147,6 +172,37 @@ export default function CodePanelPage(): ReactElement | null {
     window.dispatchEvent(resetLessonEvent)
     onOpenLesson(lessonId, unitId)
   }
+
+  useEffect(() => {
+    if (!courseContent) return
+
+    const courseId = query.courseId
+    const unitId = query.unitId ?? courseContent.units[0].id
+    const lessonId = query.lessonId ?? courseContent.units[0].lessons[0].id
+
+    setUnitId(courseContent.units[0].id)
+    setLessonId(courseContent.units[0].lessons[0].id)
+
+    if (!courseId || !unitId || !lessonId) {
+      void replace(STUDENT_PATH_DASHBOARD.page404)
+      return
+    }
+
+    if (!query.unitId || !query.lessonId) {
+      void replace(
+        STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace({
+          courseId: courseId as string,
+          unitId: unitId as string,
+          lessonId: lessonId as string,
+        })
+      )
+      return
+    }
+
+    // dispatch(setLessonId(lessonId as string))
+    dispatch(setUnitId(unitId as string))
+    dispatch(setCourseId(courseId as string))
+  }, [courseContent, query.courseId, query.unitId, query.lessonId])
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
     // try {
@@ -193,40 +249,14 @@ export default function CodePanelPage(): ReactElement | null {
     }
   }
 
-  const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
-    dispatch(setUsersStatus(cb(usersStatus)))
-  }
-
-  useEffect(() => {
-    if (!courseContent) return
-
-    const courseId = query.courseId
-    const unitId = query.unitId ?? courseContent.units[0].id
-    const lessonId = query.lessonId ?? courseContent.units[0].lessons[0].id
-
-    setUnitId(courseContent.units[0].id)
-    setLessonId(courseContent.units[0].lessons[0].id)
-
-    if (!courseId || !unitId || !lessonId) {
-      void replace(STUDENT_PATH_DASHBOARD.page404)
-      return
-    }
-
-    if (!query.unitId || !query.lessonId) {
-      void replace(
-        STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace({
-          courseId: courseId as string,
-          unitId: unitId as string,
-          lessonId: lessonId as string,
-        })
-      )
-      return
-    }
-
-    // dispatch(setLessonId(lessonId as string))
-    dispatch(setUnitId(unitId as string))
-    dispatch(setCourseId(courseId as string))
-  }, [courseContent, query.courseId, query.unitId, query.lessonId])
+  const lessonIdFromRoute = query.lessonId
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+  const [showTour, setShowTour] = useState(false)
+  const [render, setRender] = useState(true)
+  const isLoadingComplete =
+    !!lesson && !isLoadingCourseContent && !isLoading && query.courseId !== null && !render
+  const isShowTour = useSelector((state) => state.tour.isStarted)
 
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
@@ -253,50 +283,67 @@ export default function CodePanelPage(): ReactElement | null {
   useEffect(() => {
     let socket: Socket | undefined
 
-    socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
-      path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-      auth: { userId: generateId(20) },
-    })
-    socket.on('connect_error', (error) => {
-      // eslint-disable-next-line no-console
-      console.error('Connection error', error)
-    })
-
-    socket.on('connect', () => {
-      if (!socket) return
-
-      socket.on('joinLesson', (data: { lesson: string; user: string }) => {
-        const { user, lesson } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-          ..._usersStatus.filter((_status) => _status.id !== user),
-          { id: user, status: 'idle', lessonId: lesson },
-        ])
+    if (isRealtimeCodeEnabled && true) {
+      socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
+        path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
+        auth: { userId: generateId(20) },
       })
-      socket.on(
-        'changeStatusInLesson',
-        (data: { lesson: string; user: string; status: string }) => {
-          const { status, user, lesson } = data
+      socket.on('connect_error', (error) => {
+        // eslint-disable-next-line no-console
+        console.error('Connection error', error)
+      })
+
+      socket.on('connect', () => {
+        // eslint-disable-next-line no-console
+        console.log('Connected to socket server')
+
+        if (!socket) return
+
+        socket.on('joinLesson', (data: { lesson: string; user: string }) => {
+          const { user, lesson } = data
           _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
             ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status, lessonId: lesson },
+            { id: user, status: 'idle', lessonId: lesson },
           ])
-        }
-      )
+        })
+        socket.on(
+          'changeStatusInLesson',
+          (data: { lesson: string; user: string; status: string }) => {
+            const { status, user, lesson } = data
+            _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+              ..._usersStatus.filter((_status) => _status.id !== user),
+              { id: user, status, lessonId: lesson },
+            ])
+          }
+        )
 
-      socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
-        const { participants } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
-      })
-      socket.on('leaveLesson', (data: { lesson: string; user: string }) => {
-        const { user, lesson } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-          ..._usersStatus.filter((_status) => _status.id !== user),
-          { id: user, status: 'inactive', lessonId: lesson },
-        ])
-      })
+        socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
+          const { participants } = data
+          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
+        })
+        socket.on('leaveLesson', (data: { lesson: string; user: string }) => {
+          const { user, lesson } = data
+          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
+            ..._usersStatus.filter((_status) => _status.id !== user),
+            { id: user, status: 'inactive', lessonId: lesson },
+          ])
+        })
 
-      dispatch(setSocket(socket))
-    })
+        // socket.onAnyOutgoing((e) => {
+        //   // eslint-disable-next-line no-console
+        //   console.log('out:', e)
+        // })
+        //
+        // socket.onAny((e) => {
+        //   // eslint-disable-next-line no-console
+        //   console.log('in:', e)
+        // })
+
+        dispatch(setSocket(socket))
+      })
+    } else {
+      dispatch(setSocket(undefined))
+    }
 
     return () => {
       socket?.off('joinLesson')
@@ -307,28 +354,9 @@ export default function CodePanelPage(): ReactElement | null {
       socket?.disconnect()
       dispatch(setSocket(undefined))
     }
-  }, [lessonIdFromRoute])
+  }, [isRealtimeCodeEnabled, lessonIdFromRoute])
 
-  useEffect(() => {
-    const user = localStorage.getItem('user')
-
-    if (user) {
-      setUser(JSON.parse(user))
-    } else {
-      const newUser = {
-        id: generateId(20),
-        first_name: RANDOM_NAME,
-        student_profile: {
-          id: generateId(20),
-          first_name: RANDOM_NAME,
-        },
-      }
-      setUser(newUser)
-      localStorage.setItem('user', JSON.stringify(newUser))
-    }
-  }, [])
-
-  if (!isLoadingComplete) {
+  if (!isLoadingComplete && render) {
     return <SkeletonCodePanel />
   }
 
@@ -349,7 +377,7 @@ export default function CodePanelPage(): ReactElement | null {
           }}
         >
           <CodePanelHeader
-            chatComponent={<CodePanelChat />}
+            chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
             onHandleFullScreen={handle.active ? handle.exit : handle.enter}
             isFullScreenView={handle.active}
             lessonManagerComponent={
@@ -363,6 +391,7 @@ export default function CodePanelPage(): ReactElement | null {
             language={DEFAULT_LANGUAGE}
           />
           <CodePanelBody
+            isFetchingLessonContent={isLoading}
             lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
             lessonContents={data ?? []}
             user={user?.student_profile as ILocalUser}

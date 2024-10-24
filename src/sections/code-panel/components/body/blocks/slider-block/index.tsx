@@ -9,7 +9,7 @@ import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
 
-import { EmptyContent } from '@/components'
+import { EmptyContent, LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
@@ -33,7 +33,13 @@ import {
 
 import BaseBlock from '../base-block'
 
-import { PROGRESS_ITEM_SX, getBoxSx, getCarouselSettings, getProgressWrapperSx } from './constants'
+import {
+  LOADER_SCREEN_SX,
+  PROGRESS_ITEM_SX,
+  getBoxSx,
+  getCarouselSettings,
+  getProgressWrapperSx,
+} from './constants'
 import Navigation from './navigation'
 
 const ProsaMirrorView = dynamic(async () => await import('./prosa-mirror-view'), { ssr: false })
@@ -43,6 +49,7 @@ interface ISliderBlock {
   onSubmitLesson: () => void
   onSubmitChallenge: (slideId: string, code?: string) => void
   integrations: Array<IIntegration & BaseResponseInterface>
+  isFetching: boolean
   code: string
   lessonType?: string
   lessonName?: string
@@ -71,6 +78,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   onSubmitLesson,
   onSubmitChallenge,
   integrations,
+  isFetching,
   code,
   lessonType,
   lessonName,
@@ -215,63 +223,69 @@ const SliderBlock: FC<ISliderBlock> = ({
           ></Box>
         ))}
       </Box>
-      {_.isEmpty(data) ? (
-        sandbox ? (
-          <TextField
-            fullWidth
-            multiline
-            minRows='12'
-            value={noteText}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setNoteText(event.target.value)
-              localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
-            }}
-          />
-        ) : (
-          <EmptyContent title={translate('messages_no_data')} />
-        )
-      ) : (
+      {!isFetching ? (
         <>
-          <Box
-            className='sliderTour'
-            height='100%'
-            sx={boxSx}
-          >
-            <Carousel
-              {...getCarouselSettings(onBeforeChange)}
-              asNavFor={nav2}
-              ref={carousel1}
-              afterChange={onUpdateLastSlide}
-            >
-              {data.map((step, stepSlideIndex) => {
-                return slideIndex == stepSlideIndex ? (
-                  <View
-                    title={step.title}
-                    lessonType={lessonType}
-                    key={step.id}
-                    type={step.type}
-                    body={step.body}
-                    integrations={integrations}
-                    connectIntegrations={connectIntegrations}
-                    stepBgColor={step.bg_color}
-                  />
-                ) : (
-                  <div key={step.id}></div>
-                )
-              })}
-            </Carousel>
-          </Box>
+          {_.isEmpty(data) ? (
+            sandbox ? (
+              <TextField
+                fullWidth
+                multiline
+                minRows='12'
+                value={noteText}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setNoteText(event.target.value)
+                  localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
+                }}
+              />
+            ) : (
+              <EmptyContent title={translate('messages_no_data')} />
+            )
+          ) : (
+            <>
+              <Box
+                className='sliderTour'
+                height='100%'
+                sx={boxSx}
+              >
+                <Carousel
+                  {...getCarouselSettings(onBeforeChange)}
+                  asNavFor={nav2}
+                  ref={carousel1}
+                  afterChange={onUpdateLastSlide}
+                >
+                  {data.map((step, stepSlideIndex) => {
+                    return slideIndex == stepSlideIndex ? (
+                      <View
+                        title={step.title}
+                        lessonType={lessonType}
+                        key={step.id}
+                        type={step.type}
+                        body={step.body}
+                        integrations={integrations}
+                        connectIntegrations={connectIntegrations}
+                        stepBgColor={step.bg_color}
+                      />
+                    ) : (
+                      <div key={step.id}></div>
+                    )
+                  })}
+                </Carousel>
+              </Box>
 
-          <Navigation
-            hasPrev={slideIndex > 0}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            stepHasValidation={stepHasValidation}
-            canMoveNext={nextStepAble || !stepHasValidation}
-            hasNextStep={hasNextStep}
-            lessonName={lessonName}
-          />
+              <Navigation
+                hasPrev={slideIndex > 0}
+                onNext={handleNext}
+                onPrev={handlePrev}
+                stepHasValidation={stepHasValidation}
+                canMoveNext={nextStepAble || !stepHasValidation}
+                hasNextStep={hasNextStep}
+                lessonName={lessonName}
+              />
+            </>
+          )}
         </>
+      ) : (
+        <LoadingScreen sx={LOADER_SCREEN_SX} />
       )}
     </BaseBlock>
   )

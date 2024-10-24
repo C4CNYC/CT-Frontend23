@@ -17,7 +17,6 @@ import { IFriend } from '@/redux/interfaces/friends.interface'
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
 import { useSelector } from '@/redux/store'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
-import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
 import { type DraggableBlockConfig, getDraggableBlockConfig } from './utils'
 
@@ -47,17 +46,13 @@ const FILTER_NAME = 'page'
 export const useNavPanel = (
   wrapperListenerRef: RefObject<HTMLDivElement | null>
 ): UseNavPanelReturn => {
-  const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
-
+  const drawerRef = useRef<HTMLDivElement | null>(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [users, setUsers] = useState<FriendUser[]>([])
   const [previewUsers, setPreviewUsers] = useState<FriendUser[]>([])
   const [draggableConfig, setDraggableConfig] = useState<DraggableBlockConfig | null>(null)
-
-  const drawerRef = useRef<HTMLDivElement | null>(null)
-
   const classId = useSelector((state) => state?.codePanel?.class?.id)
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
+  const [users, setUsers] = useState<FriendUser[]>([])
 
   const { data: availableUsers, isLoading: isAvailableUsersLoading } =
     useGetFriendsStudentContentQuery(filters)
@@ -89,8 +84,6 @@ export const useNavPanel = (
 
       return
     }
-
-    socket?.emit(SocketEventsStudentMode.InitOnlineMode, { roomId: user.id })
 
     setPreviewUsers([...newPreviewedUsers, user])
   }
