@@ -21,7 +21,7 @@ export const getSelectionRange = (view: EditorView | null) => {
 
 const langMap = {
   [Extensions.Css]: () => css(),
-  [Extensions.Html]: () => html(),
+  [Extensions.Html]: () => html({ autoCloseTags: false }),
   [Extensions.Js]: () => javascript(),
 }
 

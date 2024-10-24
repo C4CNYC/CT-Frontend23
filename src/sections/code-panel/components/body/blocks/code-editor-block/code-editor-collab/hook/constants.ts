@@ -2,12 +2,12 @@ import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup'
 
 export const BASIC_SETUP: BasicSetupOptions = {
   highlightActiveLineGutter: true,
-  foldGutter: true,
+  foldGutter: false,
   dropCursor: true,
   allowMultipleSelections: true,
   indentOnInput: false,
   bracketMatching: true,
-  closeBrackets: true,
+  closeBrackets: false,
   autocompletion: false,
   rectangularSelection: true,
   crosshairCursor: true,
@@ -15,7 +15,7 @@ export const BASIC_SETUP: BasicSetupOptions = {
   highlightSelectionMatches: true,
   closeBracketsKeymap: true,
   searchKeymap: true,
-  foldKeymap: true,
+  foldKeymap: false,
   completionKeymap: true,
   lintKeymap: true,
 }

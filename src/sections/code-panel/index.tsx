@@ -443,7 +443,7 @@ export default function CodePanelLayout(): ReactElement | null {
           }}
         >
           <CodePanelHeader
-            chatComponent={isRealtimeCodeEnabled ? <CodePanelChat /> : null}
+            chatComponent={<CodePanelChat />}
             onHandleFullScreen={handle.active ? handle.exit : handle.enter}
             isFullScreenView={handle.active}
             language={DEFAULT_LANGUAGE}

@@ -9,7 +9,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import BasePreference from './BasePreference'
 
 const MIN_FONT_SIZE = 7
-const DEFAULT_MIRROR_SIZE = 16
+const DEFAULT_MIRROR_SIZE = 14
 
 interface IEditorFontSize {
   onUpdateFontSize: (size: number) => void
