@@ -11,6 +11,9 @@ import { Socket } from 'socket.io-client'
 
 import { useSelector } from '@/redux/store'
 import { AuthUserType } from '@root/src/auth/types'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { Role } from '@root/src/redux/services/enums/role.enum'
+import { reloadWorkspaceEvent } from '@root/src/sections/code-panel/lib/events'
 import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
 import { BASIC_SETUP, EditorMode } from './constants'
@@ -62,6 +65,7 @@ export const useInitCodemirror = ({
   commentEffectRef,
   onCommentIconClick,
 }: UseBaseInit): UseBaseInitReturn => {
+  const { user: profileOwner } = useAuthContext()
   const [key, setKey] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [isCollabActive, setIsCollabActive] = useState(false)
@@ -84,13 +88,14 @@ export const useInitCodemirror = ({
           socket.emit(SocketEventsStudentMode.OnlineStudentReady, { roomId: user?.id })
         }, 1000)
       })
-      socket?.on(SocketEventsStudentMode.StopOnlineMode, async () => {
-        window.location.reload()
-        // TURN OFF COLAB REVERT CODE
-        // setIsCollabActive(false)
-      })
+
+      if (profileOwner?.role === Role.Student) {
+        socket?.on(SocketEventsStudentMode.StopOnlineMode, async () => {
+          window.dispatchEvent(reloadWorkspaceEvent)
+        })
+      }
     }
-  }, [socket])
+  }, [socket, profileOwner])
 
   const baseInit = useCallback(
     async (fileName: File) => {

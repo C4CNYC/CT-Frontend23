@@ -12,6 +12,7 @@ import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
+import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
@@ -51,6 +52,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   preloadedCode,
   contentId,
 }) => {
+  const [key, setKey] = useState<number>(0)
   const { query } = useRouter()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
@@ -102,6 +104,9 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
 
   useEffect(() => {
+    window.addEventListener(RELOAD_WORKSPACE_EVENT, () => {
+      setKey((prev) => prev + 1)
+    })
     typingListener(FIRST_LOADING_DELEY, true)
   }, [])
 
@@ -124,6 +129,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       title={TITLE}
       icon={icon}
       className='codeEditorTour'
+      key={key}
     >
       <CodeEditorStyles isDesktop={isDesktop} />
 

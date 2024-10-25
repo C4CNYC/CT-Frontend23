@@ -63,4 +63,5 @@ export const getEmptyFileManagement = () => ({
 export enum EffectType {
   SELECTION = 'selection',
   COMMENT = 'comment',
+  REMOVE = 'REMOVE',
 }

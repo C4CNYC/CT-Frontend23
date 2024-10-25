@@ -17,7 +17,7 @@ import {
   createSocket,
   waitConnectSocket,
 } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
-import { voidFunction, type BaseResponseInterface } from '@/utils'
+import { type BaseResponseInterface } from '@/utils'
 import { EditorMode } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
 import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
@@ -26,8 +26,6 @@ import { getRandomIndex } from '../../hook/utils'
 import { BOX_COLORS, HEADER_COLORS } from './constants'
 import styles from './styles'
 
-let previousValue: string | null = null
-let checkValueTimeout: any | null = null
 interface CodeBlockProps {
   onClose: () => void
   attributes?: DraggableAttributes
@@ -35,7 +33,7 @@ interface CodeBlockProps {
   owner: IFriend & BaseResponseInterface
   cursorName?: string
   lessonId?: string
-  onChangeUserStatus?: (status: string, lessonId: string) => void
+  onMoveToPortal: () => void
 }
 
 const CodeBlock: FC<CodeBlockProps> = ({
@@ -45,7 +43,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
   owner,
   cursorName,
   lessonId,
-  onChangeUserStatus = voidFunction,
+  onMoveToPortal,
 }) => {
   const dispatch = useDispatch()
   const [isStudentReady, setIsStudentReady] = useState(false)
@@ -74,7 +72,6 @@ const CodeBlock: FC<CodeBlockProps> = ({
 
     dispatch(
       setRoom({
-        // roomId: data.id,
         avatar: owner.avatar,
         roomId: `${owner.id as string}_${lessonId as string}`,
         cursorText: owner.first_name,
@@ -82,9 +79,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
       })
     )
 
-    setTimeout(() => {
-      onClose()
-    }, 0)
+    onMoveToPortal()
   }
 
   useEffect(() => {

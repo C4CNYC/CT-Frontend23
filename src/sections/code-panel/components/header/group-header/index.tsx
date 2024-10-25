@@ -37,7 +37,7 @@ const GroupHeader: FC = () => {
 
   const resetRoom = useCallback(() => {
     if (socket) {
-      socket?.emit('leaveRoom', room?.roomId)
+      socket?.emit('leaveRoom', room?.roomId?.split('_')[1])
     }
     return dispatch(
       setRoom({
@@ -45,7 +45,7 @@ const GroupHeader: FC = () => {
         mode: EditorMode.Owner,
       })
     )
-  }, [dispatch, user, query?.lessonId])
+  }, [dispatch, user, query?.lessonId, socket, room])
 
   const onChange = () => {
     dispatch(toggleRealtimeCodeHidden(!isRealtimeCodeHidden))

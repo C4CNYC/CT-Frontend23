@@ -19,7 +19,6 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
   user,
   preloadedCode,
 }) => {
-  const [isConnected, setIsConnected] = useState(false)
   const [randomRoom] = useState(`${Math.random()}${Date.now()}`)
 
   const socket = useSelector((state) => state.codePanelGlobal.socket)
@@ -29,21 +28,13 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
     const runAsyncEffect = async (socket: Socket) => {
       const isConnected = await waitConnectSocket(socket)
 
-      if (isConnected) {
-        setIsConnected(isConnected)
-      } else {
+      if (!isConnected) {
         void runAsyncEffect(socket)
       }
     }
 
-    if (socket) {
-      if (socket.connected) {
-        setIsConnected(true)
-      } else {
-        void runAsyncEffect(socket)
-      }
-    } else {
-      setIsConnected(false)
+    if (socket && !socket.connected) {
+      void runAsyncEffect(socket)
     }
   }, [socket])
 
