@@ -1,4 +1,4 @@
-import { type MutableRefObject, useCallback, useState, useMemo } from 'react'
+import { type MutableRefObject, useCallback, useState, useMemo, useEffect } from 'react'
 
 import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect, Text } from '@codemirror/state'
@@ -11,6 +11,7 @@ import { Socket } from 'socket.io-client'
 
 import { useSelector } from '@/redux/store'
 import { AuthUserType } from '@root/src/auth/types'
+import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
 import { BASIC_SETUP, EditorMode } from './constants'
 import { commentExtenstion } from './extensions/comments'
@@ -49,12 +50,11 @@ export interface UseBaseInitReturn {
 }
 
 export const useInitCodemirror = ({
+  mode,
   socket,
   withTooltip,
   onChangeStreamingDocInfo,
   roomId,
-  lessonId,
-  mode,
   user,
   cursorText,
   defaultFileName,
@@ -63,16 +63,51 @@ export const useInitCodemirror = ({
   onCommentIconClick,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0)
-  const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [isLoading, setIsLoading] = useState(true)
+  const [isCollabActive, setIsCollabActive] = useState(false)
+  const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
+
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
+
   const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
   const prevLessonJson = localStorage.getItem(getLocalStorageRoomKey(prevLessonId as string))
+
   const lineWrap = useMemo(() => new Compartment(), [])
+
+  useEffect(() => {
+    if (socket && mode === EditorMode.Owner) {
+      socket.emit(SocketEventsStudentMode.JoinCollabModFeature, { roomId: user?.id })
+      socket.on(SocketEventsStudentMode.StartOnlineMode, () => {
+        setIsCollabActive(true)
+        setTimeout(() => {
+          socket.emit(SocketEventsStudentMode.OnlineStudentReady, { roomId: user?.id })
+        }, 1000)
+      })
+      socket?.on(SocketEventsStudentMode.StopOnlineMode, async () => {
+        // TURN OFF COLAB REVERT CODE
+        // setIsCollabActive(false)
+      })
+    }
+  }, [socket])
 
   const baseInit = useCallback(
     async (fileName: File) => {
+      if (!isCollabActive && mode === EditorMode.Owner) {
+        setExtensions([
+          indentUnit.of('\t'),
+          basicSetup(BASIC_SETUP),
+          ...language(fileName),
+          EditorState.lineSeparator.of('\n'),
+          dracula,
+          lineWrap.of(EditorView.lineWrapping),
+        ])
+
+        setKey((prev) => ++prev)
+        setIsLoading(false)
+        return
+      }
+
       const addCursor = StateEffect.define<Cursor>()
       commentEffectRef.current = StateEffect.define<CommentEffect>()
       const { version, doc, cursorName, docInfo, updates } = await getDocument({
@@ -135,6 +170,7 @@ export const useInitCodemirror = ({
       onChangeStreamingDocInfo,
       defaultFileName,
       preloadedCode,
+      isCollabActive,
     ]
   )
 
