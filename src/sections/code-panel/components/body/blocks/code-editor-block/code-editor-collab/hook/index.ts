@@ -102,13 +102,14 @@ export const useCodeEditorCollab = ({
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
     initListeners(view, editorRef, { preloadedCode: preloadedCode ?? '' }, codeMirrorProps.lineWrap)
+    if (editorRef?.current) {
+      editorRef.current.style.fontSize = `14px`
+    }
   }
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
-      if (!socket) return
-
       firstInit.current = false
-      const isRoom = await isRoomExist(roomId, socket)
+      const isRoom = socket ? await isRoomExist(roomId, socket) : false
 
       if (!isRoom) {
         initializeBlockedRef.current = true
@@ -125,11 +126,11 @@ export const useCodeEditorCollab = ({
         return
       }
 
-      const fileInfo = await getFileInfo(roomId, socket)
+      const fileInfo = socket ? await getFileInfo(roomId, socket) : undefined
 
       onResetFileManager(fileInfo)
 
-      if (fileInfo.activeFile === activeFile) {
+      if (fileInfo?.activeFile === activeFile) {
         await runInitSubOwner(false)
       }
     },
@@ -138,12 +139,10 @@ export const useCodeEditorCollab = ({
 
   const runInitOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
-      if (!socket) return
-
       firstInit.current = false
       setRoomStatus(RoomStatus.Active)
 
-      const fileInfo = await getFileInfo(roomId, socket)
+      const fileInfo = socket ? await getFileInfo(roomId, socket) : null
 
       if (!isFirstInit || fileInfo == null) {
         await baseInit(activeFile)
@@ -163,7 +162,7 @@ export const useCodeEditorCollab = ({
     if (!socket) return
 
     firstInit.current = false
-    const isRoom = await isRoomExist(roomId, socket)
+    const isRoom = socket ? await isRoomExist(roomId, socket) : false
 
     if (!isRoom) {
       initializeBlockedRef.current = true
@@ -176,7 +175,7 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active)
 
     let _activeFile = activeFile
-    const fileInfo = await getFileInfo(roomId, socket)
+    const fileInfo = socket ? await getFileInfo(roomId, socket) : undefined
 
     if (fileInfo != null) {
       const shouldChangeFile =
@@ -228,7 +227,6 @@ export const useCodeEditorCollab = ({
 
     if (!socket) {
       setIsLoading(false)
-      return
     }
 
     if (initializeBlockedRef.current) {
