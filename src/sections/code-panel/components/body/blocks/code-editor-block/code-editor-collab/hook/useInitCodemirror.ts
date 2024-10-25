@@ -85,6 +85,7 @@ export const useInitCodemirror = ({
         }, 1000)
       })
       socket?.on(SocketEventsStudentMode.StopOnlineMode, async () => {
+        window.location.reload()
         // TURN OFF COLAB REVERT CODE
         // setIsCollabActive(false)
       })
