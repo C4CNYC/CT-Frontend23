@@ -4,7 +4,6 @@ import { SupportedLang } from '@/sections/code-panel/lib/types'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 export interface CodePanelBodyProps {
-  isFetchingLessonContent?: boolean
   lesson?: ILesson & BaseResponseInterface
   lessonContents: Array<ILessonContent & BaseResponseInterface>
   user: AuthUserType

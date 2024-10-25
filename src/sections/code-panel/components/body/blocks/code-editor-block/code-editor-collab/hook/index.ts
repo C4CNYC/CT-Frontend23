@@ -65,7 +65,6 @@ export const useCodeEditorCollab = ({
     setActiveFile,
     onResetFileManager,
     defaultFileName,
-    //preloadedCode,
   } = useMemoizedProps(propsToMemoize)
 
   const clearSocketData = useCallback((): void => {
@@ -201,25 +200,6 @@ export const useCodeEditorCollab = ({
     }),
     [runInitWatcher, runInitOwner, runInitSubOwner]
   )
-
-  // useEffect(() => {
-  //   const onResetLesson = () => {
-  //     editorView.current?.destroy()
-  //     if (initializeBlockedRef.current) {
-  //       return
-  //     }
-  //
-  //     if (socket) {
-  //       initialize[modeRef.current](firstInit.current)
-  //     }
-  //   }
-  //
-  //   window.addEventListener(RESET_LESSON_EVENT, onResetLesson)
-  //
-  //   return () => {
-  //     window.removeEventListener(RESET_LESSON_EVENT, onResetLesson)
-  //   }
-  // }, [socket])
 
   useModeSubscriptions({
     roomId,
