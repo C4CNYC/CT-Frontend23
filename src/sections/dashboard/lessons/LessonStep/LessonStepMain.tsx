@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Box, Dialog } from '@mui/material'
 import { useAtom } from 'jotai'
@@ -9,6 +9,7 @@ import { ResizerUi } from '@/components'
 
 import { lessonViewAtom } from './lesson-atoms/lesson-view-atom'
 import LessonTopBar from './lesson-top-bar/LessonTopBar'
+import { LessonContentContext } from './LessonStepContent/LessonContent.context'
 import StepContentEditor from './LessonStepContent/StepContentEditor'
 import LessonStepList from './LessonStepList'
 import { NoSelectedStep } from './NoSelectedStep'
@@ -18,6 +19,7 @@ export default function LessonStepMain(): React.ReactElement {
   const { stepId, lessonId } = router.query
   const [, setLessonView] = useAtom(lessonViewAtom)
   const handle = useFullScreenHandle()
+  const [locked, setLocked] = useState(false)
 
   useEffect(() => {
     setLessonView((prev) => ({
@@ -34,7 +36,12 @@ export default function LessonStepMain(): React.ReactElement {
     }))
   }, [])
   return (
-    <>
+    <LessonContentContext.Provider
+      value={{
+        locked,
+        lockedHandler: setLocked,
+      }}
+    >
       <style>
         {`
         .fullscreen-enabled {
@@ -64,6 +71,6 @@ export default function LessonStepMain(): React.ReactElement {
           </Box>
         </FullScreen>
       </Dialog>
-    </>
+    </LessonContentContext.Provider>
   )
 }

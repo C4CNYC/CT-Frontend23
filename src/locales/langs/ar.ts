@@ -791,6 +791,7 @@ const ar = {
   slide_add_html: 'استخدم قالب HTML',
   slide_add_promt_ai: 'موجه مع منظمة العفو الدولية',
   slide_add_ai_templates: 'قوالب الذكاء الاصطناعي',
+  slide_switch: 'لانتقال إلى شريحة أخرى',
   slide_content_updated: 'تم تحديث المحتوى',
   slide_standard: 'معيار',
   slide_select_format: 'حدد تنسيق الشريحة',

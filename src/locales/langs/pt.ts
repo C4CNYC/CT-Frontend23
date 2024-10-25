@@ -782,6 +782,7 @@ const pt = {
   slide_add_html: 'Usar modelo HTML',
   slide_add_promt_ai: 'Avisar com IA',
   slide_add_ai_templates: 'Modelos de IA',
+  slide_switch: 'Mudar para outro slide',
   slide_content_updated: 'Conteúdo atualizado',
   slide_standard: 'Padrão',
   slide_select_format: 'Selecione Slide Format',

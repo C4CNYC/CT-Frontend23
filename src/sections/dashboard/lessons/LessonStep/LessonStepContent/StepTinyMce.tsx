@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { Box } from '@mui/system'
 import { Editor } from '@tinymce/tinymce-react'
@@ -9,9 +9,11 @@ import { ResizerUi } from '@root/src/components'
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
 
 import { EditorSelectorProps } from './EditorSelector'
+import { LessonContentContext } from './LessonContent.context'
 import { StepPreview } from './StepPreview'
 
 export function StepTinyMce(props: EditorSelectorProps) {
+  const { lockedHandler } = useContext(LessonContentContext)
   const [editorContent, editorContentSet] = useState<string>('')
   const [{ isAllColumnsVisible }] = useAtom(lessonViewAtom)
   let content = props.content?.length ? JSON.parse(props.content) : ''
@@ -318,6 +320,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
             //tinymceScriptSrc='https://cdn.jsdelivr.net/npm/tinymce@7.3.0/tinymce.min.js'
             tinymceScriptSrc='/tinymce/tinymce.min.js'
             onEditorChange={(v, _e) => {
+              lockedHandler(v != initialValue)
               editorContentSet(v)
             }}
             initialValue={initialValue}

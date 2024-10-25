@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { Box } from '@mui/material'
 import { useAtom } from 'jotai'
@@ -8,6 +8,7 @@ import { MyEditor } from '@/components/remirror-editor/MyEditor'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { isJson } from '@root/src/utils/isJson'
 
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
 
@@ -33,9 +34,17 @@ export default function StepMultimedia({
   bgColor,
   setBgColor,
 }: Props): React.ReactElement {
-  const { locked } = useContext(LessonContentContext)
   const [{ isAllColumnsVisible }] = useAtom(lessonViewAtom)
   const [value, setValue] = useState<string>('')
+
+  const { locked, lockedHandler } = useContext(LessonContentContext)
+
+  useEffect(() => {
+    let c = isJson(content)
+      ? JSON.parse(content)?.doc ?? JSON.parse(content)?.content ?? ''
+      : content
+    lockedHandler(value != c)
+  }, [value])
 
   return (
     <ResizerUi
@@ -51,8 +60,8 @@ export default function StepMultimedia({
           integrations={integrations}
           multimediaValue={content}
           setMultimediaValue={setValue}
-          editable={!locked}
-          locked={locked}
+          editable={true}
+          locked={false}
           data={data}
           lessonId={lessonId}
           bgColor={bgColor}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 // import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { html } from '@codemirror/lang-html'
@@ -14,8 +14,11 @@ import { useDebounceCallback } from '@/hooks'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { isJson } from '@root/src/utils/isJson'
 
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
+
+import { LessonContentContext } from './LessonContent.context'
 
 interface Props {
   content: string
@@ -37,6 +40,7 @@ export default function StepCode({
 }: Props): React.ReactElement {
   const editorRef = React.useRef(null)
   const [value, setValue] = useState<string>('')
+  const { lockedHandler } = useContext(LessonContentContext)
   const [staticValue, setStaticValue] = useState<string>('')
   const handleDebouncedCallback = useDebounceCallback(1500)
   const [{ isAllColumnsVisible }] = useAtom(lessonViewAtom)
@@ -55,6 +59,10 @@ export default function StepCode({
       }, '')}</main>`
     }
   }
+  useEffect(() => {
+    let c = isJson(content) ? JSON.parse(content).content || '' : content
+    lockedHandler(value != c)
+  }, [value])
 
   useEffect(() => {
     if (content) {
