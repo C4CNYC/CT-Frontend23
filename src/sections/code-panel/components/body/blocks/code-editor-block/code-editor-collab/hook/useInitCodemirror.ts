@@ -54,7 +54,6 @@ export interface UseBaseInitReturn {
 
 export const useInitCodemirror = ({
   mode,
-  socket,
   withTooltip,
   onChangeStreamingDocInfo,
   roomId,
@@ -71,6 +70,7 @@ export const useInitCodemirror = ({
   const [isCollabActive, setIsCollabActive] = useState(false)
   const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
 
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
 

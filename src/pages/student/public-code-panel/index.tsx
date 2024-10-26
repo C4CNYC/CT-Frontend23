@@ -254,6 +254,7 @@ export default function CodePanelPage(): ReactElement | null {
     let socket: Socket | undefined
 
     socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
+      transports: ['polling'],
       path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
       auth: { userId: generateId(20) },
     })

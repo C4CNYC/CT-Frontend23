@@ -344,6 +344,7 @@ export default function CodePanelLayout(): ReactElement | null {
 
     if (authIsInitialized) {
       socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
+        transports: ['polling'],
         path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
         auth: { userId: user?.id ?? generateId(20) },
         reconnectionDelay: 1000 * 60,
