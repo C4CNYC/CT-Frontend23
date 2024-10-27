@@ -524,7 +524,11 @@ const es = {
   modules_lesson_plans_link: 'Enlace a los planes de estudio',
   modules_completed: '{{porcentaje}}% Completo',
   modules_settings: 'Configuración del módulo',
-  modules_add_lesson: 'Agregar lección',
+  modules_add_lesson: 'Agregar lección, prueba o actividad',
+  modules_add_lesson_existing: 'Insertar lección existente',
+  modules_add_lesson_new_lesson: 'Agregar nueva lección',
+  modules_add_lesson_new_quiz: 'Agregar nueva prueba',
+  modules_add_lesson_new_exircises: 'Agregar nuevos ejercicios',
   modules_view_lesson: 'Ver lección',
   modules_add_lesson_slide_link: 'Agregar/editar diapositivas de lecciones',
   modules_pls_select_lesson: 'POR FAVOR SELECCIONE LA LECCIÓN',
@@ -774,6 +778,11 @@ const es = {
   step_cant_removed: 'Lo siento, no podemos eliminar en este momento',
   lesson_settup_settings: 'Configuración y configuración de la lección',
   slide_add: 'Agregar diapositiva',
+  slide_add_blank: 'Nueva diapositiva en blanco',
+  slide_add_normal: 'Usar plantilla normal',
+  slide_add_html: 'Usar plantilla HTML',
+  slide_add_promt_ai: 'Aviso con IA',
+  slide_add_ai_templates: 'Plantillas de IA',
   slide_content_updated: 'Contenido actualizado',
   slide_standard: 'Estándar',
   slide_select_format: 'Seleccionar formato de diapositivas',
@@ -815,6 +824,18 @@ const es = {
   open_full_catalog: 'Catálogo completo abierto',
 
   // code panel blocks
+  preview_controls_run: 'Runa',
+  preview_controls_stop: 'Detener',
+  preview_controls_publish: 'Publicar',
+  preview_controls_refresh: 'Refrescar',
+  console_title: 'Consola',
+  console_tooltip_title: '¿Cuál es la consola?',
+  console_tooltip_subtitle_1:
+    'Es el lugar donde se obtiene el resultado vgen que ejecuta javascript (JS). La mayoría de las veces, JS se ejecuta en segundo plano y realiza sus cálculos y respuestas allí.',
+  console_tooltip_subtitle_2:
+    'Onli vgen iu specalli vincula una función particular a la que especifico una parte de la página para modificar la página "Principal".',
+  console_tooltip_subtitle_3:
+    'El término elegante para esto es "Manipular la CASA". - Andes "DOM" significa Modelo de Objetos de Documento.',
   no_preview_available_title: 'Navegador',
   no_preview_available_results: 'Aquí verás los resultados de tu trabajo en tiempo real',
   no_preview_available: '¿No hay vista previa disponible?',
@@ -851,6 +872,7 @@ const es = {
   enable: 'Permitir:',
   editor_colors: 'Colores del editor',
   bg_color: 'Color de fondo:',
+  slide_bg_color: 'Color de fondo',
   text_color: 'Color de texto:',
   btn_group_next: 'Siguiente 👀',
   btn_group_you_did_it: 'Lo hiciste 🙌',
@@ -904,6 +926,14 @@ const es = {
   save_to_folder: "Guardar en 'mi carpeta'",
   open_folder: "Abra 'mi carpeta'",
 
+  // CreateLesson
+  default_values: {
+    createLesson: {
+      name: 'Mi nueva lección',
+      description: 'Descripción de mi lección',
+      isEdit: false,
+    },
+  },
   organizations: {
     dashboard_title: 'Panel',
     title: 'Organizaciones',

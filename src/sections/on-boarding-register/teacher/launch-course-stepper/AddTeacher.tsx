@@ -6,7 +6,7 @@ import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/mat
 import { Iconify, RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { styledRegisterInput } from '../styles'
+import { styledRegisterInput } from '../../styles'
 
 interface Props {
   isSubmiting: boolean

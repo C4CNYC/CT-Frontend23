@@ -178,6 +178,7 @@ const en = {
   details: 'Details',
   gallery: 'Gallery',
   coming_soon: 'Coming soon',
+  on_boarding_new: 'NEW',
   keep_coding: 'Keep Coding',
   invite: 'Invite',
   mentors: 'Mentors',
@@ -526,7 +527,11 @@ const en = {
   modules_lesson_plans_link: 'Lesson plans link',
   modules_completed: '{{percentage}}% Complete',
   modules_settings: 'Module Settings',
-  modules_add_lesson: 'Add Lesson',
+  modules_add_lesson: 'Add Lesson, Quiz or Activity',
+  modules_add_lesson_existing: 'Insert Existing Lesson',
+  modules_add_lesson_new_lesson: 'Add New Lesson',
+  modules_add_lesson_new_quiz: 'Add New Quiz',
+  modules_add_lesson_new_exircises: 'Add New Exercises',
   modules_view_lesson: 'View Lesson',
   modules_add_lesson_slide_link: 'Add/Edit Lesson Slides',
   modules_pls_select_lesson: 'PLS SELECT LESSON',
@@ -603,6 +608,9 @@ const en = {
 
   // quest
   quest_type: 'Type: Course/Module',
+  creative_project: 'Creative Project',
+  research_project: 'Research Project',
+  team_project: 'Team Project',
   quest_whats_quest: "What's a quest?",
   quest_select_type: 'Select type',
   quest_select_course: 'Select a course',
@@ -648,7 +656,7 @@ const en = {
   tribes_sign_up_to_join: 'Sign up to join',
   tribes_join_class: 'Join Class',
   tribes_enter_join_code: 'Enter your Join Code to find your class',
-  tribes_code_example: 'Example: atVID13',
+  tribes_code_example: '12asd5',
   tribes_want_leave: 'Are you sure you \n want to leave tribe?',
   tribes_you_left_tribe: 'You left the tribe',
 
@@ -723,6 +731,10 @@ const en = {
   login_popup_session_subtitle:
     'Real-time view of all participants while broadcasting code & voice.',
   login_popup_session_info: 'Real-time view of all participants while broadcasting code & voice.',
+  login_ai_generate_session_title: 'A.I. Generate',
+  login_ai_generate_session_subtitle: 'Create a new lesson with A.I.',
+  login_ai_generate_session_info:
+    'Generate awesome new lessons, exercises or quizzes with AI - It’s fun and simple. Give it a try.',
   login_launch_session_title: 'Launch Course',
   login_launch_session_subtitle: 'Teacher-led or self-paced modules assigned to class or group.',
   login_launch_session_info: 'Real-time view of all participants while broadcasting code & voice.',
@@ -782,6 +794,11 @@ const en = {
   step_cant_removed: "Sorry we can't remove at this moment",
   lesson_settup_settings: 'LESSON SETUP & SETTINGS',
   slide_add: 'ADD SLIDE',
+  slide_add_blank: 'New Blank Slide',
+  slide_add_normal: 'Use Normal Template',
+  slide_add_html: 'Use HTML Template',
+  slide_add_promt_ai: 'Prompt with AI',
+  slide_add_ai_templates: 'AI Templates',
   slide_content_updated: 'Content updated',
   slide_standard: 'Standard',
   slide_select_format: 'Select slide format',
@@ -824,6 +841,18 @@ const en = {
   open_full_catalog: 'Open Full Catalog',
 
   // code panel blocks
+  preview_controls_run: 'Run',
+  preview_controls_stop: 'Stop',
+  preview_controls_publish: 'Publish',
+  preview_controls_refresh: 'Refresh',
+  console_title: 'Console',
+  console_tooltip_title: 'What is a console?',
+  console_tooltip_subtitle_1:
+    ' It’s the place you see a result when you run javascript (JS).Because most times JS runs in the background and does it’s calculations and response there.',
+  console_tooltip_subtitle_2:
+    'Only when you specifically link a particular function to a specific part of the page do you actually see JS modifying the “Front” page.',
+  console_tooltip_subtitle_3:
+    'The fancy term for this is “Manipulating the DOM”. - And “DOM” stands for Document Object Model.',
   no_preview_available_title: 'Browser',
   no_preview_available_results: 'Here you will see the results of your work in realtime',
   no_preview_available: 'No preview available?',
@@ -859,6 +888,7 @@ const en = {
   enable: 'Enable:',
   editor_colors: 'Editor colors',
   bg_color: 'Background Color:',
+  slide_bg_color: 'Slide Color',
   text_color: 'Text Color:',
   btn_group_next: 'NEXT 👀',
   btn_group_you_did_it: 'YOU DID IT 🙌',
@@ -915,6 +945,14 @@ const en = {
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: "Hi, I'm Mumu. I'm here to help when you get stuck.",
 
+  // CreateLesson
+  default_values: {
+    createLesson: {
+      name: 'My New Lesson',
+      description: 'My Lesson Description',
+      isEdit: false,
+    },
+  },
   organizations: {
     dashboard_title: 'Dashboard',
     title: 'Organizations',

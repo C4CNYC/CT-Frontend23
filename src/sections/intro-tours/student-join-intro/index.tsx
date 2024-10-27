@@ -34,10 +34,13 @@ export const StudentJoinIntro = () => {
       return
     }
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       dispatch(setStartTour(true))
       localStorage.setItem('HAS_SEEN_STUDENT_JOIN_INTRO', 'true')
     }, 1000)
+    return () => {
+      clearTimeout(timeout)
+    }
   }, [isTourStarted, dispatch])
 
   return (

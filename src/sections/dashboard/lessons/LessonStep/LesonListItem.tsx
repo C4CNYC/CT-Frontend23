@@ -4,16 +4,15 @@ import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
-import * as _ from 'lodash-es'
 import { useRouter } from 'next/router'
 
 import { Iconify, MenuPopover } from '@/components'
-import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
+import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
+import { BRIEFING, CHALANGES, CUSTOM, GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
 import Preferences from './Modals/Preferences'
 import Validation from './Modals/Validation'
 
@@ -24,10 +23,6 @@ interface Props {
   onRemove: (id: string) => void
   onDublicate: (step: ILessonContent & BaseResponseInterface) => void
 }
-
-const BRIEFING = '#0198ED'
-const CUSTOM = '#364954'
-const CHALANGES = '#FBDD3F'
 
 export default function LessonListItem({
   onRemove,
@@ -40,6 +35,8 @@ export default function LessonListItem({
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [hasValidation, setHasValidation] = useState<boolean>(false)
   const translate = useTranslate()
+
+  const isSlideActive = router.query.stepId === step.id
 
   const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
     event.preventDefault()
@@ -76,6 +73,7 @@ export default function LessonListItem({
     <Draggable
       draggableId={step.id}
       index={index}
+      key={step.id}
     >
       {(provided) => (
         <Paper
@@ -83,12 +81,13 @@ export default function LessonListItem({
           ref={provided.innerRef}
           onClick={selectStep}
           elevation={8}
-          sx={{ ...getLessonItemPaperSx(chooseBorderColor) }}
+          sx={{ ...getLessonItemPaperSx(chooseBorderColor, isSlideActive) }}
         >
-          {router.query.stepId === step.id && <Box sx={GREEN_DOT_SX}></Box>}
+          {isSlideActive && <Box sx={GREEN_DOT_SX}></Box>}
 
           <IconButton
-            sx={{ mr: '5px' }}
+            sx={{ mr: '5px', p: 0.5 }}
+            disableRipple
             {...provided.dragHandleProps}
           >
             <RxDragHandleDots2 size='24px' />
@@ -108,9 +107,10 @@ export default function LessonListItem({
               >
                 <Typography
                   variant='subtitle1'
+                  pt={0.5}
                   noWrap
                 >
-                  {_.toUpper(step.title)}
+                  {step.title}
                 </Typography>
                 <Typography
                   noWrap
@@ -141,6 +141,7 @@ export default function LessonListItem({
                 onClick={() => {
                   onDublicate(step)
                 }}
+                title='Duplicate'
               >
                 <Iconify icon='material-symbols:content-copy-outline' />
               </IconButton>

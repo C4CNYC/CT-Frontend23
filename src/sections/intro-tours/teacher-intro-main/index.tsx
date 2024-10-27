@@ -35,10 +35,13 @@ export const MainPageTour = () => {
       return
     }
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       dispatch(setStartTour(true))
       localStorage.setItem('HAS_SEEN_MAIN_TOUR', 'true')
     }, 1000)
+    return () => {
+      clearTimeout(timeout)
+    }
   }, [isTourStarted, isReadyToStart, dispatch])
 
   return (

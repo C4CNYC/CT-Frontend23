@@ -17,7 +17,7 @@ import {
 import { capitalize } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { styledRegisterInput } from '../styles'
+import { styledRegisterInput } from '../../styles'
 
 interface SchoolFormProps {
   schoolName: string

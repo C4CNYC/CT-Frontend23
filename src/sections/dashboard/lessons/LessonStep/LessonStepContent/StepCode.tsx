@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { html } from '@codemirror/lang-html'
 import { Box } from '@mui/system'
 import { dracula } from '@uiw/codemirror-theme-dracula'
-import CodeMirror from '@uiw/react-codemirror'
+import CodeMirror, { EditorView } from '@uiw/react-codemirror'
 import { useAtom } from 'jotai'
 
 import { ResizerUi } from '@/components'
@@ -25,6 +25,9 @@ interface Props {
   lessonId: string
 }
 
+/**
+   @todo: this component should be removed and BrowserView '@root/src/sections/code-panel/components/body/blocks/view-block/browser-view'  be used 
+**/
 export default function StepCode({
   content,
   integrations,
@@ -32,6 +35,7 @@ export default function StepCode({
   data,
   lessonId,
 }: Props): React.ReactElement {
+  const editorRef = React.useRef(null)
   const [value, setValue] = useState<string>('')
   const [staticValue, setStaticValue] = useState<string>('')
   const handleDebouncedCallback = useDebounceCallback(1500)
@@ -44,17 +48,20 @@ export default function StepCode({
   const pageSkeleton = (userContent: string): string | undefined => {
     if (integrations) {
       return `<head>${integrations.reduce(
-        (ac, cur) => ac + cur.head,
+        (ac, cur) => ac + (cur.head.startsWith('<') ? cur.head : `<style>${cur.head}</style>`),
         ''
-      )}</head><main>${userContent}${integrations.reduce((ac, cur) => {
-        return ac + cur.scripts
+      )}<meta charset="utf-8"></head><main>${userContent}${integrations.reduce((ac, cur) => {
+        return cur.scripts ? ac + cur.scripts : ac
       }, '')}</main>`
     }
   }
 
-  useState(() => {
-    if (content) setValue(JSON.parse(content).content)
-  })
+  useEffect(() => {
+    if (content) {
+      let contentParsed = JSON.parse(content)
+      setValue(contentParsed.content ?? '')
+    }
+  }, [content])
   return (
     <ResizerUi
       split='vertical'
@@ -66,12 +73,14 @@ export default function StepCode({
           data={data}
           lessonId={lessonId}
           sx={{ mb: 1, mt: 1, ml: 2 }}
+          editorInstance={editorRef.current}
         />
         <CodeMirror
+          ref={editorRef}
           value={value}
           theme={dracula}
           height='calc(100vh - 96px)'
-          extensions={[html()]}
+          extensions={[html(), EditorView.lineWrapping]}
           onChange={(value) => {
             setValue(value)
           }}

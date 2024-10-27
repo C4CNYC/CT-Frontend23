@@ -20,8 +20,8 @@ import * as Yup from 'yup'
 
 import { FormProvider, RHFCode, RHFTextField } from '@/components'
 import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
+import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { LessonContentComplexity } from '@/redux/services/enums/lesson-content-complexity.enum'
-import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import { useUpdateLessonContentMutation } from '@/redux/services/manager/lesson-content-manager'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -138,6 +138,7 @@ export default function Preferences({
         onClick={() => {
           setOpenDialog(true)
         }}
+        title={translate('lesson_step_preferences')}
       >
         {children}
       </Box>

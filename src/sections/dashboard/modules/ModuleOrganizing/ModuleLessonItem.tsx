@@ -30,6 +30,7 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
   const router = useRouter()
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
+  const isActive = router.query.lessonId === lesson.id
 
   const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
     event.preventDefault()
@@ -68,9 +69,9 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
           {...provided.draggableProps}
           onClick={selectStep}
           elevation={8}
-          sx={{ ...getLessonItemPaperSx(chooseBorderColor) }}
+          sx={{ ...getLessonItemPaperSx(chooseBorderColor, isActive) }}
         >
-          {router.query.lessonId === lesson.id && <Box sx={GREEN_DOT_SX}></Box>}
+          {isActive && <Box sx={GREEN_DOT_SX}></Box>}
 
           <IconButton
             sx={{ mr: '5px' }}

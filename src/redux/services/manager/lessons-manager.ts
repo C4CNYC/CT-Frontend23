@@ -1,11 +1,14 @@
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { AiLessonGenerate } from '../interfaces/ai.interface'
 import {
   ILesson,
   ILessonCreate,
   ILessonDelete,
   ILessonSearchParams,
   ILessonUpdate,
+  IOpenAiRequest,
+  ILessonGenerate,
 } from '../interfaces/courseUnits.interface'
 import { IIntegration } from '../interfaces/integration.interface'
 
@@ -61,6 +64,70 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
+    generateLesson: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generate',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    generateLessonMulti: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generateMulti',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    createByCloningLesson: builder.mutation<ILessonCreate & BaseResponseInterface, void>({
+      query: () => ({
+        url: '/manager/lesson/createByCloningLesson',
+        method: 'POST',
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    createByAI: builder.mutation<ILessonCreate & BaseResponseInterface, AiLessonGenerate>({
+      query: ({ ...body }) => ({
+        url: '/manager/lesson/generate',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    askAI: builder.mutation<
+      IOpenAiRequest & BaseResponseInterface,
+      { prompt: string; add_response_format: string }
+    >({
+      query: ({ prompt, add_response_format = 'true' }) => ({
+        url: '/manager/lesson/openAiRequest',
+        method: 'POST',
+        body: {
+          prompt,
+          add_response_format: add_response_format ? add_response_format : 'true',
+        },
+      }),
+    }),
+    createLessonUsingOpenAIAssistant: builder.mutation<
+      IOpenAiRequest & BaseResponseInterface,
+      AiLessonGenerate
+    >({
+      query: (body) => ({
+        url: '/manager/lesson/createLessonUsingOpenAIAssistant',
+        method: 'POST',
+        body,
+      }),
+    }),
+    createLessonUsingOpenAIAssistantBeta: builder.mutation<
+      IOpenAiRequest & BaseResponseInterface,
+      AiLessonGenerate
+    >({
+      query: (body) => ({
+        url: '/manager/lesson/createLessonUsingOpenAIAssistantBeta',
+        method: 'POST',
+        body,
+      }),
+    }),
     deleteLesson: builder.mutation<ILessonDelete & BaseResponseInterface, ILessonDelete>({
       query: ({ id }) => ({
         url: `/manager/lesson/${id}`,
@@ -106,6 +173,13 @@ export const {
   useGetLessonIntegrationsQuery,
   // -------------mutation-----------
   useCreateLessonMutation,
+  useCreateByCloningLessonMutation,
+  useCreateByAIMutation,
+  useGenerateLessonMutation,
+  useGenerateLessonMultiMutation,
+  useAskAIMutation,
+  useCreateLessonUsingOpenAIAssistantMutation,
+  useCreateLessonUsingOpenAIAssistantBetaMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
   useAddIntegrationMutation,

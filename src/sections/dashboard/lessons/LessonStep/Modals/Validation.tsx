@@ -56,6 +56,12 @@ export default function Validation({
     id: stepId,
   })
 
+  const sortedData = new Array(...(data || []))?.sort((a, b) => {
+    const aDate = new Date(a.createdAt)
+    const bDate = new Date(b.createdAt)
+    return aDate.getTime() - bDate.getTime()
+  })
+
   const onDeleteRule = async (id: string): Promise<void> => {
     try {
       await removeRule({ contentId: stepId, id }).unwrap()
@@ -76,6 +82,7 @@ export default function Validation({
         onClick={() => {
           setOpenDialog(true)
         }}
+        title='Validation Rules'
       >
         {children}
       </Box>
@@ -168,7 +175,7 @@ export default function Validation({
               ) : (
                 <>
                   <TableBody>
-                    {data?.map((row) => (
+                    {sortedData?.map((row) => (
                       <StyledTableRow key={row.id}>
                         <StyledTableCell
                           align='left'

@@ -6,7 +6,7 @@ import { DocumentProps, Head, Html, Main, NextScript } from 'next/document'
 import { palette } from '@/theme/palette'
 import { primaryFont } from '@/theme/typography'
 
-export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps) {
+const MyDocument = (props: DocumentProps & DocumentHeadTagsProps) => {
   return (
     <Html
       lang='en'
@@ -26,24 +26,23 @@ export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps)
           name='theme-color'
           content={palette('light').primary.main}
         />
-
-        {/* Favicon */}
+        {/* should be improved */}
         <link
           rel='apple-touch-icon'
           sizes='180x180'
-          href='/favicon/apple-touch-icon.png'
+          href='/favicon/favicon_jika.ico'
         />
         <link
           rel='icon'
           type='image/png'
           sizes='32x32'
-          href='/favicon/favicon-32x32.png'
+          href='/favicon/favicon_jika.ico'
         />
         <link
           rel='icon'
           type='image/png'
           sizes='16x16'
-          href='/favicon/favicon-16x16.png'
+          href='/favicon/favicon_jika.ico'
         />
 
         {/* Meta */}
@@ -79,3 +78,14 @@ export default function MyDocument(props: DocumentProps & DocumentHeadTagsProps)
     </Html>
   )
 }
+
+MyDocument.getInitialProps = async (ctx: any) => {
+  const initialProps = await ctx.defaultGetInitialProps(ctx)
+  const req = ctx.req
+
+  const host = req ? req.headers.host : ''
+
+  return { ...initialProps, host }
+}
+
+export default MyDocument

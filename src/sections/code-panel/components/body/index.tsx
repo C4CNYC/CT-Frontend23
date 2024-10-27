@@ -32,21 +32,20 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   lessonContents,
   user,
   language,
-  isFetchingLessonContent = false,
 }) => {
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
+  const isDesktop = useIsDesktop()
+
   const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const [document, setDocument] = useState<CodeDocument | null>(null)
+  const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
+
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
-
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
-
-  const [document, setDocument] = useState<CodeDocument | null>(null)
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
@@ -83,6 +82,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
     }
   }
 
+  const reloadBrowserView = () => {
+    setBrowserView(document)
+  }
+
   const openInstruction = () => {
     dispatch(toggleInstrations(false))
   }
@@ -105,10 +108,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             onSubmitLesson={onSubmitLesson}
             data={lessonContents}
             integrations={lesson?.integrations ?? []}
-            isFetching={isFetchingLessonContent}
             code={document?.htmlBody?.join('') ?? ''}
             lessonType={lesson?.type}
             lessonName={lesson?.name}
+            lessonId={lesson?.id || lessonId}
           />
         ) : (
           <HidedTabBtn
@@ -144,7 +147,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
               code={document?.htmlBody?.join('') ?? ''}
               user={user}
               onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-              isFetching={isFetchingLessonContent}
               contentId={lessonContents[slideIndex]?.id}
             />
           </div>
@@ -155,7 +157,11 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             }}
           >
             {!isBrowserHidden ? (
-              <ViewBlock document={document} />
+              <ViewBlock
+                integrations={lesson?.integrations ?? []}
+                document={browserView}
+                reloadBrowserView={reloadBrowserView}
+              />
             ) : (
               <HidedTabBtn
                 title={TAB_TITLES.browser_preview}
@@ -186,9 +192,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         onSubmitChallenge={onSubmitChallenge}
         data={lessonContents}
         integrations={lesson?.integrations ?? []}
-        isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
         lessonType={lesson?.type}
+        lessonId={lesson?.id || lessonId}
       />
 
       <CodeEditorBlock
@@ -197,10 +203,12 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations}
-        isFetching={isFetchingLessonContent}
       />
 
-      <ViewBlock document={document} />
+      <ViewBlock
+        document={document}
+        integrations={lesson?.integrations ?? []}
+      />
     </SwipeableViews>
   )
 }

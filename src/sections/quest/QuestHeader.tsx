@@ -2,11 +2,15 @@ import { IconButton, Stack, Typography } from '@mui/material'
 import { MdOutlineArrowBackIosNew } from '@react-icons/all-files/md/MdOutlineArrowBackIosNew'
 import { useRouter } from 'next/router'
 
+import { AssignmentProjectCategories } from '@/redux/enums/assignment-types.enum'
 // import { TbShare2 } from "react-icons/tb"; // Hide share link
-
 import { useTranslate } from '@/utils/translateHelper'
 
-export default function QuestHeader(): React.ReactElement {
+export default function QuestHeader({
+  type,
+}: {
+  type: AssignmentProjectCategories | undefined
+}): React.ReactElement {
   const { back } = useRouter()
   const translate = useTranslate()
 
@@ -41,7 +45,7 @@ export default function QuestHeader(): React.ReactElement {
             {translate("actions_share")}
           </Typography>
         </Button> */}
-        <Typography variant='button'>{translate('quest_type')}</Typography>
+        <Typography variant='button'>{translate(type as string)}</Typography>
       </Stack>
     </Stack>
   )

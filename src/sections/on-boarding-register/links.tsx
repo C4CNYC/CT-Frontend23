@@ -46,13 +46,13 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
   )
 }
 
-export function RegisterStudenTeacher({ isTeacher }: Props): React.ReactElement {
+export function RegisterStudentTeacher({ isTeacher }: Props): React.ReactElement {
   const translate = useTranslate()
 
   return (
     <Link
       component={nextLink}
-      href={isTeacher ? PATH_AUTH.onBoardingStudent : PATH_AUTH.onBoardingTeacher}
+      href={isTeacher ? PATH_AUTH.onBoardingStudent : PATH_AUTH.onBoardingTeacher.root}
       underline='none'
       typography='subtitle1'
       sx={{

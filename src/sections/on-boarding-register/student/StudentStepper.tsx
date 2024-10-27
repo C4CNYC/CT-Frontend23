@@ -10,8 +10,9 @@ import { FormProvider, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { generateRandomEmoji } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { StyledContent } from '@root/src/layouts/login/styles'
 
-import { RegisterStudenTeacher, SingLink } from '../links'
+import { RegisterStudentTeacher, SingLink } from '../links'
 import SingUp from '../teacher/SingUp'
 
 import StepperInfo from './StepperInfo'
@@ -97,45 +98,48 @@ export default function StudentStepper(): React.ReactElement {
   }, [passwordValue])
 
   return (
-    <Stack
-      sx={{
-        minHeight: '460px',
-        justifyContent: 'center',
-        position: 'relative',
-      }}
-    >
-      {activeStep !== 2 && <RegisterStudenTeacher />}
-      <FormProvider
-        methods={methods}
-        onSubmit={methods.handleSubmit(onSubmit)}
+    <StyledContent>
+      <Stack
+        sx={{
+          width: '100%',
+          minHeight: '460px',
+          justifyContent: 'center',
+          position: 'relative',
+        }}
       >
-        {activeStep === 0 && (
-          <SingUp
-            goToStep={goToStep}
-            nextStep={nextStep}
-            isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
-            isTeacher={false}
-          />
-        )}
-        {(activeStep === 1 || activeStep === 2) && (
-          <StepperProgres
-            activeStep={activeStep}
-            prevStep={prevStep}
-          />
-        )}
+        {activeStep !== 2 && <RegisterStudentTeacher />}
+        <FormProvider
+          methods={methods}
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          {activeStep === 0 && (
+            <SingUp
+              goToStep={goToStep}
+              nextStep={nextStep}
+              isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
+              isTeacher={false}
+            />
+          )}
+          {(activeStep === 1 || activeStep === 2) && (
+            <StepperProgres
+              activeStep={activeStep}
+              prevStep={prevStep}
+            />
+          )}
 
-        {activeStep === 1 && (
-          <StepperRegister
-            nextStep={nextStep}
-            isSubmiting={methods.formState.isSubmitting}
-            isSubmitSuccessful={methods.formState.isSubmitSuccessful}
-            hasOneNumber={hasOneNumber}
-            hasSixDigit={hasSixDigit}
-          />
-        )}
-      </FormProvider>
-      {activeStep === 2 && <StepperInfo />}
-      {activeStep !== 2 ? <SingLink /> : null}
-    </Stack>
+          {activeStep === 1 && (
+            <StepperRegister
+              nextStep={nextStep}
+              isSubmiting={methods.formState.isSubmitting}
+              isSubmitSuccessful={methods.formState.isSubmitSuccessful}
+              hasOneNumber={hasOneNumber}
+              hasSixDigit={hasSixDigit}
+            />
+          )}
+        </FormProvider>
+        {activeStep === 2 && <StepperInfo />}
+        {activeStep !== 2 ? <SingLink /> : null}
+      </Stack>
+    </StyledContent>
   )
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
@@ -9,15 +10,15 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { PATH_AUTH } from '@root/src/routes/paths'
 import { generateRandomEmoji } from '@root/src/utils'
 
-import { RegisterStudenTeacher, SingLink } from '../links'
+import { RegisterStudentTeacher, SingLink } from '../../links'
+import SingUp from '../SingUp'
 
 import AddSchool from './AddSchool'
 import AddTeacher from './AddTeacher'
-import SingUp from './SingUp'
 import StepperProgress from './StepperProgress'
-import WelcomeStep from './WelcomeStep'
 
 interface FormValuesProps {
   email: string
@@ -26,7 +27,8 @@ interface FormValuesProps {
   password: string
 }
 
-export default function TeacherStepper(): React.ReactElement {
+export default function LaunchCourseStepper() {
+  const { push } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [activeStep, setActiveStep] = useState(0)
   const { register } = useAuthContext()
@@ -82,30 +84,31 @@ export default function TeacherStepper(): React.ReactElement {
         minHeight: '460px',
         justifyContent: 'center',
         position: 'relative',
+        width: '100%',
       }}
     >
-      <RegisterStudenTeacher isTeacher />
+      <RegisterStudentTeacher isTeacher />
+
       <FormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        {activeStep === 0 && <WelcomeStep nextStep={nextStep} />}
-        {activeStep === 1 && (
+        {activeStep === 0 && (
           <SingUp
             goToStep={goToStep}
             nextStep={nextStep}
-            prevStep={prevStep}
+            resetRoad={() => push(PATH_AUTH.onBoardingTeacher.root)}
             isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
             isTeacher={true}
           />
         )}
-        {(activeStep === 2 || activeStep === 3) && (
+        {(activeStep === 1 || activeStep === 2) && (
           <StepperProgress
             prevStep={prevStep}
             activeStep={activeStep}
           />
         )}
-        {activeStep === 2 && (
+        {activeStep === 1 && (
           <AddTeacher
             nextStep={nextStep}
             isSubmiting={methods.formState.isSubmitting}
@@ -114,7 +117,7 @@ export default function TeacherStepper(): React.ReactElement {
         )}
       </FormProvider>
 
-      {activeStep === 3 && <AddSchool />}
+      {activeStep === 2 && <AddSchool />}
       <SingLink />
     </Stack>
   )
