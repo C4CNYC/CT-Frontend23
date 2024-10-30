@@ -52,7 +52,7 @@ export const managerApi = createApi({
     'Goal',
     'LastVisitedUnitAndLesson',
     'Media',
-    'Properties'
+    'Properties',
   ],
   endpoints: () => ({}),
 })
