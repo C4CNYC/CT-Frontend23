@@ -18,6 +18,21 @@ export interface IProperty extends BaseResponseInterface {
   propertyName: string
   propertyValue: string
 }
+export interface IUseProperty {
+  entityType: PropertyEntityType
+  entityId?: string // if optional it basically wont communicate with backend
+  propertyName: string
+}
+export interface IPropertyCreate {
+  entityType: PropertyEntityType
+  entityId: string
+  propertyName: string
+  propertyValue: string
+}
+
+export interface IPropertyUpdate extends IPropertyCreate {
+  id: string
+}
 export interface IPropertySearchParams extends BaseSearchInterface {
   entityType?: PropertyEntityType
   entityId?: string

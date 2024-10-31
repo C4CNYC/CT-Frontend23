@@ -1,28 +1,35 @@
-import { IProperty, IPropertySearchParams } from '../interfaces/properties.interface'
+import { BaseListResponseInterface } from '@root/src/utils'
+
+import {
+  IProperty,
+  IPropertyCreate,
+  IPropertySearchParams,
+  IPropertyUpdate,
+} from '../interfaces/properties.interface'
 
 import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getProperties: builder.query<IProperty[], IPropertySearchParams>({
+    getProperties: builder.query<BaseListResponseInterface<IProperty>, IPropertySearchParams>({
       query: (params) => ({
-        url: `/manager/property`,
+        url: `/admin/properties`,
         method: 'GET',
         params,
       }),
       providesTags: ['Properties'],
     }),
-    createProperty: builder.mutation<IProperty, IProperty>({
+    createProperty: builder.mutation<IProperty, IPropertyCreate>({
       query: (body) => ({
-        url: `/manager/property`,
+        url: `/admin/properties`,
         method: 'POST',
         body,
       }),
       invalidatesTags: ['Properties'],
     }),
-    updateProperty: builder.mutation<IProperty, IProperty>({
+    updateProperty: builder.mutation<IProperty, IPropertyUpdate>({
       query: ({ id, ...body }) => ({
-        url: `/manager/property/${id}`,
+        url: `/admin/properties/${id}`,
         method: 'PATCH',
         body,
       }),
@@ -30,7 +37,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     deleteProperty: builder.mutation<IProperty, { id: string }>({
       query: ({ id }) => ({
-        url: `/manager/property/${id}`,
+        url: `/admin/properties/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Properties'],

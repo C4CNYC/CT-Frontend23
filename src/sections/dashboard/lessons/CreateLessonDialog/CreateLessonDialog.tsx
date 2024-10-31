@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 import { javascript } from '@codemirror/lang-javascript'
@@ -27,6 +27,7 @@ import {
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { useProperties } from '@root/src/hooks/useProperties'
 
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
@@ -40,6 +41,8 @@ interface FormValuesProps {
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
   duration: number
+  autoRun: boolean
+  lock: boolean
 }
 
 interface IDefaultProps {
@@ -50,6 +53,8 @@ interface IDefaultProps {
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
   duration?: Record<string, number> | null | undefined
+  autoRun?: boolean
+  lock?: boolean
 }
 
 interface ICreateLessonDialogProps {
@@ -80,7 +85,16 @@ export default function CreateLessonDialog({
   const [editLesson, { isLoading: isLoadingUpdate }] = useUpdateLessonMutation()
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
-
+  const [autoRun, autoRunSet, autoRunDelete] = useProperties({
+    entityType: 'lesson',
+    entityId: id,
+    propertyName: 'autoRun',
+  })
+  const [lessonLock, lessonLockSet, lessonLockDelete] = useProperties({
+    entityType: 'lesson',
+    entityId: id,
+    propertyName: 'lock',
+  })
   const timeConvertorToSeconds = (time: Record<string, number> | null | undefined) => {
     if (time) {
       return Object.entries(time).reduce((acc, [timeTipe, time]) => {
@@ -92,13 +106,23 @@ export default function CreateLessonDialog({
     }
     return 0
   }
+
   const defaultLessonValue = {
     name: translate('default_values.createLesson.name'),
     description: translate('default_values.createLesson.description'),
+    autoRun: false,
+    lock: false,
     ...defaultValues,
     duration: timeConvertorToSeconds(defaultValues?.duration),
   }
 
+  useEffect(() => {
+    methods.reset({
+      ...defaultLessonValue,
+      autoRun: autoRun ? true : false,
+      lock: lessonLock ? true : false,
+    })
+  }, [autoRun, lessonLock])
   const handleClickOpen = (): void => {
     setOpen(true)
   }
@@ -118,19 +142,25 @@ export default function CreateLessonDialog({
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    let lessonData = {
+      ...data,
+      duration: `${data.duration * 60}`,
+      autoRun: undefined,
+    }
     try {
       if (isEdit && id) {
-        await editLesson({
-          id,
-          ...data,
-          duration: `${data.duration * 60}`,
-        }).unwrap()
+        await editLesson({ id, ...lessonData }).unwrap()
+        data.autoRun ? autoRunSet('true') : autoRunDelete()
+        data.lock ? lessonLockSet('true') : lessonLockDelete()
         if (refetch) refetch()
       } else {
-        const lesson = await createLesson({
-          ...data,
-          duration: `${data.duration * 60}`,
-        }).unwrap()
+        const lesson = await createLesson(lessonData).unwrap()
+        if (data.autoRun) {
+          autoRunSet('true')
+        }
+        if (data.lock) {
+          lessonLockSet('true')
+        }
         if (refetch) refetch()
         if (router.query.module_id || router.query.moduleId) {
           addLessonToModule({
@@ -225,55 +255,69 @@ export default function CreateLessonDialog({
                   extensions={[javascript({ jsx: true })]}
                 />
 
-                <RHFTextField
-                  name='duration'
-                  label='duration'
-                  type='number'
-                  InputProps={{
-                    startAdornment: <InputAdornment position='start'>min</InputAdornment>,
-                  }}
-                />
-
-                <RHFSelect
-                  native
-                  name='type'
-                  size='small'
-                  label='Lesson type'
+                <Stack
+                  direction='row'
+                  flexWrap='wrap'
+                  justifyContent='space-between'
+                  sx={{ '& > *': { width: '45%' } }}
                 >
-                  <option
-                    key='practical'
-                    value='practical'
-                  >
-                    {translate('lessons_practical')}
-                  </option>
-                  <option
-                    key='exercise'
-                    value='exercise'
-                  >
-                    {translate('lessons_exercise')}
-                  </option>
-                  <option
-                    key='exercise1'
-                    value='exercise1'
-                  >
-                    {translate('Lesson type 2')}
-                  </option>
-                  <option
-                    key='exercise2'
-                    value='exercise2'
-                  >
-                    {translate('Lesson type 3')}
-                  </option>
-                </RHFSelect>
-                <RHFSwitch
-                  name='active'
-                  label={translate('lessons_active')}
-                />
+                  <RHFTextField
+                    name='duration'
+                    label='duration'
+                    type='number'
+                    InputProps={{
+                      startAdornment: <InputAdornment position='start'>min</InputAdornment>,
+                    }}
+                  />
 
-                <RHFSwitch
-                  name='independent'
-                  label={translate('lessons_inependent_lesson')}
-                />
+                  <RHFSelect
+                    native
+                    name='type'
+                    label='Lesson type'
+                  >
+                    <option
+                      key='practical'
+                      value='practical'
+                    >
+                      {translate('lessons_practical')}
+                    </option>
+                    <option
+                      key='exercise'
+                      value='exercise'
+                    >
+                      {translate('lessons_exercise')}
+                    </option>
+                    <option
+                      key='exercise1'
+                      value='exercise1'
+                    >
+                      {translate('Lesson type 2')}
+                    </option>
+                    <option
+                      key='exercise2'
+                      value='exercise2'
+                    >
+                      {translate('Lesson type 3')}
+                    </option>
+                  </RHFSelect>
+                  <RHFSwitch
+                    name='active'
+                    label={translate('lessons_active')}
+                  />
+
+                  <RHFSwitch
+                    name='independent'
+                    label={translate('lessons_inependent_lesson')}
+                  />
+                  <RHFSwitch
+                    name='autoRun'
+                    label={translate('lessons_autoRun')}
+                  />
+                  <RHFSwitch
+                    name='lock'
+                    label={translate('lessons_lock')}
+                  />
+                </Stack>
               </Stack>
             </TabPanel>
             <TabPanel
