@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
@@ -13,6 +13,7 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { BRIEFING, CHALANGES, CUSTOM, GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
+import { LessonContentContext } from './LessonStepContent/LessonContent.context'
 import Preferences from './Modals/Preferences'
 import Validation from './Modals/Validation'
 
@@ -22,16 +23,19 @@ interface Props {
   index: number
   onRemove: (id: string) => void
   onDublicate: (step: ILessonContent & BaseResponseInterface) => void
+  onChangeSlide: (stepId: string) => VoidFunction
 }
 
 export default function LessonListItem({
   onRemove,
   onDublicate,
+  onChangeSlide,
   lessonId,
   step,
   index,
 }: Props): React.ReactElement {
   const router = useRouter()
+  const { locked, lockedHandler } = useContext(LessonContentContext)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [hasValidation, setHasValidation] = useState<boolean>(false)
   const translate = useTranslate()
@@ -49,14 +53,15 @@ export default function LessonListItem({
   }
 
   const selectStep = (): void => {
-    router.push(
-      `${router.pathname}?${new URLSearchParams({
-        ...router.query,
-        stepId: step.id,
-      })}`,
-      undefined,
-      { shallow: true }
-    )
+    if (!locked || window.confirm('You have changes, abondon them?'))
+      router.push(
+        `${router.pathname}?${new URLSearchParams({
+          ...router.query,
+          stepId: step.id,
+        })}`,
+        undefined,
+        { shallow: true }
+      )
   }
 
   const chooseBorderColor = (): string => {
@@ -79,7 +84,7 @@ export default function LessonListItem({
         <Paper
           {...provided.draggableProps}
           ref={provided.innerRef}
-          onClick={selectStep}
+          onClick={onChangeSlide(step.id)}
           elevation={8}
           sx={{ ...getLessonItemPaperSx(chooseBorderColor, isSlideActive) }}
         >

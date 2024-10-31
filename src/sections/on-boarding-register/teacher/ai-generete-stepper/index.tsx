@@ -46,7 +46,7 @@ const defaultValues = {
   RtrackR: '',
   RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
   RpersonaR: PERSONA[0].value,
-  RtoneR: TONE[1].value,
+  RtoneR: TONE[2].value,
   RtypeLessonR: TYPE_LESSON[1].value,
   name: null,
   email: null,

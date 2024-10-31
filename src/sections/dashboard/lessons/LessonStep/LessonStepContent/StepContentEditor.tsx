@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import {
   Box,
@@ -25,6 +25,7 @@ import {
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { Label } from '@root/src/components'
 import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -56,9 +57,9 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const DEFAULT_COLOR = '' // '#F6F9FC'
 
 export default function StepContentEditor(): React.ReactElement {
+  const { locked } = useContext(LessonContentContext)
   const { lessonId, stepId } = useRouter().query
   const { enqueueSnackbar } = useSnackbar()
-  const [locked, setLocked] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
   const [proposal, setProposal] = useState<string>('')
   const [bgColor, setBgColor] = useState<string>(DEFAULT_COLOR)
@@ -112,12 +113,7 @@ export default function StepContentEditor(): React.ReactElement {
   }
 
   return (
-    <LessonContentContext.Provider
-      value={{
-        locked,
-        lockedHandler: setLocked,
-      }}
-    >
+    <>
       <Dialog
         open={open}
         onClose={() => {
@@ -222,6 +218,7 @@ export default function StepContentEditor(): React.ReactElement {
                 <BsClipboard size='20px' /> Remirror
               </ToggleButton>
             </StyledToggleButtonGroup>
+            {locked ? <Label color='info'>Content Changed</Label> : null}
             <Preferences
               defaultValues={{ ...data! }}
               contentId={data?.id as string}
@@ -264,6 +261,6 @@ export default function StepContentEditor(): React.ReactElement {
           />
         </Box>
       </Box>
-    </LessonContentContext.Provider>
+    </>
   )
 }
