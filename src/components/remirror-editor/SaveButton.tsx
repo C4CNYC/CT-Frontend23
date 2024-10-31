@@ -1,36 +1,40 @@
 import Button from '@mui/material/Button'
-import { FaSave } from '@react-icons/all-files/fa/FaSave'
+
+import SaveIconTyniMce from '@root/src/sections/dashboard/lessons/LessonStep/LessonStepContent/SaveIconTynyMce'
 
 interface Props {
   onClick: VoidFunction
   sx?: Record<string, unknown>
+  iconColor?: string
 }
 
-export function SaveButton({ onClick, sx }: Props): JSX.Element {
+export function SaveButton({ onClick, iconColor = '#637381', sx }: Props): JSX.Element {
   return (
     <Button
-      variant='outlined'
       key='left'
       onClick={onClick}
       sx={{
         flexShrink: 0,
         ml: 'auto!important',
-        maxHeight: '40px',
-        borderRadius: '20px',
-        border: '2px solid #75CF6D',
-        color: '#75CF6D',
+        mt: 1,
+        maxHeight: '30px',
+        fontWeight: '400',
+        color: '#637381',
+        border: '.5px solid #637381',
         gap: 1,
+        alignItems: 'center',
         '&:hover': {
-          border: '2px solid #75CF6D',
+          backgroundColor: 'rgba(225, 225, 225, 0.55)',
         },
+
         ...sx,
       }}
     >
-      Save
-      <FaSave
-        size='18px'
-        style={{ marginBottom: '3px' }}
+      <SaveIconTyniMce
+        color={iconColor}
+        size={20}
       />
+      Save
     </Button>
   )
 }

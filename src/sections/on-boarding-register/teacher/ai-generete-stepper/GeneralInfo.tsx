@@ -46,14 +46,13 @@ export function GeneralInfo({ nextStep, prevStep, isModal, closeModal }: IGenera
         direction='row'
         sx={{ gap: 2, pl: isModal ? 1 : 0, alignItems: 'center' }}
       >
-        {!isModal ? (
-          <IconButton onClick={prevStep}>
-            <Iconify
-              icon='ion:chevron-back'
-              width='30px'
-            />
-          </IconButton>
-        ) : null}
+        <IconButton onClick={prevStep}>
+          <Iconify
+            icon='ion:chevron-back'
+            width='30px'
+          />
+        </IconButton>
+
         <Typography
           variant='h3'
           sx={STEP_TYTLE_STYLES}
