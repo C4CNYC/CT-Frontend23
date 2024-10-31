@@ -63,7 +63,6 @@ export const unsubscribeSocket = (socket?: Socket): void => {
 
 export const createSocket = (userId?: null | string): Socket => {
   return io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
-    transports: ['polling'],
     path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
     auth: userId ? { userId } : {},
   })
