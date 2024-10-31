@@ -70,6 +70,7 @@ export default function StepCode({
       setValue(contentParsed.content ?? '')
     }
   }, [content])
+
   return (
     <ResizerUi
       split='vertical'
@@ -97,17 +98,14 @@ export default function StepCode({
           onClick={() => {
             onSubmit(JSON.stringify({ content: value }))
           }}
+          iconColor='#fff'
           sx={{
             position: 'absolute',
             top: 65,
             right: 35,
-            color: '#7963d2',
-            border: '1px solid rgba(121, 99, 210, 0.5)',
+            color: '#fff',
             borderRadius: '4px',
-            '&:hover': {
-              border: '1px solid rgba(121, 99, 210, 0.5)',
-              backgroundColor: ' rgba(121, 99, 210, 0.1)',
-            },
+            border: 'none',
           }}
         />
       </Box>

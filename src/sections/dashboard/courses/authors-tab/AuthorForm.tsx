@@ -134,7 +134,7 @@ export default function AuthorForm({
           />
           <RHFTextField
             name='linkedin'
-            label='Linkedin'
+            label='Website link'
           />
           <RHFTextField
             name='about'
