@@ -146,6 +146,7 @@ export default function CreateLessonDialog({
       ...data,
       duration: `${data.duration * 60}`,
       autoRun: undefined,
+      lock: undefined,
     }
     try {
       if (isEdit && id) {
