@@ -171,6 +171,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   })
 
   useEffect(() => {
+    onChangeCodemirrorValue((localstorageCode ?? preloadedCode) || '')
+  }, [preloadedCode, localstorageCode])
+
+  useEffect(() => {
     const newCodeValue =
       localstorageCode ??
       prevLessonCode ??
@@ -179,10 +183,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     setCodeValue(newCodeValue)
   }, [preloadedCode, localstorageCode, streamingDoc])
 
-  const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
-
   useEffect(() => {
-    onChangeCodemirrorValue(codeValue as string)
+    // TODO: check it and remove in case of unnecessary
     return () => {
       dispatch(setPrevLessonId(null))
       dispatch(setPrevLessonCode(null))
@@ -245,7 +247,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             basicSetup={BASIC_SETUP}
             theme='dark'
             extensions={extensions}
-            readOnly={isReadOnly}
+            readOnly={_isReadOnly || roomStatus === RoomStatus.Inactive}
             value={codeValue}
             onChange={onChangeCodemirrorValue}
           />
