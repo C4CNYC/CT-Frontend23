@@ -16,9 +16,15 @@ interface Props {
   lesson: ILesson
   index?: number
   refetch?: () => void
+  lock?: boolean | undefined
 }
 
-export default function LessonCard({ lesson, index, refetch }: Props): React.ReactElement | null {
+export default function LessonCard({
+  lesson,
+  index,
+  refetch,
+  lock,
+}: Props): React.ReactElement | null {
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -128,7 +134,7 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
             >
               {lesson.active ? translate('active') : translate('not_active')}
             </Label>
-            {lesson.id.endsWith('000000000000') ? (
+            {lock || lesson.id.endsWith('000000000000') ? (
               <Label
                 variant='soft'
                 color={'error'}
@@ -220,7 +226,7 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
         </CreateLessonDialog>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-        {lesson.id.endsWith('000000000000') ? (
+        {lock || lesson.id.endsWith('000000000000') ? (
           <></>
         ) : (
           <MenuItem
