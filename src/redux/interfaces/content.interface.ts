@@ -89,6 +89,7 @@ export interface ILesson {
   independent?: boolean
   contents: ILessonContent[]
   type: 'practical' | 'exercise'
+  slug: string
 }
 
 export interface ILessonCurrent {

@@ -33,10 +33,11 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
     { class_id: query.id as string },
     { skip: !query.id || !profile }
   )
-  const { data: course, isLoading: isLoadingCourse } = useGetCourseQuery({})
+  const { data: course, isLoading: isLoadingCourse } = useGetCourseQuery({}, { skip: !profile })
+  let courseDataId = course && course.data && course.data.length ? course.data[0].id : ''
   const { data: module, isLoading: isLoadingModule } = useGetStudentCourseModulesQuery(
-    { id: course?.data[0].id as string },
-    { skip: !course?.data[0].id && !isLoadingCourse }
+    { id: courseDataId as string },
+    { skip: !courseDataId || isLoadingCourse || !profile }
   )
 
   const getLetsCodeLesson = () => {
