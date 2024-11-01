@@ -41,6 +41,7 @@ interface FormValuesProps {
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
   duration: number
+  slug: string
   autoRun: boolean
   lock: boolean
 }
@@ -53,6 +54,7 @@ interface IDefaultProps {
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
   duration?: Record<string, number> | null | undefined
+  slug?: string
   autoRun?: boolean
   lock?: boolean
 }
@@ -142,6 +144,7 @@ export default function CreateLessonDialog({
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    let lesson;
     let lessonData = {
       ...data,
       duration: `${data.duration * 60}`,
@@ -150,12 +153,12 @@ export default function CreateLessonDialog({
     }
     try {
       if (isEdit && id) {
-        await editLesson({ id, ...lessonData }).unwrap()
+        lesson = await editLesson({ id, ...lessonData }).unwrap()
         data.autoRun ? autoRunSet('true') : autoRunDelete()
         data.lock ? lessonLockSet('true') : lessonLockDelete()
         if (refetch) refetch()
       } else {
-        const lesson = await createLesson(lessonData).unwrap()
+        lesson = await createLesson(lessonData).unwrap()
         if (data.autoRun) {
           autoRunSet('true')
         }
@@ -171,9 +174,7 @@ export default function CreateLessonDialog({
         }
         methods.reset()
       }
-      enqueueSnackbar(
-        !isEdit ? translate('messages_create_success') : translate('messages_update_success')
-      )
+      enqueueSnackbar(translate(!isEdit ? 'messages_create_success' : 'messages_update_success'))
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: 'error',
@@ -186,7 +187,6 @@ export default function CreateLessonDialog({
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue)
   }
-
   return (
     <>
       <Box onClick={handleClickOpen}>{children}</Box>
@@ -264,7 +264,8 @@ export default function CreateLessonDialog({
                 >
                   <RHFTextField
                     name='duration'
-                    label='duration'
+                    label='Duration'
+                    size='small'
                     type='number'
                     InputProps={{
                       startAdornment: <InputAdornment position='start'>min</InputAdornment>,
@@ -274,6 +275,7 @@ export default function CreateLessonDialog({
                   <RHFSelect
                     native
                     name='type'
+                    size='small'
                     label='Lesson type'
                   >
                     <option
@@ -300,11 +302,15 @@ export default function CreateLessonDialog({
                     >
                       {translate('Lesson type 3')}
                     </option>
-                  </RHFSelect>
-                  <RHFSwitch
-                    name='active'
-                    label={translate('lessons_active')}
-                  />
+                  </RHFSelect> 
+                <RHFTextField
+                  name='slug'
+                  label='Slug'
+                />
+                <RHFSwitch
+                  name='active'
+                  label={translate('lessons_active')}
+                />
 
                   <RHFSwitch
                     name='independent'
