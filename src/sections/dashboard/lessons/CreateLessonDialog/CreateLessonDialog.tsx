@@ -144,7 +144,7 @@ export default function CreateLessonDialog({
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    let lesson;
+    let lesson
     let lessonData = {
       ...data,
       duration: `${data.duration * 60}`,
@@ -256,6 +256,11 @@ export default function CreateLessonDialog({
                   extensions={[javascript({ jsx: true })]}
                 />
 
+                <RHFTextField
+                  name='slug'
+                  label='Slug'
+                  size='small'
+                />
                 <Stack
                   direction='row'
                   flexWrap='wrap'
@@ -302,15 +307,11 @@ export default function CreateLessonDialog({
                     >
                       {translate('Lesson type 3')}
                     </option>
-                  </RHFSelect> 
-                <RHFTextField
-                  name='slug'
-                  label='Slug'
-                />
-                <RHFSwitch
-                  name='active'
-                  label={translate('lessons_active')}
-                />
+                  </RHFSelect>
+                  <RHFSwitch
+                    name='active'
+                    label={translate('lessons_active')}
+                  />
 
                   <RHFSwitch
                     name='independent'
