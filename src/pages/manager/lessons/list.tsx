@@ -23,6 +23,7 @@ import LessonCard from '@/sections/dashboard/lessons/LessonCard'
 import LessonStepMain from '@/sections/dashboard/lessons/LessonStep/LessonStepMain'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 
 import FilterLessons from './filter'
 
@@ -97,6 +98,13 @@ export default function LessonsListPage(): React.ReactElement {
     refetch: refetchAdminLessons,
   } = useGetAllAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
   const [lessons, setLessons] = useState<ILesson[]>([])
+  const { data: propertyLocks } = useGetPropertiesQuery(
+    {
+      entityType: 'lesson',
+      propertyName: 'lock',
+    },
+    { skip: !lessons.length }
+  )
   const data = userRole === Role.Admin ? adminData : ownLessonsData
   const isLoading = userRole === Role.Admin ? adminIsLoading : isOwnLessonDataLoading
   const isFetching = userRole === Role.Admin ? adminFetching : isOwnLessonDataFetching
@@ -234,6 +242,7 @@ export default function LessonsListPage(): React.ReactElement {
                       lesson={lesson}
                       index={index}
                       refetch={refetch}
+                      lock={!!propertyLocks?.data?.find((lock) => lock.entityId === lesson.id)}
                     />
                   ))}
                   {isFetching
