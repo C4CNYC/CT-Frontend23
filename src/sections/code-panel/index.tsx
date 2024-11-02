@@ -352,8 +352,6 @@ export default function CodePanelLayout(): ReactElement | null {
     setTimeout(() => setRender(false))
   }, [isShowTour, showTour])
  
-
-
   if (!isLoadingComplete && render ) {
     return <SkeletonCodePanel />
   }
