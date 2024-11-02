@@ -52,13 +52,6 @@ const CodePanelChat = dynamic(async () => await import('../../components/chat/ch
   ssr: false,
 })
 
-const CodePanelSignUpDialog = dynamic(
-  async () => await import('@/sections/code-panel/components/sign-up-dialog'),
-  {
-    ssr: false,
-  }
-)
-
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
   {
@@ -74,8 +67,6 @@ const CodePanelHeader = dynamic(
 )
 
 const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
-
-const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/components/footer'))
 
 const LessonsManager = dynamic(
   async () => await import('@/sections/code-panel/components/lesson-manager')
@@ -99,8 +90,8 @@ export default function CodePanelLayout(): ReactElement | null {
 
   const [render, setRender] = useState(true)
   const [showTour, setShowTour] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false) 
-  
+  const [showConfetti, setShowConfetti] = useState(false)
+
   const isShowTour = useSelector((state) => state.tour.isStarted)
   const profile = useSelector((state) => state.global.user)
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
@@ -171,25 +162,24 @@ export default function CodePanelLayout(): ReactElement | null {
     { skip: !!profile || !router.query.courseId || !router.query.lessonId }
   )
 
-  const lessonContent = profile
-    ? lessonStudentContent
-    : publicLessonContent?.length
-      ? Array.from(publicLessonContent).sort((a, b) => (a.meta.order > b.meta.order ? 1 : -1))
-      : []
+  const lessonContent = useMemo(
+    () =>
+      profile
+        ? lessonStudentContent
+        : publicLessonContent?.length
+          ? Array.from(publicLessonContent).sort((a, b) => (a.meta.order > b.meta.order ? 1 : -1))
+          : [],
+    [profile, lessonStudentContent, publicLesson, publicLessonContent]
+  )
 
-  const isLoadingLessonContent = profile
-    ? isLoadingLessonStudentContent
-    : isPublicLessonContentLoading
-  const isFetchingLessonContent = profile
-    ? isFetchingLessonStudentContent
-    : isPublicFetchingLessonContent
-  const fulfilledTimeStamp = profile ? fulfilledStudentTimeStamp : fulfilledPublicTimeStamp
+  const fulfilledTimeStamp = useMemo(
+    () => (profile ? fulfilledStudentTimeStamp : fulfilledPublicTimeStamp),
+    [profile, fulfilledStudentTimeStamp, fulfilledPublicTimeStamp]
+  )
 
   useGetContentCheckersQuery(undefined, {
     skip: !fulfilledTimeStamp || !profile,
   })
-
-  
 
   const onConfettiComplete = (confetti?: ConfettiType) => {
     setShowConfetti(false)
@@ -325,42 +315,41 @@ export default function CodePanelLayout(): ReactElement | null {
     const isFetchingLessonContent = profile
       ? isFetchingLessonStudentContent
       : isPublicFetchingLessonContent
-      return (
-        !!lesson &&
-        !isLoadingLessonContent &&
-        !isFetchingLessonContent &&
-        !isLoadingLesson &&
-        router.query.courseId !== null &&
-        !render
-      )
-    }, [
-      isLoadingLessonStudentContent,
-      isPublicLessonContentLoading,
-      isFetchingLessonStudentContent,
-      isPublicFetchingLessonContent,
-      lesson,
-      isLoadingLesson,
-      router,
-      render,
-      profile,
+
+    return (
+      !!lesson &&
+      !isLoadingLessonContent &&
+      !isFetchingLessonContent &&
+      !isLoadingLesson &&
+      router.query.courseId !== null &&
+      !render
+    )
+  }, [
+    isLoadingLessonStudentContent,
+    isPublicLessonContentLoading,
+    isFetchingLessonStudentContent,
+    isPublicFetchingLessonContent,
+    lesson,
+    isLoadingLesson,
+    router,
+    render,
+    profile,
   ])
-  
 
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
     if (!hasSeenTour) setShowTour(true)
     setTimeout(() => setRender(false))
   }, [isShowTour, showTour])
- 
-  if (!isLoadingComplete && render ) {
+
+  if (!isLoadingComplete && render) {
     return <SkeletonCodePanel />
   }
 
   return (
     <CodePanelContextProvider
-      lessonId={lessonIdFromRoute}
-      studentCode=''
-    >
+    lessonId={lessonIdFromRoute}
+    studentCode=''>
       <Head>
         <title> CodePanel: CodeTribe </title>
       </Head>
