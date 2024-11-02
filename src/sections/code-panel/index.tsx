@@ -46,6 +46,8 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
+import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
+
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
   ssr: false,
 })
@@ -104,6 +106,9 @@ export default function CodePanelLayout(): ReactElement | null {
     dispatch(setUsersStatus(cb(usersStatus)))
   }
 
+  const lessonIdFromRoute = Array.isArray(router.query.lessonId)
+    ? router.query.lessonId.join()
+    : router.query.lessonId || ''
   const handle = useFullScreenHandle()
 
   const [showConfetti, setShowConfetti] = useState(false)
@@ -305,7 +310,6 @@ export default function CodePanelLayout(): ReactElement | null {
     }
   }
 
-  const lessonIdFromRoute = router.query.lessonId
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const [showTour, setShowTour] = useState(false)
   const [render, setRender] = useState(true)
@@ -409,7 +413,10 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   return (
-    <>
+    <CodePanelContextProvider
+      lessonId={lessonIdFromRoute}
+      studentCode=''
+    >
       <Head>
         <title> CodePanel: CodeTribe </title>
       </Head>
@@ -461,6 +468,6 @@ export default function CodePanelLayout(): ReactElement | null {
           onConfettiComplete={onConfettiComplete}
         />
       )}
-    </>
+    </CodePanelContextProvider>
   )
 }
