@@ -109,8 +109,6 @@ export default function CodePanelLayout(): ReactElement | null {
   const lessonIdFromRoute = Array.isArray(router.query.lessonId)
     ? router.query.lessonId.join()
     : router.query.lessonId || ''
-  
- 
 
   const { data: studentCourseContent, isLoading: isLoadingStudentCourseContent } =
     useGetCourseContentQuery(
@@ -348,8 +346,9 @@ export default function CodePanelLayout(): ReactElement | null {
 
   return (
     <CodePanelContextProvider
-    lessonId={lessonIdFromRoute}
-    studentCode=''>
+      lessonId={lessonIdFromRoute}
+      studentCode=''
+    >
       <Head>
         <title> CodePanel: CodeTribe </title>
       </Head>
