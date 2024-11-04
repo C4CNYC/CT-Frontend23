@@ -254,9 +254,11 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
       })
 
       const { access_token: accessToken, user } = data
-      reduxDispatch(setUser(user))
 
       localStorage.setItem('accessToken', accessToken)
+
+      reduxDispatch(setUser(user))
+      setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
 
       dispatch({
         type: Types.REGISTER,
