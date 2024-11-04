@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Button, SxProps } from '@mui/material'
 import { LuCheckCircle } from '@react-icons/all-files/lu/LuCheckCircle'
 import { LuRemoveFormatting } from '@react-icons/all-files/lu/LuRemoveFormatting'
 import { LuScrollText } from '@react-icons/all-files/lu/LuScrollText'
+import { LuWrench } from '@react-icons/all-files/lu/LuWrench'
 import { TbIroning1 } from '@react-icons/all-files/tb/TbIroning1'
 import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
 import { EditorView, ReactCodeMirrorRef } from '@uiw/react-codemirror'
@@ -11,12 +12,13 @@ import { EditorView, ReactCodeMirrorRef } from '@uiw/react-codemirror'
 import Preferences from '@/sections/dashboard/lessons/LessonStep/Modals/Preferences'
 import Validation from '@/sections/dashboard/lessons/LessonStep/Modals/Validation'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useBoolean } from '@root/src/hooks/useBoolean'
 import { MediaModal } from '@root/src/sections/dashboard/medias/MediaModal'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 import { MenuPopover } from '../menu-popover'
 
-import { ChallengeBtn, PreCodeBtn, SolutionBtn, TipsBtn } from './controls-btn'
+import { BUTTONS_STYLES, ChallengeBtn, PreCodeBtn, SolutionBtn, TipsBtn } from './controls-btn'
 
 interface IMenuItems {
   data: ILessonContent & BaseResponseInterface
@@ -27,6 +29,8 @@ interface IMenuItems {
 
 const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
   const [open, setOpen] = useState<HTMLElement | null>(null)
+  const [formatMenuState, formatMenuOpen, formatMenuClose] = useBoolean()
+  const formatMenuButton = useRef<HTMLButtonElement | null>(null)
 
   const handleOpenChallengeMenu = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -145,42 +149,16 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
           <LuCheckCircle size={20} />
           Challenge
         </Button>
-        {editorInstance ? (
-          <>
-            <Button
-              onClick={capeHtml('Escape')}
-              title='Escapes HTML in the selection'
-              sx={sxSmall}
-            >
-              <LuRemoveFormatting size={20} />
-              Escape HTML
-            </Button>
-            <Button
-              onClick={capeHtml('Unescape')}
-              title='Tangle this code'
-              sx={sxSmall}
-            >
-              <LuScrollText size={20} />
-              Cape HTML
-            </Button>
-
-            <MediaModal insertImage={insertImage}>
-              <Button sx={sxSmall}>
-                <TbPhoto size={20} />
-                Insert Media
-              </Button>
-            </MediaModal>
-
-            <Button
-              sx={sxSmall}
-              onClick={handleAutoFormat}
-              title='Format code'
-            >
-              <TbIroning1 size={20} />
-              Format
-            </Button>
-          </>
-        ) : null}
+        {editorInstance && (
+          <Button
+            onClick={formatMenuOpen}
+            sx={sx}
+            ref={formatMenuButton}
+          >
+            <LuWrench size={20} />
+            Tools
+          </Button>
+        )}
       </div>
       <MenuPopover
         open={open}
@@ -221,6 +199,50 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
         >
           <PreCodeBtn />
         </Preferences>
+      </MenuPopover>
+      <MenuPopover
+        open={formatMenuState ? formatMenuButton.current : null}
+        onClose={formatMenuClose}
+        disabledArrow
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: -5, horizontal: 5 }}
+        sx={{ p: 0, width: 150, bgcolor: '#D9F6F8' }}
+      >
+        {' '}
+        {editorInstance && (
+          <>
+            <Button
+              onClick={capeHtml('Escape')}
+              title='Escapes HTML in the selection'
+              sx={BUTTONS_STYLES}
+            >
+              <LuRemoveFormatting size={20} />
+              Escape HTML
+            </Button>
+            <Button
+              onClick={capeHtml('Unescape')}
+              title='Tangle this code'
+              sx={BUTTONS_STYLES}
+            >
+              <LuScrollText size={20} />
+              Cape HTML
+            </Button>
+            <MediaModal insertImage={insertImage}>
+              <Button sx={BUTTONS_STYLES}>
+                <TbPhoto size={20} />
+                Insert Media
+              </Button>
+            </MediaModal>
+            <Button
+              sx={BUTTONS_STYLES}
+              onClick={handleAutoFormat}
+              title='Format code'
+            >
+              <TbIroning1 size={20} />
+              Format
+            </Button>
+          </>
+        )}
       </MenuPopover>
     </>
   )
