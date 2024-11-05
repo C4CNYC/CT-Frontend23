@@ -26,24 +26,6 @@ const MyDocument = (props: DocumentProps & DocumentHeadTagsProps) => {
           name='theme-color'
           content={palette('light').primary.main}
         />
-        {/* should be improved */}
-        <link
-          rel='apple-touch-icon'
-          sizes='180x180'
-          href='/favicon/favicon_jika.ico'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='32x32'
-          href='/favicon/favicon_jika.ico'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='16x16'
-          href='/favicon/favicon_jika.ico'
-        />
 
         {/* Meta */}
         <meta
