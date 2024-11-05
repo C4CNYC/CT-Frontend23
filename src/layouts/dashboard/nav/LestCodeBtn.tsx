@@ -9,6 +9,7 @@ import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assig
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetLastWorkspaceQuery } from '@root/src/redux/services/manager/activity-student'
 import {
   useGetCourseQuery,
   useGetStudentCourseModulesQuery,
@@ -21,26 +22,41 @@ interface ILetsCodeBtnProps {
 }
 
 export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
+  const theme = useTheme()
   const translate = useTranslate()
   const { push, query } = useRouter()
-  const theme = useTheme()
-  const letsCodeBtnSx = useMemo(() => getLetsCodeBtnSx(theme, isMini), [theme, isMini])
+
   const profile = useSelector((state) => state.global.user)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const unitId = useSelector((state) => state.codePanelGlobal.unitId)
+
+  const letsCodeBtnSx = useMemo(() => getLetsCodeBtnSx(theme, isMini), [theme, isMini])
+
+  const { data: workspaceActivity } = useGetLastWorkspaceQuery()
   const { data: assigments } = useGetAssignmentListStudentQuery(
     { class_id: query.id as string },
     { skip: !query.id || !profile }
   )
+
   const { data: course, isLoading: isLoadingCourse } = useGetCourseQuery({}, { skip: !profile })
-  let courseDataId = course && course.data && course.data.length ? course.data[0].id : ''
-  const { data: module, isLoading: isLoadingModule } = useGetStudentCourseModulesQuery(
+
+  let courseDataId = useMemo(
+    () => (course && course.data && course.data.length ? course.data[0].id : ''),
+    [course]
+  )
+
+  const { data: module } = useGetStudentCourseModulesQuery(
     { id: courseDataId as string },
     { skip: !courseDataId || isLoadingCourse || !profile }
   )
 
   const getLetsCodeLesson = () => {
+    if (workspaceActivity) {
+      push(STUDENT_PATH_DASHBOARD.codePanel.root + workspaceActivity.lastWorkspaceQuery)
+      return
+    }
+
     if (courseId && unitId && lessonId) {
       push(
         STUDENT_PATH_DASHBOARD.codePanel.workSpace({

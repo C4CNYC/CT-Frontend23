@@ -8,9 +8,22 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getLastWorkspace: builder.query<{ lastWorkspaceQuery: string | null }, void>({
+      query: () => ({
+        url: 'student/activity/workspace-query',
+        method: 'GET',
+      }),
+    }),
     setLastActiveTribe: builder.mutation<void, { class_id: string }>({
       query: (body) => ({
         url: `student/activity`,
+        method: 'POST',
+        body,
+      }),
+    }),
+    setLastWorkspaceQuery: builder.mutation<void, { query: string }>({
+      query: (body) => ({
+        url: `student/activity/workspace-query`,
         method: 'POST',
         body,
       }),
@@ -19,7 +32,9 @@ const extendedApi = managerApi.injectEndpoints({
 })
 
 export const {
+  useGetLastWorkspaceQuery,
   useGetLastActiveTribeQuery,
   // ------------------
   useSetLastActiveTribeMutation,
+  useSetLastWorkspaceQueryMutation,
 } = extendedApi
