@@ -7,11 +7,13 @@ const extendedApi = managerApi.injectEndpoints({
         url: 'student/activity',
         method: 'GET',
       }),
+      keepUnusedDataFor: 0,
     }),
     getLastWorkspace: builder.query<{ lastWorkspaceQuery: string | null }, void>({
       query: () => ({
         url: 'student/activity/workspace-query',
         method: 'GET',
+        keepUnusedDataFor: 0,
       }),
     }),
     setLastActiveTribe: builder.mutation<void, { class_id: string }>({
