@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react'
+import { type FC, useContext, useState } from 'react'
 
 import { CgBrowser } from '@react-icons/all-files/cg/CgBrowser'
 import { TbArrowBarToRight } from '@react-icons/all-files/tb/TbArrowBarToRight'
@@ -8,6 +8,7 @@ import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { toggleBrowser } from '@/redux/slices/code-panel-global'
 import { type RootState } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
+import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
 import BaseBlock from '../base-block'
 
@@ -27,6 +28,7 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
   const translate = useTranslate()
 
   const TITLE = translate('browser_preview')
+  const codePanelContext = useContext(CodePanelContext)
 
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
   const [iframeKey, setIframeKey] = useState<number>(0)
@@ -45,7 +47,6 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
   if (isBrowserHidden) {
     return null
   }
-
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToRight size={20} />}
@@ -57,12 +58,13 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
       }}
       takeHeaderSettings={takeHeaderSettings}
     >
-      <PreviewControls reloadIframe={reloadIframe} />
+      {!codePanelContext.autoRun && <PreviewControls reloadIframe={reloadIframe} />}
+
       <BrowserView
         document={document}
         integrations={integrations}
         isOpenHeader={isOpenHeader}
-        iframeKey={iframeKey}
+        iframeKey={iframeKey + codePanelContext.reloadIframeKey}
       />
       <ConsoleBlock />
     </BaseBlock>
