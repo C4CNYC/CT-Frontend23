@@ -46,6 +46,8 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
+import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
+
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
   ssr: false,
 })
@@ -103,6 +105,10 @@ export default function CodePanelLayout(): ReactElement | null {
   })
 
   const [completeLesson] = useCompleteLessonMutation()
+
+  const lessonIdFromRoute = Array.isArray(router.query.lessonId)
+    ? router.query.lessonId.join()
+    : router.query.lessonId || ''
 
   const { data: studentCourseContent, isLoading: isLoadingStudentCourseContent } =
     useGetCourseContentQuery(
@@ -339,7 +345,10 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   return (
-    <>
+    <CodePanelContextProvider
+      lessonId={lessonIdFromRoute}
+      studentCode=''
+    >
       <Head>
         <title> CodePanel: CodeTribe </title>
       </Head>
@@ -391,7 +400,7 @@ export default function CodePanelLayout(): ReactElement | null {
           onConfettiComplete={onConfettiComplete}
         />
       )}
-    </>
+    </CodePanelContextProvider>
   )
 }
 

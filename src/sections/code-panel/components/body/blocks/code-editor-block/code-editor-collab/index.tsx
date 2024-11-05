@@ -1,4 +1,4 @@
-import { type FC, memo, useEffect, useMemo, useState } from 'react'
+import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
 import { Text } from '@codemirror/state'
 import { Box, ClickAwayListener, Popover } from '@mui/material'
@@ -11,6 +11,7 @@ import { Socket } from 'socket.io-client'
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
+import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
 import AddComment from './components/add-comment'
 import CommentPopup from './components/comment-popup'
@@ -67,7 +68,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
-
+  const codePanelContext = useContext(CodePanelContext)
   const lessonIdFromQuery = query?.lessonId
   const sandbox = searchParams.get('sandbox')
 
@@ -98,6 +99,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
+    codePanelContext.studentCodeChange(value)
     onChangeStreamingDocInfoFromProps?.(value as any)
     if (value) {
       const localStorageKey = getLocalStorageRoomKey(

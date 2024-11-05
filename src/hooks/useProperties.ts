@@ -47,3 +47,13 @@ export const useProperties = ({ entityType, entityId, propertyName }: IUseProper
 
   return [property?.propertyValue, setProperty, removeProperty] as const
 }
+
+/* example usage : 
+
+  const [autoRun, autoRunSet, autoRunDelete] = useProperties({
+    entityType: 'lesson',
+    entityId: id,
+    propertyName: 'autoRun',
+  })
+
+*/
