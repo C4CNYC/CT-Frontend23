@@ -50,6 +50,7 @@ const fr = {
   actions_remove: 'Retirer',
   actions_edit: 'Modifier',
   actions_add: 'Ajouter',
+  actions_clone: 'Cloner',
   actions_archive: 'Archive',
   actions_close: 'Fermer',
   actions_save: 'Sauvegarder',

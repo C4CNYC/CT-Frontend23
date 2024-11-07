@@ -51,6 +51,7 @@ const es = {
   actions_edit: 'Editar',
   actions_add: 'Añadir',
   actions_archive: 'Archivo',
+  actions_clone: 'Clonar',
   actions_close: 'Cerrar',
   actions_save: 'Guardar',
   actions_search: 'Buscar en',
