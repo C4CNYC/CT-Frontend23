@@ -247,6 +247,14 @@ export default function LessonCard({
           </MenuItem>
         </CreateLessonDialog>
 
+        <MenuItem
+          onClick={() => {
+            handleClone(lesson.id)
+          }}
+        >
+          <Iconify icon='eva:copy-outline' />
+          {translate('actions_clone')}
+        </MenuItem>
         <Divider sx={{ borderStyle: 'dashed' }} />
         {lock || lesson.id.endsWith('000000000000') ? (
           <></>
@@ -262,14 +270,6 @@ export default function LessonCard({
             {translate('actions_delete')}
           </MenuItem>
         )}
-        <MenuItem
-          onClick={() => {
-            handleClone(lesson.id)
-          }}
-        >
-          <Iconify icon='eva:copy-outline' />
-          {translate('actions_clone')}
-        </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
