@@ -47,7 +47,7 @@ const defaultValues = {
   RtrackR: '',
   RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
   RpersonaR: PERSONA[0].value,
-  RtoneR: TONE[1].value,
+  RtoneR: TONE[0].value,
   RtypeLessonR: TYPE_LESSON[1].value,
   name: null,
   email: null,
@@ -67,8 +67,7 @@ const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
   persona: d.RpersonaR,
   tone: d.RtoneR,
   typeLesson: d.RtypeLessonR,
-  language: d.RlanguageR,
-  lessonPrompt: '',
+  lessonPrompt: d.RpromptR,
 })
 
 export default function AIGenerateStepper({
@@ -135,7 +134,10 @@ export default function AIGenerateStepper({
       lessonType: data.RtypeLessonR,
       programmingLanguage: data.RprogrammingLanguageR,
       track: data.RtrackR,
-      persona: data.RcustomPersonaR ?? data.RpersonaR,
+      persona: data.RcustomPersonaR || data.RpersonaR,
+      grade: data.RgradesR,
+      language: data.RcustomLanguageR || data.RlessonLanguageR,
+      tone: data.RcustomToneR || data.RtoneR,
     }
 
     let newLesson
@@ -153,14 +155,14 @@ export default function AIGenerateStepper({
         newLesson = await createLessonUsingOpenAIAssistant({
           ...lessonData,
           proficiencyLevel: data.RgradesR,
-          programmingLanguage: data.RlessonLanguageR,
+          programmingLanguage: data.RprogrammingLanguageR,
         })
         break
       case 'beta':
         newLesson = await createLessonUsingOpenAIAssistantBeta({
           ...lessonData,
           proficiencyLevel: data.RgradesR,
-          programmingLanguage: data.RlessonLanguageR,
+          programmingLanguage: data.RprogrammingLanguageR,
         })
         break
     }

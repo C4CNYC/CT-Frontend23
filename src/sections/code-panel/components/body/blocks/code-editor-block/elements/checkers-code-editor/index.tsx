@@ -57,6 +57,10 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const ref = useDetectClickOutside({ onTriggered: handleClose })
 
   useEffect(() => {
+    if (!checkers.length) {
+      return
+    }
+
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true)
     if (allPased) {
       const checkedContents = contentValidations?.map((item) => ({

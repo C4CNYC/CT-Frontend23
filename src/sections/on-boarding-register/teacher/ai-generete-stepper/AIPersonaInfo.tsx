@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
@@ -34,6 +34,8 @@ export function AIPersonaInfo({
 }: IAIPersonaInfoProps) {
   const theme = useTheme()
   const translate = useTranslate()
+
+  const [disableSubmit, setDisableSubmit] = useState(false)
 
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
@@ -137,7 +139,7 @@ export function AIPersonaInfo({
             placeholder={translate('ai_gen_other_placeholder')}
           />
         </Stack>
-        <Stack>
+        {/* <Stack>
           <Typography
             variant='h6'
             sx={OPTIONAL_TYPO_STYLES}
@@ -151,7 +153,7 @@ export function AIPersonaInfo({
             name='RcontextR'
             placeholder={translate('ai_gen_persona_context_placeholder')}
           />
-        </Stack>
+        </Stack> */}
         <label
           className='ohnohoney'
           htmlFor='name'
@@ -163,6 +165,7 @@ export function AIPersonaInfo({
           id='name'
           name='name'
           placeholder='Your name here'
+          onChange={() => setDisableSubmit(true)}
         />
         <label
           className='ohnohoney'
@@ -175,6 +178,7 @@ export function AIPersonaInfo({
           id='email'
           name='email'
           placeholder='Your e-mail here'
+          onChange={() => setDisableSubmit(true)}
         />
         <label
           className='ohnohoney'
@@ -187,12 +191,14 @@ export function AIPersonaInfo({
           id='state'
           name='state'
           placeholder='Your State here'
+          onChange={() => setDisableSubmit(true)}
         />
         <Stack sx={BTN_CONTAINER_STYLES}>
           <Button
             type='submit'
             variant='text'
             sx={skipBtnStyles}
+            disabled={disableSubmit}
           >
             {translate('ai_gen_surprise_btn')}
           </Button>
@@ -200,6 +206,7 @@ export function AIPersonaInfo({
             type='submit'
             variant='contained'
             sx={nextBtnStyles}
+            disabled={disableSubmit}
           >
             {translate('ai_gen_generate_btn')}
           </Button>
