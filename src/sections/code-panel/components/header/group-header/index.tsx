@@ -26,22 +26,26 @@ const MAX_TRIBE_NAME_LENGTH = 20
 
 const GroupHeader: FC = () => {
   const { query } = useRouter()
-
-  const isDesktop = useIsDesktop()
-  const tribe = useSelector((state) => state.codePanel.class)
   const dispatch = useDispatch()
-  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
-  const room = useSelector((state) => state.codeEditorController.room)
+  const isDesktop = useIsDesktop()
+
   const user = useSelector((state) => state.global.user)
+  const tribe = useSelector((state) => state.codePanel.class)
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const room = useSelector((state) => state.codeEditorController.room)
+  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
   const resetRoom = useCallback(() => {
+    if (socket) {
+      socket?.emit('leaveRoom', room?.roomId?.split('_')[1])
+    }
     return dispatch(
       setRoom({
         roomId: `${user?.student_profile?.id ?? ''}_${query?.lessonId as string}`,
         mode: EditorMode.Owner,
       })
     )
-  }, [dispatch, user, query?.lessonId])
+  }, [dispatch, user, query?.lessonId, socket, room])
 
   const onChange = () => {
     dispatch(toggleRealtimeCodeHidden(!isRealtimeCodeHidden))
@@ -107,10 +111,12 @@ const GroupHeader: FC = () => {
         />
       )}
 
-      <CustomSwitch
-        isActive={!isRealtimeCodeHidden}
-        onChange={onChange}
-      />
+      {user?.role !== 'student' && (
+        <CustomSwitch
+          isActive={!isRealtimeCodeHidden}
+          onChange={onChange}
+        />
+      )}
     </Stack>
   )
 }

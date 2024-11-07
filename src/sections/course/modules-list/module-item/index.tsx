@@ -110,7 +110,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
             href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
               courseId: query.id as string,
               unitId: unit?.id,
-              lessonId: unit?.lessons[0].id,
+              lessonId: unit?.lessons?.[0].id,
             })}
             sx={{
               display: 'inline-flex',

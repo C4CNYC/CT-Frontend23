@@ -39,8 +39,6 @@ interface Props {
 }
 
 function Editor({
-  editable = true,
-  locked,
   onSubmit,
   integrations,
   multimediaValue,
@@ -53,6 +51,7 @@ function Editor({
   // const { uploadToS3 } = useS3Upload();
   const [createMedia] = useCreateMediaMutation()
   const translate = useTranslate()
+
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
     let completed = 0
     const promises: Array<DelayedPromiseCreator<ImageAttributes>> = []
@@ -119,9 +118,7 @@ function Editor({
   })
 
   useEffect(() => {
-    if (!editable) {
-      setState(isJson(multimediaValue) ? JSON.parse(multimediaValue) : multimediaValue)
-    }
+    setState(isJson(multimediaValue) ? JSON.parse(multimediaValue) : multimediaValue)
   }, [multimediaValue])
 
   const saveContent = async (): Promise<void> => {
@@ -176,40 +173,30 @@ function Editor({
         `}
       </style>
       <Remirror
-        editable={editable}
+        editable={true}
         placeholder={translate('start_type_here')}
         manager={manager}
         state={state}
         // initialContent={state}
-        autoFocus={editable}
+        autoFocus={true}
         autoRender='end'
         onChange={(parameter) => {
           onChange(parameter)
           setMultimediaValue(prosemirrorNodeToHtml(parameter.state.doc))
+
           // if (setMultimediaValue) {
           //   // @ts-expect-error
           //   setMultimediaValue(parameter.state)
           // }
         }}
       >
-        {typeof locked === 'undefined' ? (
-          editable ? (
-            <EditorToolbar
-              saveContent={saveContent}
-              data={data}
-              lessonId={lessonId}
-              bgColor={bgColor}
-            />
-          ) : null
-        ) : (
-          <EditorToolbar
-            saveContent={saveContent}
-            data={data}
-            lessonId={lessonId}
-            bgColor={bgColor}
-            setBgColor={setBgColor}
-          />
-        )}
+        <EditorToolbar
+          saveContent={saveContent}
+          data={data}
+          lessonId={lessonId}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+        />
         <OnChangeHTML
           onChange={(html) => {
             setMultimediaValue(html)

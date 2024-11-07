@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { CircularProgress, Stack, Typography } from '@mui/material'
 import { CgCheckO } from '@react-icons/all-files/cg/CgCheckO'
 
+import { useTranslate } from '@root/src/utils/translateHelper'
+
 import { LOADING_STEPS } from './constants'
 
 interface ILoadingItem {
@@ -11,6 +13,7 @@ interface ILoadingItem {
   multiply: number
 }
 const LoadingItem = ({ isLoading, text, multiply }: ILoadingItem) => {
+  const translate = useTranslate()
   const [loading, setLoading] = useState(true)
   const timer = useRef<any | null>(null)
 
@@ -63,7 +66,7 @@ const LoadingItem = ({ isLoading, text, multiply }: ILoadingItem) => {
           variant='h5'
           sx={{ color: '#616161' }}
         >
-          {text}
+          {translate(text)}
         </Typography>
       </Stack>
     </>

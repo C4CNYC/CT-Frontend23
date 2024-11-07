@@ -5,6 +5,7 @@ import { IoCode } from '@react-icons/all-files/io5/IoCode'
 import { LuCheckCircle } from '@react-icons/all-files/lu/LuCheckCircle'
 import { MdOutlineTipsAndUpdates } from '@react-icons/all-files/md/MdOutlineTipsAndUpdates'
 import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
+import { useCommands } from '@remirror/react'
 
 import { MediaModal } from '@/sections/dashboard/medias/MediaModal'
 import { useTranslate } from '@/utils/translateHelper'
@@ -50,9 +51,9 @@ export function SettingsBtn(): React.ReactElement {
 }
 export function MediaBtn(): React.ReactElement {
   const translate = useTranslate()
-
+  const commands = useCommands()
   return (
-    <MediaModal>
+    <MediaModal insertImage={commands.insertImage}>
       <Tooltip title='Media'>
         <ToggleButton
           value='left'

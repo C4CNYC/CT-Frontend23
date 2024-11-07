@@ -12,26 +12,28 @@ export function mapValidations(
 ): IValidationMap[] {
   if (!validations) return []
   let noNLCode = code.replaceAll('\n', ' ')
-  let valResults = validations.map((validator) => {
-    let valid = true //in case of error in regex, we pass this test
-    try {
-      let reg = validator.regex.startsWith('/')
-        ? eval(validator.regex)
-        : new RegExp(validator.regex)
-      valid =
-        reg.test(code) ||
-        reg.test(noNLCode) ||
-        !!code.match(reg) ||
-        code.replace(/\s/g, '') === validator.regex.replace(/\s/g, '')
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('error oldu', e)
-    }
+  let valResults = new Array(...validations)
+    .sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1))
+    .map((validator) => {
+      let valid = true //in case of error in regex, we pass this test
+      try {
+        let reg = validator.regex.startsWith('/')
+          ? eval(validator.regex)
+          : new RegExp(validator.regex)
+        valid =
+          reg.test(code) ||
+          reg.test(noNLCode) ||
+          !!code.match(reg) ||
+          code.replace(/\s/g, '') === validator.regex.replace(/\s/g, '')
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('error oldu', e)
+      }
 
-    return {
-      text: validator.name,
-      valid,
-    }
-  })
+      return {
+        text: validator.name,
+        valid,
+      }
+    })
   return valResults
 }

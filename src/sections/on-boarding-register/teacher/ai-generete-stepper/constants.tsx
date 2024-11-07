@@ -5,15 +5,18 @@ export interface FormAIGenerateProps {
   RgradesR: string
   RlessonDurationR: string
   RlessonLanguageR: string
+  RcustomLanguageR: string
   RprogrammingLanguageR: string
   RtrackR: string
   RpersonaR: string
   RtoneR: string
   RtypeLessonR: string
-  RlanguageR: string
   name: string | null
   email: string | null
   RpromptR: string
+  RcustomPersonaR: string
+  RcustomToneR: string
+  RcontextR: string
 }
 
 export interface AIGenerateStepperProps {
@@ -35,16 +38,16 @@ export interface IAddons {
 }
 
 export const getToggleBtnGroupSx = (isDark: boolean) => ({
-  background: isDark ? '#fff' : '#F0EEEE80',
-  color: '#616161',
+  background: isDark ? '#919EAB52' : '#F0EEEE80',
+  color: isDark ? '#C4C4C4' : '#616161',
   borderRadius: '50px !important',
   height: '35px',
   '&>svg': { color: '#616161', marginLeft: '6px' },
   '&.Mui-selected, &.Mui-selected:hover': {
-    color: 'white',
-    backgroundColor: '#0198ED',
+    color: isDark ? '#000' : '#fff',
+    backgroundColor: isDark ? '#FBDD3F' : '#0198ED',
     '&>svg': {
-      color: '#FBDD3F !important',
+      color: isDark ? '#000 !important' : '#FBDD3F !important',
     },
   },
   '&.MuiToggleButton-root': {
@@ -61,44 +64,48 @@ export const TOGGLE_BUTTON_GROUP_STYLES = {
   border: 'none',
   background: 'transparent',
   flexWrap: 'wrap',
-
   maxWidth: { xs: '400px', sm: 'none' },
 }
 
 export const getSkipBtnSx = (isDark: boolean) => ({
   color: '#616161',
-  background: isDark ? '#fff' : '',
+  background: '',
   borderRadius: '50px',
   fontSize: '1.2rem',
   '&:hover': {
-    background: '#F0EEEE80',
+    color: isDark ? '#FFF' : '#616161',
+    background: 'none',
   },
 })
 
-export const NEXT_BUTTON_STYLES = {
+export const getNextBtnSx = (isDark: boolean) => ({
   color: 'white',
-  backgroundColor: '#0198ED',
+  backgroundColor: isDark ? '#000' : '#0198ED',
   borderRadius: '50px ',
   fontSize: '1.2rem',
   '&:hover': {
-    background: '#4CB6F3',
+    background: isDark ? '#212121' : '#4CB6F3',
+    boxShadow: 'none',
   },
-}
+})
 
 export const OPTIONAL_TYPO_STYLES = {
   pl: 2,
-  color: '#A6A6A6',
+  color: '#5C5C5C',
   display: 'flex',
   alignItems: 'baseline',
   gap: 2,
   fontWeight: 400,
 }
 
-export const STEP_TYTLE_STYLES = { fontSize: { xs: '1.3rem', md: '1.85rem' } }
+export const STEP_TYTLE_STYLES = {
+  fontSize: { xs: '1.2rem', md: '1.5rem' },
+  whiteSpace: 'pre-wrap',
+}
 
 export const STEP_CONTAINER_STYLES = {
-  minHeight: '770px',
-  width: { xs: '300px', sm: '400px', md: 'auto' },
+  gap: 3,
+  minHeight: '620px',
 }
 
 export const BTN_CONTAINER_STYLES = {
@@ -135,6 +142,7 @@ export const SIMPLE_GENERATE_TOGLE = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
+  flex: '1 1 0px',
   textAlign: 'left',
   gap: 1,
   '&.Mui-selected, &.Mui-selected:hover': {
@@ -142,7 +150,7 @@ export const SIMPLE_GENERATE_TOGLE = {
     backgroundColor: '#0198ED',
   },
   '&.MuiToggleButton-root': {
-    border: '2px solid #616161!important',
+    border: '1px solid #616161!important',
     fontWeight: 400,
     borderRadius: '20px',
   },
@@ -153,16 +161,30 @@ export const SIMPLE_GENERATE_TOGLE_GROUP = {
   flexWrap: { xs: 'wrap', md: 'nowrap' },
 }
 
+export const LANG_CONT_SX = { flexDirection: 'row', gap: 2, px: 2, pt: 1 }
+
 export const PROMTS_VARIANTS = [
-  { text: 'Python variables with exercises in Armenian', icon: 'mdi:console', color: '#FBDD3F' },
-  { text: '6th graders build weather app with api', icon: 'tabler:user-screen', color: '#d901ed' },
   {
-    text: 'Nested functions in javascript with exercises and quiz',
+    text: 'ai_gen_simple_step_prompt_1',
+    key: 'Python variables with exercises in Armenian',
+    icon: 'mdi:console',
+    color: '#FBDD3F',
+  },
+  {
+    text: 'ai_gen_simple_step_prompt_2',
+    key: '6th graders build weather app with api',
+    icon: 'tabler:user-screen',
+    color: '#d901ed',
+  },
+  {
+    text: 'ai_gen_simple_step_prompt_3',
+    key: 'Nested functions in javascript with exercises and quiz',
     icon: 'mdi:question-box-multiple-outline',
     color: '#EE467A',
   },
   {
-    text: 'Auto-graded infinite loop exercises',
+    text: 'ai_gen_simple_step_prompt_4',
+    key: 'Auto-graded infinite loop exercises',
     icon: 'material-symbols:info-outline',
     color: '#FBDD3F',
   },
@@ -171,26 +193,26 @@ export const PROMTS_VARIANTS = [
 export const TYPE_LESSON = [
   {
     key: 'simple',
-    value: 'Simple Lesson',
-    tooltip: 'An engaging, single-page lesson with coding exercises.',
+    value: 'simple',
+    tooltip: 'ai_gen_type_1_tooltip',
     icon: 'material-symbols:info-outline',
   },
   {
     key: 'exercises',
-    value: 'Concept & Exercises',
-    tooltip: 'Learn a concept, then immediately practice it in different ways.',
+    value: 'exercises',
+    tooltip: 'ai_gen_type_2_tooltip',
     icon: 'material-symbols:info-outline',
   },
   {
     key: 'project',
-    value: 'Practical Project',
-    tooltip: 'Building a project line by line with explanations and step-by-step guidance.',
+    value: 'project',
+    tooltip: 'ai_gen_type_3_tooltip',
     icon: 'material-symbols:info-outline',
   },
   {
     key: 'Beta',
     value: 'beta',
-    tooltip: 'Experimental Lesson Generator',
+    tooltip: 'ai_gen_type_5_tooltip',
     icon: 'material-symbols:info-outline',
   },
 ]
@@ -231,15 +253,15 @@ export const GRADES = [
   { key: 'Grades 7-8', value: 'Grades 7-8' },
   { key: 'Grades 9-10', value: 'Grades 9-10' },
   { key: 'Grades 11-12', value: 'Grades 11-12' },
-  { key: '18 +', value: '18 +' },
+  { key: '18+', value: '18+' },
 ]
 
 export const LESSON_DURARION = [
-  { key: '20 Mins', value: '20 Mins' },
-  { key: '40 Mins', value: '40 Mins' },
-  { key: '60 Mins', value: '60 Mins' },
-  { key: '90 Mins', value: '90 Mins' },
-  { key: '120 Mins', value: '120 Mins' },
+  { key: '20 Mins', value: '20 Minutes' },
+  { key: '40 Mins', value: '40 Minutes' },
+  { key: '60 Mins', value: '60 Minutes' },
+  { key: '90 Mins', value: '90 Minutes' },
+  { key: '120 Mins', value: '120 Minutes' },
 ]
 
 export const PERSONA = [
@@ -266,12 +288,12 @@ export const TONE = [
 ]
 
 export const LOADING_STEPS = [
-  'Compiling request',
-  'Sending request',
-  'Confirming receipt',
-  'Building the lesson',
-  'Receiving the lesson',
-  'Finishing up',
+  'ai_gen_loading_state_1',
+  'ai_gen_loading_state_2',
+  'ai_gen_loading_state_3',
+  'ai_gen_loading_state_4',
+  'ai_gen_loading_state_5',
+  'ai_gen_loading_state_6',
 ]
 
 export const TYPE_PROJECT = [

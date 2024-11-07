@@ -1,4 +1,4 @@
-import { type FC, memo, useCallback, useEffect, useRef, useState } from 'react'
+import { type FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Box, Collapse } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
@@ -12,6 +12,7 @@ import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
+import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
@@ -30,7 +31,6 @@ interface ICodeEditorBlock {
   onChangeStreamingDocInfo: (doc: Record<string, string>) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
-  isFetching?: boolean
   contentId?: string
 }
 
@@ -50,21 +50,25 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   code,
   onChangeStreamingDocInfo,
   preloadedCode,
-  isFetching = false,
   contentId,
 }) => {
-  const translate = useTranslate()
-  const TITLE = translate('code_editor')
+  const [key, setKey] = useState<number>(0)
+  const { query } = useRouter()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
-  const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
-  const [typing, setTyping] = useState<boolean | null>(null)
-  const room = useSelector((state) => state.codeEditorController.room)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const timer = useRef<NodeJS.Timeout>()
+  const translate = useTranslate()
+
   const codeRef = useRef(code)
+  const timer = useRef<NodeJS.Timeout>()
+  const [typing, setTyping] = useState<boolean | null>(null)
+  const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
+
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const codeState = useSelector((state) => state.codePanelGlobal.code)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
+
+  const TITLE = translate('code_editor')
+
   const typingListener = (deley: number, firstLoad: boolean): void => {
     if (!firstLoad) {
       setTyping(false)
@@ -78,17 +82,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       setTyping(true)
     }, deley)
   }
-
-  useEffect(() => {
-    typingListener(FIRST_LOADING_DELEY, true)
-  }, [])
-
-  useEffect(() => {
-    if (code) {
-      typingListener(TYPING_DELEY, false)
-    }
-  }, [code])
-  const { query } = useRouter()
 
   const symbolsHandler = useCallback((): void => {
     setCodingSymbols(!codingSymbols)
@@ -111,15 +104,32 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
 
   useEffect(() => {
+    window.addEventListener(RELOAD_WORKSPACE_EVENT, () => {
+      setKey((prev) => prev + 1)
+    })
+    typingListener(FIRST_LOADING_DELEY, true)
+  }, [])
+
+  useEffect(() => {
+    if (code) {
+      typingListener(TYPING_DELEY, false)
+    }
+  }, [code])
+
+  useEffect(() => {
     onResetRoom()
   }, [onResetRoom])
 
-  const selectedContent = contentValidations?.find((item) => item.contentId === contentId)
+  const selectedContent = useMemo(
+    () => contentValidations?.find((item) => item.contentId === contentId),
+    [contentId, contentValidations]
+  )
   return (
     <BaseBlock
       title={TITLE}
       icon={icon}
       className='codeEditorTour'
+      key={key}
     >
       <CodeEditorStyles isDesktop={isDesktop} />
 
@@ -144,7 +154,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         preloadedCode={preloadedCode}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
-        isFetching={isFetching}
       />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>

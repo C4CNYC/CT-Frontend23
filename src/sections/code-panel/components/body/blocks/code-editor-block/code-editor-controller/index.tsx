@@ -11,61 +11,44 @@ import { voidFunction } from '@/utils'
 interface CodeEditorControllerProps {
   onChangeStreamingDocInfo?: (value: Record<string, string>) => void
   user?: AuthUserType
-  isFetching?: boolean
   preloadedCode?: string
 }
 
 const CodeEditorController: FC<CodeEditorControllerProps> = ({
   onChangeStreamingDocInfo = voidFunction,
   user,
-  isFetching = false,
   preloadedCode,
 }) => {
-  // const { user } = useAuthContext()
-
-  const [isConnected, setIsConnected] = useState(false)
-  const room = useSelector((state) => state.codeEditorController.room)
   const [randomRoom] = useState(`${Math.random()}${Date.now()}`)
 
-  // const socket = useMemo(() => createSocket(user?.id || generateId(20)), [user]);
   const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const room = useSelector((state) => state.codeEditorController.room)
 
   useEffect(() => {
     const runAsyncEffect = async (socket: Socket) => {
       const isConnected = await waitConnectSocket(socket)
 
-      if (isConnected) {
-        setIsConnected(isConnected)
-      } else {
+      if (!isConnected) {
         void runAsyncEffect(socket)
       }
     }
 
-    if (socket) {
-      if (socket.connected) {
-        setIsConnected(true)
-      } else {
-        void runAsyncEffect(socket)
-      }
-    } else {
-      setIsConnected(false)
+    if (socket && !socket.connected) {
+      void runAsyncEffect(socket)
     }
   }, [socket])
 
   return (
-    <>
-      <CodeEditorCollab
-        roomId={room?.roomId ?? randomRoom}
-        cursorText={room?.cursorText}
-        preloadedCode={preloadedCode}
-        onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-        code={room?.code}
-        mode={room?.mode}
-        socket={socket}
-        user={user}
-        isFetching={isFetching}
-      />
-    </>
+    <CodeEditorCollab
+      roomId={room?.roomId ?? randomRoom}
+      cursorText={room?.cursorText}
+      preloadedCode={preloadedCode}
+      onChangeStreamingDocInfo={onChangeStreamingDocInfo}
+      code={room?.code}
+      mode={room?.mode}
+      socket={socket}
+      user={user}
+    />
   )
 }
 
