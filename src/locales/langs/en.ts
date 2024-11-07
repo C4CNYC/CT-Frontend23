@@ -53,6 +53,7 @@ const en = {
   actions_remove: 'Remove',
   actions_edit: 'Edit',
   actions_add: 'Add',
+  actions_clone: 'Clone',
   actions_archive: 'Archive',
   actions_close: 'Close',
   actions_save: 'Save',
