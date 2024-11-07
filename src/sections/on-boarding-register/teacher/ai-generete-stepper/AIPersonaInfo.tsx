@@ -1,14 +1,14 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
-import { Iconify } from '@root/src/components'
+import { Iconify, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   BTN_CONTAINER_STYLES,
   getToggleBtnGroupSx,
-  NEXT_BUTTON_STYLES,
   OPTIONAL_TYPO_STYLES,
   PERSONA,
   getSkipBtnSx,
@@ -16,15 +16,26 @@ import {
   STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
   TONE,
+  getNextBtnSx,
 } from './constants'
 
 type IAIPersonaInfoProps = {
   prevStep: () => void
   closeModal?: () => void
+  customPersona: boolean
+  customTone: boolean
 }
 
-export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
+export function AIPersonaInfo({
+  prevStep,
+  closeModal,
+  customPersona,
+  customTone,
+}: IAIPersonaInfoProps) {
   const theme = useTheme()
+  const translate = useTranslate()
+
+  const [disableSubmit, setDisableSubmit] = useState(false)
 
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
@@ -32,6 +43,10 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
   )
   const skipBtnStyles = useMemo(
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+  const nextBtnStyles = useMemo(
+    () => getNextBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
 
@@ -50,10 +65,7 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
           }
         `}
       </style>
-      <Stack
-        gap={2}
-        sx={STEP_CONTAINER_STYLES}
-      >
+      <Stack sx={STEP_CONTAINER_STYLES}>
         <Stack
           direction='row'
           gap={2}
@@ -69,7 +81,7 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
             variant='h3'
             sx={STEP_TYTLE_STYLES}
           >
-            Let’s have some fun ! 😂‍ 🥳
+            {translate('ai_gen_step_3_title')}
           </Typography>
           {closeModal ? (
             <IconButton
@@ -85,35 +97,63 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
         </Stack>
         <Stack>
           <Typography
-            variant='h4'
+            variant='h6'
             sx={OPTIONAL_TYPO_STYLES}
             gutterBottom
           >
-            Persona <Typography variant='body2'>Optional</Typography>
+            {translate('ai_gen_persona_title')}
+            <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
           </Typography>
           <RHFToggleButtonGroup
             name='RpersonaR'
             options={PERSONA}
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
             sxButton={toggleButtonStyles}
+            disabled={customPersona}
+          />
+          <RHFTextField
+            sx={{ maxWidth: '400px', mt: 2 }}
+            name='RcustomPersonaR'
+            placeholder={translate('ai_gen_other_placeholder')}
           />
         </Stack>
         <Stack>
           <Typography
-            variant='h4'
+            variant='h6'
             sx={OPTIONAL_TYPO_STYLES}
             gutterBottom
           >
-            Tone <Typography variant='body2'>Optional</Typography>
+            {translate('ai_gen_persona_tone_title')}
+            <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
           </Typography>
           <RHFToggleButtonGroup
             name='RtoneR'
             options={TONE}
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
             sxButton={toggleButtonStyles}
+            disabled={customTone}
+          />
+          <RHFTextField
+            sx={{ maxWidth: '400px', mt: 2 }}
+            name='RcustomToneR'
+            placeholder={translate('ai_gen_other_placeholder')}
           />
         </Stack>
+        {/* <Stack>
+          <Typography
+            variant='h6'
+            sx={OPTIONAL_TYPO_STYLES}
+            gutterBottom
+          >
+            {translate('ai_gen_persona_context_title')}
 
+            <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
+          </Typography>
+          <RHFTextField
+            name='RcontextR'
+            placeholder={translate('ai_gen_persona_context_placeholder')}
+          />
+        </Stack> */}
         <label
           className='ohnohoney'
           htmlFor='name'
@@ -125,6 +165,7 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
           id='name'
           name='name'
           placeholder='Your name here'
+          onChange={() => setDisableSubmit(true)}
         />
         <label
           className='ohnohoney'
@@ -137,21 +178,37 @@ export function AIPersonaInfo({ prevStep, closeModal }: IAIPersonaInfoProps) {
           id='email'
           name='email'
           placeholder='Your e-mail here'
+          onChange={() => setDisableSubmit(true)}
+        />
+        <label
+          className='ohnohoney'
+          htmlFor='state'
+        />
+        <input
+          className='ohnohoney'
+          autoComplete='off'
+          type='state'
+          id='state'
+          name='state'
+          placeholder='Your State here'
+          onChange={() => setDisableSubmit(true)}
         />
         <Stack sx={BTN_CONTAINER_STYLES}>
           <Button
             type='submit'
             variant='text'
             sx={skipBtnStyles}
+            disabled={disableSubmit}
           >
-            Surprise Me
+            {translate('ai_gen_surprise_btn')}
           </Button>
           <Button
             type='submit'
             variant='contained'
-            sx={NEXT_BUTTON_STYLES}
+            sx={nextBtnStyles}
+            disabled={disableSubmit}
           >
-            Generate ✨
+            {translate('ai_gen_generate_btn')}
           </Button>
         </Stack>
       </Stack>

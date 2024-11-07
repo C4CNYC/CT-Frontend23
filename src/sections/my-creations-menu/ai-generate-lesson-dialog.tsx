@@ -29,6 +29,8 @@ export default function AiGenerateLessonDialog({ children }: Props): React.React
       </Box>
       <Dialog
         open={open}
+        fullWidth
+        maxWidth='md'
         onClose={closeDialog}
       >
         <DialogContent sx={{ p: 2 }}>

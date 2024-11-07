@@ -16,6 +16,8 @@ import Carousel from 'react-slick'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { useTranslate } from '@root/src/utils/translateHelper'
+
 import { Iconify } from '../iconify'
 import CarouselArrows from '../slider/CarouselArrows'
 
@@ -43,6 +45,8 @@ export function RHFToggleButtonGroup({
 }: Props): React.ReactElement | null {
   const { control } = useFormContext()
   const theme = useTheme()
+  const translate = useTranslate()
+
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const carouselRef = useRef<Carousel>(null)
@@ -108,7 +112,7 @@ export function RHFToggleButtonGroup({
                       value={el.key}
                       key={el.key}
                     >
-                      {el.value}
+                      {translate(el.value)}
                     </ToggleButton>
                   ))}
                 </Carousel>
@@ -135,7 +139,7 @@ export function RHFToggleButtonGroup({
                         variant='body2'
                         p={1}
                       >
-                        {el.tooltip}
+                        {translate(el.tooltip ?? '')}
                       </Typography>
                     }
                   >
@@ -143,7 +147,7 @@ export function RHFToggleButtonGroup({
                       sx={sxButton}
                       value={el.key}
                     >
-                      {el.value}
+                      {translate(el.value)}
                       <Iconify icon={el.icon ?? ''} />
                     </ToggleButton>
                   </Tooltip>
@@ -153,7 +157,7 @@ export function RHFToggleButtonGroup({
                     value={el.key}
                     key={el.key}
                   >
-                    {el.value}
+                    {translate(el.value)}
                   </ToggleButton>
                 )
               )

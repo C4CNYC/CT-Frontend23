@@ -43,14 +43,19 @@ const defaultValues = {
   RgradesR: GRADES[1].value,
   RlessonDurationR: LESSON_DURARION[2].value,
   RlessonLanguageR: 'English',
+  RcustomLanguageR: '',
   RtrackR: '',
   RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
   RpersonaR: PERSONA[0].value,
-  RtoneR: TONE[2].value,
+  RtoneR: TONE[0].value,
   RtypeLessonR: TYPE_LESSON[1].value,
   name: null,
   email: null,
+  state: null,
   RpromptR: '',
+  RcustomPersonaR: '',
+  RcustomToneR: '',
+  RcontextR: '',
 }
 const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
   level: d.RlevelR,
@@ -62,8 +67,7 @@ const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
   persona: d.RpersonaR,
   tone: d.RtoneR,
   typeLesson: d.RtypeLessonR,
-  language: d.RlanguageR,
-  lessonPrompt: '',
+  lessonPrompt: d.RpromptR,
 })
 
 export default function AIGenerateStepper({
@@ -92,6 +96,7 @@ export default function AIGenerateStepper({
     RgradeR: Yup.string(),
     RlessonDurationR: Yup.string(),
     RlessonLanguageR: Yup.string(),
+    RcustomLanguageR: Yup.string(),
     RprogrammingLanguageR: Yup.string(),
     RtrackR: Yup.string(),
     RpersonaR: Yup.string(),
@@ -99,6 +104,9 @@ export default function AIGenerateStepper({
     RtypeLessonR: Yup.string(),
     RlanguageR: Yup.string(),
     RpromptR: Yup.string(),
+    RcustomPersonaR: Yup.string(),
+    RcustomToneR: Yup.string(),
+    RcontextR: Yup.string(),
   })
 
   const methods = useForm<FormAIGenerateProps>({
@@ -126,7 +134,10 @@ export default function AIGenerateStepper({
       lessonType: data.RtypeLessonR,
       programmingLanguage: data.RprogrammingLanguageR,
       track: data.RtrackR,
-      persona: data.RpersonaR,
+      persona: data.RcustomPersonaR || data.RpersonaR,
+      grade: data.RgradesR,
+      language: data.RcustomLanguageR || data.RlessonLanguageR,
+      tone: data.RcustomToneR || data.RtoneR,
     }
 
     let newLesson
@@ -144,14 +155,14 @@ export default function AIGenerateStepper({
         newLesson = await createLessonUsingOpenAIAssistant({
           ...lessonData,
           proficiencyLevel: data.RgradesR,
-          programmingLanguage: data.RlessonLanguageR,
+          programmingLanguage: data.RprogrammingLanguageR,
         })
         break
       case 'beta':
         newLesson = await createLessonUsingOpenAIAssistantBeta({
           ...lessonData,
           proficiencyLevel: data.RgradesR,
-          programmingLanguage: data.RlessonLanguageR,
+          programmingLanguage: data.RprogrammingLanguageR,
         })
         break
     }
@@ -183,7 +194,10 @@ export default function AIGenerateStepper({
   }
 
   return (
-    <Stack position='relative'>
+    <Stack
+      position='relative'
+      width='100%'
+    >
       {generateLessonLoading ||
       generateMultiLessonLoading ||
       createLessonUsingOpenAIAssistantLoading ? (
@@ -209,6 +223,7 @@ export default function AIGenerateStepper({
               nextStep={nextStep}
               prevStep={prevStep}
               closeModal={closeModal}
+              isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
             />
           )}
           {activeStep === 2 && (
@@ -222,6 +237,8 @@ export default function AIGenerateStepper({
             <AIPersonaInfo
               prevStep={prevStep}
               closeModal={closeModal}
+              customPersona={Boolean(methods.watch('RcustomPersonaR'))}
+              customTone={Boolean(methods.watch('RcustomToneR'))}
             />
           )}
         </FormProvider>

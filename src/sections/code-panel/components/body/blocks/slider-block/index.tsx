@@ -289,15 +289,6 @@ const View: FC<IView> = ({
   const translate = useTranslate()
 
   switch (type) {
-    case 'editable':
-      return (
-        <ProsaMirrorView
-          title={title}
-          multimediaValue={body}
-          lessonType={lessonType}
-          stepBgColor={stepBgColor}
-        />
-      )
     case 'code':
       return (
         <BrowserView
@@ -307,7 +298,15 @@ const View: FC<IView> = ({
         />
       )
     default:
-      return <>{translate('messages_content_type_not_supported')}</>
+    case 'editable':
+      return (
+        <ProsaMirrorView
+          title={title}
+          multimediaValue={body}
+          lessonType={lessonType}
+          stepBgColor={stepBgColor}
+        />
+      )
   }
 }
 
