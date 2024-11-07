@@ -913,6 +913,7 @@ const fr = {
   slide_add_html: 'Utiliser le modèle HTML',
   slide_add_promt_ai: 'Invite avec IA',
   slide_add_ai_templates: 'Modèles IA',
+  slide_switch: 'Passer à une autre diapositive',
   slide_content_updated: 'Contenu mis à jour',
   slide_standard: 'Standard',
   slide_select_format: 'Sélectionnez le format de la diapositive',

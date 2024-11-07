@@ -7,6 +7,7 @@ import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-student'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useGetLastActiveTribeQuery } from '@root/src/redux/services/manager/activity-student'
 
 ClassMain.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -16,9 +17,11 @@ export default function ClassMain(): React.ReactElement {
   const { push } = useRouter()
   const profile = useSelector((state) => state.global.user)
 
+  const { data, isLoading: isLastTribeLoading } = useGetLastActiveTribeQuery()
   const { data: tribes, isLoading } = useGetStudentClassesQuery({}, { skip: !profile })
+
   useEffect(() => {
-    if (isLoading) return
+    if (isLoading || isLastTribeLoading) return
     if (localStorage.getItem('ON-BOARDING') === 'on-boarding') {
       push({
         pathname: STUDENT_PATH_DASHBOARD.class.createClass,
@@ -29,11 +32,11 @@ export default function ClassMain(): React.ReactElement {
       const { joinCode, classId } = JSON.parse(localStorage.getItem('JOIN_TRIBE') ?? '{}')
       push(STUDENT_PATH_DASHBOARD.class.id(classId, { joinCode }))
     } else if (tribes?.meta.itemCount && tribes.data.length > 0) {
-      push(STUDENT_PATH_DASHBOARD.class.id(tribes.data[0].id))
+      push(STUDENT_PATH_DASHBOARD.class.id(data?.lastActiveTribe || tribes.data[0].id))
     } else {
       push(STUDENT_PATH_DASHBOARD.class.join)
     }
-  }, [isLoading])
+  }, [isLoading, isLastTribeLoading])
 
   if (isLoading) {
     return <LoadingScreen />

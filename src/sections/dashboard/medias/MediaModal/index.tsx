@@ -6,7 +6,6 @@ import { Collapse, Divider, IconButton, Skeleton } from '@mui/material'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import { Stack } from '@mui/system'
-import { useCommands } from '@remirror/react'
 import { useSnackbar } from 'notistack'
 import { ImageAttributes } from 'remirror/extensions'
 
@@ -56,15 +55,10 @@ export function MediaModal({ children, insertImage }: MediaModalProps): React.Re
   const [createMedia] = useCreateMediaMutation()
   const [uploadMediaFile] = useUploadMediaFileMutation()
 
-  try {
-    const commands = useCommands()
-    insertImage = commands.insertImage
-  } catch (e: any) {
-    if (!insertImage) {
-      insertImage = ({ src }: { src: string }) => {
-        copy(src)
-        enqueueSnackbar(translate('image_url_copied_msg'))
-      }
+  if (!insertImage) {
+    insertImage = ({ src }: { src: string }) => {
+      copy(src)
+      enqueueSnackbar(translate('image_url_copied_msg'))
     }
   }
 

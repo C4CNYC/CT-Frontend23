@@ -26,24 +26,6 @@ const MyDocument = (props: DocumentProps & DocumentHeadTagsProps) => {
           name='theme-color'
           content={palette('light').primary.main}
         />
-        {/* should be improved */}
-        <link
-          rel='apple-touch-icon'
-          sizes='180x180'
-          href='/favicon/favicon_jika.ico'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='32x32'
-          href='/favicon/favicon_jika.ico'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='16x16'
-          href='/favicon/favicon_jika.ico'
-        />
 
         {/* Meta */}
         <meta
@@ -61,6 +43,7 @@ const MyDocument = (props: DocumentProps & DocumentHeadTagsProps) => {
 
         <style>
           {`
+              .cm-lineWrapping { tab-size: 2!important; }
               .CodeMirror { height: 400px; width: 500px; border: 1px solid #ddd; }
               .CodeMirror-scroll { max-height: 400px; width:500px; }
               .CodeMirror pre { display:inline-block; padding-left: 7px; line-height: 1.25; }

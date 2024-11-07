@@ -28,6 +28,7 @@ export interface ILesson {
   independent: boolean
   type: 'practical' | 'exercise' | 'quiz'
   sort?: number
+  slug?: string
 }
 
 export interface ICourse {
@@ -150,6 +151,7 @@ export interface ILessonSearchParams extends BaseSearchInterface {
   module_id?: string
   assignment_id?: string
   lessonId?: string
+  slug?: string
 }
 
 export interface ILessonGenerate {

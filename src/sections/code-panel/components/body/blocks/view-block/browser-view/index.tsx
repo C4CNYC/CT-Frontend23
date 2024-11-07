@@ -1,6 +1,7 @@
-import { type FC, useEffect, useState } from 'react'
+import { type FC, useContext, useEffect, useState } from 'react'
 
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
+import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
 import SkeletonViewBlock from '../skeleton-view-box'
 
@@ -45,6 +46,7 @@ const BrowserView: FC<BrowserViewProps> = ({
   reloadIframe,
 }) => {
   const [docSrc, setDocSrc] = useState('')
+  const { reloadIframeKey } = useContext(CodePanelContext)
 
   const IFRAME_STYLE = {
     border: 0,

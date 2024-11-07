@@ -24,32 +24,27 @@ interface IJoinTribeLoginProps {
   classId: string
 }
 
-export default function JoinTribeLogin({
-  handleChangeAuthorization,
-  classId,
-}: IJoinTribeLoginProps): React.ReactElement {
-  const { push, query } = useRouter()
-  const { login } = useAuthContext()
-  const { enqueueSnackbar } = useSnackbar()
-  const [currentStep, setCurrentStep] = useState(0)
-  const translate = useTranslate()
-
-  const CreateLoginSchema = Yup.object().shape({
+const CreateLoginSchema = (translate: (key: string) => string) =>
+  Yup.object().shape({
     email: Yup.string()
       .required(translate('required_email'))
       .email(translate('must_be_valid_email')),
     password: Yup.string().required(translate('required_password')),
   })
 
-  const nextStep = (): void => {
-    setCurrentStep(currentStep + 1)
-  }
-  const prevStep = (): void => {
-    setCurrentStep(currentStep - 1)
-  }
+export default function JoinTribeLogin({
+  handleChangeAuthorization,
+  classId,
+}: IJoinTribeLoginProps): React.ReactElement {
+  const translate = useTranslate()
+  const { login } = useAuthContext()
+  const { push, query } = useRouter()
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [currentStep, setCurrentStep] = useState(0)
 
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(CreateLoginSchema),
+    resolver: yupResolver(CreateLoginSchema(translate)),
     mode: 'all',
   })
 
@@ -78,13 +73,13 @@ export default function JoinTribeLogin({
       >
         {currentStep === 0 && (
           <EmailStep
-            nextStep={nextStep}
+            nextStep={() => setCurrentStep(currentStep + 1)}
             isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
           />
         )}
         {currentStep === 1 && (
           <PasswordStep
-            prevStep={prevStep}
+            prevStep={() => setCurrentStep(currentStep - 1)}
             isSubmiting={methods.formState.isSubmitting}
           />
         )}

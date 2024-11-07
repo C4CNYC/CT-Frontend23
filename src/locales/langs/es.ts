@@ -911,6 +911,7 @@ const es = {
   slide_add_html: 'Usar plantilla HTML',
   slide_add_promt_ai: 'Aviso con IA',
   slide_add_ai_templates: 'Plantillas de IA',
+  slide_switch: 'Cambiar a otra diapositiva',
   slide_content_updated: 'Contenido actualizado',
   slide_standard: 'Estándar',
   slide_select_format: 'Seleccionar formato de diapositivas',

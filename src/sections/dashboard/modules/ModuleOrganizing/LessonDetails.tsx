@@ -65,6 +65,7 @@ export default function LessonDetails(): React.ReactElement {
                 independent: lesson?.independent,
                 type: lesson?.type,
                 duration: lesson?.duration,
+                slug: lesson?.slug,
               }}
             >
               <Button

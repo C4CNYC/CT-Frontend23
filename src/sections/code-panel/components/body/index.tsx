@@ -1,4 +1,4 @@
-import { type FC, useRef, useState } from 'react'
+import { type FC, useContext, useRef, useState } from 'react'
 
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
@@ -12,6 +12,8 @@ import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'
 import { TAB_TITLES } from '@/sections/code-panel/components/body/consts'
 import { CodePanelBodyProps } from '@/sections/code-panel/components/body/types'
+
+import { CodePanelContext } from '../../lib/CodePanelContext'
 
 import CodeEditorBlock from './blocks/code-editor-block'
 import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
@@ -30,22 +32,20 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   lessonContents,
   user,
   language,
-  isFetchingLessonContent = false,
 }) => {
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
+  const isDesktop = useIsDesktop()
+
   const wrapperRef = useRef<HTMLDivElement | null>(null)
-  const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-
-  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
-
-  const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
-
+  const { autoRun, studentCodeChange } = useContext(CodePanelContext)
   const [document, setDocument] = useState<CodeDocument | null>(null)
   const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
+  const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
@@ -76,6 +76,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
       setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
+      if (autoRun) {
+        setBrowserView(doc)
+      }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('Error: ', error)
@@ -94,9 +97,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
     dispatch(toggleBrowser(false))
   }
 
-  // eslint-disable-next-line no-console
-  console.log('CodePanel Body => browserView', browserView)
-
   if (isDesktop) {
     return (
       <Stack
@@ -112,7 +112,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             onSubmitLesson={onSubmitLesson}
             data={lessonContents}
             integrations={lesson?.integrations ?? []}
-            isFetching={isFetchingLessonContent}
             code={document?.htmlBody?.join('') ?? ''}
             lessonType={lesson?.type}
             lessonName={lesson?.name}
@@ -132,7 +131,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
           onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-          isFetching={isFetchingLessonContent}
           contentId={lessonContents[slideIndex]?.id}
         />
 
@@ -171,7 +169,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         onSubmitChallenge={onSubmitChallenge}
         data={lessonContents}
         integrations={lesson?.integrations ?? []}
-        isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
         lessonType={lesson?.type}
         lessonId={lesson?.id || lessonId}
@@ -183,7 +180,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations}
-        isFetching={isFetchingLessonContent}
       />
 
       <ViewBlock

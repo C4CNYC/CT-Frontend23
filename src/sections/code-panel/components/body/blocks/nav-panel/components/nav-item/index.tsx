@@ -17,14 +17,13 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 interface NavItemProps {
   onClick?: () => void
-  onToggle: () => void
   data: IFriend & BaseResponseInterface
 }
 
 const MAX_NAME_LENGTH = 15
 const MAX_ABOUT_LENGTH = 28
 
-const NavItem: FC<NavItemProps> = ({ onToggle, onClick, data }) => {
+const NavItem: FC<NavItemProps> = ({ onClick, data }) => {
   const name = `${data.first_name} ${data.last_name}`
   const tooltipNameTitle = name.length > MAX_NAME_LENGTH ? name : ''
   const tooltipAbout = data.about?.length > MAX_ABOUT_LENGTH ? data.about : ''

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Stack, Typography } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -10,6 +11,7 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import EmailStep from './email-step'
 import PasswordStep from './password-step'
@@ -21,19 +23,8 @@ interface FormValuesProps {
   password: string
 }
 
-interface IJoinTribeRegisterProps {
-  handleChangeAuthorization: () => void
-}
-
-export default function JoinTribeRegister({
-  handleChangeAuthorization,
-}: IJoinTribeRegisterProps): React.ReactElement {
-  const { register, login } = useAuthContext()
-  const { enqueueSnackbar } = useSnackbar()
-  const [currentStep, setCurrentStep] = useState(0)
-  const translate = useTranslate()
-
-  const CreateRegisterSchema = Yup.object().shape({
+const CreateRegisterSchema = (translate: (key: string) => string) =>
+  Yup.object().shape({
     email: Yup.string()
       .required(translate('required_email'))
       .email(translate('must_be_valid_email')),
@@ -42,15 +33,24 @@ export default function JoinTribeRegister({
     password: Yup.string().min(8, translate('required_password_length')),
   })
 
-  const nextStep = (): void => {
-    setCurrentStep(currentStep + 1)
-  }
-  const prevStep = (): void => {
-    setCurrentStep(currentStep - 1)
-  }
+interface IJoinTribeRegisterProps {
+  handleChangeAuthorization: () => void
+  classId: string
+}
+
+export default function JoinTribeRegister({
+  handleChangeAuthorization,
+  classId,
+}: IJoinTribeRegisterProps): React.ReactElement {
+  const translate = useTranslate()
+  const { push, query } = useRouter()
+  const { register } = useAuthContext()
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [currentStep, setCurrentStep] = useState(0)
 
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(CreateRegisterSchema),
+    resolver: yupResolver(CreateRegisterSchema(translate)),
     mode: 'all',
   })
 
@@ -63,7 +63,10 @@ export default function JoinTribeRegister({
         lastName: data.lastName,
         role: Role.Student,
       })
-      await login(data.email, data.password, 'codetribe')
+      push(
+        `${STUDENT_PATH_DASHBOARD.class.id(classId)}?` +
+          `${new URLSearchParams({ joinCode: query.id as string })}`
+      )
       enqueueSnackbar(translate('register_successfully'))
     } catch (error: any) {
       methods.setError('root', {
@@ -87,13 +90,13 @@ export default function JoinTribeRegister({
       >
         {currentStep === 0 && (
           <EmailStep
-            nextStep={nextStep}
+            nextStep={() => setCurrentStep(currentStep + 1)}
             isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
           />
         )}
         {currentStep === 1 && (
           <PasswordStep
-            prevStep={prevStep}
+            prevStep={() => setCurrentStep(currentStep - 1)}
             isSubmiting={methods.formState.isSubmitting}
           />
         )}

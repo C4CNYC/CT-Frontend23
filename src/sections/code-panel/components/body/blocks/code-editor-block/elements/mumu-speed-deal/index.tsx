@@ -61,7 +61,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
 
   const data = studentData ?? publicData
   const isLoading = isStudentDataLoading ?? isPublicDataLoading
-  const slideTips = data?.contents?.[slideIndex]?.tips
+  const slideTips = data?.contents?.find((ct) => ct.id == contentId)?.tips
 
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 

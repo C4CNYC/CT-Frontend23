@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Box, Dialog } from '@mui/material'
 import { GoogleOAuthProvider } from '@react-oauth/google'
@@ -16,20 +16,49 @@ interface IJoinTribeModal {
   isSignIn?: boolean
 }
 
+enum PageType {
+  LOGIN = 'login',
+  REGISTER = 'register',
+}
+
 export default function JoinTribeModal({
   classInfo,
   isSignIn,
 }: IJoinTribeModal): React.ReactElement {
-  const [isLogin, setIsLogin] = useState(false)
+  const [modal, setModal] = useState<PageType>(PageType.REGISTER)
   const [modalOpen, setModalOpen] = useState(true)
 
-  const handleCloseModal = (): void => {
-    setModalOpen(false)
-  }
+  const content = useMemo(() => {
+    if (isSignIn) {
+      return (
+        <JoinTribeContent
+          classId={classInfo.id}
+          handleCloseModal={() => setModalOpen(false)}
+        />
+      )
+    }
 
-  const handleChangeAuthorization = (): void => {
-    setIsLogin(!isLogin)
-  }
+    switch (modal) {
+      case PageType.LOGIN:
+        return (
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
+            <JoinTribeLogin
+              classId={classInfo.id}
+              handleChangeAuthorization={() => setModal(PageType.REGISTER)}
+            />
+          </GoogleOAuthProvider>
+        )
+      case PageType.REGISTER:
+        return (
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
+            <JoinTribeRegister
+              classId={classInfo.id}
+              handleChangeAuthorization={() => setModal(PageType.LOGIN)}
+            />
+          </GoogleOAuthProvider>
+        )
+    }
+  }, [modal, classInfo, setModal, isSignIn])
 
   return (
     <Dialog
@@ -47,23 +76,7 @@ export default function JoinTribeModal({
         py={3}
         px={2}
       >
-        {isSignIn ? (
-          <JoinTribeContent
-            classId={classInfo.id}
-            handleCloseModal={handleCloseModal}
-          />
-        ) : isLogin ? (
-          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
-            <JoinTribeLogin
-              classId={classInfo.id}
-              handleChangeAuthorization={handleChangeAuthorization}
-            />
-          </GoogleOAuthProvider>
-        ) : (
-          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
-            <JoinTribeRegister handleChangeAuthorization={handleChangeAuthorization} />
-          </GoogleOAuthProvider>
-        )}
+        {content}
       </Box>
     </Dialog>
   )

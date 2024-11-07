@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
@@ -24,15 +24,15 @@ import { RootState, useDispatch } from '@/redux/store'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { getOrder } from '@/utils/getTaskOrder'
 import { useTranslate } from '@/utils/translateHelper'
-import { Iconify } from '@root/src/components'
+import { ConfirmDialog, Iconify } from '@root/src/components'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 
-// import CloneSlideDialogs from './CreateSlide/CloneSlideDialogs'
-// import { DialogTypes } from './CreateSlide/CreateSlideTypes'
+import { HTMLTemplate } from './CreateSlide/HTMLTemplate'
+import { WithAIDialog } from './CreateSlide/WithAIDialog'
 import LessonListItem from './LesonListItem'
-// import CloneExistingSlide from './Modals/CloneExistingSlideMenu'
+import { LessonContentContext } from './LessonStepContent/LessonContent.context'
 import SkeletonList from './Modals/SkeletonList'
 import SlideTemplateDialog from './slide-templates'
 
@@ -52,12 +52,13 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const router = useRouter()
   const translate = useTranslate()
   const popover = usePopover()
+  const { locked, lockedHandler } = useContext(LessonContentContext)
+  const [changeSlideDialogOpen, changeSlideDialogOpenSet] = useState<VoidFunction>()
 
   const [updateLessonContent] = useUpdateLessonContentMutation()
   const [createLessonContent, { isLoading: createLessonLoading }] = useCreateLessonContentMutation()
-  const [cloneExistingSlideMenu, setcloneExistingSlideMenu] = useState(false)
-  const [cloneExistingSlideDialogs, setcloneExistingSlideDialogs] =
-    useState<cloneExistingSlideDialogTypes>('')
+  const [withAIDialogOpen, setWithAIDialogOpen] = useState(false)
+  const [dialogHtmlTemplate, setDialogHtmlTemplate] = useState(false)
   const [removeLessonContent] = useRemoveLessonContentMutation()
   const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
     { id: lessonId },
@@ -201,6 +202,25 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     }
   }
 
+  const onChangeSlide = (stepId: string) => () => {
+    const changeSlide = () => {
+      router.push(
+        `${router.pathname}?${new URLSearchParams({
+          ...router.query,
+          stepId,
+        })}`,
+        undefined,
+        { shallow: true }
+      )
+      lockedHandler(false)
+      changeSlideDialogOpenSet(undefined)
+    }
+    if (locked) {
+      changeSlideDialogOpenSet(() => changeSlide)
+    } else {
+      changeSlide()
+    }
+  }
   if (isLoading || isLessonLoading) return <SkeletonList />
 
   return (
@@ -224,6 +244,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
               independent: lesson?.independent ?? false,
               type: lesson?.type ?? 'practical',
               duration: lesson?.duration,
+              slug: lesson?.slug,
             }}
             isEdit
           >
@@ -278,6 +299,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
                   <LessonListItem
                     onRemove={onRemove}
                     onDublicate={onDublicate}
+                    onChangeSlide={onChangeSlide}
                     lessonId={lessonId}
                     key={board.cards[el]?.meta?.order ? +board.cards[el]?.meta?.order + i : i}
                     step={board.cards[el]}
@@ -289,6 +311,22 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
             )}
           </Droppable>
         </DragDropContext>
+        {changeSlideDialogOpen ? (
+          <ConfirmDialog
+            open={true}
+            onClose={() => changeSlideDialogOpenSet(undefined)}
+            title='Confirm discarding changes'
+            action={
+              <Button
+                variant='contained'
+                color='error'
+                onClick={() => changeSlideDialogOpen()}
+              >
+                {translate('slide_switch')}
+              </Button>
+            }
+          />
+        ) : null}
         <Stack
           direction='column'
           spacing={3}
@@ -327,14 +365,14 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
 
         <MenuItem
           onClick={() => {
-            popover.onClose()
+            setDialogHtmlTemplate(true)
           }}
         >
           {translate('slide_add_html')}
         </MenuItem>
         <MenuItem
           onClick={() => {
-            popover.onClose()
+            setWithAIDialogOpen(true)
           }}
         >
           {translate('slide_add_promt_ai')}
@@ -359,6 +397,26 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
           </ListItemIcon>
         </MenuItem>
       </CustomPopover>
+      <WithAIDialog
+        open={withAIDialogOpen}
+        onClose={() => {
+          setWithAIDialogOpen(false)
+          popover.onClose()
+        }}
+        lessonId={lessonId}
+        lessonName={lesson?.name || ''}
+      />
+      {dialogHtmlTemplate ? (
+        <HTMLTemplate
+          open={true}
+          onClose={() => {
+            setDialogHtmlTemplate(false)
+            popover.onClose()
+          }}
+          lessonId={lessonId}
+          lessonName={lesson?.name || ''}
+        />
+      ) : null}
     </>
   )
 }

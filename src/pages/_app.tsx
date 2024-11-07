@@ -41,13 +41,13 @@ const icons: Record<string, Record<string, string>> = {
   },
   codejika: {
     favicon16x16: '/favicon/favicon_jika.ico',
-    appleTouchIconUrl: '/favicon/favicon_jika.ico',
+    appleTouchIconUrl: '/favicon/apple-touch-icon.png',
     favicon32x32: '/favicon/favicon_jika.ico',
   },
   localhost: {
-    favicon16x16: '/favicon/favicon_jika.ico',
+    favicon16x16: '/favicon/favicon-16x16.png',
     appleTouchIconUrl: '/favicon/favicon_jika.ico',
-    favicon32x32: '/favicon/favicon_jika.ico',
+    favicon32x32: '/favicon/favicon-32x32.png',
   },
 }
 

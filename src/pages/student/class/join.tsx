@@ -12,6 +12,7 @@ import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 import StudentDefaultIntro from '@root/src/sections/intro-tours/student-default-intro'
 
 JoinClass.getLayout = (page: React.ReactElement) => (
@@ -28,10 +29,11 @@ interface FormValueProps {
 
 export default function JoinClass(): React.ReactElement {
   const { push } = useRouter()
-  const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
-
+  const { enqueueSnackbar } = useSnackbar()
+  const { isAuthenticated } = useAuthContext()
   const { themeStretch } = useSettingsContext()
+
   const [joinClass, { isLoading }] = useJoinClassMutation()
 
   const methods = useForm<FormValueProps>({
@@ -40,9 +42,13 @@ export default function JoinClass(): React.ReactElement {
 
   const onSubmit = async ({ code }: FormValueProps) => {
     try {
-      const { status, tribe } = await joinClass({ share_token: code }).unwrap()
-      if (status === 'joined') {
-        push(STUDENT_PATH_DASHBOARD.class.id(tribe.id))
+      if (isAuthenticated) {
+        const { status, tribe } = await joinClass({ share_token: code }).unwrap()
+        if (status === 'joined') {
+          push(STUDENT_PATH_DASHBOARD.class.id(tribe.id))
+        }
+      } else {
+        push(STUDENT_PATH_DASHBOARD.joinTribe.id(code))
       }
     } catch (error: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
