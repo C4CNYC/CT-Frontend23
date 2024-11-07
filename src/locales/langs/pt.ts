@@ -49,6 +49,7 @@ const pt = {
   actions_remove: 'Remover',
   actions_edit: 'Editar',
   actions_add: 'Add',
+  actions_clone: 'Clonar',
   actions_archive: 'Arquivo',
   actions_close: 'Fechar',
   actions_save: 'Salvar',

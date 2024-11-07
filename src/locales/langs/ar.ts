@@ -67,6 +67,7 @@ const ar = {
   actions_connect: 'يتصل',
   actions_view: 'منظر',
   actions_create: 'يخلق',
+  actions_clone: 'استنساخ',
   actions_create_authur: 'إنشاء مؤلف',
   actions_delete_author: 'حذف المؤلف',
   actions_add_tip: 'أضف نصيحة',

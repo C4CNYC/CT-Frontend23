@@ -8,7 +8,10 @@ import { useRouter } from 'next/router'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
-import { useDeleteLessonMutation } from '@/redux/services/manager/lessons-manager'
+import {
+  useDeleteLessonMutation,
+  useCloneLessonMutation,
+} from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -31,6 +34,7 @@ export default function LessonCard({
   const [loading, setLoading] = useState(false)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [deleteLesson] = useDeleteLessonMutation()
+  const [cloneLesson] = useCloneLessonMutation()
   const translate = useTranslate()
 
   const onDelete = async (): Promise<void> => {
@@ -71,6 +75,24 @@ export default function LessonCard({
     router.push(`${router.pathname}?${new URLSearchParams({ lessonId: lesson.id })}`, undefined, {
       shallow: true,
     })
+  }
+  const handleClone = (lesson_id: string): void => {
+    cloneLesson({ lesson_id }).then((data) => {
+      if ('error' in data) {
+        enqueueSnackbar(translate('messages_error'))
+        return
+      }
+      enqueueSnackbar(translate('lesson_cloned_msg'))
+      router.push(
+        `${router.pathname}?${new URLSearchParams({ lessonId: data.data.id })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    })
+
+    return
   }
 
   return (
@@ -225,6 +247,14 @@ export default function LessonCard({
           </MenuItem>
         </CreateLessonDialog>
 
+        <MenuItem
+          onClick={() => {
+            handleClone(lesson.id)
+          }}
+        >
+          <Iconify icon='eva:copy-outline' />
+          {translate('actions_clone')}
+        </MenuItem>
         <Divider sx={{ borderStyle: 'dashed' }} />
         {lock || lesson.id.endsWith('000000000000') ? (
           <></>
