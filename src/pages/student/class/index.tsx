@@ -33,6 +33,8 @@ export default function ClassMain(): React.ReactElement {
       push(STUDENT_PATH_DASHBOARD.class.id(classId, { joinCode }))
     } else if (tribes?.meta.itemCount && tribes.data.length > 0) {
       push(STUDENT_PATH_DASHBOARD.class.id(data?.lastActiveTribe || tribes.data[0].id))
+    } else if (!profile) {
+      push(STUDENT_PATH_DASHBOARD.courses.root)
     } else {
       push(STUDENT_PATH_DASHBOARD.class.join)
     }
