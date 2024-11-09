@@ -7,7 +7,7 @@ export const baseQueryWithAuth: (
   async (args: any, api: any, extraOptions: any): Promise<any> => {
     const result = await baseQuery(args, api, extraOptions)
     // if (result.error && result.error.status === 401) {
-      // window.location.pathname = '/auth/signIn'
+    // window.location.pathname = '/auth/signIn'
     // }
     return result
   }
