@@ -19,19 +19,7 @@ import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import AddAddons from './AddAddons'
 import { AIPersonaInfo } from './AIPersonaInfo'
-import {
-  AIGenerateStepperProps,
-  FormAIGenerateProps,
-  GRADES,
-  IAddons,
-  LESSON_DURARION,
-  LEVELS,
-  PERSONA,
-  PROGRAMMING_LANGUAGE,
-  TONE,
-  TYPE_LESSON,
-  TYPE_PROJECT,
-} from './constants'
+import { AIGenerateStepperProps, FormAIGenerateProps, IAddons, TYPE_PROJECT } from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
 import LoaderStep from './LoaderStep'
@@ -39,16 +27,16 @@ import SimpleAiGenerate from './SimpleAiGenerate'
 
 //@names according to avoid bots spam
 const defaultValues = {
-  RlevelR: LEVELS[0].value,
-  RgradesR: GRADES[1].value,
-  RlessonDurationR: LESSON_DURARION[2].value,
+  RlevelR: '',
+  RgradesR: '',
+  RlessonDurationR: '',
   RlessonLanguageR: 'English',
   RcustomLanguageR: '',
   RtrackR: '',
-  RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
-  RpersonaR: PERSONA[0].value,
-  RtoneR: TONE[0].value,
-  RtypeLessonR: TYPE_LESSON[1].value,
+  RprogrammingLanguageR: '',
+  RpersonaR: '',
+  RtoneR: '',
+  RtypeLessonR: '',
   name: null,
   email: null,
   state: null,
