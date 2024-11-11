@@ -69,7 +69,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           socket?.emit('changeStatusInLesson', {
             lesson: lessonId,
             user: user?.id,
-            status: 'idle',
+            status: 'active',
           })
         }
       }, 30000) // 30 seconds

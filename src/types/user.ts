@@ -1,3 +1,5 @@
+import { IFriend } from '../redux/interfaces/friends.interface'
+
 export interface IUserSocialLink {
   facebookLink: string
   instagramLink: string
@@ -146,7 +148,7 @@ export interface IUserAccountNotificationSettings {
   applicationBlog: boolean
 }
 
-export interface ILessonUserStatus {
+export interface ILessonUserStatus extends IFriend {
   id: string
   status: string
   lessonId: string
