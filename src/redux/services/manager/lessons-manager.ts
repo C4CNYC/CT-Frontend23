@@ -13,6 +13,7 @@ import {
 import { IIntegration } from '../interfaces/integration.interface'
 
 import { managerApi } from '.'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -39,7 +40,7 @@ const extendedApi = managerApi.injectEndpoints({
           const lessons = results.map((result) => result.data as ILesson).filter(Boolean)
           return { data: lessons }
         } catch (error) {
-          return { error }
+          return { error:error as FetchBaseQueryError }
         }
       },
     }),
