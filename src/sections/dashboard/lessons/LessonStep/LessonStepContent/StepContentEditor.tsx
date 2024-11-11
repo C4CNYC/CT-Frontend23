@@ -237,7 +237,7 @@ export default function StepContentEditor(): React.ReactElement {
             }}
           >
             <CgScreen size='30px' />
-            <Link href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}>
+            <Link href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId} target='_blank'>
               {translate('preview')}
             </Link>
           </div>

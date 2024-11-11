@@ -22,6 +22,7 @@ export interface FormAIGenerateProps {
 export interface AIGenerateStepperProps {
   isModal: boolean
   closeModal?: () => void
+  passedValues?: Partial<FormAIGenerateProps>
 }
 
 export interface IAddAddonsProps {

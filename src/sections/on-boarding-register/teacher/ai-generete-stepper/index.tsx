@@ -73,6 +73,7 @@ const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
 export default function AIGenerateStepper({
   isModal,
   closeModal,
+  passedValues,
 }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
 
@@ -112,7 +113,7 @@ export default function AIGenerateStepper({
   const methods = useForm<FormAIGenerateProps>({
     resolver: yupResolver(generateAICourseSchema),
     mode: 'all',
-    defaultValues: defaultValues,
+    defaultValues: {...defaultValues, ...passedValues},
   })
 
   const nextStep = () => {
