@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   Button,
@@ -10,15 +12,15 @@ import {
   Typography,
 } from '@mui/material'
 import { Box } from '@mui/system'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
+
 import { FormProvider, Iconify, RHFTextField, useSnackbar } from '@root/src/components'
 import { useCopyToClipboard } from '@root/src/hooks'
 import { MANAGER_PATH_DASHBOARD } from '@root/src/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { useTranslate } from '@root/src/utils/translateHelper'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import * as Yup from 'yup'
 
 interface LessonSchareModalProps {
   children?: React.ReactElement

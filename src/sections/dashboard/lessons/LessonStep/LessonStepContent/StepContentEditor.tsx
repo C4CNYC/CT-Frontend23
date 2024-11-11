@@ -31,13 +31,13 @@ import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import LessonSchareModal from '../Modals/LessonShareModal'
 import Preferences from '../Modals/Preferences'
 
 import { EditorSelector } from './EditorSelector'
 import { LessonContentContext } from './LessonContent.context'
 import SkeletonContentCode from './SkeletonContentCode'
 import SkeletonContentMulti from './SkeletonContentMulti'
-import LessonSchareModal from '../Modals/LessonShareModal'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   '& .MuiToggleButton-root': {
