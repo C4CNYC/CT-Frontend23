@@ -18,7 +18,6 @@ import * as Yup from 'yup'
 
 import { FormProvider, Iconify, RHFTextField, useSnackbar } from '@root/src/components'
 import { useCopyToClipboard } from '@root/src/hooks'
-import { MANAGER_PATH_DASHBOARD } from '@root/src/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -48,7 +47,7 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
 
   const onCopy = () => {
     copy(`
-      ${window.location.origin}${MANAGER_PATH_DASHBOARD.lessons.root}?lessonid${query.lessonId}&stepid${query.stepId}
+      ${window.location.origin}${STUDENT_PATH_DASHBOARD.codePanel.root}?lessonid=${query.lessonId}
     `)
     enqueueSnackbar(translate('messages_copied'))
   }
