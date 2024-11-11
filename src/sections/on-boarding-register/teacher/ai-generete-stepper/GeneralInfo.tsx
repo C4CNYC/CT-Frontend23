@@ -5,6 +5,8 @@ import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { languages } from '@root/src/assets/data/languages'
 import { Iconify, RHFSelect, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lessons-manager'
+import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
@@ -37,6 +39,13 @@ export function GeneralInfo({
   closeModal,
   isCustomLang,
 }: IGeneralInfoProps) {
+  const { data: properties } = useGetPropertiesQuery({
+    entityType: 'lesson',
+    propertyName: 'aiTemplate',
+  })
+  const { data: aiTemplates } = useGetLessonsByIdsQuery(
+    properties?.data.map((item) => item.entityId) ?? []
+  )
   const theme = useTheme()
   const translate = useTranslate()
 
@@ -93,11 +102,23 @@ export function GeneralInfo({
         </Typography>
         <RHFToggleButtonGroup
           name='RtypeLessonR'
-          options={TYPE_LESSON}
+          options={
+            aiTemplates
+              ? [
+                  ...TYPE_LESSON,
+                  ...aiTemplates?.map((ait) => ({
+                    key: ait.id,
+                    value: ait.name,
+                    tooltip: ait.description,
+                    icon: 'material-symbols:info-outline',
+                  })),
+                ]
+              : TYPE_LESSON
+          }
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
           sxButton={toggleButtonStyles}
           tooltip
-        />
+        ></RHFToggleButtonGroup>
       </Stack>
 
       <Stack>
