@@ -88,7 +88,7 @@ export default function CoursePage(): React.ReactElement {
                 level={data?.level ?? ''}
                 lessonsCount={
                   data?.units.reduce((total, unit) => {
-                    return total + unit.lessons.length
+                    return total + unit?.lessons?.length
                   }, 0) ?? 0
                 }
               />

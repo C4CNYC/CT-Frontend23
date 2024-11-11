@@ -46,6 +46,7 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
+import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
@@ -391,6 +392,8 @@ export default function CodePanelLayout(): ReactElement | null {
           />
         </Box>
       </FullScreen>
+
+      {!profile && <SignUpDialog />}
 
       {showConfetti && (
         <Confetti

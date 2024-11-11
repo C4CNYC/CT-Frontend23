@@ -1,3 +1,5 @@
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { AiLessonGenerate } from '../interfaces/ai.interface'
@@ -27,6 +29,21 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       keepUnusedDataFor: 0,
       providesTags: ['Lessons'],
+    }),
+    getLessonsByIds: builder.query<ILesson[], string[]>({
+      queryFn: async (lessonIds, _queryApi, _extraOptions, fetchWithBQ) => {
+        try {
+          const results = await Promise.all(
+            lessonIds.map((id) => fetchWithBQ(`/manager/lesson/${id}`))
+          )
+
+          // Aggregate and return the data
+          const lessons = results.map((result) => result.data as ILesson).filter(Boolean)
+          return { data: lessons }
+        } catch (error) {
+          return { error: error as FetchBaseQueryError }
+        }
+      },
     }),
     getOwnLessons: builder.query<
       BaseListResponseInterface<ILesson & BaseResponseInterface>,
@@ -63,6 +80,13 @@ const extendedApi = managerApi.injectEndpoints({
         body,
       }),
       invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    cloneLesson: builder.mutation<ILesson & BaseResponseInterface, { lesson_id: string }>({
+      query: ({ lesson_id }) => ({
+        url: `/manager/lesson/clone/${lesson_id}`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Lessons'],
     }),
     generateLesson: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
       query: ({ ...body }) => ({
@@ -110,7 +134,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     createLessonUsingOpenAIAssistant: builder.mutation<
       IOpenAiRequest & BaseResponseInterface,
-      AiLessonGenerate
+      AiLessonGenerate | { lesson_id?: string }
     >({
       query: (body) => ({
         url: '/manager/lesson/createLessonUsingOpenAIAssistant',
@@ -168,8 +192,10 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetLessonsQuery,
+  useGetLessonsByIdsQuery,
   useGetOwnLessonsQuery,
   useGetLessonQuery,
+  useCloneLessonMutation,
   useGetLessonIntegrationsQuery,
   // -------------mutation-----------
   useCreateLessonMutation,
