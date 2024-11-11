@@ -919,6 +919,16 @@ const fr = {
   slide_standard: 'Standard',
   slide_select_format: 'Sélectionnez le format de la diapositive',
 
+  // Share lesson modal
+  share_modal_title: 'Share',
+  share_modal_subtitle: 'Hey, share your lesson 😃',
+  share_modal_copy_link: 'Copy Link',
+  share_modal_assign_class: 'Assign to a class (Tribe)',
+  share_modal_create_quest: 'Create a Quest',
+  share_modal_share_social: 'Share on social',
+  share_modal_share_text: 'I just generated this fun lesson on codetribe.ai',
+  share_modal_or: 'OR',
+
   // code-panel menu
   me_me_me: 'Moi moi moi',
   get_out: "Fais-moi sortir d'ici",
