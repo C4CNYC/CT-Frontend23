@@ -11,6 +11,7 @@ import { Socket } from 'socket.io-client'
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
 import AddComment from './components/add-comment'
@@ -61,6 +62,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const styles = useStyles()
   const { query } = useRouter()
   const dispatch = useDispatch()
+  const { user } = useAuthContext()
   const searchParams = useSearchParams()
 
   const [codeValue, setCodeValue] = useState<string | undefined>('')
@@ -170,6 +172,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     socket,
     roomId,
     defaultFileName,
+    cursorText: user?.first_name,
   })
 
   useEffect(() => {
