@@ -27,7 +27,7 @@ export default function ImageLightBox({
     e.stopPropagation()
     setOpen(true)
   }
-  const handleCloseDialog = (e): void => {
+  const handleCloseDialog = (e: React.MouseEvent): void => {
     setOpen(false)
     onClick?.(e)
   }
