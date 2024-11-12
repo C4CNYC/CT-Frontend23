@@ -120,7 +120,7 @@ const SimpleAiGenerate = ({
             ) : null}
           </Stack>
           <Stack gap={{ xs: 2, sm: 2, md: 8 }}>
-            <Stack sx={{ gap: { xs: 1, sm: 1, md: 4 } }}>
+            <Stack sx={{ gap: { xs: 1, sm: 1, md: 4 }, px: { xs: 0, sm: 0, md: 4 } }}>
               <ToggleButtonGroup
                 size='large'
                 onChange={handlePresetChange}
