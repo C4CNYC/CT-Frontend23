@@ -98,14 +98,17 @@ export default function StepCode({
           onClick={() => {
             onSubmit(JSON.stringify({ content: value }))
           }}
-          iconColor='#fff'
+          iconColor='#FF69B4'
           sx={{
             position: 'absolute',
             top: 65,
             right: 35,
-            color: '#fff',
+            color: '#FF69B4',
             borderRadius: '4px',
-            border: 'none',
+            border: '1px solid #FF69B4',
+            '&:hover': {
+              background: '#FF69B43F',
+            },
           }}
         />
       </Box>
