@@ -46,6 +46,7 @@ export interface UseBaseInitReturn {
   streamingDoc?: Text
   isLoading: boolean
   extensions?: Extension[]
+  isCollabActive?: boolean
   baseInit: (fileName: File) => Promise<void>
   setIsLoading: (isLoading: boolean) => void
   setStreamingDoc: (streamingDoc: Text) => void
@@ -54,23 +55,24 @@ export interface UseBaseInitReturn {
 
 export const useInitCodemirror = ({
   mode,
-  withTooltip,
-  onChangeStreamingDocInfo,
-  roomId,
   user,
+  roomId,
+  socket,
   cursorText,
-  defaultFileName,
+  withTooltip,
   preloadedCode,
+  defaultFileName,
   commentEffectRef,
   onCommentIconClick,
+  onChangeStreamingDocInfo,
 }: UseBaseInit): UseBaseInitReturn => {
   const { user: profileOwner } = useAuthContext()
+
   const [key, setKey] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [isCollabActive, setIsCollabActive] = useState(false)
   const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
 
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
 
@@ -81,19 +83,21 @@ export const useInitCodemirror = ({
 
   useEffect(() => {
     if (socket && mode === EditorMode.Owner) {
-      socket.emit(SocketEventsStudentMode.JoinCollabModFeature, { roomId: user?.id })
-      socket.on(SocketEventsStudentMode.StartOnlineMode, () => {
-        setIsCollabActive(true)
-        setTimeout(() => {
-          socket.emit(SocketEventsStudentMode.OnlineStudentReady, { roomId: user?.id })
-        }, 1000)
-      })
-
-      if (profileOwner?.role === Role.Student) {
-        socket?.on(SocketEventsStudentMode.StopOnlineMode, async () => {
-          window.dispatchEvent(reloadWorkspaceEvent)
+      socket.on('connect', () => {
+        socket.emit(SocketEventsStudentMode.JoinCollabModFeature, { roomId: user?.id })
+        socket.on(SocketEventsStudentMode.StartOnlineMode, () => {
+          setIsCollabActive(true)
+          setTimeout(() => {
+            socket.emit(SocketEventsStudentMode.OnlineStudentReady, { roomId: user?.id })
+          }, 100)
         })
-      }
+
+        if (profileOwner?.role === Role.Student) {
+          socket?.on(SocketEventsStudentMode.StopOnlineMode, async () => {
+            window.dispatchEvent(reloadWorkspaceEvent)
+          })
+        }
+      })
     }
   }, [socket, profileOwner])
 
@@ -182,12 +186,13 @@ export const useInitCodemirror = ({
 
   return {
     key,
+    baseInit,
+    lineWrap,
+    isLoading,
     extensions,
     streamingDoc,
+    isCollabActive,
     setStreamingDoc,
-    isLoading,
-    baseInit,
     setIsLoading,
-    lineWrap,
   }
 }

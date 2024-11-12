@@ -34,27 +34,29 @@ type ReducedFields =
   | 'defaultFileName'
 
 interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFields> {
+  portalSocket?: Socket
   className?: string
   isReadOnly?: boolean
   withFileManager?: boolean
-  socket?: Socket
   isMultipleExtensionFiles?: boolean
   defaultFileName?: string
   onChangeCodemirrorValue?: (value: string) => void
 }
 
+const DEBOUNCE_TIME = 30000
+let checkValueTimeout: any | null = null
 const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
-  className,
-  isReadOnly: _isReadOnly = false,
-  mode = EditorMode.Owner,
-  withFileManager = true,
   roomId,
-  socket,
-  isMultipleExtensionFiles = false,
-  defaultFileName = 'index.html',
+  className,
+  portalSocket,
   preloadedCode,
+  withFileManager = true,
+  mode = EditorMode.Owner,
+  defaultFileName = 'index.html',
+  isReadOnly: _isReadOnly = false,
+  isMultipleExtensionFiles = false,
   onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
   ...collabProps
@@ -64,15 +66,23 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const dispatch = useDispatch()
   const { user } = useAuthContext()
   const searchParams = useSearchParams()
+  const codePanelContext = useContext(CodePanelContext)
 
   const [codeValue, setCodeValue] = useState<string | undefined>('')
 
+  const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
-  const codePanelContext = useContext(CodePanelContext)
+
   const lessonIdFromQuery = query?.lessonId
   const sandbox = searchParams.get('sandbox')
+
+  // Given the fact that we use the same editor block for portals and root editor
+  // we are spliting the socket logic here
+  const socket = portalSocket || rootSocket
+
+  const { changeLessonStatus } = useSocketController(socket)
 
   const {
     activeFile,
@@ -96,6 +106,21 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
       return
     }
+
+    if (checkValueTimeout) clearTimeout(checkValueTimeout)
+
+    if (lessonId && user) changeLessonStatus(lessonId)
+
+    checkValueTimeout = setTimeout(
+      (previousLength: number) => {
+        if (doc?.htmlBody?.length === previousLength) {
+          changeLessonStatus(lessonId!)
+        }
+      },
+      DEBOUNCE_TIME,
+      doc?.htmlBody?.length
+    )
+
     onChangeStreamingDocInfoFromProps?.(doc)
   }
 
@@ -286,6 +311,39 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       }
     </div>
   )
+}
+
+const useSocketController = (socket?: Socket) => {
+  const router = useRouter()
+  const { user } = useAuthContext()
+
+  const lessonIdFromRoute = router.query.lessonId
+
+  useEffect(() => {
+    if (!socket) return
+
+    socket.emit(
+      'joinLesson',
+      JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+    )
+
+    return () => {
+      socket?.emit(
+        'leaveLesson',
+        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+      )
+    }
+  }, [lessonIdFromRoute, socket])
+
+  return {
+    changeLessonStatus: (lessonId: string) => {
+      socket?.emit('changeStatusInLesson', {
+        lesson: lessonId,
+        user: user?.id,
+        status: 'active',
+      })
+    },
+  }
 }
 
 export default memo(CodeEditorCollab)

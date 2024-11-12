@@ -4,6 +4,7 @@ import { Box, Collapse } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
+import { Socket } from 'socket.io-client'
 
 import { type AuthUserType } from '@/auth/types'
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -18,6 +19,7 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import BaseBlock from '../base-block'
 
 import { EditorMode } from './code-editor-collab/hook/constants'
+import { waitConnectSocket } from './code-editor-collab/hook/utils/socket'
 import CodeEditorController from './code-editor-controller'
 import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
@@ -63,8 +65,9 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const [typing, setTyping] = useState<boolean | null>(null)
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
 
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
   const codeState = useSelector((state) => state.codePanelGlobal.code)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
   const TITLE = translate('code_editor')
@@ -102,6 +105,20 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )
     }
   }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
+
+  useEffect(() => {
+    const runAsyncEffect = async (socket: Socket) => {
+      const isConnected = await waitConnectSocket(socket)
+
+      if (!isConnected) {
+        void runAsyncEffect(socket)
+      }
+    }
+
+    if (socket && !socket.connected) {
+      void runAsyncEffect(socket)
+    }
+  }, [socket])
 
   useEffect(() => {
     window.addEventListener(RELOAD_WORKSPACE_EVENT, () => {
