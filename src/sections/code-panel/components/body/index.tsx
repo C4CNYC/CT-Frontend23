@@ -141,8 +141,8 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         >
           <div
             style={{
-              width: isInstructionsHidden || isBrowserHidden ? '100%' : '50%',
-              minWidth: '50%',
+              width: isInstructionsHidden || isBrowserHidden ? '100%' : '54%',
+              minWidth: '49%',
               flex: 1,
             }}
           >
@@ -157,8 +157,8 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           </div>
           <div
             style={{
-              width: !isBrowserHidden ? '50%' : '0%',
-              minWidth: isBrowserHidden ? 30 : 200,
+              width: !isBrowserHidden ? '46%' : '0%',
+              minWidth: isBrowserHidden ? 30 : '41%',
             }}
           >
             {!isBrowserHidden ? (
