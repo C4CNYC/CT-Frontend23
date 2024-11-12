@@ -1,4 +1,4 @@
-import { type FC, type RefObject, useEffect, useMemo } from 'react'
+import { type FC, type RefObject, useMemo } from 'react'
 
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -7,10 +7,8 @@ import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
 
 import { SimpleInfiniteList } from '@/components'
-import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { useSelector } from '@/redux/store'
-import { ILessonUserStatus } from '@/types'
-import { type BaseResponseInterface } from '@/utils'
+import { ILessonUserStatus } from '@root/src/types'
 
 import CodeBlock from './components/code-block'
 import CustomNavItem from './components/custom-nav-item'
@@ -19,6 +17,7 @@ import LoadListSkeleton from './components/load-list-skeleton'
 import NavItem from './components/nav-item'
 import SortableItem from './components/sortable-item'
 import { useNavPanel } from './hook'
+import { useUserWithStatuses } from './hook/useUserWithStatuses'
 import {
   DIVIDER_SX,
   DIVIDER_SX_BOTTOM,
@@ -36,6 +35,13 @@ interface NavPanelProps {
   lessonId?: string
 }
 
+interface CodeBlockUnitProps {
+  user: ILessonUserStatus
+  onDeletePreviewUser: (id: string) => void
+  lessonId?: string
+  cursorName?: string
+}
+
 const LOADER_SIZE = 20
 
 const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId }) => {
@@ -47,16 +53,11 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
     onDragEnd,
     onDeletePreviewUser,
     draggableConfig,
-    users,
-    setUsers,
     previewUsers,
-    activeUsersAmount,
-    isUsersLoading,
-    onLoadMore,
-    hasNextPage,
   } = useNavPanel(wrapperListenerRef)
+  const { users, activeUsersAmount, isUsersLoading, onLoadMore, hasNextPage } =
+    useUserWithStatuses()
 
-  const usersStatus = useSelector((state) => state.codePanelGlobal.usersStatus)
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
   const drawerSx = useMemo(() => {
@@ -66,20 +67,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
   const stackCodeBoxSx = useMemo(() => {
     return getStackCodeBoxSx(draggableConfig?.height, isOpen)
   }, [draggableConfig?.height, isOpen])
-
-  useEffect(() => {
-    const _users = users.map((_user: IFriend & BaseResponseInterface) => {
-      const userStatus = usersStatus.find(
-        (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
-      )
-      return {
-        ..._user,
-        status: userStatus?.status ?? _user.status,
-        currentLessonId: userStatus?.lessonId ?? _user.currentLessonId,
-      }
-    })
-    setUsers(_users)
-  }, [usersStatus, users.length])
 
   return (
     <Drawer
@@ -105,7 +92,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
           ) : (
             <SimpleInfiniteList
               loading={isUsersLoading}
-              hasNextPage={hasNextPage}
+              hasNextPage={!!hasNextPage}
               onLoadMore={onLoadMore}
               loaderComponent={
                 <CircularProgress
@@ -166,13 +153,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
       </Stack>
     </Drawer>
   )
-}
-
-interface CodeBlockUnitProps {
-  user: IFriend & BaseResponseInterface
-  onDeletePreviewUser: (id: string) => void
-  lessonId?: string
-  cursorName?: string
 }
 
 const CodeBlockUnit: React.FC<CodeBlockUnitProps> = ({

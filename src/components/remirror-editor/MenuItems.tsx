@@ -129,7 +129,6 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
   sx = {
     display: 'flex',
     gap: 1,
-    width: 140,
     fontSize: '1.1rem',
     color: '#364954',
     fontWeight: 400,
@@ -150,14 +149,22 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
           Challenge
         </Button>
         {editorInstance && (
-          <Button
-            onClick={formatMenuOpen}
-            sx={sx}
-            ref={formatMenuButton}
-          >
-            <LuWrench size={20} />
-            Tools
-          </Button>
+          <>
+            <Button
+              onClick={formatMenuOpen}
+              sx={sx}
+              ref={formatMenuButton}
+            >
+              <LuWrench size={20} />
+              Tools
+            </Button>
+            <MediaModal insertImage={insertImage}>
+              <Button sx={sx}>
+                <TbPhoto size={20} />
+                Insert Media
+              </Button>
+            </MediaModal>
+          </>
         )}
       </div>
       <MenuPopover
@@ -227,12 +234,6 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
               <LuScrollText size={20} />
               Cape HTML
             </Button>
-            <MediaModal insertImage={insertImage}>
-              <Button sx={BUTTONS_STYLES}>
-                <TbPhoto size={20} />
-                Insert Media
-              </Button>
-            </MediaModal>
             <Button
               sx={BUTTONS_STYLES}
               onClick={handleAutoFormat}

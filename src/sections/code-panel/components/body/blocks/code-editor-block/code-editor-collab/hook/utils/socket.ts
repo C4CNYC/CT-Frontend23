@@ -65,6 +65,7 @@ export const createSocket = (userId?: null | string): Socket => {
   return io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
     path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
     auth: userId ? { userId } : {},
+    transports: ['websocket'],
   })
 }
 
