@@ -1,28 +1,30 @@
-import Dialog from "@mui/material/Dialog";
-import { useEffect, useRef, useState } from "react"
-import { useBoolean } from "../hooks/useBoolean";
-import DialogContent from "@mui/material/DialogContent";
-import AIGenerateStepper from "../sections/on-boarding-register/teacher/ai-generete-stepper";
+import { useEffect, useRef, useState } from 'react'
+
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+
+import { useBoolean } from '../hooks/useBoolean'
+import AIGenerateStepper from '../sections/on-boarding-register/teacher/ai-generete-stepper'
 
 export default function AiGeneratePage(): React.ReactElement {
-    const containerRef = useRef<HTMLDivElement>(null)
-    const [prompt, promptSet] = useState('')
-    const [open, setOpen, setClose] = useBoolean(false)
-    useEffect(() => {
-        if (containerRef.current) {
-        // Query the injected HTML to find the field
-            const elPropmt = containerRef.current.querySelector('#prompt') as HTMLInputElement;
-            const elGenerate = containerRef.current.querySelector('#generate') as HTMLButtonElement;
-            if (elPropmt && elGenerate) {
-                elPropmt.onchange = (e) => {
-                    let t = e.target as HTMLInputElement;
-                    promptSet(t?.value);
-                }
-                elGenerate.onclick = setOpen;
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [prompt, promptSet] = useState('')
+  const [open, setOpen, setClose] = useBoolean(false)
+  useEffect(() => {
+    if (containerRef.current) {
+      // Query the injected HTML to find the field
+      const elPropmt = containerRef.current.querySelector('#prompt') as HTMLInputElement
+      const elGenerate = containerRef.current.querySelector('#generate') as HTMLButtonElement
+      if (elPropmt && elGenerate) {
+        elPropmt.onchange = (e) => {
+          let t = e.target as HTMLInputElement
+          promptSet(t?.value)
         }
-        }
-    }, []);
-    console.log("prompt", prompt)
+        elGenerate.onclick = setOpen
+      }
+    }
+  }, [])
+
   const page = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -516,9 +518,14 @@ export default function AiGeneratePage(): React.ReactElement {
 </body>
 </html>
 `
-  return <><div  ref={containerRef} dangerouslySetInnerHTML={{ __html: page }}></div>
-  
-  <Dialog
+  return (
+    <>
+      <div
+        ref={containerRef}
+        dangerouslySetInnerHTML={{ __html: page }}
+      ></div>
+
+      <Dialog
         open={open}
         fullWidth
         maxWidth='md'
@@ -527,9 +534,12 @@ export default function AiGeneratePage(): React.ReactElement {
         <DialogContent sx={{ p: 2 }}>
           <AIGenerateStepper
             isModal
-                  closeModal={setClose}
-                  passedValues={{RpromptR:prompt}}
+            closeModal={setClose}
+            passedValues={{ RpromptR: prompt }}
+            props={{ activeStep: 1 }}
           />
         </DialogContent>
-      </Dialog></>
+      </Dialog>
+    </>
+  )
 }

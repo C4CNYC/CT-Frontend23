@@ -23,6 +23,7 @@ export interface AIGenerateStepperProps {
   isModal: boolean
   closeModal?: () => void
   passedValues?: Partial<FormAIGenerateProps>
+  props?: { activeStep?: number }
 }
 
 export interface IAddAddonsProps {
@@ -179,7 +180,7 @@ export const PROMTS_VARIANTS = [
   },
   {
     text: 'ai_gen_simple_step_prompt_3',
-    key: 'Nested functions in javascript with exercises and quiz',
+    key: 'Nested functions in javascript with exercises',
     icon: 'mdi:question-box-multiple-outline',
     color: '#EE467A',
   },

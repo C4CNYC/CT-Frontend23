@@ -759,7 +759,7 @@ const en = {
   ai_gen_simple_step_title: 'Create beautiful coding lessons with Mumu 🐯',
   ai_gen_simple_step_prompt_1: 'Python variables with exercises in Armenian',
   ai_gen_simple_step_prompt_2: '6th graders build weather app with api',
-  ai_gen_simple_step_prompt_3: 'Nested functions in javascript with exercises and quiz',
+  ai_gen_simple_step_prompt_3: 'Nested functions in javascript with quiz',
   ai_gen_simple_step_prompt_4: 'Auto-graded infinite loop exercises',
   ai_gen_simple_step_placeholder: 'Enter prompt or select from above',
   ai_gen_simple_step_error_text: 'Please provide a subject for the lesson',

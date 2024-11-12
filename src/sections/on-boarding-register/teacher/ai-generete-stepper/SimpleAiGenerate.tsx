@@ -33,6 +33,7 @@ type ISimpleAiGenerateProps = {
   isModal: boolean
   closeModal?: () => void
   updateForm: (name: string, value: string) => void
+  getFormValue: (name: string) => string
   redirectAfterComplete: (lessonId: string) => void
 }
 
@@ -42,12 +43,13 @@ const SimpleAiGenerate = ({
   isModal,
   closeModal,
   updateForm,
+  getFormValue,
   redirectAfterComplete,
 }: ISimpleAiGenerateProps) => {
   const theme = useTheme()
   const translate = useTranslate()
 
-  const [textFieldValue, setTextFieldValue] = useState<string>('')
+  const [textFieldValue, setTextFieldValue] = useState<string>(getFormValue('RpromptR'))
 
   const skipBtnStyles = useMemo(
     () => getSkipBtnSx(theme.palette.mode === 'dark'),
@@ -149,7 +151,6 @@ const SimpleAiGenerate = ({
                 multiline
                 name='RpromptR'
                 minRows={3}
-                value={textFieldValue}
                 required
                 onChange={(e) => {
                   handleChangeTextField(e)
@@ -172,20 +173,12 @@ const SimpleAiGenerate = ({
             </Stack>
             <Stack sx={BTN_CONTAINER_STYLES}>
               <Button
-                variant='text'
-                sx={skipBtnStyles}
+                variant='contained'
+                sx={nextBtnStyles}
                 onClick={nextStep}
                 disabled={!textFieldValue}
               >
-                {translate('ai_gen_advanced_btn')}
-              </Button>
-              <Button
-                variant='contained'
-                sx={nextBtnStyles}
-                onClick={onSubmit}
-                disabled={!textFieldValue}
-              >
-                {translate('ai_gen_generate_btn')}
+                {translate('ai_gen_next_btn')}
               </Button>
             </Stack>
           </Stack>

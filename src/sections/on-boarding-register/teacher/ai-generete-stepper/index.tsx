@@ -74,10 +74,11 @@ export default function AIGenerateStepper({
   isModal,
   closeModal,
   passedValues,
+  props,
 }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
 
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(props?.activeStep || 0)
   const [lessonId, setLessonId] = useState<null | string>(null)
 
   const profile = useSelector((state) => state.global.user)
@@ -113,7 +114,7 @@ export default function AIGenerateStepper({
   const methods = useForm<FormAIGenerateProps>({
     resolver: yupResolver(generateAICourseSchema),
     mode: 'all',
-    defaultValues: {...defaultValues, ...passedValues},
+    defaultValues: { ...defaultValues, ...passedValues },
   })
 
   const nextStep = () => {
@@ -216,10 +217,11 @@ export default function AIGenerateStepper({
               resetRoad={resetRoad}
               closeModal={closeModal}
               updateForm={methods.setValue as any}
+              getFormValue={methods.getValues as any}
               redirectAfterComplete={redirectAfterCompleate}
             />
           )}
-          {activeStep === 1 && (
+          {activeStep === 2 && (
             <GeneralInfo
               isModal={isModal}
               nextStep={nextStep}
@@ -228,7 +230,7 @@ export default function AIGenerateStepper({
               isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
             />
           )}
-          {activeStep === 2 && (
+          {activeStep === 1 && (
             <LessonPrompt
               nextStep={nextStep}
               prevStep={prevStep}
