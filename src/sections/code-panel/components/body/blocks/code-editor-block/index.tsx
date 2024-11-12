@@ -129,7 +129,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       title={TITLE}
       icon={icon}
       className='codeEditorTour'
-      key={key}
     >
       <CodeEditorStyles isDesktop={isDesktop} />
 
@@ -151,6 +150,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )}
 
       <CodeEditorController
+        key={key}
         preloadedCode={preloadedCode}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}

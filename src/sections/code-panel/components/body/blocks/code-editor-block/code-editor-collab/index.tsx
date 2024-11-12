@@ -1,4 +1,4 @@
-import { type FC, memo, useEffect, useMemo, useState } from 'react'
+import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
 import { Text } from '@codemirror/state'
 import { Box, ClickAwayListener, Popover } from '@mui/material'
@@ -11,6 +11,8 @@ import { Socket } from 'socket.io-client'
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
 import AddComment from './components/add-comment'
 import CommentPopup from './components/comment-popup'
@@ -60,6 +62,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const styles = useStyles()
   const { query } = useRouter()
   const dispatch = useDispatch()
+  const { user } = useAuthContext()
   const searchParams = useSearchParams()
 
   const [codeValue, setCodeValue] = useState<string | undefined>('')
@@ -67,7 +70,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
-
+  const codePanelContext = useContext(CodePanelContext)
   const lessonIdFromQuery = query?.lessonId
   const sandbox = searchParams.get('sandbox')
 
@@ -98,6 +101,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
+    codePanelContext.studentCodeChange(value)
     onChangeStreamingDocInfoFromProps?.(value as any)
     if (value) {
       const localStorageKey = getLocalStorageRoomKey(
@@ -168,7 +172,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     socket,
     roomId,
     defaultFileName,
+    cursorText: user?.first_name,
   })
+
+  useEffect(() => {
+    onChangeCodemirrorValue((localstorageCode ?? preloadedCode) || '')
+  }, [preloadedCode, localstorageCode])
 
   useEffect(() => {
     const newCodeValue =
@@ -179,10 +188,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     setCodeValue(newCodeValue)
   }, [preloadedCode, localstorageCode, streamingDoc])
 
-  const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
-
   useEffect(() => {
-    onChangeCodemirrorValue(codeValue as string)
+    // TODO: check it and remove in case of unnecessary
     return () => {
       dispatch(setPrevLessonId(null))
       dispatch(setPrevLessonCode(null))
@@ -245,7 +252,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             basicSetup={BASIC_SETUP}
             theme='dark'
             extensions={extensions}
-            readOnly={isReadOnly}
+            readOnly={_isReadOnly || roomStatus === RoomStatus.Inactive}
             value={codeValue}
             onChange={onChangeCodemirrorValue}
           />

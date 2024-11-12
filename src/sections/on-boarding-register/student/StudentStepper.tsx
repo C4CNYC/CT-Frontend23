@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
@@ -107,38 +108,40 @@ export default function StudentStepper(): React.ReactElement {
           position: 'relative',
         }}
       >
-        {activeStep !== 2 && <RegisterStudentTeacher />}
-        <FormProvider
-          methods={methods}
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          {activeStep === 0 && (
-            <SingUp
-              goToStep={goToStep}
-              nextStep={nextStep}
-              isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
-              isTeacher={false}
-            />
-          )}
-          {(activeStep === 1 || activeStep === 2) && (
-            <StepperProgres
-              activeStep={activeStep}
-              prevStep={prevStep}
-            />
-          )}
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
+          {activeStep !== 2 && <RegisterStudentTeacher />}
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            {activeStep === 0 && (
+              <SingUp
+                goToStep={goToStep}
+                nextStep={nextStep}
+                isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
+                isTeacher={false}
+              />
+            )}
+            {(activeStep === 1 || activeStep === 2) && (
+              <StepperProgres
+                activeStep={activeStep}
+                prevStep={prevStep}
+              />
+            )}
 
-          {activeStep === 1 && (
-            <StepperRegister
-              nextStep={nextStep}
-              isSubmiting={methods.formState.isSubmitting}
-              isSubmitSuccessful={methods.formState.isSubmitSuccessful}
-              hasOneNumber={hasOneNumber}
-              hasSixDigit={hasSixDigit}
-            />
-          )}
-        </FormProvider>
-        {activeStep === 2 && <StepperInfo />}
-        {activeStep !== 2 ? <SingLink /> : null}
+            {activeStep === 1 && (
+              <StepperRegister
+                nextStep={nextStep}
+                isSubmiting={methods.formState.isSubmitting}
+                isSubmitSuccessful={methods.formState.isSubmitSuccessful}
+                hasOneNumber={hasOneNumber}
+                hasSixDigit={hasSixDigit}
+              />
+            )}
+          </FormProvider>
+          {activeStep === 2 && <StepperInfo />}
+          {activeStep !== 2 ? <SingLink /> : null}
+        </GoogleOAuthProvider>
       </Stack>
     </StyledContent>
   )

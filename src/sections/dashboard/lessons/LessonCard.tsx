@@ -8,7 +8,10 @@ import { useRouter } from 'next/router'
 
 import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
-import { useDeleteLessonMutation } from '@/redux/services/manager/lessons-manager'
+import {
+  useDeleteLessonMutation,
+  useCloneLessonMutation,
+} from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -16,15 +19,22 @@ interface Props {
   lesson: ILesson
   index?: number
   refetch?: () => void
+  lock?: boolean | undefined
 }
 
-export default function LessonCard({ lesson, index, refetch }: Props): React.ReactElement | null {
+export default function LessonCard({
+  lesson,
+  index,
+  refetch,
+  lock,
+}: Props): React.ReactElement | null {
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [deleteLesson] = useDeleteLessonMutation()
+  const [cloneLesson] = useCloneLessonMutation()
   const translate = useTranslate()
 
   const onDelete = async (): Promise<void> => {
@@ -65,6 +75,24 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
     router.push(`${router.pathname}?${new URLSearchParams({ lessonId: lesson.id })}`, undefined, {
       shallow: true,
     })
+  }
+  const handleClone = (lesson_id: string): void => {
+    cloneLesson({ lesson_id }).then((data) => {
+      if ('error' in data) {
+        enqueueSnackbar(translate('messages_error'))
+        return
+      }
+      enqueueSnackbar(translate('lesson_cloned_msg'))
+      router.push(
+        `${router.pathname}?${new URLSearchParams({ lessonId: data.data.id })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    })
+
+    return
   }
 
   return (
@@ -128,6 +156,23 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
             >
               {lesson.active ? translate('active') : translate('not_active')}
             </Label>
+            {lock || lesson.id.endsWith('000000000000') ? (
+              <Label
+                variant='soft'
+                color={'error'}
+                sx={{
+                  textTransform: 'uppercase',
+                  mr: 'auto',
+                  position: 'absolute',
+                  top: 10,
+                  left: 80,
+                }}
+              >
+                Special
+              </Label>
+            ) : (
+              ''
+            )}
             <Box
               component='img'
               src='/assets/icons/files/ic_file.svg'
@@ -192,6 +237,7 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
             independent: lesson.independent,
             type: lesson.type,
             duration: lesson.duration,
+            slug: lesson.slug,
           }}
           refetch={refetch}
         >
@@ -201,18 +247,29 @@ export default function LessonCard({ lesson, index, refetch }: Props): React.Rea
           </MenuItem>
         </CreateLessonDialog>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
-
         <MenuItem
           onClick={() => {
-            handleOpenConfirm()
-            handleClosePopover()
+            handleClone(lesson.id)
           }}
-          sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
-          {translate('actions_delete')}
+          <Iconify icon='eva:copy-outline' />
+          {translate('actions_clone')}
         </MenuItem>
+        <Divider sx={{ borderStyle: 'dashed' }} />
+        {lock || lesson.id.endsWith('000000000000') ? (
+          <></>
+        ) : (
+          <MenuItem
+            onClick={() => {
+              handleOpenConfirm()
+              handleClosePopover()
+            }}
+            sx={{ color: 'error.main' }}
+          >
+            <Iconify icon='eva:trash-2-outline' />
+            {translate('actions_delete')}
+          </MenuItem>
+        )}
       </MenuPopover>
 
       <ConfirmDialog

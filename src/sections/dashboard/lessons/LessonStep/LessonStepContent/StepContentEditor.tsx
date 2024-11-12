@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import {
   Box,
@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Divider,
   Link,
+  Stack,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material'
@@ -25,10 +26,12 @@ import {
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { Iconify, Label } from '@root/src/components'
 import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import LessonSchareModal from '../Modals/LessonShareModal'
 import Preferences from '../Modals/Preferences'
 
 import { EditorSelector } from './EditorSelector'
@@ -56,9 +59,9 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const DEFAULT_COLOR = '' // '#F6F9FC'
 
 export default function StepContentEditor(): React.ReactElement {
+  const { locked } = useContext(LessonContentContext)
   const { lessonId, stepId } = useRouter().query
   const { enqueueSnackbar } = useSnackbar()
-  const [locked, setLocked] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
   const [proposal, setProposal] = useState<string>('')
   const [bgColor, setBgColor] = useState<string>(DEFAULT_COLOR)
@@ -112,12 +115,7 @@ export default function StepContentEditor(): React.ReactElement {
   }
 
   return (
-    <LessonContentContext.Provider
-      value={{
-        locked,
-        lockedHandler: setLocked,
-      }}
-    >
+    <>
       <Dialog
         open={open}
         onClose={() => {
@@ -222,6 +220,7 @@ export default function StepContentEditor(): React.ReactElement {
                 <BsClipboard size='20px' /> Remirror
               </ToggleButton>
             </StyledToggleButtonGroup>
+            {locked ? <Label color='info'>Content Changed</Label> : null}
             <Preferences
               defaultValues={{ ...data! }}
               contentId={data?.id as string}
@@ -231,19 +230,30 @@ export default function StepContentEditor(): React.ReactElement {
               <SettingsBtn />
             </Preferences>
           </div>
-          <div
-            style={{
-              gap: 16,
-              display: 'flex',
-              alignItems: 'center',
-              opacity: 0.5,
-            }}
+          <Stack
+            direction='row'
+            gap={2}
           >
-            <CgScreen size='30px' />
-            <Link href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}>
-              {translate('preview')}
-            </Link>
-          </div>
+            <LessonSchareModal>
+              <Button sx={{ gap: 1, color: '#68767F' }}>
+                <Iconify icon='ph:share-fat' />
+                Share
+              </Button>
+            </LessonSchareModal>
+            <div
+              style={{
+                gap: 16,
+                display: 'flex',
+                alignItems: 'center',
+                opacity: 0.5,
+              }}
+            >
+              <CgScreen size='30px' />
+              <Link href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}>
+                {translate('preview')}
+              </Link>
+            </div>
+          </Stack>
         </Box>
         <Box
           sx={{
@@ -264,6 +274,6 @@ export default function StepContentEditor(): React.ReactElement {
           />
         </Box>
       </Box>
-    </LessonContentContext.Provider>
+    </>
   )
 }

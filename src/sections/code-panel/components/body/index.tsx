@@ -1,4 +1,4 @@
-import { type FC, useRef, useState } from 'react'
+import { type FC, useContext, useRef, useState } from 'react'
 
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
@@ -13,6 +13,8 @@ import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'
 import { TAB_TITLES } from '@/sections/code-panel/components/body/consts'
 import { CodePanelBodyProps } from '@/sections/code-panel/components/body/types'
+
+import { CodePanelContext } from '../../lib/CodePanelContext'
 
 import CodeEditorBlock from './blocks/code-editor-block'
 import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
@@ -37,9 +39,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const isDesktop = useIsDesktop()
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const { autoRun, studentCodeChange } = useContext(CodePanelContext)
   const [document, setDocument] = useState<CodeDocument | null>(null)
   const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
-
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
@@ -69,13 +71,16 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           socket?.emit('changeStatusInLesson', {
             lesson: lessonId,
             user: user?.id,
-            status: 'idle',
+            status: 'active',
           })
         }
       }, 30000) // 30 seconds
 
       setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
+      if (autoRun) {
+        setBrowserView(doc)
+      }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('Error: ', error)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 // import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { html } from '@codemirror/lang-html'
@@ -14,8 +14,11 @@ import { useDebounceCallback } from '@/hooks'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { isJson } from '@root/src/utils/isJson'
 
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
+
+import { LessonContentContext } from './LessonContent.context'
 
 interface Props {
   content: string
@@ -37,6 +40,7 @@ export default function StepCode({
 }: Props): React.ReactElement {
   const editorRef = React.useRef(null)
   const [value, setValue] = useState<string>('')
+  const { lockedHandler } = useContext(LessonContentContext)
   const [staticValue, setStaticValue] = useState<string>('')
   const handleDebouncedCallback = useDebounceCallback(1500)
   const [{ isAllColumnsVisible }] = useAtom(lessonViewAtom)
@@ -55,6 +59,10 @@ export default function StepCode({
       }, '')}</main>`
     }
   }
+  useEffect(() => {
+    let c = isJson(content) ? JSON.parse(content).content || '' : content
+    lockedHandler(value != c)
+  }, [value])
 
   useEffect(() => {
     if (content) {
@@ -62,6 +70,7 @@ export default function StepCode({
       setValue(contentParsed.content ?? '')
     }
   }, [content])
+
   return (
     <ResizerUi
       split='vertical'
@@ -89,17 +98,14 @@ export default function StepCode({
           onClick={() => {
             onSubmit(JSON.stringify({ content: value }))
           }}
+          iconColor='#fff'
           sx={{
             position: 'absolute',
             top: 65,
             right: 35,
-            color: '#7963d2',
-            border: '1px solid rgba(121, 99, 210, 0.5)',
+            color: '#fff',
             borderRadius: '4px',
-            '&:hover': {
-              border: '1px solid rgba(121, 99, 210, 0.5)',
-              backgroundColor: ' rgba(121, 99, 210, 0.1)',
-            },
+            border: 'none',
           }}
         />
       </Box>

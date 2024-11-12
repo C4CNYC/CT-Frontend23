@@ -12,7 +12,7 @@ export default function SignUpDialog(): React.ReactElement | null {
     setOpen(false)
   }
   useEffect(() => {
-    const interval = setInterval(
+    const interval = setTimeout(
       () => {
         if (!open) setOpen(true)
       },
@@ -20,9 +20,9 @@ export default function SignUpDialog(): React.ReactElement | null {
     )
 
     return () => {
-      clearInterval(interval)
+      clearTimeout(interval)
     }
-  }, [open])
+  }, [])
 
   return (
     <Dialog

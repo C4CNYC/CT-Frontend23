@@ -8,7 +8,6 @@ import { useSnackbar } from 'notistack'
 import type ConfettiType from 'react-confetti/dist/types/Confetti'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
-import { Socket, io } from 'socket.io-client'
 import { animals, colors, uniqueNamesGenerator } from 'unique-names-generator'
 
 import type { ILesson } from '@/redux/interfaces/content.interface'
@@ -62,12 +61,6 @@ const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/
 const LessonsManager = dynamic(
   async () => await import('@/sections/code-panel/components/lesson-manager')
 )
-
-interface LessonUserResponseType {
-  id: string
-  status: string
-  lessonId: string
-}
 
 interface ILocalUser {
   id: string
@@ -235,71 +228,22 @@ export default function CodePanelPage(): ReactElement | null {
   }, [isShowTour, showTour])
 
   useEffect(() => {
-    if (lessonIdFromRoute && socket) {
+    if (!socket) return
+
+    if (lessonIdFromRoute) {
       socket.emit(
         'joinLesson',
         JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
       )
-
-      return () => {
-        socket?.emit(
-          'leaveLesson',
-          JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
-        )
-      }
     }
-  }, [lessonIdFromRoute, socket])
 
-  useEffect(() => {
-    let socket: Socket | undefined
-
-    socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
-      transports: ['polling'],
-      path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-      auth: { userId: generateId(20) },
-    })
-    socket.on('connect_error', (error) => {
-      // eslint-disable-next-line no-console
-      console.error('Connection error', error)
-    })
-
-    socket.on('connect', () => {
-      if (!socket) return
-
-      socket.on('joinLesson', (data: { lesson: string; user: string }) => {
-        const { user, lesson } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-          ..._usersStatus.filter((_status) => _status.id !== user),
-          { id: user, status: 'idle', lessonId: lesson },
-        ])
-      })
-      socket.on(
-        'changeStatusInLesson',
-        (data: { lesson: string; user: string; status: string }) => {
-          const { status, user, lesson } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status, lessonId: lesson },
-          ])
-        }
-      )
-
-      socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
-        const { participants } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
-      })
-      socket.on('leaveLesson', (data: { lesson: string; user: string }) => {
-        const { user, lesson } = data
-        _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-          ..._usersStatus.filter((_status) => _status.id !== user),
-          { id: user, status: 'inactive', lessonId: lesson },
-        ])
-      })
-
-      dispatch(setSocket(socket))
-    })
+    dispatch(setSocket(socket))
 
     return () => {
+      socket?.emit(
+        'leaveLesson',
+        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+      )
       socket?.off('joinLesson')
       socket?.off('leaveLesson')
       socket?.off('changeStatusInLesson')
@@ -308,7 +252,7 @@ export default function CodePanelPage(): ReactElement | null {
       socket?.disconnect()
       dispatch(setSocket(undefined))
     }
-  }, [lessonIdFromRoute])
+  }, [lessonIdFromRoute, socket])
 
   useEffect(() => {
     const user = localStorage.getItem('user')
