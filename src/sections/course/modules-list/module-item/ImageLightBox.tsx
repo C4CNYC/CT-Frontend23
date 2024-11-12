@@ -10,12 +10,14 @@ interface IImageLightBoxProps {
   children: React.ReactElement
   image: string
   sx?: SxProps
+  onClick?: (e: React.SyntheticEvent) => void
 }
 
 export default function ImageLightBox({
   children,
   image,
   sx,
+  onClick,
 }: IImageLightBoxProps): React.ReactElement {
   const [open, setOpen] = useState(false)
   const translate = useTranslate()
@@ -25,14 +27,16 @@ export default function ImageLightBox({
     e.stopPropagation()
     setOpen(true)
   }
-  const handleCloseDialog = (): void => {
+  const handleCloseDialog = (e): void => {
     setOpen(false)
+    onClick?.(e)
   }
 
   return (
     <>
       <Box
         onClick={(e) => {
+          onClick?.(e)
           handleOpenDialog(e)
         }}
         sx={{
