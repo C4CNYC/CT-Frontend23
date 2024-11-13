@@ -88,6 +88,7 @@ export const useInitCodemirror = ({
         socket.on(SocketEventsStudentMode.StartOnlineMode, () => {
           setIsCollabActive(true)
           setTimeout(() => {
+            setKey((prev) => ++prev)
             socket.emit(SocketEventsStudentMode.OnlineStudentReady, { roomId: user?.id })
           }, 100)
         })

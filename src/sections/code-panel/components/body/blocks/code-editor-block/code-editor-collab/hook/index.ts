@@ -137,7 +137,7 @@ export const useCodeEditorCollab = ({
       firstInit.current = false
       setRoomStatus(RoomStatus.Active)
 
-      const fileInfo = socket ? await getFileInfo(roomId, socket) : null
+      const fileInfo = socket && isCollabActive ? await getFileInfo(roomId, socket) : null
 
       if (!isFirstInit || fileInfo == null) {
         await baseInit(activeFile)
@@ -150,7 +150,7 @@ export const useCodeEditorCollab = ({
         await runInitOwner(false)
       }
     },
-    [activeFile, baseInit, onResetFileManager, socket]
+    [activeFile, baseInit, onResetFileManager, socket, isCollabActive]
   )
 
   const runInitWatcher = useCallback(async (): Promise<void> => {
@@ -237,12 +237,10 @@ export const useCodeEditorCollab = ({
   useEffect(() => {
     editorView.current?.destroy()
 
-    if (!socket) setIsLoading(false)
-
     if (initializeBlockedRef.current) return
 
     initialize[modeRef.current](firstInit.current)
-  }, [initialize, socket])
+  }, [initialize])
 
   return {
     editorRef,
