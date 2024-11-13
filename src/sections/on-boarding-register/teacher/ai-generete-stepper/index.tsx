@@ -19,19 +19,7 @@ import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import AddAddons from './AddAddons'
 import { AIPersonaInfo } from './AIPersonaInfo'
-import {
-  AIGenerateStepperProps,
-  FormAIGenerateProps,
-  GRADES,
-  IAddons,
-  LESSON_DURARION,
-  LEVELS,
-  PERSONA,
-  PROGRAMMING_LANGUAGE,
-  TONE,
-  TYPE_LESSON,
-  TYPE_PROJECT,
-} from './constants'
+import { AIGenerateStepperProps, FormAIGenerateProps, IAddons, TYPE_PROJECT } from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
 import LoaderStep from './LoaderStep'
@@ -39,16 +27,16 @@ import SimpleAiGenerate from './SimpleAiGenerate'
 
 //@names according to avoid bots spam
 const defaultValues = {
-  RlevelR: LEVELS[0].value,
-  RgradesR: GRADES[1].value,
-  RlessonDurationR: LESSON_DURARION[2].value,
+  RlevelR: '',
+  RgradesR: '',
+  RlessonDurationR: '',
   RlessonLanguageR: 'English',
   RcustomLanguageR: '',
   RtrackR: '',
-  RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
-  RpersonaR: PERSONA[0].value,
-  RtoneR: TONE[0].value,
-  RtypeLessonR: TYPE_LESSON[1].value,
+  RprogrammingLanguageR: '',
+  RpersonaR: '',
+  RtoneR: '',
+  RtypeLessonR: '',
   name: null,
   email: null,
   state: null,
@@ -73,10 +61,12 @@ const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
 export default function AIGenerateStepper({
   isModal,
   closeModal,
+  passedValues,
+  props,
 }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
 
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(props?.activeStep || 0)
   const [lessonId, setLessonId] = useState<null | string>(null)
 
   const profile = useSelector((state) => state.global.user)
@@ -112,7 +102,7 @@ export default function AIGenerateStepper({
   const methods = useForm<FormAIGenerateProps>({
     resolver: yupResolver(generateAICourseSchema),
     mode: 'all',
-    defaultValues: defaultValues,
+    defaultValues: { ...defaultValues, ...passedValues },
   })
 
   const nextStep = () => {
@@ -215,10 +205,11 @@ export default function AIGenerateStepper({
               resetRoad={resetRoad}
               closeModal={closeModal}
               updateForm={methods.setValue as any}
+              getFormValue={methods.getValues as any}
               redirectAfterComplete={redirectAfterCompleate}
             />
           )}
-          {activeStep === 1 && (
+          {activeStep === 2 && (
             <GeneralInfo
               isModal={isModal}
               nextStep={nextStep}
@@ -227,7 +218,7 @@ export default function AIGenerateStepper({
               isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
             />
           )}
-          {activeStep === 2 && (
+          {activeStep === 1 && (
             <LessonPrompt
               nextStep={nextStep}
               prevStep={prevStep}

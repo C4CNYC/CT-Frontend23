@@ -1,7 +1,7 @@
 import {
   Box,
   Button,
-  Divider,
+  // Divider,
   IconButton,
   Link,
   Stack,
@@ -18,7 +18,7 @@ import { Unit } from '@/redux/interfaces/challenges.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
-import ActionsBlock from './ActionsBlock'
+// import ActionsBlock from './ActionsBlock'
 import ImageLightBox from './ImageLightBox'
 import ModuleProgress from './ModuleProgress'
 
@@ -32,6 +32,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
   const isMobile = useMediaQuery(theme.breakpoints.down(800))
   const { query } = useRouter()
   const translate = useTranslate()
+  const router = useRouter()
 
   return (
     <Stack
@@ -42,16 +43,32 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
         position: 'relative',
         zIndex: 5,
         borderRadius: '25px',
+        cursor: 'pointer',
+      }}
+      onClick={(event) => {
+        router.push(
+          STUDENT_PATH_DASHBOARD.courses.unit(query.id as string, unit?.id as string),
+          undefined,
+          { shallow: true }
+        )
       }}
     >
       {isMobile ? (
-        <IconButton sx={{ alignSelf: 'flex-end', mb: -4, mt: 0.5, mr: 0.5 }}>
+        <IconButton
+          sx={{ alignSelf: 'flex-end', mb: -4, mt: 0.5, mr: 0.5 }}
+          onClick={(event) => {
+            event.stopPropagation()
+          }}
+        >
           <MdIosShare />
         </IconButton>
       ) : null}
       <ImageLightBox
         sx={isMobile ? { alignSelf: 'center' } : {}}
         image={unit?.avatar ?? '/assets/projects/bg1.png'}
+        onClick={(event) => {
+          event.stopPropagation()
+        }}
       >
         <Box
           sx={{
@@ -124,6 +141,9 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
               '&:hover': {},
             }}
             variant='text'
+            onClick={(event) => {
+              event.stopPropagation()
+            }}
           >
             {translate('get_coding', {
               time: lastVisited ? 'Again' : '',
@@ -157,6 +177,9 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
           <Link
             href={STUDENT_PATH_DASHBOARD.courses.unit(query.id as string, unit?.id as string)}
             component={NextLink}
+            onClick={(event) => {
+              event.stopPropagation()
+            }}
             sx={{
               ml: isMobile ? 0 : 3,
               mt: isMobile ? 2 : 0,
@@ -170,7 +193,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
       </Stack>
       {!isMobile ? (
         <>
-          <Divider
+          {/* <Divider
             orientation='horizontal'
             sx={{ borderRightWidth: 2, my: 4 }}
           />
@@ -178,7 +201,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
             certificate={unit?.initial_enrolled}
             likes={unit?.initial_likes}
             rated={unit?.initial_stars}
-          />
+          /> */}
         </>
       ) : null}
     </Stack>
