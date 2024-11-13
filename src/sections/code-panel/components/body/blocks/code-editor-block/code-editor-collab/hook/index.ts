@@ -239,7 +239,12 @@ export const useCodeEditorCollab = ({
 
     if (initializeBlockedRef.current) return
 
-    initialize[modeRef.current](firstInit.current)
+    if (mode === EditorMode.Owner) {
+      initialize[modeRef.current](firstInit.current)
+    }
+    setTimeout(() => {
+      initialize[modeRef.current](firstInit.current)
+    }, 2000)
   }, [initialize])
 
   return {
