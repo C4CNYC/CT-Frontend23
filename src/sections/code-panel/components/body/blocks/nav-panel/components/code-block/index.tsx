@@ -13,10 +13,7 @@ import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
 import { RoomStatus } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/components/status-label'
-import {
-  createSocket,
-  waitConnectSocket,
-} from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
+import { waitConnectSocket } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
 import { type BaseResponseInterface } from '@/utils'
 import { EditorMode } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
 import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'

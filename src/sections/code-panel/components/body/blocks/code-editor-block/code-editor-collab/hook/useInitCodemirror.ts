@@ -94,7 +94,10 @@ export const useInitCodemirror = ({
 
         if (profileOwner?.role === Role.Student) {
           socket?.on(SocketEventsStudentMode.StopOnlineMode, async () => {
-            window.dispatchEvent(reloadWorkspaceEvent)
+            setIsCollabActive(false)
+            setTimeout(() => {
+              window.dispatchEvent(reloadWorkspaceEvent)
+            }, 100)
           })
         }
       })

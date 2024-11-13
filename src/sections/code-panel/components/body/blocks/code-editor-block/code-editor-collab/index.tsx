@@ -13,6 +13,7 @@ import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
+import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 
 import AddComment from './components/add-comment'
 import CommentPopup from './components/comment-popup'
@@ -68,6 +69,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const searchParams = useSearchParams()
   const codePanelContext = useContext(CodePanelContext)
 
+  const [refreshKey, setRefreshKey] = useState(0)
   const [codeValue, setCodeValue] = useState<string | undefined>('')
 
   const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
@@ -143,6 +145,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         return
       }
     }
+
     if (mode === EditorMode.Owner) {
       if (prevLessonCode) {
         return prevLessonCode
@@ -163,7 +166,16 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         }
       }
     }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode, lessonId, activeFile])
+  }, [
+    mode,
+    query?.lessonId,
+    prevLessonId,
+    preloadedCode,
+    lessonId,
+    activeFile,
+    lessonIdFromQuery,
+    refreshKey,
+  ])
 
   const {
     editorRef,
@@ -235,6 +247,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       }
     })
   }, [preloadedCode])
+
+  useEffect(() => {
+    window.addEventListener(RELOAD_WORKSPACE_EVENT, () => {
+      setRefreshKey((prev) => prev + 1)
+    })
+  }, [])
 
   return (
     <div
