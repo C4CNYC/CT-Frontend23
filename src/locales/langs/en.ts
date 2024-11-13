@@ -759,7 +759,7 @@ const en = {
   ai_gen_simple_step_title: 'Create beautiful coding lessons with Mumu 🐯',
   ai_gen_simple_step_prompt_1: 'Python variables with exercises in Armenian',
   ai_gen_simple_step_prompt_2: '6th graders build weather app with api',
-  ai_gen_simple_step_prompt_3: 'Nested functions in javascript with exercises and quiz',
+  ai_gen_simple_step_prompt_3: 'Nested functions in javascript with quiz',
   ai_gen_simple_step_prompt_4: 'Auto-graded infinite loop exercises',
   ai_gen_simple_step_placeholder: 'Enter prompt or select from above',
   ai_gen_simple_step_error_text: 'Please provide a subject for the lesson',
@@ -931,6 +931,16 @@ const en = {
   slide_content_updated: 'Content updated',
   slide_standard: 'Standard',
   slide_select_format: 'Select slide format',
+
+  // Share lesson modal
+  share_modal_title: 'Share',
+  share_modal_subtitle: 'Hey, share your lesson 😃',
+  share_modal_copy_link: 'Copy Link',
+  share_modal_assign_class: 'Assign to a class (Tribe)',
+  share_modal_create_quest: 'Create a Quest',
+  share_modal_share_social: 'Share on social',
+  share_modal_share_text: 'I just generated this fun lesson on codetribe.ai',
+  share_modal_or: 'OR',
 
   // code-panel menu
   me_me_me: 'Me, me, me',

@@ -123,13 +123,13 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
         />
       </Stack>
       <Stack sx={BTN_CONTAINER_STYLES}>
-        <Button
+        {/* <Button
           variant='text'
           sx={skipBtnStyles}
           onClick={nextStep}
         >
           {translate('ai_gen_surprise_btn')}
-        </Button>
+        </Button> */}
         <Button
           variant='contained'
           sx={nextBtnStyles}

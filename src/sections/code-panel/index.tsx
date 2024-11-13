@@ -8,7 +8,6 @@ import { useSnackbar } from 'notistack'
 import type ConfettiType from 'react-confetti/dist/types/Confetti'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
-import { Socket, io } from 'socket.io-client'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import type { ILesson } from '@/redux/interfaces/content.interface'
@@ -28,9 +27,7 @@ import {
   setCourseId,
   setLessonId,
   setSlideIndex,
-  setSocket,
   setUnitId,
-  setUsersStatus,
   setPrevLessonCode,
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
@@ -39,13 +36,12 @@ import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
-import { ILessonUserStatus } from '@/types'
 import { type BaseResponseInterface } from '@/utils'
-import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
+import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
@@ -72,12 +68,6 @@ const LessonsManager = dynamic(
   async () => await import('@/sections/code-panel/components/lesson-manager')
 )
 
-interface LessonUserResponseType {
-  id: string
-  status: string
-  lessonId: string
-}
-
 const DEFAULT_LANGUAGE = 'html'
 
 export default function CodePanelLayout(): ReactElement | null {
@@ -97,12 +87,9 @@ export default function CodePanelLayout(): ReactElement | null {
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
-  const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
   const codeState = useSelector((state) => state.codePanelGlobal.code)
 
-  useSocketController((cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
-    dispatch(setUsersStatus(cb(usersStatus)))
-  })
+  useSocketController()
 
   const [completeLesson] = useCompleteLessonMutation()
 
@@ -392,6 +379,8 @@ export default function CodePanelLayout(): ReactElement | null {
         </Box>
       </FullScreen>
 
+      {!profile && <SignUpDialog />}
+
       {showConfetti && (
         <Confetti
           numberOfPieces={500}
@@ -404,11 +393,8 @@ export default function CodePanelLayout(): ReactElement | null {
   )
 }
 
-const useSocketController = (
-  _setUsersStatus: (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => void
-) => {
+const useSocketController = () => {
   const router = useRouter()
-  const dispatch = useDispatch()
   const { user, isInitialized: authIsInitialized } = useAuthContext()
 
   const socket = useSelector((state) => state.codePanelGlobal.socket)
@@ -416,7 +402,7 @@ const useSocketController = (
   const lessonIdFromRoute = router.query.lessonId
 
   useEffect(() => {
-    if (lessonIdFromRoute && socket) {
+    if (socket) {
       socket.emit(
         'joinLesson',
         JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
@@ -430,69 +416,4 @@ const useSocketController = (
       }
     }
   }, [lessonIdFromRoute, socket])
-
-  useEffect(() => {
-    let socket: Socket | undefined
-
-    if (authIsInitialized) {
-      socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
-        path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-        auth: { userId: user?.id ?? generateId(20) },
-        reconnectionDelay: 1000 * 60,
-        reconnectionDelayMax: 1000 * 60 * 60,
-      })
-      socket.on('connect_error', (error) => {
-        // eslint-disable-next-line no-console
-        console.error('Connection error', error)
-      })
-
-      socket.on('connect', () => {
-        if (!socket) return
-
-        socket.on('joinLesson', (data: { lesson: string; user: string }) => {
-          const { user, lesson } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status: 'idle', lessonId: lesson },
-          ])
-        })
-        socket.on(
-          'changeStatusInLesson',
-          (data: { lesson: string; user: string; status: string }) => {
-            const { status, user, lesson } = data
-            _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-              ..._usersStatus.filter((_status) => _status.id !== user),
-              { id: user, status, lessonId: lesson },
-            ])
-          }
-        )
-
-        socket.on('lessonMembers', (data: { participants: LessonUserResponseType[] }) => {
-          const { participants } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
-        })
-        socket.on('leaveLesson', (data: { lesson: string; user: string }) => {
-          const { user, lesson } = data
-          _setUsersStatus((_usersStatus: ILessonUserStatus[]) => [
-            ..._usersStatus.filter((_status) => _status.id !== user),
-            { id: user, status: 'inactive', lessonId: lesson },
-          ])
-        })
-
-        dispatch(setSocket(socket))
-      })
-    } else {
-      dispatch(setSocket(undefined))
-    }
-
-    return () => {
-      socket?.off('joinLesson')
-      socket?.off('leaveLesson')
-      socket?.off('changeStatusInLesson')
-      socket?.off('lessonMembers')
-
-      socket?.disconnect()
-      dispatch(setSocket(undefined))
-    }
-  }, [authIsInitialized, user])
 }

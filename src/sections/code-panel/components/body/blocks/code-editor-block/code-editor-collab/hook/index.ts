@@ -106,6 +106,7 @@ export const useCodeEditorCollab = ({
       editorRef.current.style.fontSize = `14px`
     }
   }
+
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
       firstInit.current = false

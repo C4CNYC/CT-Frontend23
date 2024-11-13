@@ -22,7 +22,7 @@ export const PREVIEW_CONT_SX = {
   flexDirection: 'row',
   width: '100%',
   py: 0.5,
-  pl: 7,
+  pl: 1,
   pr: 1,
   gap: 1,
 }

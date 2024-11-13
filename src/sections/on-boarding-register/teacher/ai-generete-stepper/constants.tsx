@@ -22,6 +22,8 @@ export interface FormAIGenerateProps {
 export interface AIGenerateStepperProps {
   isModal: boolean
   closeModal?: () => void
+  passedValues?: Partial<FormAIGenerateProps>
+  props?: { activeStep?: number }
 }
 
 export interface IAddAddonsProps {
@@ -105,11 +107,10 @@ export const STEP_TYTLE_STYLES = {
 
 export const STEP_CONTAINER_STYLES = {
   gap: 3,
-  minHeight: '620px',
+  minHeight: '520px',
 }
 
 export const BTN_CONTAINER_STYLES = {
-  marginTop: 'auto',
   gap: 3,
   pr: { xs: 0, sm: 3 },
   flexDirection: { xs: 'column', sm: 'row' },
@@ -178,7 +179,7 @@ export const PROMTS_VARIANTS = [
   },
   {
     text: 'ai_gen_simple_step_prompt_3',
-    key: 'Nested functions in javascript with exercises and quiz',
+    key: 'Nested functions in javascript with exercises',
     icon: 'mdi:question-box-multiple-outline',
     color: '#EE467A',
   },

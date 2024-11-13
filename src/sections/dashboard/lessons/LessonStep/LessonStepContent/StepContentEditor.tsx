@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Divider,
   Link,
+  Stack,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material'
@@ -25,11 +26,12 @@ import {
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { Label } from '@root/src/components'
+import { Iconify, Label } from '@root/src/components'
 import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import LessonSchareModal from '../Modals/LessonShareModal'
 import Preferences from '../Modals/Preferences'
 
 import { EditorSelector } from './EditorSelector'
@@ -228,19 +230,33 @@ export default function StepContentEditor(): React.ReactElement {
               <SettingsBtn />
             </Preferences>
           </div>
-          <div
-            style={{
-              gap: 16,
-              display: 'flex',
-              alignItems: 'center',
-              opacity: 0.5,
-            }}
+          <Stack
+            direction='row'
+            gap={2}
           >
-            <CgScreen size='30px' />
-            <Link href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}>
-              {translate('preview')}
-            </Link>
-          </div>
+            <LessonSchareModal>
+              <Button sx={{ gap: 1, color: '#68767F' }}>
+                <Iconify icon='ph:share-fat' />
+                Share
+              </Button>
+            </LessonSchareModal>
+            <div
+              style={{
+                gap: 16,
+                display: 'flex',
+                alignItems: 'center',
+                opacity: 0.5,
+              }}
+            >
+              <CgScreen size='30px' />
+              <Link
+                href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}
+                target='_blank'
+              >
+                {translate('preview')}
+              </Link>
+            </div>
+          </Stack>
         </Box>
         <Box
           sx={{
