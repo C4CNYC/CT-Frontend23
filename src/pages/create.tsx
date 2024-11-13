@@ -1,4 +1,30 @@
+import { useEffect, useRef, useState } from 'react'
+
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+
+import { useBoolean } from '../hooks/useBoolean'
+import AIGenerateStepper from '../sections/on-boarding-register/teacher/ai-generete-stepper'
+
 export default function AiGeneratePage(): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [prompt, promptSet] = useState('')
+  const [open, setOpen, setClose] = useBoolean(false)
+  useEffect(() => {
+    if (containerRef.current) {
+      // Query the injected HTML to find the field
+      const elPropmt = containerRef.current.querySelector('#prompt') as HTMLInputElement
+      const elGenerate = containerRef.current.querySelector('#generate') as HTMLButtonElement
+      if (elPropmt && elGenerate) {
+        elPropmt.onchange = (e) => {
+          let t = e.target as HTMLInputElement
+          promptSet(t?.value)
+        }
+        elGenerate.onclick = setOpen
+      }
+    }
+  }, [])
+
   const page = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -399,8 +425,8 @@ export default function AiGeneratePage(): React.ReactElement {
 
     <!-- Input and Button Section -->
     <section class="prompt-section">
-        <input type="text" class="prompt-input" placeholder="Enter your lesson prompt here">
-        <button class="prompt-button">
+        <input type="text" class="prompt-input" placeholder="Enter your lesson prompt here" name="prompt" id="prompt" />
+        <button class="prompt-button" name="generate" id="generate">
             <b class="icon">💡</b> Generate
         </button>
     </section>
@@ -492,5 +518,28 @@ export default function AiGeneratePage(): React.ReactElement {
 </body>
 </html>
 `
-  return <div dangerouslySetInnerHTML={{ __html: page }}></div>
+  return (
+    <>
+      <div
+        ref={containerRef}
+        dangerouslySetInnerHTML={{ __html: page }}
+      ></div>
+
+      <Dialog
+        open={open}
+        fullWidth
+        maxWidth='md'
+        onClose={setClose}
+      >
+        <DialogContent sx={{ p: 2 }}>
+          <AIGenerateStepper
+            isModal
+            closeModal={setClose}
+            passedValues={{ RpromptR: prompt }}
+            props={{ activeStep: 1 }}
+          />
+        </DialogContent>
+      </Dialog>
+    </>
+  )
 }
