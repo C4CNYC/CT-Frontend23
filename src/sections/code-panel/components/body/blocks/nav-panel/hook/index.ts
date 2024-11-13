@@ -49,7 +49,9 @@ export const useNavPanel = (
     }
 
     if (rootSocket) {
-      rootSocket.emit(SocketEventsStudentMode.InitOnlineMode, { roomId: user.id })
+      rootSocket.emit(SocketEventsStudentMode.InitOnlineMode, {
+        roomId: `user_${user.account?.id}`,
+      })
     }
 
     setPreviewUsers([...newPreviewedUsers, user])

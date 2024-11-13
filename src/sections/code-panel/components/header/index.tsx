@@ -3,8 +3,8 @@ import { type FC, type ReactNode, useMemo } from 'react'
 import { Box, type SxProps } from '@mui/material'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { useSelector } from '@/redux/store'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { LogoMin } from '@root/src/components'
 
 import GroupHeader from './group-header'
@@ -29,8 +29,9 @@ const TopPanel: FC<ITopPanel> = ({
   publicPage = false,
 }) => {
   const isDesktop = useIsDesktop()
+  const { isAuthenticated } = useAuthContext()
+
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
-  const profile = useSelector((state) => state.global.user)
 
   return (
     <Box
@@ -44,7 +45,7 @@ const TopPanel: FC<ITopPanel> = ({
         {isDesktop && <LogoMin sx={{ width: 'auto' }} />}
         {lessonManagerComponent}
       </Box>
-      {profile ? <GroupHeader /> : ''}
+      {isAuthenticated ? <GroupHeader /> : ''}
       {isDesktop ? (
         <DesktopBar
           language={language}

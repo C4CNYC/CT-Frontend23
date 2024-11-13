@@ -42,7 +42,6 @@ const icon = (
   />
 )
 const TYPING_DELEY = 20000
-const FIRST_LOADING_DELEY = 15000
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
