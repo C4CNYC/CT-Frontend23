@@ -20,9 +20,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
     const { data } = useTenantConfig()
 
     const logo = useMemo(() => {
-      if (!data) return null
-
-      switch (data.tenant) {
+      switch (data?.tenant) {
         case 'codejika':
           return (
             <Box
