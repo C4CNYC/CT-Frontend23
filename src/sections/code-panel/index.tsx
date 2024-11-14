@@ -89,8 +89,6 @@ export default function CodePanelLayout(): ReactElement | null {
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
   const codeState = useSelector((state) => state.codePanelGlobal.code)
 
-  useSocketController()
-
   const [completeLesson] = useCompleteLessonMutation()
 
   const lessonIdFromRoute = Array.isArray(router.query.lessonId)
@@ -391,29 +389,4 @@ export default function CodePanelLayout(): ReactElement | null {
       )}
     </CodePanelContextProvider>
   )
-}
-
-const useSocketController = () => {
-  const router = useRouter()
-  const { user, isInitialized: authIsInitialized } = useAuthContext()
-
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
-
-  const lessonIdFromRoute = router.query.lessonId
-
-  useEffect(() => {
-    if (socket) {
-      socket.emit(
-        'joinLesson',
-        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
-      )
-
-      return () => {
-        socket?.emit(
-          'leaveLesson',
-          JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
-        )
-      }
-    }
-  }, [lessonIdFromRoute, socket])
 }

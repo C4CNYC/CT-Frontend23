@@ -1,4 +1,4 @@
-import { useCallback, type FC } from 'react'
+import { useCallback, useEffect, type FC } from 'react'
 
 import { Avatar, Box, Stack, Tooltip, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -31,13 +31,13 @@ const GroupHeader: FC = () => {
 
   const user = useSelector((state) => state.global.user)
   const tribe = useSelector((state) => state.codePanel.class)
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
   const room = useSelector((state) => state.codeEditorController.room)
+  const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
   const resetRoom = useCallback(() => {
-    if (socket) {
-      socket?.emit('leaveRoom', room?.roomId?.split('_')[1])
+    if (rootSocket) {
+      rootSocket?.emit('leaveRoom', room?.roomId?.split('_')[1])
     }
     return dispatch(
       setRoom({
@@ -45,7 +45,7 @@ const GroupHeader: FC = () => {
         mode: EditorMode.Owner,
       })
     )
-  }, [dispatch, user, query?.lessonId, socket, room])
+  }, [dispatch, user, query?.lessonId, rootSocket, room])
 
   const onChange = () => {
     dispatch(toggleRealtimeCodeHidden(!isRealtimeCodeHidden))
@@ -59,6 +59,12 @@ const GroupHeader: FC = () => {
     ) : (
       ''
     )
+
+  useEffect(() => {
+    if (rootSocket) {
+      rootSocket.emit('joinRoom', `tribe_${tribe?.id}`)
+    }
+  }, [rootSocket])
 
   if (!isDesktop) {
     return null
