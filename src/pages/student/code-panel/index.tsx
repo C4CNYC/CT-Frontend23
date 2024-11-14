@@ -34,8 +34,9 @@ export default function CodePanelContainer(): ReactElement | null {
 
     workspaceRef.current.query = query
     if (profile) {
-    updateWorkspaceActivity({ query })
-  }, [router])
+      updateWorkspaceActivity({ query })
+    }
+  }, [router, profile])
 
   if (!isInitialized) return null
   return <CodePanelLayout />
