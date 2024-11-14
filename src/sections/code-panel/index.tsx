@@ -92,11 +92,10 @@ export default function CodePanelLayout(): ReactElement | null {
     ? router.query.lessonId.join()
     : router.query.lessonId || ''
 
-  const { data: courseContent, isLoading: isLoadingCourseContent } =
-    useGetCourseContentQuery(
-      { id: router.query.courseId as string },
-      { skip: !router.query.courseId || !profile }
-    )
+  const { data: courseContent, isLoading: isLoadingCourseContent } = useGetCourseContentQuery(
+    { id: router.query.courseId as string },
+    { skip: !router.query.courseId || !profile }
+  )
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
@@ -110,7 +109,7 @@ export default function CodePanelLayout(): ReactElement | null {
     fulfilledTimeStamp: fulfilledTimeStamp,
   } = useGetLessonContentStudentQuery(
     { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId}
+    { skip: !router.query.lessonId }
   )
 
   useGetContentCheckersQuery(undefined, {
@@ -164,7 +163,7 @@ export default function CodePanelLayout(): ReactElement | null {
       router.query.lessonId ??
       (unitId === lastUnitId && lastLessonId
         ? lastLessonId
-        : (courseContent.units[0].lessons[0].id ?? false))
+        : courseContent.units[0].lessons[0].id ?? false)
 
     if (!courseId || !unitId || !lessonId) {
       void router.replace(STUDENT_PATH_DASHBOARD.page404)
@@ -245,16 +244,15 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   const isLoadingComplete = useMemo(() => {
-
     return (
-      !!lesson && !isLoadingLessonContent && !isFetchingLessonContent && !isLoadingLesson && router.query.courseId !== null && !render
+      !!lesson &&
+      !isLoadingLessonContent &&
+      !isFetchingLessonContent &&
+      !isLoadingLesson &&
+      router.query.courseId !== null &&
+      !render
     )
-  }, [
-    lesson,
-    isLoadingLesson,
-    router,
-    render,
-    profile,
+  }, [lesson, isLoadingLesson, router, render, profile,
   ])
 
   useEffect(() => {
