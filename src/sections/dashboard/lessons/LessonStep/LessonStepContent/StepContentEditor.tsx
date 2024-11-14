@@ -255,24 +255,17 @@ export default function StepContentEditor(): React.ReactElement {
             </div>
           </Stack>
         </Box>
-        <Box
-          sx={{
-            position: 'relative',
-            height: 'calc(100vh - 80px)',
-            overflow: 'scroll',
-          }}
-        >
-          <EditorSelector
-            bodyType={bodyType}
-            content={data?.body || ''}
-            integrations={integrations ?? []}
-            onSubmit={onSubmit}
-            data={data!}
-            lessonId={lessonId as string}
-            bgColor={bgColor}
-            setBgColor={setBgColor}
-          />
-        </Box>
+
+        <EditorSelector
+          bodyType={bodyType}
+          content={data?.body || ''}
+          integrations={integrations ?? []}
+          onSubmit={onSubmit}
+          data={data!}
+          lessonId={lessonId as string}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+        />
       </Box>
     </>
   )
