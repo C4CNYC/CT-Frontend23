@@ -15,6 +15,7 @@ import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-
 import { RoomStatus } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/components/status-label'
 import { waitConnectSocket } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
 import { type BaseResponseInterface } from '@/utils'
+import { useSelector } from '@root/src/redux/store'
 import { EditorMode } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
 import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
@@ -22,7 +23,6 @@ import { getRandomIndex } from '../../hook/utils'
 
 import { BOX_COLORS, HEADER_COLORS } from './constants'
 import styles from './styles'
-import { useSelector } from '@root/src/redux/store'
 
 interface CodeBlockProps {
   lessonId?: string
@@ -93,7 +93,6 @@ const CodeBlock: FC<CodeBlockProps> = ({
         socket.emit('joinRoom', `user_${owner.account?.id}`)
         if (!socket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
           socket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
-            console.log("OnlineStudentReady")
             setTimeout(() => {
               setIsStudentReady(true)
             }, ROOM_INIT_DELAY)
