@@ -116,7 +116,7 @@ export default function CodePanelLayout(): ReactElement | null {
 
   const { data: studentLesson, isLoading: isLoadingStudentLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId || !profile }
+    { skip: !router.query.lessonId }
   )
 
   const { data: publicLesson, isLoading: isPublicLessonLoading } = useGetPublicLessonQuery(
@@ -134,7 +134,7 @@ export default function CodePanelLayout(): ReactElement | null {
     fulfilledTimeStamp: fulfilledStudentTimeStamp,
   } = useGetLessonContentStudentQuery(
     { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId || !profile }
+    { skip: !router.query.lessonId}
   )
 
   const {
@@ -148,12 +148,7 @@ export default function CodePanelLayout(): ReactElement | null {
   )
 
   const lessonContent = useMemo(
-    () =>
-      profile
-        ? lessonStudentContent
-        : publicLessonContent?.length
-          ? Array.from(publicLessonContent).sort((a, b) => (a.meta.order > b.meta.order ? 1 : -1))
-          : [],
+    () => lessonStudentContent,
     [profile, lessonStudentContent, publicLesson, publicLessonContent]
   )
 
