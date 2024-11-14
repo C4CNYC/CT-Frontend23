@@ -46,8 +46,7 @@ export function AiGenerate(): [
         })
         break
     }
-    if ('error' in newLesson)
-      throw new Error((newLesson as any).error.data.message)
+    if ('error' in newLesson) throw new Error((newLesson as any).error.data.message)
     return newLesson
   }
   return [
