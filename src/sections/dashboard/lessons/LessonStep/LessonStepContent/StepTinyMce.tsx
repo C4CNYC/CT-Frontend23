@@ -52,7 +52,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
         defaultSize={isAllColumnsVisible ? '70%' : '100%'}
         allowResize={false}
       >
-        <Box sx={{ height: '100%' }}>
+        <Box className='lessonCreationStep3'>
           <style>{`.tox-promotion{filter:opacity(0)}`}</style>
           <Editor
             init={{
@@ -310,7 +310,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
               tinycomments_mode: 'embedded',
               tinycomments_author: 'Author name',
               content_style: integrationStyles,
-              height: '100%',
+              height: 'calc(100vh - 96px)',
               mergetags_list: [
                 { value: 'First.Name', title: 'First Name' },
                 { value: 'Email', title: 'Email' },
@@ -326,12 +326,17 @@ export function StepTinyMce(props: EditorSelectorProps) {
             initialValue={initialValue}
           />
         </Box>
-        <StepPreview
-          integrations={props.integrations}
-          staticValue={editorContent}
-          key={editorContent}
-          bgColor={props.bgColor}
-        />
+        <Box
+          className='lessonCreationStep4'
+          sx={{ height: 'calc(100vh - 96px)' }}
+        >
+          <StepPreview
+            integrations={props.integrations}
+            staticValue={editorContent}
+            key={editorContent}
+            bgColor={props.bgColor}
+          />
+        </Box>
       </ResizerUi>
     </>
   )

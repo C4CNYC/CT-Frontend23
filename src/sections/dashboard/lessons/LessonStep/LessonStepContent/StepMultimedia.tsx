@@ -52,7 +52,7 @@ export default function StepMultimedia({
       primary='first'
       defaultSize={isAllColumnsVisible ? '100%' : 800}
     >
-      <Box sx={{ bgcolor: bgColor, height: '100%' }}>
+      <Box sx={{ bgcolor: bgColor }}>
         <MyEditor
           onSubmit={() => {
             onSubmit(JSON.stringify({ doc: value }))

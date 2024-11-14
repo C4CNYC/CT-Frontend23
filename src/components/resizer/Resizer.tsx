@@ -44,15 +44,17 @@ export const ResizerUi = ({ children, ...props }: Props & SplitPaneProps): React
           .Resizer.disabled:hover {
             border-color: transparent;
           }
-          .SplitPane{
-            max-height: calc(100vh - 48px);
+          .SplitPane.vertical.disabled {
+            height: calc(100vh - 96px)!important
           }
           .Pane1{
             overflow-y: auto;
           }
           .Pane2 {
             overflow-y: hidden;
-            max-height: calc(100vh - 48px);
+          }
+          .Pane.vertical  .SplitPane.vertical {
+          height: calc(100vh - 96px)!important
           }
         `}
       </style>
