@@ -31,9 +31,7 @@ export const useUserWithStatuses = () => {
       const { participants } = data
       setUsers((_usersStatus: ILessonUserStatus[]) =>
         _usersStatus.map((_status) => {
-          const participant = participants.find(
-            (_participant) => _participant.id === _status.account?.id
-          )
+          const participant = participants.find((_participant) => _participant.id === _status.id)
           if (!participant) return _status
           return {
             ..._status,

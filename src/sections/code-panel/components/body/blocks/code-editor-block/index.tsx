@@ -4,7 +4,6 @@ import { Box, Collapse } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { Socket } from 'socket.io-client'
 
 import { type AuthUserType } from '@/auth/types'
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -13,12 +12,12 @@ import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
+import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
 
 import { EditorMode } from './code-editor-collab/hook/constants'
-import { waitConnectSocket } from './code-editor-collab/hook/utils/socket'
 import CodeEditorController from './code-editor-controller'
 import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
@@ -42,6 +41,7 @@ const icon = (
   />
 )
 const TYPING_DELEY = 20000
+const FIRST_LOADING_DELEY = 15000
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
@@ -52,6 +52,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   preloadedCode,
   contentId,
 }) => {
+  const [key, setKey] = useState<number>(0)
   const { query } = useRouter()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
@@ -62,9 +63,8 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const [typing, setTyping] = useState<boolean | null>(null)
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
 
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const codeState = useSelector((state) => state.codePanelGlobal.code)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const codeState = useSelector((state) => state.codePanelGlobal.code)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
   const TITLE = translate('code_editor')
@@ -104,18 +104,11 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
 
   useEffect(() => {
-    const runAsyncEffect = async (socket: Socket) => {
-      const isConnected = await waitConnectSocket(socket)
-
-      if (!isConnected) {
-        void runAsyncEffect(socket)
-      }
-    }
-
-    if (socket && !socket.connected) {
-      void runAsyncEffect(socket)
-    }
-  }, [socket])
+    window.addEventListener(RELOAD_WORKSPACE_EVENT, () => {
+      setKey((prev) => prev + 1)
+    })
+    typingListener(FIRST_LOADING_DELEY, true)
+  }, [])
 
   useEffect(() => {
     if (code) {
@@ -157,6 +150,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )}
 
       <CodeEditorController
+        key={key}
         preloadedCode={preloadedCode}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}

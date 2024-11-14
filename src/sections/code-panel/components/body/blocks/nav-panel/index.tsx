@@ -10,8 +10,6 @@ import { SimpleInfiniteList } from '@/components'
 import { useSelector } from '@/redux/store'
 import { ILessonUserStatus } from '@root/src/types'
 
-import { createSocket } from '../code-editor-block/code-editor-collab/hook/utils/socket'
-
 import CodeBlock from './components/code-block'
 import CustomNavItem from './components/custom-nav-item'
 import HeaderItem from './components/header-item'
@@ -57,7 +55,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
     draggableConfig,
     previewUsers,
   } = useNavPanel(wrapperListenerRef)
-
   const { users, activeUsersAmount, isUsersLoading, onLoadMore, hasNextPage } =
     useUserWithStatuses()
 
@@ -164,15 +161,13 @@ const CodeBlockUnit: React.FC<CodeBlockUnitProps> = ({
   lessonId,
   cursorName,
 }: any) => {
-  const portalSocket = useMemo(() => {
-    return createSocket()
-  }, [])
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
 
   const onCloseCodeBlock = () => {
     onDeletePreviewUser(user.id)
 
-    if (portalSocket) {
-      portalSocket.emit('leaveRoom', user.id)
+    if (socket) {
+      socket.emit('leaveRoom', user.id)
     }
   }
 
@@ -186,7 +181,6 @@ const CodeBlockUnit: React.FC<CodeBlockUnitProps> = ({
       id={user.id}
     >
       <CodeBlock
-        portalSocket={portalSocket}
         cursorName={cursorName}
         lessonId={user.currentLessonId ?? lessonId}
         onClose={onCloseCodeBlock}

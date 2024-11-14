@@ -15,6 +15,7 @@ import {
   setCourseId,
   setLessonId,
   setSlideIndex,
+  setSocket,
   setUnitId,
   setUsersStatus,
 } from '@/redux/slices/code-panel-global'
@@ -95,6 +96,7 @@ export default function CodePanelPage(): ReactElement | null {
 
   const isShowTour = useSelector((state) => state.tour.isStarted)
   const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
 
   const { data: courseContent, isLoading: isLoadingCourseContent } = useGetPublicCourseContentQuery(
     { id: query.courseId as string },
@@ -224,6 +226,33 @@ export default function CodePanelPage(): ReactElement | null {
     if (!hasSeenTour) setShowTour(true)
     setTimeout(() => setRender(false))
   }, [isShowTour, showTour])
+
+  useEffect(() => {
+    if (!socket) return
+
+    if (lessonIdFromRoute) {
+      socket.emit(
+        'joinLesson',
+        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+      )
+    }
+
+    dispatch(setSocket(socket))
+
+    return () => {
+      socket?.emit(
+        'leaveLesson',
+        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+      )
+      socket?.off('joinLesson')
+      socket?.off('leaveLesson')
+      socket?.off('changeStatusInLesson')
+      socket?.off('lessonMembers')
+
+      socket?.disconnect()
+      dispatch(setSocket(undefined))
+    }
+  }, [lessonIdFromRoute, socket])
 
   useEffect(() => {
     const user = localStorage.getItem('user')
