@@ -34,9 +34,8 @@ const extendedApi = managerApi.injectEndpoints({
       queryFn: async (lessonIds, _queryApi, _extraOptions, fetchWithBQ) => {
         try {
           const results = await Promise.all(
-            lessonIds.map((id) => fetchWithBQ(`/manager/lesson/${id}`))
+            lessonIds.map((id) => fetchWithBQ(`/public/lesson/${id}`))
           )
-
           // Aggregate and return the data
           const lessons = results.map((result) => result.data as ILesson).filter(Boolean)
           return { data: lessons }

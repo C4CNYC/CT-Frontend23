@@ -50,6 +50,7 @@ export default function AddTeacher({
         />
         <RHFTextField
           name='lastName'
+          autoComplete='family-name'
           label={translate('surname')}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />

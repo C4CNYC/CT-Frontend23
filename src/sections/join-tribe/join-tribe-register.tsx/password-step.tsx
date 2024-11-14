@@ -40,6 +40,7 @@ export default function PasswordStep({
         <RHFTextField
           name='lastName'
           label='Surname'
+          autoComplete='family-name'
           sx={(theme) => ({
             '& .MuiInputBase-root': {
               height: '52px',

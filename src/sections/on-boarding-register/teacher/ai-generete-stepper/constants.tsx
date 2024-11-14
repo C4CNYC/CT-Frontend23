@@ -197,7 +197,7 @@ export const TYPE_LESSON = [
     value: 'simple',
     tooltip: 'ai_gen_type_1_tooltip',
     icon: 'material-symbols:info-outline',
-  },
+  } /*
   {
     key: 'exercises',
     value: 'exercises',
@@ -215,7 +215,7 @@ export const TYPE_LESSON = [
     value: 'beta',
     tooltip: 'ai_gen_type_5_tooltip',
     icon: 'material-symbols:info-outline',
-  },
+  },*/,
 ]
 
 export const PROGRAMMING_LANGUAGE = [

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
@@ -16,6 +16,10 @@ import {
 } from '@/redux/services/manager/schools-manager'
 import { capitalize } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { useCreateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
+import { localStorageAvailable } from '@root/src/utils'
+import { AiGenerate } from '@root/src/utils/ai-generate'
 
 import { styledRegisterInput } from '../../styles'
 
@@ -28,12 +32,18 @@ interface SchoolFormProps {
 }
 
 export default function AddSchool(): React.ReactElement {
-  const { reload } = useRouter()
+  const { reload, push } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const { data, isLoading } = useGetMySchoolsQuery({})
+  const [aiLessonReady, aiLessonReadySet] = useState('')
+  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [updateSchool, { isLoading: isUpdating }] = useUpdateSchoolProfileMutation()
   const translate = useTranslate()
+  const [createAILesson, { isLoading: createLessonLoading }] = AiGenerate()
 
+  const AiGenerateLessonData = localStorageAvailable()
+    ? localStorage.getItem('AiGenerateLessonData')
+    : null
   const defaultCountry = countries.find((ct) => ct.code === 'US') ?? countries[0]
 
   const CreateSchoolSchema = Yup.object().shape({
@@ -45,6 +55,23 @@ export default function AddSchool(): React.ReactElement {
   })
 
   useEffect(() => {
+    if (!!AiGenerateLessonData) {
+      createLesson({ name: 'Ai Lesson', description: '', duration: '20', active: true })
+        .unwrap()
+        .then((payload) => {
+          aiLessonReadySet(payload.id)
+          let lesson = JSON.parse(AiGenerateLessonData)
+          lesson.newLessonId = payload.id
+          createAILesson(lesson) // no need to wait, we have lessonid
+          localStorage.removeItem('AiGenerateLessonData')
+        })
+        .catch((err) => {
+          enqueueSnackbar(err.data.message, { variant: 'error' })
+        })
+    }
+  }, [])
+
+  useEffect(() => {
     if (!isLoading && data) {
       methods.reset({
         schoolName: data.data[0].name ?? '',
@@ -54,7 +81,7 @@ export default function AddSchool(): React.ReactElement {
       })
     }
   }, [isLoading])
-
+  let aiLessonWaiting = !(!AiGenerateLessonData || !!aiLessonReady)
   const methods = useForm<SchoolFormProps>({
     resolver: yupResolver(CreateSchoolSchema),
     mode: 'all',
@@ -75,7 +102,17 @@ export default function AddSchool(): React.ReactElement {
         city: schoolData.city,
       }).unwrap()
       localStorage.setItem('ON-BOARDING', 'on-boarding')
-      reload()
+      if (aiLessonReady) {
+        push(
+          `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: aiLessonReady })}`,
+          undefined,
+          {
+            shallow: true,
+          }
+        )
+      } else {
+        reload()
+      }
     } catch (error: any) {
       enqueueSnackbar(error?.message ?? 'Something went wrong', { variant: 'error' })
     }
@@ -184,7 +221,7 @@ export default function AddSchool(): React.ReactElement {
               background: '#fff',
             },
           }}
-          loading={isUpdating}
+          loading={isUpdating && aiLessonWaiting}
         >
           {translate('register_all_done')}
         </LoadingButton>

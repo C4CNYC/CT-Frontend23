@@ -26,6 +26,8 @@ import { getOrder } from '@/utils/getTaskOrder'
 import { useTranslate } from '@/utils/translateHelper'
 import { ConfirmDialog, Iconify } from '@root/src/components'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
+import { useBoolean } from '@root/src/hooks/useBoolean'
+import { LoaderStepDialog } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/LoaderStepDialog'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 
@@ -70,11 +72,59 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     refetch: lessonContentsRefetch,
     isUninitialized: lessonContentsUninitialized,
   } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
+  const [LoaderStepDialogState, LoaderStepDialogStateTrue, LoaderStepDialogStateFalse] =
+    useBoolean()
+  const [contentCount, setContentCount] = useState(0)
   const slideAddButtonRef = useRef<HTMLButtonElement>(null)
   const { board } = useSelector((state: RootState) => state.lessonSteps)
+  const [refetchTimer, refetchTimerSet] = useState(0)
+
+  let newlyCreated = lesson
+    ? (new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 1
+    : false
+
+  const lessonContentsRefetchTimer = () => {
+    if (!newlyCreated) {
+      if (refetchTimer > 0) {
+        clearInterval(refetchTimer)
+        refetchTimerSet(0)
+        LoaderStepDialogStateFalse()
+      }
+      return
+    }
+    lessonContentsRefetch()
+  }
 
   useEffect(() => {
-    if (!data || !lesson) return
+    if (!newlyCreated) return
+    let interval = setInterval(lessonContentsRefetchTimer, 10000)
+    // @ts-ignore how to sync nodejs&browser
+    refetchTimerSet(interval)
+    return () => clearInterval(interval)
+  }, [newlyCreated])
+
+  useEffect(() => {
+    if (!newlyCreated) {
+      LoaderStepDialogStateFalse()
+      return
+    }
+    let contentCountNow = data?.length || 0
+    if (contentCount != contentCount) {
+      // if creation gets delayed, it wont update, so a large number req.
+      setContentCount(contentCountNow)
+      // LoaderStepDialogStateTrue()
+    }
+  }, [data, lesson])
+
+  useEffect(() => {
+    if (!lesson) return
+    if (newlyCreated && lesson.name != 'New Lesson') LoaderStepDialogStateTrue()
+  }, [lesson])
+
+  useEffect(() => {
+    if (!lesson) return
+    if (!data) return
+
     dispatch(getBoard(data))
     if (data.length !== 0 && !router.query.stepId) {
       router.push(
@@ -86,15 +136,6 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
         { shallow: true }
       )
     }
-    let interval: NodeJS.Timeout | undefined
-    if ((new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 10)
-      interval = setInterval(() => {
-        if (!lessonContentsUninitialized) {
-          //pull lessons for 10 minutes after creation
-          lessonContentsRefetch()
-        }
-      }, 10000)
-    return () => clearInterval(interval)
   }, [data, lesson, lessonContentsUninitialized])
 
   const onDragEnd = (result: DropResult): void => {
@@ -417,6 +458,10 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
           lessonName={lesson?.name || ''}
         />
       ) : null}
+      <LoaderStepDialog
+        open={LoaderStepDialogState}
+        close={LoaderStepDialogStateFalse}
+      />
     </>
   )
 }
