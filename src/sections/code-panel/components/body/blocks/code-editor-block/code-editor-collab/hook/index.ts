@@ -12,7 +12,7 @@ import { initListeners } from '@root/src/sections/code-panel/lib/listeners'
 import { RoomStatus } from '../components/status-label'
 
 import { EditorMode } from './constants'
-import { type File, getFileInfo, isRoomExist } from './requests'
+import { type File, getFileInfo } from './requests'
 import { type UseCommentsPropsReturn, useComments } from './useComments'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
@@ -104,15 +104,15 @@ export const useCodeEditorCollab = ({
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
       firstInit.current = false
-      const isRoom = socket ? await isRoomExist(roomId, socket) : false
+      // const isRoom = socket ? await isRoomExist(roomId, socket) : false
 
-      if (!isRoom) {
-        initializeBlockedRef.current = true
-        onResetFileManager()
-        setRoomStatus(RoomStatus.Inactive)
-        setIsLoading(false)
-        return
-      }
+      // if (!isRoom) {
+      //   initializeBlockedRef.current = true
+      //   onResetFileManager()
+      //   setRoomStatus(RoomStatus.Inactive)
+      //   setIsLoading(false)
+      //   return
+      // }
 
       setRoomStatus(RoomStatus.Active)
 
@@ -157,15 +157,15 @@ export const useCodeEditorCollab = ({
     if (!socket) return
 
     firstInit.current = false
-    const isRoom = socket ? await isRoomExist(roomId, socket) : false
+    // const isRoom = socket ? await isRoomExist(roomId, socket) : false
 
-    if (!isRoom) {
-      initializeBlockedRef.current = true
-      onResetFileManager()
-      setIsLoading(false)
-      setRoomStatus(RoomStatus.Inactive)
-      return
-    }
+    // if (!isRoom) {
+    //   initializeBlockedRef.current = true
+    //   onResetFileManager()
+    //   setIsLoading(false)
+    //   setRoomStatus(RoomStatus.Inactive)
+    //   return
+    // }
 
     setRoomStatus(RoomStatus.Active)
 
@@ -239,12 +239,7 @@ export const useCodeEditorCollab = ({
 
     if (initializeBlockedRef.current) return
 
-    if (mode === EditorMode.Owner) {
-      initialize[modeRef.current](firstInit.current)
-    }
-    setTimeout(() => {
-      initialize[modeRef.current](firstInit.current)
-    }, 2000)
+    initialize[modeRef.current](firstInit.current)
   }, [initialize])
 
   return {
