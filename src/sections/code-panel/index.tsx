@@ -252,8 +252,7 @@ export default function CodePanelLayout(): ReactElement | null {
       router.query.courseId !== null &&
       !render
     )
-  }, [lesson, isLoadingLesson, router, render, profile,
-  ])
+  }, [lesson, isLoadingLesson, router, render, profile])
 
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
