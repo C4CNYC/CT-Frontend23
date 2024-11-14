@@ -117,7 +117,7 @@ export const useCodeEditorCollab = ({
       setRoomStatus(RoomStatus.Active)
 
       if (!isFirstInit) {
-        await baseInit(activeFile, '')
+        await baseInit(activeFile)
         return
       }
 
@@ -140,7 +140,7 @@ export const useCodeEditorCollab = ({
       const fileInfo = socket && isCollabActive ? await getFileInfo(roomId, socket) : null
 
       if (!isFirstInit || fileInfo == null) {
-        await baseInit(activeFile, '')
+        await baseInit(activeFile)
         return
       }
 
@@ -184,7 +184,7 @@ export const useCodeEditorCollab = ({
       _activeFile = fileInfo.activeFile ?? activeFile
     }
 
-    await baseInit(_activeFile, '')
+    await baseInit(_activeFile)
   }, [activeFile, baseInit, setActiveFile, socket, onResetFileManager])
 
   useModeSubscriptions({

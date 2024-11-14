@@ -152,10 +152,6 @@ const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
       transports: ['websocket'],
     })
 
-    socket.on('connect', () => {
-      socket.emit('joinRoom', `user_${user?.id}`)
-    })
-
     dispatch(setSocket(socket))
 
     socket.on('connect_error', (error) => {

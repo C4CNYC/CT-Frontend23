@@ -1,4 +1,4 @@
-import { useCallback, useEffect, type FC } from 'react'
+import { useCallback, type FC } from 'react'
 
 import { Avatar, Box, Stack, Tooltip, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -59,12 +59,6 @@ const GroupHeader: FC = () => {
     ) : (
       ''
     )
-
-  useEffect(() => {
-    if (rootSocket) {
-      rootSocket.emit('joinRoom', `tribe_${tribe?.id}`)
-    }
-  }, [rootSocket])
 
   if (!isDesktop) {
     return null

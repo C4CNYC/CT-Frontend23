@@ -35,8 +35,6 @@ interface CodeBlockProps {
   owner: IFriend & BaseResponseInterface
 }
 
-const ROOM_INIT_DELAY = 2000
-
 const CodeBlock: FC<CodeBlockProps> = ({
   owner,
   onClose,
@@ -90,12 +88,10 @@ const CodeBlock: FC<CodeBlockProps> = ({
       const isConnected = await waitConnectSocket(socket)
 
       if (isConnected) {
-        socket.emit('joinRoom', `user_${owner.account?.id}`)
+        socket.emit('joinRoom', `student_${owner.id}`)
         if (!socket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
           socket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
-            setTimeout(() => {
-              setIsStudentReady(true)
-            }, ROOM_INIT_DELAY)
+            setIsStudentReady(true)
           })
         }
         setIsConnected(isConnected)
@@ -104,14 +100,12 @@ const CodeBlock: FC<CodeBlockProps> = ({
       }
     }
 
-    if (rootSocket) {
-      if (rootSocket.connected) {
-        rootSocket.emit('joinRoom', `user_${owner.account?.id}`)
-        if (!rootSocket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
-          rootSocket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
-            setTimeout(() => {
-              setIsStudentReady(true)
-            }, ROOM_INIT_DELAY)
+    if (portalSocket) {
+      if (portalSocket.connected) {
+        portalSocket.emit('joinRoom', `student_${owner.id}`)
+        if (!portalSocket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
+          portalSocket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
+            setIsStudentReady(true)
           })
         }
         setIsConnected(true)
@@ -121,11 +115,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
     } else {
       setIsConnected(false)
     }
-
-    return () => {
-      portalSocket?.disconnect()
-    }
-  }, [rootSocket, portalSocket])
+  }, [portalSocket])
 
   return (
     <Box sx={boxSx}>

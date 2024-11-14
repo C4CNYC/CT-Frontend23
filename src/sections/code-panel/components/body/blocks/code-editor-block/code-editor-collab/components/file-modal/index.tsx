@@ -15,31 +15,28 @@ import FileForm from './file-form'
 import { useStyles } from './styles'
 
 interface FileModalProps {
+  setActiveFile: (fileName: File) => void
   isOpen: boolean
   fileList: File[]
-  mode?: EditorMode
   isFileFormOpen: boolean
-  creationDisabled?: boolean
-  isMultipleExtensionFiles: boolean
-
-  setIsOpen: (isOpen: boolean) => void
-  onDeleteFile: (fileName: File) => void
-  setActiveFile: (fileName: File) => void
   setIsFileFormOpen: (fileName: boolean) => void
+  setIsOpen: (isOpen: boolean) => void
   onAddFile: (fileName: string) => Promise<void>
+  onDeleteFile: (fileName: File) => void
+  mode: EditorMode
+  isMultipleExtensionFiles: boolean
 }
 
 const FileModal: FC<FileModalProps> = ({
+  setActiveFile,
   isOpen,
   fileList,
+  isFileFormOpen,
+  setIsFileFormOpen,
   onAddFile,
   setIsOpen,
   onDeleteFile,
-  setActiveFile,
-  isFileFormOpen,
-  creationDisabled,
-  setIsFileFormOpen,
-  mode = EditorMode.Owner,
+  mode,
   isMultipleExtensionFiles,
 }) => {
   const theme = useTheme()
@@ -78,11 +75,9 @@ const FileModal: FC<FileModalProps> = ({
             color='#e0e3ea'
           >
             Files
-            {!creationDisabled && (
-              <IconButton onClick={() => setIsFileFormOpen(true)}>
-                <AddIcon />
-              </IconButton>
-            )}
+            <IconButton onClick={() => setIsFileFormOpen(true)}>
+              <AddIcon />
+            </IconButton>
           </Typography>
 
           <Stack>
