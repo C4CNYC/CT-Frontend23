@@ -22,6 +22,7 @@ import { getRandomIndex } from '../../hook/utils'
 
 import { BOX_COLORS, HEADER_COLORS } from './constants'
 import styles from './styles'
+import { useSelector } from '@root/src/redux/store'
 
 interface CodeBlockProps {
   lessonId?: string
@@ -50,6 +51,8 @@ const CodeBlock: FC<CodeBlockProps> = ({
   const [isStudentReady, setIsStudentReady] = useState(false)
   const [isConnected, setIsConnected] = useState(false)
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive)
+
+  const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
 
   const { boxSx, headerSx } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0]
@@ -90,6 +93,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
         socket.emit('joinRoom', `user_${owner.account?.id}`)
         if (!socket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
           socket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
+            console.log("OnlineStudentReady")
             setTimeout(() => {
               setIsStudentReady(true)
             }, ROOM_INIT_DELAY)
@@ -101,11 +105,11 @@ const CodeBlock: FC<CodeBlockProps> = ({
       }
     }
 
-    if (portalSocket) {
-      if (portalSocket.connected) {
-        portalSocket.emit('joinRoom', `user_${owner.account?.id}`)
-        if (!portalSocket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
-          portalSocket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
+    if (rootSocket) {
+      if (rootSocket.connected) {
+        rootSocket.emit('joinRoom', `user_${owner.account?.id}`)
+        if (!rootSocket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
+          rootSocket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
             setTimeout(() => {
               setIsStudentReady(true)
             }, ROOM_INIT_DELAY)
@@ -122,7 +126,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
     return () => {
       portalSocket?.disconnect()
     }
-  }, [portalSocket])
+  }, [rootSocket, portalSocket])
 
   return (
     <Box sx={boxSx}>
