@@ -13,7 +13,10 @@ import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
 import { RoomStatus } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/components/status-label'
-import { waitConnectSocket } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
+import {
+  createSocket,
+  waitConnectSocket,
+} from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
 import { type BaseResponseInterface } from '@/utils'
 import { EditorMode } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
 import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
@@ -24,26 +27,22 @@ import { BOX_COLORS, HEADER_COLORS } from './constants'
 import styles from './styles'
 
 interface CodeBlockProps {
-  lessonId?: string
-  cursorName?: string
   onClose: () => void
-  portalSocket: Socket
-  onMoveToPortal: () => void
   attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
   owner: IFriend & BaseResponseInterface
+  cursorName?: string
+  lessonId?: string
+  onMoveToPortal: () => void
 }
 
-const ROOM_INIT_DELAY = 2000
-
 const CodeBlock: FC<CodeBlockProps> = ({
-  owner,
   onClose,
-  lessonId,
-  listeners,
   attributes,
+  listeners,
+  owner,
   cursorName,
-  portalSocket,
+  lessonId,
   onMoveToPortal,
 }) => {
   const dispatch = useDispatch()
@@ -51,13 +50,14 @@ const CodeBlock: FC<CodeBlockProps> = ({
   const [isConnected, setIsConnected] = useState(false)
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive)
 
-  const { boxSx, headerSx } = useMemo(() => {
+  const { boxSx, headerSx, socket } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0]
     const headerColor = HEADER_COLORS[getRandomIndex(HEADER_COLORS.length)] ?? HEADER_COLORS[0]
 
     return {
       boxSx: styles.getBoxSx(boxColor),
       headerSx: styles.getHeaderSx(headerColor),
+      socket: createSocket(),
     }
   }, [])
 
@@ -87,12 +87,10 @@ const CodeBlock: FC<CodeBlockProps> = ({
       const isConnected = await waitConnectSocket(socket)
 
       if (isConnected) {
-        socket.emit('joinRoom', `user_${owner.account?.id}`)
+        socket.emit('joinRoom', `student_${owner.id}`)
         if (!socket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
           socket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
-            setTimeout(() => {
-              setIsStudentReady(true)
-            }, ROOM_INIT_DELAY)
+            setIsStudentReady(true)
           })
         }
         setIsConnected(isConnected)
@@ -101,28 +99,22 @@ const CodeBlock: FC<CodeBlockProps> = ({
       }
     }
 
-    if (portalSocket) {
-      if (portalSocket.connected) {
-        portalSocket.emit('joinRoom', `user_${owner.account?.id}`)
-        if (!portalSocket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
-          portalSocket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
-            setTimeout(() => {
-              setIsStudentReady(true)
-            }, ROOM_INIT_DELAY)
+    if (socket) {
+      if (socket.connected) {
+        socket.emit('joinRoom', `student_${owner.id}`)
+        if (!socket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
+          socket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
+            setIsStudentReady(true)
           })
         }
         setIsConnected(true)
       } else {
-        void runAsyncEffect(portalSocket)
+        void runAsyncEffect(socket)
       }
     } else {
       setIsConnected(false)
     }
-
-    return () => {
-      portalSocket?.disconnect()
-    }
-  }, [portalSocket])
+  }, [socket])
 
   return (
     <Box sx={boxSx}>
@@ -188,12 +180,12 @@ const CodeBlock: FC<CodeBlockProps> = ({
         isConnected &&
         (isActiveUser ? (
           <CodeEditorCollab
-            portalSocket={portalSocket}
             roomId={`${owner.id as string}_${lessonId as string}`}
             mode={EditorMode.Watcher}
             withFileManager={false}
             cursorText={cursorName}
             onRoomStatusChanged={setEditorStatus}
+            socket={socket}
           />
         ) : (
           <Box>User Offline</Box>

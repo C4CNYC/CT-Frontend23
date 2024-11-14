@@ -57,6 +57,8 @@ export const unsubscribeSocket = (socket?: Socket): void => {
   _.values(SubscribedEvents).forEach((event) => {
     socket?.off(event)
   })
+
+  socket?.disconnect()
 }
 
 export const createSocket = (userId?: null | string): Socket => {

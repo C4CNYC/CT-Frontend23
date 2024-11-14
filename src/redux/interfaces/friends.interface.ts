@@ -23,9 +23,6 @@ export interface IFriend {
   currentLessonId?: string
   createdAt: string
   updatedAt: string
-  account?: {
-    id: string
-  }
 }
 export interface IFriendsSearchParams extends BaseSearchInterface {
   name?: string
