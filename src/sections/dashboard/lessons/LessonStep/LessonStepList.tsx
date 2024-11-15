@@ -266,7 +266,10 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
 
   return (
     <>
-      <Box sx={{ p: 2 }}>
+      <Box
+        sx={{ p: 2 }}
+        className='lessonCreationStep1 lessonCreationStep2'
+      >
         <Stack sx={{ gap: 2 }}>
           <Typography
             variant='subtitle1'

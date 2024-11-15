@@ -88,7 +88,7 @@ export default function StepCode({
           ref={editorRef}
           value={value}
           theme={dracula}
-          height='calc(100vh - 96px)'
+          height='calc(100vh - 154px)'
           extensions={[html(), EditorView.lineWrapping]}
           onChange={(value) => {
             setValue(value)
