@@ -19,11 +19,6 @@ import {
 } from '@/redux/services/manager/lesson-student'
 import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
 import {
-  useGetPublicLessonQuery,
-  useGetPublicLessonContentQuery,
-  useGetPublicCourseContentQuery,
-} from '@/redux/services/public-student'
-import {
   setCourseId,
   setLessonId,
   setSlideIndex,
@@ -97,69 +92,24 @@ export default function CodePanelLayout(): ReactElement | null {
     ? router.query.lessonId.join()
     : router.query.lessonId || ''
 
-  const { data: studentCourseContent, isLoading: isLoadingStudentCourseContent } =
-    useGetCourseContentQuery(
-      { id: router.query.courseId as string },
-      { skip: !router.query.courseId || !profile }
-    )
+  const { data: courseContent, isLoading: isLoadingCourseContent } = useGetCourseContentQuery(
+    { id: router.query.courseId as string },
+    { skip: !router.query.courseId || !profile }
+  )
 
-  const { data: publicCourseContent, isLoading: isLoadingPublicCourseContent } =
-    useGetPublicCourseContentQuery(
-      { id: router.query.courseId as string },
-      { skip: !router.query.courseId || !!profile }
-    )
-
-  const courseContent = profile ? studentCourseContent : publicCourseContent
-  const isLoadingCourseContent = profile
-    ? isLoadingStudentCourseContent
-    : isLoadingPublicCourseContent
-
-  const { data: studentLesson, isLoading: isLoadingStudentLesson } = useGetLessonStudentQuery(
+  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId || !profile }
+    { skip: !router.query.lessonId }
   )
-
-  const { data: publicLesson, isLoading: isPublicLessonLoading } = useGetPublicLessonQuery(
-    { id: router.query.courseId as string, lesson_id: router.query.lessonId as string },
-    { skip: !router.query.lessonId || !router.query.courseId || !!profile }
-  )
-
-  const lesson = studentLesson ?? publicLesson
-  const isLoadingLesson = isLoadingStudentLesson ?? isPublicLessonLoading
 
   const {
-    data: lessonStudentContent,
-    isLoading: isLoadingLessonStudentContent,
-    isFetching: isFetchingLessonStudentContent,
-    fulfilledTimeStamp: fulfilledStudentTimeStamp,
+    data: lessonContent,
+    isLoading: isLoadingLessonContent,
+    isFetching: isFetchingLessonContent,
+    fulfilledTimeStamp: fulfilledTimeStamp,
   } = useGetLessonContentStudentQuery(
     { id: router.query.lessonId as string },
-    { skip: !router.query.lessonId || !profile }
-  )
-
-  const {
-    data: publicLessonContent,
-    isLoading: isPublicLessonContentLoading,
-    isFetching: isPublicFetchingLessonContent,
-    fulfilledTimeStamp: fulfilledPublicTimeStamp,
-  } = useGetPublicLessonContentQuery(
-    { id: router.query.courseId as string, lesson_id: router.query.lessonId as string },
-    { skip: !!profile || !router.query.courseId || !router.query.lessonId }
-  )
-
-  const lessonContent = useMemo(
-    () =>
-      profile
-        ? lessonStudentContent
-        : publicLessonContent?.length
-          ? Array.from(publicLessonContent).sort((a, b) => (a.meta.order > b.meta.order ? 1 : -1))
-          : [],
-    [profile, lessonStudentContent, publicLesson, publicLessonContent]
-  )
-
-  const fulfilledTimeStamp = useMemo(
-    () => (profile ? fulfilledStudentTimeStamp : fulfilledPublicTimeStamp),
-    [profile, fulfilledStudentTimeStamp, fulfilledPublicTimeStamp]
+    { skip: !router.query.lessonId }
   )
 
   useGetContentCheckersQuery(undefined, {
@@ -294,13 +244,6 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   const isLoadingComplete = useMemo(() => {
-    const isLoadingLessonContent = profile
-      ? isLoadingLessonStudentContent
-      : isPublicLessonContentLoading
-    const isFetchingLessonContent = profile
-      ? isFetchingLessonStudentContent
-      : isPublicFetchingLessonContent
-
     return (
       !!lesson &&
       !isLoadingLessonContent &&
@@ -309,17 +252,7 @@ export default function CodePanelLayout(): ReactElement | null {
       router.query.courseId !== null &&
       !render
     )
-  }, [
-    isLoadingLessonStudentContent,
-    isPublicLessonContentLoading,
-    isFetchingLessonStudentContent,
-    isPublicFetchingLessonContent,
-    lesson,
-    isLoadingLesson,
-    router,
-    render,
-    profile,
-  ])
+  }, [lesson, isLoadingLesson, router, render, profile])
 
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
