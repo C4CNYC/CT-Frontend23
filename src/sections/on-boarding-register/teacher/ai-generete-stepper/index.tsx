@@ -15,23 +15,35 @@ import { AiGenerate } from '@root/src/utils/ai-generate'
 
 import AddAddons from './AddAddons'
 import { AIPersonaInfo } from './AIPersonaInfo'
-import { AIGenerateStepperProps, FormAIGenerateProps, IAddons } from './constants'
+import {
+  AIGenerateStepperProps,
+  FormAIGenerateProps,
+  GRADES,
+  IAddons,
+  LESSON_DURARION,
+  LEVELS,
+  PERSONA,
+  PROGRAMMING_LANGUAGE,
+  TONE,
+  TYPE_LESSON,
+  TYPE_PROJECT,
+} from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
 import SimpleAiGenerate from './SimpleAiGenerate'
 
 //@names according to avoid bots spam
 const defaultValues = {
-  RlevelR: '',
-  RgradesR: '',
-  RlessonDurationR: '',
+  RlevelR: LEVELS[0].value,
+  RgradesR: GRADES[1].value,
+  RlessonDurationR: LESSON_DURARION[2].value,
   RlessonLanguageR: 'English',
   RcustomLanguageR: '',
   RtrackR: '',
-  RprogrammingLanguageR: '',
-  RpersonaR: '',
-  RtoneR: '',
-  RtypeLessonR: '',
+  RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
+  RpersonaR: PERSONA[0].value,
+  RtoneR: TONE[0].value,
+  RtypeLessonR: TYPE_LESSON[1].value,
   name: null,
   email: null,
   state: null,

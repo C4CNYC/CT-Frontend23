@@ -3,15 +3,11 @@ import { type MutableRefObject, RefObject, useEffect, useRef, useState } from 'r
 import { type DragEndEvent } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
-import { IFriend } from '@/redux/interfaces/friends.interface'
 import { useSelector } from '@/redux/store'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 import { ILessonUserStatus } from '@root/src/types'
 
 import { type DraggableBlockConfig, getDraggableBlockConfig } from './utils'
-
-type FriendUser = IFriend & BaseResponseInterface
 
 interface UseNavPanelReturn {
   drawerRef: MutableRefObject<HTMLDivElement | null>
@@ -28,13 +24,13 @@ interface UseNavPanelReturn {
 export const useNavPanel = (
   wrapperListenerRef: RefObject<HTMLDivElement | null>
 ): UseNavPanelReturn => {
+  const drawerRef = useRef<HTMLDivElement | null>(null)
+
   const [isOpen, setIsOpen] = useState(false)
   const [previewUsers, setPreviewUsers] = useState<ILessonUserStatus[]>([])
   const [draggableConfig, setDraggableConfig] = useState<DraggableBlockConfig | null>(null)
 
-  const drawerRef = useRef<HTMLDivElement | null>(null)
-
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
 
   const onAddBlock = (user: ILessonUserStatus): void => {
     const newPreviewedUsers = [...previewUsers]
@@ -52,7 +48,9 @@ export const useNavPanel = (
       return
     }
 
-    socket?.emit(SocketEventsStudentMode.InitOnlineMode, { roomId: user.id })
+    if (rootSocket) {
+      rootSocket.emit(SocketEventsStudentMode.InitOnlineMode, { roomId: user.id })
+    }
 
     setPreviewUsers([...newPreviewedUsers, user])
   }

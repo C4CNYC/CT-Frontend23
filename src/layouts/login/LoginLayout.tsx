@@ -22,6 +22,8 @@ export default function LoginLayout({
   subtitle,
 }: Props): React.ReactElement | null {
   const translate = useTranslate()
+  // eslint-disable-next-line no-console
+  console.log('LoginLayout')
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
       <StyledRoot>
