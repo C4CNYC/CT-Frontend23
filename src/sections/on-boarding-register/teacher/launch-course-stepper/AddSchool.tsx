@@ -58,22 +58,16 @@ export default function AddSchool(): React.ReactElement {
     if (!!AiGenerateLessonData) {
       let lessonDataToCreate = JSON.parse(AiGenerateLessonData)
       localStorage.removeItem('AiGenerateLessonData')
-      if (lessonDataToCreate.lessonType in ['simple', 'exercise']) {
-        createAILesson(lessonDataToCreate).then((payload) => {
-          aiLessonReadySet(payload.data.id)
+      createLesson({ name: 'Ai Lesson', description: '', duration: '20', active: true })
+        .unwrap()
+        .then((payload) => {
+          aiLessonReadySet(payload.id)
+          lessonDataToCreate.newLessonId = payload.id
+          createAILesson(lessonDataToCreate) // no need to wait, we have lessonid
         })
-      } else {
-        createLesson({ name: 'Ai Lesson', description: '', duration: '20', active: true })
-          .unwrap()
-          .then((payload) => {
-            aiLessonReadySet(payload.id)
-            lessonDataToCreate.newLessonId = payload.id
-            createAILesson(lessonDataToCreate) // no need to wait, we have lessonid
-          })
-          .catch((err) => {
-            enqueueSnackbar(err.data.message, { variant: 'error' })
-          })
-      }
+        .catch((err) => {
+          enqueueSnackbar(err.data.message, { variant: 'error' })
+        })
     }
   }, [])
 

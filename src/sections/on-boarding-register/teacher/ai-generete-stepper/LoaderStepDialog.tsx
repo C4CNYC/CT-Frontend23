@@ -17,7 +17,6 @@ export function LoaderStepDialog({
     <Dialog
       open={open}
       fullWidth
-      maxWidth='md'
       onClose={close}
     >
       <DialogContent sx={{ p: 2 }}>

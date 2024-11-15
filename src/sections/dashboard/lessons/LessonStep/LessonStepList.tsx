@@ -108,11 +108,8 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
       LoaderStepDialogStateFalse()
       return
     }
-    let contentCountNow = data?.length || 0
-    if (contentCount != contentCount) {
-      // if creation gets delayed, it wont update, so a large number req.
-      setContentCount(contentCountNow)
-      // LoaderStepDialogStateTrue()
+    if (data?.length && data.length > 0) {
+      LoaderStepDialogStateFalse()
     }
   }, [data, lesson])
 
