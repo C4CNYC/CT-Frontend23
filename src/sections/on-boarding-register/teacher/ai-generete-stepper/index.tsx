@@ -26,7 +26,6 @@ import {
   PROGRAMMING_LANGUAGE,
   TONE,
   TYPE_LESSON,
-  TYPE_PROJECT,
 } from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
