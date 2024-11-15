@@ -10,8 +10,6 @@ export const StyledContentTeacher = styled('div', {
   display: 'flex',
   borderRadius: '8px',
   justifyContent: 'center',
-  height: 'calc(100% - 32px)',
-  overflowY: 'auto',
   padding: theme.spacing(3),
   ...bgBlur({ color: theme.palette.background.default }),
   [theme.breakpoints.up('sm')]: {
