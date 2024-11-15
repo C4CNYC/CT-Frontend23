@@ -30,10 +30,10 @@ export function AiGenerate(): [
       case 'multi':
       case 'full':
       case 'exercises':
+      case 'project':
         newLesson = await generateMultiLesson(lessonData)
         break
       default:
-      case 'project':
         newLesson = await createLessonUsingOpenAIAssistant({
           ...lessonData,
           lesson_id: lessonData.lessonType,

@@ -122,29 +122,37 @@ export default function AIGenerateStepper({
       localStorage.setItem('AiGenerateLessonData', JSON.stringify(lessonData))
       push(PATH_AUTH.onBoardingTeacher.launchCourse)
     } else {
-      // let newLesson = await createLesson(lessonData)
-      // if (newLesson?.data?.id) {
-      //   if (closeModal) closeModal()
-      //   redirectAfterCompleate(newLesson.data.id)
-      // }
-      createLesson({ name: 'Ai Lesson', description: '', duration: '20', active: true })
-        .unwrap()
-        .then((payload) => {
-          lessonData.newLessonId = payload.id
-          createAILesson(lessonData) // no need to wait, we have lessonid
-          localStorage.removeItem('AiGenerateLessonData')
+      if (['simple', 'exercises'].includes(lessonData.lessonType)) {
+        createAILesson(lessonData).then((payload) => {
           if (closeModal) closeModal()
           push(
-            `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: payload.id ?? '' })}`,
+            `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: payload.data.id ?? '' })}`,
             undefined,
             {
               shallow: true,
             }
           )
         })
-        .catch((err) => {
-          enqueueSnackbar(err.data.message, { variant: 'error' })
-        })
+      } else {
+        createLesson({ name: 'Ai Lesson', description: '', duration: '20', active: true })
+          .unwrap()
+          .then((payload) => {
+            lessonData.newLessonId = payload.id
+            createAILesson(lessonData) // no need to wait, we have lessonid
+            localStorage.removeItem('AiGenerateLessonData')
+            if (closeModal) closeModal()
+            push(
+              `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: payload.id ?? '' })}`,
+              undefined,
+              {
+                shallow: true,
+              }
+            )
+          })
+          .catch((err) => {
+            enqueueSnackbar(err.data.message, { variant: 'error' })
+          })
+      }
     }
   }
 
