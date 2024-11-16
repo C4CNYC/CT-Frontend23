@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 
-import { Box, Dialog } from '@mui/material'
+import { Dialog } from '@mui/material'
 import { useAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 
 import { ResizerUi } from '@/components'
+import LessonCreationIntro from '@root/src/sections/intro-tours/lesson-creation-intro'
 
 import { lessonViewAtom } from './lesson-atoms/lesson-view-atom'
 import LessonTopBar from './lesson-top-bar/LessonTopBar'
@@ -52,23 +53,22 @@ export default function LessonStepMain(): React.ReactElement {
       <Dialog
         open={Boolean(lessonId)}
         onClose={() => {}}
-        PaperProps={{ sx: { height: '100vh' } }}
         fullScreen
       >
         <FullScreen handle={handle}>
           <LessonTopBar />
 
-          <Box>
-            <ResizerUi
-              split='vertical'
-              minSize={300}
-              maxSize={750}
-              defaultSize={'400px'}
-            >
-              <LessonStepList lessonId={lessonId as string} />
-              {stepId ? <StepContentEditor /> : <NoSelectedStep />}
-            </ResizerUi>
-          </Box>
+          {stepId && <LessonCreationIntro deley={1000} />}
+          <ResizerUi
+            split='vertical'
+            minSize={300}
+            maxSize={750}
+            defaultSize={'400px'}
+            style={{ height: 'calc(100% - 48px)' }}
+          >
+            <LessonStepList lessonId={lessonId as string} />
+            {stepId ? <StepContentEditor /> : <NoSelectedStep />}
+          </ResizerUi>
         </FullScreen>
       </Dialog>
     </LessonContentContext.Provider>
