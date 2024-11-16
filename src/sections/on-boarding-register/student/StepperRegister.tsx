@@ -8,6 +8,7 @@ import { Iconify, RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { styledRegisterInput } from '../styles'
+import { SUBMIT_BTN_SX } from '../teacher/constants'
 
 interface Props {
   nextStep: () => void
@@ -96,28 +97,19 @@ export default function StepperRegister({
       >
         <Chip
           label='1 Number'
-          icon={hasOneNumber ? <MdDone /> : <></>}
-          color={hasOneNumber ? 'success' : 'default'}
+          icon={hasOneNumber ? <MdDone color={hasOneNumber ? '#fff' : ''} /> : <></>}
+          sx={{ background: hasOneNumber ? '#79d2aa' : '', color: hasOneNumber ? '#fff' : '' }}
         />
         <Chip
           label='8+ Characters'
-          icon={hasSixDigit ? <MdDone /> : <></>}
-          color={hasSixDigit ? 'success' : 'default'}
+          icon={hasSixDigit ? <MdDone color={hasSixDigit ? '#fff' : ''} /> : <></>}
+          sx={{ background: hasSixDigit ? '#79d2aa' : '', color: hasSixDigit ? '#fff' : '' }}
         />
       </Stack>
       <LoadingButton
         type='submit'
         loading={isSubmiting}
-        sx={{
-          background: '#43D4DD33',
-          color: '#43D4DD',
-          fontSize: '1.5rem',
-          mt: 2,
-          width: '100%',
-          '&:hover': {
-            background: '#fff',
-          },
-        }}
+        sx={SUBMIT_BTN_SX}
       >
         {translate('register_whoopie')}
       </LoadingButton>

@@ -1,11 +1,13 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import { Button, IconButton, Stack, Theme, Typography } from '@mui/material'
+import { Button, IconButton, Stack, Typography } from '@mui/material'
 import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import { StepWizardChildProps } from 'react-step-wizard'
 
 import { Image } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { SINGIN_BTN_SX } from './constants'
 
 interface Props {
   setError: Dispatch<SetStateAction<string>>
@@ -48,15 +50,7 @@ export default function EmailNotFound({
             setError('')
             previousStep?.()
           }}
-          sx={(theme: Theme) => ({
-            background: theme.palette.grey[100],
-            color: theme.palette.grey[500],
-            fontSize: '1.5rem',
-            mt: 1,
-            '&:hover': {
-              background: theme.palette.grey[200],
-            },
-          })}
+          sx={SINGIN_BTN_SX}
         >
           {translate('login_go_back')}
         </Button>
