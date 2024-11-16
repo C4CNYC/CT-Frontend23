@@ -1,4 +1,4 @@
-import { type FC, useEffect } from 'react'
+import { type FC, useEffect, useState } from 'react'
 
 import { Box, Button, Popover, Typography } from '@mui/material'
 
@@ -23,12 +23,13 @@ interface TipsPopoverProps {
 const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, tips }) => {
   const isDesktop = useIsDesktop()
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     if (!isDesktop && activeTab !== 1) {
       setOpenPoper(false)
     }
-  }, [isDesktop, activeTab])
+  }, [isDesktop, activeTab, setOpenPoper])
 
   return (
     <Popover
@@ -37,7 +38,13 @@ const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, 
       anchorEl={anchorEl}
       slotProps={{
         paper: {
-          style: { width: '250px' },
+          style: {
+            width: '250px',
+            transition: 'opacity 0.3s ease-in-out',
+            opacity: isHovered ? 1 : 0.7,
+          },
+          onMouseEnter: () => setIsHovered(true),
+          onMouseLeave: () => setIsHovered(false),
         },
       }}
       onClose={() => {

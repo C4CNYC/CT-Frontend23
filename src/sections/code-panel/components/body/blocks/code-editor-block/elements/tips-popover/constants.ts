@@ -4,26 +4,21 @@ export const MOBILE_POPPER_WIDTH = '60%'
 export const BOX_STYLES = {
   border: '1px solid #FBDD3F',
   background: '#155275',
-  opacity: 0.5,
-  borderRadius: '10px',
+  borderRadius: '12px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  py: 1,
+  pt: 1,
   px: 2,
-  height: '230px',
+  minHeight: '100px',
   overflowY: 'auto',
   '::-webkit-scrollbar': {
     display: 'none',
   },
   transition: 'all .2s ease-in',
-  '&:hover': {
-    background: '#155275',
-    opacity: 1,
-  },
 }
 
-export const POPOVER_VERTICAL = -100
+export const POPOVER_VERTICAL = 30
 export const POPOVER_HORIZONTAL = -260
 
 export const TYP_COLOR = { color: '#fff' }

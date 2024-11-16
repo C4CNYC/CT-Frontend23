@@ -41,8 +41,8 @@ const icon = (
     color='#43D4DD'
   />
 )
-const TYPING_DELEY = 20000
-const FIRST_LOADING_DELEY = 15000
+const OPEN_POPOVER_DELEY = 15000
+const CLOSE_POPOVER_DELEY = 4000
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
@@ -59,8 +59,9 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const translate = useTranslate()
 
   const codeRef = useRef(code)
-  const timer = useRef<NodeJS.Timeout>()
-  const [typing, setTyping] = useState<boolean | null>(null)
+  const openPopoverTimer = useRef<NodeJS.Timeout | null>(null)
+  const closePopoverTimer = useRef<NodeJS.Timeout | null>(null)
+  const [isOpenPopover, setIsOpenPopover] = useState<boolean | null>(null)
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
 
   const socket = useSelector((state) => state.codePanelGlobal.socket)
@@ -68,21 +69,10 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
-  const TITLE = translate('code_editor')
-
-  const typingListener = (deley: number, firstLoad: boolean): void => {
-    if (!firstLoad) {
-      setTyping(false)
-    }
-
-    if (timer.current != null) {
-      clearInterval(timer.current)
-    }
-
-    timer.current = setInterval(() => {
-      setTyping(true)
-    }, deley)
-  }
+  const selectedContent = useMemo(
+    () => contentValidations?.find((item) => item.contentId === contentId),
+    [contentId, contentValidations]
+  )
 
   const symbolsHandler = useCallback((): void => {
     setCodingSymbols(!codingSymbols)
@@ -119,29 +109,34 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [socket])
 
   useEffect(() => {
-    if (code) {
-      typingListener(TYPING_DELEY, false)
-    }
-  }, [code])
-
-  useEffect(() => {
     onResetRoom()
   }, [onResetRoom])
 
-  const selectedContent = useMemo(
-    () => contentValidations?.find((item) => item.contentId === contentId),
-    [contentId, contentValidations]
-  )
+  useEffect(() => {
+    openPopoverTimer.current = setTimeout(() => {
+      setIsOpenPopover(true)
+
+      closePopoverTimer.current = setTimeout(() => {
+        setIsOpenPopover(false)
+      }, CLOSE_POPOVER_DELEY)
+    }, OPEN_POPOVER_DELEY)
+
+    return () => {
+      if (openPopoverTimer.current) clearTimeout(openPopoverTimer.current)
+      if (closePopoverTimer.current) clearTimeout(closePopoverTimer.current)
+    }
+  }, [])
+
   return (
     <BaseBlock
-      title={TITLE}
+      title={translate('code_editor')}
       icon={icon}
       className='codeEditorTour'
     >
       <CodeEditorStyles isDesktop={isDesktop} />
 
       <MumuSpeedDial
-        typing={typing}
+        openPopover={isOpenPopover}
         contentId={contentId}
       />
 
