@@ -1,19 +1,18 @@
-import { Container, Stack } from '@mui/material'
+import { Container, Stack, SxProps } from '@mui/material'
 import dynamic from 'next/dynamic'
 
-// hooks
 import { useOffSetTop } from '@/hooks'
 
 import { HEADER_SIZES } from '../../theme/consts'
 
-//
 const Header = dynamic(async () => await import('./Header'), { ssr: false })
 
 interface Props {
   children?: React.ReactNode
+  sx?: SxProps
 }
 
-export default function CompactLayout({ children }: Props): React.ReactElement | null {
+export default function CompactLayout({ children, sx }: Props): React.ReactElement | null {
   const isOffset = useOffSetTop(HEADER_SIZES.H_MAIN_DESKTOP)
 
   return (
@@ -29,6 +28,7 @@ export default function CompactLayout({ children }: Props): React.ReactElement |
             minHeight: '100vh',
             textAlign: 'center',
             justifyContent: 'center',
+            ...sx,
           }}
         >
           {children}
