@@ -63,6 +63,20 @@ export function GeneralInfo({
     () => getNextBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
+  //type script wiening
+  const type_lesson = (
+    aiTemplates && aiTemplates.length > 0
+      ? [
+          ...TYPE_LESSON,
+          ...aiTemplates.map((ait) => ({
+            key: ait.id,
+            value: ait.name,
+            tooltip: ait.description,
+            icon: 'material-symbols:info-outline',
+          })),
+        ]
+      : TYPE_LESSON
+  ).filter((e) => e !== undefined)
   return (
     <Stack sx={STEP_CONTAINER_STYLES}>
       <Stack
@@ -104,19 +118,7 @@ export function GeneralInfo({
         </Typography>
         <RHFToggleButtonGroup
           name='RtypeLessonR'
-          options={
-            aiTemplates
-              ? [
-                  ...TYPE_LESSON,
-                  ...aiTemplates?.map((ait) => ({
-                    key: ait.id,
-                    value: ait.name,
-                    tooltip: ait.description,
-                    icon: 'material-symbols:info-outline',
-                  })),
-                ]
-              : TYPE_LESSON
-          }
+          options={type_lesson}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
           sxButton={toggleButtonStyles}
           tooltip
