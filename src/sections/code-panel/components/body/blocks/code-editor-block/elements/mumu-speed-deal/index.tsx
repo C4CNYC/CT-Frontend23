@@ -116,7 +116,6 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
 
       <Tooltip title={<Typography>{translate('code_editor_mumu_menu_tooltip')}</Typography>}>
         <SpeedDial
-          ref={popperRef}
           aria-describedby={'popper'}
           ariaLabel='SpeedDial basic example'
           open={speedDeal}
@@ -125,7 +124,12 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
           FabProps={speedDealProps}
           sx={speedDealStyles}
           direction='up'
-          icon={<Box sx={BOX_PROPS} />}
+          icon={
+            <Box
+              sx={BOX_PROPS}
+              ref={popperRef}
+            />
+          }
         >
           {actionsList.map((action) => {
             if (action.name === 'tips') {

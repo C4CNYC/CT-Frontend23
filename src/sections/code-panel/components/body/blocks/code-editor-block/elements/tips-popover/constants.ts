@@ -18,9 +18,6 @@ export const BOX_STYLES = {
   transition: 'all .2s ease-in',
 }
 
-export const POPOVER_VERTICAL = 30
-export const POPOVER_HORIZONTAL = -260
-
 export const TYP_COLOR = { color: '#fff' }
 
 export const BUTTON_STYLES = {
