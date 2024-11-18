@@ -16,7 +16,7 @@ export default function SignUpDialog(): React.ReactElement | null {
       () => {
         if (!open) setOpen(true)
       },
-      5 * 60 * 1000
+      1 * 60 * 1000
     )
 
     return () => {
