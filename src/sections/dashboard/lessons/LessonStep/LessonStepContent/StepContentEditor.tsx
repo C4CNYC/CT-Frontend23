@@ -71,7 +71,12 @@ export default function StepContentEditor(): React.ReactElement {
     { id: lessonId as string },
     { skip: !lessonId || !stepId }
   )
-  const { data, isFetching, isLoading } = useGetLessonContentByIdQuery(
+  const {
+    data,
+    isFetching,
+    isLoading,
+    refetch: refetchLessonContent,
+  } = useGetLessonContentByIdQuery(
     { lessonId: lessonId as string, id: stepId as string },
     { skip: !lessonId || !stepId }
   )
@@ -94,6 +99,7 @@ export default function StepContentEditor(): React.ReactElement {
         body,
       }).unwrap()
       enqueueSnackbar(translate('slide_content_updated'))
+      refetchLessonContent()
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
