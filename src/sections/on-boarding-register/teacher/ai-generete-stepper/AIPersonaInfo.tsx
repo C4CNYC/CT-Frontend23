@@ -17,6 +17,7 @@ import {
   TOGGLE_BUTTON_GROUP_STYLES,
   TONE,
   getNextBtnSx,
+  RHFTextFieldInRHFToggleButtonGroup,
 } from './constants'
 
 type IAIPersonaInfoProps = {
@@ -110,12 +111,13 @@ export function AIPersonaInfo({
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
             sxButton={toggleButtonStyles}
             disabled={customPersona}
-          />
-          <RHFTextField
-            sx={{ maxWidth: '400px', mt: 2 }}
-            name='RcustomPersonaR'
-            placeholder={translate('ai_gen_other_placeholder')}
-          />
+          >
+            <RHFTextField
+              sx={RHFTextFieldInRHFToggleButtonGroup}
+              name='RcustomPersonaR'
+              placeholder={translate('ai_gen_other_placeholder')}
+            />
+          </RHFToggleButtonGroup>
         </Stack>
         <Stack>
           <Typography
@@ -132,12 +134,13 @@ export function AIPersonaInfo({
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
             sxButton={toggleButtonStyles}
             disabled={customTone}
-          />
-          <RHFTextField
-            sx={{ maxWidth: '400px', mt: 2 }}
-            name='RcustomToneR'
-            placeholder={translate('ai_gen_other_placeholder')}
-          />
+          >
+            <RHFTextField
+              sx={RHFTextFieldInRHFToggleButtonGroup}
+              name='RcustomToneR'
+              placeholder={translate('ai_gen_other_placeholder')}
+            />
+          </RHFToggleButtonGroup>
         </Stack>
         {/* <Stack>
           <Typography

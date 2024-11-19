@@ -162,6 +162,7 @@ export function RHFToggleButtonGroup({
                 )
               )
             )}
+            {other.children}
           </ToggleButtonGroup>
         )}
       />
