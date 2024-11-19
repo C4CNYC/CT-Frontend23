@@ -237,6 +237,7 @@ export const PROGRAMMING_LANGUAGE = [
   { key: 'HTML/CSS', value: 'HTML/CSS' },
   { key: 'HTML/CSS/JS', value: 'HTML/CSS/JS' },
   { key: 'Kaboom.js', value: 'Kaboom.js' },
+  { key: 'P5.js', value: 'P5.js' },
 ]
 
 export const TRACK = [
