@@ -165,6 +165,18 @@ export const SIMPLE_GENERATE_TOGLE_GROUP = {
 
 export const LANG_CONT_SX = { flexDirection: 'row', gap: 2, px: 2, pt: 1 }
 
+export const RHFTextFieldInRHFToggleButtonGroup = {
+  maxWidth: '200px',
+  padding: '4px',
+  '& input': {
+    padding: '8px 14px ',
+    fontSize: '0.875rem',
+  },
+  '& .MuiInputBase-root': {
+    borderRadius: '50px',
+  },
+}
+
 export const PROMTS_VARIANTS = [
   {
     text: 'ai_gen_simple_step_prompt_1',
@@ -225,6 +237,7 @@ export const PROGRAMMING_LANGUAGE = [
   { key: 'HTML/CSS', value: 'HTML/CSS' },
   { key: 'HTML/CSS/JS', value: 'HTML/CSS/JS' },
   { key: 'Kaboom.js', value: 'Kaboom.js' },
+  { key: 'P5.js', value: 'P5.js' },
 ]
 
 export const TRACK = [
