@@ -66,7 +66,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
 
   return (
     <>
-      <IconButton
+      {/* <IconButton
         sx={{
           display: isDesktop ? 'inline-flex' : 'none',
           background: isChatVisible ? '#c5d6e3' : theme.palette.background.default,
@@ -79,7 +79,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
         }}
       >
         <IoChatboxEllipsesOutline size={20} />
-      </IconButton>
+      </IconButton> */}
 
       {getContent()}
     </>
