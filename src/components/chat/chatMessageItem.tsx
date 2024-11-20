@@ -65,7 +65,7 @@ export default function ChatMessageItem({ message }: { message: IChatMessage }) 
         if (codeFormatting) {
           return <code key={index}>{msg}</code>
         }
-        return (<Typography key={index}>{msg}</Typography>)
+        return <Typography key={index}>{msg}</Typography>
       })}
     </Stack>
   )

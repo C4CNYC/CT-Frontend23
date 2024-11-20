@@ -53,7 +53,7 @@ const Chat = (): React.ReactElement => {
           sender: SENDER_AI.MUMU_AI,
           body: responseMessage,
           timestamp: new Date(),
-        }
+        },
       ])
     )
   }

@@ -14,7 +14,8 @@ export default function ChatMessageList({ messages = [] }: { messages: Array<ICh
       <Scrollbar sx={{ px: 3, py: 5, height: 1 }}>
         <Box>
           {messages.map((message, i) => {
-            return (<ChatMessageItem
+            return (
+              <ChatMessageItem
                 key={i}
                 message={message}
                 //   participants={participants}
