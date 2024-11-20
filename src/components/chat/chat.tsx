@@ -39,20 +39,23 @@ const Chat = (): React.ReactElement => {
 
   const sendAskAI = async (message: string) => {
     const response = await getHelpFromAI({
-      prompt: `${slideContext} ${messageLog} ${message}`
+      prompt: `${slideContext} ${messageLog} ${message}`,
     })
 
     let responseMessage: any = ''
     if ('data' in response) {
       responseMessage = response.data?.data ?? response.data
     }
-    dispatch(setChatMessages([
-      ...messageLog, 
-      {
-      sender: SENDER_AI.MUMU_AI,
-      body: responseMessage,
-      timestamp: new Date(),
-    }]))
+    dispatch(
+      setChatMessages([
+        ...messageLog,
+        {
+          sender: SENDER_AI.MUMU_AI,
+          body: responseMessage,
+          timestamp: new Date(),
+        }
+      ])
+    )
   }
 
   const renderNav = (
@@ -79,7 +82,6 @@ const Chat = (): React.ReactElement => {
     </Stack>
   )
 
-  console.log('stack', messageLog)
   return (
     <Stack
       // component={Card}

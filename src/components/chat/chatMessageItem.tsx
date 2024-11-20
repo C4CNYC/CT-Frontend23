@@ -10,7 +10,6 @@ import { formatDistanceToNowStrict } from 'date-fns'
 import { IChatMessage } from '@/redux/slices/chat-handler'
 import { useSelector } from '@/redux/store'
 
-
 // ----------------------------------------------------------------------
 
 export default function ChatMessageItem({ message }: { message: IChatMessage }) {
@@ -56,19 +55,17 @@ export default function ChatMessageItem({ message }: { message: IChatMessage }) 
     >
       {displayMessages.map((msg, index) => {
         if (msg === '```') {
-          codeFormatting = false 
+          codeFormatting = false
           return '\n'
         }
-        if(msg === '```javascript') {
+        if (msg === '```javascript') {
           codeFormatting = true
           return '\n'
         }
         if (codeFormatting) {
-          return <code>{msg}</code>
+          return <code key={index}>{msg}</code>
         }
-        return (<Typography key={index}>
-          {msg}
-        </Typography>)
+        return (<Typography key={index}>{msg}</Typography>)
       })}
     </Stack>
   )
