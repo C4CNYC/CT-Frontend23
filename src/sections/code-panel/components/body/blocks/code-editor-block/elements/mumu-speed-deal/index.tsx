@@ -24,9 +24,10 @@ import {
 interface MumuSpeedDialProps {
   typing: boolean | null
   contentId?: string
+  code?: string
 }
 
-const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
+const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ contentId, code, typing }) => {
   const isDesktop = useIsDesktop()
   const [actionsList, setActionsList] = useState<Array<Record<string, any>>>(actions)
   const popperRef = useRef<null | HTMLElement>(null)
@@ -170,6 +171,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
       <UnstuckMobileDialog
         open={dialogType === IActionDialogType.stuck}
         onClose={handleCloseDialog}
+        slideText={`${data?.contents?.[slideIndex]?.body} The solution is: ${data?.contents?.[slideIndex]?.solution_body} The preloaded starter code is: ${data?.contents?.[slideIndex]?.preload_body} My current code is: ${code}`}
       />
     </>
   )
