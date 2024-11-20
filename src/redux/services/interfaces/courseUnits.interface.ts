@@ -138,7 +138,8 @@ export interface ILessonCreate {
 }
 export interface IOpenAiRequest {
   prompt: string
-  data?: string
+  data?: any
+  error?: any
 }
 
 export interface IModulesSearchParams extends BaseSearchInterface {

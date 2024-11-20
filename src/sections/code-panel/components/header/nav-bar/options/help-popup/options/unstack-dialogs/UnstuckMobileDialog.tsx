@@ -80,9 +80,9 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({ open, onClose, slid
     })
 
     if ('data' in response && response.data) {
-      setAIResponse([...aiResponse, response.data?.data ?? response.data?.error])
-    } else if (response.error) {
-      setAIResponse([...aiResponse, response?.error?.data])
+      setAIResponse([...aiResponse, response.data?.data ?? (response.data as any)?.error])
+    } else if ('error' in response && response.error) {
+      setAIResponse([...aiResponse, (response?.error as any)?.data])
     }
   }
 
