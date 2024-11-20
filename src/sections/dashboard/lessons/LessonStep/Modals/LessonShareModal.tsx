@@ -10,6 +10,7 @@ import {
   IconButton,
   Stack,
   Typography,
+  Link,
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
@@ -157,15 +158,21 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             py={2}
             gap={1}
           >
-            <Button sx={SHARE_BTN_SX}>
-              <Iconify icon='ri:twitter-x-line' />
-            </Button>
-            <Button sx={SHARE_BTN_SX}>
-              <Iconify icon='basil:facebook-outline' />
-            </Button>
-            <Button sx={SHARE_BTN_SX}>
-              <Iconify icon='basil:linkedin-outline' />
-            </Button>
+            <Link href={`https://twitter.com/intent/tweet?text=${socialText}%20@codetriber%20%23AIForEducation`}>
+              <Button sx={SHARE_BTN_SX}>
+                <Iconify icon='ri:twitter-x-line' />
+              </Button>
+            </Link>
+            {/* <Link href=''>
+              <Button sx={SHARE_BTN_SX}>
+                <Iconify icon='basil:facebook-outline' />
+              </Button>
+            </Link>
+            <Link href=''>
+              <Button sx={SHARE_BTN_SX}>
+                <Iconify icon='basil:linkedin-outline' />
+              </Button>
+            </Link> */}
           </Stack>
         </DialogContent>
       </Dialog>
