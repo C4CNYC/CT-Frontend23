@@ -107,11 +107,10 @@ export const STEP_TYTLE_STYLES = {
 
 export const STEP_CONTAINER_STYLES = {
   gap: 3,
-  minHeight: '620px',
+  minHeight: '520px',
 }
 
 export const BTN_CONTAINER_STYLES = {
-  marginTop: 'auto',
   gap: 3,
   pr: { xs: 0, sm: 3 },
   flexDirection: { xs: 'column', sm: 'row' },

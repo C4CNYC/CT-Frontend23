@@ -3,18 +3,34 @@ import { Theme } from '@mui/material'
 export const getPageContainerSx = (isMobile: boolean, light: boolean, headerBg?: string | null) => {
   return light
     ? {
+        borderRadius: '8px',
         pt: isMobile ? 2 : 10,
         px: isMobile ? 1 : 8,
+        pb: 2,
         background: !isMobile
           ? `linear-gradient(249.57deg, rgba(255, 255, 255, 0.8) 27.55%, 
                               rgba(255, 255, 255, 0.6) 44.53%, 
                               rgba(255, 255, 255, 0.24) 63.57%), 
               top left / contain url(${headerBg || '/assets/projects/header_bg.png'}) no-repeat`
           : '',
+        '-webkit-mask': `linear-gradient(to top,  transparent 3%, #fff 6% 94%, transparent 96%),
+        linear-gradient(to left, transparent 3%, #fff 5% 94%, transparent 98%)`,
+        '-webkit-mask-size': '110% 110%',
+        '-webkit-mask-position': 'center',
+        '-webkit-mask-repeat': 'no-repeat',
+        '-webkit-mask-composite': 'source-in',
+        mask: `linear-gradient(to top,  transparent 3%, #fff 6% 94%, transparent 96%),
+        linear-gradient(to left, transparent 3%, #fff 5% 94%, transparent 98%)`,
+        'mask-size': '110% 110%',
+        'mask-position': 'center',
+        'mask-repeat': 'no-repeat',
+        'mask-composite': 'intersect',
       }
     : {
+        borderRadius: '8px',
         pt: isMobile ? 2 : 10,
         px: isMobile ? 1 : 8,
+        pb: 2,
         background: !isMobile
           ? `linear-gradient(249.57deg, rgba(255, 255, 255, 0.8) 27.55%, 
                           rgba(255, 255, 255, 0.6) 44.53%, 

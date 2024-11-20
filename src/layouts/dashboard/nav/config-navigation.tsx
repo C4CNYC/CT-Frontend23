@@ -41,11 +41,6 @@ export const admin = {
       path: MANAGER_PATH_DASHBOARD.organization.schools,
       icon: <RiOrganizationChart />,
     },
-    {
-      title: 'sidebar_menu_courses',
-      path: MANAGER_PATH_DASHBOARD.courses.root,
-      icon: <MdPlayLesson />,
-    },
   ],
 }
 
@@ -83,6 +78,11 @@ export const managment = {
 export const content = {
   subheader: 'sidebar_menu_content',
   items: [
+    {
+      title: 'sidebar_menu_courses',
+      path: MANAGER_PATH_DASHBOARD.courses.root,
+      icon: <MdPlayLesson />,
+    },
     {
       title: 'sidebar_menu_modules',
       path: MANAGER_PATH_DASHBOARD.modules.root,
