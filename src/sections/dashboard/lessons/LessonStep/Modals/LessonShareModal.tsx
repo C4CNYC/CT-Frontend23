@@ -38,11 +38,13 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
   const generateAICourseSchema = Yup.object().shape({
     title: Yup.string(),
   })
+  const [socialText, setSocialText] = useState(translate('share_modal_share_text'))
+  const [twitterUrl, setTwitterUrl] = useState(`https://twitter.com/intent/tweet?text=${socialText}`)
 
   const methods = useForm<FormShareModalProps>({
     resolver: yupResolver(generateAICourseSchema),
     mode: 'all',
-    defaultValues: { title: translate('share_modal_share_text') },
+    defaultValues: { title: socialText },
   })
 
   const onCopy = () => {
@@ -53,6 +55,10 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
   }
 
   const onSubmit = () => {}
+
+  const onChangeSocialText = (e: any) => {
+    setSocialText(e.target.value)
+  }
 
   return (
     <>
@@ -142,6 +148,8 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
               name='title'
               multiline
               rows={2}
+              onChange={onChangeSocialText}
+              value={socialText}
             />
           </FormProvider>
           <Stack
