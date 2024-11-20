@@ -56,7 +56,7 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({ open, onClose, slid
   const [checked, setChecked] = useState<string[]>([])
   const translate = useTranslate()
   const dispatch = useDispatch()
-  const profile = useSelector((state) => state.global.user)
+  const profile = useSelector((state: any) => state.global.user)
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value)
     const newChecked = [...checked]
