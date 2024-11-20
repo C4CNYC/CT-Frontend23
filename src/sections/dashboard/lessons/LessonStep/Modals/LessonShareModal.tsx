@@ -10,6 +10,7 @@ import {
   IconButton,
   Stack,
   Typography,
+  Link,
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { useRouter } from 'next/router'
@@ -38,11 +39,12 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
   const generateAICourseSchema = Yup.object().shape({
     title: Yup.string(),
   })
+  const [socialText, setSocialText] = useState(translate('share_modal_share_text'))
 
   const methods = useForm<FormShareModalProps>({
     resolver: yupResolver(generateAICourseSchema),
     mode: 'all',
-    defaultValues: { title: translate('share_modal_share_text') },
+    defaultValues: { title: socialText },
   })
 
   const onCopy = () => {
@@ -53,6 +55,10 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
   }
 
   const onSubmit = () => {}
+
+  const onChangeSocialText = (e: any) => {
+    setSocialText(e.target.value)
+  }
 
   return (
     <>
@@ -142,6 +148,8 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
               name='title'
               multiline
               rows={2}
+              onChange={onChangeSocialText}
+              value={socialText}
             />
           </FormProvider>
           <Stack
@@ -149,15 +157,24 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             py={2}
             gap={1}
           >
-            <Button sx={SHARE_BTN_SX}>
-              <Iconify icon='ri:twitter-x-line' />
-            </Button>
-            <Button sx={SHARE_BTN_SX}>
-              <Iconify icon='basil:facebook-outline' />
-            </Button>
-            <Button sx={SHARE_BTN_SX}>
-              <Iconify icon='basil:linkedin-outline' />
-            </Button>
+            <Link
+              target='_blank'
+              href={`https://twitter.com/intent/tweet?text=${socialText}%20@codetriber%20%23AIForEducation`}
+            >
+              <Button sx={SHARE_BTN_SX}>
+                <Iconify icon='ri:twitter-x-line' />
+              </Button>
+            </Link>
+            {/* <Link href=''>
+              <Button sx={SHARE_BTN_SX}>
+                <Iconify icon='basil:facebook-outline' />
+              </Button>
+            </Link>
+            <Link href=''>
+              <Button sx={SHARE_BTN_SX}>
+                <Iconify icon='basil:linkedin-outline' />
+              </Button>
+            </Link> */}
           </Stack>
         </DialogContent>
       </Dialog>
