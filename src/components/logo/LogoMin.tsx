@@ -77,20 +77,6 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
       }
     }, [data])
 
-    if (!data) {
-      return null
-    }
-
-    // if data.tenant === 'codejika' set codejika logo url or svg
-    // else set default logo url or svg
-
-    if (disabledLink) {
-      switch (data.tenant) {
-        case 'codeJika':
-      }
-      return logo
-    }
-
     return (
       <Link
         component={NextLink}

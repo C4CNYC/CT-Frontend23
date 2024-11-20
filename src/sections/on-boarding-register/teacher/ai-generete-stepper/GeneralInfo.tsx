@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
+import { useController } from 'react-hook-form'
 
 import { languages } from '@root/src/assets/data/languages'
 import { Iconify, RHFSelect, RHFTextField } from '@root/src/components'
@@ -32,6 +33,7 @@ type IGeneralInfoProps = {
   closeModal?: () => void
   prevStep: () => void
   isCustomLang: boolean
+  isTrackSelected: boolean
 }
 
 export function GeneralInfo({
@@ -40,7 +42,13 @@ export function GeneralInfo({
   isModal,
   closeModal,
   isCustomLang,
+  isTrackSelected,
 }: IGeneralInfoProps) {
+  const { field: RtrackRField } = useController({ name: 'RtrackR' })
+
+  const RtrackRHandleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: any) => {
+    RtrackRField.onChange(newAlignment === RtrackRField.value ? null : newAlignment)
+  }
   const { data: properties } = useGetPropertiesQuery({
     entityType: 'lesson',
     propertyName: 'aiTemplate',
@@ -77,6 +85,7 @@ export function GeneralInfo({
         ]
       : TYPE_LESSON
   ).filter((e) => e !== undefined)
+
   return (
     <Stack sx={STEP_CONTAINER_STYLES}>
       <Stack
@@ -139,6 +148,7 @@ export function GeneralInfo({
           options={PROGRAMMING_LANGUAGE}
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
           sxButton={toggleButtonStyles}
+          disabled={isTrackSelected}
         />
       </Stack>
       <Stack>
@@ -159,6 +169,7 @@ export function GeneralInfo({
             options={TRACK}
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
             sxButton={toggleButtonStyles}
+            onChange={RtrackRHandleChange}
           />
         </div>
       </Stack>
