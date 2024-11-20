@@ -5,7 +5,7 @@ import { useState, type CSSProperties, type FC, type ReactNode } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, IconButton, useTheme } from '@mui/material'
 import { SxProps, Theme } from '@mui/system'
-import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEllipsesOutline'
+// import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEllipsesOutline'
 import Draggable from 'react-draggable'
 import { useDispatch } from 'react-redux'
 
