@@ -40,7 +40,6 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
     title: Yup.string(),
   })
   const [socialText, setSocialText] = useState(translate('share_modal_share_text'))
-  const [twitterUrl, setTwitterUrl] = useState(`https://twitter.com/intent/tweet?text=${socialText}`)
 
   const methods = useForm<FormShareModalProps>({
     resolver: yupResolver(generateAICourseSchema),
@@ -158,7 +157,9 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             py={2}
             gap={1}
           >
-            <Link href={`https://twitter.com/intent/tweet?text=${socialText}%20@codetriber%20%23AIForEducation`}>
+            <Link
+              href={`https://twitter.com/intent/tweet?text=${socialText}%20@codetriber%20%23AIForEducation`}
+            >
               <Button sx={SHARE_BTN_SX}>
                 <Iconify icon='ri:twitter-x-line' />
               </Button>
