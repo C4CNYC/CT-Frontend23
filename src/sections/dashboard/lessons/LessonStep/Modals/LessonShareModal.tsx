@@ -158,6 +158,7 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             gap={1}
           >
             <Link
+              target='_blank'
               href={`https://twitter.com/intent/tweet?text=${socialText}%20@codetriber%20%23AIForEducation`}
             >
               <Button sx={SHARE_BTN_SX}>
