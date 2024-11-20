@@ -7,11 +7,17 @@ import { HiTrash } from '@react-icons/all-files/hi2/HiTrash'
 import { PiArrowBendUpLeftLight } from '@react-icons/all-files/pi/PiArrowBendUpLeftLight'
 import { formatDistanceToNowStrict } from 'date-fns'
 
+import { IChatMessage } from '@/redux/slices/chat-handler'
+import { useSelector } from '@/redux/store'
+
+
 // ----------------------------------------------------------------------
 
-export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
+export default function ChatMessageItem({ message }: { message: IChatMessage }) {
   //   const { body, createdAt } = message
-
+  const profile = useSelector((state) => state.global.user)
+  const displayMessages = message.body.split('\n')
+  const isMe = message.sender === profile?.id
   const renderInfo = (
     <Typography
       noWrap
@@ -24,12 +30,14 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
         }),
       }}
     >
-      {!isMe && `firstName`} &nbsp;
-      {formatDistanceToNowStrict(new Date(2024, 1, 14), {
+      {!isMe && message.sender} &nbsp;
+      {formatDistanceToNowStrict(new Date(message?.timestamp || Date.now()), {
         addSuffix: true,
       })}
     </Typography>
   )
+
+  let codeFormatting = false
 
   const renderBody = (
     <Stack
@@ -46,7 +54,22 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
         }),
       }}
     >
-      {'message body'}
+      {displayMessages.map((msg, index) => {
+        if (msg === '```') {
+          codeFormatting = false 
+          return '\n'
+        }
+        if(msg === '```javascript') {
+          codeFormatting = true
+          return '\n'
+        }
+        if (codeFormatting) {
+          return <code>{msg}</code>
+        }
+        return (<Typography key={index}>
+          {msg}
+        </Typography>)
+      })}
     </Stack>
   )
 

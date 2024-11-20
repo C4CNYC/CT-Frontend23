@@ -36,7 +36,6 @@ export default function ChatHeaderDetail({ name, avatar, status }: IChatHeader) 
 
       <ListItemText
         primary={name}
-        secondary={status ? 'online' : 'ofline'}
         secondaryTypographyProps={{
           component: 'span',
           ...(status && {

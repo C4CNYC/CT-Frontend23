@@ -118,6 +118,13 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Lessons' }],
     }),
+    getHelpFromAI: builder.mutation<IOpenAiRequest & BaseResponseInterface, { prompt: string }>({
+      query: ({ prompt }) => ({
+        url: '/student/lesson/aihelp',
+        method: 'POST',
+        body: { prompt },
+      }),
+    }),
     askAI: builder.mutation<
       IOpenAiRequest & BaseResponseInterface,
       { prompt: string; add_response_format: string }
@@ -202,6 +209,7 @@ export const {
   useCreateByAIMutation,
   useGenerateLessonMutation,
   useGenerateLessonMultiMutation,
+  useGetHelpFromAIMutation,
   useAskAIMutation,
   useCreateLessonUsingOpenAIAssistantMutation,
   useCreateLessonUsingOpenAIAssistantBetaMutation,

@@ -143,6 +143,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       <MumuSpeedDial
         typing={typing}
         contentId={contentId}
+        code={codeState}
       />
 
       {Boolean(validations?.length) && (

@@ -1,24 +1,26 @@
 import Box from '@mui/material/Box'
 
+import { IChatMessage } from '@/redux/slices/chat-handler'
+
 import { Scrollbar } from '../scrollbar'
 
 import ChatMessageItem from './chatMessageItem'
 
 // ----------------------------------------------------------------------
 
-export default function ChatMessageList({ messages = [] }) {
+export default function ChatMessageList({ messages = [] }: { messages: Array<IChatMessage> }) {
   return (
     <>
       <Scrollbar sx={{ px: 3, py: 5, height: 1 }}>
         <Box>
-          {Array(6, 6, 6, 6).map((_, i) => (
-            <ChatMessageItem
+          {messages.map((message, i) => {
+            return <ChatMessageItem
               key={i}
-              isMe={i % 2 ? true : false}
-              //   message={message}
+              message={message}
               //   participants={participants}
             />
-          ))}
+          }
+          )}
         </Box>
       </Scrollbar>
     </>

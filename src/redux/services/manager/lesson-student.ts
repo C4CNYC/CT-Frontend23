@@ -10,6 +10,8 @@ import {
 import { ContentValidation, setContentValidations } from '@/redux/slices/code-panel-global'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { IOpenAiRequest } from '../interfaces/courseUnits.interface'
+
 import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
@@ -122,6 +124,13 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['LastVisitedUnitAndLesson'],
     }),
+    getHelpFromAI: builder.mutation<IOpenAiRequest & BaseResponseInterface, { prompt: string }>({
+      query: ({ prompt }) => ({
+        url: '/student/lesson/aihelp',
+        method: 'POST',
+        body: { prompt },
+      }),
+    }),
   }),
 
   overrideExisting: false,
@@ -137,4 +146,5 @@ export const {
   // -------------mutation-----------
   useUpdateStudentLastVisitedDataMutation,
   useUpdateStudentLastVisitedSlideMutation,
+  useGetHelpFromAIMutation,
 } = extendedApi

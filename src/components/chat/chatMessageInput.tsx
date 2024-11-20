@@ -8,12 +8,13 @@ import { sub } from 'date-fns'
 
 // ----------------------------------------------------------------------
 
-export default function ChatMessageInput(
-  {
-    //   recipients,
-    //   selectedConversationId,
-  }
-) {
+export default function ChatMessageInput({
+  sendMessage,
+  //   recipients,
+  //   selectedConversationId,
+}: {
+  sendMessage: (message: string) => void
+}) {
   const [message, setMessage] = useState('')
 
   const messageData = useMemo(
@@ -41,16 +42,8 @@ export default function ChatMessageInput(
   }, [])
 
   const handleSendMessage = useCallback(
-    async (event: { key: string }) => {
-      try {
-        if (event.key === 'Enter') {
-          if (message) {
-          }
-          setMessage('')
-        }
-      } catch (error) {
-        // console.error(error)
-      }
+    async (event: React.MouseEvent<HTMLButtonElement>) => {
+      sendMessage(message)
     },
     [conversationData, message, messageData]
   )
@@ -58,17 +51,17 @@ export default function ChatMessageInput(
   return (
     <>
       <InputBase
-        value={message}
-        onKeyUp={handleSendMessage}
+        // onKeyUp={handleSendMessage}
+        // onClick={}
+        autoFocus
         onChange={handleChangeMessage}
         placeholder='Type a message'
-        disabled={false}
         endAdornment={
           <Stack
             direction='row'
             sx={{ flexShrink: 0 }}
           >
-            <IconButton onClick={() => handleSendMessage}>
+            <IconButton onClick={handleSendMessage}>
               <IoIosSend />
             </IconButton>
           </Stack>
@@ -77,6 +70,7 @@ export default function ChatMessageInput(
           px: 1,
           height: 56,
           flexShrink: 0,
+          bgcolor: 'white',
           borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
         }}
       />
