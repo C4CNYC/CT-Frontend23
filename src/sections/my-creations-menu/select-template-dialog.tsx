@@ -20,6 +20,7 @@ import {
   useGetLessonsByIdsQuery,
 } from '@root/src/redux/services/manager/lessons-manager'
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { fDateTime } from '@root/src/utils'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -57,7 +58,7 @@ export function SelectTemplateDialog({ children }: Props): React.ReactElement {
       }
       enqueueSnackbar(translate('lesson_cloned_msg'))
       router.push(
-        `${router.pathname}?${new URLSearchParams({ lessonId: data.data.id })}`,
+        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: data.data.id })}`,
         undefined,
         {
           shallow: true,
