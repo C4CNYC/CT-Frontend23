@@ -4,13 +4,13 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { PATH_PAGE } from '@/routes/paths'
 
 export default function HomePage(): React.ReactElement {
   const { isAuthenticated } = useAuthContext()
   const { push } = useRouter()
   useEffect(() => {
-    void push(STUDENT_PATH_DASHBOARD.class.root)
+    void push(PATH_PAGE.create)
   }, [push])
   return (
     <>
