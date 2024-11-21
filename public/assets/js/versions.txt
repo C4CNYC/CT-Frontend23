@@ -1,0 +1,4 @@
+https://cdn.jsdelivr.net/npm/p5@1.11.1/lib/p5.min.js
+https://cdn.jsdelivr.net/npm/brython@3.10.4/brython.min.js
+https://unpkg.com/kaboom@2000.2.9/dist/kaboom.js
+

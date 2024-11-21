@@ -21,7 +21,7 @@ export const COURSE_INFO_IMAGE_SX = {
 export const getCourseInfoWrapperSx = (theme: Theme) => ({
   flexDirection: {
     xs: 'column-reverse',
-    sm: 'row',
+    sm: 'column-reverse',
     md: 'row',
   },
   flexWrap: 'nowrap',

@@ -23,7 +23,6 @@ import {
   LESSON_DURARION,
   LEVELS,
   PERSONA,
-  PROGRAMMING_LANGUAGE,
   TONE,
   TYPE_LESSON,
   TYPE_PROJECT,
@@ -40,7 +39,7 @@ const defaultValues = {
   RlessonLanguageR: 'English',
   RcustomLanguageR: '',
   RtrackR: '',
-  RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
+  RprogrammingLanguageR: '',
   RpersonaR: PERSONA[0].value,
   RtoneR: TONE[0].value,
   RtypeLessonR: TYPE_LESSON[1].value,
@@ -202,6 +201,7 @@ export default function AIGenerateStepper({
             prevStep={prevStep}
             closeModal={closeModal}
             isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
+            isTrackSelected={Boolean(methods.watch('RtrackR'))}
           />
         )}
         {activeStep === 1 && (

@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
-import { IconButton, InputAdornment, Link, Stack, Typography, useTheme } from '@mui/material'
+import { IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
 import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import NextLink from 'next/link'
 import { StepWizardChildProps } from 'react-step-wizard'
@@ -11,7 +11,7 @@ import { PATH_AUTH } from '@/routes/paths'
 import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { RESER_PASS_SX, TYPO_CONT_SX, getButtonSx } from './constants'
+import { RESER_PASS_SX, TYPO_CONT_SX, SINGIN_BTN_SX } from './constants'
 
 interface Props {
   isSubmiting: boolean
@@ -26,7 +26,6 @@ export default function SingInPassword({
   isError,
   currentStep,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
-  const theme = useTheme()
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [isDisabledBtn, setIsDisabletBtn] = useState<boolean>(true)
   const translate = useTranslate()
@@ -42,8 +41,6 @@ export default function SingInPassword({
       setIsDisabletBtn(false)
     }
   }, [currentStep])
-
-  const buttonSx = useMemo(() => getButtonSx(theme), [theme])
 
   return (
     <>
@@ -104,7 +101,7 @@ export default function SingInPassword({
           type='submit'
           disabled={isDisabledBtn}
           loading={isSubmiting}
-          sx={buttonSx}
+          sx={SINGIN_BTN_SX}
         >
           {translate('login_lets_go')}
         </LoadingButton>
