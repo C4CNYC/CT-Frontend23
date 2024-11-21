@@ -16,6 +16,7 @@ const ConsoleBlock = () => {
     let eventListener = function (event: { data: any }) {
       if (event.data && event.data.type === 'ConsoleLog') {
         if (ConsoleBoxRef.current === null) return
+        if (!isOpen) setIsOpen(true)
         ConsoleBoxRef.current.innerHTML += event?.data?.message + '<br/>'
         ConsoleBoxRef.current.scrollTop = ConsoleBoxRef.current.scrollHeight
       }
