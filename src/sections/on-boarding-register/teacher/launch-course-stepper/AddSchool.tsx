@@ -22,6 +22,7 @@ import { localStorageAvailable } from '@root/src/utils'
 import { AiGenerate } from '@root/src/utils/ai-generate'
 
 import { styledRegisterInput } from '../../styles'
+import { SUBMIT_BTN_SX } from '../constants'
 
 interface SchoolFormProps {
   schoolName: string
@@ -211,16 +212,7 @@ export default function AddSchool(): React.ReactElement {
         </Stack>
         <LoadingButton
           type='submit'
-          sx={{
-            background: '#43D4DD33',
-            color: '#43D4DD',
-            fontSize: '1.5rem',
-            mt: 3,
-            width: '100%',
-            '&:hover': {
-              background: '#fff',
-            },
-          }}
+          sx={SUBMIT_BTN_SX}
           loading={isUpdating && aiLessonWaiting}
         >
           {translate('register_all_done')}

@@ -33,6 +33,7 @@ import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
@@ -105,10 +106,29 @@ export default function CodePanelLayout(): ReactElement | null {
     isLoading: isLoadingLessonContent,
     isFetching: isFetchingLessonContent,
     fulfilledTimeStamp: fulfilledTimeStamp,
+    isError: isErrorLessonContent,
   } = useGetLessonContentStudentQuery(
     { id: router.query.lessonId as string },
     { skip: !router.query.lessonId }
   )
+
+  let { data: lessonsRelatedWithSlug, isLoading: lessonsRelatedWithSlugIsLoading } =
+    useGetLessonsQuery(
+      {
+        slug: lessonIdFromRoute,
+      },
+      { skip: !lessonIdFromRoute && !isErrorLessonContent }
+    )
+  useEffect(() => {
+    if (
+      !lessonsRelatedWithSlug ||
+      !lessonsRelatedWithSlug?.data ||
+      !lessonsRelatedWithSlug?.data.length
+    )
+      return
+    let l = lessonsRelatedWithSlug.data[0]
+    router.push(STUDENT_PATH_DASHBOARD.codePanel.root + `?&lessonId=${l.id}`)
+  }, [lessonsRelatedWithSlug])
 
   useGetContentCheckersQuery(undefined, {
     skip: !fulfilledTimeStamp || !profile,
