@@ -29,6 +29,7 @@ export const PATH_PAGE = {
   studentProfile: '/student/profile',
   pricing: '/student/pricing',
   home: '/main',
+  create: '/create',
 }
 
 export const PATH_MAIN = {
