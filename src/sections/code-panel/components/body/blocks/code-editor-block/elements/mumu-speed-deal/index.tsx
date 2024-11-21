@@ -22,11 +22,11 @@ import {
 } from './constants'
 
 interface MumuSpeedDialProps {
-  typing: boolean | null
+  openPopover: boolean | null
   contentId?: string
 }
 
-const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
+const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
   const isDesktop = useIsDesktop()
   const [actionsList, setActionsList] = useState<Array<Record<string, any>>>(actions)
   const popperRef = useRef<null | HTMLElement>(null)
@@ -37,7 +37,6 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
   const translate = useTranslate()
   let lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   let courseId = useSelector((state) => state.codePanelGlobal.courseId)
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const profile = useSelector((state) => state.global.user)
   const searchParams = useSearchParams()
 
@@ -49,18 +48,17 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
     courseId = searchParams.get('courseId') || undefined
   }
 
-  const { data: studentData, isLoading: isStudentDataLoading } = useGetLessonStudentQuery(
+  const { data: studentData } = useGetLessonStudentQuery(
     { id: lessonId as string },
     { skip: !lessonId || !profile }
   )
 
-  const { data: publicData, isLoading: isPublicDataLoading } = useGetPublicLessonQuery(
+  const { data: publicData } = useGetPublicLessonQuery(
     { id: courseId as string, lesson_id: lessonId as string },
     { skip: !lessonId || !courseId || !!profile }
   )
 
   const data = studentData ?? publicData
-  const isLoading = isStudentDataLoading ?? isPublicDataLoading
   const slideTips = data?.contents?.find((ct) => ct.id == contentId)?.tips
 
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
@@ -88,10 +86,13 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
   }, [])
 
   useEffect(() => {
-    if (typing && slideTips && !isChecked) {
+    if (!openPopover) {
+      setOpenPoper(false)
+    }
+    if (openPopover && slideTips && !isChecked) {
       setOpenPoper(true)
     }
-  }, [typing])
+  }, [openPopover])
 
   useEffect(() => {
     if (openPoper) {
@@ -115,7 +116,6 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
 
       <Tooltip title={<Typography>{translate('code_editor_mumu_menu_tooltip')}</Typography>}>
         <SpeedDial
-          ref={popperRef}
           aria-describedby={'popper'}
           ariaLabel='SpeedDial basic example'
           open={speedDeal}
@@ -124,7 +124,12 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing, contentId }) => {
           FabProps={speedDealProps}
           sx={speedDealStyles}
           direction='up'
-          icon={<Box sx={BOX_PROPS} />}
+          icon={
+            <Box
+              sx={BOX_PROPS}
+              ref={popperRef}
+            />
+          }
         >
           {actionsList.map((action) => {
             if (action.name === 'tips') {

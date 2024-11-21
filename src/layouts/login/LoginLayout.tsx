@@ -4,7 +4,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import { Image } from '@/components/image'
 import { Logo } from '@/components/logo'
 import ThemeSwitcher from '@/components/theme-switcher'
-import { useTranslate } from '@/utils/translateHelper'
 
 import { StyledRoot, StyledSection, StyledSectionBg, StyledSwitcher } from './styles'
 
@@ -21,7 +20,6 @@ export default function LoginLayout({
   title,
   subtitle,
 }: Props): React.ReactElement | null {
-  const translate = useTranslate()
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
       <StyledRoot>
@@ -73,10 +71,7 @@ export default function LoginLayout({
 
           <StyledSectionBg />
         </StyledSection>
-
-        {/* <StyledContent> */}
         {children}
-        {/* </StyledContent> */}
         <StyledSwitcher>
           <ThemeSwitcher />
         </StyledSwitcher>

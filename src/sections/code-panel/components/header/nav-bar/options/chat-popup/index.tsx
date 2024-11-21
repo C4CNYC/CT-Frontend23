@@ -5,7 +5,7 @@ import { useState, type CSSProperties, type FC, type ReactNode } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, IconButton, useTheme } from '@mui/material'
 import { SxProps, Theme } from '@mui/system'
-import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEllipsesOutline'
+// import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEllipsesOutline'
 import Draggable from 'react-draggable'
 import { useDispatch } from 'react-redux'
 
@@ -66,7 +66,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
 
   return (
     <>
-      <IconButton
+      {/* <IconButton
         sx={{
           display: isDesktop ? 'inline-flex' : 'none',
           background: isChatVisible ? '#c5d6e3' : theme.palette.background.default,
@@ -79,7 +79,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
         }}
       >
         <IoChatboxEllipsesOutline size={20} />
-      </IconButton>
+      </IconButton> */}
 
       {getContent()}
     </>
