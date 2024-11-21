@@ -148,15 +148,15 @@ export function SelectTemplateDialog({ children }: Props): React.ReactElement {
                           ),
                           label: lesson.contents?.length + ' slides',
                         },
-                        {
-                          icon: (
-                            <Iconify
-                              icon='solar:users-group-rounded-bold'
-                              sx={{ color: 'primary.main' }}
-                            />
-                          ),
-                          label: `${lesson.duration}`,
-                        },
+                        // {
+                        //   icon: (
+                        //     <Iconify
+                        //       icon='solar:users-group-rounded-bold'
+                        //       sx={{ color: 'primary.main' }}
+                        //     />
+                        //   ),
+                        //   label: `${lesson.}`,
+                        // },
                       ].map((item) => (
                         <Stack
                           key={item.label}
