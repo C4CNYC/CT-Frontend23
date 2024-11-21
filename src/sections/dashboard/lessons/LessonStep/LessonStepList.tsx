@@ -124,7 +124,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
 
   useEffect(() => {
     if (!lesson) return
-    if (newlyCreated && lesson.name != 'New Lesson') LoaderStepDialogStateTrue()
+    if (newlyCreated && lesson.name === 'Ai Lesson') LoaderStepDialogStateTrue()
   }, [lesson])
 
   useEffect(() => {
