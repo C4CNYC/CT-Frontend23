@@ -6,6 +6,7 @@ import { FaTasks } from '@react-icons/all-files/fa/FaTasks'
 import { FaUserFriends } from '@react-icons/all-files/fa/FaUserFriends'
 import { FaUsers } from '@react-icons/all-files/fa/FaUsers'
 import { FaUserShield } from '@react-icons/all-files/fa/FaUserShield'
+import { FiCodesandbox } from '@react-icons/all-files/fi/FiCodesandbox'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
 import { GiProgression } from '@react-icons/all-files/gi/GiProgression'
 import { GoFileSubmodule } from '@react-icons/all-files/go/GoFileSubmodule'
@@ -99,6 +100,11 @@ export const content = {
       icon: <FaTasks />,
       info: <Label color='success'>Coming soon</Label>,
       disabled: true,
+    },
+    {
+      title: 'Properties',
+      path: MANAGER_PATH_DASHBOARD.properties,
+      icon: <FiCodesandbox />,
     },
     {
       title: 'sidebar_menu_integrations',

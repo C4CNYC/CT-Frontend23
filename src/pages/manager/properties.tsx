@@ -1,0 +1,255 @@
+import { ChangeEventHandler } from 'react'
+
+import { yupResolver } from '@hookform/resolvers/yup'
+import {
+  Button,
+  Card,
+  IconButton,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material'
+import { Container, Stack } from '@mui/system'
+import { format } from 'date-fns'
+import * as _ from 'lodash-es'
+import Head from 'next/head'
+import { useSnackbar } from 'notistack'
+import { useForm } from 'react-hook-form'
+
+import {
+  CustomBreadcrumbs,
+  FormProvider,
+  Iconify,
+  RHFSelect,
+  RHFTextField,
+  Scrollbar,
+  TableNoData,
+  TablePaginationCustom,
+  useSettingsContext,
+  useTable,
+} from '@/components'
+import { useFilters } from '@/hooks'
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
+import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
+import { useTranslate } from '@/utils/translateHelper'
+import {
+  PropertiesCreateEdit,
+  propertiesSchema,
+} from '@root/src/components/properties/create-edit-properties'
+import {
+  IPropertySearchParams,
+  PropertyEntityTypes,
+} from '@root/src/redux/services/interfaces/properties.interface'
+import {
+  useGetPropertiesQuery,
+  useDeletePropertyMutation,
+} from '@root/src/redux/services/manager/properties-manager'
+
+ManagerProperties.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+)
+
+export default function ManagerProperties(): React.ReactElement {
+  const { dense, onChangeDense } = useTable()
+  const { enqueueSnackbar } = useSnackbar()
+  const { themeStretch } = useSettingsContext()
+  const { filters, setFilter } = useFilters<IPropertySearchParams>({ entityType: 'lesson' })
+  const { data: properties, isLoading: propertiesLoading } = useGetPropertiesQuery(filters)
+
+  const [deleteProperty] = useDeletePropertyMutation()
+  const translate = useTranslate()
+
+  const methods = useForm<IPropertySearchParams>({
+    resolver: yupResolver(propertiesSchema),
+    defaultValues: { entityType: 'lesson' },
+  })
+
+  const onDelete = async (id: string): Promise<void> => {
+    try {
+      await deleteProperty({ id }).unwrap()
+      enqueueSnackbar(translate('properties_removed'))
+    } catch (e: any) {
+      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+    }
+  }
+  const onChangeHandler: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
+    setFilter(e.target.name, e.target.value)
+    //@ts-ignore
+    methods.setValue(e.target.name, e.target.value)
+  }
+  return (
+    <>
+      <Head>
+        <title>{translate('properties')} | CodeTribe</title>
+      </Head>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
+        {!propertiesLoading ? (
+          <CustomBreadcrumbs
+            heading=''
+            links={[
+              {
+                name: translate('home'),
+                href: STUDENT_PATH_DASHBOARD.class.root,
+              },
+              {
+                name: translate('properties'),
+                href: MANAGER_PATH_DASHBOARD.apps.root,
+              },
+            ]}
+            action={
+              <PropertiesCreateEdit>
+                <Button
+                  variant='contained'
+                  startIcon={<Iconify icon='eva:plus-fill' />}
+                >
+                  {translate('properties')}
+                </Button>
+              </PropertiesCreateEdit>
+            }
+          />
+        ) : (
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
+            mb={2}
+          >
+            <SkeletonBreadcrumbs />
+            <Skeleton
+              variant='rectangular'
+              animation='wave'
+              sx={{
+                width: '160px',
+                height: '36px',
+                borderRadius: '8px',
+              }}
+            />
+          </Stack>
+        )}
+        {propertiesLoading ? (
+          <SkeletonTable />
+        ) : (
+          <>
+            <FormProvider methods={methods}>
+              <Stack
+                direction='row'
+                spacing={2}
+              >
+                <RHFSelect
+                  native
+                  name='entityType'
+                  onChange={onChangeHandler}
+                >
+                  {PropertyEntityTypes.map((pet) => (
+                    <option
+                      key={pet}
+                      value={pet}
+                    >
+                      {pet}
+                    </option>
+                  ))}
+                </RHFSelect>
+                <RHFTextField
+                  name='propertyName'
+                  placeholder='Property Name'
+                  onChange={onChangeHandler}
+                />
+
+                <RHFTextField
+                  name='entityId'
+                  placeholder='Entity Id'
+                  onChange={onChangeHandler}
+                />
+                <RHFTextField
+                  name='propertyValue'
+                  placeholder='Property Value'
+                  onChange={onChangeHandler}
+                />
+              </Stack>
+            </FormProvider>
+            <Card>
+              <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
+                <Scrollbar>
+                  <Table
+                    size={dense ? 'small' : 'medium'}
+                    sx={{ minWidth: 800 }}
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align='left'>{translate('title')}</TableCell>
+                        <TableCell align='left'>{translate('actions_create')}</TableCell>
+                        <TableCell align='left'>{translate('actions_update')}</TableCell>
+                        <TableCell align='right'></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {properties?.data.map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell align='left'>{row.propertyName}</TableCell>
+                          <TableCell align='left'>
+                            {format(new Date(row.createdAt), 'MM/dd/yyyy')}
+                          </TableCell>
+                          <TableCell align='left'>
+                            {format(new Date(row.updatedAt), 'MM/dd/yyyy')}
+                          </TableCell>
+                          <TableCell align='right'>
+                            <Stack
+                              direction='row'
+                              justifyContent='flex-end'
+                              gap={2}
+                            >
+                              <PropertiesCreateEdit
+                                isEdit
+                                id={row.id}
+                                defaultValues={_.omit(row, ['updatedAt', 'createdAt', 'id'])}
+                              >
+                                <IconButton>
+                                  <Iconify icon='material-symbols:edit' />
+                                </IconButton>
+                              </PropertiesCreateEdit>
+                              <IconButton
+                                onClick={async () => {
+                                  await onDelete(row.id)
+                                }}
+                              >
+                                <Iconify
+                                  color='red'
+                                  icon='material-symbols:delete'
+                                />
+                              </IconButton>
+                            </Stack>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      <TableNoData isNotFound={!properties?.data.length} />
+                    </TableBody>
+                  </Table>
+                </Scrollbar>
+              </TableContainer>
+              <TablePaginationCustom
+                count={properties?.meta.itemCount ? properties?.meta.itemCount : 0}
+                page={properties?.meta.page ? properties?.meta.page - 1 : 0}
+                rowsPerPage={properties?.meta.take ?? 0}
+                onPageChange={(e: any, page: number) => {
+                  setFilter('page', page + 1)
+                }}
+                onRowsPerPageChange={(e: any) => {
+                  setFilter('take', e.target.value)
+                }}
+                dense={dense}
+                onChangeDense={onChangeDense}
+              />
+            </Card>
+          </>
+        )}
+      </Container>
+    </>
+  )
+}
