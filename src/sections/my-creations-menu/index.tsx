@@ -3,10 +3,7 @@ import { useState } from 'react'
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import {
-  useCreateLessonMutation,
-  useCreateByCloningLessonMutation,
-} from '@/redux/services/manager/lessons-manager'
+import { useCreateLessonMutation } from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
@@ -21,6 +18,7 @@ import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import AiGenerateLessonDialog from './ai-generate-lesson-dialog'
 import DiamondFeatureModal from './diamond-feature-modal'
+import SelectLanguageModal from './select-language-dialog'
 
 export default function MyCreationsMenu(): React.ReactElement {
   const { translate } = useLocales()
@@ -28,9 +26,7 @@ export default function MyCreationsMenu(): React.ReactElement {
   const isDesktop = useResponsive('up', 'md')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const router = useRouter()
-  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
-  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
-    useCreateByCloningLessonMutation()
+  const [createLesson] = useCreateLessonMutation()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -50,19 +46,6 @@ export default function MyCreationsMenu(): React.ReactElement {
       duration: '60',
     }).unwrap()
     return lesson
-  }
-
-  async function createByCloningLessonHandler() {
-    let data = await createByCloningLesson()
-    if ((data as any)?.data?.id) {
-      router.push(
-        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: (data as any).data.id })}`,
-        undefined,
-        {
-          shallow: true,
-        }
-      )
-    }
   }
 
   return (
@@ -137,13 +120,9 @@ export default function MyCreationsMenu(): React.ReactElement {
               </ListItemIcon>
             </MenuItem>
           </AiGenerateLessonDialog>
-          <MenuItem
-            onClick={async () => {
-              await createByCloningLessonHandler()
-            }}
-          >
-            Add New Lesson
-          </MenuItem>
+          <SelectLanguageModal>
+            <MenuItem>Add New Lesson</MenuItem>
+          </SelectLanguageModal>
           <MenuItem
             onClick={() => {
               router.push(STUDENT_PATH_DASHBOARD.myLessons, undefined, {

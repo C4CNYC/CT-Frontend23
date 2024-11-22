@@ -1,0 +1,233 @@
+import { useState } from 'react'
+
+import { LoadingButton } from '@mui/lab'
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Typography,
+} from '@mui/material'
+import { Stack } from '@mui/system'
+import { useRouter } from 'next/router'
+
+import { Iconify, Image } from '@root/src/components'
+import { useCreateByCloningLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
+
+import { GO_BTN_SX, LANG_ITEMS_CONT_SX } from './constants'
+
+interface SelectLanguageModalProps {
+  children: React.ReactElement[] | React.ReactElement
+}
+
+export default function SelectLanguageModal({
+  children,
+}: SelectLanguageModalProps): React.ReactElement {
+  const router = useRouter()
+  const [open, setOpen] = useState<boolean>(false)
+  const [selectedLang, setSelectedLang] = useState<string | null>(null)
+
+  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
+    useCreateByCloningLessonMutation()
+
+  const openDialog = () => {
+    setOpen(true)
+  }
+  const closeDialog = () => {
+    setOpen(false)
+  }
+
+  async function createByCloningLessonHandler() {
+    let data = await createByCloningLesson()
+    if ((data as any)?.data?.id) {
+      router.push(
+        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: (data as any).data.id })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    }
+  }
+
+  return (
+    <>
+      <Box
+        onClick={() => {
+          openDialog()
+        }}
+      >
+        {children}
+      </Box>
+      <Dialog
+        open={open}
+        onClose={closeDialog}
+      >
+        <DialogTitle sx={{ color: '#616161' }}>
+          <Typography variant='h4'>Select a Language</Typography>
+
+          <IconButton
+            onClick={closeDialog}
+            sx={{ position: 'absolute', right: '5px', top: '5px' }}
+          >
+            <Iconify
+              icon='flowbite:close-outline'
+              width={20}
+              height={20}
+            />
+          </IconButton>
+          <Typography variant='body1'>It may load with a template</Typography>
+        </DialogTitle>
+
+        <DialogContent>
+          <Stack sx={LANG_ITEMS_CONT_SX}>
+            <Typography variant='h6'>Favorites:</Typography>
+            {LANGUAGES_MOCK.map((el) => (
+              <LanguageItem
+                isSelected={el.langName === selectedLang}
+                onSelectLang={(lang) => setSelectedLang(lang)}
+                imageSrc={el.imageSrc}
+                langName={el.langName}
+                description={el.description}
+                key={el.description}
+              />
+            ))}
+          </Stack>
+        </DialogContent>
+        <DialogActions sx={{ gap: 1 }}>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={selectedLang}
+            label='languages'
+            onChange={(e) => setSelectedLang(e.target.value)}
+            input={<OutlinedInput />}
+            placeholder='Select Other Language'
+            fullWidth
+            displayEmpty
+            sx={{
+              background: '#F0EEEE80',
+            }}
+          >
+            {OTHER_LANGUAGES_MOCK.map((lng) => (
+              <MenuItem
+                value={lng}
+                key={lng}
+              >
+                {lng}
+              </MenuItem>
+            ))}
+          </Select>
+          <LoadingButton
+            loading={isCreateBCLLoading}
+            disabled={!selectedLang}
+            onClick={async () => {
+              await createByCloningLessonHandler()
+            }}
+            sx={GO_BTN_SX}
+          >
+            GO
+            <Iconify
+              icon='fa6-solid:chevron-right'
+              width={25}
+            />
+          </LoadingButton>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
+}
+
+interface LanguageItemProps {
+  imageSrc: string
+  langName: string
+  description: string
+  onSelectLang: (lang: string) => void
+  isSelected: boolean
+}
+
+const LanguageItem = ({
+  imageSrc,
+  langName,
+  description,
+  onSelectLang,
+  isSelected,
+}: LanguageItemProps): React.ReactElement => {
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <Stack
+      direction='row'
+      justifyContent='space-between'
+      alignItems='center'
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => onSelectLang(langName)}
+      sx={{
+        transition: 'all .3s easy-in-out',
+        borderRadius: '16px',
+        background: isHovered || isSelected ? '#D4D2CF' : '',
+        py: 1,
+        px: 0.5,
+        '&:hover': {
+          cursor: 'pointer',
+        },
+      }}
+    >
+      <Stack
+        alignItems='center'
+        justifyContent='center'
+        flex={1}
+        maxWidth={60}
+      >
+        <Image
+          src={imageSrc}
+          alt={langName}
+          width={50}
+          height={50}
+        />
+      </Stack>
+      <Stack sx={{ maxWidth: '340px', pl: 2, pr: 2 }}>
+        <Typography variant='h5'>{langName}</Typography>
+        <Typography variant='subtitle2'>{description}</Typography>
+      </Stack>
+      <Iconify
+        color={isHovered || isSelected ? '' : '#EAEAEB'}
+        icon='fa6-solid:chevron-right'
+        width='30px'
+      />
+    </Stack>
+  )
+}
+
+const OTHER_LANGUAGES_MOCK = ['JS', 'C++', 'C#', 'Java']
+
+const LANGUAGES_MOCK = [
+  {
+    imageSrc: '/assets/my-creations-menu/language-logo/html.svg',
+    langName: 'HTML/CSS/JS',
+    description: 'Learn the basics of the web together. Spin up fun web-based projects.',
+  },
+  {
+    imageSrc: '/assets/my-creations-menu/language-logo/kaboom.svg',
+    langName: 'Kaboom.js',
+    description:
+      'A fun way to create games. Created to transition learners from block- to text-based.',
+  },
+  {
+    imageSrc: '/assets/my-creations-menu/language-logo/python.svg',
+    langName: 'Python (Brython)',
+    description: 'Beginner-friendly and readable. Brython runs as Python, but in the browser.',
+  },
+  {
+    imageSrc: '/assets/my-creations-menu/language-logo/p5.svg',
+    langName: 'P5.js',
+    description: 'A friendly tool for learning to code and make art.',
+  },
+]
