@@ -12,6 +12,7 @@ import { IGallery } from '@/redux/interfaces/gallary.interface'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { baseQueryWrapper } from './helpers/base_query_wrapper'
+import { ILesson as ILessonFromCourseUnits } from './interfaces/courseUnits.interface'
 
 export const studentPublicApi = createApi({
   reducerPath: 'api/public',
@@ -56,6 +57,16 @@ const extendedApi = studentPublicApi.injectEndpoints({
       }),
       providesTags: ['LessonPublic'],
     }),
+    getPublicLessonBySlug: builder.query<
+      BaseListResponseInterface<ILessonFromCourseUnits & BaseResponseInterface>,
+      { slug: string }
+    >({
+      query: ({ slug }) => ({
+        url: `/lesson?slug=${slug}`,
+        method: 'GET',
+      }),
+      providesTags: ['LessonPublic'],
+    }),
     getPublicLessonContent: builder.query<
       Array<ILessonContent & BaseResponseInterface>,
       { id: string; lesson_id: string }
@@ -87,6 +98,7 @@ export const {
   useGetPublicCourseContentQuery,
   useGetPublicCourseQuery,
   useGetPublicLessonQuery,
+  useGetPublicLessonBySlugQuery,
   useGetPublicLessonContentQuery,
   useGetPublicClassQuery,
   // ------  projects  ---------
