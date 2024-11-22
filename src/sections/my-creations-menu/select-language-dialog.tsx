@@ -20,7 +20,7 @@ import { Iconify, Image } from '@root/src/components'
 import { useCreateByCloningLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
-import { GO_BTN_SX, LANG_ITEMS_CONT_SX } from './constants'
+import { GO_BTN_SX, LANG_ITEMS_CONT_SX, LANGUAGES_MOCK, OTHER_LANGUAGES_MOCK } from './constants'
 
 interface SelectLanguageModalProps {
   children: React.ReactElement[] | React.ReactElement
@@ -205,29 +205,3 @@ const LanguageItem = ({
     </Stack>
   )
 }
-
-const OTHER_LANGUAGES_MOCK = ['JS', 'C++', 'C#', 'Java']
-
-const LANGUAGES_MOCK = [
-  {
-    imageSrc: '/assets/my-creations-menu/language-logo/html.svg',
-    langName: 'HTML/CSS/JS',
-    description: 'Learn the basics of the web together. Spin up fun web-based projects.',
-  },
-  {
-    imageSrc: '/assets/my-creations-menu/language-logo/kaboom.svg',
-    langName: 'Kaboom.js',
-    description:
-      'A fun way to create games. Created to transition learners from block- to text-based.',
-  },
-  {
-    imageSrc: '/assets/my-creations-menu/language-logo/python.svg',
-    langName: 'Python (Brython)',
-    description: 'Beginner-friendly and readable. Brython runs as Python, but in the browser.',
-  },
-  {
-    imageSrc: '/assets/my-creations-menu/language-logo/p5.svg',
-    langName: 'P5.js',
-    description: 'A friendly tool for learning to code and make art.',
-  },
-]
