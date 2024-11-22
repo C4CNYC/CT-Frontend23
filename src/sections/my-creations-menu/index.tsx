@@ -3,7 +3,10 @@ import { useState } from 'react'
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { useCreateLessonMutation } from '@/redux/services/manager/lessons-manager'
+import {
+  useCreateByCloningLessonMutation,
+  useCreateLessonMutation,
+} from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
@@ -27,6 +30,8 @@ export default function MyCreationsMenu(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const router = useRouter()
   const [createLesson] = useCreateLessonMutation()
+  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
+    useCreateByCloningLessonMutation()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -36,6 +41,19 @@ export default function MyCreationsMenu(): React.ReactElement {
 
   const handleClosePopover = (): void => {
     setOpenPopover(null)
+  }
+
+  async function createByCloningLessonHandler() {
+    let data = await createByCloningLesson()
+    if ((data as any)?.data?.id) {
+      router.push(
+        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: (data as any).data.id })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    }
   }
 
   const createNewLesson = async () => {
@@ -120,7 +138,12 @@ export default function MyCreationsMenu(): React.ReactElement {
               </ListItemIcon>
             </MenuItem>
           </AiGenerateLessonDialog>
-          <SelectLanguageModal>
+          <SelectLanguageModal
+            onSubmit={async () => {
+              await createByCloningLessonHandler()
+            }}
+            isLoading={isCreateBCLLoading}
+          >
             <MenuItem>Add New Lesson</MenuItem>
           </SelectLanguageModal>
           <MenuItem

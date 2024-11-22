@@ -14,46 +14,30 @@ import {
   Typography,
 } from '@mui/material'
 import { Stack } from '@mui/system'
-import { useRouter } from 'next/router'
 
 import { Iconify, Image } from '@root/src/components'
-import { useCreateByCloningLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
-import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import { GO_BTN_SX, LANG_ITEMS_CONT_SX, LANGUAGES_MOCK, OTHER_LANGUAGES_MOCK } from './constants'
 
 interface SelectLanguageModalProps {
   children: React.ReactElement[] | React.ReactElement
+  isLoading: boolean
+  onSubmit: () => void
 }
 
 export default function SelectLanguageModal({
   children,
+  isLoading,
+  onSubmit,
 }: SelectLanguageModalProps): React.ReactElement {
-  const router = useRouter()
   const [open, setOpen] = useState<boolean>(false)
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
-
-  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
-    useCreateByCloningLessonMutation()
 
   const openDialog = () => {
     setOpen(true)
   }
   const closeDialog = () => {
     setOpen(false)
-  }
-
-  async function createByCloningLessonHandler() {
-    let data = await createByCloningLesson()
-    if ((data as any)?.data?.id) {
-      router.push(
-        `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: (data as any).data.id })}`,
-        undefined,
-        {
-          shallow: true,
-        }
-      )
-    }
   }
 
   return (
@@ -125,11 +109,9 @@ export default function SelectLanguageModal({
             ))}
           </Select>
           <LoadingButton
-            loading={isCreateBCLLoading}
+            loading={isLoading}
             disabled={!selectedLang}
-            onClick={async () => {
-              await createByCloningLessonHandler()
-            }}
+            onClick={onSubmit}
             sx={GO_BTN_SX}
           >
             GO
