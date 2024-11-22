@@ -471,8 +471,8 @@ export default function AiGeneratePage(): React.ReactElement {
 
         <!-- Input and Button Section -->
         <section class="prompt-section">
-            <input type="text" class="prompt-input" placeholder="Enter your lesson prompt here">
-            <button class="prompt-button">
+            <input type="text" class="prompt-input" name="prompt" id="prompt" placeholder="Enter your lesson prompt here">
+            <button class="prompt-button" id="generate" name="generate">
                 <b class="icon">💡</b> Generate
             </button>
         </section>
