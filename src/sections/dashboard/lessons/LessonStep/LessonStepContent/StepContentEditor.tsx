@@ -82,7 +82,7 @@ export default function StepContentEditor(): React.ReactElement {
   )
 
   const [bodyType, setBodyType] = useState<LessonContentType>(
-    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.TinyMce
+    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.Code
   )
 
   useEffect(() => {
