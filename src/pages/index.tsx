@@ -14,7 +14,7 @@ export default function HomePage(): React.ReactElement {
   const { isAuthenticated } = useAuthContext()
   const { push } = useRouter()
   useEffect(() => {
-    if (profile?.role === Role.Student) {
+    if (profile?.role) {
       void push(STUDENT_PATH_DASHBOARD.class.root)
     } else {
       void push(PATH_PAGE.create)
