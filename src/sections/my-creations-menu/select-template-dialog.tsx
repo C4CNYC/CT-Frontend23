@@ -109,8 +109,8 @@ export function SelectTemplateDialog({ children }: Props): React.ReactElement {
                       >
                         {lesson?.contents && lesson?.contents?.length ? (
                           <Image
-                            alt={lesson.contents.find(k=>k.cover!='')?.cover}
-                            src={lesson.contents.find(k=>k.cover!='')?.cover}
+                            alt={lesson.contents.find((k) => k.cover != '')?.cover}
+                            src={lesson.contents.find((k) => k.cover != '')?.cover}
                             sx={{ width: 1, height: 164, borderRadius: 1 }}
                           />
                         ) : null}
