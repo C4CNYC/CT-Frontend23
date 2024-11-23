@@ -15,7 +15,6 @@ const LoaderStep = ({ isLoading }: ILoaderStep) => {
   return (
     <Stack
       gap={2}
-      minHeight='770px'
       width={{ xs: '300px', sm: '400px', md: '560px' }}
     >
       <Typography variant='h3'> {translate('ai_gen_loading_title')}</Typography>
