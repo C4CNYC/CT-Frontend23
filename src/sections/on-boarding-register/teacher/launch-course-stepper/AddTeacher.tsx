@@ -7,6 +7,7 @@ import { Iconify, RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { styledRegisterInput } from '../../styles'
+import { SUBMIT_BTN_SX } from '../constants'
 
 interface Props {
   isSubmiting: boolean
@@ -50,6 +51,7 @@ export default function AddTeacher({
         />
         <RHFTextField
           name='lastName'
+          autoComplete='family-name'
           label={translate('surname')}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
@@ -80,16 +82,7 @@ export default function AddTeacher({
       <LoadingButton
         type='submit'
         loading={isSubmiting}
-        sx={{
-          background: '#43D4DD33',
-          color: '#43D4DD',
-          fontSize: '1.5rem',
-          mt: 2,
-          width: '100%',
-          '&:hover': {
-            background: '#fff',
-          },
-        }}
+        sx={SUBMIT_BTN_SX}
       >
         {translate('register_whoopie')}
       </LoadingButton>

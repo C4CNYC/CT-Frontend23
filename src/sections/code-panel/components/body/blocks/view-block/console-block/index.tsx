@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Box, Collapse, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 
@@ -10,7 +10,20 @@ import { CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'
 const ConsoleBlock = () => {
   const translate = useTranslate()
   const [isOpen, setIsOpen] = useState(false)
+  const ConsoleBoxRef = useRef<HTMLElement>(null)
 
+  useEffect(() => {
+    let eventListener = function (event: { data: any }) {
+      if (event.data && event.data.type === 'ConsoleLog') {
+        if (ConsoleBoxRef.current === null) return
+        if (!isOpen) setIsOpen(true)
+        ConsoleBoxRef.current.innerHTML += event?.data?.message + '<br/>'
+        ConsoleBoxRef.current.scrollTop = ConsoleBoxRef.current.scrollHeight
+      }
+    }
+    window.addEventListener('message', eventListener)
+    return () => window.removeEventListener('message', eventListener)
+  }, [])
   return (
     <Box sx={CONSOLE_CONT_SX}>
       <Stack sx={CONSOLE_HEADER_SX}>
@@ -51,7 +64,18 @@ const ConsoleBlock = () => {
         </IconButton>
       </Stack>
       <Collapse in={isOpen}>
-        <Box sx={{ width: '100%', height: '200px', background: '#333' }}>
+        <Box
+          sx={{
+            width: '100%',
+            height: '200px',
+            background: '#333',
+            color: '#DDD',
+            whiteSpace: 'pre-wrap',
+            overflowY: 'auto',
+            padding: '0px 10px',
+          }}
+          ref={ConsoleBoxRef}
+        >
           {/* place for console info */}
         </Box>
       </Collapse>

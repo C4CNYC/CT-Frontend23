@@ -16,9 +16,7 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
     const { data } = useTenantConfig()
 
     const logo = useMemo(() => {
-      if (!data) return null
-
-      switch (data.tenant) {
+      switch (data?.tenant) {
         case 'codejika':
           return (
             <Box
@@ -78,20 +76,6 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
           )
       }
     }, [data])
-
-    if (!data) {
-      return null
-    }
-
-    // if data.tenant === 'codejika' set codejika logo url or svg
-    // else set default logo url or svg
-
-    if (disabledLink) {
-      switch (data.tenant) {
-        case 'codeJika':
-      }
-      return logo
-    }
 
     return (
       <Link

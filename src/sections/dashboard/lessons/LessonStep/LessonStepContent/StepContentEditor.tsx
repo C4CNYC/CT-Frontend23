@@ -71,13 +71,18 @@ export default function StepContentEditor(): React.ReactElement {
     { id: lessonId as string },
     { skip: !lessonId || !stepId }
   )
-  const { data, isFetching, isLoading } = useGetLessonContentByIdQuery(
+  const {
+    data,
+    isFetching,
+    isLoading,
+    refetch: refetchLessonContent,
+  } = useGetLessonContentByIdQuery(
     { lessonId: lessonId as string, id: stepId as string },
     { skip: !lessonId || !stepId }
   )
 
   const [bodyType, setBodyType] = useState<LessonContentType>(
-    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.TinyMce
+    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.Code
   )
 
   useEffect(() => {
@@ -94,6 +99,7 @@ export default function StepContentEditor(): React.ReactElement {
         body,
       }).unwrap()
       enqueueSnackbar(translate('slide_content_updated'))
+      refetchLessonContent()
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
@@ -249,30 +255,26 @@ export default function StepContentEditor(): React.ReactElement {
               }}
             >
               <CgScreen size='30px' />
-              <Link href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}>
+              <Link
+                href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}
+                target='_blank'
+              >
                 {translate('preview')}
               </Link>
             </div>
           </Stack>
         </Box>
-        <Box
-          sx={{
-            position: 'relative',
-            height: 'calc(100vh - 80px)',
-            overflow: 'scroll',
-          }}
-        >
-          <EditorSelector
-            bodyType={bodyType}
-            content={data?.body || ''}
-            integrations={integrations ?? []}
-            onSubmit={onSubmit}
-            data={data!}
-            lessonId={lessonId as string}
-            bgColor={bgColor}
-            setBgColor={setBgColor}
-          />
-        </Box>
+
+        <EditorSelector
+          bodyType={bodyType}
+          content={data?.body || ''}
+          integrations={integrations ?? []}
+          onSubmit={onSubmit}
+          data={data!}
+          lessonId={lessonId as string}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+        />
       </Box>
     </>
   )

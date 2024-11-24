@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { DragDropContext, DropResult, Droppable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
@@ -26,6 +26,9 @@ import { getOrder } from '@/utils/getTaskOrder'
 import { useTranslate } from '@/utils/translateHelper'
 import { ConfirmDialog, Iconify } from '@root/src/components'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
+import { useBoolean } from '@root/src/hooks/useBoolean'
+import { useCounter } from '@root/src/hooks/useCounter'
+import { LoaderStepDialog } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/LoaderStepDialog'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 
@@ -70,11 +73,64 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     refetch: lessonContentsRefetch,
     isUninitialized: lessonContentsUninitialized,
   } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
-  const slideAddButtonRef = useRef<HTMLButtonElement>(null)
+  const [LoaderStepDialogState, LoaderStepDialogStateTrue, LoaderStepDialogStateFalse] =
+    useBoolean()
+  const [contentCount, contentCountSet] = useState(0)
+  const [contentPullCount, contentPullCountDec, contentPullCountInc] = useCounter(5)
   const { board } = useSelector((state: RootState) => state.lessonSteps)
+  const [refetchTimer, refetchTimerSet] = useState(0)
+
+  let newlyCreated = lesson
+    ? (new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 3
+    : false
+
+  useEffect(contentPullCountDec, [data])
+
+  const lessonContentsRefetchTimer = () => {
+    if (newlyCreated || contentPullCount > 0) {
+      lessonContentsRefetch()
+    } else {
+      if (refetchTimer > 0) {
+        clearInterval(refetchTimer)
+        refetchTimerSet(0)
+        LoaderStepDialogStateFalse()
+      }
+      return
+    }
+  }
 
   useEffect(() => {
-    if (!data || !lesson) return
+    if (!newlyCreated) return
+    let interval = setInterval(lessonContentsRefetchTimer, 10000)
+    // @ts-ignore how to sync nodejs&browser
+    refetchTimerSet(interval)
+    return () => clearInterval(interval)
+  }, [newlyCreated])
+
+  useEffect(() => {
+    let dataLength = data?.length || 0
+    if (dataLength != contentCount) {
+      contentCountSet(dataLength)
+      contentPullCountInc()
+    }
+    if (!newlyCreated) {
+      LoaderStepDialogStateFalse()
+      return
+    }
+    if (dataLength && dataLength > 0) {
+      LoaderStepDialogStateFalse()
+    }
+  }, [data, lesson])
+
+  useEffect(() => {
+    if (!lesson) return
+    if (newlyCreated && lesson.name === 'Ai Lesson') LoaderStepDialogStateTrue()
+  }, [lesson])
+
+  useEffect(() => {
+    if (!lesson) return
+    if (!data) return
+
     dispatch(getBoard(data))
     if (data.length !== 0 && !router.query.stepId) {
       router.push(
@@ -86,15 +142,6 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
         { shallow: true }
       )
     }
-    let interval: NodeJS.Timeout | undefined
-    if ((new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 10)
-      interval = setInterval(() => {
-        if (!lessonContentsUninitialized) {
-          //pull lessons for 10 minutes after creation
-          lessonContentsRefetch()
-        }
-      }, 10000)
-    return () => clearInterval(interval)
   }, [data, lesson, lessonContentsUninitialized])
 
   const onDragEnd = (result: DropResult): void => {
@@ -225,7 +272,10 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
 
   return (
     <>
-      <Box sx={{ p: 2 }}>
+      <Box
+        sx={{ p: 2 }}
+        className='lessonCreationStep1 lessonCreationStep2'
+      >
         <Stack sx={{ gap: 2 }}>
           <Typography
             variant='subtitle1'
@@ -417,6 +467,10 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
           lessonName={lesson?.name || ''}
         />
       ) : null}
+      <LoaderStepDialog
+        open={LoaderStepDialogState}
+        close={LoaderStepDialogStateFalse}
+      />
     </>
   )
 }

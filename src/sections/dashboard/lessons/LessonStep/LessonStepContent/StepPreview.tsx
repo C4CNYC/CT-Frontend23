@@ -20,7 +20,7 @@ export function StepPreview({ integrations, staticValue, bgColor }: Props) {
     }
   }
   return (
-    <Box sx={{ bgcolor: bgColor, height: '100%' }}>
+    <Box sx={{ bgcolor: bgColor }}>
       <iframe
         style={{
           border: 0,

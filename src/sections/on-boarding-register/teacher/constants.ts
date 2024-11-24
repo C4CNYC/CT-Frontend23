@@ -10,6 +10,8 @@ export const StyledContentTeacher = styled('div', {
   display: 'flex',
   borderRadius: '8px',
   justifyContent: 'center',
+  height: 'calc(100% - 32px)',
+  overflowY: 'auto',
   padding: theme.spacing(3),
   ...bgBlur({ color: theme.palette.background.default }),
   [theme.breakpoints.up('sm')]: {
@@ -66,3 +68,15 @@ export const getImageWrapperSx = (color: string): SxProps => ({
   width: '100px',
   height: '100px',
 })
+
+export const SUBMIT_BTN_SX = {
+  background: '#43D4DD33',
+  color: '#43D4DD',
+  fontSize: '1.5rem',
+  mt: 3,
+  width: '100%',
+  '&:hover': {
+    background: '#43D4DD80',
+    color: '#2FAAB3',
+  },
+}

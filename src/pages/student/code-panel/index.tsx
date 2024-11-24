@@ -3,6 +3,7 @@ import { ReactElement, useEffect, useRef } from 'react'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
 
+import { useSelector } from '@/redux/store'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useSetLastWorkspaceQueryMutation } from '@root/src/redux/services/manager/activity-student'
 import CodePanelLayout from '@root/src/sections/code-panel'
@@ -17,6 +18,7 @@ export default function CodePanelContainer(): ReactElement | null {
   const router = useRouter()
   const { isInitialized } = useAuthContext()
   const workspaceRef = useRef<{ query: string }>({ query: '' })
+  const profile = useSelector((state) => state.global.user)
 
   const [updateWorkspaceActivity] = useSetLastWorkspaceQueryMutation()
 
@@ -31,8 +33,10 @@ export default function CodePanelContainer(): ReactElement | null {
     if (workspaceRef.current.query === query || (!lessonId && !unitId && !courseId)) return
 
     workspaceRef.current.query = query
-    updateWorkspaceActivity({ query })
-  }, [router])
+    if (profile) {
+      updateWorkspaceActivity({ query })
+    }
+  }, [router, profile])
 
   if (!isInitialized) return null
   return <CodePanelLayout />

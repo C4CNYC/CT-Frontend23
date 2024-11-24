@@ -22,6 +22,8 @@ export interface FormAIGenerateProps {
 export interface AIGenerateStepperProps {
   isModal: boolean
   closeModal?: () => void
+  passedValues?: Partial<FormAIGenerateProps>
+  props?: { activeStep?: number }
 }
 
 export interface IAddAddonsProps {
@@ -105,11 +107,10 @@ export const STEP_TYTLE_STYLES = {
 
 export const STEP_CONTAINER_STYLES = {
   gap: 3,
-  minHeight: '620px',
+  minHeight: '520px',
 }
 
 export const BTN_CONTAINER_STYLES = {
-  marginTop: 'auto',
   gap: 3,
   pr: { xs: 0, sm: 3 },
   flexDirection: { xs: 'column', sm: 'row' },
@@ -163,6 +164,18 @@ export const SIMPLE_GENERATE_TOGLE_GROUP = {
 
 export const LANG_CONT_SX = { flexDirection: 'row', gap: 2, px: 2, pt: 1 }
 
+export const RHFTextFieldInRHFToggleButtonGroup = {
+  maxWidth: '200px',
+  padding: '4px',
+  '& input': {
+    padding: '8px 14px ',
+    fontSize: '0.875rem',
+  },
+  '& .MuiInputBase-root': {
+    borderRadius: '50px',
+  },
+}
+
 export const PROMTS_VARIANTS = [
   {
     text: 'ai_gen_simple_step_prompt_1',
@@ -178,7 +191,7 @@ export const PROMTS_VARIANTS = [
   },
   {
     text: 'ai_gen_simple_step_prompt_3',
-    key: 'Nested functions in javascript with exercises and quiz',
+    key: 'Nested functions in javascript with exercises',
     icon: 'mdi:question-box-multiple-outline',
     color: '#EE467A',
   },
@@ -202,7 +215,7 @@ export const TYPE_LESSON = [
     value: 'exercises',
     tooltip: 'ai_gen_type_2_tooltip',
     icon: 'material-symbols:info-outline',
-  },
+  } /*
   {
     key: 'project',
     value: 'project',
@@ -214,7 +227,7 @@ export const TYPE_LESSON = [
     value: 'beta',
     tooltip: 'ai_gen_type_5_tooltip',
     icon: 'material-symbols:info-outline',
-  },
+  },*/,
 ]
 
 export const PROGRAMMING_LANGUAGE = [
@@ -223,6 +236,7 @@ export const PROGRAMMING_LANGUAGE = [
   { key: 'HTML/CSS', value: 'HTML/CSS' },
   { key: 'HTML/CSS/JS', value: 'HTML/CSS/JS' },
   { key: 'Kaboom.js', value: 'Kaboom.js' },
+  { key: 'P5.js', value: 'P5.js' },
 ]
 
 export const TRACK = [

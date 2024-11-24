@@ -6,16 +6,12 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider } from '@/components'
-import {
-  useGenerateLessonMutation,
-  useGenerateLessonMultiMutation,
-  useCreateLessonUsingOpenAIAssistantMutation,
-  useCreateLessonUsingOpenAIAssistantBetaMutation,
-} from '@root/src/redux/services/manager/lessons-manager'
+import { FormProvider, useSnackbar } from '@/components'
+import { useCreateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
+import { AiGenerate } from '@root/src/utils/ai-generate'
 
 import AddAddons from './AddAddons'
 import { AIPersonaInfo } from './AIPersonaInfo'
@@ -27,14 +23,11 @@ import {
   LESSON_DURARION,
   LEVELS,
   PERSONA,
-  PROGRAMMING_LANGUAGE,
   TONE,
   TYPE_LESSON,
-  TYPE_PROJECT,
 } from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
-import LoaderStep from './LoaderStep'
 import SimpleAiGenerate from './SimpleAiGenerate'
 
 //@names according to avoid bots spam
@@ -45,7 +38,7 @@ const defaultValues = {
   RlessonLanguageR: 'English',
   RcustomLanguageR: '',
   RtrackR: '',
-  RprogrammingLanguageR: PROGRAMMING_LANGUAGE[0].value,
+  RprogrammingLanguageR: '',
   RpersonaR: PERSONA[0].value,
   RtoneR: TONE[0].value,
   RtypeLessonR: TYPE_LESSON[1].value,
@@ -73,23 +66,18 @@ const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
 export default function AIGenerateStepper({
   isModal,
   closeModal,
+  passedValues,
+  props,
 }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
 
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(props?.activeStep || 0)
   const [lessonId, setLessonId] = useState<null | string>(null)
+  const { enqueueSnackbar } = useSnackbar()
 
   const profile = useSelector((state) => state.global.user)
-
-  const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
-  const [generateMultiLesson, { isLoading: generateMultiLessonLoading }] =
-    useGenerateLessonMultiMutation()
-  const [createLessonUsingOpenAIAssistant, { isLoading: createLessonUsingOpenAIAssistantLoading }] =
-    useCreateLessonUsingOpenAIAssistantMutation()
-  const [
-    createLessonUsingOpenAIAssistantBeta,
-    { isLoading: createLessonUsingOpenAIAssistantBetaLoading },
-  ] = useCreateLessonUsingOpenAIAssistantBetaMutation()
+  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
+  const [createAILesson, { isLoading: createLessonLoading }] = AiGenerate()
 
   const generateAICourseSchema = Yup.object().shape({
     RlevelR: Yup.string(),
@@ -112,7 +100,7 @@ export default function AIGenerateStepper({
   const methods = useForm<FormAIGenerateProps>({
     resolver: yupResolver(generateAICourseSchema),
     mode: 'all',
-    defaultValues: defaultValues,
+    defaultValues: { ...defaultValues, ...passedValues },
   })
 
   const nextStep = () => {
@@ -138,39 +126,30 @@ export default function AIGenerateStepper({
       grade: data.RgradesR,
       language: data.RcustomLanguageR || data.RlessonLanguageR,
       tone: data.RcustomToneR || data.RtoneR,
+      newLessonId: '',
     }
-
-    let newLesson
-    switch (data.RtypeLessonR as (typeof TYPE_PROJECT)[number]['value']) {
-      case 'simple':
-        newLesson = await generateLesson(lessonData)
-        break
-      case 'multi':
-      case 'full':
-      case 'exercises':
-        newLesson = await generateMultiLesson(lessonData)
-        break
-      default:
-      case 'project':
-        newLesson = await createLessonUsingOpenAIAssistant({
-          ...lessonData,
-          proficiencyLevel: data.RgradesR,
-          programmingLanguage: data.RprogrammingLanguageR,
-          lesson_id: data.RtypeLessonR,
+    if (!profile) {
+      localStorage.setItem('AiGenerateLessonData', JSON.stringify(lessonData))
+      push(PATH_AUTH.onBoardingTeacher.launchCourse)
+    } else {
+      createLesson({ name: 'Ai Lesson', description: '', duration: '20', active: true })
+        .unwrap()
+        .then((payload) => {
+          lessonData.newLessonId = payload.id
+          createAILesson(lessonData) // no need to wait, we have lessonid
+          localStorage.removeItem('AiGenerateLessonData')
+          if (closeModal) closeModal()
+          push(
+            `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: payload.id ?? '' })}`,
+            undefined,
+            {
+              shallow: true,
+            }
+          )
         })
-        break
-      case 'beta':
-        newLesson = await createLessonUsingOpenAIAssistantBeta({
-          ...lessonData,
-          proficiencyLevel: data.RgradesR,
-          programmingLanguage: data.RprogrammingLanguageR,
+        .catch((err) => {
+          enqueueSnackbar(err.data.message, { variant: 'error' })
         })
-        break
-    }
-
-    if ('data' in newLesson && newLesson.data) {
-      if (closeModal) closeModal()
-      redirectAfterCompleate(newLesson.data.id)
     }
   }
 
@@ -199,51 +178,48 @@ export default function AIGenerateStepper({
       position='relative'
       width='100%'
     >
-      {generateLessonLoading ||
-      generateMultiLessonLoading ||
-      createLessonUsingOpenAIAssistantLoading ? (
-        <LoaderStep isLoading={generateLessonLoading} />
-      ) : (
-        <FormProvider
-          methods={methods}
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          {activeStep === 0 && (
-            <SimpleAiGenerate
-              isModal={isModal}
-              nextStep={nextStep}
-              resetRoad={resetRoad}
-              closeModal={closeModal}
-              updateForm={methods.setValue as any}
-              redirectAfterComplete={redirectAfterCompleate}
-            />
-          )}
-          {activeStep === 1 && (
-            <GeneralInfo
-              isModal={isModal}
-              nextStep={nextStep}
-              prevStep={prevStep}
-              closeModal={closeModal}
-              isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
-            />
-          )}
-          {activeStep === 2 && (
-            <LessonPrompt
-              nextStep={nextStep}
-              prevStep={prevStep}
-              closeModal={closeModal}
-            />
-          )}
-          {activeStep === 3 && (
-            <AIPersonaInfo
-              prevStep={prevStep}
-              closeModal={closeModal}
-              customPersona={Boolean(methods.watch('RcustomPersonaR'))}
-              customTone={Boolean(methods.watch('RcustomToneR'))}
-            />
-          )}
-        </FormProvider>
-      )}
+      <FormProvider
+        methods={methods}
+        onSubmit={methods.handleSubmit(onSubmit)}
+      >
+        {activeStep === 0 && (
+          <SimpleAiGenerate
+            isModal={isModal}
+            nextStep={nextStep}
+            resetRoad={resetRoad}
+            closeModal={closeModal}
+            updateForm={methods.setValue as any}
+            getFormValue={methods.getValues as any}
+            redirectAfterComplete={redirectAfterCompleate}
+          />
+        )}
+        {activeStep === 2 && (
+          <GeneralInfo
+            isModal={isModal}
+            nextStep={nextStep}
+            prevStep={prevStep}
+            closeModal={closeModal}
+            isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
+            isTrackSelected={Boolean(methods.watch('RtrackR'))}
+          />
+        )}
+        {activeStep === 1 && (
+          <LessonPrompt
+            nextStep={nextStep}
+            prevStep={prevStep}
+            closeModal={closeModal}
+          />
+        )}
+        {activeStep === 3 && (
+          <AIPersonaInfo
+            prevStep={prevStep}
+            closeModal={closeModal}
+            customPersona={Boolean(methods.watch('RcustomPersonaR'))}
+            customTone={Boolean(methods.watch('RcustomToneR'))}
+          />
+        )}
+      </FormProvider>
+
       {activeStep === 4 && (
         <AddAddons
           closeModal={closeModal}

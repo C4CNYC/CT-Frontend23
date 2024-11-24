@@ -24,9 +24,6 @@ import SliderBlock from './blocks/slider-block'
 import ViewBlock from './blocks/view-block'
 import { CodeDocument } from './blocks/view-block/browser-view'
 
-let previousLength: number | null = null
-let checkValueTimeout: any | null = null
-
 const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
   onSubmitChallenge,
@@ -39,10 +36,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const isDesktop = useIsDesktop()
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
-  const { autoRun, studentCodeChange } = useContext(CodePanelContext)
+  const { autoRun } = useContext(CodePanelContext)
   const [document, setDocument] = useState<CodeDocument | null>(null)
   const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
@@ -51,31 +47,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
-      if (checkValueTimeout) {
-        // Clear the previous timeout if the value changes
-        clearTimeout(checkValueTimeout)
-      }
-
-      previousLength = doc?.htmlBody?.length // Store the current value
-      if (lessonId && user) {
-        socket?.emit('changeStatusInLesson', {
-          lesson: lessonId,
-          user: user?.id,
-          status: 'active',
-        })
-      }
-
-      // Set up the check for 30 seconds later
-      checkValueTimeout = setTimeout(() => {
-        if (doc?.htmlBody?.length === previousLength) {
-          socket?.emit('changeStatusInLesson', {
-            lesson: lessonId,
-            user: user?.id,
-            status: 'active',
-          })
-        }
-      }, 30000) // 30 seconds
-
       setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
       if (autoRun) {

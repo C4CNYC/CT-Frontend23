@@ -32,6 +32,8 @@ export default function LessonTopBar(): React.ReactElement {
         justifyContent: 'space-between',
         maxHeight: '48px',
         boxShadow: 2,
+        zIndex: 1,
+        position: 'relative',
       }}
     >
       <Logo />
