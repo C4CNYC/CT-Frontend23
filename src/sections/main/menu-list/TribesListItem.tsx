@@ -5,6 +5,7 @@ import { useSettingsContext } from '@/components'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { useSetLastActiveTribeMutation } from '@root/src/redux/services/manager/activity-student'
 
 import { TRIBE_LINK_SX, getSignOfActiveLink, getTribeTitleSx } from './constants'
 
@@ -17,8 +18,15 @@ export default function TribeListItem({ active, classItem }: Props): React.React
   const theme = useTheme()
   const { themeLayout } = useSettingsContext()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+  const [setLastActiveTribe] = useSetLastActiveTribeMutation()
+
   const isNavMini = themeLayout === 'mini' && !isMobile
   const isRTL = theme.direction === 'rtl'
+
+  const onTribeClick = () => {
+    setLastActiveTribe({ class_id: classItem.id })
+  }
 
   return (
     <Tooltip
@@ -28,6 +36,7 @@ export default function TribeListItem({ active, classItem }: Props): React.React
       <Link
         component={NextLink}
         underline='none'
+        onClick={onTribeClick}
         href={STUDENT_PATH_DASHBOARD.class.id(classItem.id)}
         sx={TRIBE_LINK_SX}
       >

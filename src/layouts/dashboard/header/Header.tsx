@@ -65,7 +65,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
         }}
       >
         Hey {user?.first_name ? user.first_name : 'Friend'}
-        <Typography variant='h3'>👋</Typography>
+        <Typography variant='h4'>👋</Typography>
       </Typography>
       <Stack
         flexGrow={1}

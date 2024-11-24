@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import {
   Box,
@@ -7,32 +7,37 @@ import {
   DialogActions,
   DialogTitle,
   Divider,
+  Link,
+  Stack,
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { BsAspectRatio } from '@react-icons/all-files/bs/BsAspectRatio'
+import { BsClipboard } from '@react-icons/all-files/bs/BsClipboard'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
-import { MdOutlinePermMedia } from '@react-icons/all-files/md/MdOutlinePermMedia'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
-import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import {
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { Iconify, Label } from '@root/src/components'
 import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
+import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import LessonSchareModal from '../Modals/LessonShareModal'
 import Preferences from '../Modals/Preferences'
 
+import { EditorSelector } from './EditorSelector'
 import { LessonContentContext } from './LessonContent.context'
 import SkeletonContentCode from './SkeletonContentCode'
 import SkeletonContentMulti from './SkeletonContentMulti'
-import StepCode from './StepCode'
-import StepMultimedia from './StepMultimedia'
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   '& .MuiToggleButton-root': {
@@ -51,13 +56,14 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }))
 
-const DEFAULT_COLOR = '#F6F9FC'
+const DEFAULT_COLOR = '' // '#F6F9FC'
 
 export default function StepContentEditor(): React.ReactElement {
+  const { locked } = useContext(LessonContentContext)
   const { lessonId, stepId } = useRouter().query
   const { enqueueSnackbar } = useSnackbar()
-  const [locked, setLocked] = useState(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [proposal, setProposal] = useState<string>('')
   const [bgColor, setBgColor] = useState<string>(DEFAULT_COLOR)
   const translate = useTranslate()
   const [updateContent] = useUpdateLessonContentMutation()
@@ -65,13 +71,18 @@ export default function StepContentEditor(): React.ReactElement {
     { id: lessonId as string },
     { skip: !lessonId || !stepId }
   )
-  const { data, isFetching, isLoading } = useGetLessonContentByIdQuery(
+  const {
+    data,
+    isFetching,
+    isLoading,
+    refetch: refetchLessonContent,
+  } = useGetLessonContentByIdQuery(
     { lessonId: lessonId as string, id: stepId as string },
     { skip: !lessonId || !stepId }
   )
 
   const [bodyType, setBodyType] = useState<LessonContentType>(
-    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.Editable
+    (localStorage.getItem('bodyType') as LessonContentType) || LessonContentType.Code
   )
 
   useEffect(() => {
@@ -83,11 +94,12 @@ export default function StepContentEditor(): React.ReactElement {
       await updateContent({
         lessonId: lessonId as string,
         id: stepId as string,
-        type: bodyType,
+        type: bodyType == 'editable' ? bodyType : LessonContentType.Code,
         bg_color: bgColor,
         body,
       }).unwrap()
       enqueueSnackbar(translate('slide_content_updated'))
+      refetchLessonContent()
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
@@ -109,12 +121,7 @@ export default function StepContentEditor(): React.ReactElement {
   }
 
   return (
-    <LessonContentContext.Provider
-      value={{
-        locked,
-        lockedHandler: setLocked,
-      }}
-    >
+    <>
       <Dialog
         open={open}
         onClose={() => {
@@ -126,7 +133,7 @@ export default function StepContentEditor(): React.ReactElement {
           typography='h5'
           color='error'
         >
-          Any content in the current editor can be deleted if you switch now
+          Any unsaved edit in the current editor can be deleted if you switch
         </DialogTitle>
         <DialogTitle
           textAlign='center'
@@ -136,7 +143,10 @@ export default function StepContentEditor(): React.ReactElement {
         </DialogTitle>
         <DialogActions sx={{ gap: 2, justifyContent: 'center' }}>
           <Button
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false)
+              setProposal(bodyType)
+            }}
             variant='outlined'
             color='error'
           >
@@ -145,11 +155,7 @@ export default function StepContentEditor(): React.ReactElement {
           <Button
             onClick={() => {
               setOpen(false)
-              setBodyType(
-                bodyType === LessonContentType.Editable
-                  ? LessonContentType.Code
-                  : LessonContentType.Editable
-              )
+              setBodyType(proposal as LessonContentType)
             }}
             variant='outlined'
             color='success'
@@ -188,23 +194,23 @@ export default function StepContentEditor(): React.ReactElement {
               exclusive
               value={bodyType}
               onChange={(_, newValue) => {
-                if (newValue === LessonContentType.Code || newValue === LessonContentType.Editable)
-                  setOpen(true)
-                else setBodyType(newValue)
+                if (bodyType === newValue) return
+                setProposal(newValue)
+                setOpen(true)
               }}
               aria-label='select slide type'
             >
-              <ToggleButton
-                value={LessonContentType.Editable}
-                aria-label='Standard'
-                sx={{ gap: 1 }}
-              >
-                <MdOutlinePermMedia size='20px' /> {translate('slide_standard')}
-              </ToggleButton>
               <Divider
                 orientation='vertical'
                 flexItem
               />
+              <ToggleButton
+                value={LessonContentType.TinyMce}
+                aria-label='TinyMce'
+                sx={{ gap: 1 }}
+              >
+                <BsAspectRatio size='20px' /> Standard
+              </ToggleButton>
               <ToggleButton
                 value={LessonContentType.Code}
                 aria-label='HTML'
@@ -212,7 +218,15 @@ export default function StepContentEditor(): React.ReactElement {
               >
                 <BsCodeSlash size='20px' /> HTML
               </ToggleButton>
+              <ToggleButton
+                value={LessonContentType.Editable}
+                aria-label='Remirror'
+                sx={{ gap: 1 }}
+              >
+                <BsClipboard size='20px' /> Remirror
+              </ToggleButton>
             </StyledToggleButtonGroup>
+            {locked ? <Label color='info'>Content Changed</Label> : null}
             <Preferences
               defaultValues={{ ...data! }}
               contentId={data?.id as string}
@@ -222,45 +236,46 @@ export default function StepContentEditor(): React.ReactElement {
               <SettingsBtn />
             </Preferences>
           </div>
-          <div
-            style={{
-              gap: 16,
-              display: 'flex',
-              alignItems: 'center',
-              opacity: 0.5,
-            }}
+          <Stack
+            direction='row'
+            gap={2}
           >
-            <CgScreen size='30px' />
-            {translate('preview')}
-          </div>
+            <LessonSchareModal>
+              <Button sx={{ gap: 1, color: '#68767F' }}>
+                <Iconify icon='ph:share-fat' />
+                Share
+              </Button>
+            </LessonSchareModal>
+            <div
+              style={{
+                gap: 16,
+                display: 'flex',
+                alignItems: 'center',
+                opacity: 0.5,
+              }}
+            >
+              <CgScreen size='30px' />
+              <Link
+                href={STUDENT_PATH_DASHBOARD.codePanel.root + '?lessonId=' + lessonId}
+                target='_blank'
+              >
+                {translate('preview')}
+              </Link>
+            </div>
+          </Stack>
         </Box>
-        <Box
-          sx={{
-            position: 'relative',
-            height: 'calc(100vh - 80px)',
-            overflow: 'scroll',
-          }}
-        >
-          {bodyType === LessonContentType.Code ? (
-            <StepCode
-              content={data?.body || ''}
-              integrations={integrations ?? []}
-              onSubmit={onSubmit}
-              data={data!}
-              lessonId={lessonId as string}
-            />
-          ) : (
-            <StepMultimedia
-              content={data?.type === LessonContentType.Editable ? data?.body : ''}
-              onSubmit={onSubmit}
-              data={data!}
-              lessonId={lessonId as string}
-              bgColor={bgColor}
-              setBgColor={setBgColor}
-            />
-          )}
-        </Box>
+
+        <EditorSelector
+          bodyType={bodyType}
+          content={data?.body || ''}
+          integrations={integrations ?? []}
+          onSubmit={onSubmit}
+          data={data!}
+          lessonId={lessonId as string}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+        />
       </Box>
-    </LessonContentContext.Provider>
+    </>
   )
 }

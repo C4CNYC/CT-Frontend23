@@ -1,9 +1,10 @@
-import { type FC, memo, useCallback, useEffect, useRef, useState } from 'react'
+import { type FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Box, Collapse } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
+import { Socket } from 'socket.io-client'
 
 import { type AuthUserType } from '@/auth/types'
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -17,6 +18,7 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import BaseBlock from '../base-block'
 
 import { EditorMode } from './code-editor-collab/hook/constants'
+import { waitConnectSocket } from './code-editor-collab/hook/utils/socket'
 import CodeEditorController from './code-editor-controller'
 import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
@@ -30,7 +32,6 @@ interface ICodeEditorBlock {
   onChangeStreamingDocInfo: (doc: Record<string, string>) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
-  isFetching?: boolean
   contentId?: string
 }
 
@@ -40,8 +41,8 @@ const icon = (
     color='#43D4DD'
   />
 )
-const TYPING_DELEY = 20000
-const FIRST_LOADING_DELEY = 15000
+const OPEN_POPOVER_DELEY = 15000
+const CLOSE_POPOVER_DELEY = 4000
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
@@ -50,45 +51,28 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   code,
   onChangeStreamingDocInfo,
   preloadedCode,
-  isFetching = false,
   contentId,
 }) => {
-  const translate = useTranslate()
-  const TITLE = translate('code_editor')
+  const { query } = useRouter()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
-  const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
-  const [typing, setTyping] = useState<boolean | null>(null)
-  const room = useSelector((state) => state.codeEditorController.room)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const timer = useRef<NodeJS.Timeout>()
+  const translate = useTranslate()
+
   const codeRef = useRef(code)
+  const openPopoverTimer = useRef<NodeJS.Timeout | null>(null)
+  const closePopoverTimer = useRef<NodeJS.Timeout | null>(null)
+  const [isOpenPopover, setIsOpenPopover] = useState<boolean | null>(null)
+  const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
+
+  const socket = useSelector((state) => state.codePanelGlobal.socket)
   const codeState = useSelector((state) => state.codePanelGlobal.code)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
-  const typingListener = (deley: number, firstLoad: boolean): void => {
-    if (!firstLoad) {
-      setTyping(false)
-    }
 
-    if (timer.current != null) {
-      clearInterval(timer.current)
-    }
-
-    timer.current = setInterval(() => {
-      setTyping(true)
-    }, deley)
-  }
-
-  useEffect(() => {
-    typingListener(FIRST_LOADING_DELEY, true)
-  }, [])
-
-  useEffect(() => {
-    if (code) {
-      typingListener(TYPING_DELEY, false)
-    }
-  }, [code])
-  const { query } = useRouter()
+  const selectedContent = useMemo(
+    () => contentValidations?.find((item) => item.contentId === contentId),
+    [contentId, contentValidations]
+  )
 
   const symbolsHandler = useCallback((): void => {
     setCodingSymbols(!codingSymbols)
@@ -111,20 +95,48 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
 
   useEffect(() => {
+    const runAsyncEffect = async (socket: Socket) => {
+      const isConnected = await waitConnectSocket(socket)
+
+      if (!isConnected) {
+        void runAsyncEffect(socket)
+      }
+    }
+
+    if (socket && !socket.connected) {
+      void runAsyncEffect(socket)
+    }
+  }, [socket])
+
+  useEffect(() => {
     onResetRoom()
   }, [onResetRoom])
 
-  const selectedContent = contentValidations?.find((item) => item.contentId === contentId)
+  useEffect(() => {
+    openPopoverTimer.current = setTimeout(() => {
+      setIsOpenPopover(true)
+
+      closePopoverTimer.current = setTimeout(() => {
+        setIsOpenPopover(false)
+      }, CLOSE_POPOVER_DELEY)
+    }, OPEN_POPOVER_DELEY)
+
+    return () => {
+      if (openPopoverTimer.current) clearTimeout(openPopoverTimer.current)
+      if (closePopoverTimer.current) clearTimeout(closePopoverTimer.current)
+    }
+  }, [])
+
   return (
     <BaseBlock
-      title={TITLE}
+      title={translate('code_editor')}
       icon={icon}
       className='codeEditorTour'
     >
       <CodeEditorStyles isDesktop={isDesktop} />
 
       <MumuSpeedDial
-        typing={typing}
+        openPopover={isOpenPopover}
         contentId={contentId}
       />
 
@@ -144,7 +156,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         preloadedCode={preloadedCode}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
-        isFetching={isFetching}
       />
 
       <Box sx={{ display: isDesktop ? 'none' : 'block' }}>

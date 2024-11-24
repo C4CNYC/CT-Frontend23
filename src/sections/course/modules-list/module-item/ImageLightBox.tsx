@@ -6,16 +6,20 @@ import { BiShowAlt } from '@react-icons/all-files/bi/BiShowAlt'
 import { Image } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
+import { LIGHT_BOX_ICON_BTN } from './constants'
+
 interface IImageLightBoxProps {
   children: React.ReactElement
   image: string
   sx?: SxProps
+  onClick?: (e: React.SyntheticEvent) => void
 }
 
 export default function ImageLightBox({
   children,
   image,
   sx,
+  onClick,
 }: IImageLightBoxProps): React.ReactElement {
   const [open, setOpen] = useState(false)
   const translate = useTranslate()
@@ -25,18 +29,19 @@ export default function ImageLightBox({
     e.stopPropagation()
     setOpen(true)
   }
-  const handleCloseDialog = (): void => {
+  const handleCloseDialog = (e: React.MouseEvent): void => {
     setOpen(false)
+    onClick?.(e)
   }
 
   return (
     <>
       <Box
         onClick={(e) => {
+          onClick?.(e)
           handleOpenDialog(e)
         }}
         sx={{
-          width: 'fit-content',
           position: 'relative',
           zIndex: 1,
           '&:hover': {
@@ -47,24 +52,7 @@ export default function ImageLightBox({
         }}
       >
         {children}
-        <Box
-          sx={{
-            opacity: 0,
-            position: 'absolute',
-            width: '50px',
-            height: '50px',
-            top: 'calc(50% - 25px)',
-            left: 'calc(50% - 25px)',
-            zIndex: 2,
-            background: 'rgba(225, 225, 225, 0.6)',
-            color: '#fff',
-            borderRadius: '50%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            transition: 'all .2s linear',
-          }}
-        >
+        <Box sx={LIGHT_BOX_ICON_BTN}>
           <BiShowAlt size={40} />
         </Box>
       </Box>

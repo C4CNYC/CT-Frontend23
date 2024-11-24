@@ -34,10 +34,13 @@ export const StudentDefaultIntro = () => {
       return
     }
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       dispatch(setStartTour(true))
       localStorage.setItem('HAS_SEEN_STUDENT_DEFAULT_INTRO', 'true')
     }, 1000)
+    return () => {
+      clearTimeout(timeout)
+    }
   }, [isTourStarted, dispatch])
 
   return (

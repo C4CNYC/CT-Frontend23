@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
-import { Button, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Collapse, Stack, Typography, useTheme } from '@mui/material'
 import { SlArrowDown } from '@react-icons/all-files/sl/SlArrowDown'
 import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
 
@@ -19,8 +19,6 @@ interface ICourseInfoProps {
   level: string
 }
 
-const MAX_DESCRIPTION_LENGTH = 250
-
 export default function CourseInfo({
   cover,
   name,
@@ -32,6 +30,14 @@ export default function CourseInfo({
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const translate = useTranslate()
+  const descRef = useRef<HTMLElement | null>(null)
+
+  const ellipsisHandler = () => {
+    if (descRef.current) {
+      return descRef.current.offsetWidth < descRef.current.scrollWidth
+    }
+    return false
+  }
 
   const containerStyles = useMemo(() => getCourseInfoWrapperSx(theme), [theme])
   const seeMoreBtnStyles = useMemo(() => getSeeMoreBtnSx(theme), [theme])
@@ -48,20 +54,31 @@ export default function CourseInfo({
         <Typography
           variant='subtitle1'
           sx={{ pb: !open ? 1 : 1 }}
+          ref={descRef}
+          noWrap
+          textOverflow='ellipsis'
         >
-          {description.length > MAX_DESCRIPTION_LENGTH && !open
-            ? `${description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
-            : description}
+          {description}
         </Typography>
-        <Button
-          sx={seeMoreBtnStyles}
-          onClick={() => {
-            setOpen(!open)
-          }}
-        >
-          {open ? translate('actions_show_less') : translate('actions_see_more')}
-          {open ? <SlArrowUp /> : <SlArrowDown />}
-        </Button>
+        {ellipsisHandler() ? (
+          <>
+            <Collapse in={open}>{description}</Collapse>
+            <Button
+              sx={seeMoreBtnStyles}
+              onClick={() => {
+                setOpen(!open)
+              }}
+            >
+              {open ? translate('actions_show_less') : translate('actions_see_more')}
+              {open ? (
+                <SlArrowUp style={{ marginLeft: '10px' }} />
+              ) : (
+                <SlArrowDown style={{ marginLeft: '10px' }} />
+              )}
+            </Button>
+          </>
+        ) : null}
+
         <CourseSummarily
           duration={duration}
           lessonsCount={lessonsCount}

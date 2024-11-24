@@ -1,4 +1,4 @@
-import { type FC, useRef, useState } from 'react'
+import { type FC, useContext, useRef, useState } from 'react'
 
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
@@ -13,15 +13,14 @@ import { useSelector } from '@/redux/store'
 import { TAB_TITLES } from '@/sections/code-panel/components/body/consts'
 import { CodePanelBodyProps } from '@/sections/code-panel/components/body/types'
 
+import { CodePanelContext } from '../../lib/CodePanelContext'
+
 import CodeEditorBlock from './blocks/code-editor-block'
 import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
 import NavPanel from './blocks/nav-panel'
 import SliderBlock from './blocks/slider-block'
 import ViewBlock from './blocks/view-block'
 import { CodeDocument } from './blocks/view-block/browser-view'
-
-let previousLength: number | null = null
-let checkValueTimeout: any | null = null
 
 const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
@@ -30,55 +29,35 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   lessonContents,
   user,
   language,
-  isFetchingLessonContent = false,
 }) => {
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
+  const isDesktop = useIsDesktop()
+
   const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const { autoRun } = useContext(CodePanelContext)
+  const [document, setDocument] = useState<CodeDocument | null>(null)
+  const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
-
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
-
-  const [document, setDocument] = useState<CodeDocument | null>(null)
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
-      if (checkValueTimeout) {
-        // Clear the previous timeout if the value changes
-        clearTimeout(checkValueTimeout)
-      }
-
-      previousLength = doc?.htmlBody?.length // Store the current value
-      if (lessonId && user) {
-        socket?.emit('changeStatusInLesson', {
-          lesson: lessonId,
-          user: user?.id,
-          status: 'active',
-        })
-      }
-
-      // Set up the check for 30 seconds later
-      checkValueTimeout = setTimeout(() => {
-        if (doc?.htmlBody?.length === previousLength) {
-          socket?.emit('changeStatusInLesson', {
-            lesson: lessonId,
-            user: user?.id,
-            status: 'idle',
-          })
-        }
-      }, 30000) // 30 seconds
-
       setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
+      if (autoRun) {
+        setBrowserView(doc)
+      }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log('Error: ', error)
     }
+  }
+
+  const reloadBrowserView = () => {
+    setBrowserView(document)
   }
 
   const openInstruction = () => {
@@ -104,10 +83,10 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             onSubmitLesson={onSubmitLesson}
             data={lessonContents}
             integrations={lesson?.integrations ?? []}
-            isFetching={isFetchingLessonContent}
             code={document?.htmlBody?.join('') ?? ''}
             lessonType={lesson?.type}
             lessonName={lesson?.name}
+            lessonId={lesson?.id || lessonId}
           />
         ) : (
           <HidedTabBtn
@@ -123,12 +102,15 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
           onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-          isFetching={isFetchingLessonContent}
           contentId={lessonContents[slideIndex]?.id}
         />
 
         {!isBrowserHidden ? (
-          <ViewBlock document={document} />
+          <ViewBlock
+            integrations={lesson?.integrations ?? []}
+            document={browserView}
+            reloadBrowserView={reloadBrowserView}
+          />
         ) : (
           <HidedTabBtn
             title={TAB_TITLES.browser_preview}
@@ -158,9 +140,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         onSubmitChallenge={onSubmitChallenge}
         data={lessonContents}
         integrations={lesson?.integrations ?? []}
-        isFetching={isFetchingLessonContent}
         code={document?.htmlBody?.join('') ?? ''}
         lessonType={lesson?.type}
+        lessonId={lesson?.id || lessonId}
       />
 
       <CodeEditorBlock
@@ -169,10 +151,12 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations}
-        isFetching={isFetchingLessonContent}
       />
 
-      <ViewBlock document={document} />
+      <ViewBlock
+        document={document}
+        integrations={lesson?.integrations ?? []}
+      />
     </SwipeableViews>
   )
 }

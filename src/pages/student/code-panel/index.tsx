@@ -1,28 +1,43 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useRef } from 'react'
 
-import { enqueueSnackbar } from 'notistack'
+import _ from 'lodash'
+import { useRouter } from 'next/router'
 
-import { useAuthContext } from '@/auth/useAuthContext'
-import { isUserLoggedIn } from '@root/src/auth/utils'
+import { useSelector } from '@/redux/store'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { useSetLastWorkspaceQueryMutation } from '@root/src/redux/services/manager/activity-student'
 import CodePanelLayout from '@root/src/sections/code-panel'
 
+const buildQueryFromObject = (query: Record<string, string>) => {
+  return Object.keys(_.omitBy(query, (value) => !value))
+    .map((key) => `${key}=${query[key]}`)
+    .join('&')
+}
+
 export default function CodePanelContainer(): ReactElement | null {
-  const { register, login } = useAuthContext()
-  const [render, setRender] = useState(false)
-  const verifyUserAuthenticationStatus = async () => {
-    try {
-      if (isUserLoggedIn()) return null
-    } catch (error: any) {
-      enqueueSnackbar(`${error?.message}`, { variant: 'error', autoHideDuration: 1000 })
-    } finally {
-      setRender(true)
-    }
-  }
+  const router = useRouter()
+  const { isInitialized } = useAuthContext()
+  const workspaceRef = useRef<{ query: string }>({ query: '' })
+  const profile = useSelector((state) => state.global.user)
+
+  const [updateWorkspaceActivity] = useSetLastWorkspaceQueryMutation()
 
   useEffect(() => {
-    verifyUserAuthenticationStatus()
-  }, [])
+    const { courseId, unitId, lessonId } = router.query
+    const query = `?${buildQueryFromObject({
+      courseId: (courseId as string) || '',
+      unitId: (unitId as string) || '',
+      lessonId: (lessonId as string) || '',
+    })}`
 
-  if (render) return <CodePanelLayout />
-  else return null
+    if (workspaceRef.current.query === query || (!lessonId && !unitId && !courseId)) return
+
+    workspaceRef.current.query = query
+    if (profile) {
+      updateWorkspaceActivity({ query })
+    }
+  }, [router, profile])
+
+  if (!isInitialized) return null
+  return <CodePanelLayout />
 }

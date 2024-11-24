@@ -15,7 +15,9 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'GET',
       }),
       providesTags: ['LessonsContent'],
-      transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
+      transformResponse: (
+        res: Array<ILessonContent & BaseResponseInterface>
+      ): Array<ILessonContent & BaseResponseInterface> =>
         res.sort((a, b) => a.meta.order - b.meta.order),
     }),
     getLessonContentById: builder.query<
@@ -32,7 +34,7 @@ const extendedApi = managerApi.injectEndpoints({
 
     createLessonContent: builder.mutation<
       ILessonContent,
-      { lessonId: string } & Omit<ILessonContentUpdate, 'body' | 'type' | 'cover'>
+      { lessonId: string } & Omit<ILessonContentUpdate, 'cover'>
     >({
       query: ({ lessonId, ...body }) => ({
         url: `/manager/lesson/${lessonId}/content`,

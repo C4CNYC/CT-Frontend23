@@ -3,9 +3,8 @@ import { type FC, useMemo, useState, useEffect } from 'react'
 import { type DraggableAttributes } from '@dnd-kit/core'
 import { type SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
-import { Box, Stack, Avatar, Typography, IconButton } from '@mui/material'
+import { Box, Stack, Avatar, Typography, IconButton, CircularProgress } from '@mui/material'
 import { CgClose } from '@react-icons/all-files/cg/CgClose'
-import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
@@ -14,53 +13,52 @@ import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
 import { RoomStatus } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/components/status-label'
-import {
-  createSocket,
-  waitConnectSocket,
-} from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
-import { voidFunction, type BaseResponseInterface } from '@/utils'
+import { waitConnectSocket } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
+import { type BaseResponseInterface } from '@/utils'
+import { useSelector } from '@root/src/redux/store'
 import { EditorMode } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
+import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
 import { getRandomIndex } from '../../hook/utils'
 
 import { BOX_COLORS, HEADER_COLORS } from './constants'
 import styles from './styles'
 
-let previousValue: string | null = null
-let checkValueTimeout: any | null = null
 interface CodeBlockProps {
+  lessonId?: string
+  cursorName?: string
   onClose: () => void
+  portalSocket: Socket
+  onMoveToPortal: () => void
   attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
   owner: IFriend & BaseResponseInterface
-  cursorName?: string
-  lessonId?: string
-  onChangeUserStatus?: (status: string, lessonId: string) => void
 }
 
 const CodeBlock: FC<CodeBlockProps> = ({
-  onClose,
-  attributes,
-  listeners,
   owner,
-  cursorName,
+  onClose,
   lessonId,
-  onChangeUserStatus = voidFunction,
+  listeners,
+  attributes,
+  cursorName,
+  portalSocket,
+  onMoveToPortal,
 }) => {
   const dispatch = useDispatch()
+  const [isStudentReady, setIsStudentReady] = useState(false)
   const [isConnected, setIsConnected] = useState(false)
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive)
-  const route = useRouter()
-  // const socket = useSocket();
 
-  const { boxSx, headerSx, socket } = useMemo(() => {
+  const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
+
+  const { boxSx, headerSx } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0]
     const headerColor = HEADER_COLORS[getRandomIndex(HEADER_COLORS.length)] ?? HEADER_COLORS[0]
 
     return {
       boxSx: styles.getBoxSx(boxColor),
       headerSx: styles.getHeaderSx(headerColor),
-      socket: createSocket(),
     }
   }, [])
 
@@ -75,13 +73,14 @@ const CodeBlock: FC<CodeBlockProps> = ({
 
     dispatch(
       setRoom({
-        // roomId: data.id,
         avatar: owner.avatar,
         roomId: `${owner.id as string}_${lessonId as string}`,
         cursorText: owner.first_name,
         mode: EditorMode.SubOwner,
       })
     )
+
+    onMoveToPortal()
   }
 
   useEffect(() => {
@@ -89,44 +88,34 @@ const CodeBlock: FC<CodeBlockProps> = ({
       const isConnected = await waitConnectSocket(socket)
 
       if (isConnected) {
+        socket.emit('joinRoom', `student_${owner.id}`)
+        if (!socket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
+          socket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
+            setIsStudentReady(true)
+          })
+        }
         setIsConnected(isConnected)
       } else {
         void runAsyncEffect(socket)
       }
     }
 
-    if (socket) {
-      if (socket.connected) {
+    if (portalSocket) {
+      if (portalSocket.connected) {
+        portalSocket.emit('joinRoom', `student_${owner.id}`)
+        if (!portalSocket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
+          portalSocket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
+            setIsStudentReady(true)
+          })
+        }
         setIsConnected(true)
       } else {
-        void runAsyncEffect(socket)
+        void runAsyncEffect(portalSocket)
       }
     } else {
       setIsConnected(false)
     }
-  }, [socket])
-
-  // const onChangeCodemirrorValue = (value: string) => {
-  //   if (checkValueTimeout) {
-  //     // Clear the previous timeout if the value changes
-  //     clearTimeout(checkValueTimeout)
-  //   }
-  //
-  //   previousValue = value // Store the current value
-  //   onChangeUserStatus('active', lessonId as string)
-  //
-  //   // Set up the check for 30 seconds later
-  //   checkValueTimeout = setTimeout(() => {
-  //     if (value === previousValue) {
-  //       // eslint-disable-next-line no-console
-  //       console.log(`Value after 30 seconds: ${value} (unchanged)`)
-  //       onChangeUserStatus('idle', lessonId as string)
-  //     } else {
-  //       // eslint-disable-next-line no-console
-  //       console.log('Value has changed')
-  //     }
-  //   }, 30000) // 30 seconds
-  // }
+  }, [portalSocket])
 
   return (
     <Box sx={boxSx}>
@@ -186,17 +175,18 @@ const CodeBlock: FC<CodeBlockProps> = ({
         </Stack>
       </Stack>
 
-      {isConnected &&
+      {!isStudentReady && <CircularProgress />}
+
+      {isStudentReady &&
+        isConnected &&
         (isActiveUser ? (
           <CodeEditorCollab
-            // roomId={data.id}
+            portalSocket={portalSocket}
             roomId={`${owner.id as string}_${lessonId as string}`}
             mode={EditorMode.Watcher}
             withFileManager={false}
             cursorText={cursorName}
             onRoomStatusChanged={setEditorStatus}
-            socket={socket}
-            // onChangeCodemirrorValue={onChangeCodemirrorValue}
           />
         ) : (
           <Box>User Offline</Box>

@@ -1,4 +1,4 @@
-import { type FC, type RefObject, useEffect, useMemo } from 'react'
+import { type FC, type RefObject, useMemo } from 'react'
 
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -7,10 +7,10 @@ import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
 
 import { SimpleInfiniteList } from '@/components'
-import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { useSelector } from '@/redux/store'
-import { ILessonUserStatus } from '@/types'
-import { type BaseResponseInterface } from '@/utils'
+import { ILessonUserStatus } from '@root/src/types'
+
+import { createSocket } from '../code-editor-block/code-editor-collab/hook/utils/socket'
 
 import CodeBlock from './components/code-block'
 import CustomNavItem from './components/custom-nav-item'
@@ -19,6 +19,7 @@ import LoadListSkeleton from './components/load-list-skeleton'
 import NavItem from './components/nav-item'
 import SortableItem from './components/sortable-item'
 import { useNavPanel } from './hook'
+import { useUserWithStatuses } from './hook/useUserWithStatuses'
 import {
   DIVIDER_SX,
   DIVIDER_SX_BOTTOM,
@@ -36,6 +37,13 @@ interface NavPanelProps {
   lessonId?: string
 }
 
+interface CodeBlockUnitProps {
+  user: ILessonUserStatus
+  onDeletePreviewUser: (id: string) => void
+  lessonId?: string
+  cursorName?: string
+}
+
 const LOADER_SIZE = 20
 
 const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId }) => {
@@ -46,24 +54,14 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
     setIsOpen,
     onDragEnd,
     onDeletePreviewUser,
-    closeAllUsersPreview,
     draggableConfig,
-    users,
-    setUsers,
     previewUsers,
-    activeUsersAmount,
-    isUsersLoading,
-    onLoadMore,
-    hasNextPage,
   } = useNavPanel(wrapperListenerRef)
 
-  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
-  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
+  const { users, activeUsersAmount, isUsersLoading, onLoadMore, hasNextPage } =
+    useUserWithStatuses()
 
-  // const socket = useSelector((state) => state.codePanelGlobal.socket)
-  const usersStatus = useSelector((state) => state.codePanelGlobal.usersStatus)
-  // const room = useSelector((state: RootState) => state.codeEditorController.room)
-  // const roomId = room?.roomId ?? ''
+  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 
   const drawerSx = useMemo(() => {
     return getDrawerSx(isOpen, isRealtimeCodeHidden)
@@ -72,46 +70,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
   const stackCodeBoxSx = useMemo(() => {
     return getStackCodeBoxSx(draggableConfig?.height, isOpen)
   }, [draggableConfig?.height, isOpen])
-
-  useEffect(() => {
-    const _users = users.map((_user: IFriend & BaseResponseInterface) => {
-      const userStatus = usersStatus.find(
-        (_userStatus: ILessonUserStatus) => _userStatus.id === _user.id
-      )
-      return {
-        ..._user,
-        status: userStatus?.status ?? _user.status,
-        currentLessonId: userStatus?.lessonId ?? _user.currentLessonId,
-      }
-    })
-    setUsers(_users)
-  }, [usersStatus, users.length])
-
-  useEffect(() => {
-    if (isRealtimeCodeEnabled) {
-      setIsOpen(false)
-      closeAllUsersPreview()
-    }
-  }, [isRealtimeCodeHidden])
-
-  // const onChangeUserStatus = (status: string, lessonId: string) => {
-  //   try {
-  //     socket?.emit('changeStatusInLesson', {
-  //       lesson: lessonId,
-  //       user: roomId,
-  //       status,
-  //     })
-  //     setUsers((_users: IFriend[]) =>
-  //       _users.map((_user: IFriend) => {
-  //         if (roomId === `${_user.id as string}_${lessonId as string}`) return { ..._user, status }
-  //         return { ..._user }
-  //       })
-  //     )
-  //   } catch (error: any) {
-  //     // eslint-disable-next-line no-console
-  //     console.log('onChangeUserStatusError: ', error)
-  //   }
-  // }
 
   return (
     <Drawer
@@ -137,7 +95,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
           ) : (
             <SimpleInfiniteList
               loading={isUsersLoading}
-              hasNextPage={hasNextPage}
+              hasNextPage={!!hasNextPage}
               onLoadMore={onLoadMore}
               loaderComponent={
                 <CircularProgress
@@ -150,9 +108,6 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
                 <NavItem
                   key={`${user.id}-${index}`}
                   data={user}
-                  onToggle={() => {
-                    setIsOpen(!isOpen)
-                  }}
                   onClick={() => {
                     onAddBlock(user)
                   }}
@@ -182,37 +137,63 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
           }}
         />
       </List>
-
-      {isRealtimeCodeEnabled && (
-        <Stack sx={stackCodeBoxSx}>
-          <DndContext onDragEnd={onDragEnd}>
-            <SortableContext
-              items={previewUsers}
-              strategy={verticalListSortingStrategy}
-            >
-              {previewUsers.map((user) => {
-                return (
-                  <SortableItem
-                    key={user.id}
-                    id={user.id}
-                  >
-                    <CodeBlock
-                      onClose={() => {
-                        onDeletePreviewUser(user.id)
-                      }}
-                      owner={user}
-                      cursorName={cursorName}
-                      // onChangeUserStatus={onChangeUserStatus}
-                      lessonId={user.currentLessonId ?? lessonId}
-                    />
-                  </SortableItem>
-                )
-              })}
-            </SortableContext>
-          </DndContext>
-        </Stack>
-      )}
+      <Stack sx={stackCodeBoxSx}>
+        <DndContext onDragEnd={onDragEnd}>
+          <SortableContext
+            items={previewUsers}
+            strategy={verticalListSortingStrategy}
+          >
+            {previewUsers.map((user) => (
+              <CodeBlockUnit
+                key={user.id}
+                onDeletePreviewUser={onDeletePreviewUser}
+                user={user}
+                lessonId={lessonId}
+              />
+            ))}
+          </SortableContext>
+        </DndContext>
+      </Stack>
     </Drawer>
+  )
+}
+
+const CodeBlockUnit: React.FC<CodeBlockUnitProps> = ({
+  user,
+  onDeletePreviewUser,
+  lessonId,
+  cursorName,
+}: any) => {
+  const portalSocket = useMemo(() => {
+    return createSocket()
+  }, [])
+
+  const onCloseCodeBlock = () => {
+    onDeletePreviewUser(user.id)
+
+    if (portalSocket) {
+      portalSocket.emit('leaveRoom', user.id)
+    }
+  }
+
+  const onMoveToPortal = () => {
+    onDeletePreviewUser(user.id)
+  }
+
+  return (
+    <SortableItem
+      key={user.id}
+      id={user.id}
+    >
+      <CodeBlock
+        portalSocket={portalSocket}
+        cursorName={cursorName}
+        lessonId={user.currentLessonId ?? lessonId}
+        onClose={onCloseCodeBlock}
+        onMoveToPortal={onMoveToPortal}
+        owner={user}
+      />
+    </SortableItem>
   )
 }
 

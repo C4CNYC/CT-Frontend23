@@ -12,6 +12,7 @@ interface Props {
   info: string
   color: string
   disabled?: boolean
+  isNew?: boolean
 }
 
 export function SessionType({
@@ -21,6 +22,7 @@ export function SessionType({
   info,
   color,
   disabled,
+  isNew,
 }: Props): React.ReactElement {
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
@@ -30,7 +32,7 @@ export function SessionType({
     <Stack
       direction='row'
       alignItems='center'
-      sx={{ pr: { xs: 0, sm: 0, md: 1 } }}
+      sx={{ pr: { xs: 0, sm: 0, md: 1 }, width: '100%', justifyContent: 'space-between' }}
     >
       <Tooltip
         title={<Typography>{translate(info)}</Typography>}
@@ -54,11 +56,14 @@ export function SessionType({
         </Badge>
       </Tooltip>
       <Stack sx={{ pl: 2 }}>
-        {disabled ? (
+        {disabled || isNew ? (
           <Badge
-            sx={{ '& .MuiBadge-anchorOriginTopRight': { top: 0 } }}
-            badgeContent={translate('coming_soon')}
-            color='success'
+            sx={{
+              '& .MuiBadge-anchorOriginTopRight': { top: 0 },
+              left: '-10px',
+              '& .MuiBadge-badge	': { color: '#fff', background: isNew ? '#FBDD3F' : '#364954' },
+            }}
+            badgeContent={translate(isNew ? 'on_boarding_new' : 'coming_soon')}
           >
             <Typography
               variant='h4'
@@ -90,7 +95,7 @@ export function SessionType({
       <Image
         src='/assets/on-boarding/arrow.svg'
         alt='arrow image'
-        sx={{ width: '38px', height: '60px' }}
+        sx={{ minWidth: '38px', height: '60px' }}
       />
     </Stack>
   )

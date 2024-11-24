@@ -1,7 +1,8 @@
-import { type MutableRefObject, useCallback, useState, useMemo } from 'react'
+import { type MutableRefObject, useCallback, useState, useMemo, useEffect } from 'react'
 
 import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, StateEffect, Text } from '@codemirror/state'
+import { EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
@@ -10,6 +11,10 @@ import { Socket } from 'socket.io-client'
 
 import { useSelector } from '@/redux/store'
 import { AuthUserType } from '@root/src/auth/types'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { Role } from '@root/src/redux/services/enums/role.enum'
+import { reloadWorkspaceEvent } from '@root/src/sections/code-panel/lib/events'
+import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
 import { BASIC_SETUP, EditorMode } from './constants'
 import { commentExtenstion } from './extensions/comments'
@@ -41,6 +46,7 @@ export interface UseBaseInitReturn {
   streamingDoc?: Text
   isLoading: boolean
   extensions?: Extension[]
+  isCollabActive?: boolean
   baseInit: (fileName: File) => Promise<void>
   setIsLoading: (isLoading: boolean) => void
   setStreamingDoc: (streamingDoc: Text) => void
@@ -48,30 +54,74 @@ export interface UseBaseInitReturn {
 }
 
 export const useInitCodemirror = ({
-  socket,
-  withTooltip,
-  onChangeStreamingDocInfo,
-  roomId,
-  lessonId,
   mode,
   user,
+  roomId,
+  socket,
   cursorText,
-  defaultFileName,
+  withTooltip,
   preloadedCode,
+  defaultFileName,
   commentEffectRef,
   onCommentIconClick,
+  onChangeStreamingDocInfo,
 }: UseBaseInit): UseBaseInitReturn => {
+  const { user: profileOwner } = useAuthContext()
+
   const [key, setKey] = useState(0)
-  const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [isLoading, setIsLoading] = useState(true)
+  const [isCollabActive, setIsCollabActive] = useState(false)
+  const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
   const [extensions, setExtensions] = useState<Extension[] | undefined>()
+
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
+
   const getLocalStorageRoomKey = (roomId: string) => `room_doc_${roomId}`
   const prevLessonJson = localStorage.getItem(getLocalStorageRoomKey(prevLessonId as string))
+
   const lineWrap = useMemo(() => new Compartment(), [])
+
+  useEffect(() => {
+    if (socket && mode === EditorMode.Owner) {
+      socket.on('connect', () => {
+        socket.emit(SocketEventsStudentMode.JoinCollabModFeature, { roomId: user?.id })
+        socket.on(SocketEventsStudentMode.StartOnlineMode, () => {
+          setIsCollabActive(true)
+          setTimeout(() => {
+            setKey((prev) => ++prev)
+            socket.emit(SocketEventsStudentMode.OnlineStudentReady, { roomId: user?.id })
+          }, 100)
+        })
+
+        if (profileOwner?.role === Role.Student) {
+          socket?.on(SocketEventsStudentMode.StopOnlineMode, async () => {
+            setIsCollabActive(false)
+            setTimeout(() => {
+              window.dispatchEvent(reloadWorkspaceEvent)
+            }, 100)
+          })
+        }
+      })
+    }
+  }, [socket, profileOwner])
 
   const baseInit = useCallback(
     async (fileName: File) => {
+      if (!isCollabActive && mode === EditorMode.Owner) {
+        setExtensions([
+          indentUnit.of('\t'),
+          basicSetup(BASIC_SETUP),
+          ...language(fileName),
+          EditorState.lineSeparator.of('\n'),
+          dracula,
+          lineWrap.of(EditorView.lineWrapping),
+        ])
+
+        setKey((prev) => ++prev)
+        setIsLoading(false)
+        return
+      }
+
       const addCursor = StateEffect.define<Cursor>()
       commentEffectRef.current = StateEffect.define<CommentEffect>()
       const { version, doc, cursorName, docInfo, updates } = await getDocument({
@@ -89,9 +139,9 @@ export const useInitCodemirror = ({
         indentUnit.of('\t'),
         basicSetup(BASIC_SETUP),
         ...language(fileName),
+        EditorState.lineSeparator.of('\n'),
         dracula,
         lineWrap.of(EditorView.lineWrapping),
-
         ...(socket
           ? [
               peerExtension({
@@ -134,17 +184,19 @@ export const useInitCodemirror = ({
       onChangeStreamingDocInfo,
       defaultFileName,
       preloadedCode,
+      isCollabActive,
     ]
   )
 
   return {
     key,
+    baseInit,
+    lineWrap,
+    isLoading,
     extensions,
     streamingDoc,
+    isCollabActive,
     setStreamingDoc,
-    isLoading,
-    baseInit,
     setIsLoading,
-    lineWrap,
   }
 }

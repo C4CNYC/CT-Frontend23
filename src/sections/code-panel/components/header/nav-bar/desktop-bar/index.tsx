@@ -7,6 +7,7 @@ import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-glob
 import { useSelector } from '@/redux/store'
 import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
+// import { NotificationsDrawer } from '@root/src/components/notifications-drawer'
 
 import ChatPopup from '../options/chat-popup'
 // import HelpPopup from "../options/help-popup";
@@ -50,7 +51,19 @@ const DesktopBar: FC<IDesktopBar> = ({
       {/* <HelpPopup /> */}
 
       <ChatPopup chatComponent={chatComponent} />
-
+      {/* <NotificationsDrawer
+        data={[
+          {
+            id: 'sdcsdsc',
+            type: 'project',
+            category: 'Project UI',
+            avatarUrl: '/assets/icons/home/ic_development.svg',
+            createdAt: '',
+            isUnRead: true,
+            title: 'some title',
+          },
+        ]}
+      /> */}
       <SettingDrawer />
 
       <GalleryMenu

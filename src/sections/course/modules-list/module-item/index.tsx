@@ -1,7 +1,8 @@
+import { useMemo } from 'react'
+
 import {
   Box,
   Button,
-  Divider,
   IconButton,
   Link,
   Stack,
@@ -18,7 +19,7 @@ import { Unit } from '@/redux/interfaces/challenges.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
-import ActionsBlock from './ActionsBlock'
+import { getBtnSx, getImgSx, getModuleItemCont, INFO_CONT_SX, seeMoreBtn } from './constants'
 import ImageLightBox from './ImageLightBox'
 import ModuleProgress from './ModuleProgress'
 
@@ -32,75 +33,66 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
   const isMobile = useMediaQuery(theme.breakpoints.down(800))
   const { query } = useRouter()
   const translate = useTranslate()
+  const router = useRouter()
+
+  const moduleContSx = useMemo(() => getModuleItemCont(theme), [theme])
+  const imgSx = useMemo(() => getImgSx(unit?.avatar, theme), [theme, unit?.avatar])
+  const btnSx = useMemo(
+    () => getBtnSx(isMobile, lastVisited, theme),
+    [theme, isMobile, lastVisited]
+  )
+  const moreBtnSx = useMemo(() => seeMoreBtn(isMobile), [isMobile])
 
   return (
     <Stack
       direction={isMobile ? 'column' : 'row'}
-      sx={{
-        background: theme.palette.mode === 'light' ? '#fff' : theme.palette.background.paper,
-        // height: isMobile ? "auto" : "200px",
-        position: 'relative',
-        zIndex: 5,
-        borderRadius: '25px',
+      sx={moduleContSx}
+      onClick={(event) => {
+        router.push(
+          STUDENT_PATH_DASHBOARD.courses.unit(query.id as string, unit?.id as string),
+          undefined,
+          { shallow: true }
+        )
       }}
     >
       {isMobile ? (
-        <IconButton sx={{ alignSelf: 'flex-end', mb: -4, mt: 0.5, mr: 0.5 }}>
+        <IconButton
+          sx={{ alignSelf: 'flex-end', mb: -4, mt: 0.5, mr: 0.5 }}
+          onClick={(event) => {
+            event.stopPropagation()
+          }}
+        >
           <MdIosShare />
         </IconButton>
       ) : null}
       <ImageLightBox
         sx={isMobile ? { alignSelf: 'center' } : {}}
         image={unit?.avatar ?? '/assets/projects/bg1.png'}
-      >
-        <Box
-          sx={{
-            flexShrink: '0',
-            borderRadius: '25px 25px 0 25px',
-            overflow: 'hidden',
-            width: '150px',
-            height: '100%',
-            background: `no-repeat url(${
-              unit?.avatar ?? '/assets/projects/bg1.png'
-            }) center / cover`,
-            position: 'relative',
-            [theme.breakpoints.down(800)]: {
-              m: 2,
-              width: '200px',
-              minHeight: '200px',
-            },
-          }}
-        />
-      </ImageLightBox>
-      <Stack
-        sx={{
-          p: 2,
-          pr: 3,
-          justifyContent: 'space-between',
-          flex: 1,
+        onClick={(event) => {
+          event.stopPropagation()
         }}
       >
+        <Box sx={imgSx} />
+      </ImageLightBox>
+      <Stack sx={INFO_CONT_SX}>
         <ModuleProgress progress={unit?.progress ? unit?.progress : 3} />
-        <Box>
-          <Typography
-            variant='h5'
-            noWrap
-            gutterBottom
-            sx={{
-              maxWidth: { lg: '450px', xl: '550px' },
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              wordWrap: 'break-word',
-            }}
-          >
-            {unit?.name}
-          </Typography>
-          <Typography variant='body1'>
-            {unit?.description && unit?.description?.length > 85
-              ? `${unit?.description.slice(0, 80)} ...`
-              : unit?.description}
-          </Typography>
-        </Box>
+
+        <Typography
+          variant='h5'
+          noWrap
+          textOverflow='ellipsis'
+          gutterBottom
+        >
+          {unit?.name}
+        </Typography>
+        <Typography
+          variant='body1'
+          noWrap
+          textOverflow='ellipsis'
+        >
+          {unit?.description}
+        </Typography>
+
         <Stack
           direction={isMobile ? 'column-reverse' : 'row'}
           alignItems='center'
@@ -111,20 +103,13 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
             href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
               courseId: query.id as string,
               unitId: unit?.id,
-              lessonId: unit?.lessons[0].id,
+              lessonId: unit?.lessons?.[0].id,
             })}
-            sx={{
-              display: 'inline-flex',
-              alignSelf: isMobile ? 'flex-end' : 'flex-start',
-              gap: 0.3,
-              fontSize: '1.0rem',
-              color: theme.palette.mode === 'light' ? '#364954' : '#fff',
-              background: lastVisited ? '-webkit-linear-gradient(150deg,#61F3F3,#00B8D9)' : '',
-              '-webkit-background-clip': lastVisited ? 'text' : '',
-              '-webkit-text-fill-color': lastVisited ? 'transparent' : '',
-              '&:hover': {},
-            }}
+            sx={btnSx}
             variant='text'
+            onClick={(event) => {
+              event.stopPropagation()
+            }}
           >
             {translate('get_coding', {
               time: lastVisited ? 'Again' : '',
@@ -158,29 +143,15 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
           <Link
             href={STUDENT_PATH_DASHBOARD.courses.unit(query.id as string, unit?.id as string)}
             component={NextLink}
-            sx={{
-              mt: isMobile ? 2 : 0,
-              color: 'inherit',
-              alignSelf: isMobile ? 'flex-start' : 'center',
+            onClick={(event) => {
+              event.stopPropagation()
             }}
+            sx={moreBtnSx}
           >
             {translate('actions_see_more')}
           </Link>
         </Stack>
       </Stack>
-      {!isMobile ? (
-        <>
-          <Divider
-            orientation='horizontal'
-            sx={{ borderRightWidth: 2, my: 4 }}
-          />
-          <ActionsBlock
-            certificate={unit?.initial_enrolled}
-            likes={unit?.initial_likes}
-            rated={unit?.initial_stars}
-          />
-        </>
-      ) : null}
     </Stack>
   )
 }

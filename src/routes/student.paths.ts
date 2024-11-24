@@ -48,18 +48,19 @@ export const STUDENT_PATH_DASHBOARD = {
   },
   codePanel: {
     root: '/student/code-panel',
+    sandbox: '/student/code-panel?sandbox=true',
     workSpace: ({
       courseId,
       unitId,
       lessonId,
     }: {
-      courseId: string
+      courseId?: string
       unitId?: string
       lessonId?: string
     }) =>
       path(
         '/student/code-panel',
-        `?courseId=${courseId}${unitId ? `&unitId=${unitId}` : ''}${lessonId ? `&lessonId=${lessonId}` : ''}`
+        `?${courseId ? `courseId=${courseId}` : ''}${unitId ? `&unitId=${unitId}` : ''}${lessonId ? `&lessonId=${lessonId}` : ''}`
       ),
   },
   publicCodePanel: {

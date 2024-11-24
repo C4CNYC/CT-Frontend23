@@ -55,7 +55,9 @@ export const useCodeEditorCollab = ({
   const initRoomDataRef = useRef({ mode, roomId })
   const editorView = useRef<EditorView | null>(null)
   const editorRef = useRef<HTMLDivElement | null>(null)
+
   const [roomStatus, setRoomStatus] = useState(RoomStatus.Active)
+
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
   const {
@@ -65,17 +67,7 @@ export const useCodeEditorCollab = ({
     setActiveFile,
     onResetFileManager,
     defaultFileName,
-    //preloadedCode,
   } = useMemoizedProps(propsToMemoize)
-
-  const clearSocketData = useCallback((): void => {
-    if (initRoomDataRef.current.mode === EditorMode.Owner) {
-      socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId)
-    }
-
-    unsubscribeSocket(socket)
-    editorView.current?.destroy()
-  }, [])
 
   const { commentEffectRef, onCommentIconClick, ...commentProps } = useComments({
     editorView,
@@ -85,31 +77,34 @@ export const useCodeEditorCollab = ({
     activeFile: activeFile.id,
   })
 
-  const { baseInit, setIsLoading, setStreamingDoc, ...codeMirrorProps } = useInitCodemirror({
-    socket,
-    withTooltip,
-    onChangeStreamingDocInfo,
-    roomId,
-    lessonId,
-    mode,
-    user,
-    cursorText,
-    defaultFileName,
-    preloadedCode,
-    commentEffectRef,
-    onCommentIconClick,
-  })
+  const { baseInit, setIsLoading, setStreamingDoc, isCollabActive, ...codeMirrorProps } =
+    useInitCodemirror({
+      socket,
+      withTooltip,
+      onChangeStreamingDocInfo,
+      roomId,
+      lessonId,
+      mode,
+      user,
+      cursorText,
+      defaultFileName,
+      preloadedCode,
+      commentEffectRef,
+      onCommentIconClick,
+    })
 
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
     initListeners(view, editorRef, { preloadedCode: preloadedCode ?? '' }, codeMirrorProps.lineWrap)
+    if (editorRef?.current) {
+      editorRef.current.style.fontSize = `14px`
+    }
   }
+
   const runInitSubOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
-      if (!socket) return
-
       firstInit.current = false
-      const isRoom = await isRoomExist(roomId, socket)
+      const isRoom = socket ? await isRoomExist(roomId, socket) : false
 
       if (!isRoom) {
         initializeBlockedRef.current = true
@@ -126,11 +121,11 @@ export const useCodeEditorCollab = ({
         return
       }
 
-      const fileInfo = await getFileInfo(roomId, socket)
+      const fileInfo = socket ? await getFileInfo(roomId, socket) : undefined
 
       onResetFileManager(fileInfo)
 
-      if (fileInfo.activeFile === activeFile) {
+      if (fileInfo?.activeFile === activeFile) {
         await runInitSubOwner(false)
       }
     },
@@ -139,12 +134,10 @@ export const useCodeEditorCollab = ({
 
   const runInitOwner = useCallback(
     async (isFirstInit: boolean): Promise<void> => {
-      if (!socket) return
-
       firstInit.current = false
       setRoomStatus(RoomStatus.Active)
 
-      const fileInfo = await getFileInfo(roomId, socket)
+      const fileInfo = socket && isCollabActive ? await getFileInfo(roomId, socket) : null
 
       if (!isFirstInit || fileInfo == null) {
         await baseInit(activeFile)
@@ -157,14 +150,14 @@ export const useCodeEditorCollab = ({
         await runInitOwner(false)
       }
     },
-    [activeFile, baseInit, onResetFileManager, socket]
+    [activeFile, baseInit, onResetFileManager, socket, isCollabActive]
   )
 
   const runInitWatcher = useCallback(async (): Promise<void> => {
     if (!socket) return
 
     firstInit.current = false
-    const isRoom = await isRoomExist(roomId, socket)
+    const isRoom = socket ? await isRoomExist(roomId, socket) : false
 
     if (!isRoom) {
       initializeBlockedRef.current = true
@@ -177,7 +170,7 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active)
 
     let _activeFile = activeFile
-    const fileInfo = await getFileInfo(roomId, socket)
+    const fileInfo = socket ? await getFileInfo(roomId, socket) : undefined
 
     if (fileInfo != null) {
       const shouldChangeFile =
@@ -194,34 +187,6 @@ export const useCodeEditorCollab = ({
     await baseInit(_activeFile)
   }, [activeFile, baseInit, setActiveFile, socket, onResetFileManager])
 
-  const initialize = useMemo(
-    () => ({
-      [EditorMode.Owner]: runInitOwner,
-      [EditorMode.SubOwner]: runInitSubOwner,
-      [EditorMode.Watcher]: runInitWatcher,
-    }),
-    [runInitWatcher, runInitOwner, runInitSubOwner]
-  )
-
-  // useEffect(() => {
-  //   const onResetLesson = () => {
-  //     editorView.current?.destroy()
-  //     if (initializeBlockedRef.current) {
-  //       return
-  //     }
-  //
-  //     if (socket) {
-  //       initialize[modeRef.current](firstInit.current)
-  //     }
-  //   }
-  //
-  //   window.addEventListener(RESET_LESSON_EVENT, onResetLesson)
-  //
-  //   return () => {
-  //     window.removeEventListener(RESET_LESSON_EVENT, onResetLesson)
-  //   }
-  // }, [socket])
-
   useModeSubscriptions({
     roomId,
     roomStatus,
@@ -232,6 +197,32 @@ export const useCodeEditorCollab = ({
     socket,
     onChangeStreamingDocInfo,
   })
+
+  const initialize = useMemo(
+    () => ({
+      [EditorMode.Owner]: runInitOwner,
+      [EditorMode.SubOwner]: runInitSubOwner,
+      [EditorMode.Watcher]: runInitWatcher,
+    }),
+    [runInitWatcher, runInitOwner, runInitSubOwner]
+  )
+
+  const clearSocketData = useCallback((): void => {
+    if (initRoomDataRef.current.mode === EditorMode.Owner) {
+      socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId)
+    }
+
+    unsubscribeSocket(socket)
+    editorView.current?.destroy()
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', clearSocketData)
+    return () => {
+      window.removeEventListener('beforeunload', clearSocketData)
+      clearSocketData()
+    }
+  }, [])
 
   useEffect(() => {
     onRoomStatusChanged?.(roomStatus)
@@ -246,25 +237,10 @@ export const useCodeEditorCollab = ({
   useEffect(() => {
     editorView.current?.destroy()
 
-    if (!socket) {
-      setIsLoading(false)
-      return
-    }
-
-    if (initializeBlockedRef.current) {
-      return
-    }
+    if (initializeBlockedRef.current) return
 
     initialize[modeRef.current](firstInit.current)
-  }, [initialize, socket])
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', clearSocketData)
-    return () => {
-      window.removeEventListener('beforeunload', clearSocketData)
-      clearSocketData()
-    }
-  }, [clearSocketData])
+  }, [initialize])
 
   return {
     editorRef,

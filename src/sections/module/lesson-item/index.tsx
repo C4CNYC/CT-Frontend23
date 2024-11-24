@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react'
+import { useMemo, useEffect, useRef, useState } from 'react'
 
 import { Box, Button, Collapse, Link, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
@@ -35,10 +35,10 @@ import TrainingProgress from './LessonProgress'
 
 interface ILessonItemProps {
   lesson: ILesson
-  unitId: string
+  unitId?: string
   locked: boolean
-  prevLesson: ILesson
-  index: number
+  prevLesson?: ILesson
+  index?: number
 }
 
 export default function LessonItem({
@@ -60,6 +60,7 @@ export default function LessonItem({
   const locketBtnSx = useMemo(() => getLockedBtnSx(isRTL), [isRTL])
 
   const [openDetails, setOpenDetails] = useState(false)
+  const descRef = useRef<HTMLElement | null>(null)
   const [open, setOpen] = useState(false)
   const [maxDesc, setMaxDesc] = useState(50)
   const isTablet = useMediaQuery(theme.breakpoints.up('xl'))
@@ -95,6 +96,13 @@ export default function LessonItem({
     )
   }
 
+  const ellipsisHandler = () => {
+    if (descRef.current) {
+      return descRef.current.offsetWidth < descRef.current.scrollWidth
+    }
+    return false
+  }
+
   useEffect(() => {
     if (isTablet) {
       setMaxDesc(200)
@@ -124,14 +132,15 @@ export default function LessonItem({
         <Typography
           variant='body1'
           mb={lesson?.description?.length < maxDesc ? 1 : 0}
+          ref={descRef}
+          sx={{ textOverflow: 'ellipsis' }}
+          noWrap
         >
-          {lesson?.description?.length < maxDesc
-            ? lesson?.description
-            : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`}
+          {lesson.description}
         </Typography>
-        {lesson?.description?.length > maxDesc ? (
+        {ellipsisHandler() ? (
           <>
-            <Collapse in={openDetails}>{lesson?.description?.slice(47)}</Collapse>
+            <Collapse in={openDetails}>{lesson.description}</Collapse>
             <Button
               onClick={() => {
                 setOpenDetails(!openDetails)

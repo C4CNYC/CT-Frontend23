@@ -3,23 +3,27 @@ import { useCallback, useEffect, useState } from 'react'
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd'
 import { Box, Button, Container, useTheme } from '@mui/material'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
-import { useGetAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
+import { useGetAllAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { ILesson, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import {
+  useGetOwnLessonsQuery,
+  useCreateByCloningLessonMutation,
+} from '@/redux/services/manager/lessons-manager'
 import { useUpdateModuleLessonMutation } from '@/redux/services/manager/modules-manager'
 import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import LessonCard from '@/sections/dashboard/lessons/LessonCard'
 import LessonStepMain from '@/sections/dashboard/lessons/LessonStep/LessonStepMain'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 
 import FilterLessons from './filter'
 
@@ -68,6 +72,7 @@ function getSort(result: DropResult, lessons: ILesson[]): number {
 LessonsListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function LessonsListPage(): React.ReactElement {
+  const router = useRouter()
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
   const theme = useTheme()
@@ -93,8 +98,15 @@ export default function LessonsListPage(): React.ReactElement {
     isLoading: adminIsLoading,
     isFetching: adminFetching,
     refetch: refetchAdminLessons,
-  } = useGetAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
+  } = useGetAllAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
   const [lessons, setLessons] = useState<ILesson[]>([])
+  const { data: propertyLocks } = useGetPropertiesQuery(
+    {
+      entityType: 'lesson',
+      propertyName: 'lock',
+    },
+    { skip: !lessons.length }
+  )
   const data = userRole === Role.Admin ? adminData : ownLessonsData
   const isLoading = userRole === Role.Admin ? adminIsLoading : isOwnLessonDataLoading
   const isFetching = userRole === Role.Admin ? adminFetching : isOwnLessonDataFetching
@@ -112,6 +124,8 @@ export default function LessonsListPage(): React.ReactElement {
   }
 
   const [updateModuleLesson] = useUpdateModuleLessonMutation()
+  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
+    useCreateByCloningLessonMutation()
 
   const onDragEnd = useCallback(
     (result: DropResult): void => {
@@ -144,6 +158,18 @@ export default function LessonsListPage(): React.ReactElement {
       />
     )
   }
+  async function createByCloningLessonHandler() {
+    let data = await createByCloningLesson()
+    if ('data' in data && data.data?.id) {
+      router.push(
+        `${router.pathname}?${new URLSearchParams({ lessonId: data.data.id })}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      )
+    }
+  }
 
   return (
     <>
@@ -165,7 +191,13 @@ export default function LessonsListPage(): React.ReactElement {
             },
           ]}
           action={
-            <CreateLessonDialog refetch={refetch}>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 1,
+                flexDirection: { xs: 'column', sm: 'row' },
+              }}
+            >
               <Button
                 variant='contained'
                 startIcon={
@@ -179,10 +211,11 @@ export default function LessonsListPage(): React.ReactElement {
                   />
                 }
                 sx={{ mr: 2 }}
+                onClick={createByCloningLessonHandler}
               >
                 {translate('lessons_create_lesson')}
               </Button>
-            </CreateLessonDialog>
+            </Box>
           }
         />
 
@@ -220,6 +253,7 @@ export default function LessonsListPage(): React.ReactElement {
                       lesson={lesson}
                       index={index}
                       refetch={refetch}
+                      lock={!!propertyLocks?.data?.find((lock) => lock.entityId === lesson.id)}
                     />
                   ))}
                   {isFetching

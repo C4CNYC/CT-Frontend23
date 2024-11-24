@@ -1,17 +1,11 @@
-import { type FC, useEffect } from 'react'
+import { type FC, useEffect, useState } from 'react'
 
-import { Box, Button, Popover, Typography } from '@mui/material'
+import { Box, Button, Popper, Typography } from '@mui/material'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 
-import {
-  BOX_STYLES,
-  BUTTON_STYLES,
-  POPOVER_HORIZONTAL,
-  POPOVER_VERTICAL,
-  TYP_COLOR,
-} from './constants'
+import { BOX_STYLES, BUTTON_STYLES, TYP_COLOR } from './constants'
 
 interface TipsPopoverProps {
   openPoper: boolean
@@ -23,30 +17,34 @@ interface TipsPopoverProps {
 const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, tips }) => {
   const isDesktop = useIsDesktop()
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
+  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     if (!isDesktop && activeTab !== 1) {
       setOpenPoper(false)
     }
-  }, [isDesktop, activeTab])
+  }, [isDesktop, activeTab, setOpenPoper])
 
   return (
-    <Popover
+    <Popper
       id='popper'
       open={openPoper}
       anchorEl={anchorEl}
-      slotProps={{
-        paper: {
-          style: { width: '250px' },
+      sx={{
+        transition: 'opacity 0.3s ease-in-out',
+        opacity: isHovered ? 1 : 0.6,
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      placement='left-start'
+      modifiers={[
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 10],
+          },
         },
-      }}
-      onClose={() => {
-        setOpenPoper(false)
-      }}
-      anchorOrigin={{
-        vertical: POPOVER_VERTICAL,
-        horizontal: POPOVER_HORIZONTAL,
-      }}
+      ]}
     >
       <Box sx={BOX_STYLES}>
         <Typography
@@ -65,7 +63,7 @@ const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, 
           OK
         </Button>
       </Box>
-    </Popover>
+    </Popper>
   )
 }
 

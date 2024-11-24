@@ -33,9 +33,10 @@ export default function DetailsStep({
 }): React.ReactElement {
   const theme = useTheme()
   const { data, isLoading } = coursesData
-  const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.MY_CREATIONS)
+  const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.COURSE)
   const [course, setCourse] = useState<string | null>()
   const [lesson, setLesson] = useState<string | undefined>(initialLesson || undefined)
+  const [module, setModule] = useState<string | undefined>()
   const translate = useTranslate()
 
   const selectedModules = useMemo(() => data?.find((c) => c.id === course)?.units, [data, course])
@@ -55,8 +56,12 @@ export default function DetailsStep({
   } = useGetOwnLessonsQuery(filters)
 
   useEffect(() => {
-    setCourse(methods.getValues('course') ?? data?.[0]?.id)
+    setCourse(methods.getValues('course'))
   }, [data])
+
+  if (!course && data) {
+    setCourse(data[0]?.id)
+  }
 
   return (
     <Stack sx={{ gap: 4, minHeight: '630px' }}>
@@ -250,6 +255,10 @@ export default function DetailsStep({
                   '& fieldset': { border: 'none' },
                   background: theme.palette.mode === 'light' ? '#fff' : '',
                   border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
+                }}
+                onChange={(event: any) => {
+                  setModule(event.target.value)
+                  methods.setValue('module', event.target.value)
                 }}
               >
                 {!selectedModules?.length && (

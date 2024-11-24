@@ -53,6 +53,7 @@ const en = {
   actions_remove: 'Remove',
   actions_edit: 'Edit',
   actions_add: 'Add',
+  actions_clone: 'Clone',
   actions_archive: 'Archive',
   actions_close: 'Close',
   actions_save: 'Save',
@@ -178,6 +179,7 @@ const en = {
   details: 'Details',
   gallery: 'Gallery',
   coming_soon: 'Coming soon',
+  on_boarding_new: 'NEW',
   keep_coding: 'Keep Coding',
   invite: 'Invite',
   mentors: 'Mentors',
@@ -320,7 +322,7 @@ const en = {
   sidebar_menu_catalog: 'Catalog',
   sidebar_menu_catalog_tooltip: 'All the official courses are listed here.',
   sidebar_menu_market: 'Market',
-  sidebar_menu_market_tooltip: 'Content created by community and partners here.',
+  sidebar_menu_market_tooltip: 'Coming soon - Content created by community and partners here.',
   sidebar_menu_sandbox: 'Sandbox',
   sidebar_menu_sandbox_tooltip: 'It’s an open code editor. Build anything you want here.',
   sidebar_menu_tribes: 'Tribes',
@@ -526,7 +528,11 @@ const en = {
   modules_lesson_plans_link: 'Lesson plans link',
   modules_completed: '{{percentage}}% Complete',
   modules_settings: 'Module Settings',
-  modules_add_lesson: 'Add Lesson',
+  modules_add_lesson: 'Add Lesson, Quiz or Activity',
+  modules_add_lesson_existing: 'Insert Existing Lesson',
+  modules_add_lesson_new_lesson: 'Add New Lesson',
+  modules_add_lesson_new_quiz: 'Add New Quiz',
+  modules_add_lesson_new_exircises: 'Add New Exercises',
   modules_view_lesson: 'View Lesson',
   modules_add_lesson_slide_link: 'Add/Edit Lesson Slides',
   modules_pls_select_lesson: 'PLS SELECT LESSON',
@@ -603,6 +609,9 @@ const en = {
 
   // quest
   quest_type: 'Type: Course/Module',
+  creative_project: 'Creative Project',
+  research_project: 'Research Project',
+  team_project: 'Team Project',
   quest_whats_quest: "What's a quest?",
   quest_select_type: 'Select type',
   quest_select_course: 'Select a course',
@@ -648,7 +657,7 @@ const en = {
   tribes_sign_up_to_join: 'Sign up to join',
   tribes_join_class: 'Join Class',
   tribes_enter_join_code: 'Enter your Join Code to find your class',
-  tribes_code_example: 'Example: atVID13',
+  tribes_code_example: '12asd5',
   tribes_want_leave: 'Are you sure you \n want to leave tribe?',
   tribes_you_left_tribe: 'You left the tribe',
 
@@ -723,6 +732,10 @@ const en = {
   login_popup_session_subtitle:
     'Real-time view of all participants while broadcasting code & voice.',
   login_popup_session_info: 'Real-time view of all participants while broadcasting code & voice.',
+  login_ai_generate_session_title: 'A.I. Generate',
+  login_ai_generate_session_subtitle: 'Create a new lesson with A.I.',
+  login_ai_generate_session_info:
+    'Generate awesome new lessons, exercises or quizzes with AI - It’s fun and simple. Give it a try.',
   login_launch_session_title: 'Launch Course',
   login_launch_session_subtitle: 'Teacher-led or self-paced modules assigned to class or group.',
   login_launch_session_info: 'Real-time view of all participants while broadcasting code & voice.',
@@ -741,6 +754,134 @@ const en = {
   register_birth_date: 'Date of Birth',
   register_help_assign: 'This helps us assign you to the right groups',
   register_successfully: 'Registered successfully!',
+
+  // on-boarding-flow
+  ai_gen_simple_step_title: 'Create beautiful coding lessons with Mumu 🐯',
+  ai_gen_simple_step_prompt_1: 'Python variables with exercises in Armenian',
+  ai_gen_simple_step_prompt_2: '6th graders build weather app with api',
+  ai_gen_simple_step_prompt_3: 'Nested functions in javascript with quiz',
+  ai_gen_simple_step_prompt_4: 'Auto-graded infinite loop exercises',
+  ai_gen_simple_step_placeholder: 'Enter prompt or select from above',
+  ai_gen_simple_step_error_text: 'Please provide a subject for the lesson',
+
+  ai_gen_step_1_title: 'Lesson Basics 💬 😍',
+  ai_gen_step_2_title: 'Who’s it for? 🤷🏽‍ ',
+  ai_gen_step_3_title: 'Let’s have some fun !  😂‍ 🥳',
+  ai_gen_addon_title: 'Shiny New Things    💍 🤩',
+
+  ai_gen_next_btn: 'Next',
+  ai_gen_skip_btn: 'Skip',
+  ai_gen_advanced_btn: 'Advanced',
+  ai_gen_generate_btn: 'Generate ✨',
+  ai_gen_surprise_btn: 'Surprise Me',
+  ai_gen_decline_btn: 'Decline',
+  ai_gen_addons_btn: 'Request Add-ons',
+
+  ai_gen_optional_subtitle: 'Optional',
+  ai_gen_other_placeholder: 'Other',
+
+  ai_gen_type_1_title: 'Type',
+  ai_gen_type_1_subtitle: 'Select one or more',
+  ai_gen_type_1_value: 'Simple Lesson',
+  ai_gen_type_1_tooltip: 'An engaging, single-page lesson with coding exercises.',
+  ai_gen_type_2_value: 'Concept & Exercises',
+  ai_gen_type_2_tooltip: 'Learn a concept, then immediately practice it in different ways.',
+  ai_gen_type_3_value: 'Practical Project',
+  ai_gen_type_3_tooltip:
+    'Building a project line by line with explanations and step-by-step guidance.',
+  ai_gen_type_4_value: 'beta',
+  ai_gen_type_5_tooltip:
+    'Building a project line by line with explanations and step-by-step guidance.',
+
+  ai_gen_progr_lng_title: 'Programming Language ',
+  ai_gen_progr_lng_opt_1: 'Javascript',
+  ai_gen_progr_lng_opt_2: 'Python (Brython)',
+  ai_gen_progr_lng_opt_3: 'HTML/CSS',
+  ai_gen_progr_lng_opt_4: 'HTML/CSS/JS',
+  ai_gen_progr_lng_opt_5: 'Kaboom.js',
+
+  ai_gen_track_title: 'Track',
+  ai_gen_track_option_1: 'AI & API',
+  ai_gen_track_option_2: 'Game-Dev',
+  ai_gen_track_option_3: 'Web-Dev',
+  ai_gen_track_option_4: 'Data Science',
+  ai_gen_track_option_5: 'Programming Logic',
+  ai_gen_track_option_6: 'Math Class',
+  ai_gen_track_option_7: 'History Class',
+  ai_gen_track_option_8: 'English Class',
+  ai_gen_track_option_9: 'Dance Class',
+  ai_gen_track_option_10: 'Hour of Code',
+  ai_gen_track_option_11: 'Science Class',
+
+  ai_gen_level_title: 'Level',
+  ai_gen_level_1: 'Beginner',
+  ai_gen_level_2: 'Novice',
+  ai_gen_level_3: 'Amateur',
+  ai_gen_level_4: 'Intermediate',
+  ai_gen_level_5: 'Advanced',
+
+  ai_gen_grade_title: 'Grade/Age',
+  ai_gen_grade_1: 'Grades 3-4',
+  ai_gen_grade_2: 'Grades 5-6',
+  ai_gen_grade_3: 'Grades 7-8',
+  ai_gen_grade_4: 'Grades 9-10',
+  ai_gen_grade_5: 'Grades 11-12',
+  ai_gen_grade_6: '18 +',
+
+  ai_gen_duration_title: 'Lesson Duration',
+  ai_gen_duration_1: '20 Mins',
+  ai_gen_duration_2: '40 Mins',
+  ai_gen_duration_3: '60 Mins',
+  ai_gen_duration_4: '90 Mins',
+  ai_gen_duration_5: '120 Mins',
+
+  ai_gen_persona_title: 'Persona',
+  ai_gen_persona_1: 'Mumu',
+  ai_gen_persona_2: 'Winnie the Pooh',
+  ai_gen_persona_3: 'Benny the Bunny',
+  ai_gen_persona_4: 'Lulu the Lamb',
+  ai_gen_persona_5: 'Daisy the Duckling',
+  ai_gen_persona_6: 'Pip the Penguin',
+  ai_gen_persona_7: 'Milo the Mouse',
+  ai_gen_persona_8: 'Nina the Squirrel',
+  ai_gen_persona_9: 'Charlie the Cat',
+
+  ai_gen_persona_tone_title: 'Tone',
+  ai_gen_persona_tone_1: 'Silly',
+  ai_gen_persona_tone_2: 'Grumpy',
+  ai_gen_persona_tone_3: 'Lively',
+  ai_gen_persona_tone_4: 'Boring',
+  ai_gen_persona_context_title: 'Context',
+  ai_gen_persona_context_placeholder: 'Any additional context or preferences within the prompt.',
+
+  ai_gen_addons_title: 'Add any of the following to your lesson?',
+  ai_gen_addons_text_main_1: 'Quiz  |',
+  ai_gen_addons_text_sub_1: 'Multiple-choice, matching or fill-in-the-blanks.',
+  ai_gen_addons_text_main_2: 'Auto-grading  | ',
+  ai_gen_addons_text_sub_2:
+    'Using regex: Create tests which check if the correct solution code was typed.',
+  ai_gen_addons_text_main_3: 'Lesson Plan | ',
+  ai_gen_addons_text_sub_3:
+    'Ice-breakers, lesson overview, group discussion, synthesizing and more.',
+  ai_gen_addons_text_main_4: 'Revision & Improvement  |',
+  ai_gen_addons_text_sub_4:
+    'Request a full review and stress testing to ensure the lesson content and flow is accurate, relevant and lively.',
+  ai_gen_addons_additional: 'Additional Request',
+  ai_gen_addons_diamond_1: 'Note: This feature may be limited to',
+  ai_gen_addons_diamond_2: 'DIAMOND ',
+  ai_gen_addons_diamond_3: 'accounts.',
+
+  ai_gen_loading_title: 'Hang tight...   ⌛  👀 💗',
+  ai_gen_loading_subtitle: 'We are building 🏗️ your lesson...',
+  ai_gen_loading_state_1: 'Compiling request',
+  ai_gen_loading_state_2: 'Sending request',
+  ai_gen_loading_state_3: 'Confirming receipt',
+  ai_gen_loading_state_4: 'Building the lesson',
+  ai_gen_loading_state_5: 'Receiving the lesson',
+  ai_gen_loading_state_6: 'Finishing up',
+
+  ai_gen_lng_select_title: 'Select from list or type the name of any language',
+  ai_gen_lng_placeholder: 'Other Language',
 
   // School type
   primary_school: 'Primary School',
@@ -782,9 +923,24 @@ const en = {
   step_cant_removed: "Sorry we can't remove at this moment",
   lesson_settup_settings: 'LESSON SETUP & SETTINGS',
   slide_add: 'ADD SLIDE',
+  slide_add_blank: 'New Blank Slide',
+  slide_add_normal: 'Use Normal Template',
+  slide_add_html: 'Use HTML Template',
+  slide_add_promt_ai: 'Prompt with AI',
+  slide_add_ai_templates: 'AI Templates',
   slide_content_updated: 'Content updated',
   slide_standard: 'Standard',
   slide_select_format: 'Select slide format',
+
+  // Share lesson modal
+  share_modal_title: 'Share',
+  share_modal_subtitle: 'Hey, share your lesson 😃',
+  share_modal_copy_link: 'Copy Link',
+  share_modal_assign_class: 'Assign to a class (Tribe)',
+  share_modal_create_quest: 'Create a Quest',
+  share_modal_share_social: 'Share on social',
+  share_modal_share_text: 'I just generated this fun lesson on codetribe.ai',
+  share_modal_or: 'OR',
 
   // code-panel menu
   me_me_me: 'Me, me, me',
@@ -824,6 +980,18 @@ const en = {
   open_full_catalog: 'Open Full Catalog',
 
   // code panel blocks
+  preview_controls_run: 'Run',
+  preview_controls_stop: 'Stop',
+  preview_controls_publish: 'Publish',
+  preview_controls_refresh: 'Refresh',
+  console_title: 'Console',
+  console_tooltip_title: 'What is a console?',
+  console_tooltip_subtitle_1:
+    ' It’s the place you see a result when you run javascript (JS).Because most times JS runs in the background and does it’s calculations and response there.',
+  console_tooltip_subtitle_2:
+    'Only when you specifically link a particular function to a specific part of the page do you actually see JS modifying the “Front” page.',
+  console_tooltip_subtitle_3:
+    'The fancy term for this is “Manipulating the DOM”. - And “DOM” stands for Document Object Model.',
   no_preview_available_title: 'Browser',
   no_preview_available_results: 'Here you will see the results of your work in realtime',
   no_preview_available: 'No preview available?',
@@ -859,6 +1027,7 @@ const en = {
   enable: 'Enable:',
   editor_colors: 'Editor colors',
   bg_color: 'Background Color:',
+  slide_bg_color: 'Slide Color',
   text_color: 'Text Color:',
   btn_group_next: 'NEXT 👀',
   btn_group_you_did_it: 'YOU DID IT 🙌',
@@ -915,6 +1084,14 @@ const en = {
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: "Hi, I'm Mumu. I'm here to help when you get stuck.",
 
+  // CreateLesson
+  default_values: {
+    createLesson: {
+      name: 'My New Lesson',
+      description: 'My Lesson Description',
+      isEdit: false,
+    },
+  },
   organizations: {
     dashboard_title: 'Dashboard',
     title: 'Organizations',

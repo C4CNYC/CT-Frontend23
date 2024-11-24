@@ -12,6 +12,7 @@ export default function CatalogMenuItem(): React.ReactElement {
       component={NextLink}
       href={STUDENT_PATH_DASHBOARD.courses.root}
       underline='none'
+      className='defaultIntroStudentStep2 studentJoinStep3'
     >
       <DefaultMenuItem
         title='sidebar_menu_catalog'

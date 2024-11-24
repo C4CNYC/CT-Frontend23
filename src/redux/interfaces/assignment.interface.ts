@@ -43,6 +43,7 @@ export interface IAssignmentFull {
   skill_tags: ISkill[]
   assignee_classes: IClass[]
   courseUnit?: ICourse
+  courseUnitId?: string
   lessonId?: string
   language?: string
   category?: AssignmentProjectCategories

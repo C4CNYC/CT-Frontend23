@@ -17,6 +17,7 @@ import {
 } from '@root/src/assets/data/time-data'
 
 import { styledRegisterInput } from '../styles'
+import { SUBMIT_BTN_SX } from '../teacher/constants'
 
 interface FormValueProps {
   day: string
@@ -200,16 +201,7 @@ export default function StepperInfo(): React.ReactElement {
         <LoadingButton
           type='submit'
           loading={methods.formState.isSubmitting}
-          sx={{
-            background: '#43D4DD33',
-            color: '#43D4DD',
-            fontSize: '1.5rem',
-            mt: 2,
-            width: '100%',
-            '&:hover': {
-              background: '#fff',
-            },
-          }}
+          sx={SUBMIT_BTN_SX}
         >
           {translate('register_all_done')}
         </LoadingButton>

@@ -1,16 +1,19 @@
-import { type FC, memo, useEffect, useMemo, useState } from 'react'
+import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
 import { Text } from '@codemirror/state'
 import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
+import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
-import { useAuthContext } from '@/auth/useAuthContext'
 import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
+import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 
 import AddComment from './components/add-comment'
 import CommentPopup from './components/comment-popup'
@@ -32,57 +35,56 @@ type ReducedFields =
   | 'defaultFileName'
 
 interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFields> {
+  portalSocket?: Socket
   className?: string
   isReadOnly?: boolean
   withFileManager?: boolean
-  socket?: Socket
   isMultipleExtensionFiles?: boolean
   defaultFileName?: string
   onChangeCodemirrorValue?: (value: string) => void
 }
 
+const DEBOUNCE_TIME = 30000
+let checkValueTimeout: any | null = null
 const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
-  className,
-  isReadOnly: _isReadOnly = false,
-  mode = EditorMode.Owner,
-  withFileManager = true,
   roomId,
-  socket,
-  isMultipleExtensionFiles = false,
-  defaultFileName = 'index.html',
+  className,
+  portalSocket,
   preloadedCode,
+  withFileManager = true,
+  mode = EditorMode.Owner,
+  defaultFileName = 'index.html',
+  isReadOnly: _isReadOnly = false,
+  isMultipleExtensionFiles = false,
   onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
   ...collabProps
 }) => {
   const styles = useStyles()
+  const { query } = useRouter()
+  const dispatch = useDispatch()
+  const { user } = useAuthContext()
+  const searchParams = useSearchParams()
+  const codePanelContext = useContext(CodePanelContext)
+
+  const [refreshKey, setRefreshKey] = useState(0)
+  const [codeValue, setCodeValue] = useState<string | undefined>('')
+
+  const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const { user, isInitialized: authIsInitialized } = useAuthContext()
-  const { query } = useRouter()
-  const dispatch = useDispatch()
-  const [codeValue, setCodeValue] = useState<string | undefined>('')
 
-  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
-    if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
-      return
-    }
-    onChangeStreamingDocInfoFromProps?.(doc)
-  }
+  const lessonIdFromQuery = query?.lessonId
+  const sandbox = searchParams.get('sandbox')
 
-  const preloadMemo = useMemo(() => {
-    if (preloadedCode) {
-      return preloadedCode
-    }
-    if (prevLessonCode && prevLessonId === lessonId) {
-      return prevLessonCode
-    }
-    return ''
-  }, [lessonId, preloadedCode])
+  // Given the fact that we use the same editor block for portals and root editor
+  // we are spliting the socket logic here
+  const socket = portalSocket || rootSocket
+
+  const { changeLessonStatus } = useSocketController(socket)
 
   const {
     activeFile,
@@ -102,12 +104,55 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     mode,
   })
 
+  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
+    if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
+      return
+    }
+
+    if (checkValueTimeout) clearTimeout(checkValueTimeout)
+
+    if (lessonId && user) changeLessonStatus(lessonId)
+
+    checkValueTimeout = setTimeout(
+      (previousLength: number) => {
+        if (doc?.htmlBody?.length === previousLength) {
+          changeLessonStatus(lessonId!)
+        }
+      },
+      DEBOUNCE_TIME,
+      doc?.htmlBody?.length
+    )
+
+    onChangeStreamingDocInfoFromProps?.(doc)
+  }
+
+  const onChangeCodemirrorValue = (value: string) => {
+    onChangeCodemirrorValueFromProps(value)
+    codePanelContext.studentCodeChange(value)
+    onChangeStreamingDocInfoFromProps?.(value as any)
+    if (value) {
+      const localStorageKey = getLocalStorageRoomKey(
+        `${lessonId}${lessonIdFromQuery}${activeFile?.id}`
+      )
+      localStorage.setItem(localStorageKey, value)
+    }
+    void updateCommentWidgetPosition()
+  }
+
   const localstorageCode = useMemo(() => {
+    if (!lessonId && !lessonIdFromQuery) {
+      if (!sandbox) {
+        return
+      }
+    }
+
     if (mode === EditorMode.Owner) {
       if (prevLessonCode) {
         return prevLessonCode
       }
-      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${activeFile}`)
+      const localStorageKey = getLocalStorageRoomKey(
+        `${lessonId}${lessonIdFromQuery}${activeFile?.id}`
+      )
       const localStorageCodeValue = localStorage.getItem(localStorageKey)
       if (localStorageCodeValue) {
         try {
@@ -121,21 +166,19 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         }
       }
     }
-  }, [mode, query?.lessonId, prevLessonId, preloadedCode, user, lessonId, activeFile])
-
-  const onChangeCodemirrorValue = (value: string) => {
-    onChangeCodemirrorValueFromProps(value)
-    onChangeStreamingDocInfoFromProps?.(value as any)
-    if (value) {
-      const localStorageKey = getLocalStorageRoomKey(`${lessonId}${activeFile}`)
-      localStorage.setItem(localStorageKey, value)
-    }
-    void updateCommentWidgetPosition()
-  }
+  }, [
+    mode,
+    query?.lessonId,
+    prevLessonId,
+    preloadedCode,
+    lessonId,
+    activeFile,
+    lessonIdFromQuery,
+    refreshKey,
+  ])
 
   const {
     editorRef,
-    isLoading,
     extensions,
     streamingDoc,
     setStreamingDoc,
@@ -166,26 +209,28 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     socket,
     roomId,
     defaultFileName,
+    cursorText: user?.first_name,
   })
 
   useEffect(() => {
-    setCodeValue(
-      prevLessonCode ??
-        localstorageCode ??
-        (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
-    )
-  }, [preloadedCode, localstorageCode, streamingDoc, onChangeCodemirrorValue])
-  const isReadOnly = _isReadOnly || roomStatus === RoomStatus.Inactive
+    onChangeCodemirrorValue((localstorageCode ?? preloadedCode) || '')
+  }, [preloadedCode, localstorageCode])
 
   useEffect(() => {
+    const newCodeValue =
+      localstorageCode ??
+      prevLessonCode ??
+      (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
+
+    setCodeValue(newCodeValue)
+  }, [preloadedCode, localstorageCode, streamingDoc])
+
+  useEffect(() => {
+    // TODO: check it and remove in case of unnecessary
     return () => {
       dispatch(setPrevLessonId(null))
       dispatch(setPrevLessonCode(null))
     }
-  }, [])
-
-  useEffect(() => {
-    onChangeCodemirrorValue(codeValue as string)
   }, [])
 
   useEffect(() => {
@@ -202,6 +247,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       }
     })
   }, [preloadedCode])
+
+  useEffect(() => {
+    window.addEventListener(RELOAD_WORKSPACE_EVENT, () => {
+      setRefreshKey((prev) => prev + 1)
+    })
+  }, [])
 
   return (
     <div
@@ -244,7 +295,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             basicSetup={BASIC_SETUP}
             theme='dark'
             extensions={extensions}
-            readOnly={isReadOnly}
+            readOnly={_isReadOnly || roomStatus === RoomStatus.Inactive}
             value={codeValue}
             onChange={onChangeCodemirrorValue}
           />
@@ -278,6 +329,39 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       }
     </div>
   )
+}
+
+const useSocketController = (socket?: Socket) => {
+  const router = useRouter()
+  const { user } = useAuthContext()
+
+  const lessonIdFromRoute = router.query.lessonId
+
+  useEffect(() => {
+    if (!socket) return
+
+    socket.emit(
+      'joinLesson',
+      JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+    )
+
+    return () => {
+      socket?.emit(
+        'leaveLesson',
+        JSON.stringify({ lesson: lessonIdFromRoute, user: user?.student_profile?.id })
+      )
+    }
+  }, [lessonIdFromRoute, socket])
+
+  return {
+    changeLessonStatus: (lessonId: string) => {
+      socket?.emit('changeStatusInLesson', {
+        lesson: lessonId,
+        user: user?.id,
+        status: 'active',
+      })
+    },
+  }
 }
 
 export default memo(CodeEditorCollab)

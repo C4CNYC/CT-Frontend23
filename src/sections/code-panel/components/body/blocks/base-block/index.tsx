@@ -47,7 +47,10 @@ const BaseBlock: FC<IBaseBlock> = ({
   const storageAvailable = localStorageAvailable()
   const isDesktop = useIsDesktop()
   const isTabletAndMobile = !isDesktop
-  const boxStyles = useMemo(() => getBoxStyles(isTabletAndMobile, theme), [useTheme])
+  const boxStyles = useMemo(
+    () => getBoxStyles(isTabletAndMobile, theme),
+    [theme, isTabletAndMobile]
+  )
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
 
   const getHeaderSettings = () => {

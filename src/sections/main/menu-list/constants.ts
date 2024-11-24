@@ -47,3 +47,45 @@ export const getAddTribeButtonSx = (theme: Theme, isNavMini: boolean, isRTL: boo
   color: theme.palette.info.light,
   border: `2px solid ${theme.palette.info.light}`,
 })
+
+export const AVATAR_SX = {
+  position: 'absolute',
+  left: {
+    xs: 'calc(50% - 20px)',
+    sm: 'calc(50% - 25px)',
+    md: 'calc(50% - 35px)',
+  },
+  top: 0,
+  width: { xs: '40px', sm: '60px', md: '80px', lg: '100px' },
+  height: { xs: '40px', sm: '60px', md: '80px', lg: '100px' },
+  background: '#1ACB7F',
+  fontSize: { xs: '35px', sm: '40px', md: '60px', lg: '70px' },
+  zIndex: 15,
+}
+
+export const inputNameStyles = (theme: Theme, isValid: boolean) => ({
+  background: theme.palette.mode === 'light' ? (isValid ? '#75CF6D33' : '#fff') : '',
+  border: theme.palette.mode === 'light' ? '' : '1px solid #fff',
+  pt: 4,
+  pb: 3,
+  px: { xs: 0, sm: 3 },
+  maxWidth: { xs: '300px', sm: '400px', md: '550px' },
+
+  borderRadius: 2,
+  '& fieldset': { border: 'none' },
+  '.MuiInputBase-input': {
+    fontSize: { sm: '30px', md: '30px', lg: '80px' },
+    letterSpacing: '28px',
+    fontWeight: '700',
+  },
+})
+export const getButtonSx = (theme: Theme) => ({
+  background: '#43D4DD33',
+  color: '#43D4DD',
+  fontSize: '1.5rem',
+  m: '0 auto 24px',
+  minWidth: '300px',
+  '&:hover': {
+    background: theme.palette.mode === 'light' ? '' : '#fff',
+  },
+})

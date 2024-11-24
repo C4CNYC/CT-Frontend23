@@ -1,14 +1,15 @@
 import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Box, useTheme } from '@mui/material'
+import { Box, TextField, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import * as _ from 'lodash-es'
 import dynamic from 'next/dynamic'
+import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
 
-import { EmptyContent, LoadingScreen } from '@/components'
+import { EmptyContent } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
@@ -32,13 +33,7 @@ import {
 
 import BaseBlock from '../base-block'
 
-import {
-  LOADER_SCREEN_SX,
-  PROGRESS_ITEM_SX,
-  getBoxSx,
-  getCarouselSettings,
-  getProgressWrapperSx,
-} from './constants'
+import { PROGRESS_ITEM_SX, getBoxSx, getCarouselSettings, getProgressWrapperSx } from './constants'
 import Navigation from './navigation'
 
 const ProsaMirrorView = dynamic(async () => await import('./prosa-mirror-view'), { ssr: false })
@@ -48,15 +43,16 @@ interface ISliderBlock {
   onSubmitLesson: () => void
   onSubmitChallenge: (slideId: string, code?: string) => void
   integrations: Array<IIntegration & BaseResponseInterface>
-  isFetching: boolean
   code: string
   lessonType?: string
   lessonName?: string
+  lessonId?: string
 }
 
 interface IView {
   type: LessonContentType
   body: string
+  integrations: IIntegration[]
   connectIntegrations: (body: string) => CodeDocument | null
   title?: string
   lessonType?: string
@@ -75,21 +71,24 @@ const SliderBlock: FC<ISliderBlock> = ({
   onSubmitLesson,
   onSubmitChallenge,
   integrations,
-  isFetching,
   code,
   lessonType,
   lessonName,
+  lessonId,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const profile = useSelector((state) => state.global.user)
   const course = useSelector((state) => state.codePanelGlobal.courseId)
   const unit = useSelector((state) => state.codePanelGlobal.unitId)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
+  const searchParams = useSearchParams()
+  const sandbox = searchParams.get('sandbox')
+
+  const [noteText, setNoteText] = useState(localStorage.getItem(`sandboxNotes${profile?.id}`) ?? '')
 
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
   const { data: lastSlide } = useGetStudentLastVisitedSlideQuery(
@@ -99,7 +98,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     { skip: !lessonId || !profile }
   )
 
-  const title = translate('instructions')
+  const title = sandbox ? translate('Notes') : translate('instructions')
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
     setIsOpenHeader(isOpen)
   }, [])
@@ -125,7 +124,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [slideIndex])
 
   useEffect(() => {
-    const progress = JSON.parse(localStorage?.getItem(`${profile?.id}_progress`) || '{}')
+    const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
     if (lessonId && progress) {
       const lastSlide: number = progress[lessonId as string]
       if (lastSlide && carousel1.current) {
@@ -166,7 +165,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
     }
     if (localStorage) {
-      const progress = localStorage.getItem(`${profile?.id}_progress`)
+      const progress = localStorage.getItem(`${lessonId}_progress`)
       let newProgress: any = {}
       if (progress) {
         newProgress = JSON.parse(progress)
@@ -174,7 +173,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       if (lessonId) {
         newProgress[lessonId as string] = next
       }
-      localStorage.setItem(`${profile?.id}_progress`, JSON.stringify(newProgress))
+      localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
   }
 
@@ -216,62 +215,89 @@ const SliderBlock: FC<ISliderBlock> = ({
           ></Box>
         ))}
       </Box>
-      {!isFetching ? (
-        <>
-          {_.isEmpty(data) ? (
-            <EmptyContent title={translate('messages_no_data')} />
-          ) : (
-            <>
-              <Box
-                className='sliderTour'
-                height='100%'
-                sx={boxSx}
-              >
-                <Carousel
-                  {...getCarouselSettings(onBeforeChange)}
-                  asNavFor={nav2}
-                  ref={carousel1}
-                  afterChange={onUpdateLastSlide}
-                >
-                  {data.map((step) => {
-                    return (
-                      <View
-                        title={step.title}
-                        lessonType={lessonType}
-                        key={step.id}
-                        type={step.type}
-                        body={step.body}
-                        connectIntegrations={connectIntegrations}
-                        stepBgColor={step.bg_color}
-                      />
-                    )
-                  })}
-                </Carousel>
-              </Box>
-
-              <Navigation
-                hasPrev={slideIndex > 0}
-                onNext={handleNext}
-                onPrev={handlePrev}
-                stepHasValidation={stepHasValidation}
-                canMoveNext={nextStepAble || !stepHasValidation}
-                hasNextStep={hasNextStep}
-                lessonName={lessonName}
-              />
-            </>
-          )}
-        </>
+      {_.isEmpty(data) ? (
+        sandbox ? (
+          <TextField
+            fullWidth
+            multiline
+            minRows='12'
+            value={noteText}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setNoteText(event.target.value)
+              localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
+            }}
+          />
+        ) : (
+          <EmptyContent title={translate('messages_no_data')} />
+        )
       ) : (
-        <LoadingScreen sx={LOADER_SCREEN_SX} />
+        <>
+          <Box
+            className='sliderTour'
+            height='100%'
+            sx={boxSx}
+          >
+            <Carousel
+              {...getCarouselSettings(onBeforeChange)}
+              asNavFor={nav2}
+              ref={carousel1}
+              afterChange={onUpdateLastSlide}
+            >
+              {data.map((step, stepSlideIndex) => {
+                return slideIndex == stepSlideIndex ? (
+                  <View
+                    title={step.title}
+                    lessonType={lessonType}
+                    key={step.id}
+                    type={step.type}
+                    body={step.body}
+                    integrations={integrations}
+                    connectIntegrations={connectIntegrations}
+                    stepBgColor={step.bg_color}
+                  />
+                ) : (
+                  <div key={step.id}></div>
+                )
+              })}
+            </Carousel>
+          </Box>
+
+          <Navigation
+            hasPrev={slideIndex > 0}
+            onNext={handleNext}
+            onPrev={handlePrev}
+            stepHasValidation={stepHasValidation}
+            canMoveNext={nextStepAble || !stepHasValidation}
+            hasNextStep={hasNextStep}
+            lessonName={lessonName}
+          />
+        </>
       )}
     </BaseBlock>
   )
 }
 
-const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType, stepBgColor }) => {
+const View: FC<IView> = ({
+  type,
+  body,
+  connectIntegrations,
+  title,
+  lessonType,
+  stepBgColor,
+  integrations,
+}) => {
   const translate = useTranslate()
 
   switch (type) {
+    case 'code':
+      return (
+        <BrowserView
+          integrations={integrations}
+          document={connectIntegrations(body)}
+          stepBgColor={stepBgColor}
+        />
+      )
+    default:
     case 'editable':
       return (
         <ProsaMirrorView
@@ -281,10 +307,6 @@ const View: FC<IView> = ({ type, body, connectIntegrations, title, lessonType, s
           stepBgColor={stepBgColor}
         />
       )
-    case 'code':
-      return <BrowserView document={connectIntegrations(body)} />
-    default:
-      return <>{translate('messages_content_type_not_supported')}</>
   }
 }
 

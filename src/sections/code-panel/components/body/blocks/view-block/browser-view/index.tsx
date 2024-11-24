@@ -1,4 +1,7 @@
-import { type FC, useEffect, useState } from 'react'
+import { type FC, useContext, useEffect, useState } from 'react'
+
+import { IIntegration } from '@/redux/services/interfaces/integration.interface'
+import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
 import SkeletonViewBlock from '../skeleton-view-box'
 
@@ -10,8 +13,11 @@ export interface CodeDocument {
 
 interface BrowserViewProps {
   document: CodeDocument | null
+  integrations: IIntegration[]
   isOpenHeader?: boolean
   iframeKey?: number
+  stepBgColor?: string
+  reloadIframe?: () => void
 }
 
 enum TagNames {
@@ -31,8 +37,23 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
     ''
   )
 
-const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey }) => {
+const BrowserView: FC<BrowserViewProps> = ({
+  document,
+  isOpenHeader,
+  iframeKey,
+  stepBgColor,
+  integrations,
+  reloadIframe,
+}) => {
   const [docSrc, setDocSrc] = useState('')
+  const { reloadIframeKey } = useContext(CodePanelContext)
+
+  const IFRAME_STYLE = {
+    border: 0,
+    width: '100%',
+    height: iframeKey ? 'calc(100% - 32px)' : '100%',
+    background: '#fff',
+  }
 
   useEffect(() => {
     if (document == null) {
@@ -42,17 +63,22 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey }
     const fontPath = '/fonts/index.css'
     const fontCssLink = `<link rel="stylesheet" href="${fontPath}">`
     const { htmlBody = [], cssBody = [], jsBody = [] } = document
+    let integrationsScripts = integrations
+      .map((integration) => integration.scripts)
+      .filter(Boolean)
+      .join('\n')
 
     setDocSrc(`
       <html style="height: 100%">
         <head>
           ${fontCssLink}
           ${getBody(cssBody, TagNames.Style)}
+          ${integrationsScripts}
         </head>
-        <body style="height: 100%; margin: 0;">
-        <script src="https://unpkg.com/kaboom@2000.2.9/dist/kaboom.js"></script>
+        <body style="height: 100%; margin: 0;" id="pageLesson">
+        <div class="lesson-page " style=${stepBgColor ? 'background-color:' + stepBgColor : ''}>
           ${(document as any).length ? document : htmlBody.join('\n')}
-          ${getBody(jsBody, TagNames.Script)}
+        </div>
         </body>
       </html>
     `)
@@ -67,13 +93,6 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader, iframeKey }
   ) : (
     <SkeletonViewBlock isOpenHeader={isOpenHeader} />
   )
-}
-
-const IFRAME_STYLE = {
-  border: 0,
-  width: '100%',
-  height: '100%',
-  background: '#fff',
 }
 
 export default BrowserView

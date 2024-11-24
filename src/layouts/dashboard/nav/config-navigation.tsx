@@ -20,7 +20,7 @@ import { Label } from '@/components/label'
 import { Role } from '@/redux/services/enums/role.enum'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import FeedbackDialog from '@/sections/feedback/FeedbackDialog'
+import LessonFeedback from '@/sections/code-panel/components/footer/lesson-feedback/LessonFeedback'
 import InviteFriendsModal from '@/sections/invite-friends/InviteFriendsModal'
 import MenuTribesList from '@/sections/main/menu-list/MenuTribesList'
 import CatalogMenuItem from '@root/src/sections/menu-items-components/catalog-item'
@@ -40,11 +40,6 @@ export const admin = {
       title: 'sidebar_menu_schools',
       path: MANAGER_PATH_DASHBOARD.organization.schools,
       icon: <RiOrganizationChart />,
-    },
-    {
-      title: 'sidebar_menu_courses',
-      path: MANAGER_PATH_DASHBOARD.courses.root,
-      icon: <MdPlayLesson />,
     },
   ],
 }
@@ -83,6 +78,11 @@ export const managment = {
 export const content = {
   subheader: 'sidebar_menu_content',
   items: [
+    {
+      title: 'sidebar_menu_courses',
+      path: MANAGER_PATH_DASHBOARD.courses.root,
+      icon: <MdPlayLesson />,
+    },
     {
       title: 'sidebar_menu_modules',
       path: MANAGER_PATH_DASHBOARD.modules.root,
@@ -196,7 +196,9 @@ export const apps = {
       title: 'sidebar_menu_feedback',
       path: '#',
       icon: <BiConversation size={20} />,
-      component: (children: React.ReactElement) => <FeedbackDialog>{children}</FeedbackDialog>,
+      component: (children: React.ReactElement) => (
+        <LessonFeedback sidebar={true}>{children}</LessonFeedback>
+      ),
     },
   ],
 }

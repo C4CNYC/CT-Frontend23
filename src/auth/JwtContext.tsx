@@ -92,6 +92,7 @@ interface AuthProviderProps {
   children: React.ReactNode
 }
 
+// TODO: Handle scenario when user is not logged in and user data is an empty string with isAuthenticated set to true
 export function AuthProvider({ children }: AuthProviderProps): React.ReactElement | null {
   const [state, dispatch] = useReducer(reducer, initialState)
   const reduxDispatch = useDispatch()
@@ -253,9 +254,11 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
       })
 
       const { access_token: accessToken, user } = data
-      reduxDispatch(setUser(user))
 
       localStorage.setItem('accessToken', accessToken)
+
+      reduxDispatch(setUser(user))
+      setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
 
       dispatch({
         type: Types.REGISTER,

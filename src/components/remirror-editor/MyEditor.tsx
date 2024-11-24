@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
-import { Remirror, ThemeProvider, useRemirror } from '@remirror/react'
+import { prosemirrorNodeToHtml } from '@remirror/core-utils'
+import { Remirror, OnChangeHTML, ThemeProvider, useRemirror } from '@remirror/react'
 // import { useS3Upload } from "next-s3-upload";
 import { ImageAttributes, ImageExtension } from 'remirror/extensions'
 import 'remirror/styles/all.css'
@@ -8,6 +9,7 @@ import 'remirror/styles/all.css'
 import { useCreateMediaMutation } from '@/redux/services/manager/media-manager'
 import { BaseResponseInterface, isJson } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { IIntegration } from '@root/src/redux/services/interfaces/integration.interface'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 
@@ -26,7 +28,8 @@ declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>
 interface Props {
   editable?: boolean
   multimediaValue: string
-  setMultimediaValue?: (value: string) => void
+  setMultimediaValue: (value: string) => void
+  integrations: IIntegration[]
   onSubmit?: () => void
   locked?: boolean
   data: ILessonContent & BaseResponseInterface
@@ -36,9 +39,8 @@ interface Props {
 }
 
 function Editor({
-  editable = true,
-  locked,
   onSubmit,
+  integrations,
   multimediaValue,
   setMultimediaValue,
   data,
@@ -49,6 +51,7 @@ function Editor({
   // const { uploadToS3 } = useS3Upload();
   const [createMedia] = useCreateMediaMutation()
   const translate = useTranslate()
+
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
     let completed = 0
     const promises: Array<DelayedPromiseCreator<ImageAttributes>> = []
@@ -96,17 +99,26 @@ function Editor({
     ...extensions(),
     new ImageExtension({ enableResizing: true, uploadHandler }),
   ]
+  const integrationStyleRegex = /<style[^>]*?>\s*[^{}]*?\{([^}]*)\}[^<]*?<\/style>/g
+
+  const integrationStyles = integrations.reduce((acc, curr) => {
+    let matches
+    while ((matches = integrationStyleRegex.exec(curr.head)) !== null) {
+      acc += '\n' + matches[1]
+    }
+    return acc
+  }, '')
 
   const { manager, state, setState, onChange } = useRemirror({
     extensions: newExtentions,
-    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : '',
+    content: isJson(multimediaValue)
+      ? JSON.parse(multimediaValue)?.doc ?? JSON.parse(multimediaValue)?.content ?? ''
+      : '',
     stringHandler: 'html',
   })
 
   useEffect(() => {
-    if (!editable) {
-      setState(isJson(multimediaValue) ? JSON.parse(multimediaValue) : multimediaValue)
-    }
+    setState(isJson(multimediaValue) ? JSON.parse(multimediaValue) : multimediaValue)
   }, [multimediaValue])
 
   const saveContent = async (): Promise<void> => {
@@ -150,7 +162,6 @@ function Editor({
             margin-left: 30px;
           }
           .remirror-theme code {
-            background-color: #f5f4f4;
             border: .1rem solid rgba(0, 0, 0, .1);
             border-radius: 0.4rem;
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -158,42 +169,39 @@ function Editor({
             padding: 0.1rem;
             vertical-align: middle;
           }
+          ${integrationStyles}
         `}
       </style>
       <Remirror
-        editable={editable}
+        editable={true}
         placeholder={translate('start_type_here')}
         manager={manager}
         state={state}
         // initialContent={state}
-        autoFocus={editable}
+        autoFocus={true}
         autoRender='end'
         onChange={(parameter) => {
           onChange(parameter)
-          if (setMultimediaValue) {
-            // @ts-expect-error
-            setMultimediaValue(parameter.state)
-          }
+          setMultimediaValue(prosemirrorNodeToHtml(parameter.state.doc))
+
+          // if (setMultimediaValue) {
+          //   // @ts-expect-error
+          //   setMultimediaValue(parameter.state)
+          // }
         }}
       >
-        {typeof locked === 'undefined' ? (
-          editable ? (
-            <EditorToolbar
-              saveContent={saveContent}
-              data={data}
-              lessonId={lessonId}
-              bgColor={bgColor}
-            />
-          ) : null
-        ) : (
-          <EditorToolbar
-            saveContent={saveContent}
-            data={data}
-            lessonId={lessonId}
-            bgColor={bgColor}
-            setBgColor={setBgColor}
-          />
-        )}
+        <EditorToolbar
+          saveContent={saveContent}
+          data={data}
+          lessonId={lessonId}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+        />
+        <OnChangeHTML
+          onChange={(html) => {
+            setMultimediaValue(html)
+          }}
+        />
       </Remirror>
     </ThemeProvider>
   )

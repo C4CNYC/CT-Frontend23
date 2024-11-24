@@ -56,10 +56,12 @@ const extendedApi = managerApi.injectEndpoints({
                 ...content,
                 checkers:
                   content.contentId === c.id
-                    ? c.validations.map((val) => ({
-                        text: val.name,
-                        valid: true,
-                      }))
+                    ? c.validations
+                        .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+                        .map((val) => ({
+                          text: val.name,
+                          valid: true,
+                        }))
                     : content.checkers,
               })),
             contentValidations?.codePanelGlobal?.contentValidations

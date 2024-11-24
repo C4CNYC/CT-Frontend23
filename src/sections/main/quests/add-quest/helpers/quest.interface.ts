@@ -3,7 +3,7 @@ import { ISkill } from '@/redux/services/interfaces/skill.interface'
 
 export interface FormQuestProps {
   type: AssignmentTypes
-  course: string
+  course?: string
   classes?: string[] | []
   students?: string[] | []
   name: string

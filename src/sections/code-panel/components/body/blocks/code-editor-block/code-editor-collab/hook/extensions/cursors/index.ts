@@ -33,7 +33,7 @@ export const cursorExtension = ({
               id: cursorId,
               from: e.selection.ranges[0].from,
               to: e.selection.ranges[0].to,
-              tooltipText,
+              tooltipText: tooltipText || 'Teacher',
               userId,
               type: EffectType.SELECTION,
             }),

@@ -185,6 +185,7 @@ export default function ProfileInfoForm({
                 />
                 <RHFTextField
                   name='lastName'
+                  autoComplete='family-name'
                   label={translate('last_name')}
                 />
                 <RHFSelect
