@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import {
@@ -20,15 +20,17 @@ import { Iconify, Image } from '@root/src/components'
 import { GO_BTN_SX, LANG_ITEMS_CONT_SX, LANGUAGES_MOCK, OTHER_LANGUAGES_MOCK } from './constants'
 
 interface SelectLanguageModalProps {
-  children: React.ReactElement[] | React.ReactElement
+  children?: React.ReactElement[] | React.ReactElement
   isLoading: boolean
   onSubmit: () => void
+  isForceOpen?: boolean
 }
 
 export default function SelectLanguageModal({
   children,
   isLoading,
   onSubmit,
+  isForceOpen,
 }: SelectLanguageModalProps): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false)
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
@@ -39,6 +41,12 @@ export default function SelectLanguageModal({
   const closeDialog = () => {
     setOpen(false)
   }
+
+  useEffect(() => {
+    if (isForceOpen !== undefined) {
+      setOpen(isForceOpen)
+    }
+  }, [isForceOpen])
 
   return (
     <>

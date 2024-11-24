@@ -37,10 +37,10 @@ export default function AddSchool(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const { data, isLoading } = useGetMySchoolsQuery({})
   const [aiLessonReady, aiLessonReadySet] = useState('')
-  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
+  const [createLesson] = useCreateLessonMutation()
   const [updateSchool, { isLoading: isUpdating }] = useUpdateSchoolProfileMutation()
   const translate = useTranslate()
-  const [createAILesson, { isLoading: createLessonLoading }] = AiGenerate()
+  const [createAILesson] = AiGenerate()
 
   const AiGenerateLessonData = localStorageAvailable()
     ? localStorage.getItem('AiGenerateLessonData')

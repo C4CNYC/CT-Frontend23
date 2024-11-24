@@ -25,6 +25,7 @@ import CreateHeader from '@/sections/main/create-class/createHeader'
 import CreatePalette, { CLASS_PALETTE } from '@/sections/main/create-class/createPalette'
 import { createRandomAvatar } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import SelectLanguageModal from '@root/src/sections/my-creations-menu/select-language-dialog'
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)]
@@ -43,6 +44,7 @@ export default function CreateClass(): React.ReactElement {
   const { push, query } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [openDialog, setOpenDialog] = useState(false)
+  const [isLangSelectionOpen, setIsLangSelectionOpen] = useState(false)
   const [schoolId, setSchoolId] = useState('')
   const [choosenColor, setChoosenColor] = useState(randomInArray(CLASS_PALETTE))
   const translate = useTranslate()
@@ -83,12 +85,8 @@ export default function CreateClass(): React.ReactElement {
         }).unwrap()
         enqueueSnackbar(translate('messages_class_created'))
         if (query.onBoarding) {
-          push(
-            STUDENT_PATH_DASHBOARD.class.addQuest(classInfo.id, {
-              schoolId,
-              onBoarding: query.onBoarding as string,
-            })
-          )
+          setIsLangSelectionOpen(true)
+          return
         } else {
           push(STUDENT_PATH_DASHBOARD.class.id(classInfo.id))
         }
@@ -96,6 +94,10 @@ export default function CreateClass(): React.ReactElement {
     } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: 'error' })
     }
+  }
+
+  const onSelectLanguage = () => {
+    push(STUDENT_PATH_DASHBOARD.codePanel.sandbox)
   }
 
   useEffect(() => {
@@ -127,6 +129,11 @@ export default function CreateClass(): React.ReactElement {
             setSchoolId(id)
           }}
           schools={data?.data}
+        />
+        <SelectLanguageModal
+          onSubmit={onSelectLanguage}
+          isLoading={false}
+          isForceOpen={isLangSelectionOpen}
         />
         <FormProvider
           methods={methods}
