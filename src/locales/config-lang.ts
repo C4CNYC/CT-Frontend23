@@ -1,6 +1,4 @@
-import { enUS, ptPT } from '@mui/material/locale'
-import { esES, frFR } from '@mui/x-date-pickers'
-import { arEG } from 'date-fns/locale'
+import { enUS, frFR, ptPT, esES, arEG } from '@mui/material/locale'
 
 // PLEASE REMOVE `LOCAL STORAGE` WHEN YOU CHANGE SETTINGS.
 
