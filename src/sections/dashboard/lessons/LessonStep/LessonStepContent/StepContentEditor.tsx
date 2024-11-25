@@ -94,7 +94,7 @@ export default function StepContentEditor(): React.ReactElement {
       await updateContent({
         lessonId: lessonId as string,
         id: stepId as string,
-        type: bodyType == 'editable' ? bodyType : LessonContentType.Code,
+        type: bodyType,
         bg_color: bgColor,
         body,
       }).unwrap()
@@ -106,7 +106,7 @@ export default function StepContentEditor(): React.ReactElement {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem('bodyType') && data?.type) {
+    if (data?.type) {
       setBodyType(data.type)
     }
     setBgColor(data?.bg_color ?? DEFAULT_COLOR)
