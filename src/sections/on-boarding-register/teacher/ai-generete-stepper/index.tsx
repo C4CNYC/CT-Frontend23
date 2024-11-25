@@ -24,7 +24,6 @@ import {
   LEVELS,
   PERSONA,
   TONE,
-  TYPE_LESSON,
 } from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
@@ -41,7 +40,7 @@ const defaultValues = {
   RprogrammingLanguageR: '',
   RpersonaR: PERSONA[0].value,
   RtoneR: TONE[0].value,
-  RtypeLessonR: TYPE_LESSON[1].value,
+  RtypeLessonR: '',
   name: null,
   email: null,
   state: null,
@@ -199,6 +198,8 @@ export default function AIGenerateStepper({
             nextStep={nextStep}
             prevStep={prevStep}
             closeModal={closeModal}
+            updateForm={methods.setValue as any}
+            getFormValue={methods.getValues as any}
             isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
             isTrackSelected={Boolean(methods.watch('RtrackR'))}
           />

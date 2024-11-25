@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
@@ -32,6 +32,8 @@ type IGeneralInfoProps = {
   isModal: boolean
   closeModal?: () => void
   prevStep: () => void
+  updateForm: (name: string, value: string) => void
+  getFormValue: (name: string) => string
   isCustomLang: boolean
   isTrackSelected: boolean
 }
@@ -41,6 +43,8 @@ export function GeneralInfo({
   prevStep,
   isModal,
   closeModal,
+  updateForm,
+  getFormValue,
   isCustomLang,
   isTrackSelected,
 }: IGeneralInfoProps) {
@@ -56,6 +60,13 @@ export function GeneralInfo({
   const { data: aiTemplates } = useGetLessonsByIdsQuery(
     properties?.data.map((item) => item.entityId) ?? []
   )
+  useEffect(() => {
+    if (!aiTemplates || aiTemplates.length < 1) return
+    if (!getFormValue('RtypeLessonR')) {
+      let exerciseAiTemplate = aiTemplates.find((t) => t.name.includes('Exercise'))
+      updateForm('RtypeLessonR', exerciseAiTemplate ? exerciseAiTemplate.id : aiTemplates[0].id)
+    }
+  }, [aiTemplates])
   const theme = useTheme()
   const translate = useTranslate()
   const { value: trackOptions, onToggle: trackOptionsToggle } = useBoolean(false)
@@ -71,6 +82,7 @@ export function GeneralInfo({
     () => getNextBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
+
   //type script wiening
   const type_lesson = (
     aiTemplates && aiTemplates.length > 0
