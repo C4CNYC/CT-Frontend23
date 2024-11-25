@@ -132,7 +132,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onChangeStreamingDocInfoFromProps?.(value as any)
     if (value) {
       const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}`
+        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
       )
       localStorage.setItem(localStorageKey, value)
     }
@@ -140,9 +140,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   }
 
   const localstorageCode = useMemo(() => {
-    if (!lessonId && !lessonIdFromQuery) {
-      if (!sandbox) {
-        return
+    if (!lessonId && !lessonIdFromQuery && !sandbox) {
+      return
       }
     }
 
@@ -175,6 +174,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     activeFile,
     lessonIdFromQuery,
     refreshKey,
+    slideIndex,
   ])
 
   const {
