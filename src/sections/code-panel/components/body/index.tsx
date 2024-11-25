@@ -97,7 +97,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         )}
 
         <CodeEditorBlock
-          preloadedCode={lessonContents[0]?.preload_body ?? ''}
+          preloadedCode={lessonContents[slideIndex]?.preload_body ?? ''}
           validations={lessonContents[slideIndex]?.validations || ''}
           code={document?.htmlBody?.join('') ?? ''}
           user={user}
