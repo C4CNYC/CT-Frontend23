@@ -63,7 +63,7 @@ export function GeneralInfo({
   useEffect(() => {
     if (!aiTemplates || aiTemplates.length < 1) return
     if (!getFormValue('RtypeLessonR')) {
-      let exerciseAiTemplate = aiTemplates.find((t) => t.name.includes('Exercise'))
+      let exerciseAiTemplate = aiTemplates.find((t) => t.name.includes('Practical'))
       updateForm('RtypeLessonR', exerciseAiTemplate ? exerciseAiTemplate.id : aiTemplates[0].id)
     }
   }, [aiTemplates])
