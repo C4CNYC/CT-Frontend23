@@ -31,8 +31,8 @@ import SimpleAiGenerate from './SimpleAiGenerate'
 
 //@names according to avoid bots spam
 const defaultValues = {
-  RlevelR: LEVELS[0].value,
-  RgradesR: GRADES[1].value,
+  RlevelR: LEVELS[1].value,
+  RgradesR: GRADES[2].value,
   RlessonDurationR: LESSON_DURARION[2].value,
   RlessonLanguageR: 'English',
   RcustomLanguageR: '',
