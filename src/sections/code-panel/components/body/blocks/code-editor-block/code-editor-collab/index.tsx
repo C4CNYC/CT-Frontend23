@@ -76,6 +76,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
   const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
 
   const lessonIdFromQuery = query?.lessonId
   const sandbox = searchParams.get('sandbox')
@@ -132,7 +133,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onChangeStreamingDocInfoFromProps?.(value as any)
     if (value) {
       const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}`
+        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
       )
       localStorage.setItem(localStorageKey, value)
     }
@@ -140,10 +141,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   }
 
   const localstorageCode = useMemo(() => {
-    if (!lessonId && !lessonIdFromQuery) {
-      if (!sandbox) {
-        return
-      }
+    if (!lessonId && !lessonIdFromQuery && !sandbox) {
+      return
     }
 
     if (mode === EditorMode.Owner) {
@@ -151,7 +150,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         return prevLessonCode
       }
       const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}`
+        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
       )
       const localStorageCodeValue = localStorage.getItem(localStorageKey)
       if (localStorageCodeValue) {
@@ -175,6 +174,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     activeFile,
     lessonIdFromQuery,
     refreshKey,
+    slideIndex,
   ])
 
   const {

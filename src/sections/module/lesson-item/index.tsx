@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Box, Button, Collapse, Link, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
@@ -50,6 +50,7 @@ export default function LessonItem({
 }: ILessonItemProps): React.ReactElement {
   const theme = useTheme()
   const [openDetails, setOpenDetails] = useState(false)
+  const descRef = useRef<HTMLElement | null>(null)
   const { user } = useAuthContext()
   const courseId = useRouter().query.id
   const [open, setOpen] = useState(false)
@@ -89,6 +90,13 @@ export default function LessonItem({
     )
   }
 
+  const ellipsisHandler = () => {
+    if (descRef.current) {
+      return descRef.current.offsetWidth < descRef.current.scrollWidth
+    }
+    return false
+  }
+
   useEffect(() => {
     if (isTablet) {
       setMaxDesc(200)
@@ -118,16 +126,15 @@ export default function LessonItem({
         <Typography
           variant='body1'
           mb={lesson?.description?.length < maxDesc ? 1 : 0}
+          ref={descRef}
+          sx={{ textOverflow: 'ellipsis' }}
+          noWrap
         >
-          {lesson?.description
-            ? lesson?.description?.length < maxDesc
-              ? lesson?.description
-              : `${lesson?.description?.slice(0, 47)} ${openDetails ? '' : '...'}`
-            : ''}
+          {lesson.description}
         </Typography>
-        {lesson?.description?.length > maxDesc ? (
+        {ellipsisHandler() ? (
           <>
-            <Collapse in={openDetails}>{lesson?.description?.slice(47)}</Collapse>
+            <Collapse in={openDetails}>{lesson.description}</Collapse>
             <Button
               onClick={() => {
                 setOpenDetails(!openDetails)

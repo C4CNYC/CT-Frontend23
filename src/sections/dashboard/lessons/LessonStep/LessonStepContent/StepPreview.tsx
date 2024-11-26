@@ -15,7 +15,7 @@ export function StepPreview({ integrations, staticValue, bgColor }: Props) {
         (ac, cur) => ac + (cur.head.startsWith('<') ? cur.head : `<style>${cur.head}</style>`),
         ''
       )}<meta charset="utf-8"></head><main>${userContent}${integrations.reduce((ac, cur) => {
-        return ac + cur.scripts
+        return cur.scripts ? ac + cur.scripts : ac
       }, '')}</main>`
     }
   }
