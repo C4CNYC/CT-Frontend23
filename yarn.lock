@@ -3849,6 +3849,14 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tinymce/tinymce-react@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-react/-/tinymce-react-5.1.1.tgz#3b8555ceaccfa6bb8bb03c3b0c8baaccde138bde"
+  integrity sha512-DQ0wpvnf/9z8RsOEAmrWZ1DN1PKqcQHfU+DpM3llLze7FHmxVtzuN8O+FYh0oAAF4stzAXwiCIVacfqjMwRieQ==
+  dependencies:
+    prop-types "^15.6.2"
+    tinymce "^7.0.0 || ^6.0.0 || ^5.5.1"
+
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@tsconfig/node10/-/node10-1.0.9.tgz#df4907fc07a886922637b15e02d4cebc4c0021b2"
@@ -4409,6 +4417,11 @@
     "@codemirror/theme-one-dark" "^6.0.0"
     "@uiw/codemirror-extensions-basic-setup" "4.21.21"
     codemirror "^6.0.0"
+
+"@uiw/react-split@^5.9.3":
+  version "5.9.3"
+  resolved "https://registry.yarnpkg.com/@uiw/react-split/-/react-split-5.9.3.tgz#3d99f2b62288d4a6eb716b0fd6b37a2c5dc7f82e"
+  integrity sha512-HgwETU+kRhzZAp+YiE4Yu8bNJm3jxxnGgGPfkadUl8jA1wsMD3aMMskuhQF5akiUUUadiLUvAc8e1RH9Y/SKDw==
 
 "@ungap/structured-clone@^1.2.0":
   version "1.2.0"
@@ -11393,6 +11406,11 @@ tinycolor2@^1.4.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.6.0.tgz#f98007460169b0263b97072c5ae92484ce02d09e"
   integrity sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==
+
+"tinymce@^7.0.0 || ^6.0.0 || ^5.5.1", tinymce@^7.3.0:
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-7.4.1.tgz#cae3160a7d5850e3069d6d79625b1c74918f8af9"
+  integrity sha512-g1Ieaio5YU+jLEQZkQyxTT8EY/im+TC/CFBPlqDBCNdsF8YQOeLMot+K6vmFOAXhNc85KhP1rC9Dn2X+iBFDGg==
 
 tmp-promise@^3.0.3:
   version "3.0.3"
