@@ -1,4 +1,5 @@
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
+import { FileExtension } from '@root/src/types/lessons'
 
 import { LessonContentComplexity } from '../enums/lesson-content-complexity.enum'
 import { LessonContentType } from '../enums/lesson-content-type.enum'
@@ -91,6 +92,13 @@ export interface ILessonUpdate {
   description: string
   active?: boolean
   duration: string
+}
+
+export interface ILessonPreloadFile {
+  id: string
+  name: string
+  preloaded_code: string
+  extension: FileExtension
 }
 
 export interface IAddLessonToModule {

@@ -274,6 +274,8 @@ const en = {
   messages_chalage_comleted: 'Challange successfully completed',
   messages_course_doesnt_exist: "Course doesn't exist",
   messages_lesson_removed: 'Lesson removed from the module',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'Skill name is required',
@@ -553,6 +555,8 @@ const en = {
   lessons_settings: 'Lesson Settings',
   lessons_starter_code: 'Starter Code',
   lessons_starter_code_from_previous: 'Copy from the previous lesson',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Integrations',

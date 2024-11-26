@@ -26,6 +26,7 @@ import { useUpdateLessonContentMutation } from '@/redux/services/manager/lesson-
 import { useTranslate } from '@/utils/translateHelper'
 
 import { GeneralTab } from './GeneralTab'
+import PreloadTab from './preload-tab'
 
 interface FormValuesProps {
   slug: string
@@ -102,7 +103,7 @@ export default function Preferences({
     setValue(newValue)
   }
 
-  const CreateLessonDemonSchema = Yup.object().shape({
+  const CreateLessonDemoSchema = Yup.object().shape({
     title: Yup.string().required(translate('required_title')),
     skills: Yup.array(),
   })
@@ -110,7 +111,7 @@ export default function Preferences({
   const { enqueueSnackbar } = useSnackbar()
   const [updateLessonContent, { isLoading }] = useUpdateLessonContentMutation()
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(CreateLessonDemonSchema),
+    resolver: yupResolver(CreateLessonDemoSchema),
     defaultValues,
   })
 
@@ -212,18 +213,7 @@ export default function Preferences({
                 value={value}
                 index={2}
               >
-                <Box>
-                  <ModalCodeFullscreen
-                    title={translate('code_will_preload')}
-                    name='preload_body'
-                  />
-                  <RHFCode
-                    placeholder={translate('code_will_preload')}
-                    name='preload_body'
-                    height='350px'
-                    extensions={[javascript({ jsx: true })]}
-                  />
-                </Box>
+                <PreloadTab />
               </TabPanel>
               <TabPanel
                 value={value}
@@ -237,29 +227,32 @@ export default function Preferences({
                 />
               </TabPanel>
             </DialogContent>
-            <DialogActions>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  gap: 2,
-                }}
-              >
-                <Button
-                  onClick={() => {
-                    setOpenDialog(false)
+
+            <DialogActions sx={{ minHeight: '84px' }}>
+              {value !== 2 && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    gap: 2,
                   }}
                 >
-                  {translate('actions_close')}
-                </Button>
-                <LoadingButton
-                  type='submit'
-                  variant='contained'
-                  loading={isLoading}
-                >
-                  {translate('actions_save')}
-                </LoadingButton>
-              </Box>
+                  <Button
+                    onClick={() => {
+                      setOpenDialog(false)
+                    }}
+                  >
+                    {translate('actions_close')}
+                  </Button>
+                  <LoadingButton
+                    type='submit'
+                    variant='contained'
+                    loading={isLoading}
+                  >
+                    {translate('actions_save')}
+                  </LoadingButton>
+                </Box>
+              )}
             </DialogActions>
           </Box>
         </FormProvider>

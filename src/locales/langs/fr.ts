@@ -270,6 +270,8 @@ const fr = {
   messages_chalage_comleted: 'Défi réussi',
   messages_course_doesnt_exist: "Le cours n'existe pas",
   messages_lesson_removed: 'Leçon supprimée du module',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'Le nom de la compétence est requis',
@@ -551,6 +553,8 @@ const fr = {
   lessons_settings: 'Paramètres de la leçon',
   lessons_starter_code: 'Code de démarrage',
   lessons_starter_code_from_previous: 'Copie de la leçon précédente',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Intégrations',

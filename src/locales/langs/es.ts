@@ -270,6 +270,8 @@ const es = {
   messages_chalage_comleted: 'Desafío completado con éxito',
   messages_course_doesnt_exist: 'El curso no existe',
   messages_lesson_removed: 'Lección eliminada del módulo',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'El nombre de la habilidad es obligatorio',
@@ -550,6 +552,8 @@ const es = {
   lessons_settings: 'Configuración de la lección',
   lessons_starter_code: 'Código de inicio',
   lessons_starter_code_from_previous: 'Copiar de la lección anterior',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Integraciones',

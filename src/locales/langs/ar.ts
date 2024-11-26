@@ -274,6 +274,8 @@ const ar = {
   messages_chalage_comleted: 'تم إكمال التحدي بنجاح',
   messages_course_doesnt_exist: 'الدورة غير موجودة',
   messages_lesson_removed: 'تمت إزالة الدرس من الوحدة النمطية',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'اسم المهارة مطلوب',
@@ -554,6 +556,8 @@ const ar = {
   lessons_settings: 'إعدادات الدرس',
   lessons_starter_code: 'كود البداية',
   lessons_starter_code_from_previous: 'نسخ من الدرس السابق',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'التكامل',
