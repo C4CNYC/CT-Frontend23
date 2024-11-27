@@ -87,18 +87,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const { changeLessonStatus } = useSocketController(socket)
 
-  const {
-    activeFile,
-    setActiveFile,
-    onDeleteFile,
-    isFileFormOpen,
-    isOpen,
-    setIsOpen,
-    fileList,
-    setIsFileFormOpen,
-    onAddFile,
-    addedFileList,
-  } = useFileManager()
+  const { activeFile, setActiveFile, onDeleteFile, isOpen, setIsOpen, files, onAddFile } =
+    useFileManager()
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
@@ -257,11 +247,9 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         <>
           <FileModal
             isOpen={isOpen}
-            isFileFormOpen={isFileFormOpen}
             setActiveFile={setActiveFile}
             setIsOpen={setIsOpen}
-            fileList={fileList}
-            setIsFileFormOpen={setIsFileFormOpen}
+            files={files}
             onAddFile={onAddFile}
             onDeleteFile={onDeleteFile}
             mode={mode}
@@ -271,7 +259,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
           <FileSwitcher
             activeFile={activeFile}
             onChange={setActiveFile}
-            fileList={addedFileList}
+            fileList={files}
           />
         </>
       )}

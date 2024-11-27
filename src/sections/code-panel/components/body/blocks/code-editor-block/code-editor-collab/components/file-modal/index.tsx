@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react'
+import { type FC, useEffect, useState } from 'react'
 
 import AddIcon from '@mui/icons-material/Add'
 import Close from '@mui/icons-material/Close'
@@ -6,8 +6,9 @@ import FolderIcon from '@mui/icons-material/Folder'
 import { Button, ClickAwayListener, Stack, Typography, IconButton } from '@mui/material'
 import { useTheme } from '@mui/system'
 
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+
 import { EditorMode } from '../../hook/constants'
-import { File } from '../../hook/requests'
 import DevIcon from '../dev-icon'
 
 import ConfirmModalWrapper from './confirm-wrapper-modal'
@@ -17,11 +18,9 @@ import { useStyles } from './styles'
 interface FileModalProps {
   setActiveFile: (id: string) => void
   isOpen: boolean
-  fileList: File[]
-  isFileFormOpen: boolean
-  setIsFileFormOpen: (fileName: boolean) => void
+  files: StudentFile[]
   setIsOpen: (isOpen: boolean) => void
-  onAddFile: (fileName: string) => Promise<void>
+  onAddFile: (fileName: string, lessonContentId: string) => Promise<void>
   onDeleteFile: (id: string) => void
   mode: EditorMode
   isMultipleExtensionFiles: boolean
@@ -30,9 +29,7 @@ interface FileModalProps {
 const FileModal: FC<FileModalProps> = ({
   setActiveFile,
   isOpen,
-  fileList,
-  isFileFormOpen,
-  setIsFileFormOpen,
+  files,
   onAddFile,
   setIsOpen,
   onDeleteFile,
@@ -41,18 +38,24 @@ const FileModal: FC<FileModalProps> = ({
 }) => {
   const theme = useTheme()
   const styles = useStyles(theme)
-  const [fileToDelete, setFileToDelete] = useState<File | null>(null)
+  const [fileToDelete, setFileToDelete] = useState<Pick<StudentFile, 'id' | 'name'> | null>(null)
+  const [isDeleteExist, setIsDeleteExist] = useState<boolean>(false)
+  const [isFileFormOpen, setIsFileFormOpen] = useState<boolean>(false)
 
   const onSubmitDelete = () => {
     if (fileToDelete == null) {
       return
     }
 
-    onDeleteFile(fileToDelete.id)
+    onDeleteFile(fileToDelete.id as string)
     setFileToDelete(null)
   }
 
-  const isDeleteExist = fileList.length > 1 && mode === EditorMode.Owner
+  useEffect(() => {
+    if (files.length > 1 && mode === EditorMode.Owner) {
+      setIsDeleteExist(true)
+    }
+  }, [files])
 
   return (
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
@@ -81,27 +84,29 @@ const FileModal: FC<FileModalProps> = ({
           </Typography>
 
           <Stack>
-            {fileList.map(({ id, name }) => {
+            {files.map(({ id, name, extension }) => {
               return (
                 <Stack
                   key={id}
                   sx={styles.BUTTON_WRAPPER}
                 >
                   <Button
-                    onClick={() => setActiveFile(id)}
+                    onClick={() => setActiveFile(id ?? '')}
                     sx={styles.BUTTON_FILE_SX}
                     variant='text'
                   >
                     <DevIcon
                       sx={styles.devIcon}
-                      fileName={name}
+                      fileName={`${name}.${extension}`}
                     />
-
-                    {name}
+                    {name}.{extension}
                   </Button>
 
                   {isDeleteExist && (
-                    <IconButton onClick={() => setFileToDelete({ id, name })}>
+                    <IconButton
+                      size='small'
+                      onClick={() => setFileToDelete({ id, name })}
+                    >
                       <Close />
                     </IconButton>
                   )}
@@ -115,7 +120,7 @@ const FileModal: FC<FileModalProps> = ({
           isOpen={isFileFormOpen}
           onClose={() => setIsFileFormOpen(false)}
           onSubmit={onAddFile}
-          fileList={fileList}
+          files={files}
           isMultipleExtensionFiles={isMultipleExtensionFiles}
         />
 

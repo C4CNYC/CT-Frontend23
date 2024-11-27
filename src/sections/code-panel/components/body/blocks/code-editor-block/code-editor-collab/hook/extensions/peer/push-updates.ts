@@ -1,7 +1,8 @@
 import { sendableUpdates } from '@codemirror/collab'
 import { Socket } from 'socket.io-client'
 
-import type { File } from '../../requests'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+
 import { EmitSocketEvents, SubscribedEvents } from '../../utils/socket'
 
 interface PushUpdatesProps {
@@ -9,7 +10,7 @@ interface PushUpdatesProps {
   roomId: string
   version: number
   updates: ReturnType<typeof sendableUpdates>
-  fileName: File
+  fileName: StudentFile
 }
 
 export const pushUpdates = ({

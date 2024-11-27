@@ -16,6 +16,7 @@ import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
 import {
   setNextStepAble,
+  setSlideId,
   setSlideIndex,
   setSolutionCode,
   toggleInstrations,
@@ -180,6 +181,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const onBeforeChange = (_: number, next: number) => {
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
+    dispatch(setSlideId(data[slideIndex].id))
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {

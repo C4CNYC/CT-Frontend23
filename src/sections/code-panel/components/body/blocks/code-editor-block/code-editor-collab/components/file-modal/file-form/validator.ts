@@ -1,6 +1,6 @@
 import { getFileExtension } from '@/utils/getFileExtension'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { Extensions } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
-import type { File } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/requests'
 
 const validationList: string[] = [Extensions.Html, Extensions.Css, Extensions.Js]
 const EMPTY_ERROR = 'Cannot be empty'
@@ -9,11 +9,11 @@ const FILE_EXIST_ERROR = 'File is already exist'
 
 interface ValidateProps {
   fileName: string
-  fileList: File[]
+  fileList: StudentFile[]
   isMultipleExtensionFiles: boolean
 }
 
-const isExtensionExist = (fileList: File[], extension: string) =>
+const isExtensionExist = (fileList: StudentFile[], extension: string) =>
   fileList.some(({ name }) => getFileExtension(name) === extension)
 
 export const validate = ({

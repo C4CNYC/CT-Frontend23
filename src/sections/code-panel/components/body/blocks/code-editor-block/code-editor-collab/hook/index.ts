@@ -7,12 +7,13 @@ import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
 import { useSelector } from '@/redux/store'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { initListeners } from '@root/src/sections/code-panel/lib/listeners'
 
 import { RoomStatus } from '../components/status-label'
 
 import { EditorMode } from './constants'
-import { type File, getFileInfo, isRoomExist } from './requests'
+import { getFileInfo, isRoomExist } from './requests'
 import { type UseCommentsPropsReturn, useComments } from './useComments'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
@@ -23,7 +24,7 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
   mode?: EditorMode
   user?: AuthUserType
-  activeFile: File
+  activeFile: StudentFile
   socket?: Socket
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
@@ -68,7 +69,7 @@ export const useCodeEditorCollab = ({
     socket,
     cursorText,
     roomId,
-    activeFile: activeFile.id,
+    activeFile: activeFile?.id ?? '',
   })
 
   const { baseInit, setIsLoading, setStreamingDoc, isCollabActive, ...codeMirrorProps } =

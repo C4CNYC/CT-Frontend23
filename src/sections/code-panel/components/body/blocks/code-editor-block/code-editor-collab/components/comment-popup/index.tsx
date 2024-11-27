@@ -4,7 +4,8 @@ import Close from '@mui/icons-material/Close'
 import { type PopoverProps, Popover, Box, ClickAwayListener, Button } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
 
-import type { File } from '../../hook/requests'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+
 import { WidgetPosition } from '../../hook/requests/comments'
 import type { CommentPopupProps } from '../../hook/useComments'
 import { language } from '../../hook/utils'
@@ -22,7 +23,7 @@ interface CommentComponentPopupProps extends Partial<Omit<CommentPopupProps, 'po
   onRemoveComment: (props: OnRemoveComment) => Promise<void>
   onRemoveCommentGroup: (groupId: string) => Promise<void>
   position?: WidgetPosition
-  activeFile: File
+  activeFile: StudentFile
 }
 
 const ANCHOR_ORIGIN: PopoverProps['anchorOrigin'] = {

@@ -76,6 +76,10 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'GET',
       }),
       providesTags: ['LessonSlidePreload'],
+      transformResponse: (
+        res: Array<ILessonPreloadFile & BaseResponseInterface>
+      ): Array<ILessonPreloadFile & BaseResponseInterface> =>
+        res.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()),
       keepUnusedDataFor: 0,
     }),
 
@@ -88,7 +92,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'POST',
         body: { name, extension, preloaded_code },
       }),
-      invalidatesTags: [{ type: 'LessonSlidePreload' }],
+      invalidatesTags: ['LessonSlidePreload'],
     }),
 
     updateLessonStepPreloadFile: builder.mutation<
@@ -100,7 +104,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body: { name, extension, preloaded_code },
       }),
-      invalidatesTags: [{ type: 'LessonSlidePreload' }],
+      invalidatesTags: ['LessonSlidePreload'],
     }),
 
     removeLessonStepPreloadFile: builder.mutation<
@@ -111,7 +115,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/manager/lesson/${lessonId}/content/${contentId}/file/${fileId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'LessonSlidePreload' }],
+      invalidatesTags: ['LessonSlidePreload'],
     }),
   }),
   overrideExisting: false,

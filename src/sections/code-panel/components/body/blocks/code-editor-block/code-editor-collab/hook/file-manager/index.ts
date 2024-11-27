@@ -1,18 +1,20 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
-import { DEFAULT_FILE } from '../constants'
-import { type File } from '../requests'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import {
+  useCreateStudentFileMutation,
+  useDeleteStudentFileMutation,
+  useGetStudentFilesQuery,
+} from '@root/src/redux/services/manager/workspace-student'
+import { useSelector } from '@root/src/redux/store'
 
 interface UseFileManagerReturn {
   isOpen: boolean
-  fileList: File[]
-  addedFileList: File[]
-  isFileFormOpen: boolean
-  onAddFile: (fileName: string) => Promise<void>
-  activeFile: File
+  files: StudentFile[]
+  onAddFile: (fileName: string, lessonContentId: string) => Promise<void>
+  activeFile: StudentFile
   setActiveFile: (id: string) => void
   setIsOpen: (isOpen: boolean) => void
-  setIsFileFormOpen: (isOpen: boolean) => void
   onDeleteFile: (id: string) => void
 }
 
@@ -30,45 +32,67 @@ interface UseFileManagerReturn {
 */
 
 export const useFileManager = (): UseFileManagerReturn => {
+  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const [isOpen, setIsOpen] = useState(false)
+  const [activeFile, _setActiveFile] = useState<StudentFile>()
 
-  // #TODO: ISSUE-272 - Default file should be from api call
-  const [activeFile, _setActiveFile] = useState<File>(DEFAULT_FILE)
-
-  // #TODO: ISSUE-272 - File list should be from api call
-  // this state should be removed
-  const [fileList, setFileList] = useState<File[]>([])
-  const [addedFileList, setAddedFileList] = useState<File[]>([])
-  const [isFileFormOpen, setIsFileFormOpen] = useState(false)
+  const [createStudentFile] = useCreateStudentFileMutation()
+  const [deleteStudentFile] = useDeleteStudentFileMutation()
+  const { data: files = [] } = useGetStudentFilesQuery(
+    { contentId: slideId, prevContentId: '' },
+    { skip: !slideId }
+  )
 
   // ------------------------------------------------------ //
   //                        Handlers                        //
   // ------------------------------------------------------ //
 
-  const onAddFile = async (fileName: string): Promise<void> => {
-    // #TODO: ISSUE-272 - Add file creation logic
+  const onAddFile = async (fileName: string, lessonContentId: string): Promise<void> => {
+    const [name, extension] = fileName.split('.')
+    try {
+      await createStudentFile({ name, extension, lessonContentId, body: '' })
+    } catch (e: any) {
+      throw new Error(e.message)
+    }
   }
 
   const onDeleteFile = useCallback((id: string) => {
-    // #TODO: ISSUE-272 - Add file deletion logic
+    try {
+      deleteStudentFile({ id }).unwrap()
+      getDefaultFile()
+    } catch (e: any) {
+      throw new Error(e.message)
+    }
   }, [])
 
-  const setActiveFile = useCallback((id: string): void => {
-    // #TODO: ISSUE-272 - Update logic for setting active file
-  }, [])
+  const setActiveFile = useCallback(
+    (id: string): void => {
+      _setActiveFile(files.find((file) => file.id === id))
+    },
+    [files]
+  )
+
+  const getDefaultFile = () => {
+    _setActiveFile(
+      files.find((file) => file.name === 'index' || file.name === 'main') || files[0] || null
+    )
+  }
+
+  useEffect(() => {
+    if (files && !activeFile) {
+      getDefaultFile()
+    }
+  }, [files])
 
   // ------------------------------------------------------ //
 
   return {
     onAddFile,
     isOpen,
-    isFileFormOpen,
-    fileList,
-    activeFile,
+    files,
+    activeFile: activeFile!,
     setActiveFile,
     setIsOpen,
-    setIsFileFormOpen,
-    addedFileList,
     onDeleteFile,
   }
 }

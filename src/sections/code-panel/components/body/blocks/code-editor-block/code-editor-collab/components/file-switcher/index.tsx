@@ -2,15 +2,16 @@ import { type FC } from 'react'
 
 import { Stack, Tabs, Tab } from '@mui/material'
 
-import type { File } from '../../hook/requests'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+
 import DevIcon from '../dev-icon'
 
 import { styles } from './styles'
 
 interface FileSwitcherProps {
-  activeFile: File | null
+  activeFile: StudentFile
   onChange: (id: string) => void
-  fileList: File[]
+  fileList: StudentFile[]
 }
 
 const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList }) => {
@@ -18,7 +19,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
     <Stack sx={styles.WRAPPER_STACK_SX}>
       <Tabs
         sx={styles.TABS}
-        value={activeFile?.name}
+        value={activeFile?.id}
         onChange={(_, id) => {
           onChange(id)
         }}

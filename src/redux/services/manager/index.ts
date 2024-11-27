@@ -54,6 +54,7 @@ export const managerApi = createApi({
     'Media',
     'Properties',
     'LessonSlidePreload',
+    'WorkspaceStudent',
   ],
   endpoints: () => ({}),
 })

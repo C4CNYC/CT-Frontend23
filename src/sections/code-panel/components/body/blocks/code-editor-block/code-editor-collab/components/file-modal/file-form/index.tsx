@@ -2,7 +2,8 @@ import { type FC, useState, useEffect, useRef, KeyboardEvent } from 'react'
 
 import { Button, TextField, CircularProgress } from '@mui/material'
 
-import type { File } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/requests'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { useSelector } from '@root/src/redux/store'
 
 import ConfirmModalWrapper from '../confirm-wrapper-modal'
 
@@ -13,8 +14,8 @@ interface FileFormProps {
   isOpen: boolean
   onClose: () => void
   defaultValue?: string
-  onSubmit: (fileName: string) => Promise<void>
-  fileList: File[]
+  onSubmit: (fileName: string, lessonContentId: string) => Promise<void>
+  files: StudentFile[]
   isMultipleExtensionFiles: boolean
 }
 
@@ -25,9 +26,10 @@ const FileForm: FC<FileFormProps> = ({
   onClose,
   onSubmit,
   defaultValue,
-  fileList,
+  files,
   isMultipleExtensionFiles,
 }) => {
+  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const textFieldRef = useRef<HTMLDivElement | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -50,7 +52,7 @@ const FileForm: FC<FileFormProps> = ({
 
     const error = validate({
       fileName: value,
-      fileList,
+      fileList: files,
       isMultipleExtensionFiles,
     })
 
@@ -62,7 +64,7 @@ const FileForm: FC<FileFormProps> = ({
 
     try {
       setIsLoading(true)
-      await onSubmit(value)
+      await onSubmit(value, slideId)
     } finally {
       setIsLoading(false)
     }

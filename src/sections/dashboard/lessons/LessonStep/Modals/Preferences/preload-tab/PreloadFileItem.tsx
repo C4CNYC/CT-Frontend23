@@ -87,7 +87,9 @@ const PreloadFileItem = ({ id, name, extension, preloaded_code }: ILessonPreload
         }).unwrap()
         enqueueSnackbar(translate('messages_deleted'))
       }
-    } catch (e) {}
+    } catch (e: any) {
+      enqueueSnackbar(translate('messages_error'))
+    }
   }
 
   return (
@@ -150,6 +152,7 @@ const PreloadFileItem = ({ id, name, extension, preloaded_code }: ILessonPreload
             type='button'
             onClick={methods.handleSubmit(onSubmit)}
             loading={isUpdatin}
+            disabled={!methods.formState.isDirty}
           >
             {translate('messages_lesson_file_update')}
           </LoadingButton>
@@ -161,8 +164,8 @@ const PreloadFileItem = ({ id, name, extension, preloaded_code }: ILessonPreload
       <ConfirmDialog
         open={confirm}
         onClose={() => setConfirm(false)}
-        title={translate('messages_lesson_file_delete')}
-        content={`${translate('messages_delete_question')} file: ${methods.getValues('fileName')} ?`}
+        title={`${translate('messages_lesson_file_delete')} ${methods.getValues('fileName')}?`}
+        content={translate('messages_delete_question')}
         action={
           <Button
             variant='contained'
