@@ -47,6 +47,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
+      // #TODO: ISSUE-272 update code body over here.
       setDocument(doc as CodeDocument)
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
       if (autoRun) {
