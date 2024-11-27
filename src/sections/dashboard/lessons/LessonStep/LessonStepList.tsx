@@ -28,6 +28,7 @@ import { ConfirmDialog, Iconify } from '@root/src/components'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { useCounter } from '@root/src/hooks/useCounter'
+import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { LoaderStepDialog } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/LoaderStepDialog'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
@@ -187,14 +188,18 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const newContentOrder = idCardWithMaxOrder
     ? parseFloat(board.cards[idCardWithMaxOrder].meta.order as string) + 1
     : 1
+  const activeSlideId = cardIds?.find((s) => s == router.query.stepId)
 
   const createEmptySlide = async (): Promise<void> => {
+    let NewLessonType = 'code'
+    if (activeSlideId) NewLessonType = board?.cards[activeSlideId].type
     try {
       const { id: stepId } = await createLessonContent({
         lessonId,
         draft: false,
         active: true,
         title: translate('slide'),
+        type: NewLessonType as LessonContentType,
         meta: { order: newContentOrder },
       }).unwrap()
       enqueueSnackbar(translate('messages_step_created'))
