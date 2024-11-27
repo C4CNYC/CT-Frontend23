@@ -61,6 +61,7 @@ export default function ProgressCard({ activeTab }: IProgressCardProps): React.R
       skip: !query.id || !activeTab,
     }
   )
+
   const filteredData =
     loggedUser?.role !== 'student'
       ? progressData

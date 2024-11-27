@@ -9,7 +9,7 @@ import { styles } from './styles'
 
 interface FileSwitcherProps {
   activeFile: File | null
-  onChange: (fileName: File) => void
+  onChange: (id: string) => void
   fileList: File[]
 }
 
@@ -20,7 +20,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
         sx={styles.TABS}
         value={activeFile?.name}
         onChange={(_, id) => {
-          onChange(fileList.find(({ id: _id }) => id === _id) as File)
+          onChange(id)
         }}
         variant='scrollable'
         scrollButtons={false}

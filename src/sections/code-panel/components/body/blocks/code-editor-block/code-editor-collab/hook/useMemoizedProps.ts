@@ -1,15 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-import type { File, FileInfo } from './requests'
-
 export interface MemoizedProps {
   code?: string
   cursorText?: string
   withTooltip?: boolean
   preloadedCode?: string
   onChangeStreamingDocInfo?: (doc: Record<string, string>) => void
-  setActiveFile: (fileName: File) => void
-  onResetFileManager: (info?: FileInfo) => void
   defaultFileName: string
   isFetching?: boolean
 }
@@ -23,8 +19,6 @@ export const useMemoizedProps = ({
   cursorText = 'Unknown',
   withTooltip = true,
   onChangeStreamingDocInfo,
-  onResetFileManager,
-  setActiveFile,
   code,
   preloadedCode,
   defaultFileName,
@@ -33,18 +27,8 @@ export const useMemoizedProps = ({
   const onChangeRef = useRef(onChangeStreamingDocInfo)
   const withTooltipRef = useRef(withTooltip)
   const preloadedCodeRef = useRef(preloadedCode)
-  const setActiveFileRef = useRef(setActiveFile)
   const cursorTextRef = useRef<string>(cursorText)
-  const onResetFileManagerRef = useRef(onResetFileManager)
   const defaultFileNameRef = useRef(defaultFileName)
-
-  useEffect(() => {
-    setActiveFileRef.current = setActiveFile
-  }, [setActiveFile])
-
-  useEffect(() => {
-    onResetFileManagerRef.current = onResetFileManager
-  }, [onResetFileManager])
 
   useEffect(() => {
     preloadedCodeRef.current = preloadedCode
@@ -58,18 +42,8 @@ export const useMemoizedProps = ({
     onChangeRef.current?.(code)
   }, [])
 
-  const _onResetFileManager = useCallback((fileInfo?: FileInfo) => {
-    onResetFileManagerRef.current(fileInfo)
-  }, [])
-
-  const _setActiveFile = useCallback((fileName: File) => {
-    setActiveFileRef.current(fileName)
-  }, [])
-
   return {
     onChangeStreamingDocInfo: _onChange,
-    onResetFileManager: _onResetFileManager,
-    setActiveFile: _setActiveFile,
     cursorText: cursorTextRef.current,
     withTooltip: withTooltipRef.current,
     preloadedCode: preloadedCodeRef.current,

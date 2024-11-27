@@ -15,14 +15,14 @@ import FileForm from './file-form'
 import { useStyles } from './styles'
 
 interface FileModalProps {
-  setActiveFile: (fileName: File) => void
+  setActiveFile: (id: string) => void
   isOpen: boolean
   fileList: File[]
   isFileFormOpen: boolean
   setIsFileFormOpen: (fileName: boolean) => void
   setIsOpen: (isOpen: boolean) => void
   onAddFile: (fileName: string) => Promise<void>
-  onDeleteFile: (fileName: File) => void
+  onDeleteFile: (id: string) => void
   mode: EditorMode
   isMultipleExtensionFiles: boolean
 }
@@ -48,7 +48,7 @@ const FileModal: FC<FileModalProps> = ({
       return
     }
 
-    onDeleteFile(fileToDelete)
+    onDeleteFile(fileToDelete.id)
     setFileToDelete(null)
   }
 
@@ -88,7 +88,7 @@ const FileModal: FC<FileModalProps> = ({
                   sx={styles.BUTTON_WRAPPER}
                 >
                   <Button
-                    onClick={() => setActiveFile({ id, name })}
+                    onClick={() => setActiveFile(id)}
                     sx={styles.BUTTON_FILE_SX}
                     variant='text'
                   >

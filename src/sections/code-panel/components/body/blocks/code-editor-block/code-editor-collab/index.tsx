@@ -89,6 +89,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const {
     activeFile,
+    setActiveFile,
+    onDeleteFile,
     isFileFormOpen,
     isOpen,
     setIsOpen,
@@ -96,14 +98,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     setIsFileFormOpen,
     onAddFile,
     addedFileList,
-    onDeleteFileWithEvents,
-    onChangeFileWithEvents,
-    ...collabPropsFromFileManager
-  } = useFileManager({
-    socket,
-    roomId,
-    mode,
-  })
+  } = useFileManager()
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
@@ -201,7 +196,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     },
   } = useCodeEditorCollab({
     ...collabProps,
-    ...collabPropsFromFileManager,
     onChangeStreamingDocInfo,
     preloadedCode: localstorageCode ?? preloadedCode,
     activeFile,
@@ -264,19 +258,19 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
           <FileModal
             isOpen={isOpen}
             isFileFormOpen={isFileFormOpen}
-            setActiveFile={onChangeFileWithEvents}
+            setActiveFile={setActiveFile}
             setIsOpen={setIsOpen}
             fileList={fileList}
             setIsFileFormOpen={setIsFileFormOpen}
             onAddFile={onAddFile}
-            onDeleteFile={onDeleteFileWithEvents}
+            onDeleteFile={onDeleteFile}
             mode={mode}
             isMultipleExtensionFiles={isMultipleExtensionFiles}
           />
 
           <FileSwitcher
             activeFile={activeFile}
-            onChange={onChangeFileWithEvents}
+            onChange={setActiveFile}
             fileList={addedFileList}
           />
         </>
