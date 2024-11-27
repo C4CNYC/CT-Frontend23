@@ -27,7 +27,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
         scrollButtons={false}
         aria-label='scrollable prevent tabs example'
       >
-        {fileList.map(({ name, id }) => (
+        {fileList.map(({ name, id, extension }) => (
           <Tab
             sx={styles.TAB}
             key={id}
@@ -35,10 +35,9 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
               <>
                 <DevIcon
                   sx={styles.DEV_ICON}
-                  fileName={name}
+                  fileName={`${name}.${extension}`}
                 />
-
-                {name}
+                {`${name}.${extension}`}
               </>
             }
             value={id}

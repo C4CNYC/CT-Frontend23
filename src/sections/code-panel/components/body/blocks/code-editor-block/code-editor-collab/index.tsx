@@ -202,12 +202,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   useEffect(() => {
     const newCodeValue =
-      localstorageCode ??
+      activeFile?.body ??
       prevLessonCode ??
       (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
 
     setCodeValue(newCodeValue)
-  }, [preloadedCode, localstorageCode, streamingDoc])
+  }, [preloadedCode, localstorageCode, streamingDoc, activeFile])
 
   useEffect(() => {
     // TODO: check it and remove in case of unnecessary
