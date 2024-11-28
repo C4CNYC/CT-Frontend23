@@ -213,7 +213,10 @@ export default function Preferences({
                 value={value}
                 index={2}
               >
-                <PreloadTab />
+                <PreloadTab
+                  lessonId={lessonId}
+                  contentId={contentId}
+                />
               </TabPanel>
               <TabPanel
                 value={value}

@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Skeleton, Stack, useTheme } from '@mui/material'
-import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
 import { EmptyContent, Iconify } from '@root/src/components'
@@ -16,8 +15,12 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import { getAssetBtnSx } from './constants'
 import PreloadFileItem from './PreloadFileItem'
 
-const PreloadTab = () => {
-  const { query } = useRouter()
+interface PreloadTabProps {
+  lessonId: string
+  contentId: string
+}
+
+const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
   const theme = useTheme()
@@ -25,16 +28,16 @@ const PreloadTab = () => {
   const addAssetSx = useMemo(() => getAssetBtnSx(isDarkMode), [isDarkMode])
 
   const { data, isLoading } = useGetLessonSlidePreloadFilesQuery({
-    lessonId: query.lessonId as string,
-    contentId: query.stepId as string,
+    lessonId,
+    contentId,
   })
   const [postFile, { isLoading: isCreating }] = useAddLessonStepPreloadFileMutation()
 
   const onCreate = async () => {
     try {
       await postFile({
-        lessonId: query.lessonId as string,
-        contentId: query.stepId as string,
+        lessonId,
+        contentId,
         extension: FileExtension.HTML,
         name: 'index',
         preloaded_code: '',
@@ -67,6 +70,8 @@ const PreloadTab = () => {
               extension={el.extension as FileExtension}
               preloaded_code={el.preloaded_code}
               id={el.id}
+              lessonId={lessonId}
+              contentId={contentId}
               key={el.id}
             />
           ))
