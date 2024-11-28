@@ -215,21 +215,19 @@ const SliderBlock: FC<ISliderBlock> = ({
           ></Box>
         ))}
       </Box>
-      {_.isEmpty(data) ? (
-        sandbox ? (
-          <TextField
-            fullWidth
-            multiline
-            minRows='12'
-            value={noteText}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setNoteText(event.target.value)
-              localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
-            }}
-          />
-        ) : (
-          <EmptyContent title={translate('messages_no_data')} />
-        )
+      {sandbox ? (
+        <TextField
+          fullWidth
+          multiline
+          minRows='12'
+          value={noteText}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setNoteText(event.target.value)
+            localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
+          }}
+        />
+      ) : _.isEmpty(data) ? (
+        <EmptyContent title={translate('messages_no_data')} />
       ) : (
         <>
           <Box
