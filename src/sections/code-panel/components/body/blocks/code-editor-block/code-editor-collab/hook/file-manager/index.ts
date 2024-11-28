@@ -30,7 +30,7 @@ export const useFileManager = (): UseFileManagerReturn => {
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [updateStudentFile] = useUpdateStudentFileMutation()
-  const { data: files = [] } = useGetStudentFilesQuery(
+  const { data: files = [], isLoading } = useGetStudentFilesQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
     { skip: !lessonId || !slideId }
   )
@@ -38,6 +38,13 @@ export const useFileManager = (): UseFileManagerReturn => {
   // ------------------------------------------------------ //
   //                        Handlers                        //
   // ------------------------------------------------------ //
+
+  const getDefaultFile = useCallback(() => {
+    if (!files) return null
+    _setActiveFile(
+      files.find((file) => file.name === 'index' || file.name === 'main') || files[0] || null
+    )
+  }, [files])
 
   const onAddFile = async (fileName: string, lessonId: string): Promise<void> => {
     const [name, extension] = fileName.split('.')
@@ -62,14 +69,17 @@ export const useFileManager = (): UseFileManagerReturn => {
     }
   }
 
-  const onDeleteFile = useCallback((id: string) => {
-    try {
-      deleteStudentFile({ id }).unwrap()
-      getDefaultFile()
-    } catch (e: any) {
-      throw new Error(e.message)
-    }
-  }, [])
+  const onDeleteFile = useCallback(
+    (id: string) => {
+      try {
+        deleteStudentFile({ id }).unwrap()
+        getDefaultFile()
+      } catch (e: any) {
+        throw new Error(e.message)
+      }
+    },
+    [deleteStudentFile, getDefaultFile]
+  )
 
   const setActiveFile = useCallback(
     (id: string): void => {
@@ -78,17 +88,14 @@ export const useFileManager = (): UseFileManagerReturn => {
     [files]
   )
 
-  const getDefaultFile = () => {
-    _setActiveFile(
-      files.find((file) => file.name === 'index' || file.name === 'main') || files[0] || null
-    )
-  }
+  useEffect(() => {
+    if (files) _setActiveFile(files[0])
+  }, [files, getDefaultFile])
 
   useEffect(() => {
-    if (files && !activeFile) {
-      getDefaultFile()
-    }
-  }, [files])
+    if (isLoading) return
+    getDefaultFile()
+  }, [lessonId, slideId, getDefaultFile])
 
   // ------------------------------------------------------ //
 

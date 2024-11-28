@@ -17,7 +17,6 @@ import { CodePanelBodyProps } from '@/sections/code-panel/components/body/types'
 import { CodePanelContext } from '../../lib/CodePanelContext'
 
 import CodeEditorBlock from './blocks/code-editor-block'
-import { useFileManager } from './blocks/code-editor-block/code-editor-collab/hook/file-manager'
 import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
 import NavPanel from './blocks/nav-panel'
 import ResizeDivider from './blocks/resize-divider'
@@ -38,32 +37,18 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const { autoRun } = useContext(CodePanelContext)
-  const { onUpdateFile } = useFileManager()
   const [document, setDocument] = useState<CodeDocument | null>(null)
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null)
   const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     try {
-      const _body = (doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''
-
       setDocument(doc as CodeDocument)
-      dispatch(setCode(_body))
-
-      if (!timerId) {
-        const timer = setTimeout(() => {
-          onUpdateFile(slideId, { body: _body })
-          return setTimerId(null)
-        }, 2000)
-
-        setTimerId(timer)
-      }
+      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
 
       if (autoRun) {
         setBrowserView(doc)

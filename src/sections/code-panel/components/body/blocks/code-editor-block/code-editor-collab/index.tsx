@@ -45,7 +45,9 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
 }
 
 const DEBOUNCE_TIME = 30000
+const DEBOUNCE_SAVE_TIME = 3000
 let checkValueTimeout: any | null = null
+let checkSaveTimeout: any | null = null
 const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
@@ -87,14 +89,21 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const { changeLessonStatus } = useSocketController(socket)
 
-  const { activeFile, setActiveFile, onDeleteFile, isOpen, setIsOpen, files, onAddFile } =
-    useFileManager()
+  const {
+    activeFile,
+    setActiveFile,
+    onDeleteFile,
+    isOpen,
+    setIsOpen,
+    files,
+    onAddFile,
+    onUpdateFile,
+  } = useFileManager()
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
       return
     }
-
     if (checkValueTimeout) clearTimeout(checkValueTimeout)
 
     if (lessonId && user) changeLessonStatus(lessonId)
@@ -121,7 +130,20 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
       )
       localStorage.setItem(localStorageKey, value)
+      if (checkSaveTimeout) clearTimeout(checkSaveTimeout)
+      checkSaveTimeout = setTimeout(
+        (previousLength: number) => {
+          if (value.length !== previousLength) {
+            onUpdateFile(activeFile.id as string, {
+              body: value,
+            })
+          }
+        },
+        DEBOUNCE_SAVE_TIME,
+        activeFile?.body?.length
+      )
     }
+
     void updateCommentWidgetPosition()
   }
 
