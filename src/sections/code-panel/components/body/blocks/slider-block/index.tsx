@@ -181,7 +181,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const onBeforeChange = (_: number, next: number) => {
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    dispatch(setSlideId(data[slideIndex].id))
+    dispatch(setSlideId(data[next].id))
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {
