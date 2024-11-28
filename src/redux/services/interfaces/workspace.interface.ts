@@ -1,7 +1,7 @@
 export interface StudentFile {
   name: string
   extension: string
-  lessonContentId: string
+  lessonId: string
   body: string
   id?: string
 }

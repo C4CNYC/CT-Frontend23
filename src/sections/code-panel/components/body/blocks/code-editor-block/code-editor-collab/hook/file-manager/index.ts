@@ -11,7 +11,7 @@ import { useSelector } from '@root/src/redux/store'
 interface UseFileManagerReturn {
   isOpen: boolean
   files: StudentFile[]
-  onAddFile: (fileName: string, lessonContentId: string) => Promise<void>
+  onAddFile: (fileName: string, lessonId: string) => Promise<void>
   activeFile: StudentFile
   setActiveFile: (id: string) => void
   setIsOpen: (isOpen: boolean) => void
@@ -32,25 +32,27 @@ interface UseFileManagerReturn {
 */
 
 export const useFileManager = (): UseFileManagerReturn => {
-  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const [isOpen, setIsOpen] = useState(false)
   const [activeFile, _setActiveFile] = useState<StudentFile>()
+
+  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const { data: files = [] } = useGetStudentFilesQuery(
-    { contentId: slideId, prevContentId: '' },
-    { skip: !slideId }
+    { lessonId: lessonId!, lessonContentId: slideId || '' },
+    { skip: !lessonId || !slideId }
   )
 
   // ------------------------------------------------------ //
   //                        Handlers                        //
   // ------------------------------------------------------ //
 
-  const onAddFile = async (fileName: string, lessonContentId: string): Promise<void> => {
+  const onAddFile = async (fileName: string, lessonId: string): Promise<void> => {
     const [name, extension] = fileName.split('.')
     try {
-      await createStudentFile({ name, extension, lessonContentId, body: '' })
+      await createStudentFile({ name, extension, lessonId, body: '' })
     } catch (e: any) {
       throw new Error(e.message)
     }

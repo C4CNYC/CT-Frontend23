@@ -14,7 +14,7 @@ interface FileFormProps {
   isOpen: boolean
   onClose: () => void
   defaultValue?: string
-  onSubmit: (fileName: string, lessonContentId: string) => Promise<void>
+  onSubmit: (fileName: string, lessonId: string) => Promise<void>
   files: StudentFile[]
   isMultipleExtensionFiles: boolean
 }
@@ -29,11 +29,13 @@ const FileForm: FC<FileFormProps> = ({
   files,
   isMultipleExtensionFiles,
 }) => {
-  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
-  const textFieldRef = useRef<HTMLDivElement | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
   const [value, setValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const textFieldRef = useRef<HTMLDivElement | null>(null)
+
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
   useEffect(() => {
     setValue(defaultValue ?? '')
@@ -64,7 +66,7 @@ const FileForm: FC<FileFormProps> = ({
 
     try {
       setIsLoading(true)
-      await onSubmit(value, slideId)
+      await onSubmit(value, lessonId!)
     } finally {
       setIsLoading(false)
     }

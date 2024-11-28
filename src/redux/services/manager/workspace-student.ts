@@ -8,14 +8,14 @@ const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getStudentFiles: builder.query<
       Array<StudentFile & BaseResponseInterface>,
-      { contentId: string; prevContentId?: string }
+      { lessonId: string; lessonContentId?: string }
     >({
-      query: ({ contentId, prevContentId }) => ({
+      query: ({ lessonId, lessonContentId }) => ({
         url: '/student/workspace',
         method: 'GET',
         params: {
-          lessonContentId: contentId,
-          previousLessonContentId: prevContentId ?? '',
+          lessonId,
+          lessonContentId: lessonContentId,
         },
       }),
       keepUnusedDataFor: 0,

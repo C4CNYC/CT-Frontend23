@@ -20,7 +20,7 @@ interface FileModalProps {
   isOpen: boolean
   files: StudentFile[]
   setIsOpen: (isOpen: boolean) => void
-  onAddFile: (fileName: string, lessonContentId: string) => Promise<void>
+  onAddFile: (fileName: string, lessonId: string) => Promise<void>
   onDeleteFile: (id: string) => void
   mode: EditorMode
   isMultipleExtensionFiles: boolean
