@@ -11,9 +11,12 @@ import { useSelector } from '@root/src/redux/store'
 
 interface UseFileManagerReturn {
   isOpen: boolean
+  isFileLoading: boolean
+  barFiles: StudentFile[]
   files: StudentFile[]
-  onAddFile: (fileName: string, lessonId: string) => Promise<void>
+  onAddFile: (fileName: string) => Promise<void>
   activeFile: StudentFile
+  onCloseFile: (id: string) => void
   setActiveFile: (id: string) => void
   setIsOpen: (isOpen: boolean) => void
   onDeleteFile: (id: string) => void
@@ -22,6 +25,7 @@ interface UseFileManagerReturn {
 
 export const useFileManager = (): UseFileManagerReturn => {
   const [isOpen, setIsOpen] = useState(false)
+  const [barFiles, setBarFiles] = useState<StudentFile[]>([])
   const [activeFile, _setActiveFile] = useState<StudentFile>()
 
   const slideId = useSelector((state) => state.codePanelGlobal.slideId)
@@ -30,26 +34,23 @@ export const useFileManager = (): UseFileManagerReturn => {
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [updateStudentFile] = useUpdateStudentFileMutation()
-  const { data: files = [], isLoading } = useGetStudentFilesQuery(
+
+  const {
+    data: files = [],
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetStudentFilesQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
     { skip: !lessonId || !slideId }
   )
 
-  // ------------------------------------------------------ //
-  //                        Handlers                        //
-  // ------------------------------------------------------ //
+  const onAddFile = async (fileName: string): Promise<void> => {
+    if (!lessonId || !slideId) return
 
-  const getDefaultFile = useCallback(() => {
-    if (!files) return null
-    _setActiveFile(
-      files.find((file) => file.name === 'index' || file.name === 'main') || files[0] || null
-    )
-  }, [files])
-
-  const onAddFile = async (fileName: string, lessonId: string): Promise<void> => {
     const [name, extension] = fileName.split('.')
     try {
-      await createStudentFile({ name, extension, lessonId, body: '' })
+      await createStudentFile({ name, extension, lessonId, body: '', lessonContentId: slideId })
     } catch (e: any) {
       throw new Error(e.message)
     }
@@ -73,33 +74,58 @@ export const useFileManager = (): UseFileManagerReturn => {
     (id: string) => {
       try {
         deleteStudentFile({ id }).unwrap()
-        getDefaultFile()
+        if (activeFile?.id === id) _setActiveFile(barFiles[0] || files[0])
+        setBarFiles((prev) => prev.filter((file) => file.id !== id))
       } catch (e: any) {
         throw new Error(e.message)
       }
     },
-    [deleteStudentFile, getDefaultFile]
+    [deleteStudentFile, activeFile, barFiles, files]
   )
 
   const setActiveFile = useCallback(
     (id: string): void => {
-      _setActiveFile(files.find((file) => file.id === id))
+      if (activeFile?.id === id) return
+
+      const file = files.find((file) => file.id === id)
+
+      if (!file) return
+
+      _setActiveFile(file)
+      if (!barFiles.find((file) => file.id === id)) {
+        setBarFiles((prev) => [...prev, file])
+      }
     },
-    [files]
+    [files, barFiles, activeFile]
+  )
+
+  const onCloseFile = useCallback(
+    (id: string) => {
+      if (activeFile?.id === id) _setActiveFile(barFiles.filter((file) => file.id !== id)[0])
+      setBarFiles((prev) => prev.filter((file) => file.id !== id))
+    },
+    [barFiles, activeFile]
   )
 
   useEffect(() => {
-    if (files) _setActiveFile(files[0])
-  }, [files, getDefaultFile])
+    if (activeFile) refetch()
+  }, [activeFile])
 
   useEffect(() => {
-    if (isLoading) return
-    getDefaultFile()
-  }, [lessonId, slideId, getDefaultFile])
+    if (files?.[0] && !files.find((file) => file.id === activeFile?.id)) {
+      _setActiveFile(files[0])
+      setBarFiles((prev) => [...prev, files[0]])
+    }
+  }, [files, activeFile])
 
-  // ------------------------------------------------------ //
+  useEffect(() => {
+    setBarFiles([])
+  }, [lessonId, slideId])
 
   return {
+    barFiles,
+    onCloseFile,
+    isFileLoading: isFetching || isLoading,
     onAddFile,
     isOpen,
     files,

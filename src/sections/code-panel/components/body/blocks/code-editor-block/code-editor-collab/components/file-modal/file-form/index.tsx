@@ -14,7 +14,7 @@ interface FileFormProps {
   isOpen: boolean
   onClose: () => void
   defaultValue?: string
-  onSubmit: (fileName: string, lessonId: string) => Promise<void>
+  onSubmit: (fileName: string) => Promise<void>
   files: StudentFile[]
   isMultipleExtensionFiles: boolean
 }
@@ -66,7 +66,7 @@ const FileForm: FC<FileFormProps> = ({
 
     try {
       setIsLoading(true)
-      await onSubmit(value, lessonId!)
+      await onSubmit(value)
     } finally {
       setIsLoading(false)
     }

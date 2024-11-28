@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from 'react'
+import { type FC } from 'react'
 
 import { Stack, Tabs, Tab, IconButton } from '@mui/material'
 
@@ -12,37 +12,11 @@ import { styles } from './styles'
 interface FileSwitcherProps {
   activeFile: StudentFile
   onChange: (id: string) => void
+  closeTab: (id: string) => void
   fileList: StudentFile[]
 }
 
-const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList }) => {
-  const [tabsList, setTabList] = useState<StudentFile[]>([])
-
-  const closeTab = (id: string) => {
-    if (tabsList.length === 1) return
-
-    const updatedTabs = tabsList.filter((el) => el.id !== id)
-
-    setTabList(updatedTabs)
-
-    if (activeFile?.id === id) {
-      const newActiveFile = updatedTabs[0]
-      onChange(newActiveFile.id as string)
-    }
-  }
-
-  useEffect(() => {
-    if (!activeFile) return
-    const isActiveFileClosed = tabsList.some((tabFile) => tabFile.id === activeFile.id)
-    if (!isActiveFileClosed) {
-      setTabList([...tabsList, activeFile])
-    }
-  }, [activeFile])
-
-  useEffect(() => {
-    setTabList(fileList)
-  }, [fileList])
-
+const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, fileList }) => {
   return (
     <Stack sx={styles.WRAPPER_STACK_SX}>
       <Tabs
@@ -55,7 +29,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
         scrollButtons={false}
         aria-label='scrollable prevent tabs example'
       >
-        {tabsList.map(({ name, id, extension }) => (
+        {fileList?.map(({ name, id, extension }) => (
           <Tab
             sx={styles.TAB}
             key={id}
@@ -69,7 +43,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
               </>
             }
             icon={
-              tabsList.length > 1 ? (
+              fileList.length > 1 ? (
                 <IconButton
                   sx={{ p: 0 }}
                   onClick={(e) => {

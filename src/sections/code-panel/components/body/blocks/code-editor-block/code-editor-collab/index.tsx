@@ -45,7 +45,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
 }
 
 const DEBOUNCE_TIME = 30000
-const DEBOUNCE_SAVE_TIME = 3000
+const DEBOUNCE_SAVE_TIME = 400
 let checkValueTimeout: any | null = null
 let checkSaveTimeout: any | null = null
 const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
@@ -90,9 +90,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const { changeLessonStatus } = useSocketController(socket)
 
   const {
+    barFiles,
+    isFileLoading,
     activeFile,
     setActiveFile,
     onDeleteFile,
+    onCloseFile,
     isOpen,
     setIsOpen,
     files,
@@ -130,18 +133,22 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
       )
       localStorage.setItem(localStorageKey, value)
-      if (checkSaveTimeout) clearTimeout(checkSaveTimeout)
-      checkSaveTimeout = setTimeout(
-        (previousLength: number) => {
-          if (value.length !== previousLength) {
-            onUpdateFile(activeFile.id as string, {
-              body: value,
-            })
-          }
-        },
-        DEBOUNCE_SAVE_TIME,
-        activeFile?.body?.length
-      )
+
+      if (activeFile?.body !== value) {
+        if (checkSaveTimeout) clearTimeout(checkSaveTimeout)
+
+        checkSaveTimeout = setTimeout(
+          (previousLength: number) => {
+            if (value.length !== previousLength) {
+              onUpdateFile(activeFile?.id as string, {
+                body: value,
+              })
+            }
+          },
+          DEBOUNCE_SAVE_TIME,
+          activeFile?.body?.length
+        )
+      }
     }
 
     void updateCommentWidgetPosition()
@@ -260,6 +267,10 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     })
   }, [])
 
+  if (!files.length) {
+    return null
+  }
+
   return (
     <div
       className={`${styles.wrapper} code-editor-wrapper`}
@@ -281,14 +292,15 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
           <FileSwitcher
             activeFile={activeFile}
             onChange={setActiveFile}
-            fileList={files}
+            closeTab={onCloseFile}
+            fileList={barFiles}
           />
         </>
       )}
 
       <StatusLabel status={roomStatus} />
 
-      {
+      {!isFileLoading ? (
         <>
           <CodeMirror
             onContextMenu={onContextMenu}
@@ -330,7 +342,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             </ClickAwayListener>
           </Popover>
         </>
-      }
+      ) : null}
     </div>
   )
 }

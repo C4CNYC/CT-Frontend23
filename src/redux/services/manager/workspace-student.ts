@@ -38,7 +38,6 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: 'WorkspaceStudent' }],
     }),
     deleteStudentFile: builder.mutation<StudentFile & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
