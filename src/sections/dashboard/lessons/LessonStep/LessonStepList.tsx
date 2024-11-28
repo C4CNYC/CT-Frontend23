@@ -64,10 +64,11 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const [withAIDialogOpen, setWithAIDialogOpen] = useState(false)
   const [dialogHtmlTemplate, setDialogHtmlTemplate] = useState(false)
   const [removeLessonContent] = useRemoveLessonContentMutation()
-  const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
-    { id: lessonId },
-    { skip: !lessonId }
-  )
+  const {
+    data: lesson,
+    isLoading: isLessonLoading,
+    refetch: lessonRefetch,
+  } = useGetLessonQuery({ id: lessonId }, { skip: !lessonId })
   const {
     data,
     isLoading,
@@ -77,6 +78,8 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const [LoaderStepDialogState, LoaderStepDialogStateTrue, LoaderStepDialogStateFalse] =
     useBoolean()
   const [contentCount, contentCountSet] = useState(0)
+  const [lessonLoadedAfterContent, lessonLoadedAfterContentSet] = useState(false)
+
   const [contentPullCount, contentPullCountDec, contentPullCountInc] = useCounter(5)
   const { board } = useSelector((state: RootState) => state.lessonSteps)
   const [refetchTimer, refetchTimerSet] = useState(0)
@@ -85,10 +88,9 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     ? (new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 3
     : false
 
-  useEffect(contentPullCountDec, [data])
-
   const lessonContentsRefetchTimer = () => {
     if (newlyCreated || contentPullCount > 0) {
+      contentPullCountDec()
       lessonContentsRefetch()
     } else {
       if (refetchTimer > 0) {
@@ -118,7 +120,11 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
       LoaderStepDialogStateFalse()
       return
     }
-    if (dataLength && dataLength > 0) {
+    if (newlyCreated && dataLength > 0) {
+      if (!lessonLoadedAfterContent) {
+        lessonLoadedAfterContentSet(true)
+        lessonRefetch()
+      }
       LoaderStepDialogStateFalse()
     }
   }, [data, lesson])
