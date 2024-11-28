@@ -1,10 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, InputLabel, Stack, useTheme } from '@mui/material'
-import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
@@ -17,7 +16,6 @@ import {
   useSnackbar,
 } from '@/components'
 import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
-import { ILessonPreloadFile } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import {
   useRemoveLessonStepPreloadFileMutation,
   useUpdateLessonStepPreloadFileMutation,
@@ -33,15 +31,30 @@ interface FormValuesProps {
   fileType: FileExtension
 }
 
-const PreloadFileItem = ({ id, name, extension, preloaded_code }: ILessonPreloadFile) => {
+interface PreloadFileItemProps {
+  id: string
+  name: string
+  preloaded_code: string
+  extension: FileExtension
+  lessonId: string
+  contentId: string
+}
+
+const PreloadFileItem = ({
+  id,
+  name,
+  extension,
+  preloaded_code,
+  lessonId,
+  contentId,
+}: PreloadFileItemProps) => {
   const theme = useTheme()
-  const { query } = useRouter()
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
 
   const [confirm, setConfirm] = useState<boolean>(false)
   const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
-  const [updateFile, { isLoading: isUpdatin }] = useUpdateLessonStepPreloadFileMutation()
+  const [updateFile, { isLoading }] = useUpdateLessonStepPreloadFileMutation()
   const [removeFile] = useRemoveLessonStepPreloadFileMutation()
 
   const FileSchema = Yup.object().shape({
@@ -50,21 +63,23 @@ const PreloadFileItem = ({ id, name, extension, preloaded_code }: ILessonPreload
     code: Yup.string(),
   })
 
+  const defaultValues = {
+    fileName: name ?? 'index',
+    fileType: (extension as FileExtension) ?? FileExtension.HTML,
+    code: preloaded_code ?? '',
+  }
+
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(FileSchema),
-    defaultValues: {
-      fileName: name ?? 'index',
-      fileType: (extension as FileExtension) ?? FileExtension.HTML,
-      code: preloaded_code ?? '',
-    },
+    defaultValues,
   })
 
   const onSubmit = async (formData: FormValuesProps) => {
     try {
       if (id) {
         await updateFile({
-          lessonId: query.lessonId as string,
-          contentId: query.stepId as string,
+          lessonId,
+          contentId,
           fileId: id,
           extension: formData.fileType,
           name: formData.fileName,
@@ -81,8 +96,8 @@ const PreloadFileItem = ({ id, name, extension, preloaded_code }: ILessonPreload
     try {
       if (id) {
         removeFile({
-          lessonId: query.lessonId as string,
-          contentId: query.stepId as string,
+          lessonId,
+          contentId,
           fileId: id,
         }).unwrap()
         enqueueSnackbar(translate('messages_deleted'))
@@ -91,6 +106,14 @@ const PreloadFileItem = ({ id, name, extension, preloaded_code }: ILessonPreload
       enqueueSnackbar(translate('messages_error'))
     }
   }
+
+  useEffect(() => {
+    methods.reset({
+      code: preloaded_code,
+      fileName: name,
+      fileType: extension,
+    })
+  }, [name, preloaded_code, extension])
 
   return (
     <>
@@ -151,12 +174,15 @@ const PreloadFileItem = ({ id, name, extension, preloaded_code }: ILessonPreload
             variant='contained'
             type='button'
             onClick={methods.handleSubmit(onSubmit)}
-            loading={isUpdatin}
+            loading={isLoading}
             disabled={!methods.formState.isDirty}
           >
             {translate('messages_lesson_file_update')}
           </LoadingButton>
-          <Button onClick={() => setConfirm(true)}>
+          <Button
+            onClick={() => setConfirm(true)}
+            color='error'
+          >
             {translate('messages_lesson_file_delete')}
           </Button>
         </Box>

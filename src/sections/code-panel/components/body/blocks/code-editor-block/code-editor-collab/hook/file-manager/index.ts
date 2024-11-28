@@ -5,6 +5,7 @@ import {
   useCreateStudentFileMutation,
   useDeleteStudentFileMutation,
   useGetStudentFilesQuery,
+  useUpdateStudentFileMutation,
 } from '@root/src/redux/services/manager/workspace-student'
 import { useSelector } from '@root/src/redux/store'
 
@@ -16,20 +17,8 @@ interface UseFileManagerReturn {
   setActiveFile: (id: string) => void
   setIsOpen: (isOpen: boolean) => void
   onDeleteFile: (id: string) => void
+  onUpdateFile: (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>) => Promise<void>
 }
-
-/*
-  #TODO: ISSUE-272
-    - Add file creation logic
-    - Add file deletion logic
-    - Update logic for setting active file
-    - Add file list from api call
-    - Add default file from api call (
-        default file should be the file with name index or main,
-        if not found then first file in the list
-      )
-    - after finishing the above points remove the all TODO comments
-*/
 
 export const useFileManager = (): UseFileManagerReturn => {
   const [isOpen, setIsOpen] = useState(false)
@@ -40,6 +29,7 @@ export const useFileManager = (): UseFileManagerReturn => {
 
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
+  const [updateStudentFile] = useUpdateStudentFileMutation()
   const { data: files = [] } = useGetStudentFilesQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
     { skip: !lessonId || !slideId }
@@ -53,6 +43,20 @@ export const useFileManager = (): UseFileManagerReturn => {
     const [name, extension] = fileName.split('.')
     try {
       await createStudentFile({ name, extension, lessonId, body: '' })
+    } catch (e: any) {
+      throw new Error(e.message)
+    }
+  }
+
+  const onUpdateFile = async (
+    id: string,
+    body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>
+  ): Promise<void> => {
+    try {
+      const filteredBody = Object.fromEntries(
+        Object.entries(body).filter(([_, value]) => value !== undefined)
+      )
+      await updateStudentFile({ id, ...filteredBody })
     } catch (e: any) {
       throw new Error(e.message)
     }
@@ -96,5 +100,6 @@ export const useFileManager = (): UseFileManagerReturn => {
     setActiveFile,
     setIsOpen,
     onDeleteFile,
+    onUpdateFile,
   }
 }
