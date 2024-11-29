@@ -1,5 +1,9 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
+
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import {
   useCreateStudentFileMutation,
@@ -11,39 +15,69 @@ import { useSelector } from '@root/src/redux/store'
 
 interface UseFileManagerReturn {
   isOpen: boolean
+  files: StudentFile[]
+  preloadedCode: string
   isFileLoading: boolean
   barFiles: StudentFile[]
-  files: StudentFile[]
-  onAddFile: (fileName: string) => Promise<void>
   activeFile: StudentFile
+  isFileControllerAvailable: boolean
+
   onCloseFile: (id: string) => void
+  onDeleteFile: (id: string) => void
   setActiveFile: (id: string) => void
   setIsOpen: (isOpen: boolean) => void
-  onDeleteFile: (id: string) => void
+  onAddFile: (fileName: string) => Promise<void>
   onUpdateFile: (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>) => Promise<void>
 }
 
+const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
+
+export const DEFAULT_FILE_ID = 'default'
+const DEFAULT_FILE = {
+  id: DEFAULT_FILE_ID,
+  name: 'index',
+  extension: 'html',
+  body: '',
+}
+
 export const useFileManager = (): UseFileManagerReturn => {
+  const { query } = useRouter()
+  const searchParams = useSearchParams()
+  const { isAuthenticated } = useAuthContext()
+
   const [isOpen, setIsOpen] = useState(false)
-  const [barFiles, setBarFiles] = useState<StudentFile[]>([])
+  const [barFiles, _setBarFiles] = useState<StudentFile[]>([])
   const [activeFile, _setActiveFile] = useState<StudentFile>()
 
   const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
 
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [updateStudentFile] = useUpdateStudentFileMutation()
 
   const {
-    data: files = [],
+    refetch,
     isLoading,
     isFetching,
-    refetch,
+    data: files = [],
   } = useGetStudentFilesQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
-    { skip: !lessonId || !slideId }
+    { skip: !lessonId || !slideId || !isAuthenticated }
   )
+
+  const localstorageCode = useMemo(() => {
+    if (!lessonId && !query?.lessonId && !searchParams.get('sandbox')) {
+      return
+    }
+
+    const localStorageKey = getLocalStorageRoomKey(
+      `${lessonId}${query?.lessonId}${activeFile?.id}${slideIndex}`
+    )
+
+    return getLocalStorageCode(localStorageKey)
+  }, [query?.lessonId, lessonId, activeFile, slideIndex, searchParams])
 
   const onAddFile = async (fileName: string): Promise<void> => {
     if (!lessonId || !slideId) return
@@ -75,7 +109,7 @@ export const useFileManager = (): UseFileManagerReturn => {
       try {
         deleteStudentFile({ id }).unwrap()
         if (activeFile?.id === id) _setActiveFile(barFiles[0] || files[0])
-        setBarFiles((prev) => prev.filter((file) => file.id !== id))
+        _setBarFiles((prev) => prev.filter((file) => file.id !== id))
       } catch (e: any) {
         throw new Error(e.message)
       }
@@ -93,7 +127,7 @@ export const useFileManager = (): UseFileManagerReturn => {
 
       _setActiveFile(file)
       if (!barFiles.find((file) => file.id === id)) {
-        setBarFiles((prev) => [...prev, file])
+        _setBarFiles((prev) => [...prev, file])
       }
     },
     [files, barFiles, activeFile]
@@ -102,37 +136,67 @@ export const useFileManager = (): UseFileManagerReturn => {
   const onCloseFile = useCallback(
     (id: string) => {
       if (activeFile?.id === id) _setActiveFile(barFiles.filter((file) => file.id !== id)[0])
-      setBarFiles((prev) => prev.filter((file) => file.id !== id))
+      _setBarFiles((prev) => prev.filter((file) => file.id !== id))
     },
     [barFiles, activeFile]
   )
 
   useEffect(() => {
+    if (activeFile?.id === DEFAULT_FILE_ID) return
+    _setActiveFile(undefined)
+    _setBarFiles([])
+  }, [lessonId, slideId])
+
+  useEffect(() => {
+    if (activeFile?.id === DEFAULT_FILE_ID) return
     if (activeFile) refetch()
   }, [activeFile])
 
   useEffect(() => {
-    if (files?.[0] && !files.find((file) => file.id === activeFile?.id)) {
-      _setActiveFile(files[0])
-      setBarFiles((prev) => [...prev, files[0]])
+    if (!isAuthenticated || searchParams.get('sandbox')) {
+      _setActiveFile({ ...DEFAULT_FILE, body: localstorageCode ?? '' })
+      _setBarFiles([{ ...DEFAULT_FILE, body: localstorageCode ?? '' }])
     }
-  }, [files, activeFile])
+  }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
-    setBarFiles([])
-  }, [lessonId, slideId])
+    if (isLoading || isFetching || !isAuthenticated) return
+
+    if (files?.[0] && !files.find((file) => file.id === activeFile?.id)) {
+      _setActiveFile(files[0])
+      _setBarFiles((prev) => [...prev, files[0]])
+    }
+  }, [files])
 
   return {
-    barFiles,
-    onCloseFile,
-    isFileLoading: isFetching || isLoading,
-    onAddFile,
-    isOpen,
     files,
+    isOpen,
+    barFiles,
     activeFile: activeFile!,
-    setActiveFile,
+    preloadedCode: activeFile?.body!,
+    isFileLoading: isFetching || isLoading,
+    isFileControllerAvailable: activeFile?.id !== DEFAULT_FILE_ID,
+
     setIsOpen,
+    onAddFile,
+    onCloseFile,
     onDeleteFile,
     onUpdateFile,
+    setActiveFile,
+  }
+}
+
+function getLocalStorageCode(key: string) {
+  const localStorageCodeValue = localStorage.getItem(key)
+  if (localStorageCodeValue) {
+    try {
+      const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
+      const code = (docInfo?.htmlBody as unknown as string[])?.join('')
+      if (code) {
+        return code
+      }
+    } catch (e) {
+      return localStorageCodeValue
+    }
   }
 }

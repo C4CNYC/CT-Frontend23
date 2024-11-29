@@ -16,31 +16,35 @@ import FileForm from './file-form'
 import { useStyles } from './styles'
 
 interface FileModalProps {
-  setActiveFile: (id: string) => void
   isOpen: boolean
+  mode: EditorMode
   files: StudentFile[]
+  isFileControllerAvailable: boolean
+  isMultipleExtensionFiles: boolean
+
+  onDeleteFile: (id: string) => void
+  setActiveFile: (id: string) => void
   setIsOpen: (isOpen: boolean) => void
   onAddFile: (fileName: string) => Promise<void>
-  onDeleteFile: (id: string) => void
-  mode: EditorMode
-  isMultipleExtensionFiles: boolean
 }
 
 const FileModal: FC<FileModalProps> = ({
-  setActiveFile,
-  isOpen,
+  mode,
   files,
+  isOpen,
+  isFileControllerAvailable,
+  isMultipleExtensionFiles,
   onAddFile,
   setIsOpen,
   onDeleteFile,
-  mode,
-  isMultipleExtensionFiles,
+  setActiveFile,
 }) => {
   const theme = useTheme()
   const styles = useStyles(theme)
-  const [fileToDelete, setFileToDelete] = useState<Pick<StudentFile, 'id' | 'name'> | null>(null)
+
   const [isDeleteExist, setIsDeleteExist] = useState<boolean>(false)
   const [isFileFormOpen, setIsFileFormOpen] = useState<boolean>(false)
+  const [fileToDelete, setFileToDelete] = useState<Pick<StudentFile, 'id' | 'name'> | null>(null)
 
   const onSubmitDelete = () => {
     if (fileToDelete == null) {
@@ -63,6 +67,7 @@ const FileModal: FC<FileModalProps> = ({
         <Button
           onClick={() => setIsOpen(!isOpen)}
           sx={styles.FOLDER_BUTTON_SX}
+          disabled={!isFileControllerAvailable}
         >
           <FolderIcon />
         </Button>

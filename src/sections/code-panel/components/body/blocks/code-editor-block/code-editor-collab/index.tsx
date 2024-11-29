@@ -1,9 +1,8 @@
-import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
+import { type FC, memo, useContext, useEffect, useState } from 'react'
 
 import { Text } from '@codemirror/state'
-import { Box, ClickAwayListener, Popover } from '@mui/material'
+// import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
-import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
@@ -15,8 +14,8 @@ import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 
-import AddComment from './components/add-comment'
-import CommentPopup from './components/comment-popup'
+// import AddComment from './components/add-comment'
+// import CommentPopup from './components/comment-popup'
 import FileModal from './components/file-modal'
 import FileSwitcher from './components/file-switcher'
 import StatusLabel, { RoomStatus } from './components/status-label'
@@ -54,7 +53,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   roomId,
   className,
   portalSocket,
-  preloadedCode,
   withFileManager = true,
   mode = EditorMode.Owner,
   defaultFileName = 'index.html',
@@ -68,20 +66,16 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const { query } = useRouter()
   const dispatch = useDispatch()
   const { user } = useAuthContext()
-  const searchParams = useSearchParams()
   const codePanelContext = useContext(CodePanelContext)
 
-  const [refreshKey, setRefreshKey] = useState(0)
+  const [, setRefreshKey] = useState(0)
   const [codeValue, setCodeValue] = useState<string | undefined>('')
 
   const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
-  const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
 
   const lessonIdFromQuery = query?.lessonId
-  const sandbox = searchParams.get('sandbox')
 
   // Given the fact that we use the same editor block for portals and root editor
   // we are spliting the socket logic here
@@ -90,26 +84,29 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const { changeLessonStatus } = useSocketController(socket)
 
   const {
-    barFiles,
-    isFileLoading,
-    activeFile,
-    setActiveFile,
-    onDeleteFile,
-    onCloseFile,
-    isOpen,
-    setIsOpen,
     files,
+    isOpen,
+    barFiles,
+    activeFile,
+    isFileLoading,
+    preloadedCode,
+    isFileControllerAvailable,
+
     onAddFile,
+    setIsOpen,
+    onCloseFile,
+    onDeleteFile,
     onUpdateFile,
+    setActiveFile,
   } = useFileManager()
 
   const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
     if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
       return
     }
-    if (checkValueTimeout) clearTimeout(checkValueTimeout)
 
     if (lessonId && user) changeLessonStatus(lessonId)
+    if (checkValueTimeout) clearTimeout(checkValueTimeout)
 
     checkValueTimeout = setTimeout(
       (previousLength: number) => {
@@ -128,13 +125,9 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onChangeCodemirrorValueFromProps(value)
     codePanelContext.studentCodeChange(value)
     onChangeStreamingDocInfoFromProps?.(value as any)
-    if (value) {
-      const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
-      )
-      localStorage.setItem(localStorageKey, value)
 
-      if (activeFile?.body !== value) {
+    if (value) {
+      if (isFileControllerAvailable && activeFile?.body !== value) {
         if (checkSaveTimeout) clearTimeout(checkSaveTimeout)
 
         checkSaveTimeout = setTimeout(
@@ -148,48 +141,18 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
           DEBOUNCE_SAVE_TIME,
           activeFile?.body?.length
         )
+
+        return
       }
+
+      const localStorageKey = getLocalStorageRoomKey(
+        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
+      )
+      localStorage.setItem(localStorageKey, value)
     }
 
     void updateCommentWidgetPosition()
   }
-
-  const localstorageCode = useMemo(() => {
-    if (!lessonId && !lessonIdFromQuery && !sandbox) {
-      return
-    }
-
-    if (mode === EditorMode.Owner) {
-      if (prevLessonCode) {
-        return prevLessonCode
-      }
-      const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
-      )
-      const localStorageCodeValue = localStorage.getItem(localStorageKey)
-      if (localStorageCodeValue) {
-        try {
-          const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
-          const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
-          if (code) {
-            return code
-          }
-        } catch (e) {
-          return localStorageCodeValue
-        }
-      }
-    }
-  }, [
-    mode,
-    query?.lessonId,
-    prevLessonId,
-    preloadedCode,
-    lessonId,
-    activeFile,
-    lessonIdFromQuery,
-    refreshKey,
-    slideIndex,
-  ])
 
   const {
     editorRef,
@@ -201,22 +164,22 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     roomStatus,
     commentProps: {
       onContextMenu,
-      isAddCommentDisabled,
-      isAddCommentOpen,
-      position,
-      setIsAddCommentOpen,
-      onAddComment,
-      isCommentPopupOpen,
-      commentPopupProps,
-      onCloseCommentPopup,
-      onRemoveComment,
-      onRemoveCommentGroup,
+      // isAddCommentDisabled,
+      // isAddCommentOpen,
+      // position,
+      // setIsAddCommentOpen,
+      // onAddComment,
+      // isCommentPopupOpen,
+      // commentPopupProps,
+      // onCloseCommentPopup,
+      // onRemoveComment,
+      // onRemoveCommentGroup,
       updateCommentWidgetPosition,
     },
   } = useCodeEditorCollab({
     ...collabProps,
     onChangeStreamingDocInfo,
-    preloadedCode: localstorageCode ?? preloadedCode,
+    preloadedCode: preloadedCode,
     activeFile,
     mode,
     socket,
@@ -226,17 +189,16 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   })
 
   useEffect(() => {
-    onChangeCodemirrorValue((localstorageCode ?? preloadedCode) || '')
-  }, [preloadedCode, localstorageCode])
+    onChangeCodemirrorValue(preloadedCode || '')
+  }, [preloadedCode])
 
   useEffect(() => {
     const newCodeValue =
-      activeFile?.body ??
-      prevLessonCode ??
+      preloadedCode ??
       (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
 
     setCodeValue(newCodeValue)
-  }, [preloadedCode, localstorageCode, streamingDoc, activeFile])
+  }, [preloadedCode, streamingDoc])
 
   useEffect(() => {
     // TODO: check it and remove in case of unnecessary
@@ -267,10 +229,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     })
   }, [])
 
-  if (!files.length) {
-    return null
-  }
-
   return (
     <div
       className={`${styles.wrapper} code-editor-wrapper`}
@@ -279,13 +237,14 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       {withFileManager && (
         <>
           <FileModal
-            isOpen={isOpen}
-            setActiveFile={setActiveFile}
-            setIsOpen={setIsOpen}
+            mode={mode}
             files={files}
+            isOpen={isOpen}
+            isFileControllerAvailable={isFileControllerAvailable}
+            setIsOpen={setIsOpen}
             onAddFile={onAddFile}
             onDeleteFile={onDeleteFile}
-            mode={mode}
+            setActiveFile={setActiveFile}
             isMultipleExtensionFiles={isMultipleExtensionFiles}
           />
 
@@ -316,7 +275,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             onChange={onChangeCodemirrorValue}
           />
 
-          <CommentPopup
+          {/* <CommentPopup
             {...commentPopupProps}
             isOpen={isCommentPopupOpen}
             onClose={onCloseCommentPopup}
@@ -340,7 +299,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
                 />
               </Box>
             </ClickAwayListener>
-          </Popover>
+          </Popover> */}
         </>
       ) : null}
     </div>

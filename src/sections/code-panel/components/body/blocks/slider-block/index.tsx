@@ -77,18 +77,24 @@ const SliderBlock: FC<ISliderBlock> = ({
   lessonName,
   lessonId,
 }) => {
+  const carousel1 = useRef<Carousel | null>(null)
+
   const theme = useTheme()
   const dispatch = useDispatch()
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
-  const profile = useSelector((state) => state.global.user)
-  const course = useSelector((state) => state.codePanelGlobal.courseId)
-  const unit = useSelector((state) => state.codePanelGlobal.unitId)
-  const translate = useTranslate()
   const isDesktop = useIsDesktop()
+  const translate = useTranslate()
   const searchParams = useSearchParams()
+
   const sandbox = searchParams.get('sandbox')
 
+  const profile = useSelector((state) => state.global.user)
+  const unit = useSelector((state) => state.codePanelGlobal.unitId)
+  const course = useSelector((state) => state.codePanelGlobal.courseId)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
+
+  const [nav2, setNav2] = useState<Carousel>()
+  const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
   const [noteText, setNoteText] = useState(localStorage.getItem(`sandboxNotes${profile?.id}`) ?? '')
 
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
@@ -99,40 +105,15 @@ const SliderBlock: FC<ISliderBlock> = ({
     { skip: !lessonId || !profile }
   )
 
+  const hasNextStep = slideIndex < data.length - 1
+  const stepHasValidation = !!data[slideIndex]?.validations?.length
   const title = sandbox ? translate('Notes') : translate('instructions')
+  const progressWrapperSx = useMemo(() => getProgressWrapperSx(theme), [theme])
+  const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
+
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
     setIsOpenHeader(isOpen)
   }, [])
-
-  const progressWrapperSx = useMemo(() => getProgressWrapperSx(theme), [theme])
-  const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
-
-  const carousel1 = useRef<Carousel | null>(null)
-  const [nav2, setNav2] = useState<Carousel>()
-  const hasNextStep = slideIndex < data.length - 1
-  const stepHasValidation = !!data[slideIndex]?.validations?.length
-  const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop, isOpenHeader])
-
-  useEffect(() => {
-    if (carousel1.current && lastSlide) {
-      setNav2(carousel1.current)
-      carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
-    }
-  }, [data, lastSlide])
-
-  useEffect(() => {
-    dispatch(setNextStepAble(false))
-  }, [slideIndex])
-
-  useEffect(() => {
-    const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
-    if (lessonId && progress) {
-      const lastSlide: number = progress[lessonId as string]
-      if (lastSlide && carousel1.current) {
-        carousel1.current.slickGoTo(lastSlide)
-      }
-    }
-  }, [lessonId, carousel1, data])
 
   const handlePrev = (): void => {
     carousel1.current?.slickPrev()
@@ -194,6 +175,35 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
     return null
   }
+
+  useEffect(() => {
+    return () => {
+      dispatch(setSlideId(''))
+      dispatch(setSlideIndex(0))
+      dispatch(setSolutionCode(''))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (carousel1.current && lastSlide) {
+      setNav2(carousel1.current)
+      carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
+    }
+  }, [data, lastSlide])
+
+  useEffect(() => {
+    dispatch(setNextStepAble(false))
+  }, [slideIndex])
+
+  useEffect(() => {
+    const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
+    if (lessonId && progress) {
+      const lastSlide: number = progress[lessonId as string]
+      if (lastSlide && carousel1.current) {
+        carousel1.current.slickGoTo(lastSlide)
+      }
+    }
+  }, [lessonId, carousel1, data])
 
   return (
     <BaseBlock
