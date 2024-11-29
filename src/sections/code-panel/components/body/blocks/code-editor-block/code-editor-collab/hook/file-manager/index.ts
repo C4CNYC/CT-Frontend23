@@ -1,9 +1,10 @@
-import { useState, useCallback, useEffect, useMemo } from 'react'
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { LessonType } from '@root/src/redux/interfaces/content.interface'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useGetLessonStudentQuery } from '@root/src/redux/services/manager/lesson-student'
 import {
@@ -42,6 +43,8 @@ const DEFAULT_FILE = {
 }
 
 export const useFileManager = (): UseFileManagerReturn => {
+  const lessonRef = useRef<string | null>(null)
+
   const { query } = useRouter()
   const searchParams = useSearchParams()
   const { isAuthenticated } = useAuthContext()
@@ -148,12 +151,6 @@ export const useFileManager = (): UseFileManagerReturn => {
   )
 
   useEffect(() => {
-    if (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === 'practical') return
-    _setActiveFile(undefined)
-    _setBarFiles([])
-  }, [lessonId, slideId])
-
-  useEffect(() => {
     if (activeFile?.id === DEFAULT_FILE_ID) return
     if (activeFile) refetch()
   }, [activeFile])
@@ -166,11 +163,27 @@ export const useFileManager = (): UseFileManagerReturn => {
   }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
+    if (
+      lessonRef.current === lesson?.id &&
+      (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === LessonType.PRACTICAL)
+    ) {
+      lessonRef.current = lesson?.id
+      return
+    }
+
+    _setActiveFile(undefined)
+    _setBarFiles([])
+  }, [lessonId, slideId])
+
+  useEffect(() => {
     if (isLoading || isFetching || !isAuthenticated) return
 
     if (files?.[0] && !files.find((file) => file.id === activeFile?.id)) {
       _setActiveFile(files[0])
-      _setBarFiles((prev) => [...prev, files[0]])
+
+      if (!barFiles.find((file) => file.id === files[0].id)) {
+        _setBarFiles((prev) => [...prev, files[0]])
+      }
     }
   }, [files])
 

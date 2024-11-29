@@ -16,7 +16,6 @@ import {
   setLessonId,
   setSlideIndex,
   setUnitId,
-  setUsersStatus,
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -24,7 +23,6 @@ import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
-import { ILessonUserStatus } from '@/types'
 import type { BaseResponseInterface } from '@/utils'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
@@ -184,10 +182,6 @@ export default function CodePanelPage(): ReactElement | null {
     }
   }
 
-  const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
-    dispatch(setUsersStatus(cb(usersStatus)))
-  }
-
   useEffect(() => {
     if (!courseContent) return
 
@@ -214,7 +208,6 @@ export default function CodePanelPage(): ReactElement | null {
       return
     }
 
-    // dispatch(setLessonId(lessonId as string))
     dispatch(setUnitId(unitId as string))
     dispatch(setCourseId(courseId as string))
   }, [courseContent, query.courseId, query.unitId, query.lessonId])

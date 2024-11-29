@@ -39,6 +39,14 @@ const extendedApi = managerApi.injectEndpoints({
         body,
       }),
     }),
+    lessonFilesCarryOver: builder.mutation<void, { lessonId: string; prevLessonId: string }>({
+      query: (body) => ({
+        url: `/student/workspace/file/carry-over`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'WorkspaceStudent' }],
+    }),
     deleteStudentFile: builder.mutation<StudentFile & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/workspace/file/${id}`,
@@ -55,4 +63,5 @@ export const {
   useCreateStudentFileMutation,
   useUpdateStudentFileMutation,
   useDeleteStudentFileMutation,
+  useLessonFilesCarryOverMutation,
 } = extendedApi

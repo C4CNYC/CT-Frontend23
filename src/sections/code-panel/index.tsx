@@ -10,7 +10,7 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import type { ILesson } from '@/redux/interfaces/content.interface'
+import { LessonType, type ILesson } from '@/redux/interfaces/content.interface'
 import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
 import {
   useGetContentCheckersQuery,
@@ -34,6 +34,7 @@ import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
+import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
@@ -86,6 +87,7 @@ export default function CodePanelLayout(): ReactElement | null {
   const codeState = useSelector((state) => state.codePanelGlobal.code)
 
   const [completeLesson] = useCompleteLessonMutation()
+  const [carryOverFiles] = useLessonFilesCarryOverMutation()
 
   const lessonIdFromRoute = Array.isArray(router.query.lessonId)
     ? router.query.lessonId.join()
@@ -227,12 +229,6 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   const onSubmitLesson = async (): Promise<void> => {
-    /*
-      TODO: ISSUE-272
-        - if current lesson and next lesson not independent,
-        and both of them are not exercises, then you should use carry-over request before move to next slide
-        - previous lesson id you can try to send to onSubmitLesson parameter
-    */
     setShowConfetti(true)
     try {
       enqueueSnackbar(translate('messages_lesson_complete'))
@@ -246,6 +242,17 @@ export default function CodePanelLayout(): ReactElement | null {
 
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
+        if (
+          nextLessonInfo.type === LessonType.PRACTICAL &&
+          !nextLessonInfo.isIndependent &&
+          lesson?.type === LessonType.PRACTICAL &&
+          !lesson?.independent
+        ) {
+          await carryOverFiles({
+            lessonId: nextLessonInfo.lessonId as string,
+            prevLessonId: lesson.id as string,
+          })
+        }
         router
           .push(
             STUDENT_PATH_DASHBOARD.codePanel.workSpace({
