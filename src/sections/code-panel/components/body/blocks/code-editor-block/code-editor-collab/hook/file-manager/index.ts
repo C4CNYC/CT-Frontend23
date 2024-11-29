@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { useGetLessonStudentQuery } from '@root/src/redux/services/manager/lesson-student'
 import {
   useCreateStudentFileMutation,
   useDeleteStudentFileMutation,
@@ -65,6 +66,11 @@ export const useFileManager = (): UseFileManagerReturn => {
   } = useGetStudentFilesQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
     { skip: !lessonId || !slideId || !isAuthenticated }
+  )
+
+  const { data: lesson } = useGetLessonStudentQuery(
+    { id: lessonId! },
+    { skip: !lessonId || !isAuthenticated }
   )
 
   const localstorageCode = useMemo(() => {
@@ -142,7 +148,7 @@ export const useFileManager = (): UseFileManagerReturn => {
   )
 
   useEffect(() => {
-    if (activeFile?.id === DEFAULT_FILE_ID) return
+    if (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === 'practical') return
     _setActiveFile(undefined)
     _setBarFiles([])
   }, [lessonId, slideId])

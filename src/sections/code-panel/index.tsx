@@ -227,6 +227,12 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   const onSubmitLesson = async (): Promise<void> => {
+    /*
+      TODO: ISSUE-272
+        - if current lesson and next lesson not independent,
+        and both of them are not exercises, then you should use carry-over request before move to next slide
+        - previous lesson id you can try to send to onSubmitLesson parameter
+    */
     setShowConfetti(true)
     try {
       enqueueSnackbar(translate('messages_lesson_complete'))

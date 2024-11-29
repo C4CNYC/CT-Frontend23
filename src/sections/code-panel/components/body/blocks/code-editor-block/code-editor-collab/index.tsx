@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
-import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
@@ -74,8 +73,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-
-  const lessonIdFromQuery = query?.lessonId
 
   // Given the fact that we use the same editor block for portals and root editor
   // we are spliting the socket logic here
@@ -146,7 +143,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       }
 
       const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
+        `${lessonId}${query?.lessonId}${activeFile?.id}${slideIndex}`
       )
       localStorage.setItem(localStorageKey, value)
     }
@@ -199,14 +196,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
     setCodeValue(newCodeValue)
   }, [preloadedCode, streamingDoc])
-
-  useEffect(() => {
-    // TODO: check it and remove in case of unnecessary
-    return () => {
-      dispatch(setPrevLessonId(null))
-      dispatch(setPrevLessonCode(null))
-    }
-  }, [])
 
   useEffect(() => {
     if (!preloadedCode) return
