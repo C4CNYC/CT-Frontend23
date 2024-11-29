@@ -17,6 +17,7 @@ import { Container, Stack } from '@mui/system'
 import { format } from 'date-fns'
 import * as _ from 'lodash-es'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 
@@ -44,6 +45,7 @@ import {
   propertiesSchema,
 } from '@root/src/components/properties/create-edit-properties'
 import {
+  IProperty,
   IPropertySearchParams,
   PropertyEntityTypes,
 } from '@root/src/redux/services/interfaces/properties.interface'
@@ -84,8 +86,32 @@ export default function ManagerProperties(): React.ReactElement {
     //@ts-ignore
     methods.setValue(e.target.name, e.target.value)
   }
+  const LinkEntity = (row: IProperty) => {
+    switch (row.entityType) {
+      case 'lesson':
+        return (
+          <Link
+            href={`${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: row.entityId })}`}
+            target={row.entityId}
+          >
+            {row.entityType}
+          </Link>
+        )
+      default:
+        return row.entityType
+    }
+  }
   return (
     <>
+      <style>
+        {`
+        .hoverShowChild  .hoverShow{
+          display:none
+        }
+        .hoverShowChild:hover .hoverShow{
+          display:block
+        } `}
+      </style>
       <Head>
         <title>{translate('properties')} | CodeTribe</title>
       </Head>
@@ -185,7 +211,9 @@ export default function ManagerProperties(): React.ReactElement {
                       <TableRow>
                         <TableCell align='left'>{translate('title')}</TableCell>
                         <TableCell align='left'>{translate('actions_create')}</TableCell>
-                        <TableCell align='left'>{translate('actions_update')}</TableCell>
+                        <TableCell align='left'>{translate('propertyValue')}</TableCell>
+                        <TableCell align='left'>{translate('entityId')}</TableCell>
+                        <TableCell align='left'> </TableCell>
                         <TableCell align='right'></TableCell>
                       </TableRow>
                     </TableHead>
@@ -193,12 +221,17 @@ export default function ManagerProperties(): React.ReactElement {
                       {properties?.data.map((row) => (
                         <TableRow key={row.id}>
                           <TableCell align='left'>{row.propertyName}</TableCell>
-                          <TableCell align='left'>
+                          <TableCell
+                            align='left'
+                            className='hoverShowChild'
+                          >
                             {format(new Date(row.createdAt), 'MM/dd/yyyy')}
+                            <div className='hoverShow'>
+                              {format(new Date(row.updatedAt), 'MM/dd/yyyy')}
+                            </div>
                           </TableCell>
-                          <TableCell align='left'>
-                            {format(new Date(row.updatedAt), 'MM/dd/yyyy')}
-                          </TableCell>
+                          <TableCell>{row.propertyValue}</TableCell>
+                          <TableCell>{LinkEntity(row)}</TableCell>
                           <TableCell align='right'>
                             <Stack
                               direction='row'
