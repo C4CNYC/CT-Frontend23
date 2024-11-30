@@ -38,7 +38,7 @@ export function SelectTemplateDialog({ children }: Props): React.ReactElement {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
   const [dialogopen, dialogopenOpen, dialogopenClose] = useBoolean(false)
-  
+
   const [cloneLesson] = useCloneLessonMutation()
   const { data: properties } = useGetPropertiesQuery(
     {

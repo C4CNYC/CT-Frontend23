@@ -28,16 +28,16 @@ export default function Lesson() {
   )
   useEffect(() => {
     if (!isReady || isLoading || isLoadingPublic) return
-    let l: (ILesson & BaseResponseInterface) | undefined
+    let lesson: (ILesson & BaseResponseInterface) | undefined
     if (isAuthenticated) {
       if (lessons?.data?.length) {
-        l = lessons.data[0]
+        lesson = lessons.data[0]
       }
     } else {
-      if (lessonsPublic?.data?.length) l = lessonsPublic.data[0]
+      if (lessonsPublic?.data?.length) lesson = lessonsPublic.data[0]
     }
-    if (l) {
-      push(`/student/code-panel?&lessonId=${l.id}`)
+    if (lesson) {
+      push(`/student/code-panel?&lessonId=${lesson.id}`)
     } else {
       notFoundSet(true)
     }

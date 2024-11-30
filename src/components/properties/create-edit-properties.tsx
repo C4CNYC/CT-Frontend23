@@ -38,7 +38,6 @@ interface Prop {
   children: React.ReactElement
   isEdit?: boolean
 }
-// RHFCode
 export function PropertiesCreateEdit({
   isEdit = false,
   children,
@@ -58,8 +57,6 @@ export function PropertiesCreateEdit({
     defaultValues,
   })
 
-  const { handleSubmit } = methods
-
   const onSubmit = async (data: IProperty): Promise<void> => {
     try {
       enqueueSnackbar(
@@ -69,7 +66,7 @@ export function PropertiesCreateEdit({
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
     if (id) {
-      //await updateproperties({         id,        ...data,      }).unwrap()
+      await updateproperties({ ...data, id }).unwrap()
     } else {
       await createproperties(data).unwrap()
     }
@@ -92,7 +89,7 @@ export function PropertiesCreateEdit({
         <DialogTitle sx={{ pb: 2 }}>{translate('propertiess_create_int')}</DialogTitle>
         <FormProvider
           methods={methods}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={methods.handleSubmit(onSubmit)}
         >
           <DialogContent>
             <Stack gap={2}>

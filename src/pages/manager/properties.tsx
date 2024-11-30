@@ -64,9 +64,9 @@ export default function ManagerProperties(): React.ReactElement {
   const { dense, onChangeDense } = useTable()
   const { themeStretch } = useSettingsContext()
   const { filters, setFilter } = useFilters<IPropertySearchParams>({ entityType: 'lesson' })
-  
+
   const [deleteProperty] = useDeletePropertyMutation()
-  
+
   const { data: properties, isLoading: propertiesLoading } = useGetPropertiesQuery(filters)
 
   const methods = useForm<IPropertySearchParams>({
@@ -84,8 +84,7 @@ export default function ManagerProperties(): React.ReactElement {
   }
   const onChangeHandler: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
     setFilter(e.target.name, e.target.value)
-    //@ts-ignore
-    methods.setValue(e.target.name, e.target.value)
+    methods.setValue(e.target.name as keyof IPropertySearchParams, e.target.value)
   }
   const LinkEntity = (row: IProperty) => {
     switch (row.entityType) {
@@ -104,15 +103,6 @@ export default function ManagerProperties(): React.ReactElement {
   }
   return (
     <>
-      <style>
-        {`
-        .hoverShowChild  .hoverShow{
-          display:none
-        }
-        .hoverShowChild:hover .hoverShow{
-          display:block
-        } `}
-      </style>
       <Head>
         <title>{translate('properties')} | CodeTribe</title>
       </Head>
@@ -226,10 +216,7 @@ export default function ManagerProperties(): React.ReactElement {
                             align='left'
                             className='hoverShowChild'
                           >
-                            {format(new Date(row.createdAt), 'MM/dd/yyyy')}
-                            <div className='hoverShow'>
-                              {format(new Date(row.updatedAt), 'MM/dd/yyyy')}
-                            </div>
+                            {format(new Date(row.updatedAt), 'MM/dd/yyyy')}
                           </TableCell>
                           <TableCell>{row.propertyValue}</TableCell>
                           <TableCell>{LinkEntity(row)}</TableCell>
