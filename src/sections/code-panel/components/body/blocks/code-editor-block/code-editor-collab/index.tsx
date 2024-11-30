@@ -205,7 +205,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             mode={mode}
             files={files}
             isOpen={isOpen}
-            isMultipleExtensionFiles={isMultipleExtensionFiles}
             isFileControllerAvailable={isFileControllerAvailable}
             setIsOpen={setIsOpen}
             onAddFile={onAddFile}

@@ -1025,6 +1025,18 @@ const pt = {
   btn_group_skip: 'PULAR',
   btn_group_tooltip: 'Preencha todas as tarefas para continuar (ou pular, se disponível.)',
 
+  //Add file modal
+  file_manager_title: 'Files',
+  add_file_madal_title: 'Add file',
+  add_file_btn: 'Add file',
+  file_extension_label: 'File extension:',
+  file_name_label: 'File name:',
+  file_with_same_name_and_extension_exists: 'File with same name and extension already exists',
+  file_name_should_not_contain_dots: 'File name should not contain dots',
+  delete_file_confirm_1: 'Are you sure you want to delete',
+  delete_file_confirm_2: 'file?',
+  delete_file_btn: 'Delete file',
+
   // Timer
   timer_minute: 'Minuto',
   timer_minutes: 'Minutos',
