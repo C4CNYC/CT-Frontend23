@@ -1,17 +1,12 @@
 import { Box, Card, Dialog, DialogContent, DialogTitle, IconButton, Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 
-//import { Image } from '@/components/image/Image'
-import { Iconify, useSnackbar } from '@root/src/components'
+import { Iconify } from '@root/src/components'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { ILesson, ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
-import {
-  useCloneLessonMutation,
-  useGetLessonsByIdsQuery,
-} from '@root/src/redux/services/manager/lessons-manager'
+import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
-import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface ILessonWC extends ILesson {
   contents?: ILessonContent[]
@@ -23,9 +18,6 @@ interface Props {
 }
 
 export function SandBoxDialog({ children }: Props): React.ReactElement {
-  const [cloneLesson] = useCloneLessonMutation()
-  const { enqueueSnackbar } = useSnackbar()
-  const translate = useTranslate()
   const router = useRouter()
   const [dialogopen, dialogopenOpen, dialogopenClose] = useBoolean(false)
   const { data: properties } = useGetPropertiesQuery(
