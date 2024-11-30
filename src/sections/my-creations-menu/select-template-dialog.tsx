@@ -40,6 +40,7 @@ export function SelectTemplateDialog({ children }: Props): React.ReactElement {
   const [dialogopen, dialogopenOpen, dialogopenClose] = useBoolean(false)
 
   const [cloneLesson] = useCloneLessonMutation()
+
   const { data: properties } = useGetPropertiesQuery(
     {
       entityType: 'lesson',
@@ -51,6 +52,7 @@ export function SelectTemplateDialog({ children }: Props): React.ReactElement {
   const { data: aiTemplates } = useGetLessonsByIdsQuery(
     properties?.data.map((item) => item.entityId) ?? []
   )
+
   const createFromTemplate = (lesson_id: string) => () => {
     cloneLesson({ lesson_id }).then((data) => {
       if ('error' in data) {
