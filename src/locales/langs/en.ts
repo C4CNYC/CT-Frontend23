@@ -571,6 +571,16 @@ const en = {
   integrations_empty: "You don't have any integrations.",
   integrations_lets_create: "Let's create an integration",
 
+  //Properties
+  properties: 'Property',
+  properties_removed: 'Propery Removed',
+  entityType: 'Entity type',
+  entityId: 'Entity Id',
+  propertyName: 'Property Name',
+  propertyValue: 'Property Value',
+  properties_updated_msg: 'Property updated',
+  properties_created_msg: 'Property created',
+
   // Skills page
   skills: 'Skills',
   skills_removed: 'Skill removed',

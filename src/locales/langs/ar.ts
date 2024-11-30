@@ -572,6 +572,15 @@ const ar = {
   integrations_empty: 'ليس لديك أي تكاملات.',
   integrations_lets_create: 'دعونا إنشاء التكامل',
 
+  properties: 'الخاصية',
+  properties_removed: 'تمت إزالة الخاصية',
+  entityType: 'نوع الكيان',
+  entityId: 'معرّف الكيان',
+  propertyName: 'اسم الخاصية',
+  propertyValue: 'قيمة الخاصية',
+  properties_updated_msg: 'تم تحديث الخاصية',
+  properties_created_msg: 'تم إنشاء الخاصية',
+
   // Skills page
   skills: 'مهارات',
   skills_removed: 'تمت إزالة المهارة',
