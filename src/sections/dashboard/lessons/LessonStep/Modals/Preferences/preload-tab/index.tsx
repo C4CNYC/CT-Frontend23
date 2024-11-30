@@ -39,7 +39,7 @@ const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
         lessonId,
         contentId,
         extension: FileExtension.HTML,
-        name: 'index',
+        name: generateRandomName(),
         preloaded_code: '',
       }).unwrap()
       enqueueSnackbar(translate('messages_added'))
@@ -89,6 +89,10 @@ const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
       </Stack>
     </>
   )
+}
+
+function generateRandomName() {
+  return Math.random().toString(36).substring(7)
 }
 
 export default PreloadTab
