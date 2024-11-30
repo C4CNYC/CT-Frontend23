@@ -54,8 +54,8 @@ export const useFileManager = (): UseFileManagerReturn => {
   const [activeFile, _setActiveFile] = useState<StudentFile>()
 
   const slideId = useSelector((state) => state.codePanelGlobal.slideId)
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId) || String(query?.lessonId)
 
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
