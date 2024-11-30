@@ -21,9 +21,10 @@ interface PreloadTabProps {
 }
 
 const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
-  const { enqueueSnackbar } = useSnackbar()
-  const translate = useTranslate()
   const theme = useTheme()
+  const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
   const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
   const addAssetSx = useMemo(() => getAssetBtnSx(isDarkMode), [isDarkMode])
 
