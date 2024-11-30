@@ -59,14 +59,15 @@ ManagerProperties.getLayout = (page: React.ReactElement) => (
 )
 
 export default function ManagerProperties(): React.ReactElement {
-  const { dense, onChangeDense } = useTable()
+  const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const { dense, onChangeDense } = useTable()
   const { themeStretch } = useSettingsContext()
   const { filters, setFilter } = useFilters<IPropertySearchParams>({ entityType: 'lesson' })
-  const { data: properties, isLoading: propertiesLoading } = useGetPropertiesQuery(filters)
-
+  
   const [deleteProperty] = useDeletePropertyMutation()
-  const translate = useTranslate()
+  
+  const { data: properties, isLoading: propertiesLoading } = useGetPropertiesQuery(filters)
 
   const methods = useForm<IPropertySearchParams>({
     resolver: yupResolver(propertiesSchema),

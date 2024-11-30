@@ -47,11 +47,11 @@ export function PropertiesCreateEdit({
     entityType: 'lesson',
   },
 }: Prop): React.ReactElement {
-  const [open, handleOpen, handleClose] = useBoolean(false)
+  const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const [open, handleOpen, handleClose] = useBoolean(false)
   const [createproperties, { isLoading: creatLoading }] = useCreatePropertyMutation()
   const [updateproperties, { isLoading: updateLoading }] = useUpdatePropertyMutation()
-  const translate = useTranslate()
 
   const methods = useForm<IProperty>({
     resolver: yupResolver(propertiesSchema),
