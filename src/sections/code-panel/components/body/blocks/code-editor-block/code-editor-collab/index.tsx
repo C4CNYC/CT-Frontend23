@@ -249,7 +249,7 @@ const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc
 const docBuilder = (files: StudentFile[], activeFile: StudentFile, value: string) => {
   if (activeFile?.id === DEFAULT_FILE_ID) {
     return {
-      htmlBody: value || activeFile.body,
+      htmlBody: value,
       cssBody: '',
       jsBody: '',
     }
