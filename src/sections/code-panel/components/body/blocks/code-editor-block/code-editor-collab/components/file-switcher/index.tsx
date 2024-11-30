@@ -33,7 +33,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({
           onChange(id)
         }}
         variant='scrollable'
-        scrollButtons='auto'
+        scrollButtons={fileList.length < 2 ? false : 'auto'}
         selectionFollowsFocus
         TabScrollButtonProps={{
           sx: {
