@@ -156,13 +156,17 @@ export const useFileManager = (): UseFileManagerReturn => {
   }, [activeFile])
 
   useEffect(() => {
-    if (!isAuthenticated || searchParams.get('sandbox')) {
+    const isSandboxWithoutLesson = searchParams.get('sandbox') && !lesson?.id
+
+    if (!isAuthenticated || isSandboxWithoutLesson) {
       _setActiveFile({ ...DEFAULT_FILE, body: localstorageCode ?? '' })
       _setBarFiles([{ ...DEFAULT_FILE, body: localstorageCode ?? '' }])
     }
   }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
+    if (!lesson?.id) return
+
     if (
       lessonRef.current === lesson?.id &&
       (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === LessonType.PRACTICAL)
@@ -194,7 +198,7 @@ export const useFileManager = (): UseFileManagerReturn => {
     activeFile: activeFile!,
     preloadedCode: activeFile?.body!,
     isFileLoading: isFetching || isLoading,
-    isFileControllerAvailable: activeFile?.id !== DEFAULT_FILE_ID,
+    isFileControllerAvailable: !!activeFile && activeFile?.id !== DEFAULT_FILE_ID,
 
     setIsOpen,
     onAddFile,
