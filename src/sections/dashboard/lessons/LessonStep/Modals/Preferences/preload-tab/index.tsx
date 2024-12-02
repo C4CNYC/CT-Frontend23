@@ -44,8 +44,10 @@ const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
         preloaded_code: '',
       }).unwrap()
       enqueueSnackbar(translate('messages_added'))
-    } catch (e) {
-      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+    } catch (e: any) {
+      enqueueSnackbar(e?.data?.message ?? translate('messages_error'), {
+        variant: 'error',
+      })
     }
   }
 

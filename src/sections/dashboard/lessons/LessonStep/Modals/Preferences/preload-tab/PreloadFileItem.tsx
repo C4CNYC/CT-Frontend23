@@ -90,7 +90,9 @@ const PreloadFileItem = ({
         enqueueSnackbar(translate('messages_edited'))
       }
     } catch (e: any) {
-      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+      enqueueSnackbar(e?.data?.message ?? translate('messages_error'), {
+        variant: 'error',
+      })
     }
   }
 
