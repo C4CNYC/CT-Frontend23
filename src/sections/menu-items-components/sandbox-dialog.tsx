@@ -19,7 +19,9 @@ interface Props {
 
 export function SandBoxDialog({ children }: Props): React.ReactElement {
   const router = useRouter()
+
   const [dialogopen, dialogopenOpen, dialogopenClose] = useBoolean(false)
+
   const { data: properties } = useGetPropertiesQuery(
     {
       entityType: 'lesson',
@@ -31,6 +33,7 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
   const { data: aiTemplates } = useGetLessonsByIdsQuery(
     properties?.data.map((item) => item.entityId) ?? []
   )
+
   const createFromTemplate = (lesson_id: string) => () => {
     router.push(`${STUDENT_PATH_DASHBOARD.codePanel.sandbox}&lessonId=${lesson_id}`, undefined, {
       shallow: true,

@@ -193,6 +193,66 @@ const SliderBlock: FC<ISliderBlock> = ({
     return null
   }
 
+  const CarouselBody = useMemo(() => {
+    if (sandbox)
+      return (
+        <TextField
+          fullWidth
+          multiline
+          minRows='12'
+          value={noteText}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setNoteText(event.target.value)
+            localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
+          }}
+        />
+      )
+    if (_.isEmpty(data)) return <EmptyContent title={translate('messages_no_data')} />
+    return (
+      <>
+        <Box
+          className='sliderTour'
+          height='100%'
+          sx={boxSx}
+        >
+          <Carousel
+            {...getCarouselSettings(onBeforeChange)}
+            asNavFor={nav2}
+            ref={carousel1}
+            afterChange={onUpdateLastSlide}
+          >
+            {data.map((step, stepSlideIndex) => {
+              return slideIndex == stepSlideIndex ? (
+                <View
+                  title={step.title}
+                  lessonType={lessonType}
+                  key={step.id}
+                  type={step.type}
+                  body={step.body}
+                  integrations={integrations}
+                  connectIntegrations={connectIntegrations}
+                  stepBgColor={step.bg_color}
+                />
+              ) : (
+                <div key={step.id}></div>
+              )
+            })}
+          </Carousel>
+        </Box>
+
+        <Navigation
+          hasPrev={slideIndex > 0}
+          onNext={handleNext}
+          onPrev={handlePrev}
+          stepHasValidation={stepHasValidation}
+          canMoveNext={nextStepAble || !stepHasValidation}
+          hasNextStep={hasNextStep}
+          lessonName={lessonName}
+        />
+      </>
+    )
+  }, [sandbox, data])
+
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToLeft size={20} />}
@@ -215,62 +275,7 @@ const SliderBlock: FC<ISliderBlock> = ({
           ></Box>
         ))}
       </Box>
-      {sandbox ? (
-        <TextField
-          fullWidth
-          multiline
-          minRows='12'
-          value={noteText}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setNoteText(event.target.value)
-            localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
-          }}
-        />
-      ) : _.isEmpty(data) ? (
-        <EmptyContent title={translate('messages_no_data')} />
-      ) : (
-        <>
-          <Box
-            className='sliderTour'
-            height='100%'
-            sx={boxSx}
-          >
-            <Carousel
-              {...getCarouselSettings(onBeforeChange)}
-              asNavFor={nav2}
-              ref={carousel1}
-              afterChange={onUpdateLastSlide}
-            >
-              {data.map((step, stepSlideIndex) => {
-                return slideIndex == stepSlideIndex ? (
-                  <View
-                    title={step.title}
-                    lessonType={lessonType}
-                    key={step.id}
-                    type={step.type}
-                    body={step.body}
-                    integrations={integrations}
-                    connectIntegrations={connectIntegrations}
-                    stepBgColor={step.bg_color}
-                  />
-                ) : (
-                  <div key={step.id}></div>
-                )
-              })}
-            </Carousel>
-          </Box>
-
-          <Navigation
-            hasPrev={slideIndex > 0}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            stepHasValidation={stepHasValidation}
-            canMoveNext={nextStepAble || !stepHasValidation}
-            hasNextStep={hasNextStep}
-            lessonName={lessonName}
-          />
-        </>
-      )}
+      {CarouselBody}
     </BaseBlock>
   )
 }
