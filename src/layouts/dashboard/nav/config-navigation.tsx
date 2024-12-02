@@ -214,6 +214,7 @@ export const socials = {
 }
 
 export const menuConfig = {
+  [Role.SuperAdmin]: [admin, managment, content],
   [Role.Owner]: [admin, managment, content],
   [Role.Admin]: [admin, managment, content],
   [Role.Student]: [courses, general, apps],

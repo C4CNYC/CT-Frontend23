@@ -68,7 +68,7 @@ export default function MyCreationsMenu(): React.ReactElement {
 
   return (
     <>
-      <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+      <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
         {themeLayout === 'vertical' || !isDesktop ? (
           <StyledItemVertical
             depth={1}

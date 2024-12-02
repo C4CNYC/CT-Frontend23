@@ -206,7 +206,9 @@ export default function ShareGroupModal({
               {translate('actions_copy')}
             </Button>
           </Box>
-          <RoleBasedGuard roles={[Role.Manager, Role.Editor, Role.Owner, Role.Admin]}>
+          <RoleBasedGuard
+            roles={[Role.Manager, Role.Editor, Role.Owner, Role.SuperAdmin, Role.Admin]}
+          >
             <Stack
               mt='20px'
               ml='15px'
