@@ -170,9 +170,11 @@ export default function CodePanelPage(): ReactElement | null {
             lessonId: pathStr[1],
           })
         ).then(() => {
-          dispatch(setUnitId(pathStr[0]))
-          dispatch(setLessonId(pathStr[1]))
           dispatch(setSlideIndex(0))
+          setTimeout(() => {
+            dispatch(setUnitId(pathStr[0]))
+            dispatch(setLessonId(pathStr[1]))
+          }, 100)
         })
       } else {
         enqueueSnackbar(translate('messages_course_complete'))
