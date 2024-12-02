@@ -41,6 +41,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
 
 const DEBOUNCE_TIME = 30000
 const DEBOUNCE_SAVE_TIME = 400
+const MIN_WIDTH = 200
 
 let checkValueTimeout: any | null = null
 let checkSaveTimeout: any | null = null
@@ -65,6 +66,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const [, setRefreshKey] = useState(0)
   const [codeValue, setCodeValue] = useState<string | undefined>('')
+  const [contWidth, setContWidth] = useState(0)
 
   const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
@@ -194,6 +196,15 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     })
   }, [])
 
+  useEffect(() => {
+    if (!editorRef.current) return
+    const resizeObserver = new ResizeObserver(() => {
+      setContWidth(editorRef.current?.getBoundingClientRect().width ?? MIN_WIDTH)
+    })
+    resizeObserver.observe(editorRef.current)
+    return () => resizeObserver.disconnect()
+  }, [editorRef])
+
   return (
     <div
       className={`${styles.wrapper} code-editor-wrapper`}
@@ -217,6 +228,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
             activeFile={activeFile}
             closeTab={onCloseFile}
             onChange={setActiveFile}
+            contWidth={contWidth}
           />
         </>
       )}

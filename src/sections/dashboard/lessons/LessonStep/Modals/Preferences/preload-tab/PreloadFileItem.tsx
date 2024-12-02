@@ -53,7 +53,9 @@ const PreloadFileItem = ({
   const { enqueueSnackbar } = useSnackbar()
 
   const [confirm, setConfirm] = useState<boolean>(false)
+
   const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
+
   const [updateFile, { isLoading }] = useUpdateLessonStepPreloadFileMutation()
   const [removeFile] = useRemoveLessonStepPreloadFileMutation()
 
@@ -82,7 +84,7 @@ const PreloadFileItem = ({
           contentId,
           fileId: id,
           extension: formData.fileType,
-          name: formData.fileName,
+          name: formData.fileName.trim(),
           preloaded_code: formData.code as FileExtension,
         }).unwrap()
         enqueueSnackbar(translate('messages_edited'))

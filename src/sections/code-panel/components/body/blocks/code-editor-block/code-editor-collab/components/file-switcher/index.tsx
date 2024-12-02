@@ -14,11 +14,18 @@ interface FileSwitcherProps {
   onChange: (id: string) => void
   closeTab: (id: string) => void
   fileList: StudentFile[]
+  contWidth: number
 }
 
-const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, fileList }) => {
+const FileSwitcher: FC<FileSwitcherProps> = ({
+  onChange,
+  closeTab,
+  activeFile,
+  fileList,
+  contWidth,
+}) => {
   return (
-    <Stack sx={styles.WRAPPER_STACK_SX}>
+    <Stack sx={{ ...styles.WRAPPER_STACK_SX, maxWidth: `${contWidth}px` }}>
       <Tabs
         sx={styles.TABS}
         value={activeFile?.id}
@@ -26,7 +33,15 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, f
           onChange(id)
         }}
         variant='scrollable'
-        scrollButtons={false}
+        scrollButtons={fileList.length < 2 ? false : 'auto'}
+        selectionFollowsFocus
+        TabScrollButtonProps={{
+          sx: {
+            color: '#fff',
+            width: '30px!important',
+          },
+          disableRipple: true,
+        }}
         aria-label='scrollable prevent tabs example'
       >
         {fileList?.map(({ name, id, extension }) => (
