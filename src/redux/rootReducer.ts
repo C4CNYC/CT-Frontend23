@@ -6,6 +6,7 @@ import { adminApi } from './services/admin'
 import { authApi } from './services/auth'
 import { feedbackApi } from './services/feedback'
 import { managerApi } from './services/manager'
+import { superAdmin } from './services/manager/super-admin'
 import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
@@ -52,6 +53,7 @@ export const rootPersistConfig = {
 }
 
 const rootReducer = combineReducers({
+  [superAdmin.reducerPath]: superAdmin.reducer,
   [adminApi.reducerPath]: adminApi.reducer,
   [managerApi.reducerPath]: managerApi.reducer,
   [authApi.reducerPath]: authApi.reducer,

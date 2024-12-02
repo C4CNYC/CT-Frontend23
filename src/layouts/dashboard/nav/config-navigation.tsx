@@ -45,6 +45,17 @@ export const admin = {
   ],
 }
 
+export const superAdmin = {
+  subheader: 'Administration',
+  items: [
+    {
+      title: 'Admin',
+      path: MANAGER_PATH_DASHBOARD.administration.root,
+      icon: <Iconify icon='eos-icons:admin' />,
+    },
+  ],
+}
+
 export const managment = {
   subheader: 'sidebar_menu_management',
   items: [
@@ -214,7 +225,7 @@ export const socials = {
 }
 
 export const menuConfig = {
-  [Role.SuperAdmin]: [admin, managment, content],
+  [Role.SuperAdmin]: [superAdmin, admin, managment, content],
   [Role.Owner]: [admin, managment, content],
   [Role.Admin]: [admin, managment, content],
   [Role.Student]: [courses, general, apps],

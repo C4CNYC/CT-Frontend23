@@ -1079,6 +1079,19 @@ const fr = {
   save_to_folder: "Enregistrer dans 'Mon dossier'",
   open_folder: "Ouvrez 'Mon dossier'",
 
+  //Super Admin
+  admin_title_nav: 'Admin',
+  administration_title: 'Administration',
+  create_new_org: 'Create new',
+  create_new_org_dialog_title: 'Create Organisation',
+  update_org_dialog_title: 'Update Organisation',
+  create_new_name_label: 'Organisation name',
+  create_new_slug_label: 'Slug',
+  name_validation_msg: 'Name is reqired',
+  slug_validation_msg_1:
+    'Slug must be lowercase, contain no spaces or numbers, and only use letters and hyphens',
+  slug_validation_msg_2: 'Slug is required',
+
   // CreateLesson
   default_values: {
     createLesson: {

@@ -1,0 +1,93 @@
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoadingButton } from '@mui/lab'
+import { Button, Stack } from '@mui/material'
+import { useForm } from 'react-hook-form'
+import * as Yup from 'yup'
+
+import { FormProvider, RHFTextField, useSnackbar } from '@/components'
+import { IAdministration } from '@root/src/redux/services/interfaces/administration'
+import {
+  useCreateOrgMutation,
+  useUpdateOrgMutation,
+} from '@root/src/redux/services/manager/super-admin'
+import { useTranslate } from '@root/src/utils/translateHelper'
+
+import { FormValuesProps } from './constants'
+
+interface MainTabProps {
+  handleClose: () => void
+  org?: IAdministration
+}
+
+const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
+  const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [createOrg, { isLoading }] = useCreateOrgMutation()
+  const [updateOrg, { isLoading: isUpdating }] = useUpdateOrgMutation()
+
+  const CreateOrgSchema = Yup.object().shape({
+    name: Yup.string().required(translate('name_validation_msg')),
+    slug: Yup.string()
+      .matches(/^[a-z-]+$/, translate('slug_validation_msg_1'))
+      .transform((value) => (value ? value.toLowerCase().trim() : value))
+      .required('slug_validation_msg_2Slug is required'),
+  })
+
+  const methods = useForm<FormValuesProps>({
+    resolver: yupResolver(CreateOrgSchema),
+    defaultValues: {
+      name: org?.name,
+      slug: org?.slug,
+    },
+  })
+
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    try {
+      if (org) {
+        await updateOrg({ id: org.id, ...data }).unwrap()
+        enqueueSnackbar(translate('messages_update_success'))
+      } else {
+        await createOrg(data).unwrap()
+        enqueueSnackbar(translate('messages_create_success'))
+        methods.reset()
+        handleClose()
+      }
+    } catch (e: any) {
+      enqueueSnackbar(e.data.message ?? translate('message_error'), { variant: 'error' })
+    }
+  }
+
+  return (
+    <FormProvider
+      methods={methods}
+      onSubmit={methods.handleSubmit(onSubmit)}
+    >
+      <Stack gap={2}>
+        <RHFTextField
+          name='name'
+          label={translate('create_new_name_label')}
+          required
+        />
+
+        <RHFTextField
+          name='slug'
+          label={translate('create_new_slug_label')}
+          required
+        />
+      </Stack>
+      <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', mt: 4, gap: 1 }}>
+        <Button onClick={handleClose}>{translate('actions_close')}</Button>
+        <LoadingButton
+          type='submit'
+          variant='contained'
+          loading={isLoading || isUpdating}
+        >
+          {translate(org ? 'actions_update' : 'actions_create')}
+        </LoadingButton>
+      </Stack>
+    </FormProvider>
+  )
+}
+
+export default MainTab
