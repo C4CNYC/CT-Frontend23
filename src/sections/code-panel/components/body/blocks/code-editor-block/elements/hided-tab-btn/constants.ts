@@ -17,7 +17,7 @@ export const getCollapsebarSx = (isTabletAndMobile: boolean, title: string): SxP
   justifyContent: 'center',
   pt: '20px',
   width: 30,
-  height: isTabletAndMobile ? 'calc(100vh - 80px)' : 'calc(100vh - 105px)',
+  height: isTabletAndMobile ? 'calc(100vh - 80px)' : 'calc(100vh - 70px)',
   overflow: 'hidden',
   position: 'relative',
   cursor: 'pointer',

@@ -562,6 +562,15 @@ const pt = {
   integrations_empty: 'Você não tem nenhuma integração.',
   integrations_lets_create: 'Vamos criar uma integração',
 
+  properties: 'Propriedade',
+  properties_removed: 'Propriedade Removida',
+  entityType: 'Tipo de Entidade',
+  entityId: 'ID da Entidade',
+  propertyName: 'Nome da Propriedade',
+  propertyValue: 'Valor da Propriedade',
+  properties_updated_msg: 'Propriedade atualizada',
+  properties_created_msg: 'Propriedade criada',
+
   // Skills page
   skills: 'Habilidades',
   skills_removed: 'Habilidade removida',

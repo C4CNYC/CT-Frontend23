@@ -3,6 +3,7 @@ import { type FC, useContext, useRef, useState } from 'react'
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
 import { TiDocumentText } from '@react-icons/all-files/ti/TiDocumentText'
+import Split from '@uiw/react-split'
 import { useDispatch } from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 
@@ -18,6 +19,7 @@ import { CodePanelContext } from '../../lib/CodePanelContext'
 import CodeEditorBlock from './blocks/code-editor-block'
 import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
 import NavPanel from './blocks/nav-panel'
+import ResizeDivider from './blocks/resize-divider'
 import SliderBlock from './blocks/slider-block'
 import ViewBlock from './blocks/view-block'
 import { CodeDocument } from './blocks/view-block/browser-view'
@@ -75,7 +77,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         px={1}
         gap={1}
         direction='row'
-        alignItems='stretch'
       >
         {!isInstructionsHidden ? (
           <SliderBlock
@@ -95,30 +96,57 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             openPanelFnc={openInstruction}
           />
         )}
-
-        <CodeEditorBlock
-          preloadedCode={lessonContents[0]?.preload_body ?? ''}
-          validations={lessonContents[slideIndex]?.validations || ''}
-          code={document?.htmlBody?.join('') ?? ''}
-          user={user}
-          onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-          contentId={lessonContents[slideIndex]?.id}
-        />
-
-        {!isBrowserHidden ? (
-          <ViewBlock
-            integrations={lesson?.integrations ?? []}
-            document={browserView}
-            reloadBrowserView={reloadBrowserView}
-          />
-        ) : (
-          <HidedTabBtn
-            title={TAB_TITLES.browser_preview}
-            icon={<FaDesktop size={20} />}
-            openPanelFnc={openPreview}
-          />
-        )}
-
+        <Split
+          lineBar
+          disable={isBrowserHidden}
+          style={{
+            borderRadius: 3,
+            flexBasis: isInstructionsHidden ? '100%' : '66.6%',
+          }}
+          renderBar={({ ...props }) => (
+            <ResizeDivider
+              props={props}
+              isBrowserHidden={isBrowserHidden}
+            />
+          )}
+        >
+          <div
+            style={{
+              width: isInstructionsHidden || isBrowserHidden ? '100%' : '54%',
+              minWidth: '49%',
+              flex: 1,
+            }}
+          >
+            <CodeEditorBlock
+              preloadedCode={lessonContents[slideIndex]?.preload_body ?? ''}
+              validations={lessonContents[slideIndex]?.validations || ''}
+              code={document?.htmlBody?.join('') ?? ''}
+              user={user}
+              onChangeStreamingDocInfo={onChangeStreamingDocInfo}
+              contentId={lessonContents[slideIndex]?.id}
+            />
+          </div>
+          <div
+            style={{
+              width: !isBrowserHidden ? '46%' : '0%',
+              minWidth: isBrowserHidden ? 30 : '41%',
+            }}
+          >
+            {!isBrowserHidden ? (
+              <ViewBlock
+                integrations={lesson?.integrations ?? []}
+                document={browserView}
+                reloadBrowserView={reloadBrowserView}
+              />
+            ) : (
+              <HidedTabBtn
+                title={TAB_TITLES.browser_preview}
+                icon={<FaDesktop size={20} />}
+                openPanelFnc={openPreview}
+              />
+            )}
+          </div>
+        </Split>
         <NavPanel
           wrapperListenerRef={wrapperRef}
           cursorName={user?.first_name}

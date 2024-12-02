@@ -486,7 +486,7 @@ export default function AiGeneratePage(): React.ReactElement {
             <p>Watch a quick demo to discover how easy it is to generate coding lessons with AI.</p>
             <div class="video-container">
                 <!-- Embed YouTube video -->
-                <iframe src="https://www.youtube.com/embed/your-video-id" frameborder="0" allowfullscreen></iframe>
+                 <iframe src="https://www.youtube.com/embed/cqYGI23v9Ao?si=cpK0ewizKpfRPWUw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 

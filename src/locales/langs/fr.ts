@@ -565,6 +565,15 @@ const fr = {
   integrations_empty: "Vous n'avez aucune intégration.",
   integrations_lets_create: 'Créons une intégration',
 
+  properties: 'Propriété',
+  properties_removed: 'Propriété Supprimée',
+  entityType: 'Type d’Entité',
+  entityId: 'ID de l’Entité',
+  propertyName: 'Nom de la Propriété',
+  propertyValue: 'Valeur de la Propriété',
+  properties_updated_msg: 'Propriété mise à jour',
+  properties_created_msg: 'Propriété créée',
+
   // Skills page
   skills: 'Compétences',
   skills_removed: 'Compétence supprimée',
