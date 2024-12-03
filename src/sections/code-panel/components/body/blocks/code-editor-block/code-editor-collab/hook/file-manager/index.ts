@@ -1,184 +1,225 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 
-import type { Socket } from 'socket.io-client'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { LessonType } from '@root/src/redux/interfaces/content.interface'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { useGetLessonStudentQuery } from '@root/src/redux/services/manager/lesson-student'
 import {
-  EditorMode,
-  DEFAULT_FILE,
-  MIN_FILE_LIST_LENGTH,
-  getEmptyFileManagement,
-} from '../constants'
-import { type FileInfo, type File, createFile } from '../requests'
-import { EmitSocketEvents } from '../utils/socket'
-
-import { useModeSubscriptions } from './useModeSubscriptions'
+  useCreateStudentFileMutation,
+  useDeleteStudentFileMutation,
+  useGetStudentFilesQuery,
+  useUpdateStudentFileMutation,
+} from '@root/src/redux/services/manager/workspace-student'
+import { useSelector } from '@root/src/redux/store'
 
 interface UseFileManagerReturn {
   isOpen: boolean
-  fileList: File[]
-  addedFileList: File[]
-  isFileFormOpen: boolean
-  onAddFile: (fileName: string) => Promise<void>
-  activeFile: File
-  setActiveFile: (fileName: File) => void
+  files: StudentFile[]
+  preloadedCode: string
+  isFileLoading: boolean
+  barFiles: StudentFile[]
+  activeFile: StudentFile
+  isFileControllerAvailable: boolean
+
+  onCloseFile: (id: string) => void
+  onDeleteFile: (id: string) => void
+  setActiveFile: (id: string) => void
   setIsOpen: (isOpen: boolean) => void
-  setIsFileFormOpen: (isOpen: boolean) => void
-  onDeleteFile: (fileName: File) => File | null
-  onDeleteFileWithEvents: (fileName: File) => void
-  onResetFileManager: (info?: FileInfo) => void
-  onChangeFileWithEvents: (fileName: File) => void
+  onAddFile: (fileName: string) => Promise<void>
+  onUpdateFile: (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>) => Promise<void>
 }
 
-interface UseFileManagerProps {
-  socket?: Socket
-  roomId: string
-  mode: EditorMode
+const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
+
+export const DEFAULT_FILE_ID = 'default'
+const DEFAULT_FILE = {
+  id: DEFAULT_FILE_ID,
+  name: 'index',
+  extension: 'html',
+  body: '',
 }
 
-export const useFileManager = ({
-  socket,
-  roomId,
-  mode,
-}: UseFileManagerProps): UseFileManagerReturn => {
+export const useFileManager = (): UseFileManagerReturn => {
+  const lessonRef = useRef<string | null>(null)
+
+  const { query } = useRouter()
+  const searchParams = useSearchParams()
+  const { isAuthenticated } = useAuthContext()
+
   const [isOpen, setIsOpen] = useState(false)
-  const [activeFile, _setActiveFile] = useState<File>(DEFAULT_FILE)
-  const [fileList, setFileList] = useState<File[]>([DEFAULT_FILE])
-  const [addedFileList, setAddedFileList] = useState<File[]>([DEFAULT_FILE])
-  const [isFileFormOpen, setIsFileFormOpen] = useState(false)
+  const [barFiles, _setBarFiles] = useState<StudentFile[]>([])
+  const [activeFile, _setActiveFile] = useState<StudentFile>()
 
-  // ------------------------------------------------------ //
-  //                        Handlers                        //
-  // ------------------------------------------------------ //
+  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId) || String(query?.lessonId)
 
-  const onAddFile = async (fileName: string): Promise<void> => {
-    if (!socket) {
-      // console.error("TODO onAddFile not implemented without sockets")
+  const [createStudentFile] = useCreateStudentFileMutation()
+  const [deleteStudentFile] = useDeleteStudentFileMutation()
+  const [updateStudentFile] = useUpdateStudentFileMutation()
+
+  const {
+    refetch,
+    isLoading,
+    isFetching,
+    data: files = [],
+  } = useGetStudentFilesQuery(
+    { lessonId: lessonId!, lessonContentId: slideId || '' },
+    { skip: !lessonId || !slideId || !isAuthenticated }
+  )
+
+  const { data: lesson } = useGetLessonStudentQuery(
+    { id: lessonId! },
+    { skip: !lessonId || !isAuthenticated }
+  )
+
+  const localstorageCode = useMemo(() => {
+    if (!lessonId && !query?.lessonId && !searchParams.get('sandbox')) {
       return
     }
-    const file = await createFile({ roomId, fileName, socket })
-    setFileList([...fileList, file])
+
+    const localStorageKey = getLocalStorageRoomKey(
+      `${lessonId}${query?.lessonId}${activeFile?.id}${slideIndex}`
+    )
+
+    return getLocalStorageCode(localStorageKey)
+  }, [query?.lessonId, lessonId, activeFile, slideIndex, searchParams])
+
+  const onAddFile = async (fileName: string): Promise<void> => {
+    if (!lessonId || !slideId) return
+
+    const [name, extension] = fileName.split('.')
+    try {
+      await createStudentFile({ name, extension, lessonId, body: '', lessonContentId: slideId })
+    } catch (e: any) {
+      throw new Error(e.message)
+    }
+  }
+
+  const onUpdateFile = async (
+    id: string,
+    body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>
+  ): Promise<void> => {
+    try {
+      const filteredBody = Object.fromEntries(
+        Object.entries(body).filter(([_, value]) => value !== undefined)
+      )
+      await updateStudentFile({ id, ...filteredBody })
+    } catch (e: any) {
+      throw new Error(e.message)
+    }
   }
 
   const onDeleteFile = useCallback(
-    (fileName: File): File | null => {
-      if (fileList.length === MIN_FILE_LIST_LENGTH) {
-        return null
+    (id: string) => {
+      try {
+        deleteStudentFile({ id }).unwrap()
+        if (activeFile?.id === id) _setActiveFile(barFiles[0] || files[0])
+        _setBarFiles((prev) => prev.filter((file) => file.id !== id))
+      } catch (e: any) {
+        throw new Error(e.message)
       }
-
-      const isActiveFileDeleted = fileName.id === activeFile.id
-      const newFileList = [...fileList]
-      const index = newFileList.findIndex(({ id }) => id === fileName.id)
-      const addedFileIndex = addedFileList.findIndex(({ id }) => id === fileName.id)
-
-      if (addedFileIndex > -1) {
-        const newAddedFileList = [...addedFileList]
-        newAddedFileList.splice(addedFileIndex, 1)
-        setAddedFileList(newAddedFileList)
-        socket?.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList)
-      }
-
-      let newActiveFile: File | null = null
-
-      if (isActiveFileDeleted) {
-        const nextActiveFile =
-          newFileList[index - 1] != null ? newFileList[index - 1] : newFileList[index + 1]
-
-        newActiveFile = nextActiveFile
-        _setActiveFile(nextActiveFile)
-      }
-
-      newFileList.splice(index, 1)
-      setFileList(newFileList)
-
-      return newActiveFile
     },
-    [fileList, addedFileList, activeFile, roomId, socket]
+    [deleteStudentFile, activeFile, barFiles, files]
   )
-
-  const onDeleteFileWithEvents = useCallback(
-    (fileName: File) => {
-      const newActiveFile = onDeleteFile(fileName)
-
-      if (newActiveFile != null) {
-        socket?.emit(EmitSocketEvents.SetActiveFile, roomId, newActiveFile)
-      }
-
-      socket?.emit(EmitSocketEvents.DeleteFile, roomId, fileName)
-    },
-    [onDeleteFile, socket]
-  )
-
-  const onChangeFileWithEvents = (fileName: File): void => {
-    setActiveFile(fileName)
-
-    if (mode === EditorMode.Owner) {
-      socket?.emit(EmitSocketEvents.SetActiveFile, roomId, fileName)
-    }
-  }
 
   const setActiveFile = useCallback(
-    (fileName: File): void => {
-      const isExist = addedFileList.some(({ id }) => fileName.id === id)
+    (id: string): void => {
+      if (activeFile?.id === id) return
 
-      if (!isExist) {
-        const newAddedFileList = [fileName, ...addedFileList]
+      const file = files.find((file) => file.id === id)
 
-        setAddedFileList(newAddedFileList)
+      if (!file) return
 
-        socket?.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList)
-      }
-
-      _setActiveFile(fileName)
-    },
-    [addedFileList, socket, mode, roomId]
-  )
-
-  const onResetFileManager = useCallback(
-    ({ activeFile, files, filesInLayout }: FileInfo = getEmptyFileManagement()) => {
-      _setActiveFile(activeFile)
-      setFileList(files)
-      setAddedFileList(filesInLayout)
-    },
-    []
-  )
-
-  const onUpdateFileList = useCallback(
-    (fileName: File, socketId: string) => {
-      if (socket?.id !== socketId) {
-        setFileList((prev) => {
-          const isExist = prev.some(({ id }) => id === fileName.id)
-
-          return isExist ? prev : [...prev, fileName]
-        })
+      _setActiveFile(file)
+      if (!barFiles.find((file) => file.id === id)) {
+        _setBarFiles((prev) => [...prev, file])
       }
     },
-    [socket]
+    [files, barFiles, activeFile]
   )
 
-  useModeSubscriptions({
-    roomId,
-    onDeleteFile,
-    setActiveFile,
-    onUpdateFileList,
-    socket,
-    mode,
-  })
+  const onCloseFile = useCallback(
+    (id: string) => {
+      if (activeFile?.id === id) _setActiveFile(barFiles.filter((file) => file.id !== id)[0])
+      _setBarFiles((prev) => prev.filter((file) => file.id !== id))
+    },
+    [barFiles, activeFile]
+  )
 
-  // ------------------------------------------------------ //
+  useEffect(() => {
+    if (activeFile?.id === DEFAULT_FILE_ID) return
+    if (activeFile) refetch()
+  }, [activeFile])
+
+  useEffect(() => {
+    const isSandboxWithoutLesson = searchParams.get('sandbox') && !lesson?.id
+
+    if (!isAuthenticated || isSandboxWithoutLesson) {
+      _setActiveFile({ ...DEFAULT_FILE, body: localstorageCode ?? '' })
+      _setBarFiles([{ ...DEFAULT_FILE, body: localstorageCode ?? '' }])
+    }
+  }, [isAuthenticated, searchParams, localstorageCode])
+
+  useEffect(() => {
+    if (!lesson?.id) return
+
+    if (
+      lessonRef.current === lesson?.id &&
+      (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === LessonType.PRACTICAL)
+    ) {
+      lessonRef.current = lesson?.id
+      return
+    }
+
+    _setActiveFile(undefined)
+    _setBarFiles([])
+  }, [lessonId, slideId])
+
+  useEffect(() => {
+    if (isLoading || isFetching || !isAuthenticated) return
+
+    if (files?.[0] && !files.find((file) => file.id === activeFile?.id)) {
+      _setActiveFile(files[0])
+
+      if (!barFiles.find((file) => file.id === files[0].id)) {
+        _setBarFiles((prev) => [...prev, files[0]])
+      }
+    }
+  }, [files])
 
   return {
-    onAddFile,
+    files,
     isOpen,
-    isFileFormOpen,
-    fileList,
-    activeFile,
-    setActiveFile,
+    barFiles,
+    activeFile: activeFile!,
+    preloadedCode: activeFile?.body!,
+    isFileLoading: isFetching || isLoading,
+    isFileControllerAvailable: !!activeFile && activeFile?.id !== DEFAULT_FILE_ID,
+
     setIsOpen,
-    setIsFileFormOpen,
-    addedFileList,
+    onAddFile,
+    onCloseFile,
     onDeleteFile,
-    onResetFileManager,
-    onDeleteFileWithEvents,
-    onChangeFileWithEvents,
+    onUpdateFile,
+    setActiveFile,
+  }
+}
+
+function getLocalStorageCode(key: string) {
+  const localStorageCodeValue = localStorage.getItem(key)
+  if (localStorageCodeValue) {
+    try {
+      const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
+      const code = (docInfo?.htmlBody as unknown as string[])?.join('')
+      if (code) {
+        return code
+      }
+    } catch (e) {
+      return localStorageCodeValue
+    }
   }
 }

@@ -269,6 +269,8 @@ const pt = {
   messages_chalage_comleted: 'Desafio concluído com sucesso',
   messages_course_doesnt_exist: 'O curso não existe',
   messages_lesson_removed: 'Lição removida do módulo',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'O nome da habilidade é necessário',
@@ -548,6 +550,8 @@ const pt = {
   lessons_settings: 'Configurações de aula',
   lessons_starter_code: 'Código inicial',
   lessons_starter_code_from_previous: 'Copiar da lição anterior',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Integrações',
@@ -1029,6 +1033,18 @@ const pt = {
   btn_group_back: 'VOLTAR',
   btn_group_skip: 'PULAR',
   btn_group_tooltip: 'Preencha todas as tarefas para continuar (ou pular, se disponível.)',
+
+  //Add file modal
+  file_manager_title: 'Files',
+  add_file_madal_title: 'Add file',
+  add_file_btn: 'Add file',
+  file_extension_label: 'File extension:',
+  file_name_label: 'File name:',
+  file_with_same_name_and_extension_exists: 'File with same name and extension already exists',
+  file_name_should_not_contain_dots: 'File name should not contain dots',
+  delete_file_confirm_1: 'Are you sure you want to delete',
+  delete_file_confirm_2: 'file?',
+  delete_file_btn: 'Delete file',
 
   // Timer
   timer_minute: 'Minuto',

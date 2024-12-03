@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { setCode, toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
+import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'
 import { TAB_TITLES } from '@/sections/code-panel/components/body/consts'
@@ -30,25 +30,26 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   onSubmitLesson,
   lessonContents,
   user,
-  language,
 }) => {
+  const wrapperRef = useRef<HTMLDivElement | null>(null)
+
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
-
-  const wrapperRef = useRef<HTMLDivElement | null>(null)
   const { autoRun } = useContext(CodePanelContext)
-  const [document, setDocument] = useState<CodeDocument | null>(null)
-  const [browserView, setBrowserView] = useState<CodeDocument | null>(null)
+
+  const [document, setDocument] = useState<CodeDocument | null>()
+  const [browserView, setBrowserView] = useState<CodeDocument | null>()
+
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
-  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
+  const onChangeStreamingDocInfo = (doc: CodeDocument) => {
     try {
-      setDocument(doc as CodeDocument)
-      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join('') ?? doc ?? ''))
+      setDocument(doc)
+
       if (autoRun) {
         setBrowserView(doc)
       }
@@ -80,11 +81,11 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       >
         {!isInstructionsHidden ? (
           <SliderBlock
+            code={document?.htmlBody ?? ''}
+            data={lessonContents}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
-            data={lessonContents}
             integrations={lesson?.integrations ?? []}
-            code={document?.htmlBody?.join('') ?? ''}
             lessonType={lesson?.type}
             lessonName={lesson?.name}
             lessonId={lesson?.id || lessonId}
@@ -120,7 +121,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             <CodeEditorBlock
               preloadedCode={lessonContents[slideIndex]?.preload_body ?? ''}
               validations={lessonContents[slideIndex]?.validations || ''}
-              code={document?.htmlBody?.join('') ?? ''}
+              code={document?.htmlBody ?? ''}
               user={user}
               onChangeStreamingDocInfo={onChangeStreamingDocInfo}
               contentId={lessonContents[slideIndex]?.id}
@@ -135,7 +136,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             {!isBrowserHidden ? (
               <ViewBlock
                 integrations={lesson?.integrations ?? []}
-                document={browserView}
+                document={browserView!}
                 reloadBrowserView={reloadBrowserView}
               />
             ) : (
@@ -168,13 +169,13 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         onSubmitChallenge={onSubmitChallenge}
         data={lessonContents}
         integrations={lesson?.integrations ?? []}
-        code={document?.htmlBody?.join('') ?? ''}
+        code={document?.htmlBody ?? ''}
         lessonType={lesson?.type}
         lessonId={lesson?.id || lessonId}
       />
 
       <CodeEditorBlock
-        code={document?.htmlBody?.join('') ?? ''}
+        code={document?.htmlBody ?? ''}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
@@ -182,7 +183,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       />
 
       <ViewBlock
-        document={document}
+        document={document!}
         integrations={lesson?.integrations ?? []}
       />
     </SwipeableViews>

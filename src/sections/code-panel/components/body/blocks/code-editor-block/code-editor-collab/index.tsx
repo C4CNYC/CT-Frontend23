@@ -1,28 +1,23 @@
 import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
 import { Text } from '@codemirror/state'
-import { Box, ClickAwayListener, Popover } from '@mui/material'
 import CodeMirror from '@uiw/react-codemirror'
-import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
 import { Socket } from 'socket.io-client'
 
-import { setPrevLessonCode, setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 
-import AddComment from './components/add-comment'
-import CommentPopup from './components/comment-popup'
 import FileModal from './components/file-modal'
 import FileSwitcher from './components/file-switcher'
 import StatusLabel, { RoomStatus } from './components/status-label'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
 import { BASIC_SETUP, EditorMode } from './hook/constants'
-import { useFileManager } from './hook/file-manager'
+import { DEFAULT_FILE_ID, useFileManager } from './hook/file-manager'
 import { useStyles } from './styles'
 
 type ReducedFields =
@@ -45,41 +40,37 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
 }
 
 const DEBOUNCE_TIME = 30000
+const DEBOUNCE_SAVE_TIME = 400
+const MIN_WIDTH = 200
+
 let checkValueTimeout: any | null = null
-const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
+let checkSaveTimeout: any | null = null
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   roomId,
   className,
   portalSocket,
-  preloadedCode,
   withFileManager = true,
   mode = EditorMode.Owner,
   defaultFileName = 'index.html',
   isReadOnly: _isReadOnly = false,
   isMultipleExtensionFiles = false,
-  onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
+  onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
   ...collabProps
 }) => {
   const styles = useStyles()
   const { query } = useRouter()
-  const dispatch = useDispatch()
   const { user } = useAuthContext()
-  const searchParams = useSearchParams()
   const codePanelContext = useContext(CodePanelContext)
 
-  const [refreshKey, setRefreshKey] = useState(0)
+  const [, setRefreshKey] = useState(0)
   const [codeValue, setCodeValue] = useState<string | undefined>('')
+  const [contWidth, setContWidth] = useState(0)
 
   const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const prevLessonId = useSelector((state) => state.codePanelGlobal.prevLessonId)
-  const prevLessonCode = useSelector((state) => state.codePanelGlobal.prevLessonCode)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-
-  const lessonIdFromQuery = query?.lessonId
-  const sandbox = searchParams.get('sandbox')
 
   // Given the fact that we use the same editor block for portals and root editor
   // we are spliting the socket logic here
@@ -88,150 +79,101 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   const { changeLessonStatus } = useSocketController(socket)
 
   const {
-    activeFile,
-    isFileFormOpen,
+    files,
     isOpen,
-    setIsOpen,
-    fileList,
-    setIsFileFormOpen,
+    barFiles,
+    activeFile,
+    isFileLoading,
+    preloadedCode,
+    isFileControllerAvailable,
+
     onAddFile,
-    addedFileList,
-    onDeleteFileWithEvents,
-    onChangeFileWithEvents,
-    ...collabPropsFromFileManager
-  } = useFileManager({
-    socket,
-    roomId,
-    mode,
-  })
+    setIsOpen,
+    onCloseFile,
+    onDeleteFile,
+    onUpdateFile,
+    setActiveFile,
+  } = useFileManager()
 
-  const onChangeStreamingDocInfo = (doc: Record<string, string>) => {
-    if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
-      return
-    }
-
-    if (checkValueTimeout) clearTimeout(checkValueTimeout)
-
-    if (lessonId && user) changeLessonStatus(lessonId)
-
-    checkValueTimeout = setTimeout(
-      (previousLength: number) => {
-        if (doc?.htmlBody?.length === previousLength) {
-          changeLessonStatus(lessonId!)
+  const { editorRef, extensions, streamingDoc, setStreamingDoc, key, onCreateEditor, roomStatus } =
+    useCodeEditorCollab({
+      ...collabProps,
+      mode,
+      roomId,
+      socket,
+      activeFile,
+      preloadedCode,
+      defaultFileName,
+      cursorText: user?.first_name,
+      onChangeStreamingDocInfo: (doc: Record<string, string>) => {
+        if (!doc.htmlBody?.[0]?.length && !doc.jsBody?.[0]?.length && !doc.cssBody?.[0]?.length) {
+          return
         }
-      },
-      DEBOUNCE_TIME,
-      doc?.htmlBody?.length
-    )
 
-    onChangeStreamingDocInfoFromProps?.(doc)
-  }
+        if (lessonId && user) changeLessonStatus(lessonId)
+        if (checkValueTimeout) clearTimeout(checkValueTimeout)
+
+        checkValueTimeout = setTimeout(
+          (previousLength: number) => {
+            if (doc?.htmlBody?.length === previousLength) {
+              changeLessonStatus(lessonId!)
+            }
+          },
+          DEBOUNCE_TIME,
+          doc?.htmlBody?.length
+        )
+
+        onChangeStreamingDocInfoFromProps?.(doc)
+      },
+    })
+
+  const isEditorReadOnly = useMemo(
+    () => _isReadOnly || roomStatus === RoomStatus.Inactive,
+    [_isReadOnly, roomStatus]
+  )
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
     codePanelContext.studentCodeChange(value)
-    onChangeStreamingDocInfoFromProps?.(value as any)
+    onChangeStreamingDocInfoFromProps?.(docBuilder(files, activeFile, value))
+
     if (value) {
+      if (isFileControllerAvailable && activeFile?.body !== value) {
+        if (checkSaveTimeout) clearTimeout(checkSaveTimeout)
+
+        checkSaveTimeout = setTimeout(
+          (previousLength: number) => {
+            if (value.length !== previousLength) {
+              onUpdateFile(activeFile?.id as string, {
+                body: value,
+              })
+            }
+          },
+          DEBOUNCE_SAVE_TIME,
+          activeFile?.body?.length
+        )
+
+        return
+      }
+
       const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
+        `${lessonId}${query?.lessonId}${activeFile?.id}${slideIndex}`
       )
       localStorage.setItem(localStorageKey, value)
     }
-    void updateCommentWidgetPosition()
   }
 
-  const localstorageCode = useMemo(() => {
-    if (!lessonId && !lessonIdFromQuery && !sandbox) {
-      return
-    }
-
-    if (mode === EditorMode.Owner) {
-      if (prevLessonCode) {
-        return prevLessonCode
-      }
-      const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${lessonIdFromQuery}${activeFile?.id}${slideIndex}`
-      )
-      const localStorageCodeValue = localStorage.getItem(localStorageKey)
-      if (localStorageCodeValue) {
-        try {
-          const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
-          const code = prevLessonCode ?? (docInfo?.htmlBody as unknown as string[])?.join('')
-          if (code) {
-            return code
-          }
-        } catch (e) {
-          return localStorageCodeValue
-        }
-      }
-    }
-  }, [
-    mode,
-    query?.lessonId,
-    prevLessonId,
-    preloadedCode,
-    lessonId,
-    activeFile,
-    lessonIdFromQuery,
-    refreshKey,
-    slideIndex,
-  ])
-
-  const {
-    editorRef,
-    extensions,
-    streamingDoc,
-    setStreamingDoc,
-    key,
-    onCreateEditor,
-    roomStatus,
-    commentProps: {
-      onContextMenu,
-      isAddCommentDisabled,
-      isAddCommentOpen,
-      position,
-      setIsAddCommentOpen,
-      onAddComment,
-      isCommentPopupOpen,
-      commentPopupProps,
-      onCloseCommentPopup,
-      onRemoveComment,
-      onRemoveCommentGroup,
-      updateCommentWidgetPosition,
-    },
-  } = useCodeEditorCollab({
-    ...collabProps,
-    ...collabPropsFromFileManager,
-    onChangeStreamingDocInfo,
-    preloadedCode: localstorageCode ?? preloadedCode,
-    activeFile,
-    mode,
-    socket,
-    roomId,
-    defaultFileName,
-    cursorText: user?.first_name,
-  })
-
   useEffect(() => {
-    onChangeCodemirrorValue((localstorageCode ?? preloadedCode) || '')
-  }, [preloadedCode, localstorageCode])
+    onChangeCodemirrorValue(preloadedCode || '')
+  }, [preloadedCode])
 
   useEffect(() => {
     const newCodeValue =
-      localstorageCode ??
-      prevLessonCode ??
+      preloadedCode ??
       (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
 
     setCodeValue(newCodeValue)
-  }, [preloadedCode, localstorageCode, streamingDoc])
-
-  useEffect(() => {
-    // TODO: check it and remove in case of unnecessary
-    return () => {
-      dispatch(setPrevLessonId(null))
-      dispatch(setPrevLessonCode(null))
-    }
-  }, [])
+  }, [preloadedCode, streamingDoc])
 
   useEffect(() => {
     if (!preloadedCode) return
@@ -254,6 +196,15 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     })
   }, [])
 
+  useEffect(() => {
+    if (!editorRef.current) return
+    const resizeObserver = new ResizeObserver(() => {
+      setContWidth(editorRef.current?.getBoundingClientRect().width ?? MIN_WIDTH)
+    })
+    resizeObserver.observe(editorRef.current)
+    return () => resizeObserver.disconnect()
+  }, [editorRef])
+
   return (
     <div
       className={`${styles.wrapper} code-editor-wrapper`}
@@ -262,73 +213,78 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       {withFileManager && (
         <>
           <FileModal
-            isOpen={isOpen}
-            isFileFormOpen={isFileFormOpen}
-            setActiveFile={onChangeFileWithEvents}
-            setIsOpen={setIsOpen}
-            fileList={fileList}
-            setIsFileFormOpen={setIsFileFormOpen}
-            onAddFile={onAddFile}
-            onDeleteFile={onDeleteFileWithEvents}
             mode={mode}
-            isMultipleExtensionFiles={isMultipleExtensionFiles}
+            files={files}
+            isOpen={isOpen}
+            isFileControllerAvailable={isFileControllerAvailable}
+            setIsOpen={setIsOpen}
+            onAddFile={onAddFile}
+            onDeleteFile={onDeleteFile}
+            setActiveFile={setActiveFile}
           />
 
           <FileSwitcher
+            fileList={barFiles}
             activeFile={activeFile}
-            onChange={onChangeFileWithEvents}
-            fileList={addedFileList}
+            closeTab={onCloseFile}
+            onChange={setActiveFile}
+            contWidth={contWidth}
           />
         </>
       )}
 
       <StatusLabel status={roomStatus} />
 
-      {
+      {!isFileLoading ? (
         <>
           <CodeMirror
-            onContextMenu={onContextMenu}
-            onCreateEditor={onCreateEditor}
             key={key}
-            className={className}
-            height='100%'
-            basicSetup={BASIC_SETUP}
             theme='dark'
-            extensions={extensions}
-            readOnly={_isReadOnly || roomStatus === RoomStatus.Inactive}
+            height='100%'
             value={codeValue}
+            className={className}
+            extensions={extensions}
+            basicSetup={BASIC_SETUP}
+            readOnly={isEditorReadOnly}
+            onCreateEditor={onCreateEditor}
             onChange={onChangeCodemirrorValue}
           />
-
-          <CommentPopup
-            {...commentPopupProps}
-            isOpen={isCommentPopupOpen}
-            onClose={onCloseCommentPopup}
-            onRemoveComment={onRemoveComment}
-            onRemoveCommentGroup={onRemoveCommentGroup}
-            activeFile={activeFile}
-          />
-
-          <Popover
-            classes={{ root: styles.popover }}
-            anchorReference='anchorPosition'
-            open={isAddCommentOpen}
-            anchorPosition={position}
-          >
-            <ClickAwayListener onClickAway={() => setIsAddCommentOpen(false)}>
-              <Box>
-                <AddComment
-                  isDisabled={isAddCommentDisabled}
-                  onAddComment={onAddComment}
-                  onClose={() => setIsAddCommentOpen(false)}
-                />
-              </Box>
-            </ClickAwayListener>
-          </Popover>
         </>
-      }
+      ) : null}
     </div>
   )
+}
+
+const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
+
+const docBuilder = (files: StudentFile[], activeFile: StudentFile, value: string) => {
+  if (activeFile?.id === DEFAULT_FILE_ID) {
+    return {
+      htmlBody: value,
+      cssBody: '',
+      jsBody: '',
+    }
+  }
+  // TODO: Update this logic in next iteration
+  const doc = {
+    htmlBody: files
+      .filter((file) => file.extension === 'html')
+      .map((file) => file)
+      .map((file) => (file.id === activeFile?.id ? value : file.body))
+      .join(' '),
+    cssBody: files
+      .filter((file) => file.extension === 'css')
+      .map((file) => file)
+      .map((file) => (file.id === activeFile?.id ? value : file.body))
+      .join(' '),
+    jsBody: files
+      .filter((file) => file.extension === 'js')
+      .map((file) => file)
+      .map((file) => (file.id === activeFile?.id ? value : file.body))
+      .join(' '),
+  }
+
+  return doc
 }
 
 const useSocketController = (socket?: Socket) => {

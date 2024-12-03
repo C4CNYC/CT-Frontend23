@@ -13,6 +13,7 @@ import { useSelector } from '@/redux/store'
 import { AuthUserType } from '@root/src/auth/types'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { Role } from '@root/src/redux/services/enums/role.enum'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { reloadWorkspaceEvent } from '@root/src/sections/code-panel/lib/events'
 import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
@@ -22,7 +23,7 @@ import type { CommentEffect } from './extensions/comments/types'
 import { cursorExtension } from './extensions/cursors'
 import type { Cursor } from './extensions/cursors/types'
 import { peerExtension } from './extensions/peer'
-import { type File, getDocument } from './requests'
+import { getDocument } from './requests'
 import type { CommentPopupProps } from './useComments'
 import { language } from './utils'
 
@@ -47,7 +48,7 @@ export interface UseBaseInitReturn {
   isLoading: boolean
   extensions?: Extension[]
   isCollabActive?: boolean
-  baseInit: (fileName: File) => Promise<void>
+  baseInit: (fileName: StudentFile) => Promise<void>
   setIsLoading: (isLoading: boolean) => void
   setStreamingDoc: (streamingDoc: Text) => void
   lineWrap: Compartment
@@ -106,7 +107,7 @@ export const useInitCodemirror = ({
   }, [socket, profileOwner])
 
   const baseInit = useCallback(
-    async (fileName: File) => {
+    async (fileName: StudentFile) => {
       if (!isCollabActive && mode === EditorMode.Owner) {
         setExtensions([
           indentUnit.of('\t'),
@@ -161,7 +162,7 @@ export const useInitCodemirror = ({
               }),
               commentExtenstion({
                 updates,
-                fileId: fileName.id,
+                fileId: fileName.id as string,
                 roomId,
                 socket,
                 onCommentIconClick,

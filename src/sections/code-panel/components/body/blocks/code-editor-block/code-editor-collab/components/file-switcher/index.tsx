@@ -1,32 +1,50 @@
 import { type FC } from 'react'
 
-import { Stack, Tabs, Tab } from '@mui/material'
+import { Stack, Tabs, Tab, IconButton } from '@mui/material'
 
-import type { File } from '../../hook/requests'
+import { Iconify } from '@root/src/components'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+
 import DevIcon from '../dev-icon'
 
 import { styles } from './styles'
 
 interface FileSwitcherProps {
-  activeFile: File | null
-  onChange: (fileName: File) => void
-  fileList: File[]
+  activeFile: StudentFile
+  onChange: (id: string) => void
+  closeTab: (id: string) => void
+  fileList: StudentFile[]
+  contWidth: number
 }
 
-const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList }) => {
+const FileSwitcher: FC<FileSwitcherProps> = ({
+  onChange,
+  closeTab,
+  activeFile,
+  fileList,
+  contWidth,
+}) => {
   return (
-    <Stack sx={styles.WRAPPER_STACK_SX}>
+    <Stack sx={{ ...styles.WRAPPER_STACK_SX, maxWidth: `${contWidth}px` }}>
       <Tabs
         sx={styles.TABS}
-        value={activeFile?.name}
+        value={activeFile?.id}
         onChange={(_, id) => {
-          onChange(fileList.find(({ id: _id }) => id === _id) as File)
+          onChange(id)
         }}
         variant='scrollable'
-        scrollButtons={false}
+        scrollButtons={fileList.length < 2 ? false : 'auto'}
+        selectionFollowsFocus
+        TabScrollButtonProps={{
+          sx: {
+            color: '#fff',
+            width: '30px!important',
+          },
+          disableRipple: true,
+        }}
         aria-label='scrollable prevent tabs example'
       >
-        {fileList.map(({ name, id }) => (
+        {fileList?.map(({ name, id, extension }) => (
           <Tab
             sx={styles.TAB}
             key={id}
@@ -34,12 +52,30 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, activeFile, fileList })
               <>
                 <DevIcon
                   sx={styles.DEV_ICON}
-                  fileName={name}
+                  fileName={`${name}.${extension}`}
                 />
-
-                {name}
+                {`${name}.${extension}`}
               </>
             }
+            icon={
+              fileList.length > 1 ? (
+                <IconButton
+                  sx={{ p: 0 }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    closeTab(id ?? '')
+                  }}
+                >
+                  <Iconify
+                    icon='jam:close'
+                    color='#fff'
+                  />
+                </IconButton>
+              ) : (
+                <></>
+              )
+            }
+            iconPosition='end'
             value={id}
           />
         ))}

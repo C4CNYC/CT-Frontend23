@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react'
+import { type FC, useEffect, useState } from 'react'
 
 import AddIcon from '@mui/icons-material/Add'
 import Close from '@mui/icons-material/Close'
@@ -6,53 +6,62 @@ import FolderIcon from '@mui/icons-material/Folder'
 import { Button, ClickAwayListener, Stack, Typography, IconButton } from '@mui/material'
 import { useTheme } from '@mui/system'
 
+import { ConfirmDialog } from '@root/src/components'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { useTranslate } from '@root/src/utils/translateHelper'
+
 import { EditorMode } from '../../hook/constants'
-import { File } from '../../hook/requests'
 import DevIcon from '../dev-icon'
 
-import ConfirmModalWrapper from './confirm-wrapper-modal'
-import FileForm from './file-form'
+import AddStudentFileModal from './AddStudentFileModal'
 import { useStyles } from './styles'
 
 interface FileModalProps {
-  setActiveFile: (fileName: File) => void
   isOpen: boolean
-  fileList: File[]
-  isFileFormOpen: boolean
-  setIsFileFormOpen: (fileName: boolean) => void
+  mode: EditorMode
+  files: StudentFile[]
+  isFileControllerAvailable: boolean
+
+  onDeleteFile: (id: string) => void
+  setActiveFile: (id: string) => void
   setIsOpen: (isOpen: boolean) => void
   onAddFile: (fileName: string) => Promise<void>
-  onDeleteFile: (fileName: File) => void
-  mode: EditorMode
-  isMultipleExtensionFiles: boolean
 }
 
 const FileModal: FC<FileModalProps> = ({
-  setActiveFile,
+  mode,
+  files,
   isOpen,
-  fileList,
-  isFileFormOpen,
-  setIsFileFormOpen,
+  isFileControllerAvailable,
   onAddFile,
   setIsOpen,
   onDeleteFile,
-  mode,
-  isMultipleExtensionFiles,
+  setActiveFile,
 }) => {
   const theme = useTheme()
+  const translate = useTranslate()
   const styles = useStyles(theme)
-  const [fileToDelete, setFileToDelete] = useState<File | null>(null)
+
+  const [isDeleteExist, setIsDeleteExist] = useState<boolean>(false)
+  const [fileToDelete, setFileToDelete] = useState<Pick<
+    StudentFile,
+    'id' | 'name' | 'extension'
+  > | null>(null)
 
   const onSubmitDelete = () => {
     if (fileToDelete == null) {
       return
     }
 
-    onDeleteFile(fileToDelete)
+    onDeleteFile(fileToDelete.id as string)
     setFileToDelete(null)
   }
 
-  const isDeleteExist = fileList.length > 1 && mode === EditorMode.Owner
+  useEffect(() => {
+    if (files.length > 1 && mode === EditorMode.Owner) {
+      setIsDeleteExist(true)
+    }
+  }, [files])
 
   return (
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
@@ -60,6 +69,7 @@ const FileModal: FC<FileModalProps> = ({
         <Button
           onClick={() => setIsOpen(!isOpen)}
           sx={styles.FOLDER_BUTTON_SX}
+          disabled={!isFileControllerAvailable}
         >
           <FolderIcon />
         </Button>
@@ -70,38 +80,51 @@ const FileModal: FC<FileModalProps> = ({
             ...(isOpen ? styles.STACK_SX_ACTIVE : {}),
           }}
         >
-          <Typography
-            variant='h5'
-            color='#e0e3ea'
+          <Stack
+            direction='row'
+            alignItems='center'
+            gap={1}
           >
-            Files
-            <IconButton onClick={() => setIsFileFormOpen(true)}>
-              <AddIcon />
-            </IconButton>
-          </Typography>
+            <Typography
+              variant='h5'
+              color='#e0e3ea'
+            >
+              {translate('file_manager_title')}
+            </Typography>
+            <AddStudentFileModal
+              onSubmit={onAddFile}
+              files={files}
+            >
+              <IconButton>
+                <AddIcon />
+              </IconButton>
+            </AddStudentFileModal>
+          </Stack>
 
           <Stack>
-            {fileList.map(({ id, name }) => {
+            {files.map(({ id, name, extension }) => {
               return (
                 <Stack
                   key={id}
                   sx={styles.BUTTON_WRAPPER}
                 >
                   <Button
-                    onClick={() => setActiveFile({ id, name })}
+                    onClick={() => setActiveFile(id ?? '')}
                     sx={styles.BUTTON_FILE_SX}
                     variant='text'
                   >
                     <DevIcon
                       sx={styles.devIcon}
-                      fileName={name}
+                      fileName={`${name}.${extension}`}
                     />
-
-                    {name}
+                    {name}.{extension}
                   </Button>
 
                   {isDeleteExist && (
-                    <IconButton onClick={() => setFileToDelete({ id, name })}>
+                    <IconButton
+                      size='small'
+                      onClick={() => setFileToDelete({ id, name, extension })}
+                    >
                       <Close />
                     </IconButton>
                   )}
@@ -111,31 +134,31 @@ const FileModal: FC<FileModalProps> = ({
           </Stack>
         </Stack>
 
-        <FileForm
-          isOpen={isFileFormOpen}
-          onClose={() => setIsFileFormOpen(false)}
-          onSubmit={onAddFile}
-          fileList={fileList}
-          isMultipleExtensionFiles={isMultipleExtensionFiles}
-        />
-
-        <ConfirmModalWrapper
-          isOpen={fileToDelete != null}
+        <ConfirmDialog
+          open={fileToDelete != null}
           onClose={() => setFileToDelete(null)}
-          title='Delete file'
-        >
-          <Stack sx={styles.REMOVE_FILE_CONTENT}>
-            Are you sure you want to delete <span>{fileToDelete?.name}</span> file ?
-          </Stack>
-
-          <Button
-            onClick={onSubmitDelete}
-            sx={styles.REMOVE_BUTTON}
-            variant='contained'
-          >
-            Delete file
-          </Button>
-        </ConfirmModalWrapper>
+          title={
+            <Typography variant='body1'>
+              {translate('delete_file_confirm_1')}{' '}
+              <Typography
+                variant='h6'
+                display='inline-flex'
+              >
+                {fileToDelete?.name}.{fileToDelete?.extension}
+              </Typography>{' '}
+              {translate('delete_file_confirm_2')}
+            </Typography>
+          }
+          action={
+            <Button
+              color='error'
+              onClick={onSubmitDelete}
+              variant='contained'
+            >
+              {translate('delete_file_btn')}
+            </Button>
+          }
+        />
       </Stack>
     </ClickAwayListener>
   )
