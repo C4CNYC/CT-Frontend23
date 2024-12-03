@@ -44,7 +44,6 @@ interface ISliderBlock {
   onSubmitLesson: () => void
   onSubmitChallenge: (slideId: string, code?: string) => void
   integrations: Array<IIntegration & BaseResponseInterface>
-  code: string
   lessonType?: string
   lessonName?: string
   lessonId?: string
@@ -72,7 +71,6 @@ const SliderBlock: FC<ISliderBlock> = ({
   onSubmitLesson,
   onSubmitChallenge,
   integrations,
-  code,
   lessonType,
   lessonName,
   lessonId,
@@ -91,7 +89,6 @@ const SliderBlock: FC<ISliderBlock> = ({
   const unit = useSelector((state) => state.codePanelGlobal.unitId)
   const course = useSelector((state) => state.codePanelGlobal.courseId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
 
   const [nav2, setNav2] = useState<Carousel>()
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
@@ -133,7 +130,7 @@ const SliderBlock: FC<ISliderBlock> = ({
           event_label: `SlideNumber ${slideIndex + 1}`,
         })
       }
-      onSubmitChallenge(data[slideIndex].id, code)
+      onSubmitChallenge(data[slideIndex].id, '')
     }
     if (hasNextStep) {
       carousel1.current?.slickNext()
@@ -175,14 +172,6 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
     return null
   }
-
-  useEffect(() => {
-    return () => {
-      dispatch(setSlideId(''))
-      dispatch(setSlideIndex(0))
-      dispatch(setSolutionCode(''))
-    }
-  }, [])
 
   useEffect(() => {
     if (carousel1.current && lastSlide) {
@@ -274,18 +263,47 @@ const SliderBlock: FC<ISliderBlock> = ({
             </Carousel>
           </Box>
 
-          <Navigation
-            hasPrev={slideIndex > 0}
-            onNext={handleNext}
-            onPrev={handlePrev}
+          <NextStep
+            handleNext={handleNext}
+            handlePrev={handlePrev}
             stepHasValidation={stepHasValidation}
-            canMoveNext={nextStepAble || !stepHasValidation}
             hasNextStep={hasNextStep}
             lessonName={lessonName}
           />
         </>
       )}
     </BaseBlock>
+  )
+}
+
+interface NextStepProps {
+  handleNext: (skip?: boolean) => void
+  handlePrev: () => void
+  stepHasValidation: boolean
+  hasNextStep: boolean
+  lessonName?: string
+}
+
+const NextStep = ({
+  handleNext,
+  handlePrev,
+  stepHasValidation,
+  hasNextStep,
+  lessonName,
+}: NextStepProps) => {
+  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+
+  return (
+    <Navigation
+      hasPrev={slideIndex > 0}
+      onNext={handleNext}
+      onPrev={handlePrev}
+      stepHasValidation={stepHasValidation}
+      canMoveNext={nextStepAble || !stepHasValidation}
+      hasNextStep={hasNextStep}
+      lessonName={lessonName}
+    />
   )
 }
 
@@ -298,8 +316,6 @@ const View: FC<IView> = ({
   stepBgColor,
   integrations,
 }) => {
-  const translate = useTranslate()
-
   switch (type) {
     case 'code':
       return (

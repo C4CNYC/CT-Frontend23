@@ -5,10 +5,11 @@ import CodeMirror from '@uiw/react-codemirror'
 import { useRouter } from 'next/router'
 import { Socket } from 'socket.io-client'
 
-import { useSelector } from '@/redux/store'
+import { useDispatch, useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { setCode } from '@root/src/redux/slices/code-panel-global'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 
@@ -61,6 +62,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 }) => {
   const styles = useStyles()
   const { query } = useRouter()
+  const dispatch = useDispatch()
   const { user } = useAuthContext()
   const codePanelContext = useContext(CodePanelContext)
 
@@ -70,7 +72,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
 
   // Given the fact that we use the same editor block for portals and root editor
   // we are spliting the socket logic here
@@ -93,6 +94,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onDeleteFile,
     onUpdateFile,
     setActiveFile,
+    localStorageKey,
   } = useFileManager()
 
   const { editorRef, extensions, streamingDoc, setStreamingDoc, key, onCreateEditor, roomStatus } =
@@ -136,6 +138,11 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onChangeCodemirrorValueFromProps(value)
     codePanelContext.studentCodeChange(value)
     onChangeStreamingDocInfoFromProps?.(docBuilder(files, activeFile, value))
+    dispatch(
+      setCode(
+        Object.values(docBuilder(files, activeFile, value)).reduce((acc, curr) => acc + curr, '')
+      )
+    )
 
     if (value) {
       if (isFileControllerAvailable && activeFile?.body !== value) {
@@ -156,9 +163,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         return
       }
 
-      const localStorageKey = getLocalStorageRoomKey(
-        `${lessonId}${query?.lessonId}${activeFile?.id}${slideIndex}`
-      )
       localStorage.setItem(localStorageKey, value)
     }
   }
