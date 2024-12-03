@@ -1,4 +1,16 @@
-import { Box, Card, Dialog, DialogContent, DialogTitle, IconButton, Stack } from '@mui/material'
+import { useState } from 'react'
+
+import { LoadingButton } from '@mui/lab'
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material'
 import { useRouter } from 'next/router'
 
 import { Iconify } from '@root/src/components'
@@ -7,6 +19,10 @@ import { ILesson, ILessonContent } from '@root/src/redux/services/interfaces/cou
 import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
+
+import { GO_BTN_SX, LANG_ITEMS_CONT_SX } from '../my-creations-menu/constants'
+
+import { SelectLanguageItem } from './select-language-item'
 
 interface ILessonWC extends ILesson {
   contents?: ILessonContent[]
@@ -18,6 +34,8 @@ interface Props {
 }
 
 export function SandBoxDialog({ children }: Props): React.ReactElement {
+  const [selectedLang, setSelectedLang] = useState<string | null>(null)
+
   const router = useRouter()
 
   const [dialogopen, dialogopenOpen, dialogopenClose] = useBoolean(false)
@@ -34,7 +52,7 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
     properties?.data.map((item) => item.entityId) ?? []
   )
 
-  const createFromTemplate = (lesson_id: string) => () => {
+  const openSandboxWithTemplate = (lesson_id: string) => () => {
     router.push(`${STUDENT_PATH_DASHBOARD.codePanel.sandbox}&lessonId=${lesson_id}`, undefined, {
       shallow: true,
     })
@@ -51,71 +69,52 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
           maxWidth='md'
           onClose={dialogopenClose}
         >
-          <DialogTitle sx={{ pb: 2 }}>Select a Language </DialogTitle>
-          <DialogContent sx={{ p: 2 }}>
-            <Box
-              gap={3}
-              display='flex'
-              sx={{
-                flexDirection: 'column',
-                padding: '1rem',
-                borderRadius: '1rem',
-              }}
-            >
-              {aiTemplates?.map((l) => {
-                let lesson = l as ILessonWC
-                return (
-                  <Card
-                    key={lesson.id}
-                    onClick={createFromTemplate(lesson.id)}
-                  >
-                    <Box
-                      gap={0.5}
-                      display='flex'
-                      sx={{ p: 1 }}
-                    >
-                      <Box
-                        flexGrow={1}
-                        flexBasis={1}
-                        sx={{ position: 'relative' }}
-                      >
-                        {lesson?.contents && lesson?.contents?.length ? (
-                          <img
-                            alt='Symbol of this lesson'
-                            src={lesson.contents.find((c) => Boolean(c.cover))?.cover || ''}
-                            style={{
-                              width: '96px',
-                              height: '96px',
-                              borderRadius: 1,
-                              objectFit: 'contain',
-                            }}
-                          />
-                        ) : null}
-                      </Box>
+          <DialogTitle sx={{ color: '#616161' }}>
+            <Typography variant='h4'>Select a Language</Typography>
 
-                      <div
-                        style={{
-                          flexBasis: 1,
-                          flexGrow: 3,
-                        }}
-                      >
-                        <h3>{lesson.name}</h3>
-                        {lesson.description}
-                      </div>
-                      <Stack
-                        spacing={1.5}
-                        sx={{ position: 'relative', p: (theme) => theme.spacing(0, 2.5, 2.5, 2.5) }}
-                      >
-                        <IconButton sx={{ position: 'absolute', bottom: 20, right: 8 }}>
-                          <Iconify icon='eva:arrow-ios-forward-fill' />
-                        </IconButton>
-                      </Stack>
-                    </Box>
-                  </Card>
+            <IconButton
+              onClick={dialogopenClose}
+              sx={{ position: 'absolute', right: '5px', top: '5px' }}
+            >
+              <Iconify
+                icon='flowbite:close-outline'
+                width={20}
+                height={20}
+              />
+            </IconButton>
+            <Typography variant='body1'>It may load with a template</Typography>
+          </DialogTitle>
+          <DialogContent sx={{ p: 2 }}>
+            <Stack sx={LANG_ITEMS_CONT_SX}>
+              <Typography variant='h6'>Favorites:</Typography>
+              {aiTemplates?.map((el) => {
+                let lesson = el as ILessonWC
+                return (
+                  <SelectLanguageItem
+                    isSelected={lesson.id === selectedLang}
+                    onSelectLang={(lang) => setSelectedLang(lang)}
+                    imageSrc={lesson.contents?.find((c) => Boolean(c.cover))?.cover || ''}
+                    langName={lesson.name}
+                    description={el.description}
+                    key={el.description}
+                  />
                 )
               })}
-            </Box>
+            </Stack>
           </DialogContent>
+          <DialogActions>
+            <LoadingButton
+              loading={!selectedLang}
+              onClick={openSandboxWithTemplate(selectedLang || '')}
+              sx={GO_BTN_SX}
+            >
+              GO
+              <Iconify
+                icon='fa6-solid:chevron-right'
+                width={25}
+              />
+            </LoadingButton>
+          </DialogActions>
         </Dialog>
       ) : null}
     </>
