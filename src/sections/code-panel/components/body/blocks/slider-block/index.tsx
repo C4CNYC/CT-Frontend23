@@ -44,7 +44,6 @@ interface ISliderBlock {
   onSubmitLesson: () => void
   onSubmitChallenge: (slideId: string, code?: string) => void
   integrations: Array<IIntegration & BaseResponseInterface>
-  code: string
   lessonType?: string
   lessonName?: string
   lessonId?: string
@@ -72,7 +71,6 @@ const SliderBlock: FC<ISliderBlock> = ({
   onSubmitLesson,
   onSubmitChallenge,
   integrations,
-  code,
   lessonType,
   lessonName,
   lessonId,
@@ -133,7 +131,7 @@ const SliderBlock: FC<ISliderBlock> = ({
           event_label: `SlideNumber ${slideIndex + 1}`,
         })
       }
-      onSubmitChallenge(data[slideIndex].id, code)
+      onSubmitChallenge(data[slideIndex].id, '')
     }
     if (hasNextStep) {
       carousel1.current?.slickNext()
@@ -298,8 +296,6 @@ const View: FC<IView> = ({
   stepBgColor,
   integrations,
 }) => {
-  const translate = useTranslate()
-
   switch (type) {
     case 'code':
       return (
