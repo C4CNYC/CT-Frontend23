@@ -23,6 +23,7 @@ import managerReducer from './slices/manager'
 import mobileTabManagerReducer from './slices/mobile-tab-manager'
 import rabitsReduce from './slices/rabits'
 import schoolSettingsReducer from './slices/schoolSettings'
+import tenantReducer from './slices/tenant'
 import tourReducer from './slices/tour'
 
 interface INoopStorage {
@@ -63,6 +64,7 @@ const rootReducer = combineReducers({
   [publicApi.reducerPath]: publicApi.reducer,
   [feedbackApi.reducerPath]: feedbackApi.reducer,
   [tenantConfigApi.reducerPath]: tenantConfigApi.reducer,
+  tenant: tenantReducer,
   global: globalRducer,
   manager: managerReducer,
   lessonSteps: lessonStepsReducer,
