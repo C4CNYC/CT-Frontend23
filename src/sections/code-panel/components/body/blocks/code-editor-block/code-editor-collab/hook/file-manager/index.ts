@@ -20,6 +20,7 @@ interface UseFileManagerReturn {
   files: StudentFile[]
   preloadedCode: string
   isFileLoading: boolean
+  localStorageKey: string
   barFiles: StudentFile[]
   activeFile: StudentFile
   isFileControllerAvailable: boolean
@@ -71,22 +72,39 @@ export const useFileManager = (): UseFileManagerReturn => {
     { skip: !lessonId || !slideId || !isAuthenticated }
   )
 
-  const { data: lesson } = useGetLessonStudentQuery(
-    { id: lessonId! },
-    { skip: !lessonId || !isAuthenticated }
-  )
+  const { data: lesson } = useGetLessonStudentQuery({ id: lessonId! }, { skip: !lessonId })
+
+  const localStorageKey = useMemo(() => {
+    let localStorageKey
+
+    switch (lesson?.type) {
+      case LessonType.EXERCISE:
+        localStorageKey = getLocalStorageRoomKey(`${query?.lessonId}${activeFile?.id}${slideIndex}`)
+        break
+      case LessonType.PRACTICAL:
+      default:
+        localStorageKey = getLocalStorageRoomKey(`${query?.lessonId}`)
+        break
+    }
+
+    return localStorageKey
+  }, [query?.lessonId, activeFile?.id, slideIndex, lesson])
 
   const localstorageCode = useMemo(() => {
     if (!lessonId && !query?.lessonId && !searchParams.get('sandbox') && isAuthenticated) {
       return
     }
 
-    const localStorageKey = getLocalStorageRoomKey(
-      `${query?.lessonId}${activeFile?.id}${slideIndex}`
-    )
-
     return getLocalStorageCode(localStorageKey)
-  }, [query?.lessonId, lessonId, activeFile, slideIndex, searchParams, isAuthenticated])
+  }, [
+    query?.lessonId,
+    lessonId,
+    activeFile,
+    slideIndex,
+    searchParams,
+    isAuthenticated,
+    localStorageKey,
+  ])
 
   const onAddFile = async (fileName: string): Promise<void> => {
     if (!lessonId || !slideId) return
@@ -156,7 +174,7 @@ export const useFileManager = (): UseFileManagerReturn => {
   }, [activeFile])
 
   useEffect(() => {
-    const isSandboxWithoutLesson = searchParams.get('sandbox') && !lesson?.id
+    const isSandboxWithoutLesson = searchParams.get('sandbox')
 
     if (!isAuthenticated || isSandboxWithoutLesson) {
       _setActiveFile({ ...DEFAULT_FILE, body: localstorageCode ?? '' })
@@ -165,7 +183,12 @@ export const useFileManager = (): UseFileManagerReturn => {
   }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
-    if (!lesson?.id) return
+    if (!isAuthenticated) {
+      _setActiveFile({ ...DEFAULT_FILE, body: localstorageCode ?? '' })
+      _setBarFiles([{ ...DEFAULT_FILE, body: localstorageCode ?? '' }])
+
+      return
+    }
 
     if (
       lessonRef.current === lesson?.id &&
@@ -195,6 +218,7 @@ export const useFileManager = (): UseFileManagerReturn => {
     files,
     isOpen,
     barFiles,
+    localStorageKey,
     activeFile: activeFile!,
     preloadedCode: activeFile?.body!,
     isFileLoading: isFetching || isLoading,
