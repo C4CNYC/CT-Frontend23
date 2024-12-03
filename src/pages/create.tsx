@@ -167,7 +167,7 @@ export default function AiGeneratePage(): React.ReactElement {
             /* Headline Section */
             .headline {
                 text-align: center;
-                margin-top: 50px;
+                margin: 50px auto;
                 font-family: "Raleway", sans-serif;
                 color: #fff;
                 width: 90%;
