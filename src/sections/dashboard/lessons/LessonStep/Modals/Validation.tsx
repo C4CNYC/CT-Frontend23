@@ -103,7 +103,7 @@ export default function Validation({
             variant='h5'
             sx={{ pb: 1, pt: 2 }}
           >
-            {translate('validation_rules')} ({stepTitle})
+            {translate('validation_rules')}
           </DialogTitle>
           <IconButton
             onClick={() => {

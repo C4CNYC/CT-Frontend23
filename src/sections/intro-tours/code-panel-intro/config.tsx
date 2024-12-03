@@ -153,7 +153,7 @@ export const TOUR_STEPS_DECKTOP = [
               variant='soft'
               sx={{ textTransform: 'uppercase' }}
             >
-              Leave a feedback
+              Leave feedback
             </Button>
           </LessonFeedback>
         </Box>

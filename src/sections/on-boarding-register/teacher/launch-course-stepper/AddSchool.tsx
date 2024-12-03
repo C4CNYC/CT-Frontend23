@@ -120,7 +120,10 @@ export default function AddSchool(): React.ReactElement {
   }
 
   return (
-    <Stack minHeight={500}>
+    <Stack
+      minHeight={500}
+      mb={1}
+    >
       <FormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
@@ -200,6 +203,7 @@ export default function AddSchool(): React.ReactElement {
             <option disabled>─────────────────────────</option>
             {countries
               .filter((el) => el.code !== 'US')
+              .sort((a, b) => a.label.localeCompare(b.label))
               .map((country) => (
                 <option
                   key={country.code}

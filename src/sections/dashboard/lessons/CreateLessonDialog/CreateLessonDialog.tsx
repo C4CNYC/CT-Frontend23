@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, DialogActions, Stack, Tab, Tabs, useTheme } from '@mui/material'
+import { Box, Button, DialogActions, Stack, Tab, Tabs, Tooltip, useTheme } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -308,23 +308,43 @@ export default function CreateLessonDialog({
                       {translate('Lesson type 3')}
                     </option>
                   </RHFSelect>
-                  <RHFSwitch
-                    name='active'
-                    label={translate('lessons_active')}
-                  />
-
+                  <Tooltip
+                    slotProps={{ popper: { disablePortal: true } }}
+                    title={translate('lessons_active_tooltip')}
+                  >
+                    <Box>
+                      <RHFSwitch
+                        name='active'
+                        label={translate('lessons_active')}
+                      />
+                    </Box>
+                  </Tooltip>
                   <RHFSwitch
                     name='independent'
                     label={translate('lessons_inependent_lesson')}
                   />
-                  <RHFSwitch
-                    name='autoRun'
-                    label={translate('lessons_autoRun')}
-                  />
-                  <RHFSwitch
-                    name='lock'
-                    label={translate('lessons_lock')}
-                  />
+                  <Tooltip
+                    slotProps={{ popper: { disablePortal: true } }}
+                    title={translate('lessons_autoRun_tooltip')}
+                  >
+                    <Box>
+                      <RHFSwitch
+                        name='autoRun'
+                        label={translate('lessons_autoRun')}
+                      />
+                    </Box>
+                  </Tooltip>
+                  <Tooltip
+                    slotProps={{ popper: { disablePortal: true } }}
+                    title={translate('lesson_lock_tooltip')}
+                  >
+                    <Box>
+                      <RHFSwitch
+                        name='lock'
+                        label={translate('lessons_lock')}
+                      />
+                    </Box>
+                  </Tooltip>
                 </Stack>
               </Stack>
             </TabPanel>

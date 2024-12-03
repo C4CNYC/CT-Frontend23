@@ -47,6 +47,7 @@ export default function Page404(): React.ReactElement {
           <Box
             display='flex'
             flexDirection='row'
+            gap={2}
           >
             <Button
               component={NextLink}
@@ -56,19 +57,6 @@ export default function Page404(): React.ReactElement {
               fullWidth
             >
               {translate('home')}
-            </Button>
-            <Button
-              component={NextLink}
-              href={STUDENT_PATH_DASHBOARD.gallery.root}
-              size='large'
-              variant='contained'
-              fullWidth
-              sx={{
-                ml: 2,
-                mr: 2,
-              }}
-            >
-              {translate('gallery')}
             </Button>
             <Button
               component={NextLink}
