@@ -12,9 +12,12 @@ export interface IAdministration {
   logo: string | null
   home_page_type: HomePageType
   favicon: string | null
+  code?: string
 }
 
 export interface IAdministrationCreate {
   name: string
   slug: string
+  home_page_type: HomePageType
+  code?: string
 }

@@ -44,46 +44,52 @@ const LogoTab = ({ id, handleClose }: LogoTabProps): React.ReactElement => {
       <FormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
+        style={{ height: '100%' }}
       >
-        <Box sx={{ position: 'relative' }}>
-          {uploadedFile ? (
-            <IconButton
-              sx={UPLOAD_IMG_BTN}
-              onClick={() => {
-                setUploadedFile(null)
-              }}
-            >
-              <IoMdClose size='20px' />
-            </IconButton>
-          ) : null}
-          <RHFUpload
-            name='logo'
-            onDrop={(files: File[]) => {
-              setUploadedFile(files[0])
-            }}
-            helperText={
-              <Typography
-                variant='caption'
-                noWrap
-                width='90px'
-                sx={HELPER_IMG_TEXT}
+        <Stack
+          justifyContent='space-between'
+          height='100%'
+        >
+          <Box sx={{ position: 'relative' }}>
+            {uploadedFile ? (
+              <IconButton
+                sx={UPLOAD_IMG_BTN}
+                onClick={() => {
+                  setUploadedFile(null)
+                }}
               >
-                {uploadedFile?.name}
-              </Typography>
-            }
-          />
-          <SingleFilePreview file={uploadedFile ? URL.createObjectURL(uploadedFile) : null} />
-        </Box>
+                <IoMdClose size='20px' />
+              </IconButton>
+            ) : null}
+            <RHFUpload
+              name='logo'
+              onDrop={(files: File[]) => {
+                setUploadedFile(files[0])
+              }}
+              helperText={
+                <Typography
+                  variant='caption'
+                  noWrap
+                  width='90px'
+                  sx={HELPER_IMG_TEXT}
+                >
+                  {uploadedFile?.name}
+                </Typography>
+              }
+            />
+            <SingleFilePreview file={uploadedFile ? URL.createObjectURL(uploadedFile) : null} />
+          </Box>
 
-        <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', mt: 5.5, gap: 1 }}>
-          <Button onClick={handleClose}>{translate('actions_close')}</Button>
-          <LoadingButton
-            type='submit'
-            variant='contained'
-            loading={isLoading}
-          >
-            {translate('actions_save')}
-          </LoadingButton>
+          <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', mt: 5.5, gap: 1 }}>
+            <Button onClick={handleClose}>{translate('actions_close')}</Button>
+            <LoadingButton
+              type='submit'
+              variant='contained'
+              loading={isLoading}
+            >
+              {translate('actions_save')}
+            </LoadingButton>
+          </Stack>
         </Stack>
       </FormProvider>
     </>

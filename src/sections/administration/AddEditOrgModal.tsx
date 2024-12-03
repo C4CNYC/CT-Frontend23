@@ -7,9 +7,11 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 
 import { useTranslate } from '@/utils/translateHelper'
+import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 
 import { TAB_SX } from './constants'
+import CustomCodeTab from './CustomCodeTab'
 import FaviconTab from './FaviconTab'
 import LogoMiniTab from './LogoMiniTab'
 import LogoTab from './LogoTab'
@@ -43,11 +45,13 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
           <Grid
             container
             spacing={3}
+            sx={{ flex: 1 }}
           >
             <Grid
               item
               xs={12}
               md={12}
+              sx={{ minHeight: '100%' }}
             >
               {children}
             </Grid>
@@ -104,7 +108,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
             : translate('create_new_org_dialog_title')}
         </DialogTitle>
         <DialogContent sx={{ p: 0, mt: '-10px' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider', pl: 3 }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', px: org?.id ? 3 : 0 }}>
             {org?.id ? (
               <Tabs
                 value={value}
@@ -127,6 +131,12 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
                   label={translate('Favicon')}
                   {...a11yProps(3)}
                 />
+                {org.home_page_type === HomePageType.Custom ? (
+                  <Tab
+                    label={translate('Code')}
+                    {...a11yProps(4)}
+                  />
+                ) : null}
               </Tabs>
             ) : null}
           </Box>
@@ -163,6 +173,16 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
           >
             <FaviconTab
               handleClose={handleClose}
+              id={org?.id as string}
+            />
+          </TabPanel>
+          <TabPanel
+            value={value}
+            index={4}
+          >
+            <CustomCodeTab
+              handleClose={handleClose}
+              code={org?.code}
               id={org?.id as string}
             />
           </TabPanel>

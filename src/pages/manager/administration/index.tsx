@@ -73,7 +73,11 @@ const TABLE_HEAD = [
     label: 'slug',
     align: 'center',
   },
-
+  {
+    id: 'type',
+    label: 'Home page type',
+    align: 'center',
+  },
   { id: '' },
 ]
 

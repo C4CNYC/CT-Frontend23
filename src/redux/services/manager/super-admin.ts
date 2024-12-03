@@ -43,7 +43,7 @@ export const superAdmin = createApi({
     }),
     updateOrg: builder.mutation<
       IAdministration & BaseResponseInterface,
-      { id: string } & IAdministrationCreate
+      { id: string } & Partial<IAdministrationCreate>
     >({
       query: ({ id, ...body }) => ({
         url: `/org/${id}`,

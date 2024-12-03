@@ -25,7 +25,7 @@ export default function OrgTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props): React.ReactElement | null {
-  const { name, slug, logo, min_logo, favicon } = row
+  const { name, slug, logo, min_logo, favicon, home_page_type } = row
   const [openConfirm, setOpenConfirm] = useState(false)
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
@@ -100,6 +100,8 @@ export default function OrgTableRow({
         <TableCell align='center'>{name}</TableCell>
 
         <TableCell align='center'>{slug}</TableCell>
+
+        <TableCell align='center'>{home_page_type}</TableCell>
 
         <TableCell align='right'>
           <IconButton

@@ -1106,6 +1106,9 @@ const en = {
   slug_validation_msg_1:
     'Slug must be lowercase, contain no spaces or numbers, and only use letters and hyphens',
   slug_validation_msg_2: 'Slug is required',
+  home_page_type_validation_msg: 'Select type',
+  home_page_type_required_msg: 'Home page type is required',
+  add_custom_html_code: 'Add custom HTML code',
 
   // CreateLesson
   default_values: {

@@ -1,3 +1,5 @@
+import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
+
 export const HELPER_IMG_TEXT = {
   mt: 1,
   mb: -1,
@@ -18,10 +20,14 @@ export const UPLOAD_IMG_BTN = {
 export const TAB_SX = {
   p: { xs: 2, sm: 3 },
   minWidth: '350px',
-  minHeight: '250px',
+  minHeight: '350px',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
 }
 
 export interface FormValuesProps {
   name: string
   slug: string
+  home_page_type: HomePageType
 }
