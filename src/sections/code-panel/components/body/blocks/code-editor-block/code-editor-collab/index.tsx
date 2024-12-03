@@ -72,7 +72,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
 
   // Given the fact that we use the same editor block for portals and root editor
   // we are spliting the socket logic here
@@ -95,6 +94,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onDeleteFile,
     onUpdateFile,
     setActiveFile,
+    localStorageKey,
   } = useFileManager()
 
   const { editorRef, extensions, streamingDoc, setStreamingDoc, key, onCreateEditor, roomStatus } =
@@ -163,9 +163,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         return
       }
 
-      const localStorageKey = getLocalStorageRoomKey(
-        `${query?.lessonId}${activeFile?.id}${slideIndex}`
-      )
       localStorage.setItem(localStorageKey, value)
     }
   }
