@@ -77,16 +77,16 @@ export const useFileManager = (): UseFileManagerReturn => {
   )
 
   const localstorageCode = useMemo(() => {
-    if (!lessonId && !query?.lessonId && !searchParams.get('sandbox')) {
+    if (!lessonId && !query?.lessonId && !searchParams.get('sandbox') && isAuthenticated) {
       return
     }
 
     const localStorageKey = getLocalStorageRoomKey(
-      `${lessonId}${query?.lessonId}${activeFile?.id}${slideIndex}`
+      `${query?.lessonId}${activeFile?.id}${slideIndex}`
     )
 
     return getLocalStorageCode(localStorageKey)
-  }, [query?.lessonId, lessonId, activeFile, slideIndex, searchParams])
+  }, [query?.lessonId, lessonId, activeFile, slideIndex, searchParams, isAuthenticated])
 
   const onAddFile = async (fileName: string): Promise<void> => {
     if (!lessonId || !slideId) return

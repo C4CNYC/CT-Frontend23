@@ -63,6 +63,7 @@ export const codePanelSlice = createSlice({
       state.solutionCode = payload
     },
     setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<'nextStepAble'>>): void => {
+      if (state.nextStepAble === payload) return
       state.nextStepAble = payload
     },
     setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<'unitId'>>): void => {
