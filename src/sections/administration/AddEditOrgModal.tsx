@@ -10,6 +10,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 
 import { TAB_SX } from './constants'
+import FaviconTab from './FaviconTab'
 import LogoMiniTab from './LogoMiniTab'
 import LogoTab from './LogoTab'
 import MainTab from './MainTab'
@@ -122,6 +123,10 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
                   label={translate('Logo-mini')}
                   {...a11yProps(2)}
                 />
+                <Tab
+                  label={translate('Favicon')}
+                  {...a11yProps(3)}
+                />
               </Tabs>
             ) : null}
           </Box>
@@ -148,6 +153,15 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
             index={2}
           >
             <LogoMiniTab
+              handleClose={handleClose}
+              id={org?.id as string}
+            />
+          </TabPanel>
+          <TabPanel
+            value={value}
+            index={3}
+          >
+            <FaviconTab
               handleClose={handleClose}
               id={org?.id as string}
             />

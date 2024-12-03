@@ -25,7 +25,7 @@ export default function OrgTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props): React.ReactElement | null {
-  const { name, slug, logo, id } = row
+  const { name, slug, logo, min_logo, favicon } = row
   const [openConfirm, setOpenConfirm] = useState(false)
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
@@ -46,6 +46,7 @@ export default function OrgTableRow({
   const handleClosePopover = (): void => {
     setOpenPopover(null)
   }
+
   return (
     <>
       <TableRow
@@ -58,22 +59,47 @@ export default function OrgTableRow({
             onClick={onSelectRow}
           />
         </TableCell>
-        <TableCell>
+        <TableCell align='center'>
           <Stack
             direction='row'
             alignItems='center'
-            spacing={2}
+            justifyContent='center'
           >
             <Avatar
-              alt={name}
+              alt={'logo'}
               src={logo ?? ''}
             />
           </Stack>
         </TableCell>
+        <TableCell>
+          <Stack
+            direction='row'
+            alignItems='center'
+            justifyContent='center'
+          >
+            <Avatar
+              alt={'min_logo'}
+              src={min_logo ?? ''}
+            />
+          </Stack>
+        </TableCell>
 
-        <TableCell align='left'>{name}</TableCell>
+        <TableCell>
+          <Stack
+            direction='row'
+            alignItems='center'
+            justifyContent='center'
+          >
+            <Avatar
+              alt={'org_favicon'}
+              src={favicon ?? ''}
+            />
+          </Stack>
+        </TableCell>
 
-        <TableCell align='left'>{slug}</TableCell>
+        <TableCell align='center'>{name}</TableCell>
+
+        <TableCell align='center'>{slug}</TableCell>
 
         <TableCell align='right'>
           <IconButton

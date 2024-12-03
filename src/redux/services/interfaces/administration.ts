@@ -11,6 +11,7 @@ export interface IAdministration {
   min_logo: string | null
   logo: string | null
   home_page_type: HomePageType
+  favicon: string | null
 }
 
 export interface IAdministrationCreate {

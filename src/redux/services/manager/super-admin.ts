@@ -82,6 +82,17 @@ export const superAdmin = createApi({
       }),
       invalidatesTags: ['Administration'],
     }),
+    updateOrgFavicon: builder.mutation<
+      IAdministration & BaseResponseInterface,
+      { id: string; file: FormData }
+    >({
+      query: ({ id, file }) => ({
+        url: `/org/${id}/favicon`,
+        method: 'PATCH',
+        body: file,
+      }),
+      invalidatesTags: ['Administration'],
+    }),
   }),
 })
 
@@ -94,4 +105,5 @@ export const {
   useUpdateOrgLogoMiniMutation,
   useUpdateOrgLogoMutation,
   useDeleteOrgMutation,
+  useUpdateOrgFaviconMutation,
 } = superAdmin

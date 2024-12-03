@@ -47,16 +47,31 @@ import OrgTableRow from '@root/src/sections/administration/OrgTableRow'
 const STATUS_OPTIONS = ['all']
 
 const TABLE_HEAD = [
-  { id: '' },
+  {
+    id: 'Logo',
+    label: 'Logo',
+    align: 'center',
+  },
+  {
+    id: 'Logo-mini',
+    label: 'Logo-mini',
+    align: 'center',
+  },
+
+  {
+    id: 'Favicon',
+    label: 'Favicon',
+    align: 'center',
+  },
   {
     id: 'name',
     label: 'name',
-    align: 'left',
+    align: 'center',
   },
   {
     id: 'slug',
     label: 'slug',
-    align: 'left',
+    align: 'center',
   },
 
   { id: '' },
