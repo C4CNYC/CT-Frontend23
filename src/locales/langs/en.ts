@@ -945,6 +945,7 @@ const en = {
   slide_content_updated: 'Content updated',
   slide_standard: 'Standard',
   slide_select_format: 'Select slide format',
+  slide_switch: 'Switch to other slide',
 
   // Share lesson modal
   share_modal_title: 'Share',
