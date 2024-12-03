@@ -450,7 +450,7 @@ export default function AiGeneratePage(): React.ReactElement {
                 
 
             </nav>
-            <a href="/auth/on-boarding/student" class="login-button">Student Login</a>
+            <a href="/auth/on-boarding/student" class="login-button">Register | Login</a>
         </header>
            </br>
       <div class="right-align-flex">
