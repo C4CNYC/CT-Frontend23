@@ -25,7 +25,7 @@ import CreateHeader from '@/sections/main/create-class/createHeader'
 import CreatePalette, { CLASS_PALETTE } from '@/sections/main/create-class/createPalette'
 import { createRandomAvatar } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import SelectLanguageModal from '@root/src/sections/my-creations-menu/select-language-dialog'
+import { SelectTemplateDialog } from '@root/src/sections/my-creations-menu/select-template-dialog'
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)]
@@ -96,10 +96,6 @@ export default function CreateClass(): React.ReactElement {
     }
   }
 
-  const onSelectLanguage = () => {
-    push(STUDENT_PATH_DASHBOARD.codePanel.sandbox)
-  }
-
   useEffect(() => {
     if (data?.data && data?.data.length > 1) {
       setOpenDialog(true)
@@ -130,11 +126,8 @@ export default function CreateClass(): React.ReactElement {
           }}
           schools={data?.data}
         />
-        <SelectLanguageModal
-          onSubmit={onSelectLanguage}
-          isLoading={false}
-          isForceOpen={isLangSelectionOpen}
-        />
+        <SelectTemplateDialog isForceOpen={isLangSelectionOpen} />
+
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}

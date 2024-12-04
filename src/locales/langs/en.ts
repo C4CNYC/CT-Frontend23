@@ -542,6 +542,8 @@ const en = {
   lesson: 'Lesson',
   lessons_list: 'Lessons List',
   lessons_create_lesson: 'Create Lesson',
+  lessons_create_lesson_desc: 'Select a template to start your lesson',
+  lesson_cloned_msg: 'Lesson created successfully',
   lessons_edit_lesson: 'Edit Lesson',
   lessons_name: 'Lesson Name',
   lessons_description: 'Lesson description',
@@ -566,6 +568,16 @@ const en = {
   integrations_body_links_plh: 'Body links or scripts',
   integrations_empty: "You don't have any integrations.",
   integrations_lets_create: "Let's create an integration",
+
+  //Properties
+  properties: 'Property',
+  properties_removed: 'Propery Removed',
+  entityType: 'Entity type',
+  entityId: 'Entity Id',
+  propertyName: 'Property Name',
+  propertyValue: 'Property Value',
+  properties_updated_msg: 'Property updated',
+  properties_created_msg: 'Property created',
 
   // Skills page
   skills: 'Skills',

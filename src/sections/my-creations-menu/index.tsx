@@ -21,7 +21,7 @@ import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import AiGenerateLessonDialog from './ai-generate-lesson-dialog'
 import DiamondFeatureModal from './diamond-feature-modal'
-import SelectLanguageModal from './select-language-dialog'
+import { SelectTemplateDialog } from './select-template-dialog'
 
 export default function MyCreationsMenu(): React.ReactElement {
   const { translate } = useLocales()
@@ -138,12 +138,15 @@ export default function MyCreationsMenu(): React.ReactElement {
               </ListItemIcon>
             </MenuItem>
           </AiGenerateLessonDialog>
+          <SelectTemplateDialog>
+            <MenuItem>Add From Templates</MenuItem>
+          </SelectTemplateDialog>
           <MenuItem
             onClick={async () => {
               await createByCloningLessonHandler()
             }}
           >
-            Add New Lesson
+            Add Blank Lesson
           </MenuItem>
           <MenuItem
             onClick={() => {

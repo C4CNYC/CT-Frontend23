@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { LoadingButton } from '@mui/lab'
 import {
   Box,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -20,7 +20,7 @@ import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lesson
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
-import { GO_BTN_SX, LANG_ITEMS_CONT_SX } from '../my-creations-menu/constants'
+import { LANG_ITEMS_CONT_SX } from '../my-creations-menu/constants'
 
 import { SelectLanguageItem } from './select-language-item'
 
@@ -66,7 +66,7 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
         <Dialog
           open={dialogopen}
           fullWidth
-          maxWidth='md'
+          maxWidth='sm'
           onClose={dialogopenClose}
         >
           <DialogTitle sx={{ color: '#616161' }}>
@@ -103,17 +103,20 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
             </Stack>
           </DialogContent>
           <DialogActions>
-            <LoadingButton
-              loading={!selectedLang}
+            <Button
+              disabled={!selectedLang}
+              title={selectedLang ? '' : 'Select template to continue'}
+              variant='contained'
+              sx={{ mr: 2, fontSize: '1.5rem' }}
               onClick={openSandboxWithTemplate(selectedLang || '')}
-              sx={GO_BTN_SX}
             >
+              {' '}
               GO
               <Iconify
                 icon='fa6-solid:chevron-right'
                 width={25}
               />
-            </LoadingButton>
+            </Button>
           </DialogActions>
         </Dialog>
       ) : null}

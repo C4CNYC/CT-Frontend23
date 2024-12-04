@@ -42,7 +42,7 @@ export const SelectLanguageItem = ({
       }}
     >
       <Stack
-        alignItems='center'
+        alignItems='stretch'
         justifyContent='center'
         flex={1}
         maxWidth={60}
@@ -54,7 +54,10 @@ export const SelectLanguageItem = ({
           height={50}
         />
       </Stack>
-      <Stack sx={{ maxWidth: '340px', pl: 2, pr: 2 }}>
+      <Stack
+        sx={{ maxWidth: '340px', pl: 2, pr: 2 }}
+        flex={5}
+      >
         <Typography variant='h5'>{langName}</Typography>
         <Typography variant='subtitle2'>{description}</Typography>
       </Stack>
