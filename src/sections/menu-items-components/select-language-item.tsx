@@ -11,6 +11,7 @@ interface LanguageItemProps {
   description: string
   onSelectLang: (lang: string) => void
   isSelected: boolean
+  key: string
 }
 
 export const SelectLanguageItem = ({
@@ -19,6 +20,7 @@ export const SelectLanguageItem = ({
   description,
   onSelectLang,
   isSelected,
+  key,
 }: LanguageItemProps): React.ReactElement => {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -29,7 +31,7 @@ export const SelectLanguageItem = ({
       alignItems='center'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onSelectLang(langName)}
+      onClick={() => onSelectLang(key)}
       sx={{
         transition: 'all .3s easy-in-out',
         borderRadius: '16px',

@@ -92,11 +92,11 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
                 return (
                   <SelectLanguageItem
                     isSelected={lesson.id === selectedLang}
-                    onSelectLang={(lang) => setSelectedLang(lang)}
+                    onSelectLang={() => setSelectedLang(lesson.id)}
                     imageSrc={lesson.contents?.find((c) => Boolean(c.cover))?.cover || ''}
                     langName={lesson.name}
-                    description={el.description}
-                    key={el.description}
+                    description={lesson.description}
+                    key={lesson.id}
                   />
                 )
               })}
@@ -110,7 +110,6 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
               sx={{ mr: 2, fontSize: '1.5rem' }}
               onClick={openSandboxWithTemplate(selectedLang || '')}
             >
-              {' '}
               GO
               <Iconify
                 icon='fa6-solid:chevron-right'

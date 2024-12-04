@@ -133,7 +133,6 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
               sx={{ mr: 2, fontSize: '1.5rem' }}
               onClick={createFromTemplate(selectedTemplate || '')}
             >
-              {' '}
               GO
               <Iconify
                 icon='fa6-solid:chevron-right'
