@@ -17,6 +17,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { type Unit } from '@/redux/interfaces/challenges.interface'
 import { useSelector } from '@/redux/store'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 
 import { ACC_SUMMARY_SX, DIVIDER_SX, LIST_SX, getButtonSx, getTypSx } from './constants'
 
@@ -31,11 +32,18 @@ const MAX_TEXT_LENGTH = 39
 const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
-  const isMobile = !isDesktop
-  const typSx = useMemo(() => getTypSx(isMobile), [isMobile])
-  const tooltipText = module.name.length > MAX_TEXT_LENGTH ? module.name : ''
-  const isLessonsExists = module.lessons.length > 0
+  const { isAuthenticated } = useAuthContext()
+
   const currentLessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+
+  const typSx = useMemo(() => getTypSx(!isDesktop), [isDesktop])
+  const { tooltipText, isLessonsExists } = useMemo(
+    () => ({
+      isLessonsExists: module.lessons.length > 0,
+      tooltipText: module.name.length > MAX_TEXT_LENGTH ? module.name : '',
+    }),
+    [module]
+  )
 
   return (
     <Stack key={module.id}>
@@ -67,6 +75,7 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
                   onClose()
                 }}
                 sx={getButtonSx(lesson.id === currentLessonId, theme.palette.mode === 'light')}
+                style={{ pointerEvents: !isAuthenticated ? 'none' : 'auto' }}
               >
                 <Box display='flex'>
                   <Typography

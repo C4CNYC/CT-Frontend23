@@ -17,7 +17,7 @@ import {
   setSlideIndex,
   setUnitId,
 } from '@/redux/slices/code-panel-global'
-import { type RootState, useSelector } from '@/redux/store'
+import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
@@ -84,15 +84,12 @@ export default function CodePanelPage(): ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
   const { query, push, replace } = useRouter()
 
-  const lessonIdFromRoute = query.lessonId
-
   const [render, setRender] = useState(true)
   const [user, setUser] = useState<ILocalUser>()
   const [showTour, setShowTour] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
 
   const isShowTour = useSelector((state) => state.tour.isStarted)
-  const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
 
   const { data: courseContent, isLoading: isLoadingCourseContent } = useGetPublicCourseContentQuery(
     { id: query.courseId as string },

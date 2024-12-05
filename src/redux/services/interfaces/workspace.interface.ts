@@ -4,5 +4,5 @@ export interface StudentFile {
   lessonId?: string
   lessonContentId?: string
   body: string
-  id?: string
+  id: string
 }

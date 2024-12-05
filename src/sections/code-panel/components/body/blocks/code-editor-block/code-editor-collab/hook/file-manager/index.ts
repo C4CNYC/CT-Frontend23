@@ -4,16 +4,20 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { LessonType } from '@root/src/redux/interfaces/content.interface'
+import { ILesson, LessonType } from '@root/src/redux/interfaces/content.interface'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useGetLessonStudentQuery } from '@root/src/redux/services/manager/lesson-student'
 import {
   useCreateStudentFileMutation,
   useDeleteStudentFileMutation,
+  useGetFilesByUnauthUserQuery,
   useGetStudentFilesQuery,
   useUpdateStudentFileMutation,
 } from '@root/src/redux/services/manager/workspace-student'
 import { useSelector } from '@root/src/redux/store'
+import { BaseResponseInterface } from '@root/src/utils'
+
+import { unauthFileLocalStorageManger } from './filesLocalstorageManager'
 
 interface UseFileManagerReturn {
   isOpen: boolean
@@ -33,8 +37,6 @@ interface UseFileManagerReturn {
   onUpdateFile: (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>) => Promise<void>
 }
 
-const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
-
 export const DEFAULT_FILE_ID = 'default'
 const DEFAULT_FILE = {
   id: DEFAULT_FILE_ID,
@@ -44,7 +46,7 @@ const DEFAULT_FILE = {
 }
 
 export const useFileManager = (): UseFileManagerReturn => {
-  const lessonRef = useRef<string | null>(null)
+  const lessonRef = useRef<(ILesson & BaseResponseInterface) | null>(null)
 
   const { query } = useRouter()
   const searchParams = useSearchParams()
@@ -63,6 +65,12 @@ export const useFileManager = (): UseFileManagerReturn => {
   const [updateStudentFile] = useUpdateStudentFileMutation()
 
   const {
+    data: lesson,
+    isLoading: isLessonLoading,
+    isFetching: isLessonFetching,
+  } = useGetLessonStudentQuery({ id: lessonId! }, { skip: !lessonId })
+
+  const {
     refetch,
     isLoading,
     isFetching,
@@ -72,23 +80,30 @@ export const useFileManager = (): UseFileManagerReturn => {
     { skip: !lessonId || !slideId || !isAuthenticated }
   )
 
-  const { data: lesson } = useGetLessonStudentQuery({ id: lessonId! }, { skip: !lessonId })
+  const {
+    data: unauthFiles = [],
+    isLoading: IsUnauthFilesLoading,
+    isFetching: isUnauthFilesFetching,
+  } = useGetFilesByUnauthUserQuery(
+    { lessonId: lessonId!, lessonContentId: slideId || '' },
+    { skip: !lessonId || !slideId || isAuthenticated }
+  )
 
   const localStorageKey = useMemo(() => {
     let localStorageKey
 
     switch (lesson?.type) {
       case LessonType.EXERCISE:
-        localStorageKey = getLocalStorageRoomKey(`${query?.lessonId}${activeFile?.id}${slideIndex}`)
+        localStorageKey = getLocalStorageRoomKey(`${lessonId}_${slideId}`)
         break
       case LessonType.PRACTICAL:
       default:
-        localStorageKey = getLocalStorageRoomKey(`${query?.lessonId}`)
+        localStorageKey = getLocalStorageRoomKey(`${lessonId}`)
         break
     }
 
     return localStorageKey
-  }, [query?.lessonId, activeFile?.id, slideIndex, lesson])
+  }, [lessonId, slideId, lesson])
 
   const localstorageCode = useMemo(() => {
     if (!lessonId && !query?.lessonId && !searchParams.get('sandbox') && isAuthenticated) {
@@ -106,58 +121,132 @@ export const useFileManager = (): UseFileManagerReturn => {
     localStorageKey,
   ])
 
-  const onAddFile = async (fileName: string): Promise<void> => {
-    if (!lessonId || !slideId) return
-
-    const [name, extension] = fileName.split('.')
-    try {
-      await createStudentFile({ name, extension, lessonId, body: '', lessonContentId: slideId })
-    } catch (e: any) {
-      throw new Error(e.message)
+  const unauthFilesList = useMemo(() => {
+    if (
+      isAuthenticated ||
+      isUnauthFilesFetching ||
+      IsUnauthFilesLoading ||
+      isLessonLoading ||
+      isLessonFetching
+    ) {
+      return []
     }
-  }
 
-  const onUpdateFile = async (
-    id: string,
-    body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>
-  ): Promise<void> => {
-    try {
+    if (lessonRef.current?.id && lesson?.id && lesson?.id !== lessonRef.current?.id) {
+      if (
+        lesson?.type !== LessonType.EXERCISE &&
+        lessonRef.current?.type !== LessonType.EXERCISE &&
+        !lesson?.independent
+      ) {
+        const files = unauthFileLocalStorageManger(localStorageKey).carryOverFiles(
+          getLocalStorageRoomKey(`${lessonRef.current?.id}`),
+          unauthFiles
+        )
+        lessonRef.current = lesson!
+        return files
+      }
+    }
+
+    lessonRef.current = lesson!
+
+    return unauthFileLocalStorageManger(localStorageKey).getFiles(unauthFiles)
+  }, [
+    unauthFiles,
+    localStorageKey,
+    isAuthenticated,
+    activeFile,
+    isLessonFetching,
+    isUnauthFilesFetching,
+    IsUnauthFilesLoading,
+    lesson,
+  ])
+
+  const onAddFile = useCallback(
+    async (fileName: string): Promise<void> => {
+      if (!lessonId || !slideId) return
+
+      const [name, extension] = fileName.split('.')
+
+      try {
+        if (!isAuthenticated) {
+          const file = unauthFileLocalStorageManger(localStorageKey).addFile({
+            id: `${name}-${extension}-${new Date().getTime()}`,
+            name,
+            extension,
+            body: '',
+            lessonContentId: slideId,
+          })
+          _setActiveFile(file)
+          _setBarFiles((prev) => [...prev, file!])
+          return
+        }
+
+        await createStudentFile({ name, extension, lessonId, body: '', lessonContentId: slideId })
+      } catch (e: any) {
+        throw new Error(e.message)
+      }
+    },
+    [lessonId, slideId]
+  )
+
+  const onUpdateFile = useCallback(
+    async (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>): Promise<void> => {
       const filteredBody = Object.fromEntries(
         Object.entries(body).filter(([_, value]) => value !== undefined)
       )
-      await updateStudentFile({ id, ...filteredBody })
-    } catch (e: any) {
-      throw new Error(e.message)
-    }
-  }
+
+      try {
+        if (!isAuthenticated) {
+          unauthFileLocalStorageManger(localStorageKey).updateFile(id, filteredBody)
+          return
+        }
+
+        await updateStudentFile({ id, ...filteredBody })
+      } catch (e: any) {
+        throw new Error(e.message)
+      }
+    },
+    [isAuthenticated, localStorageKey]
+  )
 
   const onDeleteFile = useCallback(
     (id: string) => {
       try {
-        deleteStudentFile({ id }).unwrap()
+        if (!isAuthenticated) {
+          unauthFileLocalStorageManger(localStorageKey).removeFile(id)
+        } else {
+          deleteStudentFile({ id }).unwrap()
+        }
+
         if (activeFile?.id === id) _setActiveFile(barFiles[0] || files[0])
         _setBarFiles((prev) => prev.filter((file) => file.id !== id))
       } catch (e: any) {
         throw new Error(e.message)
       }
     },
-    [deleteStudentFile, activeFile, barFiles, files]
+    [deleteStudentFile, activeFile, barFiles, files, isAuthenticated, localStorageKey]
   )
 
   const setActiveFile = useCallback(
     (id: string): void => {
       if (activeFile?.id === id) return
 
-      const file = files.find((file) => file.id === id)
+      let file: StudentFile | undefined
+
+      if (!isAuthenticated) {
+        file = unauthFilesList.find((file) => file.id === id)
+      } else {
+        file = files.find((file) => file.id === id)
+      }
 
       if (!file) return
 
       _setActiveFile(file)
       if (!barFiles.find((file) => file.id === id)) {
-        _setBarFiles((prev) => [...prev, file])
+        _setBarFiles((prev) => [...prev, file!])
       }
     },
-    [files, barFiles, activeFile]
+    [files, barFiles, activeFile, isAuthenticated, localStorageKey, unauthFilesList]
   )
 
   const onCloseFile = useCallback(
@@ -169,39 +258,35 @@ export const useFileManager = (): UseFileManagerReturn => {
   )
 
   useEffect(() => {
-    if (activeFile?.id === DEFAULT_FILE_ID) return
+    if (!isAuthenticated || searchParams.get('sandbox')) return
     if (activeFile) refetch()
-  }, [activeFile])
+  }, [activeFile, searchParams])
 
   useEffect(() => {
-    const isSandboxWithoutLesson = searchParams.get('sandbox')
-
-    if (!isAuthenticated || isSandboxWithoutLesson) {
+    if (searchParams.get('sandbox')) {
       _setActiveFile({ ...DEFAULT_FILE, body: localstorageCode ?? '' })
       _setBarFiles([{ ...DEFAULT_FILE, body: localstorageCode ?? '' }])
     }
   }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      _setActiveFile({ ...DEFAULT_FILE, body: localstorageCode ?? '' })
-      _setBarFiles([{ ...DEFAULT_FILE, body: localstorageCode ?? '' }])
-
+    if (!isAuthenticated || searchParams.get('sandbox')) {
       return
     }
 
     if (
-      lessonRef.current === lesson?.id &&
+      lessonRef.current?.id === lesson?.id &&
       (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === LessonType.PRACTICAL)
     ) {
-      lessonRef.current = lesson?.id
+      lessonRef.current = lesson!
       return
     }
 
     _setActiveFile(undefined)
     _setBarFiles([])
-  }, [lessonId, slideId])
+  }, [lessonId, slideId, searchParams])
 
+  /* authorized user entry point */
   useEffect(() => {
     if (isLoading || isFetching || !isAuthenticated) return
 
@@ -214,15 +299,48 @@ export const useFileManager = (): UseFileManagerReturn => {
     }
   }, [files])
 
+  /* not authorized user entry point */
+  useEffect(() => {
+    if (IsUnauthFilesLoading || isUnauthFilesFetching || isAuthenticated) return
+
+    if (unauthFilesList?.[0] && !unauthFilesList.find((file) => file.id === activeFile?.id)) {
+      switch (lesson?.type) {
+        case LessonType.EXERCISE:
+          _setActiveFile(unauthFilesList[0])
+          break
+        case LessonType.PRACTICAL:
+        default:
+          if (!activeFile) _setActiveFile(unauthFilesList[0])
+          break
+      }
+
+      _setBarFiles((prev) => {
+        const prevFiltered = prev.filter((file) => unauthFilesList.find((f) => f.id === file.id))
+        if (!prev.find((file) => file.id === unauthFilesList[0].id)) {
+          return [...prevFiltered, unauthFilesList[0]]
+        }
+
+        return prevFiltered
+      })
+    }
+  }, [
+    lesson,
+    activeFile,
+    unauthFilesList,
+    isAuthenticated,
+    IsUnauthFilesLoading,
+    isUnauthFilesFetching,
+  ])
+
   return {
-    files,
+    files: isAuthenticated ? files : unauthFilesList,
     isOpen,
     barFiles,
     localStorageKey,
     activeFile: activeFile!,
     preloadedCode: activeFile?.body!,
-    isFileLoading: isFetching || isLoading,
-    isFileControllerAvailable: !!activeFile && activeFile?.id !== DEFAULT_FILE_ID,
+    isFileLoading: isFetching || isLoading || IsUnauthFilesLoading || isUnauthFilesFetching,
+    isFileControllerAvailable: !!activeFile || !!unauthFilesList.length,
 
     setIsOpen,
     onAddFile,
@@ -232,6 +350,8 @@ export const useFileManager = (): UseFileManagerReturn => {
     setActiveFile,
   }
 }
+
+const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
 
 function getLocalStorageCode(key: string) {
   const localStorageCodeValue = localStorage.getItem(key)
