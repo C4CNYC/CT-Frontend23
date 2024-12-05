@@ -149,6 +149,18 @@ export const useFileManager = (): UseFileManagerReturn => {
 
     lessonRef.current = lesson!
 
+    const files = unauthFileLocalStorageManger(localStorageKey).getFiles(unauthFiles)
+
+    if (!files.length) {
+      unauthFileLocalStorageManger(localStorageKey).addFile({
+        id: DEFAULT_FILE_ID,
+        name: 'hello',
+        extension: 'html',
+        body: '',
+        lessonContentId: slideId,
+      })
+    }
+
     return unauthFileLocalStorageManger(localStorageKey).getFiles(unauthFiles)
   }, [
     unauthFiles,
