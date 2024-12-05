@@ -2,7 +2,9 @@ import { useMemo } from 'react'
 
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
+import { languages } from '@root/src/assets/data/languages'
 import { Iconify } from '@root/src/components'
+import { RHFSelect, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -18,15 +20,22 @@ import {
   TOGGLE_BUTTON_GROUP_STYLES,
   getToggleBtnGroupSx,
   getNextBtnSx,
+  LANG_CONT_SX,
 } from './constants'
 
 type ILessonPromptProps = {
   nextStep: () => void
   prevStep: () => void
   closeModal?: () => void
+  isCustomLang: boolean
 }
 
-export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILessonPromptProps) {
+export default function LessonPrompt({
+  nextStep,
+  prevStep,
+  closeModal,
+  isCustomLang,
+}: ILessonPromptProps) {
   const theme = useTheme()
   const translate = useTranslate()
 
@@ -121,6 +130,38 @@ export default function LessonPrompt({ nextStep, prevStep, closeModal }: ILesson
           sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
           sxButton={toggleButtonStyles}
         />
+      </Stack>
+      <Stack>
+        <Typography
+          variant='h6'
+          sx={OPTIONAL_TYPO_STYLES}
+          gutterBottom
+        >
+          Language
+          <Typography variant='caption'>{translate('ai_gen_lng_select_title')}</Typography>
+        </Typography>
+        <Stack sx={LANG_CONT_SX}>
+          <RHFSelect
+            name='RlessonLanguageR'
+            native
+            disabled={isCustomLang}
+            sx={{ maxWidth: '300px' }}
+          >
+            {languages.map((el) => (
+              <option
+                key={el.code}
+                value={el.language}
+              >
+                {el.language}
+              </option>
+            ))}
+          </RHFSelect>
+          <RHFTextField
+            sx={{ maxWidth: '300px' }}
+            name='RcustomLanguageR'
+            placeholder={translate('ai_gen_lng_placeholder')}
+          />
+        </Stack>
       </Stack>
       <Stack sx={BTN_CONTAINER_STYLES}>
         {/* <Button
