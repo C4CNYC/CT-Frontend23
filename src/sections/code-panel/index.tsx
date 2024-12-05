@@ -11,7 +11,10 @@ import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { LessonType, type ILesson } from '@/redux/interfaces/content.interface'
-import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
+import {
+  useGetCourseContentQuery,
+  useGetCoursePublicContentQuery,
+} from '@/redux/services/manager/challenges-student'
 import {
   useGetContentCheckersQuery,
   useGetLessonContentStudentQuery,
@@ -72,6 +75,7 @@ export default function CodePanelLayout(): ReactElement | null {
   const translate = useTranslate()
   const { user } = useAuthContext()
   const handle = useFullScreenHandle()
+  const { isAuthenticated } = useAuthContext()
   const { enqueueSnackbar } = useSnackbar()
 
   const [render, setRender] = useState(true)
@@ -91,10 +95,20 @@ export default function CodePanelLayout(): ReactElement | null {
     ? router.query.lessonId.join()
     : router.query.lessonId || ''
 
-  const { data: courseContent, isLoading: isLoadingCourseContent } = useGetCourseContentQuery(
-    { id: router.query.courseId as string },
-    { skip: !router.query.courseId || !profile }
-  )
+  const { data: courseAuthContent, isLoading: isLoadingAuthCourseContent } =
+    useGetCourseContentQuery(
+      { id: router.query.courseId as string },
+      { skip: !router.query.courseId || !isAuthenticated }
+    )
+
+  const { data: coursePublicContent, isLoading: isLoadingPublicCourse } =
+    useGetCoursePublicContentQuery(
+      { id: router.query.courseId as string },
+      { skip: !router.query.courseId || isAuthenticated }
+    )
+
+  const courseContent = courseAuthContent ?? coursePublicContent
+  const isLoadingCourseContent = isLoadingAuthCourseContent || isLoadingPublicCourse
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
@@ -248,8 +262,7 @@ export default function CodePanelLayout(): ReactElement | null {
         if (
           nextLessonInfo.type === LessonType.PRACTICAL &&
           !nextLessonInfo.isIndependent &&
-          lesson?.type === LessonType.PRACTICAL &&
-          !lesson?.independent
+          lesson?.type === LessonType.PRACTICAL
         ) {
           await carryOverFiles({
             lessonId: nextLessonInfo.lessonId as string,

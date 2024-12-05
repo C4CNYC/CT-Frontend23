@@ -94,7 +94,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onDeleteFile,
     onUpdateFile,
     setActiveFile,
-    localStorageKey,
   } = useFileManager()
 
   const { editorRef, extensions, streamingDoc, setStreamingDoc, key, onCreateEditor, roomStatus } =
@@ -162,8 +161,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
         return
       }
-
-      localStorage.setItem(localStorageKey, value)
     }
   }
 

@@ -188,7 +188,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
     if (lessonId && progress) {
       const lastSlide: number = progress[lessonId as string]
-      if (lastSlide && carousel1.current) {
+      if (lastSlide !== undefined && carousel1.current) {
         carousel1.current.slickGoTo(lastSlide)
       }
     }

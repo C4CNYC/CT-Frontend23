@@ -21,7 +21,21 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['WorkspaceStudent'],
     }),
-    createStudentFile: builder.mutation<StudentFile, StudentFile>({
+    getFilesByUnauthUser: builder.query<
+      StudentFile[],
+      { lessonId: string; lessonContentId?: string }
+    >({
+      query: ({ lessonId, lessonContentId }) => ({
+        url: '/public/workspace',
+        method: 'GET',
+        params: {
+          lessonId,
+          lessonContentId,
+        },
+      }),
+      keepUnusedDataFor: 0,
+    }),
+    createStudentFile: builder.mutation<StudentFile, Omit<StudentFile, 'id'>>({
       query: ({ ...body }) => ({
         url: `/student/workspace/file`,
         method: 'POST',
@@ -59,6 +73,7 @@ const extendedApi = managerApi.injectEndpoints({
 })
 export const {
   useGetStudentFilesQuery,
+  useGetFilesByUnauthUserQuery,
   // -------------mutation-----------
   useCreateStudentFileMutation,
   useUpdateStudentFileMutation,
