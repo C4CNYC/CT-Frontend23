@@ -37,7 +37,7 @@ export const SelectLanguageItem = ({
         borderRadius: '16px',
         background: isHovered || isSelected ? '#D4D2CF' : '',
         py: 1,
-        px: 0.5,
+        px: 1,
         '&:hover': {
           cursor: 'pointer',
         },
@@ -48,6 +48,7 @@ export const SelectLanguageItem = ({
         justifyContent='center'
         flex={1}
         maxWidth={60}
+        sx={{ background: 'transparent' }}
       >
         <Image
           src={imageSrc}
