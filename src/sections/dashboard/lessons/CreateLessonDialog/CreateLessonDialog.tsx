@@ -1,10 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useState } from 'react'
 
-import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, DialogActions, Stack, Tab, Tabs, Tooltip, useTheme } from '@mui/material'
+import {
+  Box,
+  Button,
+  DialogActions,
+  Stack,
+  Tab,
+  Tabs,
+  Tooltip,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -13,21 +22,19 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import {
-  FormProvider,
-  RHFCode,
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  useSnackbar,
-} from '@/components'
+import { FormProvider, RHFSwitch, RHFTextField, useSnackbar } from '@/components'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useProperties } from '@root/src/hooks/useProperties'
+import {
+  getToggleBtnGroupSx,
+  TOGGLE_BUTTON_GROUP_STYLES,
+} from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/constants'
 
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
@@ -44,6 +51,17 @@ interface FormValuesProps {
   slug: string
   autoRun: boolean
   lock: boolean
+}
+
+export enum LessonTypeEnum {
+  simple = 'simple',
+  practical = 'practical',
+  start_project = 'start_project',
+  part_project = 'part_project',
+  exercise = 'exercise',
+  concept_exercises = 'concept_exercises',
+  quiz = 'quiz',
+  other = 'other',
 }
 
 interface IDefaultProps {
@@ -87,6 +105,12 @@ export default function CreateLessonDialog({
   const [editLesson, { isLoading: isLoadingUpdate }] = useUpdateLessonMutation()
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
+
+  const toggleButtonStyles = useMemo(
+    () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+
   const [autoRun, autoRunSet, autoRunDelete] = useProperties({
     entityType: 'lesson',
     entityId: id,
@@ -248,12 +272,31 @@ export default function CreateLessonDialog({
                   multiline
                   rows={3}
                 />
-
-                <RHFCode
-                  placeholder={translate('integrations_head_links_plh')}
-                  name='head'
-                  height='180px'
-                  extensions={[javascript({ jsx: true })]}
+                <Stack
+                  direction='row'
+                  gap={1}
+                  mb={-1}
+                  ml={1}
+                >
+                  <Typography
+                    variant='h6'
+                    color='#5C5C5C'
+                  >
+                    Lesson Type
+                  </Typography>
+                  <Typography
+                    variant='body2'
+                    color='#5C5C5C'
+                  >
+                    Select one<sup>*</sup>
+                  </Typography>
+                </Stack>
+                <RHFToggleButtonGroup
+                  name='type'
+                  options={_mochLessonTypes}
+                  sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+                  sxButton={toggleButtonStyles}
+                  tooltip
                 />
 
                 <RHFTextField
@@ -261,53 +304,23 @@ export default function CreateLessonDialog({
                   label='Slug'
                   size='small'
                 />
+
+                <RHFTextField
+                  name='duration'
+                  label='Duration'
+                  size='small'
+                  type='number'
+                  InputProps={{
+                    startAdornment: <InputAdornment position='start'>min</InputAdornment>,
+                  }}
+                />
+
                 <Stack
                   direction='row'
                   flexWrap='wrap'
                   justifyContent='space-between'
                   sx={{ '& > *': { width: '45%' } }}
                 >
-                  <RHFTextField
-                    name='duration'
-                    label='Duration'
-                    size='small'
-                    type='number'
-                    InputProps={{
-                      startAdornment: <InputAdornment position='start'>min</InputAdornment>,
-                    }}
-                  />
-
-                  <RHFSelect
-                    native
-                    name='type'
-                    size='small'
-                    label='Lesson type'
-                  >
-                    <option
-                      key='practical'
-                      value='practical'
-                    >
-                      {translate('lessons_practical')}
-                    </option>
-                    <option
-                      key='exercise'
-                      value='exercise'
-                    >
-                      {translate('lessons_exercise')}
-                    </option>
-                    <option
-                      key='exercise1'
-                      value='exercise1'
-                    >
-                      {translate('Lesson type 2')}
-                    </option>
-                    <option
-                      key='exercise2'
-                      value='exercise2'
-                    >
-                      {translate('Lesson type 3')}
-                    </option>
-                  </RHFSelect>
                   <Tooltip
                     slotProps={{ popper: { disablePortal: true } }}
                     title={translate('lessons_active_tooltip')}
@@ -451,3 +464,55 @@ function a11yProps(index: number): Record<string, string> {
     'aria-controls': `simple-tabpanel-${index}`,
   }
 }
+
+// @TODO: uncomment after updating backend
+
+const _mochLessonTypes = [
+  // {
+  //   key: LessonTypeEnum.simple,
+  //   value: 'Simple',
+  //   tooltip: 'An engaging, single-page lesson with coding exercises.',
+  //   icon: 'material-symbols:info-outline',
+  // },
+  {
+    key: LessonTypeEnum.practical,
+    value: 'Practical',
+    tooltip: 'Building a project line-by-line with explanations and step-by-step guidance.',
+    icon: 'material-symbols:info-outline',
+  },
+  // {
+  //   key: LessonTypeEnum.start_project,
+  //   value: 'Start of Project',
+  //   tooltip:
+  //     'The beginning lesson of a project. Subsequent lessons will build on the code typed here.',
+  //   icon: 'material-symbols:info-outline',
+  // },
+  // {
+  //   key: LessonTypeEnum.part_project,
+  //   value: 'Part of Project',
+  //   tooltip:
+  //     'Build things with this lesson type: The code you type in one lesson, flows to the next, if the lesson is completed.',
+  //   icon: 'material-symbols:info-outline',
+  // },
+  {
+    key: LessonTypeEnum.exercise,
+    value: 'Exercises',
+    tooltip:
+      'Exercises with instructions and examples. Great for reinforcing learning or evaluating competency.',
+    icon: 'material-symbols:info-outline',
+  },
+  // {
+  //   key: LessonTypeEnum.concept_exercises,
+  //   value: 'Concept & Exercises',
+  //   tooltip: 'Learn a concept, then immediately practice it in different ways.',
+  //   icon: 'material-symbols:info-outline',
+  // },
+  // {
+  //   key: LessonTypeEnum.quiz,
+  //   value: 'Quiz',
+  // },
+  // {
+  //   key: LessonTypeEnum.other,
+  //   value: 'Other',
+  // },
+]

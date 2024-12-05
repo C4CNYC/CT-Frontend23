@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { javascript } from '@codemirror/lang-javascript'
 import {
   Autocomplete,
   AutocompleteChangeDetails,
@@ -16,7 +17,7 @@ import parse from 'autosuggest-highlight/parse'
 // import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 
-import { Iconify, SearchNotFound } from '@/components'
+import { Iconify, RHFCode, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { useGetIntegrationsListQuery } from '@/redux/services/manager/integration-manager'
@@ -231,6 +232,14 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
           </button>
         )
       })}
+      <Box pt={2}>
+        <RHFCode
+          placeholder={translate('integrations_head_links_plh')}
+          name='head'
+          height='180px'
+          extensions={[javascript({ jsx: true })]}
+        />
+      </Box>
     </>
   )
 }
