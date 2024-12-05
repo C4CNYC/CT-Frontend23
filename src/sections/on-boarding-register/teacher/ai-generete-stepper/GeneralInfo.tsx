@@ -192,13 +192,7 @@ export function GeneralInfo({
           gutterBottom
         >
           Language
-        </Typography>
-        <Typography
-          variant='body2'
-          sx={OPTIONAL_TYPO_STYLES}
-          gutterBottom
-        >
-          {translate('ai_gen_lng_select_title')}
+          <Typography variant='caption'>{translate('ai_gen_lng_select_title')}</Typography>
         </Typography>
         <Stack sx={LANG_CONT_SX}>
           <RHFSelect

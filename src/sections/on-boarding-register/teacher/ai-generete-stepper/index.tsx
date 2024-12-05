@@ -125,6 +125,7 @@ export default function AIGenerateStepper({
       grade: data.RgradesR,
       language: data.RcustomLanguageR || data.RlessonLanguageR,
       tone: data.RcustomToneR || data.RtoneR,
+      context: data.RcontextR,
       newLessonId: '',
     }
     if (!profile) {
