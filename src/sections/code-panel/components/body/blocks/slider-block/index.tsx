@@ -174,7 +174,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   useEffect(() => {
-    if (carousel1.current && lastSlide) {
+    if (carousel1.current !== null) {
       setNav2(carousel1.current)
       carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
     }
@@ -188,7 +188,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
     if (lessonId && progress) {
       const lastSlide: number = progress[lessonId as string]
-      if (lastSlide !== undefined && carousel1.current) {
+      if (carousel1.current !== null && lastSlide) {
         carousel1.current.slickGoTo(lastSlide)
       }
     }

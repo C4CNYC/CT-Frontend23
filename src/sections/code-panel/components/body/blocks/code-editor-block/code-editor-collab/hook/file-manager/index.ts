@@ -127,7 +127,8 @@ export const useFileManager = (): UseFileManagerReturn => {
       isUnauthFilesFetching ||
       IsUnauthFilesLoading ||
       isLessonLoading ||
-      isLessonFetching
+      isLessonFetching ||
+      !slideId
     ) {
       return []
     }
@@ -171,6 +172,7 @@ export const useFileManager = (): UseFileManagerReturn => {
     isUnauthFilesFetching,
     IsUnauthFilesLoading,
     lesson,
+    slideId,
   ])
 
   const onAddFile = useCallback(
