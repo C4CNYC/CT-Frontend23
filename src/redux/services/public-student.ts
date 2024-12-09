@@ -47,6 +47,13 @@ const extendedApi = studentPublicApi.injectEndpoints({
       }),
       providesTags: ['CoursePublicContent'],
     }),
+    getPublicModuleContent: builder.query<ICourseContent & BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `/module/${id}/content`,
+        method: 'GET',
+      }),
+      providesTags: ['CoursePublicContent'],
+    }),
     getPublicLesson: builder.query<
       ILesson & BaseResponseInterface,
       { id: string; lesson_id: string }
@@ -95,6 +102,7 @@ const extendedApi = studentPublicApi.injectEndpoints({
 })
 
 export const {
+  useGetPublicModuleContentQuery,
   useGetPublicCourseContentQuery,
   useGetPublicCourseQuery,
   useGetPublicLessonQuery,
