@@ -37,6 +37,7 @@ import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
+import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
@@ -101,14 +102,20 @@ export default function CodePanelLayout(): ReactElement | null {
       { skip: !router.query.courseId || !isAuthenticated }
     )
 
+  const { data: unitContent, isLoading: isLoadingUnitContent } = useGetPublicModuleContentQuery(
+    { id: router.query.unitId as string },
+    { skip: !!router.query.courseId || !isAuthenticated || !router.query.unitId }
+  )
+
   const { data: coursePublicContent, isLoading: isLoadingPublicCourse } =
     useGetCoursePublicContentQuery(
       { id: router.query.courseId as string },
       { skip: !router.query.courseId || isAuthenticated }
     )
 
-  const courseContent = courseAuthContent ?? coursePublicContent
-  const isLoadingCourseContent = isLoadingAuthCourseContent || isLoadingPublicCourse
+  const courseContent = courseAuthContent || coursePublicContent || unitContent
+  const isLoadingCourseContent =
+    isLoadingAuthCourseContent || isLoadingPublicCourse || isLoadingUnitContent
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
@@ -154,7 +161,8 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
-    if (!router.query.courseId) return
+    if (!router.query.courseId && !unitId) return
+
     void router.push(
       STUDENT_PATH_DASHBOARD.codePanel.workSpace({
         courseId: router.query.courseId as string,
@@ -197,7 +205,7 @@ export default function CodePanelLayout(): ReactElement | null {
         ? lastLessonId
         : courseContent.units[0].lessons[0].id ?? false)
 
-    if (!courseId || !unitId || !lessonId) {
+    if (!courseId && !unitId && !lessonId) {
       void router.replace(STUDENT_PATH_DASHBOARD.page404)
       return
     }

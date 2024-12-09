@@ -1,6 +1,5 @@
 import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
-import { Text } from '@codemirror/state'
 import CodeMirror from '@uiw/react-codemirror'
 import { useRouter } from 'next/router'
 import { Socket } from 'socket.io-client'
@@ -8,17 +7,16 @@ import { Socket } from 'socket.io-client'
 import { useDispatch, useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { setCode } from '@root/src/redux/slices/code-panel-global'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
-import { RELOAD_WORKSPACE_EVENT } from '@root/src/sections/code-panel/lib/events'
 
 import FileModal from './components/file-modal'
 import FileSwitcher from './components/file-switcher'
 import StatusLabel, { RoomStatus } from './components/status-label'
 import { type UseCodeEditorCollabProps, useCodeEditorCollab } from './hook'
 import { BASIC_SETUP, EditorMode } from './hook/constants'
-import { DEFAULT_FILE_ID, useFileManager } from './hook/file-manager'
+import { useFileManager } from './hook/file-manager'
+import { docBuilder } from './hook/utils/doc-builder'
 import { useStyles } from './styles'
 
 type ReducedFields =
@@ -61,14 +59,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   ...collabProps
 }) => {
   const styles = useStyles()
-  const { query } = useRouter()
   const dispatch = useDispatch()
   const { user } = useAuthContext()
   const codePanelContext = useContext(CodePanelContext)
 
-  const [, setRefreshKey] = useState(0)
-  const [codeValue, setCodeValue] = useState<string | undefined>('')
   const [contWidth, setContWidth] = useState(0)
+  const [codeValue, setCodeValue] = useState<string | undefined>('')
 
   const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
@@ -84,7 +80,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     isOpen,
     barFiles,
     activeFile,
-    isFileLoading,
     preloadedCode,
     isFileControllerAvailable,
 
@@ -177,27 +172,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   }, [preloadedCode, streamingDoc])
 
   useEffect(() => {
-    if (!preloadedCode) return
-    window.addEventListener('reset-lesson-event', (event) => {
-      if (preloadedCode) {
-        onChangeCodemirrorValue(preloadedCode as string)
-        setCodeValue(preloadedCode as string)
-        setStreamingDoc(Text.of([preloadedCode]))
-      } else {
-        onChangeCodemirrorValue('')
-        setCodeValue('')
-        setStreamingDoc(Text.of(['']))
-      }
-    })
-  }, [preloadedCode])
-
-  useEffect(() => {
-    window.addEventListener(RELOAD_WORKSPACE_EVENT, () => {
-      setRefreshKey((prev) => prev + 1)
-    })
-  }, [])
-
-  useEffect(() => {
     if (!editorRef.current) return
     const resizeObserver = new ResizeObserver(() => {
       setContWidth(editorRef.current?.getBoundingClientRect().width ?? MIN_WIDTH)
@@ -236,56 +210,20 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
       <StatusLabel status={roomStatus} />
 
-      {!isFileLoading ? (
-        <>
-          <CodeMirror
-            key={key}
-            theme='dark'
-            height='100%'
-            value={codeValue}
-            className={className}
-            extensions={extensions}
-            basicSetup={BASIC_SETUP}
-            readOnly={isEditorReadOnly}
-            onCreateEditor={onCreateEditor}
-            onChange={onChangeCodemirrorValue}
-          />
-        </>
-      ) : null}
+      <CodeMirror
+        key={key}
+        theme='dark'
+        height='100%'
+        value={codeValue}
+        className={className}
+        extensions={extensions}
+        basicSetup={BASIC_SETUP}
+        readOnly={isEditorReadOnly}
+        onCreateEditor={onCreateEditor}
+        onChange={onChangeCodemirrorValue}
+      />
     </div>
   )
-}
-
-const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
-
-const docBuilder = (files: StudentFile[], activeFile: StudentFile, value: string) => {
-  if (activeFile?.id === DEFAULT_FILE_ID) {
-    return {
-      htmlBody: value,
-      cssBody: '',
-      jsBody: '',
-    }
-  }
-  // TODO: Update this logic in next iteration
-  const doc = {
-    htmlBody: files
-      .filter((file) => file.extension === 'html')
-      .map((file) => file)
-      .map((file) => (file.id === activeFile?.id ? value : file.body))
-      .join(' '),
-    cssBody: files
-      .filter((file) => file.extension === 'css')
-      .map((file) => file)
-      .map((file) => (file.id === activeFile?.id ? value : file.body))
-      .join(' '),
-    jsBody: files
-      .filter((file) => file.extension === 'js')
-      .map((file) => file)
-      .map((file) => (file.id === activeFile?.id ? value : file.body))
-      .join(' '),
-  }
-
-  return doc
 }
 
 const useSocketController = (socket?: Socket) => {

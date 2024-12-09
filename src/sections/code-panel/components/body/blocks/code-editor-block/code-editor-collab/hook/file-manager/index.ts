@@ -18,6 +18,7 @@ import { useSelector } from '@root/src/redux/store'
 import { BaseResponseInterface } from '@root/src/utils'
 
 import { unauthFileLocalStorageManger } from './filesLocalstorageManager'
+import { tabsLocalStorageManger } from './tabsLocalstorageManager'
 
 interface UseFileManagerReturn {
   isOpen: boolean
@@ -89,7 +90,7 @@ export const useFileManager = (): UseFileManagerReturn => {
     { skip: !lessonId || !slideId || isAuthenticated }
   )
 
-  const localStorageKey = useMemo(() => {
+  const { localStorageKey, tabsMangerLocalStorageKey } = useMemo(() => {
     let localStorageKey
 
     switch (lesson?.type) {
@@ -102,7 +103,10 @@ export const useFileManager = (): UseFileManagerReturn => {
         break
     }
 
-    return localStorageKey
+    return {
+      localStorageKey,
+      tabsMangerLocalStorageKey: `${localStorageKey}_tabs`,
+    }
   }, [lessonId, slideId, lesson])
 
   const localstorageCode = useMemo(() => {
@@ -192,6 +196,7 @@ export const useFileManager = (): UseFileManagerReturn => {
           })
           _setActiveFile(file)
           _setBarFiles((prev) => [...prev, file!])
+          tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(file!.id)
           return
         }
 
@@ -234,6 +239,7 @@ export const useFileManager = (): UseFileManagerReturn => {
 
         if (activeFile?.id === id) _setActiveFile(barFiles[0] || files[0])
         _setBarFiles((prev) => prev.filter((file) => file.id !== id))
+        tabsLocalStorageManger(tabsMangerLocalStorageKey).removeTab(id)
       } catch (e: any) {
         throw new Error(e.message)
       }
@@ -258,6 +264,7 @@ export const useFileManager = (): UseFileManagerReturn => {
       _setActiveFile(file)
       if (!barFiles.find((file) => file.id === id)) {
         _setBarFiles((prev) => [...prev, file!])
+        tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(file.id)
       }
     },
     [files, barFiles, activeFile, isAuthenticated, localStorageKey, unauthFilesList]
@@ -267,6 +274,7 @@ export const useFileManager = (): UseFileManagerReturn => {
     (id: string) => {
       if (activeFile?.id === id) _setActiveFile(barFiles.filter((file) => file.id !== id)[0])
       _setBarFiles((prev) => prev.filter((file) => file.id !== id))
+      tabsLocalStorageManger(tabsMangerLocalStorageKey).removeTab(id)
     },
     [barFiles, activeFile]
   )
@@ -284,13 +292,14 @@ export const useFileManager = (): UseFileManagerReturn => {
   }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
-    if (!isAuthenticated || searchParams.get('sandbox')) {
+    if (searchParams.get('sandbox')) {
       return
     }
 
     if (
-      lessonRef.current?.id === lesson?.id &&
-      (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === LessonType.PRACTICAL)
+      !lessonRef.current ||
+      (lessonRef.current?.id === lesson?.id &&
+        (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === LessonType.PRACTICAL))
     ) {
       lessonRef.current = lesson!
       return
@@ -298,13 +307,31 @@ export const useFileManager = (): UseFileManagerReturn => {
 
     _setActiveFile(undefined)
     _setBarFiles([])
-  }, [lessonId, slideId, searchParams])
+  }, [lesson, slideId, searchParams])
+
+  useEffect(() => {
+    _setActiveFile(undefined)
+    _setBarFiles([])
+  }, [lessonId])
 
   /* authorized user entry point */
   useEffect(() => {
     if (isLoading || isFetching || !isAuthenticated) return
 
     if (files?.[0] && !files.find((file) => file.id === activeFile?.id)) {
+      const lastVisitedTabs = tabsLocalStorageManger(tabsMangerLocalStorageKey).getTabs()
+
+      if (lastVisitedTabs.length) {
+        const lastVisitedFiles = files.filter((file) => lastVisitedTabs.includes(file.id))
+
+        if (lastVisitedFiles.length) {
+          _setActiveFile(lastVisitedFiles[0])
+          _setBarFiles((prev) => [...lastVisitedFiles])
+
+          return
+        }
+      }
+
       _setActiveFile(files[0])
 
       if (!barFiles.find((file) => file.id === files[0].id)) {
@@ -318,6 +345,19 @@ export const useFileManager = (): UseFileManagerReturn => {
     if (IsUnauthFilesLoading || isUnauthFilesFetching || isAuthenticated) return
 
     if (unauthFilesList?.[0] && !unauthFilesList.find((file) => file.id === activeFile?.id)) {
+      const lastVisitedTabs = tabsLocalStorageManger(tabsMangerLocalStorageKey).getTabs()
+
+      if (lastVisitedTabs.length) {
+        const lastVisitedFiles = unauthFilesList.filter((file) => lastVisitedTabs.includes(file.id))
+
+        if (lastVisitedFiles.length) {
+          _setActiveFile(lastVisitedFiles[0])
+          _setBarFiles((prev) => [...lastVisitedFiles])
+
+          return
+        }
+      }
+
       switch (lesson?.type) {
         case LessonType.EXERCISE:
           _setActiveFile(unauthFilesList[0])
