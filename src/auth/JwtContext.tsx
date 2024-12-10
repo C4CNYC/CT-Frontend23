@@ -298,6 +298,7 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
     setSession(null, null)
     reduxDispatch(cleanUser())
     reduxDispatch(cleanUserRole())
+    localStorage.clear()
     dispatch({
       type: Types.LOGOUT,
     })
