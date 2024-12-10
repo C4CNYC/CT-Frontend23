@@ -26,9 +26,9 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import { INPUT_NAME_CONT_SX, INPUTS_CONT_SX, UPDATE_BOX_SX } from './constants'
 
 interface FormValuesProps {
-  fileName: string
-  code: string
-  fileType: FileExtension
+  name: string
+  preloaded_code: string
+  extension: FileExtension
 }
 
 interface PreloadFileItemProps {
@@ -60,15 +60,15 @@ const PreloadFileItem = ({
   const [removeFile] = useRemoveLessonStepPreloadFileMutation()
 
   const FileSchema = Yup.object().shape({
-    fileName: Yup.string().required(),
-    fileType: Yup.string().required(),
-    code: Yup.string(),
+    name: Yup.string().required().trim(),
+    extension: Yup.string().required(),
+    preloaded_code: Yup.string(),
   })
 
   const defaultValues = {
-    fileName: name ?? 'index',
-    fileType: (extension as FileExtension) ?? FileExtension.HTML,
-    code: preloaded_code ?? '',
+    name: name ?? 'index',
+    extension: (extension as FileExtension) ?? FileExtension.HTML,
+    preloaded_code: preloaded_code ?? '',
   }
 
   const methods = useForm<FormValuesProps>({
@@ -77,15 +77,24 @@ const PreloadFileItem = ({
   })
 
   const onSubmit = async (formData: FormValuesProps) => {
+    function dirtyValues(dirtyFields: object | boolean, allValues: object): object {
+      if (dirtyFields === true || Array.isArray(dirtyFields)) return allValues
+
+      return Object.fromEntries(
+        // @ts-ignore
+        Object.keys(dirtyFields).map((key) => [key, dirtyValues(dirtyFields[key], allValues[key])])
+      )
+    }
+
+    const updatedValues = dirtyValues(methods.formState.dirtyFields, formData)
+
     try {
       if (id) {
         await updateFile({
           lessonId,
           contentId,
           fileId: id,
-          extension: formData.fileType,
-          name: formData.fileName.trim(),
-          preloaded_code: formData.code as FileExtension,
+          ...updatedValues,
         }).unwrap()
         enqueueSnackbar(translate('messages_edited'))
       }
@@ -113,9 +122,9 @@ const PreloadFileItem = ({
 
   useEffect(() => {
     methods.reset({
-      code: preloaded_code,
-      fileName: name,
-      fileType: extension,
+      preloaded_code,
+      name,
+      extension,
     })
   }, [name, preloaded_code, extension])
 
@@ -139,12 +148,12 @@ const PreloadFileItem = ({
               }}
               size='small'
               id='fileNameId'
-              name='fileName'
+              name='name'
             />
           </Stack>
           <RHFSelect
             native
-            name='fileType'
+            name='extension'
             size='small'
             sx={{
               maxWidth: '150px',
@@ -165,11 +174,11 @@ const PreloadFileItem = ({
         </Stack>
         <ModalCodeFullscreen
           title={translate('code_will_preload')}
-          name='code'
+          name='preloaded_code'
         />
         <RHFCode
           placeholder={translate('code_will_preload')}
-          name='code'
+          name='preloaded_code'
           height='150px'
           extensions={[javascript({ jsx: true })]}
         />
@@ -194,7 +203,7 @@ const PreloadFileItem = ({
       <ConfirmDialog
         open={confirm}
         onClose={() => setConfirm(false)}
-        title={`${translate('messages_lesson_file_delete')} ${methods.getValues('fileName')}?`}
+        title={`${translate('messages_lesson_file_delete')} ${methods.getValues('name')}?`}
         content={translate('messages_delete_question')}
         action={
           <Button
