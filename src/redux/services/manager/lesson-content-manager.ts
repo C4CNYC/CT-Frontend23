@@ -97,12 +97,14 @@ const extendedApi = managerApi.injectEndpoints({
 
     updateLessonStepPreloadFile: builder.mutation<
       ILessonPreloadFile,
-      { lessonId: string; contentId: string; fileId: string } & Omit<ILessonPreloadFile, 'id'>
+      { lessonId: string; contentId: string; fileId: string } & Partial<
+        Omit<ILessonPreloadFile, 'id'>
+      >
     >({
-      query: ({ lessonId, contentId, fileId, name, extension, preloaded_code }) => ({
+      query: ({ lessonId, contentId, fileId, ...body }) => ({
         url: `/manager/lesson/${lessonId}/content/${contentId}/file/${fileId}`,
         method: 'PATCH',
-        body: { name, extension, preloaded_code },
+        body,
       }),
       invalidatesTags: ['LessonSlidePreload'],
     }),
