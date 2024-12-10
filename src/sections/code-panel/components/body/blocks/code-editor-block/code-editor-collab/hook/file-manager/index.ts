@@ -336,6 +336,7 @@ export const useFileManager = (): UseFileManagerReturn => {
 
       if (!barFiles.find((file) => file.id === files[0].id)) {
         _setBarFiles((prev) => [...prev, files[0]])
+        tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(files[0].id)
       }
     }
   }, [files])
@@ -376,6 +377,7 @@ export const useFileManager = (): UseFileManagerReturn => {
 
         return prevFiltered
       })
+      tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(unauthFilesList[0].id)
     }
   }, [
     lesson,
