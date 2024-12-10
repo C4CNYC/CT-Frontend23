@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { useEffect, useRef, useState, type FC } from 'react'
 
 import { Stack, Tabs, Tab, IconButton } from '@mui/material'
 
@@ -14,18 +14,27 @@ interface FileSwitcherProps {
   onChange: (id: string) => void
   closeTab: (id: string) => void
   fileList: StudentFile[]
-  contWidth: number
 }
+const MIN_WIDTH = 200
 
-const FileSwitcher: FC<FileSwitcherProps> = ({
-  onChange,
-  closeTab,
-  activeFile,
-  fileList,
-  contWidth,
-}) => {
+const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, fileList }) => {
+  const [contWidth, setContWidth] = useState(0)
+  const editorRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!editorRef.current) return
+    const resizeObserver = new ResizeObserver(() => {
+      setContWidth(editorRef.current?.getBoundingClientRect().width ?? MIN_WIDTH)
+    })
+    resizeObserver.observe(editorRef.current)
+    return () => resizeObserver.disconnect()
+  }, [editorRef])
+
   return (
-    <Stack sx={{ ...styles.WRAPPER_STACK_SX, maxWidth: `${contWidth}px` }}>
+    <Stack
+      sx={{ ...styles.WRAPPER_STACK_SX, maxWidth: `${contWidth}px` }}
+      ref={editorRef}
+    >
       <Tabs
         sx={styles.TABS}
         value={activeFile?.id}
