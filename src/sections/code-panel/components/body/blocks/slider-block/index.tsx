@@ -194,6 +194,40 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
   }, [lessonId, carousel1, data])
 
+  const slider = useMemo(() => {
+    return (
+      <Box
+        className='sliderTour'
+        height='100%'
+        sx={boxSx}
+      >
+        <Carousel
+          {...getCarouselSettings(onBeforeChange)}
+          asNavFor={nav2}
+          ref={carousel1}
+          afterChange={onUpdateLastSlide}
+        >
+          {data.map((step, stepSlideIndex) => {
+            return slideIndex == stepSlideIndex ? (
+              <View
+                title={step.title}
+                lessonType={lessonType}
+                key={step.id}
+                type={step.type}
+                body={step.body}
+                integrations={integrations}
+                connectIntegrations={connectIntegrations}
+                stepBgColor={step.bg_color}
+              />
+            ) : (
+              <div key={step.id}></div>
+            )
+          })}
+        </Carousel>
+      </Box>
+    )
+  }, [data, nav2, carousel1, slideIndex])
+
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToLeft size={20} />}
@@ -233,36 +267,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         )
       ) : (
         <>
-          <Box
-            className='sliderTour'
-            height='100%'
-            sx={boxSx}
-          >
-            <Carousel
-              {...getCarouselSettings(onBeforeChange)}
-              asNavFor={nav2}
-              ref={carousel1}
-              afterChange={onUpdateLastSlide}
-            >
-              {data.map((step, stepSlideIndex) => {
-                return slideIndex == stepSlideIndex ? (
-                  <View
-                    title={step.title}
-                    lessonType={lessonType}
-                    key={step.id}
-                    type={step.type}
-                    body={step.body}
-                    integrations={integrations}
-                    connectIntegrations={connectIntegrations}
-                    stepBgColor={step.bg_color}
-                  />
-                ) : (
-                  <div key={step.id}></div>
-                )
-              })}
-            </Carousel>
-          </Box>
-
+          {slider}
           <NextStep
             handleNext={handleNext}
             handlePrev={handlePrev}
