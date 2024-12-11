@@ -90,7 +90,7 @@ export const codePanelSlice = createSlice({
     ): void => {
       state.prevLessonCode = payload
     },
-    toggleInstructions: (
+    toggleInstrations: (
       state,
       { payload }: PayloadAction<PickedStoreItem<'isInstructionsHidden'>>
     ): void => {
@@ -134,7 +134,7 @@ export const {
   setUnitId,
   setCourseId,
   setLessonId,
-  toggleInstructions,
+  toggleInstrations,
   toggleBrowser,
   toggleRealtimeCodeHidden,
   setCode,
