@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
+import { toggleBrowser, toggleInstructions } from '@/redux/slices/code-panel-global'
 import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'
 import { TAB_TITLES } from '@/sections/code-panel/components/body/consts'
@@ -64,7 +64,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   }
 
   const openInstruction = () => {
-    dispatch(toggleInstrations(false))
+    dispatch(toggleInstructions(false))
   }
 
   const openPreview = () => {
