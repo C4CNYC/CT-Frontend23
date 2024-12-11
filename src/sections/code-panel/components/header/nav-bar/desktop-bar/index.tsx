@@ -3,7 +3,7 @@ import { type FC, type ReactNode } from 'react'
 import { Stack } from '@mui/system'
 import { useDispatch } from 'react-redux'
 
-import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
+import { toggleBrowser, toggleInstructions } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
@@ -37,7 +37,7 @@ const DesktopBar: FC<IDesktopBar> = ({
 
   const onChangeColumnVisability = (value: boolean) => {
     dispatch(toggleBrowser(value))
-    dispatch(toggleInstrations(value))
+    dispatch(toggleInstructions(value))
   }
 
   return (
