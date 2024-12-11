@@ -35,7 +35,10 @@ export function useLocales(): IUseLocals {
     try {
       await i18n.changeLanguage(newlang)
       onChangeDirectionByLang(newlang)
-    } catch (e: any) {}
+    } catch (e: any) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+    }
   }
 
   return {
