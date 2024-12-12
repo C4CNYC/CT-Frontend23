@@ -22,6 +22,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
     const logo = useMemo(() => {
       switch (data?.tenant) {
         case 'codejika':
+        case 'gurukul':
           return (
             <Box
               ref={ref}
