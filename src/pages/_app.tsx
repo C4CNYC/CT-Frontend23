@@ -52,6 +52,11 @@ const icons: Record<string, Record<string, string>> = {
     appleTouchIconUrl: '/favicon/favicon_jika.ico',
     favicon32x32: '/favicon/favicon-32x32.png',
   },
+  gurukul: {
+    favicon16x16: '/favicon/gcc-logo circle-favicon.png',
+    appleTouchIconUrl: '/favicon/gcc-logo circle-favicon.png',
+    favicon32x32: '/favicon/gcc-logo circle-favicon.png',
+  },
 }
 
 export default function MyApp(props: MyAppProps): React.ReactElement {
