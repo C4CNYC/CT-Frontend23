@@ -866,8 +866,7 @@ const en = {
   ai_gen_persona_tone_3: 'Lively',
   ai_gen_persona_tone_4: 'Boring',
   ai_gen_persona_context_title: 'Context',
-  ai_gen_persona_context_placeholder: 'Any additional context or preferences within the prompt.',
-
+  ai_gen_persona_context_placeholder: 'Contextual details like "focus on teamwork skills".',
   ai_gen_addons_title: 'Add any of the following to your lesson?',
   ai_gen_addons_text_main_1: 'Quiz  |',
   ai_gen_addons_text_sub_1: 'Multiple-choice, matching or fill-in-the-blanks.',
@@ -894,8 +893,8 @@ const en = {
   ai_gen_loading_state_5: 'Receiving the lesson',
   ai_gen_loading_state_6: 'Finishing up',
 
-  ai_gen_lng_select_title: 'Select from list or type the name of any language',
-  ai_gen_lng_placeholder: 'Other Language',
+  ai_gen_lng_select_title: 'Select lesson language',
+  ai_gen_lng_placeholder: 'Other languages or dialects',
 
   // School type
   primary_school: 'Primary School',

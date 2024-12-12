@@ -165,11 +165,10 @@ const SimpleAiGenerate = ({
                   },
                 }}
               />
-              {!textFieldValue ? (
-                <Typography sx={{ color: '#616161', pl: 2, mt: { xs: 0, md: -2 } }}>
-                  {translate('ai_gen_simple_step_error_text')}
-                </Typography>
-              ) : null}
+
+              <Typography sx={{ color: '#616161', pl: 2, mt: { xs: 0, md: -2 } }}>
+                {!textFieldValue ? translate('ai_gen_simple_step_error_text') : '\u00A0'}
+              </Typography>
             </Stack>
             <Stack sx={BTN_CONTAINER_STYLES}>
               <Button
