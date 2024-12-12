@@ -27,6 +27,14 @@ export function unauthFileLocalStorageManger(rootKey: string) {
     const localStorageFiles = getLocalStorageFiles()
 
     for (const file of files) {
+      const fileWithSameName = Object.values(localStorageFiles).find(
+        (f) => f.name === file.name && f.extension === file.extension
+      )
+
+      if (fileWithSameName) {
+        continue
+      }
+
       if (!localStorageFiles[file.id]) {
         _addFile(file)
       }
