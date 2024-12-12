@@ -117,7 +117,13 @@ const FileModal: FC<FileModalProps> = ({
                       sx={styles.devIcon}
                       fileName={`${name}.${extension}`}
                     />
-                    {name}.{extension}
+                    <Typography
+                      variant='subtitle2'
+                      noWrap
+                      textOverflow='ellipsis'
+                    >
+                      {name}.{extension}
+                    </Typography>
                   </Button>
 
                   {isDeleteExist && (
