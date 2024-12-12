@@ -142,6 +142,16 @@ export default function LessonListItem({
                 e.stopPropagation()
               }}
             >
+              {step.cover ? (
+                <IconButton title='Cover Image'>
+                  <img
+                    src={step.cover}
+                    alt={step.title}
+                    width={24}
+                    height={24}
+                  />
+                </IconButton>
+              ) : null}
               <IconButton
                 onClick={() => {
                   onDublicate(step)
