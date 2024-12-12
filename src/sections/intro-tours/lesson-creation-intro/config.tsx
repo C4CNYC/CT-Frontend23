@@ -1,4 +1,6 @@
-export const LESSON_CREATION_INTRO = [
+import { Step } from 'react-joyride'
+
+export const LESSON_CREATION_INTRO: Step[] = [
   {
     target: '.lessonCreationStep1',
     title: <div>Hi there 👋🏼</div>,
@@ -30,6 +32,12 @@ export const LESSON_CREATION_INTRO = [
     title: <div>Preview Student View 👩‍🎓🔍</div>,
     content: <div>See how the slides look in the Coding Panel (Workspace). </div>,
     disableBeacon: true,
-    placement: 'left' as const,
+    placement: 'auto' as const,
+    styles: {
+      spotlight: {
+        marginTop: '-750px',
+        height: '850px',
+      },
+    },
   },
 ]
