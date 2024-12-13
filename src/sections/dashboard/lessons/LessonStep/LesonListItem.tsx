@@ -4,8 +4,8 @@ import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { Iconify, MenuPopover } from '@/components'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
@@ -158,17 +158,16 @@ export default function LessonListItem({
                   title='Cover Image'
                   sx={LessonListCoverImageStyles}
                 >
-                  <Image
+                  <LazyLoadImage
                     src={step.cover}
                     alt={step.title}
-                    width={24}
-                    height={24}
+                    style={{ width: 24, height: 24 }}
                   />
-                  <Image
+                  <LazyLoadImage
                     className='hoverShow'
                     src={step.cover}
                     alt={step.title}
-                    width={240}
+                    style={{ width: 240 }}
                   />
                 </IconButton>
               ) : null}
