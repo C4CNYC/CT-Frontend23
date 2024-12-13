@@ -1,11 +1,12 @@
 import { forwardRef, useMemo } from 'react'
 
 import { Box, BoxProps, Link } from '@mui/material'
-import Image from 'next/image'
 import NextLink from 'next/link'
 
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useSelector } from '@root/src/redux/store'
+
+import { Image } from '../image'
 
 export interface LogoProps extends BoxProps {
   disabledLink?: boolean
@@ -20,12 +21,11 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       return (
         <Box
           ref={ref}
-          component='div'
           sx={{
             width: 164,
-            height: 32,
             display: 'inline-flex',
             margin: '0 auto',
+            maxHeight: '200px',
             ...sx,
           }}
           {...other}
@@ -33,8 +33,6 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
           <Image
             src={tenant.logo}
             alt='CodeJika'
-            width={164}
-            height={33}
           />
         </Box>
       )

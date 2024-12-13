@@ -2,14 +2,26 @@ import { useEffect, useRef, useState } from 'react'
 
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
+import { useRouter } from 'next/router'
 
 import { useBoolean } from '../hooks/useBoolean'
+import { HomePageType } from '../redux/services/enums/administration.enum'
+import { useGetOrgHomePageQuery } from '../redux/services/public/tribe-public'
+import { PATH_AUTH } from '../routes/paths'
 import AIGenerateStepper from '../sections/on-boarding-register/teacher/ai-generete-stepper'
 
+const SLUG_PATTERN = /https?:\/\/([^.:/]+)/
+
 export default function AiGeneratePage(): React.ReactElement {
+  const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
   const [prompt, promptSet] = useState('')
   const [open, setOpen, setClose] = useBoolean(false)
+  const [slug, setSlug] = useState<null | string>(null)
+  const [page, setPage] = useState<string>('')
+
+  const { data } = useGetOrgHomePageQuery({ slug: slug as string }, { skip: !slug })
+
   useEffect(() => {
     if (containerRef.current) {
       // Query the injected HTML to find the field
@@ -23,18 +35,39 @@ export default function AiGeneratePage(): React.ReactElement {
         elGenerate.onclick = setOpen
       }
     }
+
+    const origin =
+      typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+    const originSlug = origin.match(SLUG_PATTERN)
+
+    if (originSlug) {
+      setSlug(originSlug[1])
+    }
   }, [])
 
-  // TODO - Add request to /org/:id/home-page to get the home page body
-  // if home_page_type === 'authorization' then redirect to /sign-up
-  // if home_page_type === 'custom' then render the home_page_body
-  // if home_page_type === 'default' then redirect to /sign-up
+  useEffect(() => {
+    if (!data) return
+    switch (data.home_page_type) {
+      case HomePageType.Authorization: {
+        router.push(PATH_AUTH.onBoardingStudent)
+      }
+      case HomePageType.Default: {
+        router.push(PATH_AUTH.onBoardingStudent)
+      }
+      case HomePageType.Custom: {
+        setPage(data.home_page_body ?? '')
+        localStorage.setItem('tenantName', slug ?? 'codetribe')
+      }
+    }
+  }, [data])
+
+  if (!page) return <></>
 
   return (
     <>
       <div
         ref={containerRef}
-        dangerouslySetInnerHTML={{ __html: '' }}
+        dangerouslySetInnerHTML={{ __html: page }}
       ></div>
 
       <Dialog

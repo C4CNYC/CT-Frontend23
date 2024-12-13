@@ -66,9 +66,12 @@ export default function OrgTableRow({
             justifyContent='center'
           >
             <Avatar
-              alt={'logo'}
+              variant='rounded'
+              alt='logo'
               src={logo ?? ''}
-            />
+            >
+              Logo
+            </Avatar>
           </Stack>
         </TableCell>
         <TableCell>
@@ -78,9 +81,12 @@ export default function OrgTableRow({
             justifyContent='center'
           >
             <Avatar
+              variant='rounded'
               alt={'min_logo'}
               src={min_logo ?? ''}
-            />
+            >
+              Mini
+            </Avatar>
           </Stack>
         </TableCell>
 
@@ -93,7 +99,9 @@ export default function OrgTableRow({
             <Avatar
               alt={'org_favicon'}
               src={favicon ?? ''}
-            />
+            >
+              Icon
+            </Avatar>
           </Stack>
         </TableCell>
 

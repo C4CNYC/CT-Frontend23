@@ -4,6 +4,7 @@ import { IClass } from '@/redux/interfaces/class.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 import { baseQueryWrapper } from '../helpers/base_query_wrapper'
+import { IAdministration } from '../interfaces/administration'
 
 export const publicApi = createApi({
   reducerPath: 'api/',
@@ -16,7 +17,13 @@ export const publicApi = createApi({
         method: 'GET',
       }),
     }),
+    getOrgHomePage: builder.query<IAdministration & BaseResponseInterface, { slug: string }>({
+      query: ({ slug }) => ({
+        url: `tenant/${slug}/home-page`,
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
-export const { useGetPublicTribeQuery } = publicApi
+export const { useGetPublicTribeQuery, useGetOrgHomePageQuery } = publicApi

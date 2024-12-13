@@ -70,7 +70,7 @@ const CustomCodeTab = ({ handleClose, code, id }: CustomCodeTabProps): React.Rea
             <Box sx={{ position: 'absolute', right: '2px', bottom: '2px' }}>
               <ModalCodeFullscreen
                 title={translate('add_custom_html_code')}
-                name='code'
+                name='home_page_body'
               />
             </Box>
           </Box>

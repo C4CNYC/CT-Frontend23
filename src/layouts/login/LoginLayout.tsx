@@ -5,7 +5,13 @@ import { Image } from '@/components/image'
 import { Logo } from '@/components/logo'
 import ThemeSwitcher from '@/components/theme-switcher'
 
-import { StyledRoot, StyledSection, StyledSectionBg, StyledSwitcher } from './styles'
+import {
+  StyledLogoCont,
+  StyledRoot,
+  StyledSection,
+  StyledSectionBg,
+  StyledSwitcher,
+} from './styles'
 
 interface Props {
   subtitle?: string
@@ -24,21 +30,9 @@ export default function LoginLayout({
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
       <StyledRoot>
         <StyledSection>
-          <Logo
-            sx={{
-              zIndex: 9,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              justifyContent: 'center',
-              width: '100%',
-              mt: {
-                xs: 1.5,
-                md: 5,
-              },
-            }}
-          />
+          <StyledLogoCont>
+            <Logo />
+          </StyledLogoCont>
           <Typography
             variant='h3'
             sx={{
@@ -68,7 +62,6 @@ export default function LoginLayout({
             src={illustration ?? '/assets/illustrations/auth-cat.png'}
             sx={{ maxWidth: 720 }}
           />
-
           <StyledSectionBg />
         </StyledSection>
         {children}
