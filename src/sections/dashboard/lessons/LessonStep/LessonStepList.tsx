@@ -36,10 +36,10 @@ import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 import { HTMLTemplate } from './CreateSlide/HTMLTemplate'
 import { WithAIDialog } from './CreateSlide/WithAIDialog'
 import LessonListItem from './LesonListItem'
+import { LessonListItemLoading } from './LessonListItemLoading'
 import { LessonContentContext } from './LessonStepContent/LessonContent.context'
 import SkeletonList from './Modals/SkeletonList'
 import SlideTemplateDialog from './slide-templates'
-import { LesonListItemLoading } from './LessonListItemLoading'
 
 type cloneExistingSlideDialogTypes =
   | ''
@@ -368,7 +368,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
                     index={i}
                   />
                 ))}
-                {<LesonListItemLoading />}
+                <LessonListItemLoading />
                 {provided.placeholder}
               </Stack>
             )}

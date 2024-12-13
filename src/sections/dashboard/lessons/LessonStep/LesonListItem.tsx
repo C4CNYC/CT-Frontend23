@@ -4,6 +4,7 @@ import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { Iconify, MenuPopover } from '@/components'
@@ -157,13 +158,13 @@ export default function LessonListItem({
                   title='Cover Image'
                   sx={LessonListCoverImageStyles}
                 >
-                  <img
+                  <Image
                     src={step.cover}
                     alt={step.title}
                     width={24}
                     height={24}
                   />
-                  <img
+                  <Image
                     className='hoverShow'
                     src={step.cover}
                     alt={step.title}
