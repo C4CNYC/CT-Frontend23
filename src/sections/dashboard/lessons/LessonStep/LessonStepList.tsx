@@ -368,7 +368,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
                     index={i}
                   />
                 ))}
-                <LessonListItemLoading />
+                {false?<LessonListItemLoading />:null}
                 {provided.placeholder}
               </Stack>
             )}
