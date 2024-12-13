@@ -76,6 +76,11 @@ export interface IModuleContent {
   teacher_forum?: string
 }
 
+export enum LessonType {
+  PRACTICAL = 'practical',
+  EXERCISE = 'exercise',
+}
+
 export interface ILesson {
   active: boolean
   draft: boolean
@@ -88,7 +93,7 @@ export interface ILesson {
   skills: ISkill[]
   independent?: boolean
   contents: ILessonContent[]
-  type: 'practical' | 'exercise'
+  type: LessonType
   slug: string
 }
 

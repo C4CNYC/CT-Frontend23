@@ -125,6 +125,7 @@ export default function AIGenerateStepper({
       grade: data.RgradesR,
       language: data.RcustomLanguageR || data.RlessonLanguageR,
       tone: data.RcustomToneR || data.RtoneR,
+      context: data.RcontextR,
       newLessonId: '',
     }
     if (!profile) {
@@ -200,7 +201,6 @@ export default function AIGenerateStepper({
             closeModal={closeModal}
             updateForm={methods.setValue as any}
             getFormValue={methods.getValues as any}
-            isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
             isTrackSelected={Boolean(methods.watch('RtrackR'))}
           />
         )}
@@ -209,6 +209,7 @@ export default function AIGenerateStepper({
             nextStep={nextStep}
             prevStep={prevStep}
             closeModal={closeModal}
+            isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
           />
         )}
         {activeStep === 3 && (

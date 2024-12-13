@@ -1,14 +1,13 @@
-import { type FC, useContext, useEffect, useState } from 'react'
+import { type FC, useEffect, useMemo, useState } from 'react'
 
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
-import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
 import SkeletonViewBlock from '../skeleton-view-box'
 
 export interface CodeDocument {
-  htmlBody?: string[]
-  cssBody?: string[]
-  jsBody?: string[]
+  htmlBody?: string
+  cssBody?: string
+  jsBody?: string
 }
 
 interface BrowserViewProps {
@@ -25,17 +24,12 @@ enum TagNames {
   Script = 'script',
 }
 
-const getBody = (bodyList: string[], tagName: TagNames): string =>
-  bodyList.reduce(
-    (res: string, body: string) => `
-    ${res}
-
+const getBody = (body: string, tagName: TagNames): string =>
+  `
     <${tagName}>
       ${body}
     </${tagName}>
-  `,
-    ''
-  )
+  `
 
 const BrowserView: FC<BrowserViewProps> = ({
   document,
@@ -46,7 +40,7 @@ const BrowserView: FC<BrowserViewProps> = ({
   reloadIframe,
 }) => {
   const [docSrc, setDocSrc] = useState('')
-  const { reloadIframeKey } = useContext(CodePanelContext)
+  const [iframeProcess, setIframeProcess] = useState(false)
 
   const IFRAME_STYLE = {
     border: 0,
@@ -60,6 +54,8 @@ const BrowserView: FC<BrowserViewProps> = ({
       return
     }
 
+    setIframeProcess(true)
+
     const fontPath = '/fonts/index.css'
     const fontCssLink = `<link rel="stylesheet" href="${fontPath}">`
     const { htmlBody = [], cssBody = [], jsBody = [] } = document
@@ -72,27 +68,34 @@ const BrowserView: FC<BrowserViewProps> = ({
       <html style="height: 100%">
         <head>
           ${fontCssLink}
-          ${getBody(cssBody, TagNames.Style)}
+          ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
         </head>
         <body style="height: 100%; margin: 0;" id="pageLesson">
         <div class="lesson-page " style=${stepBgColor ? 'background-color:' + stepBgColor : ''}>
-          ${(document as any).length ? document : htmlBody.join('\n')}
+          ${(document as any).length ? document : htmlBody}
         </div>
         </body>
       </html>
     `)
+
+    setTimeout(() => {
+      setIframeProcess(false)
+    }, 100)
   }, [document])
 
-  return document ? (
-    <iframe
-      key={iframeKey}
-      srcDoc={docSrc}
-      style={IFRAME_STYLE}
-    />
-  ) : (
-    <SkeletonViewBlock isOpenHeader={isOpenHeader} />
+  const IFrame = useMemo(
+    () =>
+      !iframeProcess ? (
+        <iframe
+          srcDoc={docSrc}
+          style={IFRAME_STYLE}
+        />
+      ) : null,
+    [docSrc, iframeProcess]
   )
+
+  return document ? IFrame : <SkeletonViewBlock isOpenHeader={isOpenHeader} />
 }
 
 export default BrowserView

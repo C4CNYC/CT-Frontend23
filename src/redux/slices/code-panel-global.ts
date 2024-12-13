@@ -9,6 +9,7 @@ export interface ContentValidation {
 }
 export interface IGlobalCodePanel {
   slideIndex: number
+  slideId: string
   solutionCode: string
   nextStepAble: boolean
   lessonId?: string
@@ -28,6 +29,7 @@ export interface IGlobalCodePanel {
 
 const initialState: IGlobalCodePanel = {
   slideIndex: 0,
+  slideId: '',
   solutionCode: '',
   lessonId: undefined,
   unitId: undefined,
@@ -54,10 +56,14 @@ export const codePanelSlice = createSlice({
     setSlideIndex: (state, { payload }: PayloadAction<PickedStoreItem<'slideIndex'>>): void => {
       state.slideIndex = payload
     },
+    setSlideId: (state, { payload }: PayloadAction<PickedStoreItem<'slideId'>>): void => {
+      state.slideId = payload
+    },
     setSolutionCode: (state, { payload }: PayloadAction<PickedStoreItem<'solutionCode'>>): void => {
       state.solutionCode = payload
     },
     setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<'nextStepAble'>>): void => {
+      if (state.nextStepAble === payload) return
       state.nextStepAble = payload
     },
     setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<'unitId'>>): void => {
@@ -122,6 +128,7 @@ export const codePanelSlice = createSlice({
 
 export const {
   setSlideIndex,
+  setSlideId,
   setSolutionCode,
   setNextStepAble,
   setUnitId,

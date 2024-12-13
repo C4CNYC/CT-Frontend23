@@ -49,7 +49,7 @@ const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, 
       <Box sx={BOX_STYLES}>
         <Typography
           variant='body1'
-          sx={TYP_COLOR}
+          sx={{ ...TYP_COLOR, maxWidth: '20rem' }}
         >
           {tips}
         </Typography>

@@ -16,15 +16,13 @@ import {
   setLessonId,
   setSlideIndex,
   setUnitId,
-  setUsersStatus,
 } from '@/redux/slices/code-panel-global'
-import { type RootState, useSelector } from '@/redux/store'
+import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
-import { ILessonUserStatus } from '@/types'
 import type { BaseResponseInterface } from '@/utils'
 import generateId from '@/utils/generate-id'
 import { useTranslate } from '@/utils/translateHelper'
@@ -86,15 +84,12 @@ export default function CodePanelPage(): ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
   const { query, push, replace } = useRouter()
 
-  const lessonIdFromRoute = query.lessonId
-
   const [render, setRender] = useState(true)
   const [user, setUser] = useState<ILocalUser>()
   const [showTour, setShowTour] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
 
   const isShowTour = useSelector((state) => state.tour.isStarted)
-  const usersStatus = useSelector((state: RootState) => state.codePanelGlobal.usersStatus)
 
   const { data: courseContent, isLoading: isLoadingCourseContent } = useGetPublicCourseContentQuery(
     { id: query.courseId as string },
@@ -172,9 +167,11 @@ export default function CodePanelPage(): ReactElement | null {
             lessonId: pathStr[1],
           })
         ).then(() => {
-          dispatch(setUnitId(pathStr[0]))
-          dispatch(setLessonId(pathStr[1]))
           dispatch(setSlideIndex(0))
+          setTimeout(() => {
+            dispatch(setUnitId(pathStr[0]))
+            dispatch(setLessonId(pathStr[1]))
+          }, 100)
         })
       } else {
         enqueueSnackbar(translate('messages_course_complete'))
@@ -182,10 +179,6 @@ export default function CodePanelPage(): ReactElement | null {
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-  }
-
-  const _setUsersStatus = (cb: (value: ILessonUserStatus[]) => ILessonUserStatus[]) => {
-    dispatch(setUsersStatus(cb(usersStatus)))
   }
 
   useEffect(() => {
@@ -214,7 +207,6 @@ export default function CodePanelPage(): ReactElement | null {
       return
     }
 
-    // dispatch(setLessonId(lessonId as string))
     dispatch(setUnitId(unitId as string))
     dispatch(setCourseId(courseId as string))
   }, [courseContent, query.courseId, query.unitId, query.lessonId])

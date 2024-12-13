@@ -10,8 +10,11 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import type { ILesson } from '@/redux/interfaces/content.interface'
-import { useGetCourseContentQuery } from '@/redux/services/manager/challenges-student'
+import { LessonType, type ILesson } from '@/redux/interfaces/content.interface'
+import {
+  useGetCourseContentQuery,
+  useGetCoursePublicContentQuery,
+} from '@/redux/services/manager/challenges-student'
 import {
   useGetContentCheckersQuery,
   useGetLessonContentStudentQuery,
@@ -23,7 +26,6 @@ import {
   setLessonId,
   setSlideIndex,
   setUnitId,
-  setPrevLessonCode,
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -34,6 +36,8 @@ import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
+import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
+import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
@@ -72,6 +76,7 @@ export default function CodePanelLayout(): ReactElement | null {
   const translate = useTranslate()
   const { user } = useAuthContext()
   const handle = useFullScreenHandle()
+  const { isAuthenticated } = useAuthContext()
   const { enqueueSnackbar } = useSnackbar()
 
   const [render, setRender] = useState(true)
@@ -83,18 +88,34 @@ export default function CodePanelLayout(): ReactElement | null {
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
-  const codeState = useSelector((state) => state.codePanelGlobal.code)
 
   const [completeLesson] = useCompleteLessonMutation()
+  const [carryOverFiles] = useLessonFilesCarryOverMutation()
 
   const lessonIdFromRoute = Array.isArray(router.query.lessonId)
     ? router.query.lessonId.join()
     : router.query.lessonId || ''
 
-  const { data: courseContent, isLoading: isLoadingCourseContent } = useGetCourseContentQuery(
-    { id: router.query.courseId as string },
-    { skip: !router.query.courseId || !profile }
+  const { data: courseAuthContent, isLoading: isLoadingAuthCourseContent } =
+    useGetCourseContentQuery(
+      { id: router.query.courseId as string },
+      { skip: !router.query.courseId || !isAuthenticated }
+    )
+
+  const { data: unitContent, isLoading: isLoadingUnitContent } = useGetPublicModuleContentQuery(
+    { id: router.query.unitId as string },
+    { skip: !!router.query.courseId || !isAuthenticated || !router.query.unitId }
   )
+
+  const { data: coursePublicContent, isLoading: isLoadingPublicCourse } =
+    useGetCoursePublicContentQuery(
+      { id: router.query.courseId as string },
+      { skip: !router.query.courseId || isAuthenticated }
+    )
+
+  const courseContent = courseAuthContent || coursePublicContent || unitContent
+  const isLoadingCourseContent =
+    isLoadingAuthCourseContent || isLoadingPublicCourse || isLoadingUnitContent
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
     { id: router.query.lessonId as string },
@@ -140,7 +161,8 @@ export default function CodePanelLayout(): ReactElement | null {
   }
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
-    if (!router.query.courseId) return
+    if (!router.query.courseId && !unitId) return
+
     void router.push(
       STUDENT_PATH_DASHBOARD.codePanel.workSpace({
         courseId: router.query.courseId as string,
@@ -183,7 +205,7 @@ export default function CodePanelLayout(): ReactElement | null {
         ? lastLessonId
         : courseContent.units[0].lessons[0].id ?? false)
 
-    if (!courseId || !unitId || !lessonId) {
+    if (!courseId && !unitId && !lessonId) {
       void router.replace(STUDENT_PATH_DASHBOARD.page404)
       return
     }
@@ -202,6 +224,12 @@ export default function CodePanelLayout(): ReactElement | null {
     dispatch(setLessonId(lessonId as string))
     dispatch(setUnitId(unitId as string))
     dispatch(setCourseId(courseId as string))
+
+    return () => {
+      dispatch(setLessonId(''))
+      dispatch(setUnitId(''))
+      dispatch(setCourseId(''))
+    }
   }, [courseContent, router.query.courseId, router.query.unitId, router.query.lessonId])
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
@@ -236,10 +264,19 @@ export default function CodePanelLayout(): ReactElement | null {
         router.query.lessonId as string,
         router.query.unitId as string
       )
-      dispatch(setPrevLessonCode(codeState))
 
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
+        if (
+          nextLessonInfo.type === LessonType.PRACTICAL &&
+          !nextLessonInfo.isIndependent &&
+          lesson?.type === LessonType.PRACTICAL
+        ) {
+          await carryOverFiles({
+            lessonId: nextLessonInfo.lessonId as string,
+            prevLessonId: lesson.id as string,
+          })
+        }
         router
           .push(
             STUDENT_PATH_DASHBOARD.codePanel.workSpace({

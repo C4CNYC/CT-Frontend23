@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { Box, Button, IconButton, Stack, StackProps, Typography } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 import { useDropzone } from 'react-dropzone'
@@ -42,11 +44,13 @@ export function Upload({
   onRemove,
   onRemoveAll,
   sx,
+  onDrop,
   ...other
 }: UploadProps): React.ReactElement | null {
   const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
     multiple,
     disabled,
+    onDrop,
     ...other,
   })
 
@@ -55,6 +59,29 @@ export function Upload({
   const hasFiles = files && multiple && files.length > 0
 
   const isError = isDragReject || !!error
+
+  useEffect(() => {
+    const handlePaste = (event: ClipboardEvent) => {
+      let fileInputRef: File[] = []
+      const items = event.clipboardData?.items || []
+      for (let i = 0; i < items.length; i++) {
+        let item = items[i]
+        if (item.type.startsWith('image/')) {
+          const blob = item.getAsFile()
+          if (blob && fileInputRef) {
+            const dataTransfer = new DataTransfer()
+            dataTransfer.items.add(blob)
+            fileInputRef.push(blob)
+          }
+        }
+      }
+      if (onDrop && fileInputRef.length) onDrop(fileInputRef, [], new Event('drop'))
+    }
+    document.addEventListener('paste', handlePaste)
+    return () => {
+      document.removeEventListener('paste', handlePaste)
+    }
+  }, [])
 
   return (
     <Box sx={{ width: 1, position: 'relative', ...sx }}>
@@ -194,7 +221,7 @@ function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
 
         <Typography
           variant='body2'
-          sx={{ color: 'text.secondary' }}
+          sx={{ color: 'text.secondary', whiteSpace: 'pre-line' }}
         >
           {translate('image_drope_file')}
         </Typography>

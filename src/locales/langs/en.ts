@@ -228,7 +228,9 @@ const en = {
 
   // image upload
   image_choose_image: 'Choose image',
-  image_drope_file: 'Drop files or click here',
+  image_drope_file: `Drop files 
+   Paste screenshot
+   Click here`,
 
   // messages
   messages_success: 'Success',
@@ -274,6 +276,8 @@ const en = {
   messages_chalage_comleted: 'Challange successfully completed',
   messages_course_doesnt_exist: "Course doesn't exist",
   messages_lesson_removed: 'Lesson removed from the module',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'Skill name is required',
@@ -553,6 +557,8 @@ const en = {
   lessons_settings: 'Lesson Settings',
   lessons_starter_code: 'Starter Code',
   lessons_starter_code_from_previous: 'Copy from the previous lesson',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Integrations',
@@ -862,8 +868,7 @@ const en = {
   ai_gen_persona_tone_3: 'Lively',
   ai_gen_persona_tone_4: 'Boring',
   ai_gen_persona_context_title: 'Context',
-  ai_gen_persona_context_placeholder: 'Any additional context or preferences within the prompt.',
-
+  ai_gen_persona_context_placeholder: 'Contextual details like "focus on teamwork skills".',
   ai_gen_addons_title: 'Add any of the following to your lesson?',
   ai_gen_addons_text_main_1: 'Quiz  |',
   ai_gen_addons_text_sub_1: 'Multiple-choice, matching or fill-in-the-blanks.',
@@ -890,8 +895,8 @@ const en = {
   ai_gen_loading_state_5: 'Receiving the lesson',
   ai_gen_loading_state_6: 'Finishing up',
 
-  ai_gen_lng_select_title: 'Select from list or type the name of any language',
-  ai_gen_lng_placeholder: 'Other Language',
+  ai_gen_lng_select_title: 'Select lesson language',
+  ai_gen_lng_placeholder: 'Other languages or dialects',
 
   // School type
   primary_school: 'Primary School',
@@ -941,6 +946,7 @@ const en = {
   slide_content_updated: 'Content updated',
   slide_standard: 'Standard',
   slide_select_format: 'Select slide format',
+  slide_switch: 'Switch to other slide',
 
   // Share lesson modal
   share_modal_title: 'Share',
@@ -1045,6 +1051,18 @@ const en = {
   btn_group_back: 'BACK',
   btn_group_skip: 'SKIP',
   btn_group_tooltip: 'Please complete all tasks to continue (or skip, if available.)',
+
+  //Add file modal
+  file_manager_title: 'Files',
+  add_file_madal_title: 'Add file',
+  add_file_btn: 'Add file',
+  file_extension_label: 'File extension:',
+  file_name_label: 'File name:',
+  file_with_same_name_and_extension_exists: 'File with same name and extension already exists',
+  file_name_should_not_contain_dots: 'File name should not contain dots',
+  delete_file_confirm_1: 'Are you sure you want to delete',
+  delete_file_confirm_2: 'file?',
+  delete_file_btn: 'Delete file',
 
   // Timer
   timer_minute: 'Minute',

@@ -1,5 +1,5 @@
 import { Unit } from '@/redux/interfaces/challenges.interface'
-import { ILesson } from '@/redux/interfaces/content.interface'
+import { ILesson, LessonType } from '@/redux/interfaces/content.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 export function getNextLessonId(
@@ -10,6 +10,8 @@ export function getNextLessonId(
   path: string
   lessonId: string
   unitId: string
+  type: LessonType
+  isIndependent?: boolean
 } | null {
   const units = courseContent.map((c) => c.id)
   const content = courseContent.reduce<Record<string, Array<ILesson & BaseResponseInterface>>>(
@@ -26,6 +28,8 @@ export function getNextLessonId(
       path: `${currentUnitId}/${content[currentUnitId][lessonIndex + 1].id}`,
       unitId: currentUnitId,
       lessonId: content[currentUnitId][lessonIndex + 1].id,
+      type: content[currentUnitId][lessonIndex + 1].type,
+      isIndependent: content[currentUnitId][lessonIndex + 1].independent,
     }
   }
   if (moduleIndex + 1 === units.length) return null
@@ -34,5 +38,7 @@ export function getNextLessonId(
     path: `${nextUnitIndex}/${content[nextUnitIndex][0].id}`,
     unitId: nextUnitIndex,
     lessonId: content[nextUnitIndex][0].id,
+    type: content[nextUnitIndex][0].type,
+    isIndependent: content[nextUnitIndex][0].independent,
   }
 }

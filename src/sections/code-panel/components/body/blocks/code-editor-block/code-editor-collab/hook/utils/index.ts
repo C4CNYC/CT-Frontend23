@@ -4,10 +4,10 @@ import { javascript } from '@codemirror/lang-javascript'
 import { LanguageSupport } from '@codemirror/language'
 import { EditorView } from '@uiw/react-codemirror'
 
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { getFileExtension } from '@root/src/utils/getFileExtension'
 
 import { Extensions } from '../constants'
-import type { File } from '../requests'
 
 export const getSelectionRange = (view: EditorView | null) => {
   if (view == null) {
@@ -25,8 +25,10 @@ const langMap = {
   [Extensions.Js]: () => javascript(),
 }
 
-export const language = ({ name }: File): LanguageSupport[] => {
-  const extension = getFileExtension(name)
-
-  return extension != null ? [langMap[extension as keyof typeof langMap]()] : []
+export const language = (file: StudentFile): LanguageSupport[] => {
+  if (file) {
+    const extension = getFileExtension(file.extension)
+    return extension != null ? [langMap[extension as keyof typeof langMap]()] : []
+  }
+  return []
 }
