@@ -368,7 +368,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
                     index={i}
                   />
                 ))}
-                {false ? <LessonListItemLoading /> : null}
+                {newlyCreated && contentPullCount > 0 ? <LessonListItemLoading /> : null}
                 {provided.placeholder}
               </Stack>
             )}
