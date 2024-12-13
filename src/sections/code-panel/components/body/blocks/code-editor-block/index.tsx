@@ -59,8 +59,8 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const codeRef = useRef(code)
   const openPopoverTimer = useRef<NodeJS.Timeout | null>(null)
   const closePopoverTimer = useRef<NodeJS.Timeout | null>(null)
-  const [isOpenPopover, setIsOpenPopover] = useState<boolean | null>(null)
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
+  const [isOpenPopover, setIsOpenPopover] = useState<boolean | null>(null)
 
   const codeState = useSelector((state) => state.codePanelGlobal.code)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
@@ -122,7 +122,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         contentId={contentId}
       />
 
-      {Boolean(validations?.length) && (
+      {Boolean(validations?.length) && Boolean(selectedContent?.checkers) && (
         <Checkers
           contentId={contentId}
           checkers={
