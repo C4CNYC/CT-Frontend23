@@ -553,6 +553,14 @@ const ar = {
   lessons_practical: 'عملي',
   lessons_exercise: 'يمارس',
   lessons_inependent_lesson: 'درس مستقل',
+  lessons_active_tooltip:
+    'The lesson will show in the catalog or is shareable to the class or in a Quest.',
+  lessons_autoRun_tooltip:
+    'The browser will update on every keystroke. Only available to html files.',
+  lesson_lock_tooltip:
+    'Editing of this lesson is locked until lock is removed. This protects from accidental changes to key content.',
+  lessons_autoRun: 'Auto-run Tests',
+  lessons_lock: 'Lesson Locked',
   lessons_settings: 'إعدادات الدرس',
   lessons_starter_code: 'كود البداية',
   lessons_starter_code_from_previous: 'نسخ من الدرس السابق',
