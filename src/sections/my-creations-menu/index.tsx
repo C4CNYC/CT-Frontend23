@@ -4,8 +4,8 @@ import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import {
-  useCreateLessonMutation,
   useCreateByCloningLessonMutation,
+  useCreateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
@@ -29,7 +29,7 @@ export default function MyCreationsMenu(): React.ReactElement {
   const isDesktop = useResponsive('up', 'md')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const router = useRouter()
-  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
+  const [createLesson] = useCreateLessonMutation()
   const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
     useCreateByCloningLessonMutation()
 
@@ -43,16 +43,6 @@ export default function MyCreationsMenu(): React.ReactElement {
     setOpenPopover(null)
   }
 
-  const createNewLesson = async () => {
-    const lesson = await createLesson({
-      name: translate('my_new_lesson') as string,
-      description: translate('my_lesson_description') as string,
-      active: true,
-      duration: '60',
-    }).unwrap()
-    return lesson
-  }
-
   async function createByCloningLessonHandler() {
     let data = await createByCloningLesson()
     if ((data as any)?.data?.id) {
@@ -64,6 +54,16 @@ export default function MyCreationsMenu(): React.ReactElement {
         }
       )
     }
+  }
+
+  const createNewLesson = async () => {
+    const lesson = await createLesson({
+      name: translate('my_new_lesson') as string,
+      description: translate('my_lesson_description') as string,
+      active: true,
+      duration: '60',
+    }).unwrap()
+    return lesson
   }
 
   return (

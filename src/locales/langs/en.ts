@@ -546,6 +546,8 @@ const en = {
   lesson: 'Lesson',
   lessons_list: 'Lessons List',
   lessons_create_lesson: 'Create Lesson',
+  lessons_create_lesson_desc: 'Select a template to start your lesson',
+  lesson_cloned_msg: 'Lesson created successfully',
   lessons_edit_lesson: 'Edit Lesson',
   lessons_name: 'Lesson Name',
   lessons_description: 'Lesson description',
