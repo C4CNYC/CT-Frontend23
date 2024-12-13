@@ -13,6 +13,7 @@ import {
   Tab,
   Tabs,
 } from '@mui/material'
+import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
 import * as _ from 'lodash-es'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
@@ -24,6 +25,7 @@ import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { LessonContentComplexity } from '@/redux/services/enums/lesson-content-complexity.enum'
 import { useUpdateLessonContentMutation } from '@/redux/services/manager/lesson-content-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { MediaModal } from '@root/src/sections/dashboard/medias/MediaModal'
 
 import { GeneralTab } from './GeneralTab'
 import PreloadTab from './preload-tab'
@@ -40,6 +42,7 @@ interface FormValuesProps {
   solution_body: string
   body?: string
   type?: LessonContentType
+  cover?: string
 }
 
 interface Props {
@@ -88,6 +91,7 @@ export default function Preferences({
     complexity: LessonContentComplexity.Beginner,
     slug: '',
     title: '',
+    cover: '',
     description: '',
     preload_body: '',
     solution_body: '',
@@ -115,6 +119,10 @@ export default function Preferences({
     defaultValues,
   })
 
+  const insertImage = (imageAttributes: any) => {
+    methods.setValue('cover', imageAttributes.src)
+  }
+
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (!data.body) {
       delete data.body
@@ -122,7 +130,7 @@ export default function Preferences({
     try {
       await updateLessonContent({
         lessonId,
-        ..._.omit(data, ['createdAt', 'updatedAt', 'cover']),
+        ..._.omit(data, ['createdAt', 'updatedAt']),
         type: defaultValues?.type,
         id: contentId,
       }).unwrap()
@@ -184,6 +192,10 @@ export default function Preferences({
                     label={translate('tips')}
                     {...a11yProps(3)}
                   />
+                  <Tab
+                    label={translate('cover')}
+                    {...a11yProps(4)}
+                  />
                 </Tabs>
               </Box>
               <TabPanel
@@ -228,6 +240,22 @@ export default function Preferences({
                   name='tips'
                   label={translate('tips')}
                 />
+              </TabPanel>
+              <TabPanel
+                value={value}
+                index={4}
+              >
+                <RHFTextField
+                  rows={3}
+                  name='cover'
+                  label={translate('cover')}
+                />
+                <MediaModal insertImage={insertImage}>
+                  <Button>
+                    <TbPhoto size={20} />
+                    Insert Media
+                  </Button>
+                </MediaModal>
               </TabPanel>
             </DialogContent>
 
