@@ -228,7 +228,9 @@ const en = {
 
   // image upload
   image_choose_image: 'Choose image',
-  image_drope_file: 'Drop files or click here',
+  image_drope_file: `Drop files 
+   Paste screenshot
+   Click here`,
 
   // messages
   messages_success: 'Success',
