@@ -182,7 +182,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
           >
             <CustomCodeTab
               handleClose={handleClose}
-              code={org?.code}
+              code={org?.home_page_body}
               id={org?.id as string}
             />
           </TabPanel>

@@ -16,7 +16,7 @@ interface CustomCodeTabProps {
 }
 
 interface FormValuesProps {
-  code: string
+  home_page_body: string
 }
 
 const CustomCodeTab = ({ handleClose, code, id }: CustomCodeTabProps): React.ReactElement => {
@@ -26,13 +26,13 @@ const CustomCodeTab = ({ handleClose, code, id }: CustomCodeTabProps): React.Rea
   const [updateOrg, { isLoading: isUpdating }] = useUpdateOrgMutation()
 
   const CreateOrgSchema = Yup.object().shape({
-    code: Yup.string().required(),
+    home_page_body: Yup.string(),
   })
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateOrgSchema),
     defaultValues: {
-      code: code ?? '',
+      home_page_body: code ?? '',
     },
   })
 
@@ -63,7 +63,7 @@ const CustomCodeTab = ({ handleClose, code, id }: CustomCodeTabProps): React.Rea
           <Box sx={{ position: 'relative' }}>
             <RHFCode
               placeholder={translate('add_custom_html_code')}
-              name='code'
+              name='home_page_body'
               height='180px'
               extensions={[]}
             />
