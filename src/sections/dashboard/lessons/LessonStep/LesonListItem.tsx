@@ -26,6 +26,16 @@ interface Props {
   onChangeSlide: (stepId: string) => VoidFunction
 }
 
+const LessonListCoverImageStyles = {
+  '& .hoverShow ': {
+    display: 'none',
+    position: 'absolute',
+    zIndex: 197,
+    maxWidth: 240,
+  },
+  '&:hover .hoverShow ': { display: 'block' },
+}
+
 export default function LessonListItem({
   onRemove,
   onDublicate,
@@ -143,12 +153,21 @@ export default function LessonListItem({
               }}
             >
               {step.cover ? (
-                <IconButton title='Cover Image'>
+                <IconButton
+                  title='Cover Image'
+                  sx={LessonListCoverImageStyles}
+                >
                   <img
                     src={step.cover}
                     alt={step.title}
                     width={24}
                     height={24}
+                  />
+                  <img
+                    className='hoverShow'
+                    src={step.cover}
+                    alt={step.title}
+                    width={240}
                   />
                 </IconButton>
               ) : null}
