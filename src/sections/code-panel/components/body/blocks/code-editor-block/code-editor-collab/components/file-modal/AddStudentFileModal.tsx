@@ -96,7 +96,7 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
         }}
       >
         <DialogTitle>
-          {translate('add_file_madal_title')}
+          {translate('add_file_modal_title')}
           <IconButton
             sx={{
               position: 'absolute',

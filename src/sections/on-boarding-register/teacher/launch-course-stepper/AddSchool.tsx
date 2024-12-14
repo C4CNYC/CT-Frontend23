@@ -136,7 +136,7 @@ export default function AddSchool(): React.ReactElement {
             variant='h3'
             sx={{ display: 'flex', alignItems: 'flex-end', gap: 2 }}
           >
-            {translate('schools_add_aschool')}
+            {translate('schools_add_school')}
             <Typography
               sx={{ display: 'inline-flex' }}
               variant='h2'

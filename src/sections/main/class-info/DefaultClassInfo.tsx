@@ -106,7 +106,7 @@ export default function DefaultClassInfo({
           file,
         }).unwrap()
       }
-      enqueueSnackbar(translate('classes_class_updeted'))
+      enqueueSnackbar(translate('classes_class_updated'))
     } catch (error: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }

@@ -323,7 +323,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
               }}
             >
               <FiSettings size='20px' />
-              {translate('lesson_settup_settings')}
+              {translate('lesson_setup_settings')}
             </Button>
           </CreateLessonDialog>
 
@@ -438,7 +438,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
             setWithAIDialogOpen(true)
           }}
         >
-          {translate('slide_add_promt_ai')}
+          {translate('slide_add_prompt_ai')}
           <ListItemIcon sx={{ pl: 2 }}>
             <Iconify
               icon='mingcute:ai-line'

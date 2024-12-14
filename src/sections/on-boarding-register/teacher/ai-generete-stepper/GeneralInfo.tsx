@@ -148,7 +148,7 @@ export function GeneralInfo({
           sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          {translate('ai_gen_progr_lng_title')}
+          {translate('ai_gen_programming_lng_title')}
           <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
         </Typography>
         <RHFToggleButtonGroup

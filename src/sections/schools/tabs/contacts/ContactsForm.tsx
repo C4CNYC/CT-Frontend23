@@ -194,7 +194,7 @@ export default function ContactsForm({
               variant='h6'
               sx={{ mb: 2 }}
             >
-              {translate('contacts_tab_buling_contacts')}
+              {translate('contacts_tab_billing_contacts')}
             </Typography>
 
             <Box

@@ -117,7 +117,7 @@ export default function SignInLogin({
           })}
         >
           <FcGoogle size='50px' />
-          {translate('ligin_with_google')}
+          {translate('login_with_google')}
         </LoadingButton>
       </Stack>
     </>

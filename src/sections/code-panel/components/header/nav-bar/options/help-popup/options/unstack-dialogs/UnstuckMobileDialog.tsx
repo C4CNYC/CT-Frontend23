@@ -130,7 +130,7 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({ open, onClose }) =>
           </FullCodeSolutionModal>
         </Box>
 
-        <Typography p='15px 29px'>{translate('or_keep_goin_slide')}</Typography>
+        <Typography p='15px 29px'>{translate('or_keep_going_slide')}</Typography>
       </>
     </Dialog>
   )

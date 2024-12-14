@@ -51,7 +51,7 @@ export function StudentChangePassword({
         <RHFTextField
           sx={{ mb: 3 }}
           name='password'
-          label={translate('generated_passowrd')}
+          label={translate('generated_password')}
           value={password}
           onChange={(e) => passwordSet(e.currentTarget.value)}
         />

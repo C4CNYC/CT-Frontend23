@@ -38,7 +38,7 @@ export const getActions = ({ code, language }: GetActions): Action[] => [
         />
       </PublishModal>
     ),
-    name: 'publist_to_gallery',
+    name: 'publish_to_gallery',
     color: '#FBDD3F',
     isPublic: true,
   },

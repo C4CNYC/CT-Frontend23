@@ -6,6 +6,7 @@ import { Logo } from '@/components/logo'
 import ThemeSwitcher from '@/components/theme-switcher'
 
 import { StyledRoot, StyledSection, StyledSectionBg, StyledSwitcher } from './styles'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface Props {
   subtitle?: string
@@ -20,6 +21,7 @@ export default function LoginLayout({
   title,
   subtitle,
 }: Props): React.ReactElement | null {
+  const translate = useTranslate()
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
       <StyledRoot>
@@ -46,7 +48,7 @@ export default function LoginLayout({
               textAlign: 'left',
             }}
           >
-            {title ?? 'Yaaaay!'}
+            {title ?? translate('login_layout_title')}
           </Typography>
 
           <Typography
@@ -58,7 +60,7 @@ export default function LoginLayout({
               color: 'text.secondary',
             }}
           >
-            {subtitle ?? "You're back!"}
+            {subtitle ?? translate('login_layout_subtitle')}
           </Typography>
 
           <Image

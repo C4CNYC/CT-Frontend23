@@ -187,7 +187,7 @@ export default function UserListPage(): React.ReactElement {
                     />
                   }
                 >
-                  {translate('members_invate_student')}
+                  {translate('members_invite_student')}
                 </Button>
               </InviteStudentDialog>
               <Button

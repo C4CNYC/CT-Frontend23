@@ -1,52 +1,4 @@
-// IF THIS TRANSLATION IS INCORRECT PLEASE IGNORE THIS AS THIS TRANSLATION IS FOR DEMO PURPOSES ONLY
-// We are happy if you can help improve the translation by sending an email to support@minimals.cc.
-
 const en = {
-  demo: {
-    title: 'English',
-    introduction:
-      'CodeTribe.com | The No.1 Platform to teach Text-based Coding in Middle and High Schools </br> Like repl.it but for Teachers. Create lessons, quests or open projects in a snap. Mobile-friendly, collaborative and incredibly fun. Try it!',
-  },
-  docs: {
-    hi: 'Hi',
-    description: 'Need help? \n Please check our docs.',
-    documentation: 'Documentation',
-  },
-  app: 'App',
-  edit: 'Edit',
-  shop: 'Shop',
-  blog: 'Blog',
-  post: 'Post',
-  mail: 'Mail',
-  cards: 'Cards',
-  posts: 'Posts',
-  create: 'Create',
-  kanban: 'Kanban',
-  banking: 'Banking',
-  booking: 'Booking',
-  account: 'Account',
-  product: 'Product',
-  invoice: 'Invoice',
-  checkout: 'Checkout',
-  calendar: 'Calendar',
-  analytics: 'Analytics',
-  ecommerce: 'E-commerce',
-  management: 'Management',
-  organization: 'Organizations',
-  menu_level: 'menu level',
-  menu_level_2a: 'menu level 2a',
-  menu_level_2b: 'menu level 2b',
-  menu_level_3a: 'menu level 3a',
-  menu_level_3b: 'menu level 3b',
-  menu_level_4a: 'menu level 4a',
-  menu_level_4b: 'menu level 4b',
-  item_disabled: 'item disabled',
-  item_label: 'item label',
-  item_caption: 'item caption',
-  item_external_link: 'item external link',
-  other_cases: 'other cases',
-  item_by_roles: 'item by roles',
-
   // action words
   actions_delete: 'Delete',
   actions_password: 'Change Password',
@@ -67,7 +19,7 @@ const en = {
   actions_connect: 'Connect',
   actions_view: 'View',
   actions_create: 'Create',
-  actions_create_authur: 'Create author',
+  actions_create_author: 'Create author',
   actions_delete_author: 'Delete author',
   actions_add_tip: 'Add tip',
   actions_enter_tip: 'Enter tip',
@@ -133,7 +85,7 @@ const en = {
   avatar: 'Avatar',
   all: 'All',
   invites: 'Invites',
-  generated_passowrd: 'Generated password',
+  generated_password: 'Generated password',
   zip: 'Zip',
   start_date: 'Start date',
   icon: 'Icon',
@@ -228,9 +180,7 @@ const en = {
 
   // image upload
   image_choose_image: 'Choose image',
-  image_drope_file: `Drop files 
-   Paste screenshot
-   Click here`,
+  image_drop_file: `Drop files Paste screenshot Click here`,
 
   // messages
   messages_success: 'Success',
@@ -245,14 +195,14 @@ const en = {
   messages_email_verified: 'Email Verified',
   messages_user_verified: 'User Verified',
   messages_delete_dialog_content: 'Are you sure want to delete {{items}} items?',
-  messages_updete_avatar_info: 'Leave empty and we will generate it randomly',
+  messages_update_avatar_info: 'Leave empty and we will generate it randomly',
   messages_delete_question: 'Are you sure you want to delete?',
   messages_tip_deleted: 'Tip deleted!',
   messages_archive_question: 'Are you sure want to archive?',
   messages_img_updated: 'Image updated',
   messages_img_not_updated: 'Image not updated',
   messages_no_image_selected: 'No image selected',
-  messages_sent_seccessfully: 'Message was sent successfully',
+  messages_sent_successfully: 'Message was sent successfully',
   messages_sth_added: '{{name}} added',
   messages_sth_removed: '{{name}} removed',
   messages_copied: 'Copied!',
@@ -273,7 +223,7 @@ const en = {
   messages_content_type_not_supported: 'CONTENT TYPE NOT SUPPORTED',
   messages_lesson_complete: 'Lesson successfully completed',
   messages_course_complete: 'Course successfully completed',
-  messages_chalage_comleted: 'Challange successfully completed',
+  messages_challenge_completed: 'Challenge successfully completed',
   messages_course_doesnt_exist: "Course doesn't exist",
   messages_lesson_removed: 'Lesson removed from the module',
   messages_lesson_file_delete: 'Delete',
@@ -374,7 +324,7 @@ const en = {
   schools: 'Schools',
   schools_organization: 'Organizations',
   schools_table_active: 'Active',
-  schools_add_aschool: 'Add School',
+  schools_add_school: 'Add School',
   schools_school_info: 'School Info',
   schools_teacher_deleted_act: 'Teacher deleted',
   schools_teacher_added_act: 'Teacher added',
@@ -392,7 +342,7 @@ const en = {
   general_settings_sso_note:
     'Note: Single-sign-on allows interfacing with: Google Classroom & ClassLink \n More about Edu SSO: ',
   general_user_settings: 'User Settings',
-  general_user_invate_only: 'Invite-only users',
+  general_user_invite_only: 'Invite-only users',
   general_user_settings_note: 'Note: Only allow users to sign-up when invited by a teacher',
   general_lang_settings: 'Language Settings:',
   general_lang_settings_default: 'Default Language:',
@@ -405,7 +355,7 @@ const en = {
 
   // General > Contacts tab
   contacts_tab_technical_contacts: 'Technical Contacts',
-  contacts_tab_buling_contacts: 'Billing Contacts',
+  contacts_tab_billing_contacts: 'Billing Contacts',
 
   // General > Networks tab
   networks_tab_your_networks: 'Your networks',
@@ -416,17 +366,17 @@ const en = {
   // Students page locales
   member_actions_deleted: 'Member deleted',
   members_actions_deleted: 'Members deleted',
-  members_invate_student: 'Invite Student',
+  members_invite_student: 'Invite Student',
   members_add_student: 'Add Student',
   members_send_invite: 'Send Invite',
-  students_creatr_new: 'Create a new student',
+  students_create_new: 'Create a new student',
   students_new_student: 'New student',
   students_new_avatar_subtitle: 'Live empty and we will generate it randomly',
   students_new_cover_color: 'Cover color',
   students_new_email_notification:
     'Disabling this will automatically send the user a verification email',
   students_new_user_notification: "Disabled users don't have access to this resource",
-  students_edite_student: 'Student: Edit student',
+  students_edit_student: 'Student: Edit student',
 
   // Classes page
   classes: 'Classes',
@@ -435,7 +385,7 @@ const en = {
   classes_total_courses: 'Total (Courses)',
   classes_class_deleted: 'Class deleted',
   classes_classes_deleted: 'Classes deleted',
-  classes_class_updeted: 'Class updated successfully!',
+  classes_class_updated: 'Class updated successfully!',
   classes_class_created: 'Class {{name}} created successfully!',
   classes_class_name: 'Class name',
   classes_class_description: 'Class description',
@@ -458,9 +408,10 @@ const en = {
   assignments_updated_msg: 'Assignment updated!',
   assignments_assign_to: 'Assign to',
   assignments_add_tags_info: 'This will help others know what the theme is.',
-  assignments_updated_successfuly: 'Assignment updated successfully!',
-  assignments_created_successfuly: 'Assignment created successfully!',
-  assigments_onboarding_info: 'This is how you assign a course or module to your class.',
+  assignments_updated_successfully: 'Assignment updated successfully!',
+  assignments_created_successfully: 'Assignment created successfully!',
+  assignments_onboarding_info: 'This is how you assign a course or module to your class.',
+
   // Progress page
   progress: 'Progress',
   progress_tooltip_info: 'Click on a column to expand it and see details',
@@ -486,15 +437,15 @@ const en = {
   courses_initial_enrolled: 'Initial enrolled',
   courses_catalog: 'Courses Catalog',
   courses_empty: "You don't have any courses",
-  courses_enroled: 'ENROLLED',
+  courses_enrolled: 'ENROLLED',
   courses_certificate_tooltip_info: 'This course is eligible for a certificate.',
   courses_certificate_link: 'See sample certificate',
   courses_course_overview: 'Course Overview',
   courses_course_who_is_this_for: 'Who is this for',
-  courses_entery_point: 'A fantastic entry-point for understanding....',
+  courses_entry_point: 'A fantastic entry-point for understanding....',
   courses_for_beginners_info:
     'For curious beginners who want to understand the basics of web dev and who.',
-  courses_semple_cerificate: 'Sample Certificate',
+  courses_sample_certificate: 'Sample Certificate',
   courses_for_teachers: 'For Teachers',
   courses_for_teachers_info:
     'A “Teacher Toolbox” is found within each module with all the resources you will need.',
@@ -536,7 +487,7 @@ const en = {
   modules_add_lesson_existing: 'Insert Existing Lesson',
   modules_add_lesson_new_lesson: 'Add New Lesson',
   modules_add_lesson_new_quiz: 'Add New Quiz',
-  modules_add_lesson_new_exircises: 'Add New Exercises',
+  modules_add_lesson_new_exercises: 'Add New Exercises',
   modules_view_lesson: 'View Lesson',
   modules_add_lesson_slide_link: 'Add/Edit Lesson Slides',
   modules_pls_select_lesson: 'PLS SELECT LESSON',
@@ -555,7 +506,7 @@ const en = {
   lessons_deleted_msg: 'Lesson deleted!',
   lessons_practical: 'Practical',
   lessons_exercise: 'Exercise',
-  lessons_inependent_lesson: 'Independent lesson',
+  lessons_independent_lesson: 'Independent lesson',
   lessons_active_tooltip:
     'The lesson will show in the catalog or is shareable to the class or in a Quest.',
   lessons_autoRun_tooltip:
@@ -585,7 +536,7 @@ const en = {
 
   //Properties
   properties: 'Property',
-  properties_removed: 'Propery Removed',
+  properties_removed: 'Property Removed',
   entityType: 'Entity type',
   entityId: 'Entity Id',
   propertyName: 'Property Name',
@@ -603,7 +554,7 @@ const en = {
   // Home Overview
   home_overview: 'Home Overview',
   joined_to_class_msg: 'You joined the class!',
-  send_reques_for_join_to_class: 'You sent a request to join the class!',
+  send_request_for_join_to_class: 'You sent a request to join the class!',
   home_join_tribe: 'Join this tribe',
   been_invited_msg: 'You’ve been invited to join this tribe.',
   home_not_now: 'Not now',
@@ -641,7 +592,7 @@ const en = {
   quest_whats_quest: "What's a quest?",
   quest_select_type: 'Select type',
   quest_select_course: 'Select a course',
-  auest_select_module: 'Select module',
+  quest_select_module: 'Select module',
   quest_you_dont_have_courses_msg: "You don't have any courses",
   quest_you_dont_have_module_msg: "You don't have any module",
   quest_all_modules: 'All modules',
@@ -655,7 +606,7 @@ const en = {
   quest_close_date: 'Close Date:',
   quest_close_date_info:
     'After this submissions are no longer received. The default is 3 days after the “Due date.”',
-  quest_no_descr: 'No details available for this quest.',
+  quest_no_descriptioniption: 'No details available for this quest.',
 
   // My Notes
   notes_my: 'My Notes',
@@ -737,7 +688,7 @@ const en = {
   login_hi: 'Hi',
   sign_in: 'Login',
   login_or: 'OR',
-  ligin_with_google: 'Sign in with Google',
+  login_with_google: 'Sign in with Google',
   login_email_not_found: 'Email not found',
   login_or_wrong_password: 'or wrong password',
   login_try_again: 'Please try again or register as a new user',
@@ -819,12 +770,12 @@ const en = {
   ai_gen_type_5_tooltip:
     'Building a project line by line with explanations and step-by-step guidance.',
 
-  ai_gen_progr_lng_title: 'Programming Language ',
-  ai_gen_progr_lng_opt_1: 'Javascript',
-  ai_gen_progr_lng_opt_2: 'Python (Brython)',
-  ai_gen_progr_lng_opt_3: 'HTML/CSS',
-  ai_gen_progr_lng_opt_4: 'HTML/CSS/JS',
-  ai_gen_progr_lng_opt_5: 'Kaboom.js',
+  ai_gen_programming_lng_title: 'Programming Language ',
+  ai_gen_programming_lng_opt_1: 'Javascript',
+  ai_gen_programming_lng_opt_2: 'Python (Brython)',
+  ai_gen_programming_lng_opt_3: 'HTML/CSS',
+  ai_gen_programming_lng_opt_4: 'HTML/CSS/JS',
+  ai_gen_programming_lng_opt_5: 'Kaboom.js',
 
   ai_gen_track_title: 'Track',
   ai_gen_track_option_1: 'AI & API',
@@ -946,12 +897,12 @@ const en = {
   step_copy_slide: '{{title}} (Copy)',
   step_removed: 'Step removed',
   step_cant_removed: "Sorry we can't remove at this moment",
-  lesson_settup_settings: 'LESSON SETUP & SETTINGS',
+  lesson_setup_settings: 'LESSON SETUP & SETTINGS',
   slide_add: 'ADD SLIDE',
   slide_add_blank: 'New Blank Slide',
   slide_add_normal: 'Use Normal Template',
   slide_add_html: 'Use HTML Template',
-  slide_add_promt_ai: 'Prompt with AI',
+  slide_add_prompt_ai: 'Prompt with AI',
   slide_add_ai_templates: 'AI Templates',
   slide_content_updated: 'Content updated',
   slide_standard: 'Standard',
@@ -1030,7 +981,7 @@ const en = {
   i_need_help: 'I need help with',
   i_um_stuck: 'I`m stuck',
   full_code_solutions: 'Full code solutions.',
-  or_keep_goin_slide:
+  or_keep_going_slide:
     'Or, ... Keep going till you see a “Checkpoint” slide. There may be one ahead.',
   see_this_training: 'See this training',
   ask_for_help_in_tribe: 'Ask for help in Tribe chat',
@@ -1064,7 +1015,7 @@ const en = {
 
   //Add file modal
   file_manager_title: 'Files',
-  add_file_madal_title: 'Add file',
+  add_file_modal_title: 'Add file',
   add_file_btn: 'Add file',
   file_extension_label: 'File extension:',
   file_name_label: 'File name:',
@@ -1090,7 +1041,7 @@ const en = {
   step_4: 'Here you will see the results of your work in realtime 🤯',
   lesson_list: 'Lessons list',
   step_5: 'Feel free to choose lesson which you want 😉 or ...',
-  check_progres: 'Check your learning progress',
+  check_progress: 'Check your learning progress',
   save_publish_project: 'Save or publish your project',
   lets_look_st_this_part: 'Now let`s look at this useful part',
   step_8:
@@ -1114,7 +1065,7 @@ const en = {
   sandbox: 'Sandbox',
 
   // Code-editor save
-  publist_to_gallery: 'Publish to Gallery',
+  publish_to_gallery: 'Publish to Gallery',
   go_to_gallery: 'Go to Gallery',
   save_to_folder: "Save to 'My Folder'",
   open_folder: "Open 'My Folder'",
@@ -1217,6 +1168,9 @@ const en = {
       },
     },
   },
+
+  login_layout_title: 'Yaaaay!',
+  login_layout_subtitle: "You're back!",
 }
 
 export default en

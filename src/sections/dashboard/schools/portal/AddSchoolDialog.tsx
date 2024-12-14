@@ -88,13 +88,13 @@ export default function AddSchoolDialog(): React.ReactElement {
           />
         }
       >
-        {translate('schools_add_aschool')}
+        {translate('schools_add_school')}
       </Button>
       <Dialog
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>{translate('schools_add_aschool')}</DialogTitle>
+        <DialogTitle>{translate('schools_add_school')}</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}

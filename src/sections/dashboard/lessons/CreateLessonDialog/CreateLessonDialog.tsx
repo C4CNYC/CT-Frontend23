@@ -347,7 +347,7 @@ export default function CreateLessonDialog({
                   </Tooltip>
                   <RHFSwitch
                     name='independent'
-                    label={translate('lessons_inependent_lesson')}
+                    label={translate('lessons_independent_lesson')}
                   />
                   <Tooltip
                     slotProps={{ popper: { disablePortal: true } }}
