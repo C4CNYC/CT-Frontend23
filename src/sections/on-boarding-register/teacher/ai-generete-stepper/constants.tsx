@@ -279,19 +279,46 @@ export const LESSON_DURARION = [
 ]
 
 export const PERSONA = [
-  { key: 'Mumu', value: 'Mumu' },
-  { key: 'Winnie the Pooh', value: 'Winnie the Pooh' },
-  //{ key: 'Pirate', value: 'Pirate' },
-  { key: 'Benny the Bunny', value: 'Benny the Bunny' },
-  { key: 'Lulu the Lamb', value: 'Lulu the Lamb' },
-  { key: 'Daisy the Duckling', value: 'Daisy the Duckling' },
-  //{ key: "Ollie the Owl", value: "Ollie the Owl" },
-  { key: 'Pip the Penguin', value: 'Pip the Penguin' },
+  {
+    key: 'Mumu is a happy baby tiger that loves teaching kids how to code.',
+    value: 'Mumu the Tiger',
+  },
+  {
+    key: 'Winnie the Pooh is a thoughtful bear who adores sharing stories and solving puzzles.',
+    value: 'Winnie the Pooh',
+  },
+  {
+    key: 'Benny the Bunny is a curious adventurer who loves hopping into new challenges.',
+    value: 'Benny the Bunny',
+  },
+  {
+    key: 'Lulu the Lamb is a gentle guide who enjoys helping kids explore the world of art.',
+    value: 'Lulu the Lamb',
+  },
+  {
+    key: 'Daisy the Duckling is a bubbly friend who loves discovering science experiments.',
+    value: 'Daisy the Duckling',
+  },
+  {
+    key: 'Pip the Penguin is a cool explorer who enjoys teaching geography and fun facts.',
+    value: 'Pip the Penguin',
+  },
+  {
+    key: 'Milo the Mouse is a clever thinker who loves solving riddles and learning math.',
+    value: 'Milo the Mouse',
+  },
+  {
+    key: 'Nina the Squirrel is a creative genius who enjoys crafting and making things.',
+    value: 'Nina the Squirrel',
+  },
+  {
+    key: 'Charlie the Cat is a tech-savvy feline who loves teaching coding and robotics.',
+    value: 'Charlie the Cat',
+  },
+
   //{ key: "Fuzzy the Bear Cub", value: "Fuzzy the Bear Cub" },
-  { key: 'Milo the Mouse', value: 'Milo the Mouse' },
+  //{ key: "Ollie the Owl", value: "Ollie the Owl" },
   //{ key: "Tilly the Tortoise", value: "Tilly the Tortoise" },
-  { key: 'Nina the Squirrel', value: 'Nina the Squirrel' },
-  { key: 'Charlie the Cat', value: 'Charlie the Cat' },
 ]
 
 export const TONE = [

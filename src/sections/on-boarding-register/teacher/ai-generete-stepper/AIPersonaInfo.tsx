@@ -50,7 +50,7 @@ export function AIPersonaInfo({
     () => getNextBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
-
+  let PersonaWithTool = PERSONA.map((persona) => ({ ...persona, tooltip: persona.key }))
   return (
     <>
       <style>
@@ -107,10 +107,11 @@ export function AIPersonaInfo({
           </Typography>
           <RHFToggleButtonGroup
             name='RpersonaR'
-            options={PERSONA}
+            options={PersonaWithTool}
             sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
             sxButton={toggleButtonStyles}
             disabled={customPersona}
+            tooltip={true}
           >
             <RHFTextField
               sx={RHFTextFieldInRHFToggleButtonGroup}
@@ -142,7 +143,7 @@ export function AIPersonaInfo({
             />
           </RHFToggleButtonGroup>
         </Stack>
-        {/* <Stack>
+        <Stack>
           <Typography
             variant='h6'
             sx={OPTIONAL_TYPO_STYLES}
@@ -154,9 +155,10 @@ export function AIPersonaInfo({
           </Typography>
           <RHFTextField
             name='RcontextR'
+            rows={2}
             placeholder={translate('ai_gen_persona_context_placeholder')}
           />
-        </Stack> */}
+        </Stack>
         <label
           className='ohnohoney'
           htmlFor='name'

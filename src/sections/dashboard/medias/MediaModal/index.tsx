@@ -24,6 +24,7 @@ import {
 } from '@/redux/services/manager/media-manager'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { imageResize } from '@root/src/utils/imageResize'
 
 export interface MediaModalProps {
   children: React.ReactElement
@@ -119,21 +120,45 @@ export function MediaModal({ children, insertImage }: MediaModalProps): React.Re
     },
     [setNewFolderName]
   )
+  const FileChangeSuccess = (resDataUrl: string) => {
+    setFileUrl(resDataUrl)
+    enqueueSnackbar(translate('messages_img_updated'))
+    setFileLoading(false)
+  }
+  const FileChangeError = () => {
+    enqueueSnackbar(translate('messages_img_not_updated'), {
+      variant: 'error',
+    })
+    setFileLoading(false)
+  }
   const handleFileChange = async (newFile: File) => {
     const file = new FormData()
     setFileName(newFile.name)
     file.append('file', newFile)
     setFileLoading(true)
     try {
-      const res: any = await uploadMediaFile({ file })
-      setFileUrl(res.data.url)
-      enqueueSnackbar(translate('messages_img_updated'))
-      setFileLoading(false)
+      let res: any
+      if (newFile.type.startsWith('image/')) {
+        let img = document.createElement('img')
+        img.onload = () => {
+          imageResize(img).then((blob) => {
+            let newFileSmall = new File([blob], newFile.name, { type: 'image/webp' })
+            file.set('file', newFileSmall)
+            uploadMediaFile({ file }).then((res) => {
+              if ('error' in res) {
+                return FileChangeError()
+              }
+              FileChangeSuccess(res?.data?.url)
+            })
+          })
+        }
+        img.src = URL.createObjectURL(newFile)
+      } else {
+        res = await uploadMediaFile({ file })
+        FileChangeSuccess(res?.data?.data?.url)
+      }
     } catch (error: any) {
-      enqueueSnackbar(translate('messages_img_not_updated'), {
-        variant: 'error',
-      })
-      setFileLoading(false)
+      FileChangeError()
     }
   }
   const onBreadcrumbClick = (path: string) => {

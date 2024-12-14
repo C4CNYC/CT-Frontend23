@@ -23,7 +23,7 @@ const CheckersItemButton: FC<CheckersItemButtonProps> = ({ active, name, isCheck
     if (!active) {
       dispatch(setIsActivateCompeated(true))
     }
-  }, [active, dispatch])
+  }, [active, dispatch, isCheckedOnce])
 
   return (
     <ListItem sx={LIST_ITEM_SX}>

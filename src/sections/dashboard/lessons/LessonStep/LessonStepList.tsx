@@ -28,6 +28,7 @@ import { ConfirmDialog, Iconify } from '@root/src/components'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { useCounter } from '@root/src/hooks/useCounter'
+import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { LoaderStepDialog } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/LoaderStepDialog'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
@@ -35,6 +36,7 @@ import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
 import { HTMLTemplate } from './CreateSlide/HTMLTemplate'
 import { WithAIDialog } from './CreateSlide/WithAIDialog'
 import LessonListItem from './LesonListItem'
+import { LessonListItemLoading } from './LessonListItemLoading'
 import { LessonContentContext } from './LessonStepContent/LessonContent.context'
 import SkeletonList from './Modals/SkeletonList'
 import SlideTemplateDialog from './slide-templates'
@@ -63,10 +65,11 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const [withAIDialogOpen, setWithAIDialogOpen] = useState(false)
   const [dialogHtmlTemplate, setDialogHtmlTemplate] = useState(false)
   const [removeLessonContent] = useRemoveLessonContentMutation()
-  const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
-    { id: lessonId },
-    { skip: !lessonId }
-  )
+  const {
+    data: lesson,
+    isLoading: isLessonLoading,
+    refetch: lessonRefetch,
+  } = useGetLessonQuery({ id: lessonId }, { skip: !lessonId })
   const {
     data,
     isLoading,
@@ -76,6 +79,8 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const [LoaderStepDialogState, LoaderStepDialogStateTrue, LoaderStepDialogStateFalse] =
     useBoolean()
   const [contentCount, contentCountSet] = useState(0)
+  const [lessonLoadedAfterContent, lessonLoadedAfterContentSet] = useState(false)
+
   const [contentPullCount, contentPullCountDec, contentPullCountInc] = useCounter(5)
   const { board } = useSelector((state: RootState) => state.lessonSteps)
   const [refetchTimer, refetchTimerSet] = useState(0)
@@ -84,10 +89,9 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     ? (new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 3
     : false
 
-  useEffect(contentPullCountDec, [data])
-
   const lessonContentsRefetchTimer = () => {
     if (newlyCreated || contentPullCount > 0) {
+      contentPullCountDec()
       lessonContentsRefetch()
     } else {
       if (refetchTimer > 0) {
@@ -117,7 +121,11 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
       LoaderStepDialogStateFalse()
       return
     }
-    if (dataLength && dataLength > 0) {
+    if (newlyCreated && dataLength > 0) {
+      if (!lessonLoadedAfterContent) {
+        lessonLoadedAfterContentSet(true)
+        lessonRefetch()
+      }
       LoaderStepDialogStateFalse()
     }
   }, [data, lesson])
@@ -187,14 +195,18 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const newContentOrder = idCardWithMaxOrder
     ? parseFloat(board.cards[idCardWithMaxOrder].meta.order as string) + 1
     : 1
+  const activeSlideId = cardIds?.find((s) => s == router.query.stepId)
 
   const createEmptySlide = async (): Promise<void> => {
+    let NewLessonType = 'code'
+    if (activeSlideId) NewLessonType = board?.cards[activeSlideId].type
     try {
       const { id: stepId } = await createLessonContent({
         lessonId,
         draft: false,
         active: true,
         title: translate('slide'),
+        type: NewLessonType as LessonContentType,
         meta: { order: newContentOrder },
       }).unwrap()
       enqueueSnackbar(translate('messages_step_created'))
@@ -356,6 +368,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
                     index={i}
                   />
                 ))}
+                <LessonListItemLoading />
                 {provided.placeholder}
               </Stack>
             )}

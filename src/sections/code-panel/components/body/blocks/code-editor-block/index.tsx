@@ -4,7 +4,6 @@ import { Box, Collapse } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { Socket } from 'socket.io-client'
 
 import { type AuthUserType } from '@/auth/types'
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -18,7 +17,6 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import BaseBlock from '../base-block'
 
 import { EditorMode } from './code-editor-collab/hook/constants'
-import { waitConnectSocket } from './code-editor-collab/hook/utils/socket'
 import CodeEditorController from './code-editor-controller'
 import { CodeEditorStyles } from './CodeEditorStyles'
 import Checkers from './elements/checkers-code-editor'
@@ -61,10 +59,9 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const codeRef = useRef(code)
   const openPopoverTimer = useRef<NodeJS.Timeout | null>(null)
   const closePopoverTimer = useRef<NodeJS.Timeout | null>(null)
-  const [isOpenPopover, setIsOpenPopover] = useState<boolean | null>(null)
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true)
+  const [isOpenPopover, setIsOpenPopover] = useState<boolean | null>(null)
 
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
   const codeState = useSelector((state) => state.codePanelGlobal.code)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
@@ -83,7 +80,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
     if (user && lessonId) {
       dispatch(
         setRoom({
-          // roomId: user?.id as string,
           roomId: roomId,
           cursorText: user?.first_name as string,
           preloadedCode,
@@ -93,20 +89,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )
     }
   }, [user, lessonId, dispatch, preloadedCode, query?.lessonId])
-
-  useEffect(() => {
-    const runAsyncEffect = async (socket: Socket) => {
-      const isConnected = await waitConnectSocket(socket)
-
-      if (!isConnected) {
-        void runAsyncEffect(socket)
-      }
-    }
-
-    if (socket && !socket.connected) {
-      void runAsyncEffect(socket)
-    }
-  }, [socket])
 
   useEffect(() => {
     onResetRoom()
@@ -140,7 +122,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         contentId={contentId}
       />
 
-      {Boolean(validations?.length) && (
+      {Boolean(validations?.length) && Boolean(selectedContent?.checkers) && (
         <Checkers
           contentId={contentId}
           checkers={

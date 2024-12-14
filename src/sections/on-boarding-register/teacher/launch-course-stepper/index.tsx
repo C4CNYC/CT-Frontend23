@@ -74,7 +74,7 @@ export default function LaunchCourseStepper() {
         ...error,
         message: error.message,
       })
-      enqueueSnackbar(error.message, { variant: 'error' })
+      enqueueSnackbar(error ?? 'Error', { variant: 'error' })
     }
   }
 

@@ -12,6 +12,13 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ['Challenges'],
     }),
+    getCoursePublicContent: builder.query<IChallenges & BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `public/workspace/course/${id}/content`,
+        method: 'GET',
+      }),
+      providesTags: ['Challenges'],
+    }),
   }),
 })
-export const { useGetCourseContentQuery } = extendedApi
+export const { useGetCourseContentQuery, useGetCoursePublicContentQuery } = extendedApi

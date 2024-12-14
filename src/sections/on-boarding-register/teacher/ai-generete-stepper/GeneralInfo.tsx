@@ -4,8 +4,7 @@ import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { useController } from 'react-hook-form'
 
-import { languages } from '@root/src/assets/data/languages'
-import { Iconify, RHFSelect, RHFTextField } from '@root/src/components'
+import { Iconify } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lessons-manager'
@@ -23,7 +22,6 @@ import {
   TOGGLE_BUTTON_GROUP_STYLES,
   TRACK,
   TYPE_LESSON,
-  LANG_CONT_SX,
   getNextBtnSx,
 } from './constants'
 
@@ -34,7 +32,6 @@ type IGeneralInfoProps = {
   prevStep: () => void
   updateForm: (name: string, value: string) => void
   getFormValue: (name: string) => string
-  isCustomLang: boolean
   isTrackSelected: boolean
 }
 
@@ -45,7 +42,6 @@ export function GeneralInfo({
   closeModal,
   updateForm,
   getFormValue,
-  isCustomLang,
   isTrackSelected,
 }: IGeneralInfoProps) {
   const { field: RtrackRField } = useController({ name: 'RtrackR' })
@@ -140,7 +136,7 @@ export function GeneralInfo({
         <RHFToggleButtonGroup
           name='RtypeLessonR'
           options={type_lesson}
-          sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
+          sxGroup={{ ...TOGGLE_BUTTON_GROUP_STYLES, minHeight: 86 }}
           sxButton={toggleButtonStyles}
           tooltip
         ></RHFToggleButtonGroup>
@@ -184,44 +180,6 @@ export function GeneralInfo({
             onChange={RtrackRHandleChange}
           />
         </div>
-      </Stack>
-      <Stack>
-        <Typography
-          variant='h6'
-          sx={OPTIONAL_TYPO_STYLES}
-          gutterBottom
-        >
-          Language
-        </Typography>
-        <Typography
-          variant='body2'
-          sx={OPTIONAL_TYPO_STYLES}
-          gutterBottom
-        >
-          {translate('ai_gen_lng_select_title')}
-        </Typography>
-        <Stack sx={LANG_CONT_SX}>
-          <RHFSelect
-            name='RlessonLanguageR'
-            native
-            disabled={isCustomLang}
-            sx={{ maxWidth: '300px' }}
-          >
-            {languages.map((el) => (
-              <option
-                key={el.code}
-                value={el.language}
-              >
-                {el.language}
-              </option>
-            ))}
-          </RHFSelect>
-          <RHFTextField
-            sx={{ maxWidth: '300px' }}
-            name='RcustomLanguageR'
-            placeholder={translate('ai_gen_lng_placeholder')}
-          />
-        </Stack>
       </Stack>
       <Stack sx={BTN_CONTAINER_STYLES}>
         {/* <Button

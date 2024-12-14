@@ -7,12 +7,13 @@ import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
 import { useSelector } from '@/redux/store'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { initListeners } from '@root/src/sections/code-panel/lib/listeners'
 
 import { RoomStatus } from '../components/status-label'
 
 import { EditorMode } from './constants'
-import { type File, getFileInfo, isRoomExist } from './requests'
+import { getFileInfo, isRoomExist } from './requests'
 import { type UseCommentsPropsReturn, useComments } from './useComments'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 import { type MemoizedProps, useMemoizedProps } from './useMemoizedProps'
@@ -23,7 +24,7 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
   mode?: EditorMode
   user?: AuthUserType
-  activeFile: File
+  activeFile: StudentFile
   socket?: Socket
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
@@ -60,21 +61,15 @@ export const useCodeEditorCollab = ({
 
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
 
-  const {
-    cursorText,
-    withTooltip,
-    onChangeStreamingDocInfo,
-    setActiveFile,
-    onResetFileManager,
-    defaultFileName,
-  } = useMemoizedProps(propsToMemoize)
+  const { cursorText, withTooltip, onChangeStreamingDocInfo, defaultFileName } =
+    useMemoizedProps(propsToMemoize)
 
   const { commentEffectRef, onCommentIconClick, ...commentProps } = useComments({
     editorView,
     socket,
     cursorText,
     roomId,
-    activeFile: activeFile.id,
+    activeFile: activeFile?.id ?? '',
   })
 
   const { baseInit, setIsLoading, setStreamingDoc, isCollabActive, ...codeMirrorProps } =
@@ -108,7 +103,6 @@ export const useCodeEditorCollab = ({
 
       if (!isRoom) {
         initializeBlockedRef.current = true
-        onResetFileManager()
         setRoomStatus(RoomStatus.Inactive)
         setIsLoading(false)
         return
@@ -123,13 +117,11 @@ export const useCodeEditorCollab = ({
 
       const fileInfo = socket ? await getFileInfo(roomId, socket) : undefined
 
-      onResetFileManager(fileInfo)
-
       if (fileInfo?.activeFile === activeFile) {
         await runInitSubOwner(false)
       }
     },
-    [activeFile, baseInit, onResetFileManager, socket]
+    [activeFile, baseInit, socket]
   )
 
   const runInitOwner = useCallback(
@@ -144,13 +136,11 @@ export const useCodeEditorCollab = ({
         return
       }
 
-      onResetFileManager(fileInfo)
-
       if (fileInfo.activeFile.id === activeFile.id) {
         await runInitOwner(false)
       }
     },
-    [activeFile, baseInit, onResetFileManager, socket, isCollabActive]
+    [activeFile, baseInit, socket, isCollabActive]
   )
 
   const runInitWatcher = useCallback(async (): Promise<void> => {
@@ -161,7 +151,6 @@ export const useCodeEditorCollab = ({
 
     if (!isRoom) {
       initializeBlockedRef.current = true
-      onResetFileManager()
       setIsLoading(false)
       setRoomStatus(RoomStatus.Inactive)
       return
@@ -177,7 +166,6 @@ export const useCodeEditorCollab = ({
         fileInfo.activeFile != null && fileInfo.activeFile.id !== activeFile.id
 
       if (shouldChangeFile) {
-        onResetFileManager(fileInfo)
         return
       }
 
@@ -185,7 +173,7 @@ export const useCodeEditorCollab = ({
     }
 
     await baseInit(_activeFile)
-  }, [activeFile, baseInit, setActiveFile, socket, onResetFileManager])
+  }, [activeFile, baseInit, socket])
 
   useModeSubscriptions({
     roomId,

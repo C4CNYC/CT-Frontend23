@@ -4,6 +4,7 @@ import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { Iconify, MenuPopover } from '@/components'
@@ -24,6 +25,16 @@ interface Props {
   onRemove: (id: string) => void
   onDublicate: (step: ILessonContent & BaseResponseInterface) => void
   onChangeSlide: (stepId: string) => VoidFunction
+}
+
+const LessonListCoverImageStyles = {
+  '& .hoverShow ': {
+    display: 'none',
+    position: 'absolute',
+    zIndex: 197,
+    maxWidth: 240,
+  },
+  '&:hover .hoverShow ': { display: 'block' },
 }
 
 export default function LessonListItem({
@@ -142,6 +153,25 @@ export default function LessonListItem({
                 e.stopPropagation()
               }}
             >
+              {step.cover ? (
+                <IconButton
+                  title='Cover Image'
+                  sx={LessonListCoverImageStyles}
+                >
+                  <Image
+                    src={step.cover}
+                    alt={step.title}
+                    width={24}
+                    height={24}
+                  />
+                  <Image
+                    className='hoverShow'
+                    src={step.cover}
+                    alt={step.title}
+                    width={240}
+                  />
+                </IconButton>
+              ) : null}
               <IconButton
                 onClick={() => {
                   onDublicate(step)
