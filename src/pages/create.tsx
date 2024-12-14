@@ -46,8 +46,7 @@ export default function AiGeneratePage(): React.ReactElement {
   }, [])
 
   useEffect(() => {
-    if (!data) return
-    switch (data.home_page_type) {
+    switch (data?.home_page_type) {
       case HomePageType.Authorization: {
         router.push(PATH_AUTH.onBoardingStudent)
       }
@@ -58,6 +57,8 @@ export default function AiGeneratePage(): React.ReactElement {
         setPage(data.home_page_body ?? '')
         localStorage.setItem('tenantName', slug ?? 'codetribe')
       }
+      default:
+        router.push(PATH_AUTH.onBoardingStudent)
     }
   }, [data])
 

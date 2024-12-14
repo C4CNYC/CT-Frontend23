@@ -30,7 +30,7 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
         >
           <Image
             src={tenant.min_logo}
-            alt={tenant.name}
+            alt={`tenant${tenant.slug}`}
             width={45}
             height={33}
           />
