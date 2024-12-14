@@ -47,6 +47,9 @@ export const MANAGER_PATH_DASHBOARD = {
   skills: {
     root: path(MANAGER_ROOTS_DASHBOARD, '/skills'),
   },
+  administration: {
+    root: path(MANAGER_ROOTS_DASHBOARD, '/administration'),
+  },
   organization: {
     root: path(MANAGER_ROOTS_DASHBOARD, '/organization'),
     general: path(MANAGER_ROOTS_DASHBOARD, '/organization/general'),

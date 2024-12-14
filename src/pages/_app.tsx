@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { AppCacheProvider as EmotionAppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter'
 import { LocalizationProvider } from '@mui/x-date-pickers'
@@ -26,6 +26,7 @@ import '@/lib/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import { useAuthContext } from '../auth/useAuthContext'
 import { setSocket } from '../redux/slices/code-panel-global'
+import { DEFAULT_TENANT, Tenant } from '../redux/slices/tenant'
 import generateId from '../utils/generate-id'
 
 type NextPageWithLayout = NextPage & {
@@ -36,73 +37,58 @@ interface MyAppProps extends AppProps {
   Component: NextPageWithLayout
 }
 
-const icons: Record<string, Record<string, string>> = {
-  codetribe: {
-    favicon16x16: '/favicon/favicon-16x16.png',
-    appleTouchIconUrl: '/favicon/apple-touch-icon.png',
-    favicon32x32: '/favicon/favicon-32x32.png',
-  },
-  codejika: {
-    favicon16x16: '/favicon/favicon_jika.ico',
-    appleTouchIconUrl: '/favicon/apple-touch-icon.png',
-    favicon32x32: '/favicon/favicon_jika.ico',
-  },
-  localhost: {
-    favicon16x16: '/favicon/favicon-16x16.png',
-    appleTouchIconUrl: '/favicon/favicon_jika.ico',
-    favicon32x32: '/favicon/favicon-32x32.png',
-  },
-  gurukul: {
-    favicon16x16: '/favicon/gcc-logo circle-favicon.png',
-    appleTouchIconUrl: '/favicon/gcc-logo circle-favicon.png',
-    favicon32x32: '/favicon/gcc-logo circle-favicon.png',
-  },
-}
-
-export default function MyApp(props: MyAppProps): React.ReactElement {
-  const { Component, pageProps } = props
+export default function MyApp({ Component, pageProps, ...props }: MyAppProps): React.ReactElement {
+  const [tenant, setTenant] = useState<Tenant>()
+  const getLayout = Component.getLayout ?? ((page) => page)
 
   const subdomain = useMemo(() => {
     if (typeof window === 'object') {
       let subdomain = window.location.hostname.split('.')[0]
-      if (subdomain in icons) {
-        return subdomain
-      } else {
-        return 'codetribe'
+
+      if (subdomain) {
+        return subdomain === 'localhost' ? 'codetribe' : subdomain
       }
     }
 
     return 'codetribe'
   }, [])
 
-  const getLayout = Component.getLayout ?? ((page) => page)
-
   const favicon = useMemo(() => {
-    if (!subdomain) {
-      return null
-    }
-
     return (
       <>
         <link
           rel='apple-touch-icon'
           sizes='180x180'
-          href={icons[subdomain].appleTouchIconUrl}
+          href={tenant?.favicon}
         />
         <link
           rel='icon'
           type='image/png'
           sizes='32x32'
-          href={icons[subdomain].favicon32x32}
+          href={tenant?.favicon}
         />
         <link
           rel='icon'
           type='image/png'
           sizes='16x16'
-          href={icons[subdomain].favicon16x16}
+          href={tenant?.favicon}
         />
       </>
     )
+  }, [tenant])
+
+  useEffect(() => {
+    async function fetchTenant() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tenant/${subdomain}`)
+        const data = await res.json()
+        setTenant(data)
+      } catch (error) {
+        setTenant(DEFAULT_TENANT)
+      }
+    }
+
+    fetchTenant()
   }, [subdomain])
 
   return (
@@ -116,7 +102,7 @@ export default function MyApp(props: MyAppProps): React.ReactElement {
       </Head>
       <GoogleAnalytics></GoogleAnalytics>
       <ReduxProvider store={store}>
-        <AuthProvider>
+        <AuthProvider tenant={tenant}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <SettingsProvider>
               <MotionLazyContainer>

@@ -142,7 +142,7 @@ export default function MenuTribesList(): React.ReactElement {
         disabledArrow
         transformOrigin={{ vertical: -5, horizontal: 'center' }}
       >
-        <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+        <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
           <Link
             component={nextLink}
             href={STUDENT_PATH_DASHBOARD.class.createClass}

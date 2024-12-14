@@ -138,7 +138,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               </Typography>
             )}
           </Link> */}
-          <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
+          <RoleBasedGuard roles={[Role.Owner, Role.SuperAdmin, Role.Admin, Role.Manager]}>
             <Button
               onClick={handleOpenPopover}
               sx={{
@@ -213,7 +213,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             {translate('Assign from Catalog')}
           </MenuItem>
         </Link>
-        <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+        <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
           <Link
             component={NextLink}
             href={addQuestOpenProjectPath}
@@ -226,7 +226,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             </MenuItem>
           </Link>
         </RoleBasedGuard>
-        <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+        <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
           <Link
             component={NextLink}
             href={addQuestMyCreationsPath}

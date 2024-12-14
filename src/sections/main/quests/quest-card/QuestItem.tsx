@@ -279,7 +279,9 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
               >
                 <Iconify icon="ion:share-outline" width={22} />
               </IconButton> */}
-              <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner, Role.Editor]}>
+              <RoleBasedGuard
+                roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner, Role.Editor]}
+              >
                 <IconButton onClick={handleOpenPopover}>
                   <Iconify
                     icon='pepicons-pop:dots-y'
