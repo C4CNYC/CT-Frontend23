@@ -10,11 +10,12 @@ import { Image } from '../image'
 
 export interface LogoProps extends BoxProps {
   disabledLink?: boolean
+  isLogoNav?: boolean
 }
 
 // eslint-disable-next-line react/display-name
 export const Logo = forwardRef<HTMLDivElement, LogoProps>(
-  ({ disabledLink = false, sx, ...other }, ref): React.ReactElement | null => {
+  ({ disabledLink = false, isLogoNav = false, sx, ...other }, ref): React.ReactElement | null => {
     const tenant = useSelector((state) => state.tenant)
 
     const logo = useMemo(() => {
@@ -22,17 +23,19 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
         <Box
           ref={ref}
           sx={{
-            width: 164,
             display: 'inline-flex',
             margin: '0 auto',
-            maxHeight: '200px',
+            width: '100%',
+            maxWidth: '200px',
+            height: 'auto',
+            maxHeight: isLogoNav ? '40px' : '120px',
             ...sx,
           }}
           {...other}
         >
           <Image
             src={tenant.logo}
-            alt='CodeJika'
+            alt={`tenant${tenant.slug}`}
           />
         </Box>
       )
