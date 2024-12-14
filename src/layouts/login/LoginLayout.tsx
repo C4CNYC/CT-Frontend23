@@ -4,9 +4,9 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import { Image } from '@/components/image'
 import { Logo } from '@/components/logo'
 import ThemeSwitcher from '@/components/theme-switcher'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { StyledRoot, StyledSection, StyledSectionBg, StyledSwitcher } from './styles'
-import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface Props {
   subtitle?: string
