@@ -23,9 +23,7 @@ const HidedTabBtn: FC<IHidedTabRtn> = ({ icon, title, openPanelFnc }) => {
         onClick={() => {
           openPanelFnc()
         }}
-        sx={() => ({
-          ...getCollapsebarSx(isTabletAndMobile, title),
-        })}
+        sx={getCollapsebarSx(isTabletAndMobile, title)}
       >
         {icon}
         <Typography sx={COLLAPSEBAR_TITLE_SX}>{title}</Typography>

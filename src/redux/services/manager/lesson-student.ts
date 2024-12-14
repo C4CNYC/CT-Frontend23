@@ -30,7 +30,7 @@ const extendedApi = managerApi.injectEndpoints({
           const { data } = await queryFulfilled
           const mutatedData = data
             .filter((item) => item.validations.length)
-            .map((item) => ({ contentId: item.id, checkers: [] }))
+            .map((item) => ({ contentId: item.id, checkers: undefined }))
           dispatch(setContentValidations(mutatedData))
         } catch (err) {}
       },
@@ -50,22 +50,24 @@ const extendedApi = managerApi.injectEndpoints({
           const { completed_chalanges } = data
           let result
           const contentValidations = getState() as any
-          result = completed_chalanges.reduce(
-            (acc, c) =>
-              acc.map((content: ContentValidation) => ({
-                ...content,
-                checkers:
-                  content.contentId === c.id
-                    ? c.validations
-                        .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
-                        .map((val) => ({
-                          text: val.name,
-                          valid: true,
-                        }))
-                    : content.checkers,
-              })),
-            contentValidations?.codePanelGlobal?.contentValidations
-          )
+          result = completed_chalanges
+            .reduce(
+              (acc, c) =>
+                acc.map((content: ContentValidation) => ({
+                  ...content,
+                  checkers:
+                    content.contentId === c.id
+                      ? [...c.validations]
+                          .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+                          .map((val) => ({
+                            text: val.name,
+                            valid: true,
+                          }))
+                      : content.checkers || [],
+                })),
+              contentValidations?.codePanelGlobal?.contentValidations
+            )
+            .map((item: any) => (item.checkers ? item : { ...item, checkers: [] }))
           dispatch(setContentValidations(result))
         } catch (err) {}
       },

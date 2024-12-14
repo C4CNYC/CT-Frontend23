@@ -5,7 +5,7 @@ import { Box, Collapse, IconButton, Stack, Tooltip, Typography } from '@mui/mate
 import { Iconify } from '@root/src/components'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'
+import { COLLAPSE_BOX_SX, CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'
 
 const ConsoleBlock = () => {
   const translate = useTranslate()
@@ -24,9 +24,13 @@ const ConsoleBlock = () => {
     window.addEventListener('message', eventListener)
     return () => window.removeEventListener('message', eventListener)
   }, [])
+
   return (
     <Box sx={CONSOLE_CONT_SX}>
-      <Stack sx={CONSOLE_HEADER_SX}>
+      <Stack
+        sx={CONSOLE_HEADER_SX}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <Iconify
           icon='mdi:console-line'
           color='#C4C4C4'
@@ -56,24 +60,13 @@ const ConsoleBlock = () => {
             color='#0198ED'
           />
         </Tooltip>
-        <IconButton
-          sx={{ ml: 'auto' }}
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <IconButton sx={{ ml: 'auto' }}>
           <Iconify icon={!isOpen ? 'tabler:chevron-up' : 'tabler:chevron-down'} />
         </IconButton>
       </Stack>
       <Collapse in={isOpen}>
         <Box
-          sx={{
-            width: '100%',
-            height: '200px',
-            background: '#333',
-            color: '#DDD',
-            whiteSpace: 'pre-wrap',
-            overflowY: 'auto',
-            padding: '0px 10px',
-          }}
+          sx={COLLAPSE_BOX_SX}
           ref={ConsoleBoxRef}
         >
           {/* place for console info */}

@@ -34,12 +34,14 @@ interface ICheckers {
 
 const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
   const dispatch = useDispatch()
+
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const completedSlides = useSelector((state) => state.checkersAnimation.completedSlides)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const isActivateCompeated = useSelector((state) => state.checkersAnimation.isActivateCompeated)
+
   const handleCollaps = (): void => {
     if (isVisible) {
       dispatch(setIsVisible(false))

@@ -320,7 +320,7 @@ export function StepTinyMce(props: EditorSelectorProps) {
             //tinymceScriptSrc='https://cdn.jsdelivr.net/npm/tinymce@7.3.0/tinymce.min.js'
             tinymceScriptSrc='/tinymce/tinymce.min.js'
             onEditorChange={(v, _e) => {
-              lockedHandler(v != initialValue)
+              lockedHandler(v == initialValue)
               editorContentSet(v)
             }}
             initialValue={initialValue}

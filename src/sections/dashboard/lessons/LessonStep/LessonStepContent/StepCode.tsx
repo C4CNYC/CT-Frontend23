@@ -93,6 +93,7 @@ export default function StepCode({
           onChange={(value) => {
             setValue(value)
           }}
+          className='lessonCreationStep3'
         />
         <SaveButton
           onClick={() => {
@@ -117,6 +118,7 @@ export default function StepCode({
           sx={{
             height: 'calc(100vh - 96px)',
           }}
+          className='lessonCreationStep4'
         >
           <iframe
             style={{

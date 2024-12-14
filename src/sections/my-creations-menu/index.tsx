@@ -4,8 +4,8 @@ import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import {
-  useCreateLessonMutation,
   useCreateByCloningLessonMutation,
+  useCreateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
@@ -21,6 +21,7 @@ import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import AiGenerateLessonDialog from './ai-generate-lesson-dialog'
 import DiamondFeatureModal from './diamond-feature-modal'
+import { SelectTemplateDialog } from './select-template-dialog'
 
 export default function MyCreationsMenu(): React.ReactElement {
   const { translate } = useLocales()
@@ -28,7 +29,7 @@ export default function MyCreationsMenu(): React.ReactElement {
   const isDesktop = useResponsive('up', 'md')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const router = useRouter()
-  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
+  const [createLesson] = useCreateLessonMutation()
   const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
     useCreateByCloningLessonMutation()
 
@@ -42,16 +43,6 @@ export default function MyCreationsMenu(): React.ReactElement {
     setOpenPopover(null)
   }
 
-  const createNewLesson = async () => {
-    const lesson = await createLesson({
-      name: translate('my_new_lesson') as string,
-      description: translate('my_lesson_description') as string,
-      active: true,
-      duration: '60',
-    }).unwrap()
-    return lesson
-  }
-
   async function createByCloningLessonHandler() {
     let data = await createByCloningLesson()
     if ((data as any)?.data?.id) {
@@ -63,6 +54,16 @@ export default function MyCreationsMenu(): React.ReactElement {
         }
       )
     }
+  }
+
+  const createNewLesson = async () => {
+    const lesson = await createLesson({
+      name: translate('my_new_lesson') as string,
+      description: translate('my_lesson_description') as string,
+      active: true,
+      duration: '60',
+    }).unwrap()
+    return lesson
   }
 
   return (
@@ -137,12 +138,15 @@ export default function MyCreationsMenu(): React.ReactElement {
               </ListItemIcon>
             </MenuItem>
           </AiGenerateLessonDialog>
+          <SelectTemplateDialog>
+            <MenuItem>Add From Templates</MenuItem>
+          </SelectTemplateDialog>
           <MenuItem
             onClick={async () => {
               await createByCloningLessonHandler()
             }}
           >
-            Add New Lesson
+            Add Blank Lesson
           </MenuItem>
           <MenuItem
             onClick={() => {

@@ -2,6 +2,8 @@ import { type Update } from '@codemirror/collab'
 import { Text } from '@codemirror/state'
 import { Socket } from 'socket.io-client'
 
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+
 import { EmitSocketEvents, SubscribedEvents } from '../utils/socket'
 
 export const createFile = async ({ socket, fileName, roomId }: CreateFile): Promise<File> => {
@@ -79,7 +81,7 @@ interface GetDocumentProps {
   socket?: Socket
   roomId: string
   cursorName: string
-  fileName: File
+  fileName: StudentFile
   preloadedCode?: string
   defaultFileName: string
 }
@@ -98,9 +100,9 @@ export interface File {
 }
 
 export interface FileInfo {
-  activeFile: File
-  files: File[]
-  filesInLayout: File[]
+  activeFile: StudentFile
+  files: StudentFile[]
+  filesInLayout: StudentFile[]
 }
 
 interface CreateFile {

@@ -27,7 +27,6 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
   const isBrowserHidden = useSelector((state: RootState) => state.codePanelGlobal.isBrowserHidden)
   const translate = useTranslate()
 
-  const TITLE = translate('browser_preview')
   const codePanelContext = useContext(CodePanelContext)
 
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
@@ -50,7 +49,7 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToRight size={20} />}
-      title={TITLE}
+      title={translate('browser_preview')}
       icon={icon}
       className='browserTour'
       hideTabsHandler={() => {

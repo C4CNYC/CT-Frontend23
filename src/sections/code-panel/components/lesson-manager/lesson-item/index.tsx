@@ -31,11 +31,17 @@ const MAX_TEXT_LENGTH = 39
 const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
-  const isMobile = !isDesktop
-  const typSx = useMemo(() => getTypSx(isMobile), [isMobile])
-  const tooltipText = module.name.length > MAX_TEXT_LENGTH ? module.name : ''
-  const isLessonsExists = module.lessons.length > 0
+
   const currentLessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+
+  const typSx = useMemo(() => getTypSx(!isDesktop), [isDesktop])
+  const { tooltipText, isLessonsExists } = useMemo(
+    () => ({
+      isLessonsExists: module.lessons.length > 0,
+      tooltipText: module.name.length > MAX_TEXT_LENGTH ? module.name : '',
+    }),
+    [module]
+  )
 
   return (
     <Stack key={module.id}>
@@ -67,6 +73,7 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
                   onClose()
                 }}
                 sx={getButtonSx(lesson.id === currentLessonId, theme.palette.mode === 'light')}
+                style={{ pointerEvents: 'none' }}
               >
                 <Box display='flex'>
                   <Typography

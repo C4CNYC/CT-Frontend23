@@ -210,8 +210,8 @@ const fr = {
   preload: 'Préchargement',
   slug: 'Limace',
   files: 'Des dossiers',
-  rule: 'Règle',
-  regex: 'Expression régulière',
+  rule: 'Description',
+  regex: 'Test',
   private: 'Privé',
   open_catalog: 'Ouvrir le catalogue',
   sequence: 'Séquence',
@@ -270,6 +270,8 @@ const fr = {
   messages_chalage_comleted: 'Défi réussi',
   messages_course_doesnt_exist: "Le cours n'existe pas",
   messages_lesson_removed: 'Leçon supprimée du module',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'Le nom de la compétence est requis',
@@ -548,9 +550,19 @@ const fr = {
   lessons_practical: 'Pratique',
   lessons_exercise: 'Exercice',
   lessons_inependent_lesson: 'Leçon indépendante',
+  lessons_active_tooltip:
+    'The lesson will show in the catalog or is shareable to the class or in a Quest.',
+  lessons_autoRun_tooltip:
+    'The browser will update on every keystroke. Only available to html files.',
+  lesson_lock_tooltip:
+    'Editing of this lesson is locked until lock is removed. This protects from accidental changes to key content.',
+  lessons_autoRun: 'Auto-run Tests',
+  lessons_lock: 'Lesson Locked',
   lessons_settings: 'Paramètres de la leçon',
   lessons_starter_code: 'Code de démarrage',
   lessons_starter_code_from_previous: 'Copie de la leçon précédente',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Intégrations',
@@ -564,6 +576,15 @@ const fr = {
   integrations_body_links_plh: 'Liens de corps ou scripts',
   integrations_empty: "Vous n'avez aucune intégration.",
   integrations_lets_create: 'Créons une intégration',
+
+  properties: 'Propriété',
+  properties_removed: 'Propriété Supprimée',
+  entityType: 'Type d’Entité',
+  entityId: 'ID de l’Entité',
+  propertyName: 'Nom de la Propriété',
+  propertyValue: 'Valeur de la Propriété',
+  properties_updated_msg: 'Propriété mise à jour',
+  properties_created_msg: 'Propriété créée',
 
   // Skills page
   skills: 'Compétences',
@@ -947,14 +968,14 @@ const fr = {
   folder_name: 'Nom de dossier',
   file_name: 'Nom de fichier',
   validation_removed: 'Règle de validation supprimée',
-  validation_rules: 'Règles de validation',
+  validation_rules: 'Tests',
   not_recommend_count_validations:
     'Nous ne recommandons pas de mettre plus de {{count}} règles pour 1 étape.',
   it_can_make_your_step: 'Cela peut rendre votre démarche très compliquée et affecter',
   comfort_content: 'les apprenants au téléphone',
   updated_at: 'Mis à jour à',
   no_rules: 'PAS DE RÈGLES',
-  add_rule: 'AJOUTER UNE RÈGLE',
+  add_rule: 'Add Test',
   validation_rule_updated: 'Votre règle de validation est mise à jour avec succès',
   validation_rule_created: 'Votre règle de validation a été créée avec succès',
   start_type_here: 'Commencez à taper ici...',
@@ -1024,6 +1045,18 @@ const fr = {
   btn_group_skip: 'SAUTER',
   btn_group_tooltip:
     'Veuillez effectuer toutes les tâches pour continuer (ou ignorer, si disponible.)',
+
+  //Add file modal
+  file_manager_title: 'Files',
+  add_file_madal_title: 'Add file',
+  add_file_btn: 'Add file',
+  file_extension_label: 'File extension:',
+  file_name_label: 'File name:',
+  file_with_same_name_and_extension_exists: 'File with same name and extension already exists',
+  file_name_should_not_contain_dots: 'File name should not contain dots',
+  delete_file_confirm_1: 'Are you sure you want to delete',
+  delete_file_confirm_2: 'file?',
+  delete_file_btn: 'Delete file',
 
   // Timer
   timer_minute: 'Minute',

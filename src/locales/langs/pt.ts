@@ -209,8 +209,8 @@ const pt = {
   preload: 'Pré -carga',
   slug: 'Lesma',
   files: 'arquivos',
-  rule: 'Regra',
-  regex: 'Regex',
+  rule: 'Description',
+  regex: 'Test',
   private: 'Privada',
   open_catalog: 'Abrir Catálogo',
   sequence: 'Seqüência',
@@ -269,6 +269,8 @@ const pt = {
   messages_chalage_comleted: 'Desafio concluído com sucesso',
   messages_course_doesnt_exist: 'O curso não existe',
   messages_lesson_removed: 'Lição removida do módulo',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'O nome da habilidade é necessário',
@@ -545,9 +547,19 @@ const pt = {
   lessons_practical: 'Prática',
   lessons_exercise: 'Exercício',
   lessons_inependent_lesson: 'Lição independente',
+  lessons_active_tooltip:
+    'The lesson will show in the catalog or is shareable to the class or in a Quest.',
+  lessons_autoRun_tooltip:
+    'The browser will update on every keystroke. Only available to html files.',
+  lesson_lock_tooltip:
+    'Editing of this lesson is locked until lock is removed. This protects from accidental changes to key content.',
+  lessons_autoRun: 'Auto-run Tests',
+  lessons_lock: 'Lesson Locked',
   lessons_settings: 'Configurações de aula',
   lessons_starter_code: 'Código inicial',
   lessons_starter_code_from_previous: 'Copiar da lição anterior',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Integrações',
@@ -561,6 +573,15 @@ const pt = {
   integrations_body_links_plh: 'Links ou scripts corporais',
   integrations_empty: 'Você não tem nenhuma integração.',
   integrations_lets_create: 'Vamos criar uma integração',
+
+  properties: 'Propriedade',
+  properties_removed: 'Propriedade Removida',
+  entityType: 'Tipo de Entidade',
+  entityId: 'ID da Entidade',
+  propertyName: 'Nome da Propriedade',
+  propertyValue: 'Valor da Propriedade',
+  properties_updated_msg: 'Propriedade atualizada',
+  properties_created_msg: 'Propriedade criada',
 
   // Skills page
   skills: 'Habilidades',
@@ -944,14 +965,14 @@ const pt = {
   folder_name: 'Nome da pasta',
   file_name: 'Nome do arquivo',
   validation_removed: 'Regra de validação removida',
-  validation_rules: 'Regras de validação',
+  validation_rules: 'Tests',
   not_recommend_count_validations:
     ' Não somos recomendados, coloque mais do que {{count}} regras para 1 etapa.',
   it_can_make_your_step: 'Pode tornar sua etapa muito complicada e pode afetar',
   comfort_content: 'alunos de telefones',
   updated_at: 'Atualizado em',
   no_rules: 'Sem regras',
-  add_rule: 'Adicione a regra',
+  add_rule: 'Add Test',
   validation_rule_updated: 'Sua regra de validação é atualizada com sucesso',
   validation_rule_created: 'Sua regra de validação é criada com sucesso',
   start_type_here: 'Comece a digitar aqui ...',
@@ -1020,6 +1041,18 @@ const pt = {
   btn_group_back: 'VOLTAR',
   btn_group_skip: 'PULAR',
   btn_group_tooltip: 'Preencha todas as tarefas para continuar (ou pular, se disponível.)',
+
+  //Add file modal
+  file_manager_title: 'Files',
+  add_file_madal_title: 'Add file',
+  add_file_btn: 'Add file',
+  file_extension_label: 'File extension:',
+  file_name_label: 'File name:',
+  file_with_same_name_and_extension_exists: 'File with same name and extension already exists',
+  file_name_should_not_contain_dots: 'File name should not contain dots',
+  delete_file_confirm_1: 'Are you sure you want to delete',
+  delete_file_confirm_2: 'file?',
+  delete_file_btn: 'Delete file',
 
   // Timer
   timer_minute: 'Minuto',

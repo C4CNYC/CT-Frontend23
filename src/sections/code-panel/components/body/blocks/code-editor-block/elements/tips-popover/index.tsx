@@ -5,7 +5,7 @@ import { Box, Button, Popper, Typography } from '@mui/material'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 
-import { BOX_STYLES, BUTTON_STYLES, TYP_COLOR } from './constants'
+import { BOX_STYLES, BUTTON_STYLES, TYPO_SX } from './constants'
 
 interface TipsPopoverProps {
   openPoper: boolean
@@ -49,7 +49,7 @@ const TipsPopover: FC<TipsPopoverProps> = ({ openPoper, anchorEl, setOpenPoper, 
       <Box sx={BOX_STYLES}>
         <Typography
           variant='body1'
-          sx={TYP_COLOR}
+          sx={TYPO_SX}
         >
           {tips}
         </Typography>

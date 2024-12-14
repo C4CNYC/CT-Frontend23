@@ -25,7 +25,7 @@ export const useStyles = (theme: Theme) => ({
     transform: 'translate(-100%, 0)',
     transition: 'transform .3s',
     boxShadow: '-2px 4px 4px 0px rgba(0, 0, 0, 0.25)',
-    padding: '10px 20px',
+    padding: '10px 10px',
   },
   STACK_SX_ACTIVE: {
     transform: 'translate(0, 0)',
@@ -54,5 +54,6 @@ export const useStyles = (theme: Theme) => ({
   },
   devIcon: {
     marginRight: '8px',
+    minWidth: '20px',
   },
 })

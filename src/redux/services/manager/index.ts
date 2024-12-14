@@ -53,6 +53,8 @@ export const managerApi = createApi({
     'LastVisitedUnitAndLesson',
     'Media',
     'Properties',
+    'LessonSlidePreload',
+    'WorkspaceStudent',
   ],
   endpoints: () => ({}),
 })

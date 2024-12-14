@@ -24,7 +24,6 @@ import {
   LEVELS,
   PERSONA,
   TONE,
-  TYPE_LESSON,
 } from './constants'
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
@@ -32,8 +31,8 @@ import SimpleAiGenerate from './SimpleAiGenerate'
 
 //@names according to avoid bots spam
 const defaultValues = {
-  RlevelR: LEVELS[0].value,
-  RgradesR: GRADES[1].value,
+  RlevelR: LEVELS[1].value,
+  RgradesR: GRADES[2].value,
   RlessonDurationR: LESSON_DURARION[2].value,
   RlessonLanguageR: 'English',
   RcustomLanguageR: '',
@@ -41,7 +40,7 @@ const defaultValues = {
   RprogrammingLanguageR: '',
   RpersonaR: PERSONA[0].value,
   RtoneR: TONE[0].value,
-  RtypeLessonR: TYPE_LESSON[1].value,
+  RtypeLessonR: '',
   name: null,
   email: null,
   state: null,
@@ -126,6 +125,7 @@ export default function AIGenerateStepper({
       grade: data.RgradesR,
       language: data.RcustomLanguageR || data.RlessonLanguageR,
       tone: data.RcustomToneR || data.RtoneR,
+      context: data.RcontextR,
       newLessonId: '',
     }
     if (!profile) {
@@ -199,7 +199,8 @@ export default function AIGenerateStepper({
             nextStep={nextStep}
             prevStep={prevStep}
             closeModal={closeModal}
-            isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
+            updateForm={methods.setValue as any}
+            getFormValue={methods.getValues as any}
             isTrackSelected={Boolean(methods.watch('RtrackR'))}
           />
         )}
@@ -208,6 +209,7 @@ export default function AIGenerateStepper({
             nextStep={nextStep}
             prevStep={prevStep}
             closeModal={closeModal}
+            isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
           />
         )}
         {activeStep === 3 && (

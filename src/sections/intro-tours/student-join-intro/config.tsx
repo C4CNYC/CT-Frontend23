@@ -34,8 +34,8 @@ export const STUDENT_JOIN_INTRO = [
     title: <div>Switch or Join New Tribes</div>,
     content: (
       <div>
-        YClick on a Tribe icon to switch to another Tribe (or Class.) To join a new Tribe, just
-        click on the “+” and enter the join-code.
+        Click on a Tribe icon to switch to another Tribe (or Class.) To join a new Tribe, just click
+        on the “+” and enter the join-code.
       </div>
     ),
     disableBeacon: true,

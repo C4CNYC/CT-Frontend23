@@ -7,6 +7,7 @@ export const styles = {
     background: 'rgba(118, 142, 171, .5)',
     borderBottom: '2px solid #ECECEC',
     pl: 6,
+    minWidth: '100%',
   },
   TABS: {
     padding: 0,

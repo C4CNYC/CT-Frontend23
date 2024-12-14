@@ -3,7 +3,8 @@ import { StateEffectType } from '@codemirror/state'
 import { EditorView, ViewPlugin, ViewUpdate } from '@codemirror/view'
 import { Socket } from 'socket.io-client'
 
-import type { File } from '../../requests'
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+
 import { EmitSocketEvents } from '../../utils/socket'
 import type { Cursor } from '../cursors/types'
 
@@ -14,7 +15,7 @@ interface PeerExtensionProps {
   socket: Socket
   roomId: string
   startVersion: number
-  fileName: File
+  fileName: StudentFile
   addCursor: StateEffectType<Cursor>
   commentEffect: StateEffectType<any>
 }

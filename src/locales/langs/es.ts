@@ -210,8 +210,8 @@ const es = {
   preload: 'Precarga',
   slug: 'Babosa',
   files: 'Archivos',
-  rule: 'Regla',
-  regex: 'Regex',
+  rule: 'Description',
+  regex: 'Test',
   private: 'Privado',
   open_catalog: 'Abrir catálogo',
   sequence: 'Secuencia',
@@ -270,6 +270,8 @@ const es = {
   messages_chalage_comleted: 'Desafío completado con éxito',
   messages_course_doesnt_exist: 'El curso no existe',
   messages_lesson_removed: 'Lección eliminada del módulo',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'El nombre de la habilidad es obligatorio',
@@ -547,9 +549,13 @@ const es = {
   lessons_practical: 'Práctico',
   lessons_exercise: 'Ejercicio',
   lessons_inependent_lesson: 'Lección independiente',
+  lessons_autoRun: 'Auto-run Tests',
+  lessons_lock: 'Lesson Locked',
   lessons_settings: 'Configuración de la lección',
   lessons_starter_code: 'Código de inicio',
   lessons_starter_code_from_previous: 'Copiar de la lección anterior',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Integraciones',
@@ -563,6 +569,15 @@ const es = {
   integrations_body_links_plh: 'Enlaces corporales o scripts',
   integrations_empty: 'No tienes ninguna integración.',
   integrations_lets_create: 'Creemos una integración',
+
+  properties: 'Propiedad',
+  properties_removed: 'Propiedad Eliminada',
+  entityType: 'Tipo de Entidad',
+  entityId: 'ID de la Entidad',
+  propertyName: 'Nombre de la Propiedad',
+  propertyValue: 'Valor de la Propiedad',
+  properties_updated_msg: 'Propiedad actualizada',
+  properties_created_msg: 'Propiedad creada',
 
   // Skills page
   skills: 'Habilidades',
@@ -945,13 +960,13 @@ const es = {
   folder_name: 'Nombre de la carpeta',
   file_name: 'Nombre del archivo',
   validation_removed: 'Regla de validación eliminada',
-  validation_rules: 'Reglas de validación',
+  validation_rules: 'Tests',
   not_recommend_count_validations: ' No se recomienda poner más de {{count}} reglas para 1 paso.',
   it_can_make_your_step: 'Puede hacer que su paso sea muy complicado y puede afectar',
   comfort_content: 'ARRIENTES EN CHONELES',
   updated_at: 'Actualizado en',
   no_rules: 'SIN REGLAS',
-  add_rule: 'Agregar regla',
+  add_rule: 'Add Test',
   validation_rule_updated: 'Your validation rule is update successfully',
   validation_rule_created: 'Su regla de validación se crea con éxito',
   start_type_here: 'Empiece a escribir aquí ...',
@@ -1020,6 +1035,18 @@ const es = {
   btn_group_back: 'ATRÁS',
   btn_group_skip: 'SKIP',
   btn_group_tooltip: 'Complete todas las tareas para continuar (o omitir, si está disponible).',
+
+  //Add file modal
+  file_manager_title: 'Files',
+  add_file_madal_title: 'Add file',
+  add_file_btn: 'Add file',
+  file_extension_label: 'File extension:',
+  file_name_label: 'File name:',
+  file_with_same_name_and_extension_exists: 'File with same name and extension already exists',
+  file_name_should_not_contain_dots: 'File name should not contain dots',
+  delete_file_confirm_1: 'Are you sure you want to delete',
+  delete_file_confirm_2: 'file?',
+  delete_file_btn: 'Delete file',
 
   // Timer
   timer_minute: 'Minuto',

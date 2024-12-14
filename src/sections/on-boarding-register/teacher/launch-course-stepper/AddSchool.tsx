@@ -37,10 +37,10 @@ export default function AddSchool(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const { data, isLoading } = useGetMySchoolsQuery({})
   const [aiLessonReady, aiLessonReadySet] = useState('')
-  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
+  const [createLesson] = useCreateLessonMutation()
   const [updateSchool, { isLoading: isUpdating }] = useUpdateSchoolProfileMutation()
   const translate = useTranslate()
-  const [createAILesson, { isLoading: createLessonLoading }] = AiGenerate()
+  const [createAILesson] = AiGenerate()
 
   const AiGenerateLessonData = localStorageAvailable()
     ? localStorage.getItem('AiGenerateLessonData')
@@ -120,7 +120,10 @@ export default function AddSchool(): React.ReactElement {
   }
 
   return (
-    <Stack minHeight={500}>
+    <Stack
+      minHeight={500}
+      mb={1}
+    >
       <FormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
@@ -200,6 +203,7 @@ export default function AddSchool(): React.ReactElement {
             <option disabled>─────────────────────────</option>
             {countries
               .filter((el) => el.code !== 'US')
+              .sort((a, b) => a.label.localeCompare(b.label))
               .map((country) => (
                 <option
                   key={country.code}

@@ -214,8 +214,8 @@ const en = {
   preload: 'Preload',
   slug: 'Slug',
   files: 'Files',
-  rule: 'Rule',
-  regex: 'Regex',
+  rule: 'Description',
+  regex: 'Test',
   private: 'Private',
   open_catalog: 'Open Catalog',
   sequence: 'Sequence',
@@ -228,7 +228,9 @@ const en = {
 
   // image upload
   image_choose_image: 'Choose image',
-  image_drope_file: 'Drop files or click here',
+  image_drope_file: `Drop files 
+   Paste screenshot
+   Click here`,
 
   // messages
   messages_success: 'Success',
@@ -274,6 +276,8 @@ const en = {
   messages_chalage_comleted: 'Challange successfully completed',
   messages_course_doesnt_exist: "Course doesn't exist",
   messages_lesson_removed: 'Lesson removed from the module',
+  messages_lesson_file_delete: 'Delete',
+  messages_lesson_file_update: 'Update',
 
   // Validation messages
   required_skill_name: 'Skill name is required',
@@ -542,6 +546,8 @@ const en = {
   lesson: 'Lesson',
   lessons_list: 'Lessons List',
   lessons_create_lesson: 'Create Lesson',
+  lessons_create_lesson_desc: 'Select a template to start your lesson',
+  lesson_cloned_msg: 'Lesson created successfully',
   lessons_edit_lesson: 'Edit Lesson',
   lessons_name: 'Lesson Name',
   lessons_description: 'Lesson description',
@@ -550,9 +556,19 @@ const en = {
   lessons_practical: 'Practical',
   lessons_exercise: 'Exercise',
   lessons_inependent_lesson: 'Independent lesson',
+  lessons_active_tooltip:
+    'The lesson will show in the catalog or is shareable to the class or in a Quest.',
+  lessons_autoRun_tooltip:
+    'The browser will update on every keystroke. Only available to html files.',
+  lesson_lock_tooltip:
+    'Editing of this lesson is locked until lock is removed. This protects from accidental changes to key content.',
+  lessons_autoRun: 'Auto-run Tests',
+  lessons_lock: 'Lesson Locked',
   lessons_settings: 'Lesson Settings',
   lessons_starter_code: 'Starter Code',
   lessons_starter_code_from_previous: 'Copy from the previous lesson',
+  lesson_file_name: 'File name:',
+  lesson_file_add_asset: 'Add Asset',
 
   // Integrations page
   integrations: 'Integrations',
@@ -566,6 +582,16 @@ const en = {
   integrations_body_links_plh: 'Body links or scripts',
   integrations_empty: "You don't have any integrations.",
   integrations_lets_create: "Let's create an integration",
+
+  //Properties
+  properties: 'Property',
+  properties_removed: 'Propery Removed',
+  entityType: 'Entity type',
+  entityId: 'Entity Id',
+  propertyName: 'Property Name',
+  propertyValue: 'Property Value',
+  properties_updated_msg: 'Property updated',
+  properties_created_msg: 'Property created',
 
   // Skills page
   skills: 'Skills',
@@ -852,8 +878,7 @@ const en = {
   ai_gen_persona_tone_3: 'Lively',
   ai_gen_persona_tone_4: 'Boring',
   ai_gen_persona_context_title: 'Context',
-  ai_gen_persona_context_placeholder: 'Any additional context or preferences within the prompt.',
-
+  ai_gen_persona_context_placeholder: 'Contextual details like "focus on teamwork skills".',
   ai_gen_addons_title: 'Add any of the following to your lesson?',
   ai_gen_addons_text_main_1: 'Quiz  |',
   ai_gen_addons_text_sub_1: 'Multiple-choice, matching or fill-in-the-blanks.',
@@ -880,8 +905,8 @@ const en = {
   ai_gen_loading_state_5: 'Receiving the lesson',
   ai_gen_loading_state_6: 'Finishing up',
 
-  ai_gen_lng_select_title: 'Select from list or type the name of any language',
-  ai_gen_lng_placeholder: 'Other Language',
+  ai_gen_lng_select_title: 'Select lesson language',
+  ai_gen_lng_placeholder: 'Other languages or dialects',
 
   // School type
   primary_school: 'Primary School',
@@ -931,6 +956,7 @@ const en = {
   slide_content_updated: 'Content updated',
   slide_standard: 'Standard',
   slide_select_format: 'Select slide format',
+  slide_switch: 'Switch to other slide',
 
   // Share lesson modal
   share_modal_title: 'Share',
@@ -960,14 +986,14 @@ const en = {
   folder_name: 'Folder name',
   file_name: 'File name',
   validation_removed: 'Validation rule removed',
-  validation_rules: 'Validation Rules',
+  validation_rules: 'Tests',
   not_recommend_count_validations:
     ' We are not recommend put more then {{count}} rules for 1 step.',
   it_can_make_your_step: 'It can make your step very complicated and can affect',
   comfort_content: 'learners on phones',
   updated_at: 'Updated At',
   no_rules: 'NO RULES',
-  add_rule: 'ADD RULE',
+  add_rule: 'Add Test',
   validation_rule_updated: 'Your validation rule is update successfully',
   validation_rule_created: 'Your validation rule is created successfully',
   start_type_here: 'Start typing here ...',
@@ -1035,6 +1061,18 @@ const en = {
   btn_group_back: 'BACK',
   btn_group_skip: 'SKIP',
   btn_group_tooltip: 'Please complete all tasks to continue (or skip, if available.)',
+
+  //Add file modal
+  file_manager_title: 'Files',
+  add_file_madal_title: 'Add file',
+  add_file_btn: 'Add file',
+  file_extension_label: 'File extension:',
+  file_name_label: 'File name:',
+  file_with_same_name_and_extension_exists: 'File with same name and extension already exists',
+  file_name_should_not_contain_dots: 'File name should not contain dots',
+  delete_file_confirm_1: 'Are you sure you want to delete',
+  delete_file_confirm_2: 'file?',
+  delete_file_btn: 'Delete file',
 
   // Timer
   timer_minute: 'Minute',

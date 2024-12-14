@@ -12,6 +12,7 @@ import { IGallery } from '@/redux/interfaces/gallary.interface'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
 import { baseQueryWrapper } from './helpers/base_query_wrapper'
+import { ILesson as ILessonFromCourseUnits } from './interfaces/courseUnits.interface'
 
 export const studentPublicApi = createApi({
   reducerPath: 'api/public',
@@ -46,12 +47,29 @@ const extendedApi = studentPublicApi.injectEndpoints({
       }),
       providesTags: ['CoursePublicContent'],
     }),
+    getPublicModuleContent: builder.query<ICourseContent & BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `/module/${id}/content`,
+        method: 'GET',
+      }),
+      providesTags: ['CoursePublicContent'],
+    }),
     getPublicLesson: builder.query<
       ILesson & BaseResponseInterface,
       { id: string; lesson_id: string }
     >({
       query: ({ id, lesson_id: lessonId }) => ({
         url: `/course/${id}/lesson/${lessonId}`,
+        method: 'GET',
+      }),
+      providesTags: ['LessonPublic'],
+    }),
+    getPublicLessonBySlug: builder.query<
+      BaseListResponseInterface<ILessonFromCourseUnits & BaseResponseInterface>,
+      { slug: string }
+    >({
+      query: ({ slug }) => ({
+        url: `/lesson?slug=${slug}`,
         method: 'GET',
       }),
       providesTags: ['LessonPublic'],
@@ -84,9 +102,11 @@ const extendedApi = studentPublicApi.injectEndpoints({
 })
 
 export const {
+  useGetPublicModuleContentQuery,
   useGetPublicCourseContentQuery,
   useGetPublicCourseQuery,
   useGetPublicLessonQuery,
+  useGetPublicLessonBySlugQuery,
   useGetPublicLessonContentQuery,
   useGetPublicClassQuery,
   // ------  projects  ---------
