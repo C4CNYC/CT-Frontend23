@@ -30,7 +30,7 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
   const CreateOrgSchema = Yup.object().shape({
     name: Yup.string().required(translate('name_validation_msg')),
     slug: Yup.string()
-      .matches(/^[a-z-]+$/, translate('slug_validation_msg_1'))
+      .matches(/^[a-z0-9-]+$/, translate('slug_validation_msg_1'))
       .transform((value) => (value ? value.toLowerCase().trim() : value))
       .required('slug_validation_msg_2'),
     home_page_type: Yup.mixed<HomePageType>()
