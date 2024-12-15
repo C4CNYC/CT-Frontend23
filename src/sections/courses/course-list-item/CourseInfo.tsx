@@ -29,7 +29,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           variant='body2'
           sx={{ color: 'inherit' }}
         >
-          9 Hours
+          9 {translate('hours')}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

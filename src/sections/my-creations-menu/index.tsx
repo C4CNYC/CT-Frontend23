@@ -15,16 +15,16 @@ import {
   StyledItem as StyledItemVertical,
 } from '@root/src/components/nav-section/vertical/styles'
 import { useResponsive } from '@root/src/hooks'
-import { useLocales } from '@root/src/locales'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import AiGenerateLessonDialog from './ai-generate-lesson-dialog'
 import DiamondFeatureModal from './diamond-feature-modal'
 import { SelectTemplateDialog } from './select-template-dialog'
 
 export default function MyCreationsMenu(): React.ReactElement {
-  const { translate } = useLocales()
+  const translate = useTranslate()
   const { themeLayout } = useSettingsContext()
   const isDesktop = useResponsive('up', 'md')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
@@ -129,7 +129,7 @@ export default function MyCreationsMenu(): React.ReactElement {
         >
           <AiGenerateLessonDialog>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
-              Mumu AI Creator
+              {translate('sidebar_menu_my_creations_item_1')}
               <ListItemIcon sx={{ pl: 2, mr: -2 }}>
                 <Iconify
                   icon='mingcute:ai-line'
@@ -139,14 +139,14 @@ export default function MyCreationsMenu(): React.ReactElement {
             </MenuItem>
           </AiGenerateLessonDialog>
           <SelectTemplateDialog>
-            <MenuItem>Add From Templates</MenuItem>
+            <MenuItem> {translate('sidebar_menu_my_creations_item_8')}</MenuItem>
           </SelectTemplateDialog>
           <MenuItem
             onClick={async () => {
               await createByCloningLessonHandler()
             }}
           >
-            Add Blank Lesson
+            {translate('sidebar_menu_my_creations_item_2')}
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -156,7 +156,7 @@ export default function MyCreationsMenu(): React.ReactElement {
               handleClosePopover()
             }}
           >
-            My Lessons
+            {translate('sidebar_menu_my_creations_item_3')}
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -166,11 +166,11 @@ export default function MyCreationsMenu(): React.ReactElement {
               handleClosePopover()
             }}
           >
-            My Modules
+            {translate('sidebar_menu_my_creations_item_4')}
           </MenuItem>
           <DiamondFeatureModal>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
-              My Courses
+              {translate('sidebar_menu_my_creations_item_5')}
               <ListItemIcon sx={{ pl: 2, mr: -2 }}>
                 <Iconify
                   icon='ion:diamond-outline'
@@ -181,7 +181,7 @@ export default function MyCreationsMenu(): React.ReactElement {
           </DiamondFeatureModal>
           <DiamondFeatureModal>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
-              Integrations
+              {translate('sidebar_menu_my_creations_item_6')}
               <ListItemIcon
                 sx={{
                   pl: 2,
@@ -197,7 +197,7 @@ export default function MyCreationsMenu(): React.ReactElement {
           </DiamondFeatureModal>
           <DiamondFeatureModal>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
-              Templates
+              {translate('sidebar_menu_my_creations_item_7')}
               <ListItemIcon
                 sx={{
                   pl: 2,

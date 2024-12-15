@@ -13,6 +13,7 @@ const tr = {
   actions_save_changes: 'Değişiklikleri Kaydet',
   actions_clear: 'Temizle',
   actions_update: 'Güncelle',
+  actions_duplicate: 'Çoğalt',
   actions_cancel: 'İptal Et',
   actions_create_user: 'Kullanıcı Oluştur',
   actions_join: 'Katıl',
@@ -36,6 +37,7 @@ const tr = {
   actions_approve: 'Onayla',
   actions_previous: 'Önceki',
   actions_next: 'Sonraki',
+  actions_back: 'Geri',
   actions_send: 'Gönder',
   actions_sort_by: 'Şuna Göre Sırala',
   actions_invite: 'Davet Et',
@@ -172,6 +174,7 @@ const tr = {
   open_catalog: 'Katalogu Aç',
   sequence: 'Sıra',
   rearrange: 'Yeniden Düzenle',
+  remirror: 'Remirror',
 
   // avatar upload
   avatar__upload_text: 'Fotoğraf Yükle',
@@ -301,6 +304,7 @@ const tr = {
   sidebar_menu_modules: 'Modüller',
   sidebar_menu_lessons: 'Dersler',
   sidebar_menu_tasks: 'Görevler',
+  sidebar_menu_properties: 'Özellikler',
   sidebar_menu_integrations: 'Entegrasyonlar',
   sidebar_menu_skills: 'Yetenekler',
   sidebar_menu_apps: 'Uygulamalar',
@@ -544,6 +548,7 @@ const tr = {
   propertyValue: 'Özellik Değeri',
   properties_updated_msg: 'Özellik güncellendi',
   properties_created_msg: 'Özellik oluşturuldu',
+  properties_create_int: 'Entegrasyon oluştur',
 
   // Skills page
   skills: 'Yetenekler',
@@ -911,6 +916,15 @@ const tr = {
   slide_standard: 'Standart',
   slide_select_format: 'Slayt formatını seçin',
   slide_switch: 'Diğer slayta geç',
+  slide_loader_text: 'Daha fazla slayt geliyor',
+  slide_content_changed_barge: 'İçerik Değiştirildi',
+  slide_switch_tabs_standard: 'Standart',
+  slide_switch_tabs_html: 'HTML',
+  slide_switch_tabs_remirror: 'Remirror',
+  slide_switch_tab_dialog_title:
+    'Mevcut düzenleyicideki kaydedilmemiş herhangi bir değişiklik, sekme değiştirildiğinde silinebilir',
+  slide_switch_tab_dialog_subtitle: 'Sekme değiştirmek istediğinizden emin misiniz?',
+  slide_switch_tab_dialog_confirm: 'Evet. Anladım',
 
   // Share lesson modal
   share_modal_title: 'Paylaş',
@@ -1076,6 +1090,11 @@ const tr = {
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: 'Merhaba, Ben Mumu. Takıldığında yardımcı olmak için buradayım.',
 
+  // Code panel header
+  code_panel_header_group: 'Grup',
+  code_panel_header_off: 'Kapalı',
+  code_panel_header_collab: 'İşbirliği',
+
   // CreateLesson
   default_values: {
     createLesson: {
@@ -1173,6 +1192,143 @@ const tr = {
       },
     },
   },
+
+  no_tribe_join_code_tip_1: `Hey, eğer bir Tribe ya da Sınıfın yoksa, sadece Katalog'da kodlamaya başlayabilirsin.`,
+  no_tribe_join_code_tip_2: '“Kataloğu Aç”',
+  no_tribe_join_code_tip_3: 'mevcut kursları görmek için',
+
+  rate_site_title: 'Bu siteyi değerlendirin',
+  rate_training_title: 'Bu eğitimi değerlendirin',
+  rate_slide_title: 'Bu slidi değerlendirin',
+  rate_modal_subtitle_1: 'Bize bir değerlendirme yapın',
+  rate_modal_subtitle_2: `genel olarak`,
+  rate_modal_subtitle_3: `eğitim için`,
+  rate_modal_subtitle_4: `slide için`,
+  rate_modal_subtitle_5: '. Beğenip beğenmediğinizi bize söyleyin.',
+
+  gallery_folder_public_title: 'Herkese Açık',
+  gallery_folder_public_subtitle: 'Projelerinizi herkes görebilir.',
+  gallery_folder_private_title: 'Özel',
+  gallery_folder_private_subtitle: 'Bu klasör sadece sizin için',
+  gallery_projects_inside: 'içerideki projeler',
+
+  sidebar_menu_my_creations_item_1: 'Mumu AI Yaratıcı',
+  sidebar_menu_my_creations_item_2: 'Boş Ders Ekle',
+  sidebar_menu_my_creations_item_3: 'Derslerim',
+  sidebar_menu_my_creations_item_4: 'Modüllerim',
+  sidebar_menu_my_creations_item_5: 'Kurslarım',
+  sidebar_menu_my_creations_item_6: 'Entegrasyonlar',
+  sidebar_menu_my_creations_item_7: 'Şablonlar',
+  sidebar_menu_my_creations_item_8: 'Şablonlardan Ekle',
+
+  diamond_feature_title: 'Elmas Özellik',
+  diamond_feature_subtitle: 'Bu özellik DIAMOND hesapları için sınırlıdır.',
+
+  hours: 'Saatler',
+  module_sidebar_skills: 'YETENEKLER',
+  send_welcome_emails: 'Hoş geldin e-postalarını gönder',
+
+  class_page_popup_share_link_text_1: 'Öğrencilerinizi grubunuza eklemek için',
+  class_page_popup_share_link_text_2: 'davet linkini paylaşın',
+
+  remirror_toolbar_challenge_btn: 'Challenge',
+  remirror_toolbar_tools_btn: 'Araçlar',
+  remirror_toolbar_insert_media_btn: 'Medya ekle',
+  remirror_toolbar_escape_html_btn: 'HTML’den kaçış',
+  remirror_toolbar_escape_html_btn_title: 'Seçili HTML’yi kaçırtır',
+  remirror_toolbar_cape_html_btn: 'HTML’yi Sar',
+  remirror_toolbar_cape_html_btn_title: 'Bu kodu karıştır',
+  remirror_toolbar_format_btn: 'Biçimlendir',
+  remirror_toolbar_format_btn_title: 'Kodu biçimlendir',
+
+  intro_tour_main_step_1_title: 'Tribes (Sınıflar)',
+  intro_tour_main_step_1_subtitle:
+    'Burada oluşturduğunuz veya bir parçası olduğunuz Tribes’leri göreceksiniz.',
+  intro_tour_main_step_2_title: 'Tribe (Sınıf) Bilgileri',
+  intro_tour_main_step_2_subtitle: 'Burada mevcut sınıfla ilgili genel bilgileri görebilirsiniz.',
+  intro_tour_main_step_3_title: 'Görevler Listesi',
+  intro_tour_main_step_3_subtitle: `Tribe için görevler (Atamalar) burada listelenmiştir. Diğer sekmelerde üyeleri ve Tribe ayrıntılarını
+        yönetebilirsiniz.`,
+
+  intro_tour_student_join_step_1_title: '💥 Tribe Bilgileri 💥',
+  intro_tour_student_join_step_1_subtitle:
+    ' Burada Tribe veya Sınıfınızın tüm bilgilerini göreceksiniz.',
+  intro_tour_student_join_step_2_title: 'Görevler (Atamalar)',
+  intro_tour_student_join_step_2_subtitle: `Burada tüm görevlerinizi göreceksiniz. Bir görev kısa bir ders veya tam bir
+        kurs atayabilir. Detayları görmek için üzerine tıklayın.`,
+  intro_tour_student_join_step_3_title: 'Yeni Tribes’e Geçiş veya Katılma',
+  intro_tour_student_join_step_3_subtitle: `Başka bir Tribe (veya Sınıf) geçmek için Tribe simgesine tıklayın. Yeni bir Tribe’a katılmak için
+        “+” simgesine tıklayın ve katılım kodunu girin.`,
+  intro_tour_student_join_step_4_title: 'Heyecan Verici Katalog',
+  intro_tour_student_join_step_4_subtitle: 'Sevdiğiniz bir projeyi seçin ve kodlamaya başlayın.',
+
+  intro_tour_default_student_step_1_title: '💥 Bir tribe’a katılın 💥',
+  intro_tour_default_student_step_1_subtitle: ' Öğretmeninizden bir katılım kodu girin.',
+  intro_tour_default_student_step_2_title: 'Katalog',
+  intro_tour_default_student_step_2_subtitle: 'Burada maceranızı seçer ve kodlamaya başlarsınız.',
+  intro_tour_default_student_step_3_title: 'Kaydolun',
+  intro_tour_default_student_step_3_subtitle:
+    'Burada kaydolun veya ilerlemenizi kaydetmek için giriş yapın.',
+
+  intro_tour_lesson_creation_step_1_title: 'Merhaba 👋🏼',
+  intro_tour_lesson_creation_step_1_subtitle: 'Bu “Ders Düzenleyicisi”dir. ✏️',
+  intro_tour_lesson_creation_step_1_subtitle_2:
+    'Burada dersleri düzenleyebilir veya yeni dersler oluşturabilirsiniz.',
+  intro_tour_lesson_creation_step_2_title: 'Slaytlar 🛝',
+  intro_tour_lesson_creation_step_2_subtitle:
+    'Bunlar slaytlardır - Sayfalar. Burada ekleyebilir, düzenleyebilir veya sıralayabilirsiniz.',
+  intro_tour_lesson_creation_step_3_title: 'Formatınızı Seçin 🎨',
+  intro_tour_lesson_creation_step_3_subtitle:
+    'Slaytları basit bir düzenleyicide 📄 veya HTML olarak oluşturabilirsiniz.',
+  intro_tour_lesson_creation_step_4_title: 'Öğrenci Görünümünü Önizleyin 👩‍🎓🔍',
+  intro_tour_lesson_creation_step_4_subtitle:
+    'Slaytların Kodlama Panelinde (Çalışma Alanında) nasıl göründüğüne bakın.',
+
+  intro_tour_step_1_desktop_title: '💥 Kodlama Paneli 👩‍💻 💥',
+  intro_tour_step_1_desktop_subtitle: 'Burada tüm öğrenme ve yapma işlemleri gerçekleşir. 🤩',
+  intro_tour_step_2_desktop_title: 'Slaytlar',
+  intro_tour_step_2_desktop_subtitle: `Burada heyecan verici şeyler göreceksiniz 💎💫 ve size ne kodlayacağınızı söyleyecekler. ✍🏽 🤖 Adım adım takip edin.`,
+  intro_tour_step_3_desktop_title: 'Meydan Okuma Slaytları',
+  intro_tour_step_3_desktop_subtitle: `Bir Meydan Okuma ⚔️ slaytı mı gördünüz? O zaman kodlamaya başlama zamanı.`,
+  intro_tour_step_4_desktop_title: 'Kontroller',
+  intro_tour_step_4_desktop_subtitle:
+    '“Meydan Okuma” slaytlarında, takıldığınızda “Atla” ⏭️ seçeneğini kullanabilir ve sonra geri dönebilirsiniz 🔙.',
+  intro_tour_step_5_desktop_title: 'Kod Editörü',
+  intro_tour_step_5_desktop_subtitle:
+    'İşte Kod Editörünüz 👩🏽‍💻, burada harika şeyler inşa edeceksiniz. 😎',
+  intro_tour_step_6_desktop_title: 'Testler 🧪',
+  intro_tour_step_6_desktop_subtitle:
+    'Mevcut olduğunda, bu seçeneği tıklayarak meydan okuma için hangi kodun eksik olduğunu görebilirsiniz ⚔👀.',
+  intro_tour_step_7_desktop_title: 'Araç Kutusu 🧰',
+  intro_tour_step_7_desktop_subtitle: 'İşte geri al, yinele, kopyala ve yapıştır.',
+  intro_tour_step_7_desktop_subtitle_2: 'Karakterleri görmek için tıklayın',
+  intro_tour_step_7_desktop_subtitle_3: 'buraya.',
+  intro_tour_step_8_desktop_title: 'Dersler Listesi',
+  intro_tour_step_8_desktop_subtitle:
+    'Modülde nerede olduğunuzu görün 🤷🏾‍♂️ ve önceki dersleri kolayca geri alıp gözden geçirebilirsiniz. 👀 😉',
+  intro_tour_step_9_desktop_title: 'En önemli: Eğlenin! 🤪',
+  intro_tour_step_9_desktop_subtitle:
+    'Ve Geri Bildirim 💬 ile ne düşündüğünüzü bize bildirin: Harika 🏆 mi yoksa Kötü mü 💩?',
+  intro_tour_step_9_desktop_btn: 'Geri bildirim bırak',
+
+  intro_tour_step_1_mobile_title: '💥 Kodlama Paneli 👩‍💻 💥',
+  intro_tour_step_1_mobile_subtitle: 'Burada tüm öğrenme ve yapma işlemleri gerçekleşir. 🤩',
+  intro_tour_step_2_mobile_title: 'Slaytlar',
+  intro_tour_step_2_mobile_subtitle: `Burada heyecan verici şeyler göreceksiniz 💎💫 ve size ne kodlayacağınızı söyleyecekler. ✍🏽 🤖 Adım adım takip edin.`,
+  intro_tour_step_3_mobile_title: 'Meydan Okuma Slaytları',
+  intro_tour_step_3_mobile_subtitle: `Bir Meydan Okuma ⚔️ slaytı mı gördünüz? O zaman kodlamaya başlama zamanı.`,
+  intro_tour_step_4_mobile_title: 'Kontroller',
+  intro_tour_step_4_mobile_subtitle:
+    '“Meydan Okuma” slaytlarında, takıldığınızda “Atla” ⏭️ seçeneğini kullanabilir ve sonra geri dönebilirsiniz 🔙.',
+  intro_tour_step_5_mobile_title: 'Gezinme',
+  intro_tour_step_5_mobile_subtitle: 'Burada sekmeleri değiştirebilirsiniz.',
+  intro_tour_step_6_mobile_title: 'Dersler Listesi',
+  intro_tour_step_6_mobile_subtitle:
+    'Modülde nerede olduğunuzu görün 🤷🏾‍♂️ ve önceki dersleri kolayca geri alıp gözden geçirebilirsiniz. 👀 😉',
+  intro_tour_step_7_mobile_title: 'En önemli: Eğlenin! 🤪',
+  intro_tour_step_7_mobile_subtitle:
+    'Ve Geri Bildirim 💬 ile ne düşündüğünüzü bize bildirin: Harika 🏆 mi yoksa Kötü mü 💩?',
+  intro_tour_step_7_mobile_btn: 'Geri bildirim bırak',
 }
 
 export default tr

@@ -176,7 +176,7 @@ export default function LessonListItem({
                 onClick={() => {
                   onDublicate(step)
                 }}
-                title='Duplicate'
+                title={translate('actions_duplicate')}
               >
                 <Iconify icon='material-symbols:content-copy-outline' />
               </IconButton>

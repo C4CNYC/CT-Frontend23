@@ -9,6 +9,7 @@ import useIsDesktop from '@/hooks/useIsDesktop'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import { toggleRealtimeCodeHidden } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { EditorMode } from '../../body/blocks/code-editor-block/code-editor-collab/hook/constants'
 
@@ -25,6 +26,8 @@ import {
 const MAX_TRIBE_NAME_LENGTH = 20
 
 const GroupHeader: FC = () => {
+  const translate = useTranslate()
+
   const { query } = useRouter()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
@@ -84,7 +87,7 @@ const GroupHeader: FC = () => {
               variant='caption'
               sx={GROUP_TITLE_STYLES}
             >
-              GROUP
+              {translate('code_panel_header_group')}
             </Typography>
 
             <Tooltip title={groupTitle}>

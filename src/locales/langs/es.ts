@@ -6,6 +6,7 @@ const es = {
   actions_edit: 'Editar',
   actions_add: 'Agregar',
   actions_clone: 'Clonar',
+  actions_duplicate: 'Duplicar',
   actions_archive: 'Archivar',
   actions_close: 'Cerrar',
   actions_save: 'Guardar',
@@ -37,6 +38,7 @@ const es = {
   actions_previous: 'Anterior',
   actions_next: 'Siguiente',
   actions_send: 'Enviar',
+  actions_back: 'Atrás',
   actions_sort_by: 'Ordenar por',
   actions_invite: 'Invitar',
   actions_copy: 'Copiar',
@@ -172,6 +174,7 @@ const es = {
   open_catalog: 'Abrir catálogo',
   sequence: 'Secuencia',
   rearrange: 'Reorganizar',
+  remirror: 'Remirror',
 
   // avatar upload
   avatar__upload_text: 'Subir foto',
@@ -300,6 +303,7 @@ const es = {
   sidebar_menu_modules: 'Módulos',
   sidebar_menu_lessons: 'Lecciones',
   sidebar_menu_tasks: 'Tareas',
+  sidebar_menu_properties: 'Propiedades',
   sidebar_menu_integrations: 'Integraciones',
   sidebar_menu_skills: 'Habilidades',
   sidebar_menu_apps: 'Aplicaciones',
@@ -472,9 +476,17 @@ const es = {
   modules_create_module: 'Crear módulo',
   modules_update_module: 'Actualizar módulo',
   modules_module_name: 'Nombre del módulo',
+  modules_module_image: 'Imagen del módulo',
+  modules_module_background: 'Fondo del módulo',
   modules_module_description: 'Descripción del módulo',
   modules_module_duration: 'Duración del módulo',
-  modules_enter_tip: 'Introduce un consejo',
+  modules_module_likes: 'Me gusta iniciales',
+  modules_module_stars: 'Estrellas iniciales',
+  modules_module_enrolled: 'Inscritos iniciales',
+  modules_module_teacher_link: 'Enlace de las diapositivas del profesor',
+  modules_module_teacher_forum_link: 'Enlace del foro del profesor',
+  modules_module_lesson_plan_link: 'Enlace de los planes de lecciones',
+  modules_enter_tip: 'Ingrese la sugerencia',
   modules_add_tip: 'Agregar consejo',
   modules_module_active: 'Módulo activo',
   modules_deleted_msg: '¡Módulo eliminado!',
@@ -498,28 +510,34 @@ const es = {
   lessons_list: 'Lista de lecciones',
   lessons_create_lesson: 'Crear lección',
   lessons_create_lesson_desc: 'Selecciona una plantilla para comenzar tu lección',
-  lesson_cloned_msg: 'Lección creada exitosamente',
+  lesson_cloned_msg: 'Lección creada con éxito',
   lessons_edit_lesson: 'Editar lección',
   lessons_name: 'Nombre de la lección',
   lessons_description: 'Descripción de la lección',
+  lessons_slug: 'Slug',
+  lessons_duration: 'Duración',
   lessons_active: 'Lección activa',
   lessons_deleted_msg: '¡Lección eliminada!',
   lessons_practical: 'Práctica',
   lessons_exercise: 'Ejercicio',
   lessons_independent_lesson: 'Lección independiente',
+  lessons_type: 'Tipo de lección',
+  lessons_type_select_one: 'Seleccionar uno',
+  lessons_type_select_one_star: '*',
   lessons_active_tooltip:
-    'La lección se mostrará en el catálogo o se podrá compartir con la clase o en una misión.',
+    'La lección aparecerá en el catálogo o podrá ser compartida con la clase o en una misión.',
   lessons_autoRun_tooltip:
-    'El navegador se actualizará con cada pulsación de tecla. Solo disponible para archivos html.',
+    'El navegador se actualizará con cada pulsación de tecla. Solo disponible para archivos HTML.',
   lesson_lock_tooltip:
-    'La edición de esta lección está bloqueada hasta que se retire el bloqueo. Esto protege contra cambios accidentales en contenido clave.',
-  lessons_autoRun: 'Pruebas de autoejecución',
+    'La edición de esta lección está bloqueada hasta que se elimine el bloqueo. Esto protege contra cambios accidentales en el contenido clave.',
+  lessons_autoRun: 'Ejecutar pruebas automáticamente',
   lessons_lock: 'Lección bloqueada',
-  lessons_settings: 'Configuración de la lección',
-  lessons_starter_code: 'Código inicial',
-  lessons_starter_code_from_previous: 'Copiar de la lección anterior',
+  lessons_settings: 'Configuraciones de la lección',
+  lessons_starter_code: 'Código de inicio',
+  lessons_starter_code_from_previous: 'Copiar del curso anterior',
   lesson_file_name: 'Nombre del archivo:',
-  lesson_file_add_asset: 'Agregar recurso',
+  lesson_file_add_asset: 'Agregar archivo',
+  lesson_share_button: 'Compartir',
 
   // Integrations page
   integrations: 'Integraciones',
@@ -543,6 +561,7 @@ const es = {
   propertyValue: 'Valor de la propiedad',
   properties_updated_msg: 'Propiedad actualizada',
   properties_created_msg: 'Propiedad creada',
+  properties_create_int: 'Crear integración',
 
   // Skills page
   skills: 'Habilidades',
@@ -916,6 +935,15 @@ const es = {
   slide_standard: 'Estándar',
   slide_select_format: 'Seleccionar formato de diapositiva',
   slide_switch: 'Cambiar a otra diapositiva',
+  slide_loader_text: 'Vienen más diapositivas',
+  slide_content_changed_barge: 'Contenido modificado',
+  slide_switch_tabs_standard: 'Estándar',
+  slide_switch_tabs_html: 'HTML',
+  slide_switch_tabs_remirror: 'Remirror',
+  slide_switch_tab_dialog_title:
+    'Cualquier edición no guardada en el editor actual puede ser eliminada si cambias de pestaña',
+  slide_switch_tab_dialog_subtitle: '¿Estás seguro de que deseas cambiar?',
+  slide_switch_tab_dialog_confirm: 'Sí. Entiendo',
 
   // Share lesson modal
   share_modal_title: 'Compartir',
@@ -1099,6 +1127,11 @@ const es = {
   code_editor_mumu_menu_tooltip:
     'Hola, soy Mumu. Estoy aquí para ayudarte cuando te quedes atascado.',
 
+  // Code panel header
+  code_panel_header_group: 'Grupo',
+  code_panel_header_off: 'Apagado',
+  code_panel_header_collab: 'Colaboración',
+
   // CreateLesson
   default_values: {
     createLesson: {
@@ -1196,6 +1229,150 @@ const es = {
       },
     },
   },
+
+  login_layout_title: '¡Youpi!',
+  login_layout_subtitle: '¡Estás de vuelta!',
+  student_registration_password_number: '1 número',
+  student_registration_password_character: '8+ caracteres',
+  student_birth_data_month: 'Mes',
+  student_birth_data_day: 'Día',
+  student_birth_data_year: 'Año',
+  no_tribe_join_code_tip_1: `Oye, si no tienes una Tribu o Clase, simplemente puedes comenzar a programar en el Catálogo.`,
+  no_tribe_join_code_tip_2: '“Abrir el Catálogo”',
+  no_tribe_join_code_tip_3: 'para ver los cursos disponibles',
+
+  rate_site_title: 'Califica este sitio',
+  rate_training_title: 'Califica esta formación',
+  rate_slide_title: 'Califica esta diapositiva',
+  rate_modal_subtitle_1: 'Danos una calificación',
+  rate_modal_subtitle_2: ` en general`,
+  rate_modal_subtitle_3: ` para la formación`,
+  rate_modal_subtitle_4: ` para la diapositiva`,
+  rate_modal_subtitle_5: '. Dinos si te gusta o no.',
+
+  gallery_folder_public_title: 'Público',
+  gallery_folder_public_subtitle: 'Todo el mundo puede ver tus proyectos.',
+  gallery_folder_private_title: 'Privado',
+  gallery_folder_private_subtitle: 'Esta carpeta es solo para ti.',
+  gallery_projects_inside: 'proyectos dentro',
+
+  sidebar_menu_my_creations_item_1: 'Mumu AI Creator',
+  sidebar_menu_my_creations_item_2: 'Agregar una lección en blanco',
+  sidebar_menu_my_creations_item_3: 'Mis lecciones',
+  sidebar_menu_my_creations_item_4: 'Mis módulos',
+  sidebar_menu_my_creations_item_5: 'Mis cursos',
+  sidebar_menu_my_creations_item_6: 'Integraciones',
+  sidebar_menu_my_creations_item_7: 'Plantillas',
+  sidebar_menu_my_creations_item_8: 'Agregar desde las plantillas',
+
+  diamond_feature_title: 'Función Diamante',
+  diamond_feature_subtitle: 'Esta función está reservada para cuentas DIAMANTE.',
+
+  hours: 'Horas',
+  module_sidebar_skills: 'HABILIDADES',
+  send_welcome_emails: 'Enviar correos de bienvenida',
+
+  class_page_popup_share_link_text_1: 'Agrega estudiantes a tu grupo compartiendo el',
+  class_page_popup_share_link_text_2: 'enlace de invitación',
+
+  // Remirror Toolbar
+  remirror_toolbar_challenge_btn: 'Desafío',
+  remirror_toolbar_tools_btn: 'Herramientas',
+  remirror_toolbar_insert_media_btn: 'Insertar un medio',
+  remirror_toolbar_escape_html_btn: 'Escapar HTML',
+  remirror_toolbar_escape_html_btn_title: 'Escapa el HTML en la selección',
+  remirror_toolbar_cape_html_btn: 'Cubrir HTML',
+  remirror_toolbar_cape_html_btn_title: 'Enredar este código',
+  remirror_toolbar_format_btn: ' Formatear',
+  remirror_toolbar_format_btn_title: 'Formatear el código',
+
+  intro_tour_main_step_1_title: 'Tribus (Clases)',
+  intro_tour_main_step_1_subtitle:
+    'Aquí verás las Tribus que has creado o de las que formas parte.',
+  intro_tour_main_step_2_title: 'Información sobre la Tribu (Clase)',
+  intro_tour_main_step_2_subtitle: 'Aquí puedes ver la información general sobre la clase actual.',
+  intro_tour_main_step_3_title: 'Lista de Misiones',
+  intro_tour_main_step_3_subtitle: `Las misiones (Tareas) para la Tribu están listadas aquí. También puedes gestionar los miembros y
+        los detalles de la Tribu en las otras pestañas.`,
+
+  intro_tour_student_join_step_1_title: '💥 Detalles de la Tribu 💥',
+  intro_tour_student_join_step_1_subtitle: 'Aquí verás todos los detalles de tu Tribu o Clase.',
+  intro_tour_student_join_step_2_title: 'Misiones (Tareas)',
+  intro_tour_student_join_step_2_subtitle: `Aquí verás todas las tareas que tienes. Una misión puede asignar una lección corta o un curso completo. Haz clic para ver los detalles.`,
+  intro_tour_student_join_step_3_title: 'Cambiar o Unirse a Nuevas Tribus',
+  intro_tour_student_join_step_3_subtitle: `Haz clic en un ícono de Tribu para cambiar a otra Tribu (o Clase). Para unirte a una nueva Tribu, simplemente haz clic en el “+” e ingresa el código de registro.`,
+  intro_tour_student_join_step_4_title: 'Catálogo Emocionante',
+  intro_tour_student_join_step_4_subtitle: 'Elige un proyecto que te guste y comienza a programar.',
+
+  intro_tour_default_student_step_1_title: '💥 Unirse a una Tribu 💥',
+  intro_tour_default_student_step_1_subtitle: 'Ingresa un código de registro de tu maestro.',
+  intro_tour_default_student_step_2_title: 'Catálogo',
+  intro_tour_default_student_step_2_subtitle:
+    'Aquí es donde eliges tu aventura y comienzas a programar.',
+  intro_tour_default_student_step_3_title: 'Registro',
+  intro_tour_default_student_step_3_subtitle:
+    'Regístrate aquí o inicia sesión para guardar tu progreso.',
+
+  intro_tour_lesson_creation_step_1_title: 'Hola 👋🏼',
+  intro_tour_lesson_creation_step_1_subtitle: 'Este es el “Editor de Lecciones.” ✏️',
+  intro_tour_lesson_creation_step_1_subtitle_2: 'Aquí puedes editar o crear nuevas lecciones.',
+  intro_tour_lesson_creation_step_2_title: 'Diapositivas 🛝',
+  intro_tour_lesson_creation_step_2_subtitle:
+    'Estas son las diapositivas - Las páginas. Agrega, edita o reorganízalas aquí.',
+  intro_tour_lesson_creation_step_3_title: 'Elige tu Formato 🎨',
+  intro_tour_lesson_creation_step_3_subtitle:
+    'Puedes crear diapositivas en un editor simple 📄 o en HTML.',
+  intro_tour_lesson_creation_step_4_title: 'Vista Previa del Estudiante 👩‍🎓🔍',
+  intro_tour_lesson_creation_step_4_subtitle:
+    'Ve cómo se ven las diapositivas en el panel de programación (Espacio de Trabajo).',
+
+  intro_tour_step_1_desktop_title: '💥 El Panel de Codificación 👩‍💻 💥',
+  intro_tour_step_1_desktop_subtitle:
+    'Aquí es donde ocurre todo el aprendizaje y la construcción. 🤩',
+  intro_tour_step_2_desktop_title: 'Las Diapositivas',
+  intro_tour_step_2_desktop_subtitle: `Aquí verás cosas emocionantes 💎💫 que te dirán qué programar. ✍🏽 🤖 Solo sigue paso a paso.`,
+  intro_tour_step_3_desktop_title: 'Diapositivas de Desafío',
+  intro_tour_step_3_desktop_subtitle: `¿Ves una diapositiva de Desafío ⚔️? Eso significa que es hora de programar en el editor.`,
+  intro_tour_step_4_desktop_title: 'Controles',
+  intro_tour_step_4_desktop_subtitle:
+    'En las diapositivas de “Desafío” también puedes “Saltar” ⏭️ y regresar más tarde 🔙 si te quedas atascado.',
+  intro_tour_step_5_desktop_title: 'Editor de Código',
+  intro_tour_step_5_desktop_subtitle:
+    'Este es tu Editor de Código 👩🏽‍💻 donde crearás cosas geniales. 😎',
+  intro_tour_step_6_desktop_title: 'Pruebas 🧪',
+  intro_tour_step_6_desktop_subtitle:
+    'Cuando estén disponibles, haz clic aquí para ver qué código falta ⚔👀 para el desafío.',
+  intro_tour_step_7_desktop_title: 'Caja de Herramientas 🧰',
+  intro_tour_step_7_desktop_subtitle: 'Aquí tienes deshacer, rehacer, copiar y pegar.',
+  intro_tour_step_7_desktop_subtitle_2: 'Toca en',
+  intro_tour_step_7_desktop_subtitle_3: ' para ver los caracteres.',
+  intro_tour_step_8_desktop_title: 'Lista de Lecciones',
+  intro_tour_step_8_desktop_subtitle:
+    'Mira dónde estás en el Módulo 🤷🏾‍♂️ y regresa fácilmente para repasar lecciones anteriores. 👀 😉',
+  intro_tour_step_9_desktop_title: 'Lo más importante: ¡Diviértete! 🤪',
+  intro_tour_step_9_desktop_subtitle:
+    'Y en los comentarios 💬 cuéntanos qué opinas: ¿Maravilloso 🏆 o Poopie 💩?',
+  intro_tour_step_9_desktop_btn: 'Dejar comentario',
+
+  intro_tour_step_1_mobile_title: '💥 El Panel de Codificación 👩‍💻 💥',
+  intro_tour_step_1_mobile_subtitle:
+    'Aquí es donde ocurre todo el aprendizaje y la construcción. 🤩',
+  intro_tour_step_2_mobile_title: 'Las Diapositivas',
+  intro_tour_step_2_mobile_subtitle: `Aquí verás cosas emocionantes 💎💫 que te dirán qué programar. ✍🏽 🤖 Solo sigue paso a paso.`,
+  intro_tour_step_3_mobile_title: 'Diapositivas de Desafío',
+  intro_tour_step_3_mobile_subtitle: `¿Ves una diapositiva de Desafío ⚔️? Eso significa que es hora de programar en el editor.`,
+  intro_tour_step_4_mobile_title: 'Controles',
+  intro_tour_step_4_mobile_subtitle:
+    'En las diapositivas de “Desafío” también puedes “Saltar” ⏭️ y regresar más tarde 🔙 si te quedas atascado.',
+  intro_tour_step_5_mobile_title: 'Navegación',
+  intro_tour_step_5_mobile_subtitle: 'Aquí puedes cambiar entre estas pestañas.',
+  intro_tour_step_6_mobile_title: 'Lista de Lecciones',
+  intro_tour_step_6_mobile_subtitle:
+    'Mira dónde estás en el Módulo 🤷🏾‍♂️ y regresa fácilmente para repasar lecciones anteriores. 👀 😉',
+  intro_tour_step_7_mobile_title: 'Lo más importante: ¡Diviértete! 🤪',
+  intro_tour_step_7_mobile_subtitle:
+    'Y en los comentarios 💬 cuéntanos qué opinas: ¿Maravilloso 🏆 o Poopie 💩?',
+  intro_tour_step_7_mobile_btn: 'Dejar comentario',
 }
 
 export default es

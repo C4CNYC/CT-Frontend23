@@ -295,13 +295,14 @@ export default function CreateLessonDialog({
                     variant='h6'
                     color='#5C5C5C'
                   >
-                    Lesson Type
+                    {translate('lessons_type')}
                   </Typography>
                   <Typography
                     variant='body2'
                     color='#5C5C5C'
                   >
-                    Select one<sup>*</sup>
+                    {translate('lessons_type_select_one')}
+                    <sup>{translate('lessons_type_select_one_star')}</sup>
                   </Typography>
                 </Stack>
                 <RHFToggleButtonGroup
@@ -314,13 +315,13 @@ export default function CreateLessonDialog({
 
                 <RHFTextField
                   name='slug'
-                  label='Slug'
+                  label={translate('lessons_slug')}
                   size='small'
                 />
 
                 <RHFTextField
                   name='duration'
-                  label='Duration'
+                  label={translate('lessons_duration')}
                   size='small'
                   type='number'
                   InputProps={{

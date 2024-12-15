@@ -271,7 +271,7 @@ export default function ShareGroupModal({
               <FormControlLabel
                 sx={{ width: '100%', justifyContent: 'space-between' }}
                 control={<Switch />}
-                label={<Typography variant='h6'>Send welcome emails</Typography>}
+                label={<Typography variant='h6'>{translate('send_welcome_emails')}</Typography>}
                 labelPlacement='start'
               />
             </Stack>

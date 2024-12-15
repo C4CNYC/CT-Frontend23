@@ -1,6 +1,9 @@
 import { Skeleton, Box, Typography } from '@mui/material'
 
+import { useTranslate } from '@root/src/utils/translateHelper'
+
 export function LessonListItemLoading() {
+  const translate = useTranslate()
   return (
     <Box
       position='relative'
@@ -17,7 +20,7 @@ export function LessonListItemLoading() {
         color='textSecondary'
         zIndex={111}
       >
-        More slides are coming
+        {translate('slide_loader_text')}
       </Typography>
       <Skeleton
         variant='rectangular'

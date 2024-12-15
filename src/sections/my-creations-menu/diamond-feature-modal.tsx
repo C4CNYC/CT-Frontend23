@@ -11,12 +11,14 @@ import {
 } from '@mui/material'
 
 import { Iconify } from '@/components'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface Props {
   children: React.ReactElement[] | React.ReactElement
 }
 
 export default function DiamondFeatureModal({ children }: Props): React.ReactElement {
+  const translate = useTranslate()
   const [open, setOpen] = useState<boolean>(false)
 
   const openDialog = () => {
@@ -47,14 +49,14 @@ export default function DiamondFeatureModal({ children }: Props): React.ReactEle
             icon='ion:diamond-outline'
             color='#43D4DD'
           />
-          Diamond Feature
+          {translate('diamond_feature_title')}
         </DialogTitle>
 
         <DialogContent>
-          <Typography>This feature is limited to DIAMOND accounts.</Typography>
+          <Typography>{translate('diamond_feature_subtitle')}</Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button onClick={closeDialog}>OK</Button>
+          <Button onClick={closeDialog}>{translate('actions_ok')}</Button>
         </DialogActions>
       </Dialog>
     </>

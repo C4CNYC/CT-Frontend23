@@ -30,7 +30,7 @@ export default function CourseSummarily({
           size='15px'
           style={{ marginBottom: '3px' }}
         />
-        <Typography variant='body1'>9 Hours</Typography>
+        <Typography variant='body1'>9 {translate('hours')}</Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <AiOutlineClockCircle

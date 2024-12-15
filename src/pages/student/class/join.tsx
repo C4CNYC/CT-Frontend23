@@ -129,15 +129,15 @@ export default function JoinClass(): React.ReactElement {
               variant='body1'
               sx={{ maxWidth: '350px', mt: 3 }}
             >
-              Hey, if you have no Tribe or Class, you can just start coding in the Catalog.{' '}
+              {translate('no_tribe_join_code_tip_1')}{' '}
               <Link
                 component={NextLink}
                 href={STUDENT_PATH_DASHBOARD.courses.root}
                 underline='none'
               >
-                “Open Catalog”
+                {translate('no_tribe_join_code_tip_2')}
               </Link>{' '}
-              to see the courses available
+              {translate('no_tribe_join_code_tip_3')}
             </Typography>
           </Stack>
           <Stack>

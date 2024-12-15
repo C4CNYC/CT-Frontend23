@@ -96,12 +96,12 @@ export default function StepperRegister({
         gap={1}
       >
         <Chip
-          label='1 Number'
+          label={translate('student_registration_password_number')}
           icon={hasOneNumber ? <MdDone color={hasOneNumber ? '#fff' : ''} /> : <></>}
           sx={{ background: hasOneNumber ? '#79d2aa' : '', color: hasOneNumber ? '#fff' : '' }}
         />
         <Chip
-          label='8+ Characters'
+          label={translate('student_registration_password_character')}
           icon={hasSixDigit ? <MdDone color={hasSixDigit ? '#fff' : ''} /> : <></>}
           sx={{ background: hasSixDigit ? '#79d2aa' : '', color: hasSixDigit ? '#fff' : '' }}
         />

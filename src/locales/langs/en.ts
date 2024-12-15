@@ -6,6 +6,7 @@ const en = {
   actions_edit: 'Edit',
   actions_add: 'Add',
   actions_clone: 'Clone',
+  actions_duplicate: 'Duplicate',
   actions_archive: 'Archive',
   actions_close: 'Close',
   actions_save: 'Save',
@@ -37,6 +38,7 @@ const en = {
   actions_previous: 'Previous',
   actions_next: 'Next',
   actions_send: 'Send',
+  actions_back: 'Back',
   actions_sort_by: 'Sort by',
   actions_invite: 'Invite',
   actions_copy: 'Copy',
@@ -172,6 +174,7 @@ const en = {
   open_catalog: 'Open Catalog',
   sequence: 'Sequence',
   rearrange: 'Rearrange',
+  remirror: 'Remirror',
 
   // avatar upload
   avatar__upload_text: 'Upload photo',
@@ -300,6 +303,7 @@ const en = {
   sidebar_menu_modules: 'Modules',
   sidebar_menu_lessons: 'Lessons',
   sidebar_menu_tasks: 'Tasks',
+  sidebar_menu_properties: 'Properties',
   sidebar_menu_integrations: 'Integrations',
   sidebar_menu_skills: 'Skills',
   sidebar_menu_apps: 'Apps',
@@ -472,8 +476,16 @@ const en = {
   modules_create_module: 'Create Module',
   modules_update_module: 'Update Module',
   modules_module_name: 'Module name',
+  modules_module_image: 'Module image',
+  modules_module_background: 'Module background',
   modules_module_description: 'Module description',
   modules_module_duration: 'Module duration',
+  modules_module_likes: 'Initial likes',
+  modules_module_stars: 'Initial stars',
+  modules_module_enrolled: 'Initial enrolled',
+  modules_module_teacher_link: 'Teacher slides link',
+  modules_module_teacher_forum_link: 'Teacher forum link',
+  modules_module_lesson_plan_link: 'Lesson plans link',
   modules_enter_tip: 'Enter tip',
   modules_add_tip: 'Add tip',
   modules_module_active: 'Module active',
@@ -502,11 +514,16 @@ const en = {
   lessons_edit_lesson: 'Edit Lesson',
   lessons_name: 'Lesson Name',
   lessons_description: 'Lesson description',
+  lessons_slug: 'Slug',
+  lessons_duration: 'Duration',
   lessons_active: 'Lesson active',
   lessons_deleted_msg: 'Lesson deleted!',
   lessons_practical: 'Practical',
   lessons_exercise: 'Exercise',
   lessons_independent_lesson: 'Independent lesson',
+  lessons_type: 'Lesson Type',
+  lessons_type_select_one: 'Select one',
+  lessons_type_select_one_star: '*',
   lessons_active_tooltip:
     'The lesson will show in the catalog or is shareable to the class or in a Quest.',
   lessons_autoRun_tooltip:
@@ -520,6 +537,7 @@ const en = {
   lessons_starter_code_from_previous: 'Copy from the previous lesson',
   lesson_file_name: 'File name:',
   lesson_file_add_asset: 'Add Asset',
+  lesson_share_button: 'Share',
 
   // Integrations page
   integrations: 'Integrations',
@@ -543,6 +561,7 @@ const en = {
   propertyValue: 'Property Value',
   properties_updated_msg: 'Property updated',
   properties_created_msg: 'Property created',
+  properties_create_int: 'Create integration',
 
   // Skills page
   skills: 'Skills',
@@ -908,6 +927,15 @@ const en = {
   slide_standard: 'Standard',
   slide_select_format: 'Select slide format',
   slide_switch: 'Switch to other slide',
+  slide_loader_text: 'More slides are coming',
+  slide_content_changed_barge: 'Content Changed',
+  slide_switch_tabs_standard: 'Standard',
+  slide_switch_tabs_html: 'HTML',
+  slide_switch_tabs_remirror: 'Remirror',
+  slide_switch_tab_dialog_title:
+    ' Any unsaved edit in the current editor can be deleted if you switch',
+  slide_switch_tab_dialog_subtitle: 'Are you sure you want to switch?',
+  slide_switch_tab_dialog_confirm: 'Yes. I understand',
 
   // Share lesson modal
   share_modal_title: 'Share',
@@ -1073,6 +1101,11 @@ const en = {
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: "Hi, I'm Mumu. I'm here to help when you get stuck.",
 
+  // Code panel header
+  code_panel_header_group: 'Group',
+  code_panel_header_off: 'Off',
+  code_panel_header_collab: 'Collab',
+
   //Super Admin
   admin_title_nav: 'Admin',
   administration_title: 'Administration',
@@ -1187,6 +1220,149 @@ const en = {
 
   login_layout_title: 'Yaaaay!',
   login_layout_subtitle: "You're back!",
+  student_registration_password_number: '1 Number',
+  student_registration_password_character: '8+ Characters',
+  student_birth_data_month: 'Month',
+  student_birth_data_day: 'Day',
+  student_birth_data_year: 'Year',
+  no_tribe_join_code_tip_1: `Hey, if you have no Tribe or Class, you can just start coding in the Catalog.`,
+  no_tribe_join_code_tip_2: '“Open Catalog”',
+  no_tribe_join_code_tip_3: 'to see the courses available',
+
+  rate_site_title: 'Rate this site',
+  rate_training_title: 'Rate this training',
+  rate_slide_title: 'Rate this slide',
+  rate_modal_subtitle_1: 'Give us a rating',
+  rate_modal_subtitle_2: ` in general`,
+  rate_modal_subtitle_3: ` for the training`,
+  rate_modal_subtitle_4: ` for the slide`,
+  rate_modal_subtitle_5: '. Tell us if you like it or not.',
+
+  gallery_folder_public_title: 'Public',
+  gallery_folder_public_subtitle: 'Anyone can see your projects.',
+  gallery_folder_private_title: 'Private',
+  gallery_folder_private_subtitle: 'This folder is only for you',
+  gallery_projects_inside: 'projects inside',
+
+  sidebar_menu_my_creations_item_1: 'Mumu AI Creator',
+  sidebar_menu_my_creations_item_2: 'Add Blank Lesson',
+  sidebar_menu_my_creations_item_3: 'My Lessons',
+  sidebar_menu_my_creations_item_4: 'My Modules',
+  sidebar_menu_my_creations_item_5: 'My Courses',
+  sidebar_menu_my_creations_item_6: 'Integrations',
+  sidebar_menu_my_creations_item_7: 'Templates',
+  sidebar_menu_my_creations_item_8: 'Add From Templates',
+
+  diamond_feature_title: 'Diamond Feature',
+  diamond_feature_subtitle: 'This feature is limited to DIAMOND accounts.',
+
+  hours: 'Hours',
+  module_sidebar_skills: 'SKILLS',
+  send_welcome_emails: 'Send welcome emails',
+
+  class_page_popup_share_link_text_1: 'Add students to your group by sharing the',
+  class_page_popup_share_link_text_2: 'invite link',
+
+  // Remirror Toolbar
+  remirror_toolbar_challenge_btn: 'Challenge',
+  remirror_toolbar_tools_btn: 'Tools',
+  remirror_toolbar_insert_media_btn: 'Insert media',
+  remirror_toolbar_escape_html_btn: 'Escape HTML',
+  remirror_toolbar_escape_html_btn_title: 'Escapes HTML in the selection',
+  remirror_toolbar_cape_html_btn: 'Cape HTML',
+  remirror_toolbar_cape_html_btn_title: 'Tangle this code',
+  remirror_toolbar_format_btn: ' Format',
+  remirror_toolbar_format_btn_title: 'Format code',
+
+  intro_tour_main_step_1_title: 'Tribes ( Classes )',
+  intro_tour_main_step_1_subtitle:
+    'Here you will see the Tribes you have created or are a part of.',
+  intro_tour_main_step_2_title: 'Tribe (Class) Information',
+  intro_tour_main_step_2_subtitle: 'Here you can see general information about the current class.',
+  intro_tour_main_step_3_title: 'Quests list',
+  intro_tour_main_step_3_subtitle: `The quests (Assignments) for the Tribe are listed here. You can also manage members and
+        Tribe details in the other tabs.`,
+
+  intro_tour_student_join_step_1_title: '💥 Tribe Details 💥',
+  intro_tour_student_join_step_1_subtitle:
+    ' Here you’ll see all the details for your Tribe or Class.',
+  intro_tour_student_join_step_2_title: 'Quests ( Assignments )',
+  intro_tour_student_join_step_2_subtitle: `Here you’ll see all the assignments you have. A quest can assign a short lesson or a full
+        course. Click on it to see the details.`,
+  intro_tour_student_join_step_3_title: 'Switch or Join New Tribes',
+  intro_tour_student_join_step_3_subtitle: `Click on a Tribe icon to switch to another Tribe (or Class.) To join a new Tribe, just click
+        on the “+” and enter the join-code.`,
+  intro_tour_student_join_step_4_title: 'Exciting Catalog',
+  intro_tour_student_join_step_4_subtitle: 'Choose a project you love and start coding.',
+
+  intro_tour_default_student_step_1_title: '💥 Join a tribe 💥',
+  intro_tour_default_student_step_1_subtitle: ' Enter a join-code from your teacher.',
+  intro_tour_default_student_step_2_title: 'Catalog',
+  intro_tour_default_student_step_2_subtitle:
+    'This is where you choose your adventure and start coding.',
+  intro_tour_default_student_step_3_title: 'Register',
+  intro_tour_default_student_step_3_subtitle: 'Register here or login to save your progress.',
+
+  intro_tour_lesson_creation_step_1_title: 'Hi there 👋🏼',
+  intro_tour_lesson_creation_step_1_subtitle: 'This is the “Lesson Editor.” ✏️',
+  intro_tour_lesson_creation_step_1_subtitle_2: 'You can edit or create new lessons here.',
+  intro_tour_lesson_creation_step_2_title: 'Slides 🛝',
+  intro_tour_lesson_creation_step_2_subtitle:
+    'These are the slides - The pages. Add, edit or re-order them here.',
+  intro_tour_lesson_creation_step_3_title: 'Choose your Format 🎨',
+  intro_tour_lesson_creation_step_3_subtitle:
+    'You can create slides in a simple editor 📄 or in HTML.',
+  intro_tour_lesson_creation_step_4_title: 'Preview Student View 👩‍🎓🔍',
+  intro_tour_lesson_creation_step_4_subtitle:
+    'See how the slides look in the Coding Panel (Workspace).',
+
+  intro_tour_step_1_desktop_title: '💥 The Coding Panel 👩‍💻 💥',
+  intro_tour_step_1_desktop_subtitle: 'Here is where all the learning and building happens. 🤩',
+  intro_tour_step_2_desktop_title: 'The Slides',
+  intro_tour_step_2_desktop_subtitle: `Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
+        step by step.`,
+  intro_tour_step_3_desktop_title: 'Challenge Slides',
+  intro_tour_step_3_desktop_subtitle: `See a Challenge ⚔️ slide? That means it’s time to code in the editor.`,
+  intro_tour_step_4_desktop_title: 'Controls',
+  intro_tour_step_4_desktop_subtitle:
+    '  On “Challenge” slides you can also “Skip” ⏭️ and come back later 🔙 if you get stuck.',
+  intro_tour_step_5_desktop_title: 'Code Editor',
+  intro_tour_step_5_desktop_subtitle:
+    'Here’s your Code Editor 👩🏽‍💻 where you’ll build cool stuff. 😎',
+  intro_tour_step_6_desktop_title: 'Tests 🧪',
+  intro_tour_step_6_desktop_subtitle:
+    '  When available, click this to see what code is missing ⚔👀 for the challenge.',
+  intro_tour_step_7_desktop_title: 'Toolbox 🧰',
+  intro_tour_step_7_desktop_subtitle: 'Here’s undo, redo, copy & paste.',
+  intro_tour_step_7_desktop_subtitle_2: 'Tap on',
+  intro_tour_step_7_desktop_subtitle_3: ' see the characters.',
+  intro_tour_step_8_desktop_title: 'Lessons List',
+  intro_tour_step_8_desktop_subtitle:
+    'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
+  intro_tour_step_9_desktop_title: 'Most important: Have fun! 🤪',
+  intro_tour_step_9_desktop_subtitle:
+    'And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?',
+  intro_tour_step_9_desktop_btn: 'Leave feedback',
+
+  intro_tour_step_1_mobile_title: '💥 The Coding Panel 👩‍💻 💥',
+  intro_tour_step_1_mobile_subtitle: 'Here is where all the learning and building happens. 🤩',
+  intro_tour_step_2_mobile_title: 'The Slides',
+  intro_tour_step_2_mobile_subtitle: `Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
+        step by step.`,
+  intro_tour_step_3_mobile_title: 'Challenge Slides',
+  intro_tour_step_3_mobile_subtitle: `See a Challenge ⚔️ slide? That means it’s time to code in the editor.`,
+  intro_tour_step_4_mobile_title: 'Controls',
+  intro_tour_step_4_mobile_subtitle:
+    '  On “Challenge” slides you can also “Skip” ⏭️ and come back later 🔙 if you get stuck.',
+  intro_tour_step_5_mobile_title: 'Navigation',
+  intro_tour_step_5_mobile_subtitle: 'Here you can change this tabs',
+  intro_tour_step_6_mobile_title: 'Lessons List',
+  intro_tour_step_6_mobile_subtitle:
+    'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
+  intro_tour_step_7_mobile_title: 'Most important: Have fun! 🤪',
+  intro_tour_step_7_mobile_subtitle:
+    'And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?',
+  intro_tour_step_7_mobile_btn: 'Leave feedback',
 }
 
 export default en
