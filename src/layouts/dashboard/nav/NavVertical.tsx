@@ -62,7 +62,10 @@ export default function NavVertical({
             flexShrink: 0,
           }}
         >
-          <Logo sx={{ ml: 2 }} />
+          <Logo
+            sx={{ ml: 2 }}
+            isLogoNav
+          />
           {!isManager ? <LetsCodeBtn /> : null}
         </Stack>
 

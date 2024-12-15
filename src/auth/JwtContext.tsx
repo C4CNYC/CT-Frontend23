@@ -8,6 +8,8 @@ import { axios } from '@/utils/axios'
 import { localStorageAvailable } from '@/utils/localStorageAvailable'
 import { voidFunction } from '@/utils/voidFunction'
 
+import { resetTenant, setTenant, Tenant } from '../redux/slices/tenant'
+
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
 import { isValidToken, setSession } from './utils'
 
@@ -90,10 +92,11 @@ export const AuthContext = createContext<JWTContextType | null>(null)
 
 interface AuthProviderProps {
   children: React.ReactNode
+  tenant?: Tenant
 }
 
 // TODO: Handle scenario when user is not logged in and user data is an empty string with isAuthenticated set to true
-export function AuthProvider({ children }: AuthProviderProps): React.ReactElement | null {
+export function AuthProvider({ children, tenant }: AuthProviderProps): React.ReactElement | null {
   const [state, dispatch] = useReducer(reducer, initialState)
   const reduxDispatch = useDispatch()
   const storageAvailable = localStorageAvailable()
@@ -145,6 +148,16 @@ export function AuthProvider({ children }: AuthProviderProps): React.ReactElemen
       voidFunction()
     })
   }, [initialize])
+
+  useEffect(() => {
+    if (!tenant) return
+
+    reduxDispatch(setTenant(tenant))
+
+    return () => {
+      reduxDispatch(resetTenant())
+    }
+  }, [tenant])
 
   // AUTHENTICATE
   const authenticate = (): void => {

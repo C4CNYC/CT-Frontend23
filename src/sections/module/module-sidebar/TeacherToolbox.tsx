@@ -23,7 +23,7 @@ export default function TeacherToolbox({
   const { query } = useRouter()
 
   return (
-    <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner, Role.Editor]}>
+    <RoleBasedGuard roles={[Role.Manager, Role.SuperAdmin, Role.Admin, Role.Owner, Role.Editor]}>
       <Paper
         elevation={5}
         sx={{

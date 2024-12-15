@@ -11,6 +11,7 @@ import { adminApi } from './services/admin'
 import { authApi } from './services/auth'
 import { feedbackApi } from './services/feedback'
 import { managerApi } from './services/manager'
+import { superAdmin } from './services/manager/super-admin'
 import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
@@ -28,6 +29,7 @@ const store = configureStore({
       serializableCheck: false,
       immutableCheck: false,
     })
+      .concat(superAdmin.middleware)
       .concat(authApi.middleware)
       .concat(studentAuthApi.middleware)
       .concat(schoolSettingsApi.middleware)

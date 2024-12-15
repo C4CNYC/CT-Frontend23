@@ -73,7 +73,9 @@ export default function HomeOverview(): React.ReactElement {
       ) : null}
       {!(isLoading || !data) ? (
         <>
-          <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
+          <RoleBasedGuard
+            roles={[Role.Owner, Role.SuperAdmin, Role.SuperAdmin, Role.Admin, Role.Manager]}
+          >
             <MainPageTour />
           </RoleBasedGuard>
           <div>

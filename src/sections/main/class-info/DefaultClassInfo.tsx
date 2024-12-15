@@ -121,7 +121,9 @@ export default function DefaultClassInfo({
         className='tourMainStep3 studentJoinStep1'
         sx={{ mx: { lg: -2 } }}
       >
-        <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Editor, Role.Manager]}>
+        <RoleBasedGuard
+          roles={[Role.Owner, Role.SuperAdmin, Role.Admin, Role.Editor, Role.Manager]}
+        >
           <OnceOffNotification classData={classData} />
         </RoleBasedGuard>
         {/* <ClassInfoToggle /> */}
@@ -215,7 +217,7 @@ export default function DefaultClassInfo({
                     </Typography>
                   </Button>
                 </ShareGroupModal>
-                <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner]}>
+                <RoleBasedGuard roles={[Role.Manager, Role.SuperAdmin, Role.Admin, Role.Owner]}>
                   <IconButton
                     onClick={handleOpenPopover}
                     sx={{ ml: 2, p: 0.7 }}
