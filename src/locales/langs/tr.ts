@@ -1029,6 +1029,7 @@ const tr = {
   btn_group_back: 'GERİ',
   btn_group_skip: 'ATLA',
   btn_group_tooltip: 'Devam etmek için tüm görevleri tamamlayın (ya da varsa atlayın).',
+  code_tests_title: 'Code Tests',
 
   // Add file modal
   file_manager_title: 'Dosyalar',

@@ -183,7 +183,8 @@ const es = {
 
   // image upload
   image_choose_image: 'Elegir imagen',
-  image_drop_file: `Suelta los archivos Pega la captura de pantalla Haz clic aquí`,
+  image_drop_file: `Suelta los archivos Pega 
+  la captura de pantalla Haz clic aquí`,
 
   // messages
   messages_success: 'Éxito',
@@ -1049,6 +1050,7 @@ const es = {
   btn_group_skip: 'SALTAR',
   btn_group_tooltip:
     'Por favor, completa todas las tareas para continuar (o salta si está disponible).',
+  code_tests_title: 'Code Tests',
 
   // Add file modal
   file_manager_title: 'Archivos',

@@ -1054,6 +1054,7 @@ const fr = {
   btn_group_skip: 'PASSER',
   btn_group_tooltip:
     'Veuillez compléter toutes les tâches pour continuer (ou passer, si disponible).',
+  code_tests_title: 'Code Tests',
 
   //Add file modal
   file_manager_title: 'Fichiers',

@@ -1208,8 +1208,8 @@ const ar = {
     },
   },
 
-  login_layout_title: 'Yaaaay!',
-  login_layout_subtitle: "You're back!",
+  login_layout_title: 'نعم!',
+  login_layout_subtitle: 'لقد عدت!',
   student_registration_password_number: '1 رقم',
   student_registration_password_character: '8+ أحرف',
   student_birth_data_month: 'شهر',

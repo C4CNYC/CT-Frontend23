@@ -1045,6 +1045,7 @@ const pt = {
   btn_group_back: 'VOLTAR',
   btn_group_skip: 'PULAR',
   btn_group_tooltip: 'Complete todas as tarefas para continuar (ou pule, se disponível.)',
+  code_tests_title: 'Code Tests',
 
   // Add file modal
   file_manager_title: 'Arquivos',

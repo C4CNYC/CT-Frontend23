@@ -3,6 +3,7 @@ import { type FC } from 'react'
 import { Box, Typography } from '@mui/material'
 
 import { type IValidationMap } from '@/utils/validationMaping'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import CheckersItemButton from '../checkers-item-button'
 import { CheckerIcon } from '../CheckersIcon'
@@ -13,6 +14,7 @@ interface CheckersMenuProps {
 }
 
 const CheckersMenu: FC<CheckersMenuProps> = ({ checkers, isCheckedOnce }) => {
+  const translate = useTranslate()
   return (
     <Box
       sx={BOX_SX}
@@ -24,7 +26,9 @@ const CheckersMenu: FC<CheckersMenuProps> = ({ checkers, isCheckedOnce }) => {
           height={15}
           color='#fff'
         />
-        <Typography sx={{ fontSize: '600', ml: 1, mr: 'auto' }}>Code Tests</Typography>
+        <Typography sx={{ fontSize: '600', ml: 1, mr: 'auto' }}>
+          {translate('code_tests_title')}
+        </Typography>
       </Box>
 
       {checkers.map((item, i) => (

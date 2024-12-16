@@ -183,7 +183,8 @@ const en = {
 
   // image upload
   image_choose_image: 'Choose image',
-  image_drop_file: `Drop files Paste screenshot Click here`,
+  image_drop_file: `Drop files Paste 
+  screenshot Click here`,
 
   // messages
   messages_success: 'Success',
@@ -1040,6 +1041,7 @@ const en = {
   btn_group_back: 'BACK',
   btn_group_skip: 'SKIP',
   btn_group_tooltip: 'Please complete all tasks to continue (or skip, if available.)',
+  code_tests_title: 'Code Tests',
 
   //Add file modal
   file_manager_title: 'Files',

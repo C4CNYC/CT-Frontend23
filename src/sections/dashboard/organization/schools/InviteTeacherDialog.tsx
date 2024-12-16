@@ -100,7 +100,6 @@ export default function InviteTeacherDialog({
               }}
             />
             <Button
-              sx={{ width: '150px' }}
               variant='contained'
               disabled={!!members?.data.length || !filters.email}
               onClick={onSendInvite}
