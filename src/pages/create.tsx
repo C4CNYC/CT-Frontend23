@@ -48,7 +48,7 @@ export default function AiGeneratePage(): React.ReactElement {
   useEffect(() => {
     if (!data?.home_page_type) return
 
-    switch (data?.home_page_type) {
+    switch (data.home_page_type) {
       case HomePageType.Authorization: {
         router.push(PATH_AUTH.onBoardingStudent)
         break
