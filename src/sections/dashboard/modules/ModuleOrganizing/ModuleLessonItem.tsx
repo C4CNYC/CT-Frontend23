@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
+import { useTheme } from '@mui/system'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import * as _ from 'lodash-es'
@@ -22,22 +23,20 @@ interface Props {
   lesson: ILesson
 }
 
-const BRIEFING = '#0198ED'
 const CUSTOM = '#364954'
-const CHALANGES = '#FBDD3F'
 
 export default function ModuleLessonItem({ onRemove, index, lesson }: Props): React.ReactElement {
   const router = useRouter()
+  const theme = useTheme()
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
   const isActive = router.query.lessonId === lesson.id
-
+  const isRTL = theme.direction === 'rtl'
   const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
     event.preventDefault()
     event.stopPropagation()
     setOpenPopover(event.currentTarget)
   }
-
   const handleClosePopover = (): void => {
     setOpenPopover(null)
   }
@@ -159,6 +158,7 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                 onRemove(lesson.id)
                 handleClosePopover()
               }}
+              sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}
             >
               <Iconify icon='eva:trash-2-outline' />
               {translate('actions_remove')}

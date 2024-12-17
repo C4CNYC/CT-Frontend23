@@ -1,4 +1,4 @@
-import { MenuItem } from '@mui/material'
+import { MenuItem, useTheme } from '@mui/material'
 
 import { Socials } from '@/assets/data'
 import { RHFSelect } from '@/components'
@@ -8,6 +8,8 @@ interface Props {
 }
 
 export default function LinkSelect({ defaultValue }: Props): React.ReactElement {
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
   return (
     <RHFSelect
       name='type'
@@ -15,15 +17,13 @@ export default function LinkSelect({ defaultValue }: Props): React.ReactElement 
       sx={{
         width: '80px !important',
         height: '40px !important',
-        borderRight: 'none',
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
+        ...(isRTL && { borderLeft: 'none', borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
+        ...(!isRTL && { borderRight: 'none', borderTopRightRadius: 0, borderBottomRightRadius: 0 }),
 
         '& .MuiOutlinedInput-root': {
           height: '40px',
-          border: 'none',
-          borderTopRightRadius: 0,
-          borderBottomRightRadius: 0,
+          ...(!isRTL && { border: 'none', borderTopRightRadius: 0, borderBottomRightRadius: 0 }),
+          ...(isRTL && { border: 'none', borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
         },
         '& .MuiSelect-select': {
           display: 'flex',

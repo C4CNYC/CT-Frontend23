@@ -52,7 +52,7 @@ export default function AddAuthorDialog({
           justifyContent='space-between'
           alignItems='center'
         >
-          <DialogTitle variant='h5'>{translate('actions_create_authur')}</DialogTitle>
+          <DialogTitle variant='h5'>{translate('actions_create_author')}</DialogTitle>
           <IconButton
             onClick={handleCloseDialog}
             sx={{ mr: 2 }}

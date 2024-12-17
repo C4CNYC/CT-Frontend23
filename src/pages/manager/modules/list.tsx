@@ -1,4 +1,4 @@
-import { Box, Button, Container } from '@mui/material'
+import { Box, Button, Container, useTheme } from '@mui/material'
 import Head from 'next/head'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
@@ -24,8 +24,9 @@ import FilterModules from './filter'
 ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function ModulesListPage(): React.ReactElement | string {
-  const { themeStretch } = useSettingsContext()
+  const theme = useTheme()
   const translate = useTranslate()
+  const { themeStretch } = useSettingsContext()
   const { isAdmin } = useIsAdmin()
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
@@ -49,6 +50,7 @@ export default function ModulesListPage(): React.ReactElement | string {
     refetch: adminRefetch,
   } = useGetAdminModulesQuery(filters, { skip: !isAdmin })
 
+  const isRTL = theme.direction === 'rtl'
   const data = isAdmin ? adminData : ownData
   const isLoading = isAdmin ? adminIsLoading : isOwnLoading
   const isFetching = isAdmin ? adminFetching : isOwnFetching
@@ -69,6 +71,7 @@ export default function ModulesListPage(): React.ReactElement | string {
       />
     )
   }
+
   return (
     <>
       <Head>
@@ -92,7 +95,16 @@ export default function ModulesListPage(): React.ReactElement | string {
             <CreateModuleDialog refetch={refetch}>
               <Button
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={
+                  <Iconify
+                    icon='eva:plus-fill'
+                    sx={{
+                      ...(isRTL && {
+                        ml: 2,
+                      }),
+                    }}
+                  />
+                }
               >
                 {translate('modules_create_module')}
               </Button>
@@ -130,10 +142,6 @@ export default function ModulesListPage(): React.ReactElement | string {
               ))}
               {isFetching
                 ? Array(3)
-                    // getCountTakingElment(
-                    //   Number(data.meta.itemCount),
-                    //   Number(filters.take)
-                    // )
                     .fill(null)
                     .map((v, i) => <DefaultSkeletonItem key={i} />)
                 : null}
@@ -156,10 +164,6 @@ export default function ModulesListPage(): React.ReactElement | string {
               ))}
               {isFetching
                 ? Array(3)
-                    // getCountTakingElment(
-                    //   Number(data.meta.itemCount),
-                    //   Number(filters.take)
-                    // )
                     .fill(null)
                     .map((v, i) => <DefaultSkeletonItem key={i} />)
                 : null}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
+import { useTheme } from '@mui/system'
 import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import NextLink from 'next/link'
 import { StepWizardChildProps } from 'react-step-wizard'
@@ -26,9 +27,13 @@ export default function SingInPassword({
   isError,
   currentStep,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
+  const theme = useTheme()
+  const translate = useTranslate()
+
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [isDisabledBtn, setIsDisabletBtn] = useState<boolean>(true)
-  const translate = useTranslate()
+
+  const isRTL = theme.direction === 'rtl'
 
   if (isError) {
     if (nextStep) {
@@ -74,6 +79,9 @@ export default function SingInPassword({
           type={showPassword ? 'text' : 'password'}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           inputRef={(input) => input && isActive && input.focus()}
+          InputLabelProps={{
+            style: { marginLeft: isRTL ? '35px' : 0 },
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>

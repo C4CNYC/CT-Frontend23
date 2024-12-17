@@ -1,7 +1,16 @@
 import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
-import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import Link from 'next/link'
 
 import { ConfirmDialog, Iconify, Image, Label, MenuPopover, useSnackbar } from '@/components'
@@ -28,6 +37,8 @@ export default function CourseCard({
   const [loading, setLoading] = useState(false)
   const [deleteCourse] = useDeleteCourseMutation()
   const translate = useTranslate()
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const handleOpenConfirm = (): void => {
@@ -204,7 +215,14 @@ export default function CourseCard({
           refetch={refetch}
         >
           <MenuItem>
-            <Iconify icon='eva:edit-fill' />
+            <Iconify
+              icon='eva:edit-fill'
+              sx={{
+                ...(isRTL && {
+                  ml: 1,
+                }),
+              }}
+            />
             {translate('actions_edit')}
           </MenuItem>
         </CreateCourseDialog>
@@ -217,7 +235,14 @@ export default function CourseCard({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <Iconify
+            icon='eva:trash-2-outline'
+            sx={{
+              ...(isRTL && {
+                ml: 1,
+              }),
+            }}
+          />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

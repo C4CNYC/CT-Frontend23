@@ -11,6 +11,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  useTheme,
 } from '@mui/material'
 import { Stack } from '@mui/system'
 import Container from '@mui/system/Container'
@@ -49,6 +50,7 @@ export default function Skills(): React.ReactElement {
   const translate = useTranslate()
   const { data, isLoading } = useGetSkillQuery({ ...filters })
   const [removeSkill] = useRemoveSkillMutation()
+  const theme = useTheme()
 
   const onDelete = async (id: string): Promise<void> => {
     try {
@@ -82,7 +84,16 @@ export default function Skills(): React.ReactElement {
               <UpdateModalSkills>
                 <Button
                   variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
+                  startIcon={
+                    <Iconify
+                      icon='eva:plus-fill'
+                      sx={{
+                        ...(theme.direction === 'rtl' && {
+                          ml: 2,
+                        }),
+                      }}
+                    />
+                  }
                 >
                   {translate('skills')}
                 </Button>

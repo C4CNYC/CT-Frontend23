@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Divider, Drawer, DrawerProps, Stack, Typography } from '@mui/material'
+import { Divider, Drawer, DrawerProps, Stack, Typography, useTheme } from '@mui/material'
 import Image from 'next/image'
 
 import { countries } from '@/assets/data'
@@ -33,13 +33,14 @@ export default function SchoolDetailsDrawer({
   }, [item])
 
   const translate = useTranslate()
+  const theme = useTheme()
 
   return (
     <>
       <Drawer
         open={open}
         onClose={onClose}
-        anchor='right'
+        anchor={theme.direction === 'rtl' ? 'left' : 'right'}
         BackdropProps={{
           invisible: true,
         }}

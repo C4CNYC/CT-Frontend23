@@ -101,10 +101,17 @@ export default function AdministrationPage(): React.ReactElement {
     onSort,
     onChangeDense,
   } = useTable()
-
   const { enqueueSnackbar } = useSnackbar()
-  const [deleteOrg, { isLoading: loading }] = useDeleteOrgMutation()
   const translate = useTranslate()
+  const { themeStretch } = useSettingsContext()
+  const { filters, setFilter, resetFilters } = useFilters({
+    name: '',
+  })
+  const [openConfirm, setOpenConfirm] = useState(false)
+
+  const [deleteOrg, { isLoading: loading }] = useDeleteOrgMutation()
+  const { data, isLoading } = useGetOrgListQuery(filters)
+
   const deleteOrgCb = async (id: string): Promise<void> => {
     try {
       await deleteOrg({
@@ -122,14 +129,6 @@ export default function AdministrationPage(): React.ReactElement {
     enqueueSnackbar(translate('members_delete_success_msg'))
     setSelected([])
   }
-
-  const { themeStretch } = useSettingsContext()
-  const { filters, setFilter, resetFilters } = useFilters({
-    name: '',
-  })
-  const { data, isLoading } = useGetOrgListQuery(filters)
-
-  const [openConfirm, setOpenConfirm] = useState(false)
 
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
@@ -170,6 +169,7 @@ export default function AdministrationPage(): React.ReactElement {
           action={
             <AddEditOrgModal>
               <Button
+                sx={{ gap: 0.5 }}
                 variant='contained'
                 startIcon={<Iconify icon='eva:plus-fill' />}
               >

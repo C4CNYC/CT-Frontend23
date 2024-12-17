@@ -1,6 +1,14 @@
 import { useState } from 'react'
 
-import { Avatar, Button, ListItem, ListItemAvatar, ListItemText, MenuItem } from '@mui/material'
+import {
+  Avatar,
+  Button,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  MenuItem,
+  useTheme,
+} from '@mui/material'
 import { useSnackbar } from 'notistack'
 
 import { Iconify, MenuPopover } from '@/components'
@@ -29,6 +37,8 @@ export default function ClassItem({
   const [updateClassAvatar] = useUpdateClassesAvatarMutation()
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget)
@@ -130,7 +140,14 @@ export default function ClassItem({
             }}
           >
             <MenuItem>
-              <Iconify icon='eva:edit-fill' />
+              <Iconify
+                icon='eva:edit-fill'
+                sx={{
+                  ...(isRTL && {
+                    ml: 2,
+                  }),
+                }}
+              />
               {translate('actions_edit')}
             </MenuItem>
           </AddClassDialog>
@@ -141,7 +158,14 @@ export default function ClassItem({
             }}
             sx={{ color: 'error.main' }}
           >
-            <Iconify icon='eva:trash-2-outline' />
+            <Iconify
+              icon='eva:trash-2-outline'
+              sx={{
+                ...(isRTL && {
+                  ml: 2,
+                }),
+              }}
+            />
             {translate('actions_remove')}
           </MenuItem>
         </>

@@ -1,9 +1,11 @@
+import { Step } from 'react-joyride'
+
 import { Image } from '@/components'
 
-export const STUDENT_DEFAULT_INTRO = [
+export const getDefaultStudentIntroSteps = (translate: (key: string) => string): Step[] => [
   {
     target: '.defaultIntroStudentStep1',
-    title: <div>💥 Join a tribe 💥</div>,
+    title: <div>{translate('intro_tour_default_student_step_1_title')}</div>,
     content: (
       <div>
         <Image
@@ -11,7 +13,7 @@ export const STUDENT_DEFAULT_INTRO = [
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '290px' }}
         />
-        Enter a join-code from your teacher.
+        {translate('intro_tour_default_student_step_1_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -19,15 +21,15 @@ export const STUDENT_DEFAULT_INTRO = [
   },
   {
     target: '.defaultIntroStudentStep2',
-    title: <div>Catalog</div>,
-    content: <div>This is where you choose your adventure and start coding.</div>,
+    title: <div>{translate('intro_tour_default_student_step_2_title')}</div>,
+    content: <div> {translate('intro_tour_default_student_step_2_subtitle')}</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },
   {
     target: '.defaultIntroStudentStep3',
-    title: <div>Register</div>,
-    content: <div>Register here or login to save your progress.</div>,
+    title: <div>{translate('intro_tour_default_student_step_3_title')}</div>,
+    content: <div> {translate('intro_tour_default_student_step_3_subtitle')}</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },

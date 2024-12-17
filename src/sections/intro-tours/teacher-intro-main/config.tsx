@@ -1,27 +1,24 @@
-export const TOUR_STEPS_MAIN = [
+import { Step } from 'react-joyride'
+
+export const getIntroMainSteps = (translate: (key: string) => string): Step[] => [
   {
     target: '.tourMainStep2',
-    title: <div>Tribes ( Classes )</div>,
-    content: <div>Here you will see the Tribes you have created or are a part of.</div>,
+    title: <div>{translate('intro_tour_main_step_1_title')} </div>,
+    content: <div>{translate('intro_tour_main_step_1_subtitle')}</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },
   {
     target: '.tourMainStep3',
-    title: <div>Tribe (Class) Information</div>,
-    content: <div>Here you can see general information about the current class.</div>,
+    title: <div>{translate('intro_tour_main_step_2_title')}</div>,
+    content: <div>{translate('intro_tour_main_step_2_subtitle')}</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },
   {
     target: '.tourMainStep4',
-    title: <div>Quests list </div>,
-    content: (
-      <div>
-        The quests (Assignments) for the Tribe are listed here. You can also manage members and
-        Tribe details in the other tabs.
-      </div>
-    ),
+    title: <div>{translate('intro_tour_main_step_3_title')}</div>,
+    content: <div>{translate('intro_tour_main_step_3_subtitle')}</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },

@@ -29,16 +29,19 @@ interface IQuestItemProps {
 export default function QuestItem({ assignment, schoolId }: IQuestItemProps): React.ReactElement {
   const { query } = useRouter()
   const theme = useTheme()
-  const isLight = theme.palette.mode === 'light'
   const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
+
+  const isLight = theme.palette.mode === 'light'
+  const isRTL = theme.direction === 'rtl'
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [openConfirm, setOpenConfirm] = useState(false)
-  const translate = useTranslate()
+
   const [pinAssignment] = usePinAssignmentMutation()
   // const [unpinAssignment, { isLoading: isLoadingUnpin }] =
   //   useUnpinAssignmentMutation();
-  const [deleteAssignmet, { isLoading: isDeleting }] = useDeleteAssignmentMutation()
+  const [deleteAssignment, { isLoading: isDeleting }] = useDeleteAssignmentMutation()
 
   const pinTomblerAssignment = async () => {
     try {
@@ -52,7 +55,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
 
   const onDelete = async () => {
     try {
-      await deleteAssignmet({
+      await deleteAssignment({
         schoolId,
         assignmentId: assignment.id,
       }).unwrap()
@@ -212,7 +215,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                 <Iconify
                   icon='maki:arrow'
                   width={18}
-                  style={{ marginLeft: '3px' }}
+                  style={{ marginLeft: '3px', marginRight: '3px' }}
                 />
               </Link>
               <Link
@@ -306,7 +309,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
           underline='none'
           color={isLight ? 'initial' : '#E6F5FD'}
         >
-          <MenuItem>
+          <MenuItem sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
             <Iconify icon='eva:edit-fill' />
             {translate('actions_edit')}
           </MenuItem>
@@ -316,7 +319,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
             handleOpenConfirm()
             handleClosePopover()
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: 'error.main', flexDirection: isRTL ? 'row-reverse' : 'row' }}
         >
           <Iconify icon='eva:trash-2-outline' />
           {translate('actions_delete')}

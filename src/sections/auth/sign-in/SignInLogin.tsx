@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { useTheme } from '@mui/system'
 import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
 import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle'
 import { useGoogleLogin } from '@react-oauth/google'
@@ -23,11 +24,16 @@ export default function SignInLogin({
   goToStep,
   nextStep,
 }: Partial<StepWizardChildProps> & IProps): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar()
-  const router = useRouter()
-  const { loginWithGoogle } = useAuthContext()
-  const [isLoading, setIsLoading] = useState(false)
+  const theme = useTheme()
   const translate = useTranslate()
+  const router = useRouter()
+
+  const { enqueueSnackbar } = useSnackbar()
+  const { loginWithGoogle } = useAuthContext()
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const isRTL = theme.direction === 'rtl'
 
   const onLoginWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
@@ -41,9 +47,6 @@ export default function SignInLogin({
       setIsLoading(false)
     },
   })
-
-  // eslint-disable-next-line no-console
-  console.log('SignInLogin')
 
   return (
     <>
@@ -68,6 +71,9 @@ export default function SignInLogin({
             if (goToStep && isValid && e.code === 'Enter') {
               goToStep(2)
             }
+          }}
+          InputLabelProps={{
+            style: { marginLeft: isRTL ? '35px' : 0 },
           }}
           InputProps={{
             endAdornment: (
@@ -117,7 +123,7 @@ export default function SignInLogin({
           })}
         >
           <FcGoogle size='50px' />
-          {translate('ligin_with_google')}
+          {translate('login_with_google')}
         </LoadingButton>
       </Stack>
     </>

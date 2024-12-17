@@ -35,12 +35,15 @@ interface IClassInfoTable {
 
 export default function ClassInfoTable({ classData }: IClassInfoTable) {
   const theme = useTheme()
+  const translate = useTranslate()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const { user } = useAuthContext()
+
   const [value, setValue] = useState(0)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
-  const translate = useTranslate()
-  const { user } = useAuthContext()
+
   const isStudent = user?.role === Role.Student
+  const isRTL = theme.direction === 'rtl'
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -91,26 +94,26 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             label={!isMobile && translate('quests')}
             icon={<CiMountain1 size={20} />}
             {...customTabProps(0)}
-            sx={{ fontSize: '1.1rem' }}
+            sx={{ fontSize: '1.1rem', gap: isRTL ? 0.5 : 0 }}
           />
           {!isStudent ? (
             <Tab
               label={!isMobile && translate('members')}
               icon={<IoPeopleOutline size={20} />}
-              sx={{ fontSize: '1.1rem' }}
+              sx={{ fontSize: '1.1rem', gap: isRTL ? 0.5 : 0 }}
               {...customTabProps(1)}
             />
           ) : null}
           <Tab
             label={!isMobile && translate('details')}
             icon={<IoSettingsOutline size={20} />}
-            sx={{ fontSize: '1.1rem' }}
+            sx={{ fontSize: '1.1rem', gap: isRTL ? 0.5 : 0 }}
             {...customTabProps(isStudent ? 1 : 2)}
           />
           <Tab
             label={!isMobile && translate('progress')}
             icon={<GiProgression size={20} />}
-            sx={{ fontSize: '1.1rem' }}
+            sx={{ fontSize: '1.1rem', gap: isRTL ? 0.5 : 0 }}
             {...customTabProps(isStudent ? 2 : 3)}
           />
         </Tabs>
@@ -208,9 +211,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           underline='none'
           color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
         >
-          <MenuItem>
+          <MenuItem sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
             <SiGoogleclassroom size={10} />
-            {translate('Assign from Catalog')}
+            {translate('assign_from_catalog')}
           </MenuItem>
         </Link>
         <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
@@ -220,9 +223,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             underline='none'
             color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
           >
-            <MenuItem>
+            <MenuItem sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
               <AiOutlineFundProjectionScreen size={20} />
-              {translate('Create Pop-Up Lesson')}
+              {translate('create_popup_lesson')}
             </MenuItem>
           </Link>
         </RoleBasedGuard>
@@ -233,9 +236,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             underline='none'
             color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
           >
-            <MenuItem>
+            <MenuItem sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
               <AiOutlineFundProjectionScreen size={20} />
-              {translate('Assign from My Creations')}
+              {translate('assign_my_creations')}
             </MenuItem>
           </Link>
         </RoleBasedGuard>

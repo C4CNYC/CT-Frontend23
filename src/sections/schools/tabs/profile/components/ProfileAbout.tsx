@@ -11,7 +11,6 @@ const StyledIcon = styled(Iconify)(({ theme }) => ({
   height: 20,
   marginTop: 1,
   flexShrink: 0,
-  marginRight: theme.spacing(2),
 }))
 
 interface Props {
@@ -31,7 +30,10 @@ export default function ProfileAbout({ data }: Props): React.ReactElement | null
         sx={{ p: 3 }}
       >
         {data?.about ? <Typography variant='body2'>{data?.about}</Typography> : ''}
-        <Stack direction='row'>
+        <Stack
+          direction='row'
+          gap={1}
+        >
           <StyledIcon icon='eva:pin-fill' />
           <Typography variant='body2'>
             {translate('general_profile_live_at')} &nbsp;
@@ -45,12 +47,18 @@ export default function ProfileAbout({ data }: Props): React.ReactElement | null
           </Typography>
         </Stack>
 
-        <Stack direction='row'>
+        <Stack
+          direction='row'
+          gap={1}
+        >
           <StyledIcon icon='eva:email-fill' />
           <Typography variant='body2'>{data?.address ?? 'N/A'}</Typography>
         </Stack>
 
-        <Stack direction='row'>
+        <Stack
+          direction='row'
+          gap={1}
+        >
           <StyledIcon icon='ic:baseline-local-phone' />
 
           <Typography variant='body2'>

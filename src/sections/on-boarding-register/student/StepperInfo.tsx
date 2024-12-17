@@ -103,7 +103,7 @@ export default function StepperInfo(): React.ReactElement {
           <RHFSelect
             native={false}
             name='mounth'
-            label={translate('Month')}
+            label={translate('student_birth_data_month')}
             sx={(theme) => ({
               ...styledRegisterInput(theme, {
                 '& .MuiInputBase-root': {
@@ -134,7 +134,7 @@ export default function StepperInfo(): React.ReactElement {
           </RHFSelect>
           <RHFSelect
             name='day'
-            label={translate('Day')}
+            label={translate('student_birth_data_day')}
             sx={(theme) => ({
               ...styledRegisterInput(theme, {
                 '& .MuiInputBase-root': {
@@ -167,7 +167,7 @@ export default function StepperInfo(): React.ReactElement {
           <RHFSelect
             native={false}
             name='year'
-            label={translate('Year')}
+            label={translate('student_birth_data_year')}
             sx={(theme) => ({
               ...styledRegisterInput(theme, {
                 '& .MuiInputBase-root': {
@@ -213,7 +213,7 @@ export default function StepperInfo(): React.ReactElement {
           <FormControlLabel
             sx={{ width: '100%', justifyContent: 'space-between' }}
             control={<Switch />}
-            label='Send welcome emails'
+            label={translate('send_welcome_emails')}
             labelPlacement='start'
           />
         </Stack>

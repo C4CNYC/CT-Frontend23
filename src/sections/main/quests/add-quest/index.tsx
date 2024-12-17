@@ -191,7 +191,7 @@ export default function AddQuest(): React.ReactElement {
             course_id: formData.course,
           }).unwrap()
         }
-        enqueueSnackbar(translate('assignments_updated_successfuly'))
+        enqueueSnackbar(translate('assignments_updated_successfully'))
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
@@ -241,7 +241,7 @@ export default function AddQuest(): React.ReactElement {
             ...(query.onBoarding ? { onBoarding: 'on-boarding' } : {}),
           })
         )
-        enqueueSnackbar(translate('assignments_created_successfuly'))
+        enqueueSnackbar(translate('assignments_created_successfully'))
       } catch (error: any) {
         enqueueSnackbar(error.data.message, {
           variant: 'error',
@@ -270,7 +270,7 @@ export default function AddQuest(): React.ReactElement {
             >
               Tip:
             </Typography>{' '}
-            {translate('assigments_onboarding_info')}
+            {translate('assignments_onboarding_info')}
           </Typography>
           <IconButton onClick={() => eliminateInfoBanner()}>
             <Close />

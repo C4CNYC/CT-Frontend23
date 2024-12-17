@@ -4,6 +4,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import { Box, Button, IconButton, Paper, Typography } from '@mui/material'
 import { type TooltipRenderProps } from 'react-joyride'
 
+import { useTranslate } from '@root/src/utils/translateHelper'
+
 import {
   BOX_CONTENT_SX,
   BTN_BACK_SX,
@@ -23,6 +25,7 @@ const TooltipTourCodePanel: FC<TooltipRenderProps> = ({
   tooltipProps,
   skipProps,
 }) => {
+  const translate = useTranslate()
   return (
     <Paper
       elevation={6}
@@ -50,7 +53,7 @@ const TooltipTourCodePanel: FC<TooltipRenderProps> = ({
             {...backProps}
             sx={BTN_BACK_SX}
           >
-            Back
+            {translate('actions_back')}
             <Box id='back' />
           </Button>
         )}
@@ -67,14 +70,14 @@ const TooltipTourCodePanel: FC<TooltipRenderProps> = ({
             {...primaryProps}
             sx={NEXT_BTN_SX}
           >
-            Next
+            {translate('actions_next')}
             <Box id='next' />
           </Button>
         )}
 
         {index + 1 === size && (
           <Button {...skipProps}>
-            Close
+            {translate('actions_close')}
             <Box id='close' />
           </Button>
         )}

@@ -233,10 +233,7 @@ export default function Validation({
               mt='25px'
             >
               <CreateEditValidation stepId={stepId}>
-                <Button
-                  sx={{ width: '150px' }}
-                  variant='contained'
-                >
+                <Button variant='contained'>
                   {translate('add_rule')}
                   <Iconify
                     ml='10px'

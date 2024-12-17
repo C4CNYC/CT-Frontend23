@@ -108,6 +108,7 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
       <Box
         sx={OPEN_BOX_SX}
         ref={ref}
+        dir='ltr'
       >
         <div>
           <AnimatePresence>

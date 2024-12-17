@@ -27,7 +27,7 @@ export function ConfirmDialog({
 
       {content && <DialogContent sx={{ typography: 'body2' }}> {content} </DialogContent>}
 
-      <DialogActions sx={actionsProps}>
+      <DialogActions sx={{ gap: 1, ...actionsProps }}>
         {action}
 
         <Button

@@ -113,7 +113,7 @@ export const content = {
       disabled: true,
     },
     {
-      title: 'Properties',
+      title: 'sidebar_menu_properties',
       path: MANAGER_PATH_DASHBOARD.properties,
       icon: <FiCodesandbox />,
     },

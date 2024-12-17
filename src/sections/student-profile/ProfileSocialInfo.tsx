@@ -23,13 +23,11 @@ export default function ProfileSocialInfo({ studentId }: Props): React.ReactElem
         {data?.map((link) => (
           <Stack
             key={link.name}
-            direction='row'
-            sx={{ alignItems: 'center' }}
+            sx={{ alignItems: 'center', flexDirection: 'row', gap: 1 }}
           >
             {SOCIAL_ICONS[link.type]}
             <Link
               sx={{
-                ml: 1,
                 '&:hover': {
                   cursor: 'pointer',
                 },

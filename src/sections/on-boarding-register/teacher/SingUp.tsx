@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { useTheme } from '@mui/system'
 import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
 import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle'
 import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
@@ -29,10 +30,15 @@ export default function SingUp({
   isTeacher,
   goToStep,
 }: Props): React.ReactElement {
-  const { registerWithGoogle } = useAuthContext()
-  const { enqueueSnackbar } = useSnackbar()
-  const [isLoading, setIsLoading] = useState(false)
+  const theme = useTheme()
   const translate = useTranslate()
+
+  const { enqueueSnackbar } = useSnackbar()
+  const { registerWithGoogle } = useAuthContext()
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const isRTL = theme.direction === 'rtl'
 
   const onRegisterWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
@@ -85,6 +91,9 @@ export default function SingUp({
           label={translate('email')}
           defaultValue=''
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          InputLabelProps={{
+            style: { marginLeft: isRTL ? '35px' : 0 },
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>

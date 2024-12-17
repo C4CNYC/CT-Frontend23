@@ -45,9 +45,7 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
 
   const [selectedTemplate, selectedTemplateSet] = useState<string | null>(null)
   const [dialogopen, dialogopenOpen, dialogopenClose] = useBoolean(isForceOpen ? true : false)
-  useEffect(() => {
-    if (isForceOpen) dialogopenOpen()
-  }, [isForceOpen])
+
   const [cloneLesson] = useCloneLessonMutation()
 
   const { data: properties } = useGetPropertiesQuery(
@@ -82,6 +80,10 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
     return
   }
 
+  useEffect(() => {
+    if (isForceOpen) dialogopenOpen()
+  }, [isForceOpen])
+
   return (
     <>
       {children ? <Box onClick={dialogopenOpen}>{children}</Box> : null}
@@ -109,7 +111,7 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
           </DialogTitle>
           <DialogContent sx={{ p: 2 }}>
             <Stack sx={LANG_ITEMS_CONT_SX}>
-              <Typography variant='h6'>Favorites:</Typography>
+              <Typography variant='h6'>{translate('lesson_create_favorite_input')}</Typography>
               {aiTemplates?.map((l) => {
                 let lesson = l as ILessonWC
                 return (
@@ -133,7 +135,7 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
               sx={{ mr: 2, fontSize: '1.5rem' }}
               onClick={createFromTemplate(selectedTemplate || '')}
             >
-              GO
+              {translate('lesson_create_favorite_btn')}
               <Iconify
                 icon='fa6-solid:chevron-right'
                 width={25}

@@ -14,6 +14,7 @@ interface ILoadingItem {
 }
 const LoadingItem = ({ isLoading, text, multiply }: ILoadingItem) => {
   const translate = useTranslate()
+
   const [loading, setLoading] = useState(true)
   const timer = useRef<any | null>(null)
 

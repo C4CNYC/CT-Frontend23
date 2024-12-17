@@ -65,7 +65,7 @@ export default function ImageLightBox({
         <DialogContent sx={{ pt: 3 }}>
           <Image
             src={image}
-            alt='module image'
+            alt={translate('modules_module_image')}
           />
         </DialogContent>
         <DialogActions>

@@ -29,10 +29,13 @@ interface FormValuesProps {
 
 export default function LaunchCourseStepper() {
   const { push } = useRouter()
-  const { enqueueSnackbar } = useSnackbar()
-  const [activeStep, setActiveStep] = useState(0)
-  const { register } = useAuthContext()
+
   const translate = useTranslate()
+
+  const { enqueueSnackbar } = useSnackbar()
+  const { register } = useAuthContext()
+
+  const [activeStep, setActiveStep] = useState(0)
 
   const CreateEmailSchema = Yup.object().shape({
     email: Yup.string()

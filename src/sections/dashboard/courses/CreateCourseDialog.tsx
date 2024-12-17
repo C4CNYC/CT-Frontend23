@@ -14,6 +14,7 @@ import {
   Tab,
   Tabs,
   Typography,
+  useTheme,
 } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -74,6 +75,8 @@ export default function CreateCourseDialog({
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = useState(false)
   const [uploadedFile, setUploadedFile] = useState<null | File>(null)
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
 
   const [editCourse, { isLoading: isEditLoading }] = useUpdateCourseMutation()
   const [createCourse, { isLoading: isCreateLoading }] = useCreateCourseMutation()
@@ -189,7 +192,9 @@ export default function CreateCourseDialog({
                 value={value}
                 onChange={handleChange}
                 aria-label='basic tabs example'
-                sx={{ ml: 3 }}
+                sx={{
+                  ml: 3,
+                }}
               >
                 <Tab
                   label={translate('general')}
@@ -199,11 +204,21 @@ export default function CreateCourseDialog({
                 <Tab
                   label={translate('courses_modules')}
                   {...a11yProps(1)}
+                  sx={{
+                    ...(isRTL && {
+                      ml: 3,
+                    }),
+                  }}
                 />
                 {isEdit ? (
                   <Tab
                     label={translate('courses_authors')}
                     {...a11yProps(2)}
+                    sx={{
+                      ...(isRTL && {
+                        ml: 3,
+                      }),
+                    }}
                   />
                 ) : null}
               </Tabs>
@@ -311,8 +326,14 @@ export default function CreateCourseDialog({
                       maxHeight: '56px',
                       bgcolor: 'grey.400',
                       color: 'grey.800',
-                      borderTopRightRadius: 0,
-                      borderBottomRightRadius: 0,
+                      ...(!isRTL && {
+                        borderTopRightRadius: 0,
+                        borderBottomRightRadius: 0,
+                      }),
+                      ...(isRTL && {
+                        borderTopLeftRadius: 0,
+                        borderBottomLeftRadius: 0,
+                      }),
                     }}
                     disableElevation
                   >
@@ -321,9 +342,16 @@ export default function CreateCourseDialog({
                   <RHFTextField
                     sx={{
                       '& .MuiOutlinedInput-root': {
-                        borderTopLeftRadius: 0,
-                        borderBottomLeftRadius: 0,
-                        borderLeftColor: 'transparent',
+                        ...(!isRTL && {
+                          borderTopLeftRadius: 0,
+                          borderBottomLeftRadius: 0,
+                          borderLeftColor: 'transparent',
+                        }),
+                        ...(isRTL && {
+                          borderTopRightRadius: 0,
+                          borderBottomRightRadius: 0,
+                          borderRightColor: 'transparent',
+                        }),
                       },
                     }}
                     name='price'

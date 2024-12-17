@@ -111,6 +111,8 @@ export default function CreateLessonDialog({
     [theme.palette.mode]
   )
 
+  const isRTL = theme.direction === 'rtl'
+
   const [autoRun, autoRunSet, autoRunDelete] = useProperties({
     entityType: 'lesson',
     entityId: id,
@@ -121,6 +123,7 @@ export default function CreateLessonDialog({
     entityId: id,
     propertyName: 'lock',
   })
+
   const timeConvertorToSeconds = (time: Record<string, number> | null | undefined) => {
     if (time) {
       return Object.entries(time).reduce((acc, [timeTipe, time]) => {
@@ -246,10 +249,20 @@ export default function CreateLessonDialog({
                   <Tab
                     label={translate('skills')}
                     {...a11yProps(1)}
+                    sx={{
+                      ...(isRTL && {
+                        ml: 3,
+                      }),
+                    }}
                   />
                   <Tab
                     label={translate('integration')}
                     {...a11yProps(2)}
+                    sx={{
+                      ...(isRTL && {
+                        ml: 3,
+                      }),
+                    }}
                   />
                 </Tabs>
               </Box>
@@ -282,13 +295,14 @@ export default function CreateLessonDialog({
                     variant='h6'
                     color='#5C5C5C'
                   >
-                    Lesson Type
+                    {translate('lessons_type')}
                   </Typography>
                   <Typography
                     variant='body2'
                     color='#5C5C5C'
                   >
-                    Select one<sup>*</sup>
+                    {translate('lessons_type_select_one')}
+                    <sup>{translate('lessons_type_select_one_star')}</sup>
                   </Typography>
                 </Stack>
                 <RHFToggleButtonGroup
@@ -301,13 +315,13 @@ export default function CreateLessonDialog({
 
                 <RHFTextField
                   name='slug'
-                  label='Slug'
+                  label={translate('lessons_slug')}
                   size='small'
                 />
 
                 <RHFTextField
                   name='duration'
-                  label='Duration'
+                  label={translate('lessons_duration')}
                   size='small'
                   type='number'
                   InputProps={{
@@ -334,7 +348,7 @@ export default function CreateLessonDialog({
                   </Tooltip>
                   <RHFSwitch
                     name='independent'
-                    label={translate('lessons_inependent_lesson')}
+                    label={translate('lessons_independent_lesson')}
                   />
                   <Tooltip
                     slotProps={{ popper: { disablePortal: true } }}

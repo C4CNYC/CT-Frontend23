@@ -16,7 +16,6 @@ import {
   getToggleBtnGroupSx,
   OPTIONAL_TYPO_STYLES,
   PROGRAMMING_LANGUAGE,
-  getSkipBtnSx,
   STEP_CONTAINER_STYLES,
   STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
@@ -44,11 +43,20 @@ export function GeneralInfo({
   getFormValue,
   isTrackSelected,
 }: IGeneralInfoProps) {
+  const theme = useTheme()
+  const translate = useTranslate()
+  const { value: trackOptions, onToggle: trackOptionsToggle } = useBoolean(false)
   const { field: RtrackRField } = useController({ name: 'RtrackR' })
 
-  const RtrackRHandleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: any) => {
-    RtrackRField.onChange(newAlignment === RtrackRField.value ? null : newAlignment)
-  }
+  const toggleButtonStyles = useMemo(
+    () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+  const nextBtnStyles = useMemo(
+    () => getNextBtnSx(theme.palette.mode === 'dark'),
+    [theme.palette.mode]
+  )
+
   const { data: properties } = useGetPropertiesQuery({
     entityType: 'lesson',
     propertyName: 'aiTemplate',
@@ -56,6 +64,11 @@ export function GeneralInfo({
   const { data: aiTemplates } = useGetLessonsByIdsQuery(
     properties?.data.map((item) => item.entityId) ?? []
   )
+
+  const RtrackRHandleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: any) => {
+    RtrackRField.onChange(newAlignment === RtrackRField.value ? null : newAlignment)
+  }
+
   useEffect(() => {
     if (!aiTemplates || aiTemplates.length < 1) return
     if (!getFormValue('RtypeLessonR')) {
@@ -63,21 +76,6 @@ export function GeneralInfo({
       updateForm('RtypeLessonR', exerciseAiTemplate ? exerciseAiTemplate.id : aiTemplates[0].id)
     }
   }, [aiTemplates])
-  const theme = useTheme()
-  const translate = useTranslate()
-  const { value: trackOptions, onToggle: trackOptionsToggle } = useBoolean(false)
-  const toggleButtonStyles = useMemo(
-    () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
-    [theme.palette.mode]
-  )
-  const skipBtnStyles = useMemo(
-    () => getSkipBtnSx(theme.palette.mode === 'dark'),
-    [theme.palette.mode]
-  )
-  const nextBtnStyles = useMemo(
-    () => getNextBtnSx(theme.palette.mode === 'dark'),
-    [theme.palette.mode]
-  )
 
   //type script wiening
   const type_lesson = (
@@ -148,7 +146,7 @@ export function GeneralInfo({
           sx={OPTIONAL_TYPO_STYLES}
           gutterBottom
         >
-          {translate('ai_gen_progr_lng_title')}
+          {translate('ai_gen_programming_lng_title')}
           <Typography variant='caption'>{translate('ai_gen_optional_subtitle')}</Typography>
         </Typography>
         <RHFToggleButtonGroup
@@ -182,13 +180,6 @@ export function GeneralInfo({
         </div>
       </Stack>
       <Stack sx={BTN_CONTAINER_STYLES}>
-        {/* <Button
-          variant='text'
-          sx={skipBtnStyles}
-          onClick={nextStep}
-        >
-          {translate('ai_gen_skip_btn')}
-        </Button> */}
         <Button
           variant='contained'
           sx={nextBtnStyles}

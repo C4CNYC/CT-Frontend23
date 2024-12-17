@@ -10,6 +10,7 @@ import { useCopyToClipboard } from '@/hooks'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface, localStorageAvailable } from '@/utils'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   LINK_TEXT_SX,
@@ -27,6 +28,7 @@ interface IOnceOffNotificationProps {
 export default function OnceOffNotification({
   classData,
 }: IOnceOffNotificationProps): React.ReactElement {
+  const translate = useTranslate()
   const theme = useTheme()
   const notificationWrapperSx = useMemo(() => getNotificationWrapperSx(theme), [theme])
   const storageAvailable = localStorageAvailable()
@@ -74,7 +76,7 @@ export default function OnceOffNotification({
             variant='subtitle2'
             sx={{ mx: 1 }}
           >
-            Add students to your group by sharing the
+            {translate('class_page_popup_share_link_text_1')}
           </Typography>
           <Box
             sx={NOTIFICATION_LINK_SX}
@@ -90,7 +92,7 @@ export default function OnceOffNotification({
               variant='body2'
               sx={LINK_TEXT_SX}
             >
-              invite link
+              {translate('class_page_popup_share_link_text_2')}
             </Typography>
           </Box>
         </Stack>

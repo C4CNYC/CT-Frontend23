@@ -85,7 +85,10 @@ const Navigation: FC<INavigation> = ({
   }, [getNextBtnType])
 
   return (
-    <Box sx={BOX_SX}>
+    <Box
+      sx={BOX_SX}
+      dir='ltr'
+    >
       <div className='controls'>
         <Box sx={nestedBox}>
           <LessonFeedback lessonName={lessonName}>

@@ -1,12 +1,10 @@
 import { Box, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { CustomAvatar, Image } from '@/components'
 import { OrganizationResponce } from '@/redux/services/interfaces/organization.interface'
 import { bgBlur } from '@/utils'
-
-// auth
 
 const StyledRoot = styled('div')(({ theme }) => ({
   '&:before': {
@@ -29,10 +27,13 @@ const StyledInfo = styled('div')(({ theme }) => ({
   position: 'absolute',
   marginTop: theme.spacing(5),
   [theme.breakpoints.up('md')]: {
-    right: 'auto',
+    ...(theme.direction === 'rtl' && { left: 'auto', rigth: theme.spacing(3) }),
+    ...(theme.direction !== 'rtl' && {
+      right: 'auto',
+      left: theme.spacing(3),
+    }),
     display: 'flex',
     alignItems: 'center',
-    left: theme.spacing(3),
     bottom: theme.spacing(3),
   },
 }))
@@ -44,6 +45,8 @@ export default function ProfileCover({
   email,
 }: Pick<OrganizationResponce, 'email' | 'name' | 'cover' | 'avatar'>): React.ReactElement | null {
   const { user } = useAuthContext()
+  const theme = useTheme()
+
   return (
     <StyledRoot>
       <StyledInfo>
@@ -59,12 +62,14 @@ export default function ProfileCover({
             borderColor: 'common.white',
             width: { xs: 80, md: 128 },
             height: { xs: 80, md: 128 },
+            ...(theme.direction === 'rtl' && { mr: 2 }),
           }}
         />
 
         <Box
           sx={{
-            ml: { md: 3 },
+            ...(theme.direction === 'rtl' && { mr: { md: 3 } }),
+            ...(theme.direction !== 'rtl' && { ml: { md: 3 } }),
             mt: { xs: 1, md: 0 },
             color: 'common.white',
             textAlign: { xs: 'center', md: 'left' },

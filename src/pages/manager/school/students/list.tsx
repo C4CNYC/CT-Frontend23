@@ -13,6 +13,7 @@ import {
   TableContainer,
   Tabs,
   Tooltip,
+  useTheme,
 } from '@mui/material'
 import Head from 'next/head'
 import NextLink from 'next/link'
@@ -86,7 +87,8 @@ export default function UserListPage(): React.ReactElement {
   } = useTable()
 
   const translate = useTranslate()
-
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
   const [openConfirm, setOpenConfirm] = useState(false)
   const [value, setValue] = useState(0)
   const { push } = useRouter()
@@ -177,17 +179,31 @@ export default function UserListPage(): React.ReactElement {
                     <Iconify
                       icon='mdi:email-fast-outline'
                       width='23px'
+                      sx={{
+                        ...(isRTL && {
+                          ml: 2,
+                        }),
+                      }}
                     />
                   }
                 >
-                  {translate('members_invate_student')}
+                  {translate('members_invite_student')}
                 </Button>
               </InviteStudentDialog>
               <Button
                 component={NextLink}
                 href={MANAGER_PATH_DASHBOARD.school.new}
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={
+                  <Iconify
+                    icon='eva:plus-fill'
+                    sx={{
+                      ...(isRTL && {
+                        ml: 1,
+                      }),
+                    }}
+                  />
+                }
               >
                 {translate('members_add_student')}
               </Button>

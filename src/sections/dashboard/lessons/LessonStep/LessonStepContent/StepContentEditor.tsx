@@ -133,13 +133,13 @@ export default function StepContentEditor(): React.ReactElement {
           typography='h5'
           color='error'
         >
-          Any unsaved edit in the current editor can be deleted if you switch
+          {translate('slide_switch_tab_dialog_title')}
         </DialogTitle>
         <DialogTitle
           textAlign='center'
           typography='h6'
         >
-          Are you sure you want to switch?
+          {translate('slide_switch_tab_dialog_subtitle')}
         </DialogTitle>
         <DialogActions sx={{ gap: 2, justifyContent: 'center' }}>
           <Button
@@ -150,7 +150,7 @@ export default function StepContentEditor(): React.ReactElement {
             variant='outlined'
             color='error'
           >
-            Cancel
+            {translate('actions_cancel')}
           </Button>
           <Button
             onClick={() => {
@@ -160,7 +160,7 @@ export default function StepContentEditor(): React.ReactElement {
             variant='outlined'
             color='success'
           >
-            Yes. I understand
+            {translate('slide_switch_tab_dialog_confirm')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -209,24 +209,24 @@ export default function StepContentEditor(): React.ReactElement {
                 aria-label='TinyMce'
                 sx={{ gap: 1 }}
               >
-                <BsAspectRatio size='20px' /> Standard
+                <BsAspectRatio size='20px' /> {translate('slide_switch_tabs_standard')}
               </ToggleButton>
               <ToggleButton
                 value={LessonContentType.Code}
                 aria-label='HTML'
                 sx={{ gap: 1 }}
               >
-                <BsCodeSlash size='20px' /> HTML
+                <BsCodeSlash size='20px' /> {translate('slide_switch_tabs_html')}
               </ToggleButton>
               <ToggleButton
                 value={LessonContentType.Editable}
                 aria-label='Remirror'
                 sx={{ gap: 1 }}
               >
-                <BsClipboard size='20px' /> Remirror
+                <BsClipboard size='20px' /> {translate('slide_switch_tabs_remirror')}
               </ToggleButton>
             </StyledToggleButtonGroup>
-            {locked ? <Label color='info'>Content Changed</Label> : null}
+            {locked ? <Label color='info'>{translate('slide_content_changed_barge')}</Label> : null}
             <Preferences
               defaultValues={{ ...data! }}
               contentId={data?.id as string}
@@ -243,7 +243,7 @@ export default function StepContentEditor(): React.ReactElement {
             <LessonSchareModal>
               <Button sx={{ gap: 1, color: '#68767F' }}>
                 <Iconify icon='ph:share-fat' />
-                Share
+                {translate('lesson_share_button')}
               </Button>
             </LessonSchareModal>
             <div

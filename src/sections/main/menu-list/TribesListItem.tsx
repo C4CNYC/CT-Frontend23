@@ -22,6 +22,7 @@ export default function TribeListItem({ active, classItem }: Props): React.React
   const [setLastActiveTribe] = useSetLastActiveTribeMutation()
 
   const isNavMini = themeLayout === 'mini' && !isMobile
+  const isRTL = theme.direction === 'rtl'
 
   const onTribeClick = () => {
     setLastActiveTribe({ class_id: classItem.id })
@@ -46,6 +47,7 @@ export default function TribeListItem({ active, classItem }: Props): React.React
           sx={{
             width: '40px',
             height: '40px',
+            ...(isRTL && { mr: '16px' }),
           }}
         />
         {!isNavMini && (

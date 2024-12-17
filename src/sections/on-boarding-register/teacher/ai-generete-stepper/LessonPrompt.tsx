@@ -14,7 +14,6 @@ import {
   LESSON_DURARION,
   LEVELS,
   OPTIONAL_TYPO_STYLES,
-  getSkipBtnSx,
   STEP_CONTAINER_STYLES,
   STEP_TYTLE_STYLES,
   TOGGLE_BUTTON_GROUP_STYLES,
@@ -41,10 +40,6 @@ export default function LessonPrompt({
 
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
-    [theme.palette.mode]
-  )
-  const skipBtnStyles = useMemo(
-    () => getSkipBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
   const nextBtnStyles = useMemo(
@@ -164,13 +159,6 @@ export default function LessonPrompt({
         </Stack>
       </Stack>
       <Stack sx={BTN_CONTAINER_STYLES}>
-        {/* <Button
-          variant='text'
-          sx={skipBtnStyles}
-          onClick={nextStep}
-        >
-          {translate('ai_gen_surprise_btn')}
-        </Button> */}
         <Button
           variant='contained'
           sx={nextBtnStyles}

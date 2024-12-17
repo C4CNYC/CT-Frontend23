@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, useTheme } from '@mui/material'
 import { Container } from '@mui/system'
 import Head from 'next/head'
 
@@ -46,6 +46,9 @@ export default function CoursesListPage(): React.ReactElement {
   //   isFetching: isPublicFetching,
   // } = useGetPublicCoursesQuery(filters)
 
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
+
   if (isLoading) {
     return (
       <SkeletonList
@@ -85,7 +88,16 @@ export default function CoursesListPage(): React.ReactElement {
               >
                 <Button
                   variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
+                  startIcon={
+                    <Iconify
+                      icon='eva:plus-fill'
+                      sx={{
+                        ...(isRTL && {
+                          ml: 1,
+                        }),
+                      }}
+                    />
+                  }
                 >
                   {translate('courses_add')}
                 </Button>

@@ -1,4 +1,4 @@
-import { Box, Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
+import { Box, Button, InputAdornment, MenuItem, Stack, TextField, useTheme } from '@mui/material'
 
 import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
@@ -21,10 +21,12 @@ export default function UserTableToolbar({
   onResetFilter,
 }: Props): React.ReactElement | null {
   const translate = useTranslate()
+  const theme = useTheme()
+  const isRTL = theme.direction === 'rtl'
 
   return (
     <Stack
-      spacing={2}
+      gap={2}
       alignItems='center'
       direction={{
         xs: 'column',
@@ -95,7 +97,12 @@ export default function UserTableToolbar({
           color='error'
           sx={{ flexShrink: 0 }}
           onClick={onResetFilter}
-          startIcon={<Iconify icon='eva:trash-2-outline' />}
+          startIcon={
+            <Iconify
+              icon='eva:trash-2-outline'
+              sx={{ ...(isRTL && { ml: 2 }) }}
+            />
+          }
         >
           {translate('actions_clear')}
         </Button>

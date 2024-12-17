@@ -10,6 +10,7 @@ import { useGetProjectsQuery } from '@/redux/services/manager/gallery-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import FolderElement from '@/sections/dashboard/gallery/FolderElement'
 import { FilterMode, useFilters } from '@root/src/hooks'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 Gallery.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -19,6 +20,7 @@ interface IProjectCount {
   privatePr: number
 }
 export default function Gallery(): React.ReactElement {
+  const translate = useTranslate()
   const [projectsCount, setProjectsCount] = useState<IProjectCount>({
     publicPr: 0,
     privatePr: 0,
@@ -75,8 +77,8 @@ export default function Gallery(): React.ReactElement {
             underline='none'
           >
             <FolderElement
-              title='Public'
-              subtitle='Anyone can see your projects.'
+              title={translate('gallery_folder_public_title')}
+              subtitle={translate('gallery_folder_public_subtitle')}
               projectCout={projectsCount.publicPr}
             />
           </Link>
@@ -92,8 +94,8 @@ export default function Gallery(): React.ReactElement {
             underline='none'
           >
             <FolderElement
-              title='Private'
-              subtitle='This folder is only for you'
+              title={translate('gallery_folder_private_title')}
+              subtitle={translate('gallery_folder_private_subtitle')}
               projectCout={projectsCount.privatePr}
             />
           </Link>

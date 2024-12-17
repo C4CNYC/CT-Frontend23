@@ -1,5 +1,7 @@
 import { type FC } from 'react'
 
+import { useTranslate } from '@root/src/utils/translateHelper'
+
 import { useStyles } from './styles'
 
 interface CustomSwithProps {
@@ -9,15 +11,15 @@ interface CustomSwithProps {
 
 const CustomSwitch: FC<CustomSwithProps> = ({ onChange, isActive = false }) => {
   const styles = useStyles()
-
+  const translate = useTranslate()
   return (
     <div
       onClick={() => onChange?.(!isActive)}
       className={`${styles.wrapper} ${isActive ? 'is-active' : ''}`}
     >
-      <span className={styles.subTextActive}>COLLAB</span>
+      <span className={styles.subTextActive}>{translate('code_panel_header_collab')}</span>
 
-      <span className={styles.subTextInactive}>OFF</span>
+      <span className={styles.subTextInactive}>{translate('code_panel_header_off')}</span>
 
       <span className={styles.iconWrapper}>
         <svg

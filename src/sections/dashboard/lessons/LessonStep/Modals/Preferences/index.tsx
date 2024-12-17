@@ -251,9 +251,9 @@ export default function Preferences({
                   label={translate('cover')}
                 />
                 <MediaModal insertImage={insertImage}>
-                  <Button>
+                  <Button sx={{ gap: 1, mt: 1 }}>
                     <TbPhoto size={20} />
-                    Insert Media
+                    {translate('remirror_toolbar_insert_media_btn')}
                   </Button>
                 </MediaModal>
               </TabPanel>

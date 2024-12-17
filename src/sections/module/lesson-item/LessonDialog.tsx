@@ -11,7 +11,6 @@ import {
   Typography,
 } from '@mui/material'
 import { CiCircleQuestion } from '@react-icons/all-files/ci/CiCircleQuestion'
-import { useRouter } from 'next/router'
 
 import { useTranslate } from '@/utils/translateHelper'
 import { MenuPopover } from '@root/src/components'
@@ -40,8 +39,8 @@ export default function LessonDialog({
   closeDialog,
   openLesson,
 }: ILessonDialog): React.ReactElement {
-  const router = useRouter()
   const translate = useTranslate()
+
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
@@ -67,14 +66,14 @@ export default function LessonDialog({
           width={20}
           height={20}
         />
-        Part of Project
+        {translate('lesson_part_project_type')}
       </DialogTitle>
       <Box sx={DIALOG_TITLE_WRAPPER_SX}>
         <Typography
           sx={DIALOG_TITLE_SX}
           variant='h6'
         >
-          This Lesson Builds on the Previous One 🏗️
+          {translate('lesson_dialog_title_2')}
         </Typography>
         <IconButton
           onClick={closeDialog}
@@ -85,22 +84,17 @@ export default function LessonDialog({
       </Box>
       <DialogContent sx={DIALOG_CONTENT_WRAPPER_SX}>
         <Box sx={DIALOG_SUBTITLE_SX}>
-          <Typography>
-            It looks like you haven’t finished (at least 90% ) of the previous lesson. 🙀
-          </Typography>
+          <Typography>{translate('lesson_dialog_subtitle_1')}</Typography>
           <IconButton onClick={handleOpenPopover}>
             <CiCircleQuestion />
           </IconButton>
         </Box>
-        <Typography>
-          So we'll insert "Standard" code, but if you go back NOW and finish, then your own code
-          will automatically be passed to this lesson. 😃
-        </Typography>
+        <Typography>{translate('lesson_dialog_subtitle_2')}</Typography>
         <Button
           onClick={handleOpenPopover}
           sx={{ ...SEE_MORE_SX, my: 0 }}
         >
-          Learn more
+          {translate('lesson_dialog_learn_more')}
         </Button>
         <Button
           color='inherit'
@@ -116,7 +110,7 @@ export default function LessonDialog({
             closeDialog()
           }}
         >
-          No. I'll go back to finsh
+          {translate('lesson_dialog_go_back')}
         </Button>
       </DialogContent>
       <MenuPopover
@@ -132,27 +126,25 @@ export default function LessonDialog({
           variant='h4'
           sx={{ pb: 2 }}
         >
-          Lesson to Lesson Code Copying
+          {translate('lesson_to_lesson_code_copying')}
         </Typography>
         <Typography
           variant='body1'
           sx={{ pb: 1 }}
         >
-          We made it like this, so that you can start any lesson you want at any time. 👀 🤩
+          {translate('lesson_to_lesson_code_copying_subtitle_1')}
         </Typography>
         <Typography
           variant='body1'
           sx={{ pb: 1 }}
         >
-          But if you want your special code, with all your personal customizations to be passed
-          automatically, then you have to complete, at least, 90%.
+          {translate('lesson_to_lesson_code_copying_subtitle_2')}
         </Typography>
         <Typography
           variant='body1'
           sx={{ pb: 1 }}
         >
-          But don't worry. Whatever you choose is just fine. As long as you just keep coding. 🙌
-          Yaay!
+          {translate('lesson_to_lesson_code_copying_subtitle_3')}
         </Typography>
       </MenuPopover>
     </Dialog>

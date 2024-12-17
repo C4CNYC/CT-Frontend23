@@ -126,11 +126,16 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({ open, onClose }) =>
         >
           {translate('see_this_training')}
           <FullCodeSolutionModal disabled={checked.length !== 3}>
-            <Link href='#'>{translate('full_code_solutions')}</Link>
+            <Link
+              ml={0.5}
+              href='#'
+            >
+              {translate('full_code_solutions')}
+            </Link>
           </FullCodeSolutionModal>
         </Box>
 
-        <Typography p='15px 29px'>{translate('or_keep_goin_slide')}</Typography>
+        <Typography p='15px 29px'>{translate('or_keep_going_slide')}</Typography>
       </>
     </Dialog>
   )
