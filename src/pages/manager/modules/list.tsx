@@ -24,10 +24,9 @@ import FilterModules from './filter'
 ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function ModulesListPage(): React.ReactElement | string {
-  const { themeStretch } = useSettingsContext()
   const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
   const translate = useTranslate()
+  const { themeStretch } = useSettingsContext()
   const { isAdmin } = useIsAdmin()
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
@@ -51,6 +50,7 @@ export default function ModulesListPage(): React.ReactElement | string {
     refetch: adminRefetch,
   } = useGetAdminModulesQuery(filters, { skip: !isAdmin })
 
+  const isRTL = theme.direction === 'rtl'
   const data = isAdmin ? adminData : ownData
   const isLoading = isAdmin ? adminIsLoading : isOwnLoading
   const isFetching = isAdmin ? adminFetching : isOwnFetching
@@ -71,6 +71,7 @@ export default function ModulesListPage(): React.ReactElement | string {
       />
     )
   }
+
   return (
     <>
       <Head>
@@ -141,10 +142,6 @@ export default function ModulesListPage(): React.ReactElement | string {
               ))}
               {isFetching
                 ? Array(3)
-                    // getCountTakingElment(
-                    //   Number(data.meta.itemCount),
-                    //   Number(filters.take)
-                    // )
                     .fill(null)
                     .map((v, i) => <DefaultSkeletonItem key={i} />)
                 : null}
@@ -167,10 +164,6 @@ export default function ModulesListPage(): React.ReactElement | string {
               ))}
               {isFetching
                 ? Array(3)
-                    // getCountTakingElment(
-                    //   Number(data.meta.itemCount),
-                    //   Number(filters.take)
-                    // )
                     .fill(null)
                     .map((v, i) => <DefaultSkeletonItem key={i} />)
                 : null}

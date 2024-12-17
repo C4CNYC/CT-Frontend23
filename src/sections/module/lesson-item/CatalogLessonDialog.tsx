@@ -1,8 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Button, Dialog, DialogContent, IconButton, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
-
-import { useTranslate } from '@/utils/translateHelper'
 
 import {
   CLOSE_DIALOG_ICON_SX,
@@ -29,9 +26,6 @@ export default function CatalogLessonDialog({
   closeDialog,
   confirmClick,
 }: ILessonDialog): React.ReactElement {
-  const router = useRouter()
-  const translate = useTranslate()
-
   return (
     <Dialog
       open={open}

@@ -471,6 +471,19 @@ const tr = {
     "Durum: Bu 'Eğitim', önceki 'Eğitim'in kodu üzerine inşa edilmiştir. Şu an bu 'Eğitim' başlarsanız, önceki eğitimden gelen 'Kod Çözümü' eklenecektir. 'Kod Çözümü', önceki 'Eğitim'in doğru kodudur, kişiselleştirilmeden.",
   lesson_dialog_btn_start: 'Evet. Derse başla',
   lesson_dialog_btn_back: 'Hayır. Geri gideceğim',
+  lesson_part_project_type: 'Projenin Parçası',
+  lesson_dialog_title_2: 'Bu Ders Öncekine Dayanıyor 🏗️',
+  lesson_dialog_subtitle_1: "Görünüşe göre önceki dersin en az %90'ını tamamlamamışsınız. 🙀",
+  lesson_dialog_subtitle_2: `Bu yüzden \"Standart\" kod ekleyeceğiz, ancak ŞİMDİ geri dönüp tamamlarsanız, kendi kodunuz otomatik olarak bu derse aktarılır. 😃`,
+  lesson_dialog_learn_more: 'Daha fazla bilgi',
+  lesson_dialog_go_back: 'Hayır. Tamamlamak için geri döneceğim',
+  lesson_to_lesson_code_copying: 'Dersten Derse Kod Kopyalama',
+  lesson_to_lesson_code_copying_subtitle_1:
+    'Bunu böyle yaptık, böylece istediğiniz zaman istediğiniz derse başlayabilirsiniz. 👀 🤩',
+  lesson_to_lesson_code_copying_subtitle_2: `Ancak tüm kişisel özelleştirmelerinizle özel kodunuzun otomatik olarak 
+  aktarılmasını istiyorsanız, en az %90'ını tamamlamanız gerekiyor.`,
+  lesson_to_lesson_code_copying_subtitle_3: ` Endişelenmeyin. Ne seçerseniz seçin sorun değil. Yeter ki kodlamaya devam edin. 🙌
+   Yaay!`,
 
   // Modules pages
   modules: 'Modüller',
@@ -525,6 +538,8 @@ const tr = {
   lessons_starter_code_from_previous: 'Önceki dersten kopyala',
   lesson_file_name: 'Dosya adı:',
   lesson_file_add_asset: 'Varlık Ekle',
+  lesson_create_favorite_input: 'Favoriler',
+  lesson_create_favorite_btn: 'GİT',
 
   // Integrations page
   integrations: 'Entegrasyonlar',
@@ -549,6 +564,9 @@ const tr = {
   properties_updated_msg: 'Özellik güncellendi',
   properties_created_msg: 'Özellik oluşturuldu',
   properties_create_int: 'Entegrasyon oluştur',
+  property_name: 'Özellik Adı',
+  entry_id: 'Varlık Kimliği',
+  property_value: 'Özellik Değeri',
 
   // Skills page
   skills: 'Yetenekler',
@@ -613,6 +631,9 @@ const tr = {
   quest_close_date_info:
     'Bu tarihten sonra başvurular alınmaz. Varsayılan, “Son tarih” sonrası 3 gündür.',
   quest_no_descriptioniption: 'Bu görev için detaylar mevcut değil.',
+  assign_from_catalog: 'Katalogdan Ata',
+  create_popup_lesson: 'Acil Ders Oluştur',
+  assign_my_creations: 'Kendi Çalışmalarımdan Ata',
 
   // My Notes
   notes_my: 'Notlarım',
@@ -925,6 +946,7 @@ const tr = {
     'Mevcut düzenleyicideki kaydedilmemiş herhangi bir değişiklik, sekme değiştirildiğinde silinebilir',
   slide_switch_tab_dialog_subtitle: 'Sekme değiştirmek istediğinizden emin misiniz?',
   slide_switch_tab_dialog_confirm: 'Evet. Anladım',
+  slide_confirm_discarding_changes: 'Değişiklikleri atmayı onaylayın',
 
   // Share lesson modal
   share_modal_title: 'Paylaş',
@@ -1090,6 +1112,22 @@ const tr = {
 
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: 'Merhaba, Ben Mumu. Takıldığında yardımcı olmak için buradayım.',
+
+  //Super Admin
+  admin_title_nav: 'Yönetim',
+  administration_title: 'Yönetim',
+  create_new_org: 'Yeni oluştur',
+  create_new_org_dialog_title: 'Organizasyon oluştur',
+  update_org_dialog_title: 'Organizasyonu güncelle',
+  create_new_name_label: 'Organizasyon adı',
+  create_new_slug_label: 'Slug',
+  name_validation_msg: 'İsim gereklidir',
+  slug_validation_msg_1:
+    'Slug küçük harflerle olmalı, boşluk veya rakam içermemeli ve yalnızca harfler ile tireler kullanılmalıdır',
+  slug_validation_msg_2: 'Slug gereklidir',
+  home_page_type_validation_msg: 'Türü seçin',
+  home_page_type_required_msg: 'Ana sayfa türü gereklidir',
+  add_custom_html_code: 'Özel HTML kodu ekle',
 
   // Code panel header
   code_panel_header_group: 'Grup',

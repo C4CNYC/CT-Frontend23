@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { Button, Menu } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
+import { useTheme } from '@mui/system'
 import { useSnackbar } from 'notistack'
 
 import { useUpdateOrgMemberMutation } from '@/redux/services/admin/members-admin'
@@ -15,13 +16,19 @@ interface Props {
 }
 
 export function RoleSelector({ userId, role, email }: Props): React.ReactElement | null {
+  const theme = useTheme()
   const { enqueueSnackbar } = useSnackbar()
-  const [updateUser] = useUpdateOrgMemberMutation()
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+
+  const isRTL = theme.direction === 'rtl'
+
+  const [updateUser] = useUpdateOrgMemberMutation()
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = async (role: Role): Promise<void> => {
     setAnchorEl(null)
     try {
@@ -46,7 +53,7 @@ export function RoleSelector({ userId, role, email }: Props): React.ReactElement
         onClick={handleClick}
         disabled={role === Role.Owner}
         endIcon={<KeyboardArrowDownIcon />}
-        sx={{ paddingLeft: '20px', paddingRight: '20px' }}
+        sx={{ paddingLeft: '20px', paddingRight: '20px', gap: isRTL ? 1 : 0 }}
       >
         {role}
       </Button>

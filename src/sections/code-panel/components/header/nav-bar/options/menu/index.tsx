@@ -130,7 +130,7 @@ const Menu = (): React.ReactElement => {
                   icon={menuItem.icon}
                 />
 
-                <Box>
+                <Box pr={1}>
                   <Typography
                     sx={MENU_ITEM_TYPOGRAFY}
                     variant='button'
@@ -164,7 +164,7 @@ const Menu = (): React.ReactElement => {
                     icon={menuItem.icon}
                   />
 
-                  <Box>
+                  <Box pr={1}>
                     <Typography
                       sx={MENU_ITEM_TYPOGRAFY}
                       variant='button'

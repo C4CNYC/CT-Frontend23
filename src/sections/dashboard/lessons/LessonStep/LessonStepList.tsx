@@ -40,25 +40,27 @@ import { LessonListItemLoading } from './LessonListItemLoading'
 import { LessonContentContext } from './LessonStepContent/LessonContent.context'
 import SkeletonList from './Modals/SkeletonList'
 import SlideTemplateDialog from './slide-templates'
-
-type cloneExistingSlideDialogTypes =
-  | ''
-  | 'Empty Slide'
-  | 'HTML Template'
-  | 'Normal Template'
-  | 'With AI'
 interface Props {
   lessonId: string
 }
 
 export default function LessonStepList({ lessonId }: Props): React.ReactElement {
-  const dispatch = useDispatch()
-  const { enqueueSnackbar } = useSnackbar()
   const router = useRouter()
   const translate = useTranslate()
+  const dispatch = useDispatch()
   const popover = usePopover()
+  const { enqueueSnackbar } = useSnackbar()
   const { locked, lockedHandler } = useContext(LessonContentContext)
+
   const [changeSlideDialogOpen, changeSlideDialogOpenSet] = useState<VoidFunction>()
+  const [LoaderStepDialogState, LoaderStepDialogStateTrue, LoaderStepDialogStateFalse] =
+    useBoolean()
+  const [contentCount, contentCountSet] = useState(0)
+  const [lessonLoadedAfterContent, lessonLoadedAfterContentSet] = useState(false)
+  const [contentPullCount, contentPullCountDec, contentPullCountInc] = useCounter(5)
+  const [refetchTimer, refetchTimerSet] = useState(0)
+
+  const { board } = useSelector((state: RootState) => state.lessonSteps)
 
   const [updateLessonContent] = useUpdateLessonContentMutation()
   const [createLessonContent, { isLoading: createLessonLoading }] = useCreateLessonContentMutation()
@@ -76,14 +78,6 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
     refetch: lessonContentsRefetch,
     isUninitialized: lessonContentsUninitialized,
   } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
-  const [LoaderStepDialogState, LoaderStepDialogStateTrue, LoaderStepDialogStateFalse] =
-    useBoolean()
-  const [contentCount, contentCountSet] = useState(0)
-  const [lessonLoadedAfterContent, lessonLoadedAfterContentSet] = useState(false)
-
-  const [contentPullCount, contentPullCountDec, contentPullCountInc] = useCounter(5)
-  const { board } = useSelector((state: RootState) => state.lessonSteps)
-  const [refetchTimer, refetchTimerSet] = useState(0)
 
   let newlyCreated = lesson
     ? (new Date().getTime() - new Date(lesson.createdAt).getTime()) / 1000 / 60 < 3
@@ -378,7 +372,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
           <ConfirmDialog
             open={true}
             onClose={() => changeSlideDialogOpenSet(undefined)}
-            title='Confirm discarding changes'
+            title={translate('slide_confirm_discarding_changes')}
             action={
               <Button
                 variant='contained'

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
@@ -14,7 +14,6 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { BRIEFING, CHALANGES, CUSTOM, GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
-import { LessonContentContext } from './LessonStepContent/LessonContent.context'
 import Preferences from './Modals/Preferences'
 import Validation from './Modals/Validation'
 
@@ -46,10 +45,10 @@ export default function LessonListItem({
   index,
 }: Props): React.ReactElement {
   const router = useRouter()
-  const { locked, lockedHandler } = useContext(LessonContentContext)
+  const translate = useTranslate()
+
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [hasValidation, setHasValidation] = useState<boolean>(false)
-  const translate = useTranslate()
 
   const isSlideActive = router.query.stepId === step.id
 
@@ -61,18 +60,6 @@ export default function LessonListItem({
 
   const handleClosePopover = (): void => {
     setOpenPopover(null)
-  }
-
-  const selectStep = (): void => {
-    if (!locked || window.confirm('You have changes, abondon them?'))
-      router.push(
-        `${router.pathname}?${new URLSearchParams({
-          ...router.query,
-          stepId: step.id,
-        })}`,
-        undefined,
-        { shallow: true }
-      )
   }
 
   const chooseBorderColor = (): string => {
@@ -211,6 +198,7 @@ export default function LessonListItem({
             sx={{ width: 160 }}
           >
             <MenuItem
+              sx={{ gap: 1 }}
               onClick={() => {
                 onRemove(step.id)
                 handleClosePopover()

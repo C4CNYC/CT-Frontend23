@@ -24,8 +24,9 @@ import ResetCode from './preferences/ResetCode'
 
 const SettingDrawer = (): React.ReactElement => {
   const dispatch = useDispatch()
-  const [openDrawer, setDrawer] = useState(false)
   const translate = useTranslate()
+
+  const [openDrawer, setDrawer] = useState(false)
 
   const onStartIntro = (): void => {
     setDrawer(false)

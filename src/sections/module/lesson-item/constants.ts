@@ -101,7 +101,8 @@ export const getStartLinkSx = (isRTL: boolean) => ({
   ...(!isRTL && { pl: 2 }),
   alignItems: 'center',
   borderRadius: '80px',
-  mt: 'auto',
+  mt: 1,
+  mr: 'auto',
   color: '#fff',
   background: 'linear-gradient(308.87deg, #FFF739 -19.29%, #FF6DC5 89.25%)',
 })

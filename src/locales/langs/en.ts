@@ -470,6 +470,21 @@ const en = {
     'The Situation: This “Training” builds on the code of the previous “Training.” If you start this “Training” now, the “Code Solution” from the previous training will be added. The “Code Solution” is the correct code of the previous “Training” without any personalization',
   lesson_dialog_btn_start: 'Yes. Start the lesson',
   lesson_dialog_btn_back: "No. I'll go back",
+  lesson_part_project_type: 'Part of Project',
+  lesson_dialog_title_2: 'This Lesson Builds on the Previous One 🏗️',
+  lesson_dialog_subtitle_1:
+    'It looks like you haven’t finished (at least 90% ) of the previous lesson. 🙀',
+  lesson_dialog_subtitle_2: `So we'll insert "Standard" code, but if you go back NOW and finish, then your own code
+          will automatically be passed to this lesson. 😃`,
+  lesson_dialog_learn_more: 'Learn more',
+  lesson_dialog_go_back: "No. I'll go back to finish",
+  lesson_to_lesson_code_copying: 'Lesson to Lesson Code Copying',
+  lesson_to_lesson_code_copying_subtitle_1:
+    'We made it like this, so that you can start any lesson you want at any time. 👀 🤩',
+  lesson_to_lesson_code_copying_subtitle_2: ` But if you want your special code, with all your personal customizations to be passed
+          automatically, then you have to complete, at least, 90%.`,
+  lesson_to_lesson_code_copying_subtitle_3: ` But don't worry. Whatever you choose is just fine. As long as you just keep coding. 🙌
+          Yaay!`,
 
   // Modules pages
   modules: 'Modules',
@@ -539,6 +554,8 @@ const en = {
   lesson_file_name: 'File name:',
   lesson_file_add_asset: 'Add Asset',
   lesson_share_button: 'Share',
+  lesson_create_favorite_input: 'Favorites',
+  lesson_create_favorite_btn: 'GO',
 
   // Integrations page
   integrations: 'Integrations',
@@ -563,6 +580,9 @@ const en = {
   properties_updated_msg: 'Property updated',
   properties_created_msg: 'Property created',
   properties_create_int: 'Create integration',
+  property_name: 'Property Name',
+  entry_id: 'Entity Id',
+  property_value: 'Property Value',
 
   // Skills page
   skills: 'Skills',
@@ -627,6 +647,9 @@ const en = {
   quest_close_date_info:
     'After this submissions are no longer received. The default is 3 days after the “Due date.”',
   quest_no_descriptioniption: 'No details available for this quest.',
+  assign_from_catalog: 'Assign from Catalog',
+  create_popup_lesson: 'Create Pop-Up Lesson',
+  assign_my_creations: 'Assign from My Creations',
 
   // My Notes
   notes_my: 'My Notes',
@@ -937,6 +960,7 @@ const en = {
     ' Any unsaved edit in the current editor can be deleted if you switch',
   slide_switch_tab_dialog_subtitle: 'Are you sure you want to switch?',
   slide_switch_tab_dialog_confirm: 'Yes. I understand',
+  slide_confirm_discarding_changes: 'Confirm discarding changes',
 
   // Share lesson modal
   share_modal_title: 'Share',

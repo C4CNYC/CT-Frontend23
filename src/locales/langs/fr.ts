@@ -474,6 +474,21 @@ const fr = {
     'La situation : Cette “formation” repose sur le code de la formation précédente. Si vous commencez cette “formation” maintenant, la “solution de code” de la formation précédente sera ajoutée. La “solution de code” est le code correct de la formation précédente sans aucune personnalisation.',
   lesson_dialog_btn_start: 'Oui. Commencer la leçon',
   lesson_dialog_btn_back: 'Non. Je vais revenir',
+  lesson_part_project_type: 'Partie du projet',
+  lesson_dialog_title_2: "Cette leçon s'appuie sur la précédente 🏗️",
+  lesson_dialog_subtitle_1:
+    "Il semble que vous n'ayez pas terminé (au moins 90%) de la leçon précédente. 🙀",
+  lesson_dialog_subtitle_2: `Nous insérerons donc un code \"Standard\", mais si vous retournez MAINTENANT et terminez, votre propre 
+  code sera automatiquement transmis à cette leçon. 😃`,
+  lesson_dialog_learn_more: 'En savoir plus',
+  lesson_dialog_go_back: 'Non. Je vais retourner terminer',
+  lesson_to_lesson_code_copying: 'Copie de code de leçon à leçon',
+  lesson_to_lesson_code_copying_subtitle_1:
+    "Nous l'avons fait ainsi, afin que vous puissiez commencer n'importe quelle leçon à tout moment. 👀 🤩",
+  lesson_to_lesson_code_copying_subtitle_2: ` Mais si vous voulez que votre code spécial, avec toutes vos personnalisations, soit transmis automatiquement,
+   alors vous devez terminer au moins 90%.`,
+  lesson_to_lesson_code_copying_subtitle_3: ` Mais ne vous inquiétez pas. Quel que soit votre choix, c'est parfait. Tant que vous continuez à coder. 🙌
+   Yay!`,
 
   // Modules pages
   modules: 'Modules',
@@ -543,6 +558,8 @@ const fr = {
   lesson_file_name: 'Nom du fichier :',
   lesson_file_add_asset: 'Ajouter un fichier',
   lesson_share_button: 'Partager',
+  lesson_create_favorite_input: 'Favoris',
+  lesson_create_favorite_btn: 'ALLER',
 
   // Integrations page
   integrations: 'Intégrations',
@@ -567,6 +584,9 @@ const fr = {
   properties_updated_msg: 'Propriété mise à jour',
   properties_created_msg: 'Propriété créée',
   properties_create_int: 'Créer une intégration',
+  property_name: 'Nom de la propriété',
+  entry_id: "Identifiant de l'entité",
+  property_value: 'Valeur de la propriété',
 
   // Skills page
   skills: 'Compétences',
@@ -631,6 +651,9 @@ const fr = {
   quest_close_date_info:
     'Après cette date, les soumissions ne sont plus acceptées. La valeur par défaut est 3 jours après la « Date limite ».',
   quest_no_descriptioniption: 'Aucun détail disponible pour cette quête.',
+  assign_from_catalog: 'Attribuer depuis le catalogue',
+  create_popup_lesson: 'Créer une leçon pop-up',
+  assign_my_creations: 'Attribuer depuis mes créations',
 
   // My Notes
   notes_my: 'Mes notes',
@@ -948,6 +971,7 @@ const fr = {
     "Toute modification non sauvegardée dans l'éditeur actuel peut être supprimée si vous changez d'onglet",
   slide_switch_tab_dialog_subtitle: 'Êtes-vous sûr de vouloir changer ?',
   slide_switch_tab_dialog_confirm: 'Oui. Je comprends',
+  slide_confirm_discarding_changes: "Confirmer l'abandon des modifications",
 
   // Share lesson modal
   share_modal_title: 'Partager',
@@ -1123,20 +1147,20 @@ const fr = {
   code_panel_header_collab: 'Collaboration',
 
   //Super Admin
-  admin_title_nav: 'Admin',
+  admin_title_nav: 'Administration',
   administration_title: 'Administration',
-  create_new_org: 'Create new',
-  create_new_org_dialog_title: 'Create Organisation',
-  update_org_dialog_title: 'Update Organisation',
-  create_new_name_label: 'Organisation name',
+  create_new_org: 'Créer nouveau',
+  create_new_org_dialog_title: 'Créer une organisation',
+  update_org_dialog_title: "Mettre à jour l'organisation",
+  create_new_name_label: "Nom de l'organisation",
   create_new_slug_label: 'Slug',
-  name_validation_msg: 'Name is reqired',
+  name_validation_msg: 'Le nom est requis',
   slug_validation_msg_1:
-    'Slug must be lowercase, contain no spaces or numbers, and only use letters and hyphens',
-  slug_validation_msg_2: 'Slug is required',
-  home_page_type_validation_msg: 'Select type',
-  home_page_type_required_msg: 'Home page type is required',
-  add_custom_html_code: 'Add custom HTML code',
+    'Le slug doit être en minuscules, ne contenir ni espaces ni chiffres, et utiliser uniquement des lettres et des tirets',
+  slug_validation_msg_2: 'Le slug est requis',
+  home_page_type_validation_msg: 'Sélectionnez le type',
+  home_page_type_required_msg: "Le type de la page d'accueil est requis",
+  add_custom_html_code: 'Ajouter du code HTML personnalisé',
 
   // CreateLesson
   default_values: {

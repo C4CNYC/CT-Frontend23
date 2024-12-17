@@ -50,21 +50,22 @@ export default function LessonItem({
 }: ILessonItemProps): React.ReactElement {
   const { user } = useAuthContext()
   const { push } = useRouter()
-
-  const courseId = useRouter().query.id
-
+  const translate = useTranslate()
+  const dispatch = useDispatch()
   const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
-  const isMobile = useMediaQuery(theme.breakpoints.down(600))
-  const startLinkSx = useMemo(() => getStartLinkSx(isRTL), [isRTL])
-  const locketBtnSx = useMemo(() => getLockedBtnSx(isRTL), [isRTL])
 
   const [openDetails, setOpenDetails] = useState(false)
-  const descRef = useRef<HTMLElement | null>(null)
   const [open, setOpen] = useState(false)
   const [maxDesc, setMaxDesc] = useState(50)
+  const descRef = useRef<HTMLElement | null>(null)
+
+  const courseId = useRouter().query.id
+  const isRTL = theme.direction === 'rtl'
+  const startLinkSx = useMemo(() => getStartLinkSx(isRTL), [isRTL])
+  const locketBtnSx = useMemo(() => getLockedBtnSx(isRTL), [isRTL])
   const isTablet = useMediaQuery(theme.breakpoints.up('xl'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
+
   const openDialog = () => {
     setOpen(true)
   }
@@ -73,8 +74,6 @@ export default function LessonItem({
     setOpen(false)
   }
 
-  const translate = useTranslate()
-  const dispatch = useDispatch()
   const fetchCodeFromPrevLesson = () => {
     dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
     push(
@@ -203,7 +202,8 @@ export default function LessonItem({
                 closeDialog={closeDialog}
                 confirmClick={fetchCodeFromPrevLesson}
                 title='Hey, we’re building a project together.
-So pulled your code from previous lesson, so that you can keep building'
+                        So pulled your code from previous lesson, 
+                        so that you can keep building'
               />
             </>
           ) : (

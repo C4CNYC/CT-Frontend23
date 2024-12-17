@@ -468,6 +468,18 @@ const ar = {
     'الحالة: هذا "التدريب" يعتمد على كود التدريب السابق. إذا بدأت هذا "التدريب" الآن، سيتم إضافة "حل الكود" من التدريب السابق. "حل الكود" هو الكود الصحيح للتدريب السابق بدون أي تخصيص',
   lesson_dialog_btn_start: 'نعم. ابدأ الدرس',
   lesson_dialog_btn_back: 'لا. سأعود',
+  lesson_part_project_type: 'جزء من المشروع',
+  lesson_dialog_title_2: 'هذا الدرس يبنى على الدرس السابق 🏗️',
+  lesson_dialog_subtitle_1: 'يبدو أنك لم تُكمل (على الأقل 90٪) من الدرس السابق. 🙀',
+  lesson_dialog_subtitle_2: `لذلك سنُدرج \"رمز قياسي\"، ولكن إذا عدت الآن وأكملت، فسيتم
+   تمرير رمزك الخاص تلقائيًا إلى هذا الدرس. 😃`,
+  lesson_dialog_learn_more: 'تعرف على المزيد',
+  lesson_dialog_go_back: 'لا. سأعود للإكمال',
+  lesson_to_lesson_code_copying: 'نسخ الكود من درس إلى آخر',
+  lesson_to_lesson_code_copying_subtitle_1:
+    'لقد جعلناها كذلك لتتمكن من بدء أي درس تريده في أي وقت. 👀 🤩',
+  lesson_to_lesson_code_copying_subtitle_2: ` ولكن إذا كنت تريد أن يتم تمرير الكود الخاص بك تلقائيًا مع جميع تخصيصاتك الشخصية، فيجب عليك إكمال 90٪ على الأقل.`,
+  lesson_to_lesson_code_copying_subtitle_3: ` لكن لا تقلق. أيًا كان ما تختاره فهو جيد. طالما استمررت في البرمجة. 🙌 ياي!`,
 
   // Modules pages
   modules: 'الوحدات',
@@ -535,6 +547,8 @@ const ar = {
   lesson_file_name: 'اسم الملف:',
   lesson_file_add_asset: 'إضافة ملف',
   lesson_share_button: 'مشاركة',
+  lesson_create_favorite_input: 'المفضلة',
+  lesson_create_favorite_btn: 'اذهب',
 
   // Integrations page
   integrations: 'التكاملات',
@@ -559,6 +573,9 @@ const ar = {
   properties_updated_msg: 'تم تحديث الخاصية',
   properties_created_msg: 'تم إنشاء الخاصية',
   properties_create_int: 'إنشاء تكامل',
+  property_name: 'اسم الخاصية',
+  entry_id: 'معرف الكيان',
+  property_value: 'قيمة الخاصية',
 
   // Skills page
   skills: 'المهارات',
@@ -623,6 +640,9 @@ const ar = {
   quest_close_date_info:
     'بعد هذا التاريخ لن يتم استلام أي تقديمات. الافتراضي هو 3 أيام بعد "تاريخ الاستحقاق".',
   quest_no_descriptioniption: 'لا توجد تفاصيل متاحة لهذا المشروع.',
+  assign_from_catalog: 'تعيين من الكتالوج',
+  create_popup_lesson: 'إنشاء درس منبثق',
+  assign_my_creations: 'تعيين من إبداعاتي',
 
   // My Notes
   notes_my: 'ملاحظاتي',
@@ -927,6 +947,7 @@ const ar = {
   slide_switch_tab_dialog_title: 'أي تعديل غير محفوظ في المحرر الحالي يمكن حذفه إذا قمت بالتبديل',
   slide_switch_tab_dialog_subtitle: 'هل أنت متأكد أنك تريد التبديل؟',
   slide_switch_tab_dialog_confirm: 'نعم. أفهم',
+  slide_confirm_discarding_changes: 'تأكيد تجاهل التغييرات',
 
   // Share lesson modal
   share_modal_title: 'مشاركة',
@@ -1096,20 +1117,20 @@ const ar = {
   code_panel_header_collab: 'التعاون',
 
   //Super Admin
-  admin_title_nav: 'Admin',
-  administration_title: 'Administration',
-  create_new_org: 'Create new',
-  create_new_org_dialog_title: 'Create Organisation',
-  update_org_dialog_title: 'Update Organisation',
-  create_new_name_label: 'Organisation name',
-  create_new_slug_label: 'Slug',
-  name_validation_msg: 'Name is reqired',
+  admin_title_nav: 'الإدارة',
+  administration_title: 'الإدارة',
+  create_new_org: 'إنشاء جديد',
+  create_new_org_dialog_title: 'إنشاء منظمة',
+  update_org_dialog_title: 'تحديث المنظمة',
+  create_new_name_label: 'اسم المنظمة',
+  create_new_slug_label: 'اسم الرابط',
+  name_validation_msg: 'الاسم مطلوب',
   slug_validation_msg_1:
-    'Slug must be lowercase, contain no spaces or numbers, and only use letters and hyphens',
-  slug_validation_msg_2: 'Slug is required',
-  home_page_type_validation_msg: 'Select type',
-  home_page_type_required_msg: 'Home page type is required',
-  add_custom_html_code: 'Add custom HTML code',
+    'يجب أن يكون الرابط بالخط الصغير، ولا يحتوي على مسافات أو أرقام، ويستخدم الحروف والشرطات فقط',
+  slug_validation_msg_2: 'الرابط مطلوب',
+  home_page_type_validation_msg: 'اختر النوع',
+  home_page_type_required_msg: 'نوع الصفحة الرئيسية مطلوب',
+  add_custom_html_code: 'إضافة كود HTML مخصص',
 
   // CreateLesson
   default_values: {

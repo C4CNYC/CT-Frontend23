@@ -470,6 +470,18 @@ const es = {
     'La situación: Este “Entrenamiento” se basa en el código del “Entrenamiento” anterior. Si comienzas este “Entrenamiento” ahora, se añadirá la “Solución de código” del entrenamiento anterior. La “Solución de código” es el código correcto del “Entrenamiento” anterior sin ninguna personalización.',
   lesson_dialog_btn_start: 'Sí. Comenzar la lección',
   lesson_dialog_btn_back: 'No. Volveré atrás',
+  lesson_part_project_type: 'Parte del proyecto',
+  lesson_dialog_title_2: 'Esta lección se basa en la anterior 🏗️',
+  lesson_dialog_subtitle_1:
+    'Parece que no has terminado (al menos el 90%) de la lección anterior. 🙀',
+  lesson_dialog_subtitle_2: `Así que insertaremos un código \"Estándar\", pero si regresas AHORA y terminas, tu propio código se pasará automáticamente a esta lección. 😃`,
+  lesson_dialog_learn_more: 'Aprende más',
+  lesson_dialog_go_back: 'No. Volveré para terminar',
+  lesson_to_lesson_code_copying: 'Copiar código de una lección a otra',
+  lesson_to_lesson_code_copying_subtitle_1:
+    'Lo hicimos así para que puedas empezar cualquier lección en cualquier momento. 👀 🤩',
+  lesson_to_lesson_code_copying_subtitle_2: `Pero si quieres que tu código especial, con todas tus personalizaciones, se pase automáticamente, entonces debes completar al menos el 90%.`,
+  lesson_to_lesson_code_copying_subtitle_3: ` Pero no te preocupes. Lo que elijas está bien. Mientras sigas programando. 🙌 ¡Yay!`,
 
   // Modules pages
   modules: 'Módulos',
@@ -539,6 +551,8 @@ const es = {
   lesson_file_name: 'Nombre del archivo:',
   lesson_file_add_asset: 'Agregar archivo',
   lesson_share_button: 'Compartir',
+  lesson_create_favorite_input: 'Favoritos',
+  lesson_create_favorite_btn: 'IR',
 
   // Integrations page
   integrations: 'Integraciones',
@@ -563,6 +577,9 @@ const es = {
   properties_updated_msg: 'Propiedad actualizada',
   properties_created_msg: 'Propiedad creada',
   properties_create_int: 'Crear integración',
+  property_name: 'Nombre de la propiedad',
+  entry_id: 'ID de entidad',
+  property_value: 'Valor de la propiedad',
 
   // Skills page
   skills: 'Habilidades',
@@ -627,6 +644,9 @@ const es = {
   quest_close_date_info:
     'Después de esta fecha no se recibirán más envíos. El valor predeterminado es 3 días después de la “Fecha de vencimiento”.',
   quest_no_descriptioniption: 'No hay detalles disponibles para esta misión.',
+  assign_from_catalog: 'Asignar desde el catálogo',
+  create_popup_lesson: 'Crear lección emergente',
+  assign_my_creations: 'Asignar desde mis creaciones',
 
   // My Notes
   notes_my: 'Mis notas',
@@ -945,6 +965,7 @@ const es = {
     'Cualquier edición no guardada en el editor actual puede ser eliminada si cambias de pestaña',
   slide_switch_tab_dialog_subtitle: '¿Estás seguro de que deseas cambiar?',
   slide_switch_tab_dialog_confirm: 'Sí. Entiendo',
+  slide_confirm_discarding_changes: 'Confirmar descarte de cambios',
 
   // Share lesson modal
   share_modal_title: 'Compartir',
@@ -1104,20 +1125,20 @@ const es = {
   sandbox: 'Caja de arena',
 
   //Super Admin
-  admin_title_nav: 'Admin',
-  administration_title: 'Administration',
-  create_new_org: 'Create new',
-  create_new_org_dialog_title: 'Create Organisation',
-  update_org_dialog_title: 'Update Organisation',
-  create_new_name_label: 'Organisation name',
+  admin_title_nav: 'Administración',
+  administration_title: 'Administración',
+  create_new_org: 'Crear nuevo',
+  create_new_org_dialog_title: 'Crear Organización',
+  update_org_dialog_title: 'Actualizar Organización',
+  create_new_name_label: 'Nombre de la organización',
   create_new_slug_label: 'Slug',
-  name_validation_msg: 'Name is reqired',
+  name_validation_msg: 'El nombre es obligatorio',
   slug_validation_msg_1:
-    'Slug must be lowercase, contain no spaces or numbers, and only use letters and hyphens',
-  slug_validation_msg_2: 'Slug is required',
-  home_page_type_validation_msg: 'Select type',
-  home_page_type_required_msg: 'Home page type is required',
-  add_custom_html_code: 'Add custom HTML code',
+    'El slug debe estar en minúsculas, no contener espacios ni números, y usar solo letras y guiones',
+  slug_validation_msg_2: 'El slug es obligatorio',
+  home_page_type_validation_msg: 'Selecciona el tipo',
+  home_page_type_required_msg: 'El tipo de página de inicio es obligatorio',
+  add_custom_html_code: 'Agregar código HTML personalizado',
 
   // Code-editor save
   publish_to_gallery: 'Publicar en la Galería',

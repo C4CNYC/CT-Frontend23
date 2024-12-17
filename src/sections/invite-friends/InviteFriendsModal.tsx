@@ -29,11 +29,11 @@ interface FormValuesProps {
 }
 
 export default function InviteFriendsModal({ children }: Props): React.ReactElement {
+  const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
   const [open, setOpen] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
-  const translate = useTranslate()
-
-  const { enqueueSnackbar } = useSnackbar()
 
   const CreateNewUserSchema = Yup.object().shape({
     email: Yup.string().email().required(translate('required_email')),
@@ -68,6 +68,7 @@ export default function InviteFriendsModal({ children }: Props): React.ReactElem
     setLoading(false)
     closeDialog()
   }
+
   return (
     <>
       <Box
@@ -104,10 +105,7 @@ export default function InviteFriendsModal({ children }: Props): React.ReactElem
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Grid
-              container
-              spacing={3}
-            >
+            <Grid container>
               <Grid
                 item
                 xs={12}

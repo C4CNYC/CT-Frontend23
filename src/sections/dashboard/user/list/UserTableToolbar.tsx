@@ -26,7 +26,7 @@ export default function UserTableToolbar({
 
   return (
     <Stack
-      spacing={2}
+      gap={2}
       alignItems='center'
       direction={{
         xs: 'column',
