@@ -8,6 +8,7 @@ import { axios } from '@/utils/axios'
 import { localStorageAvailable } from '@/utils/localStorageAvailable'
 import { voidFunction } from '@/utils/voidFunction'
 
+import { defaultLang } from '../locales/config-lang'
 import { resetTenant, setTenant, Tenant } from '../redux/slices/tenant'
 
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
@@ -311,7 +312,9 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     setSession(null, null)
     reduxDispatch(cleanUser())
     reduxDispatch(cleanUserRole())
+    const lang = localStorage.getItem('i18nextLng')
     localStorage.clear()
+    localStorage.setItem('i18nextLng', lang ?? defaultLang.value)
     dispatch({
       type: Types.LOGOUT,
     })

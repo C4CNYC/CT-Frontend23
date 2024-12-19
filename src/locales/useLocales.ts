@@ -28,11 +28,11 @@ export function useLocales(): IUseLocals {
   const storageAvailable = localStorageAvailable()
 
   const langStorage = storageAvailable ? localStorage.getItem('i18nextLng') : ''
-
   const currentLang = allLangs.find((_lang) => _lang.value === langStorage) ?? defaultLang
 
   const handleChangeLanguage = async (newlang: string): Promise<void> => {
     try {
+      localStorage.setItem('i18nextLng', newlang)
       await i18n.changeLanguage(newlang)
       onChangeDirectionByLang(newlang)
     } catch (e: any) {}
@@ -41,9 +41,7 @@ export function useLocales(): IUseLocals {
   return {
     onChangeLang: handleChangeLanguage,
     translate: (text: any, options?: any) => translate(text, options),
-    // @ts-ignore
     currentLang,
-    // @ts-ignore
     allLangs,
   }
 }
