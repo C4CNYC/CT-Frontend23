@@ -1,4 +1,4 @@
-import { type FC, memo, useContext, useRef, useState } from 'react'
+import { type FC, useContext, useRef, useState } from 'react'
 
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
@@ -188,4 +188,4 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   )
 }
 
-export default memo(CodePanelBody)
+export default CodePanelBody

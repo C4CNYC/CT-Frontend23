@@ -63,7 +63,6 @@ const BrowserView: FC<BrowserViewProps> = ({
       .map((integration) => integration.scripts)
       .filter(Boolean)
       .join('\n')
-
     setDocSrc(`
       <html style="height: 100%">
         <head>
@@ -82,8 +81,7 @@ const BrowserView: FC<BrowserViewProps> = ({
     setTimeout(() => {
       setIframeProcess(false)
     }, 100)
-  }, [document])
-
+  }, [document, integrations, iframeKey])
   const IFrame = useMemo(
     () =>
       !iframeProcess ? (
