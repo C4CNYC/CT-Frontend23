@@ -61,10 +61,12 @@ export default function LessonItem({
 
   const courseId = useRouter().query.id
   const isRTL = theme.direction === 'rtl'
-  const startLinkSx = useMemo(() => getStartLinkSx(isRTL), [isRTL])
-  const locketBtnSx = useMemo(() => getLockedBtnSx(isRTL), [isRTL])
+  const lastLessonProgress = prevLesson?.progress ?? 100
+  const isLastLessonInProgress = lastLessonProgress <= 90
   const isTablet = useMediaQuery(theme.breakpoints.up('xl'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
+  const startLinkSx = useMemo(() => getStartLinkSx(isRTL), [isRTL])
+  const locketBtnSx = useMemo(() => getLockedBtnSx(isRTL), [isRTL])
 
   const openDialog = () => {
     setOpen(true)
@@ -110,9 +112,6 @@ export default function LessonItem({
       setMaxDesc(400)
     }
   }, [])
-
-  const lastLessonProgress = prevLesson?.progress ?? 100
-  const isLastLessonInProgress = lastLessonProgress <= 90
 
   return (
     <Stack sx={getLessonSx(theme)}>
