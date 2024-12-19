@@ -226,7 +226,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         </Carousel>
       </Box>
     )
-  }, [data, nav2, carousel1, slideIndex])
+  }, [data, nav2, carousel1, slideIndex, integrations])
 
   return (
     <BaseBlock
