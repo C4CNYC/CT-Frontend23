@@ -122,7 +122,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         contentId={contentId}
       />
 
-      {Boolean(validations?.length) && Boolean(selectedContent?.checkers) && (
+      {Boolean(validations?.length) && Boolean(selectedContent) && (
         <Checkers
           contentId={contentId}
           checkers={
@@ -160,4 +160,4 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   )
 }
 
-export default memo(CodeEditorBlock)
+export default CodeEditorBlock
