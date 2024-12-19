@@ -188,4 +188,4 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   )
 }
 
-export default memo(CodePanelBody)
+export default CodePanelBody
