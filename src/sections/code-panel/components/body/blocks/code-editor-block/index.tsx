@@ -160,4 +160,4 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   )
 }
 
-export default CodeEditorBlock
+export default memo(CodeEditorBlock)
