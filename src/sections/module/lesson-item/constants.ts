@@ -54,7 +54,7 @@ export const LINK_BTN_SX = {
   boxShadow: 2,
 }
 
-export const getLockedBtnSx = (isRTL: boolean) => ({
+export const getLockedBtnSx = () => ({
   cursor: 'pointer',
   display: 'flex',
   gap: 3,
@@ -63,8 +63,7 @@ export const getLockedBtnSx = (isRTL: boolean) => ({
   color: '#fff',
   borderRadius: '80px',
   p: 0.5,
-  ...(isRTL && { pr: 2 }),
-  ...(!isRTL && { pl: 2 }),
+  pr: 2,
   mt: 1,
   mr: 'auto',
 })
@@ -103,12 +102,12 @@ export const getProgressStyles = (isStarted: boolean) => ({
   background: '#fff',
 })
 
-export const getStartLinkSx = (isRTL: boolean) => ({
+export const getStartLinkSx = () => ({
   display: 'flex',
   gap: 3,
   p: 0.5,
-  ...(isRTL && { pr: 2 }),
-  ...(!isRTL && { pl: 2 }),
+  pr: 2,
+
   alignItems: 'center',
   borderRadius: '80px',
   mt: 1,

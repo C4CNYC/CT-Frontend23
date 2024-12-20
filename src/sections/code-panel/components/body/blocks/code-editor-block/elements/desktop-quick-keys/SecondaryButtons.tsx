@@ -1,5 +1,6 @@
-import { Box, Divider } from '@mui/material'
+import { Box, Divider, useTheme } from '@mui/material'
 import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
+import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
 import { FaKeyboard } from '@react-icons/all-files/fa6/FaKeyboard'
 
 import { PasteInitiate } from '@root/src/sections/code-panel/lib/events'
@@ -13,6 +14,7 @@ export default function SecondaryButtons({
   handleChangeButtons: VoidFunction
   handleClose: VoidFunction
 }) {
+  const theme = useTheme()
   return (
     <Box sx={{ height: 30, display: 'flex' }}>
       <QuickButton
@@ -137,7 +139,7 @@ export default function SecondaryButtons({
         onClick={handleClose}
         tooltipTitle='Compress'
       >
-        <FaAngleLeft size={20} />
+        {theme.direction === 'rtl' ? <FaAngleRight size={20} /> : <FaAngleLeft size={20} />}
       </QuickButton>
     </Box>
   )

@@ -85,7 +85,6 @@ const BaseBlock: FC<IBaseBlock> = ({
       flex={'1 1 0px'}
       position='relative'
       sx={boxStyles}
-      dir='ltr'
     >
       <Collapse in={isClosedHeader?.[className]}>
         <Header

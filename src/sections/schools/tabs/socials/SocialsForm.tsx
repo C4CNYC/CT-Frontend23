@@ -2,7 +2,7 @@ import React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, Grid, MenuItem, useTheme } from '@mui/material'
+import { Box, Grid, MenuItem } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -38,11 +38,10 @@ interface SocialFormProps {
 }
 
 export default function SocialsForm({ schoolId }: SocialFormProps): React.ReactElement {
-  const [createSocial, { isLoading }] = useCreateSchoolSocialMutation()
-  const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [createSocial, { isLoading }] = useCreateSchoolSocialMutation()
 
   const defaultValues = {
     schoolId,
@@ -101,22 +100,16 @@ export default function SocialsForm({ schoolId }: SocialFormProps): React.ReactE
               sx={{
                 width: '125px !important',
                 height: '40px !important',
-                ...(isRTL && {
-                  borderLeft: 'none',
-                  borderTopLeftRadius: 0,
-                  borderBottomLeftRadius: 0,
-                }),
-                ...(!isRTL && {
-                  borderRight: 'none',
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
-                }),
+
+                borderRight: 'none',
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
                 '& .MuiOutlinedInput-root': {
                   padding: '0 !important',
                   height: '40px',
                   border: 'none',
-                  ...(!isRTL && { borderTopRightRadius: 0, borderBottomRightRadius: 0 }),
-                  ...(isRTL && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
                 },
                 '& .MuiSelect-select': {
                   display: 'flex',
@@ -165,8 +158,8 @@ export default function SocialsForm({ schoolId }: SocialFormProps): React.ReactE
                 pr: 1,
                 borderTopRightRadius: '8px',
                 borderBottomRightRadius: '8px',
-                ...(!isRTL && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
-                ...(isRTL && { borderTopRightRadius: 0, borderBottomRightRadius: 0 }),
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
               }}
             >
               {translate('actions_add')}

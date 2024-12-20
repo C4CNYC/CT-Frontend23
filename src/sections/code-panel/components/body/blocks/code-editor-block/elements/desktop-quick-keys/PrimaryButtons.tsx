@@ -1,5 +1,6 @@
-import { Box, Divider } from '@mui/material'
+import { Box, Divider, useTheme } from '@mui/material'
 import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
+import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
 import { FaKeyboard } from '@react-icons/all-files/fa6/FaKeyboard'
 import { FaRegClipboard } from '@react-icons/all-files/fa6/FaRegClipboard'
 import { MdOutlineContentCopy } from '@react-icons/all-files/md/MdOutlineContentCopy'
@@ -22,6 +23,7 @@ export default function PrimaryButtons({
   handleClose: VoidFunction
   handleChangeButtons: VoidFunction
 }) {
+  const theme = useTheme()
   return (
     <Box sx={{ height: 30, display: 'flex' }}>
       <QuickButton
@@ -84,7 +86,7 @@ export default function PrimaryButtons({
         tooltipTitle='Close'
         onClick={handleClose}
       >
-        <FaAngleLeft size={26} />
+        {theme.direction === 'rtl' ? <FaAngleRight size={20} /> : <FaAngleLeft size={20} />}
       </QuickButton>
     </Box>
   )

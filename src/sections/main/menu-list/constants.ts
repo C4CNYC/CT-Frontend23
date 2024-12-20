@@ -26,8 +26,8 @@ export const getSignOfActiveLink = (theme: Theme, isActive: boolean): SxProps =>
 })
 
 export const getTribeTitleSx = (theme: Theme): SxProps => ({
-  mr: theme.direction === 'rtl' ? 2 : 0,
-  ml: theme.direction !== 'rtl' ? 2 : 0,
+  mr: 0,
+  ml: 2,
   color: theme.palette.text.secondary,
   fontSize: '18px',
   textOverflow: 'ellipsis',
@@ -35,13 +35,12 @@ export const getTribeTitleSx = (theme: Theme): SxProps => ({
   overflow: 'hidden',
 })
 
-export const getAddTribeButtonSx = (theme: Theme, isNavMini: boolean, isRTL: boolean): SxProps => ({
+export const getAddTribeButtonSx = (theme: Theme): SxProps => ({
   alignSelf: 'flex-start',
   borderRadius: 1,
   minWidth: '40px',
   p: 0,
-  ...(isRTL && { mr: 2 }),
-  ...(!isRTL && { ml: 2 }),
+  ml: 2,
   minHeight: '40px',
   height: '40px',
   color: theme.palette.info.light,

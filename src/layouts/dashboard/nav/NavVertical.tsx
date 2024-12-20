@@ -29,10 +29,11 @@ export default function NavVertical({
   isManager,
   onCloseNav,
 }: INavVertical): React.ReactElement | null {
-  const user = useSelector((state: RootState) => state.global.user)
-  const { pathname } = useRouter()
   const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
+  const { pathname } = useRouter()
+
+  const user = useSelector((state: RootState) => state.global.user)
+
   const isDesktop = useResponsive('up', 'md')
   const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
 
@@ -87,7 +88,7 @@ export default function NavVertical({
 
       {isDesktop ? (
         <Drawer
-          anchor={isRTL ? 'right' : 'left'}
+          anchor={'left'}
           open
           variant='permanent'
           PaperProps={{
@@ -95,8 +96,7 @@ export default function NavVertical({
               zIndex: 0,
               width: NAV_SIZES.W_DASHBOARD,
               bgcolor: 'transparent',
-              ...(!isRTL && { borderRight: (theme) => `dashed 1px ${theme.palette.divider}` }),
-              ...(isRTL && { borderLeft: (theme) => `dashed 1px ${theme.palette.divider}` }),
+              borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
             },
           }}
         >

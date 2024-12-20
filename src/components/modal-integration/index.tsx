@@ -3,15 +3,7 @@ import React, { useState } from 'react'
 import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Stack,
-  useTheme,
-} from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material'
 import { Box } from '@mui/system'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
@@ -54,7 +46,6 @@ export function ModalIntegration({
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
-  const theme = useTheme()
   const handleOpen = (): void => {
     setOpen(true)
   }
@@ -183,11 +174,6 @@ export function ModalIntegration({
               variant='outlined'
               color='inherit'
               onClick={onCancel}
-              sx={{
-                ...(theme.direction === 'rtl' && {
-                  ml: 2,
-                }),
-              }}
             >
               {translate('actions_cancel')}
             </Button>

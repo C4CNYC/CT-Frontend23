@@ -16,10 +16,7 @@ interface CheckersMenuProps {
 const CheckersMenu: FC<CheckersMenuProps> = ({ checkers, isCheckedOnce }) => {
   const translate = useTranslate()
   return (
-    <Box
-      sx={BOX_SX}
-      dir='ltr'
-    >
+    <Box sx={BOX_SX}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <CheckerIcon
           width={14}

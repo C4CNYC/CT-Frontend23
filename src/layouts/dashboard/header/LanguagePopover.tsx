@@ -84,8 +84,7 @@ export default function LanguagePopover(): React.ReactElement {
                 src={option.icon}
                 sx={{
                   width: 28,
-                  ...(theme.direction !== 'rtl' && { mr: 2 }),
-                  ...(theme.direction === 'rtl' && { ml: 2 }),
+                  mr: 2,
                 }}
               />
               {option.label}

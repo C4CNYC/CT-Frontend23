@@ -1,8 +1,7 @@
-import { Box, Button, useTheme } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { Container } from '@mui/system'
 import Head from 'next/head'
 
-import { useAuthContext } from '@/auth/useAuthContext'
 import {
   CustomBreadcrumbs,
   EmptyContent,
@@ -14,7 +13,6 @@ import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
 import { useGetAdminCoursesQuery } from '@/redux/services/admin/courses-admin'
 import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
-// import { useGetPublicCoursesQuery } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { CourseCard } from '@/sections/dashboard/courses/cards'
@@ -28,10 +26,10 @@ import { useIsAdmin } from '@root/src/lib/use-is-admin'
 CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function CoursesListPage(): React.ReactElement {
-  const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
+  const { themeStretch } = useSettingsContext()
   const { isAdmin } = useIsAdmin()
-  const { user } = useAuthContext()
+
   const { filters, setFilter } = useFilters<ICourseSearchParams>(
     {
       name: '',
@@ -40,14 +38,6 @@ export default function CoursesListPage(): React.ReactElement {
     FilterMode.global
   )
   const { data, isLoading, isFetching, refetch } = useGetAdminCoursesQuery(filters)
-  // const {
-  //   data: publicCourses,
-  //   isLoading: isPublicLoading,
-  //   isFetching: isPublicFetching,
-  // } = useGetPublicCoursesQuery(filters)
-
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
 
   if (isLoading) {
     return (
@@ -57,10 +47,6 @@ export default function CoursesListPage(): React.ReactElement {
       />
     )
   }
-
-  // if (!data?.data.length /*&& !publicCourses?.data.length*/) {
-  //   return <EmptyContent title='You have no courses' />
-  // }
 
   return (
     <>
@@ -88,16 +74,7 @@ export default function CoursesListPage(): React.ReactElement {
               >
                 <Button
                   variant='contained'
-                  startIcon={
-                    <Iconify
-                      icon='eva:plus-fill'
-                      sx={{
-                        ...(isRTL && {
-                          ml: 1,
-                        }),
-                      }}
-                    />
-                  }
+                  startIcon={<Iconify icon='eva:plus-fill' />}
                 >
                   {translate('courses_add')}
                 </Button>
@@ -115,12 +92,11 @@ export default function CoursesListPage(): React.ReactElement {
           <EmptyContent title='You have no courses' />
         ) : (
           <SimpleInfiniteList
-            hasNextPage={/*publicCourses?.meta.hasNextPage ??*/ data?.meta.hasNextPage ?? false}
+            hasNextPage={data?.meta.hasNextPage ?? false}
             onLoadMore={() => {
-              // if (publicCourses?.meta.take !== Number(filters?.take)) return
               setFilter('take', Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
             }}
-            loading={/*isPublicLoading ?? isPublicFetching ??*/ isLoading ?? isFetching}
+            loading={isLoading ?? isFetching}
           >
             <Box
               sx={{
@@ -135,12 +111,6 @@ export default function CoursesListPage(): React.ReactElement {
             >
               {isAdmin ? (
                 <>
-                  {/* {publicCourses?.data.map((course, index) => (
-                  <CourseCard
-                    key={index}
-                    course={course}
-                  />
-                ))} */}
                   {data?.data.map((course, index) => (
                     <CourseCard
                       key={index}

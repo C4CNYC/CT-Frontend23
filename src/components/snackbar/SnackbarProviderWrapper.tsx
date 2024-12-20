@@ -1,11 +1,10 @@
 import { useRef } from 'react'
 
-import { Box, Collapse, IconButton } from '@mui/material'
+import { Box, IconButton } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 import { SnackbarProvider, SnackbarKey } from 'notistack'
 
 import { Iconify, IconifyProps } from '../iconify'
-import { useSettingsContext } from '../settings/SettingsContext'
 
 import { StyledNotistack } from './styles'
 
@@ -16,10 +15,6 @@ export interface SnackbarProviderWrapperProps {
 export function SnackbarProviderWrapper({
   children,
 }: SnackbarProviderWrapperProps): React.ReactElement | null {
-  const { themeDirection } = useSettingsContext()
-
-  const isRTL = themeDirection === 'rtl'
-
   const notistackRef = useRef<any>(null)
 
   const onClose = (key: SnackbarKey) => () => {
@@ -41,7 +36,6 @@ export function SnackbarProviderWrapper({
         maxSnack={5}
         preventDuplicate
         autoHideDuration={3000}
-        TransitionComponent={isRTL ? Collapse : undefined}
         variant='success' // Set default variant
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         iconVariant={{

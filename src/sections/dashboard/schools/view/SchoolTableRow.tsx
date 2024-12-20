@@ -1,19 +1,9 @@
 import { useState } from 'react'
 
-import {
-  Avatar,
-  Button,
-  Divider,
-  IconButton,
-  MenuItem,
-  TableCell,
-  TableRow,
-  useTheme,
-} from '@mui/material'
+import { Avatar, Button, Divider, IconButton, MenuItem, TableCell, TableRow } from '@mui/material'
 import { BiDotsVerticalRounded } from '@react-icons/all-files/bi/BiDotsVerticalRounded'
 import { enqueueSnackbar } from 'notistack'
 
-import { useAuthContext } from '@/auth/useAuthContext'
 import { ConfirmDialog, Iconify, Label, MenuPopover } from '@/components'
 import { useArchiveSchoolMutation } from '@/redux/services/admin/school-amdin'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
@@ -27,14 +17,12 @@ interface Props {
 
 export default function SchoolTableRow({ row }: Props): React.ReactElement {
   const translate = useTranslate()
+  const [archive] = useArchiveSchoolMutation()
+
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [openConfirm, setOpenConfirm] = useState(false)
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
-
   const [openDetails, setOpenDetails] = useState(false)
-  const [archive] = useArchiveSchoolMutation()
-  const { user } = useAuthContext()
+
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
   }
@@ -120,7 +108,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow={isRTL ? 'left-center' : 'right-top'}
+        arrow={'right-top'}
         sx={{ width: 160 }}
       >
         <MenuItem
@@ -130,14 +118,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           }}
         >
           <>
-            <Iconify
-              icon='eva:edit-fill'
-              sx={{
-                ...(isRTL && {
-                  ml: 2,
-                }),
-              }}
-            />
+            <Iconify icon='eva:edit-fill' />
             {translate('actions_edit')}
           </>
         </MenuItem>
@@ -150,14 +131,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify
-            icon='eva:trash-2-outline'
-            sx={{
-              ...(isRTL && {
-                ml: 2,
-              }),
-            }}
-          />
+          <Iconify icon='eva:trash-2-outline' />
           {translate('actions_archive')}
         </MenuItem>
       </MenuPopover>

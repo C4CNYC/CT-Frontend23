@@ -17,12 +17,11 @@ interface Props {
 export default function TribeListItem({ active, classItem }: Props): React.ReactElement {
   const theme = useTheme()
   const { themeLayout } = useSettingsContext()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const [setLastActiveTribe] = useSetLastActiveTribeMutation()
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const isNavMini = themeLayout === 'mini' && !isMobile
-  const isRTL = theme.direction === 'rtl'
 
   const onTribeClick = () => {
     setLastActiveTribe({ class_id: classItem.id })
@@ -47,7 +46,6 @@ export default function TribeListItem({ active, classItem }: Props): React.React
           sx={{
             width: '40px',
             height: '40px',
-            ...(isRTL && { mr: '16px' }),
           }}
         />
         {!isNavMini && (

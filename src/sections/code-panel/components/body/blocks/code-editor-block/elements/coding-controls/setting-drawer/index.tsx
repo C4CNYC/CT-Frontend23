@@ -6,8 +6,6 @@ import { Box } from '@mui/system'
 import { Iconify } from '@/components/iconify'
 import { resetLessonEvent, updateLineWrap } from 'src/sections/code-panel/lib/events'
 
-// import { globalCodePanelAtom } from './atoms/global-code-panel.atom'
-// import { startTour } from './atoms/tour-atom'
 import EditColors from './preferences/EditColors'
 import EditorFontSize from './preferences/EditorFontSize'
 import EditorWordWrap from './preferences/EditorWordWrap'
@@ -17,19 +15,11 @@ import ResetCode from './preferences/ResetCode'
 const SettingDrawer = (): React.ReactElement => {
   const [openDrawer, setDrawer] = useState<boolean>(false)
 
-  // const [, setGlobalPanel] = useAtom(globalCodePanelAtom)
-  // const [, setStartTour] = useAtom(startTour)
-
   const onStartIntro = (): void => {
     setDrawer(false)
-    // setStartTour({ start: true })
   }
 
   const onResetLesson = () => {
-    // setGlobalPanel((prev) => ({
-    //   ...prev,
-    //   slideIndex: 0,
-    // }))
     window.dispatchEvent(resetLessonEvent)
   }
 

@@ -1,16 +1,7 @@
 import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
-import {
-  Box,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import Link from 'next/link'
 
 import { ConfirmDialog, Iconify, Image, Label, MenuPopover, useSnackbar } from '@/components'
@@ -31,16 +22,18 @@ export default function CourseCard({
   course,
   refetch,
 }: ICourseCardProps): React.ReactElement | null {
-  const { name, level, price, description, active, cover } = course
+  const translate = useTranslate()
+  const { isAdmin } = useIsAdmin()
   const { enqueueSnackbar } = useSnackbar()
+
   const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [deleteCourse] = useDeleteCourseMutation()
-  const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
+  const [deleteCourse] = useDeleteCourseMutation()
+
+  const { name, level, price, description, active, cover } = course
+
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
   }
@@ -73,8 +66,6 @@ export default function CourseCard({
       })
     }
   }
-
-  const { isAdmin } = useIsAdmin()
 
   return (
     <>
@@ -215,14 +206,7 @@ export default function CourseCard({
           refetch={refetch}
         >
           <MenuItem>
-            <Iconify
-              icon='eva:edit-fill'
-              sx={{
-                ...(isRTL && {
-                  ml: 1,
-                }),
-              }}
-            />
+            <Iconify icon='eva:edit-fill' />
             {translate('actions_edit')}
           </MenuItem>
         </CreateCourseDialog>
@@ -235,14 +219,7 @@ export default function CourseCard({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify
-            icon='eva:trash-2-outline'
-            sx={{
-              ...(isRTL && {
-                ml: 1,
-              }),
-            }}
-          />
+          <Iconify icon='eva:trash-2-outline' />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

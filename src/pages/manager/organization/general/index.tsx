@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Box, Card, Container, Stack, Tab, Tabs, useTheme } from '@mui/material'
+import { Box, Card, Container, Stack, Tab, Tabs } from '@mui/material'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
@@ -23,7 +23,6 @@ UserProfilePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page
 
 export default function UserProfilePage(): React.ReactElement {
   const translate = useTranslate()
-  const theme = useTheme()
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -31,8 +30,6 @@ export default function UserProfilePage(): React.ReactElement {
   const { themeStretch } = useSettingsContext()
   const [uploadCoverOrgImage] = useUpdateOrgCoverMutation()
   const { data, isLoading } = useGetOrganizationQuery()
-
-  const isRTL = theme.direction === 'rtl'
 
   const onUpload = async (data: File): Promise<void> => {
     try {
@@ -51,45 +48,25 @@ export default function UserProfilePage(): React.ReactElement {
     {
       value: 'profile',
       label: 'profile',
-      icon: (
-        <Iconify
-          icon='ic:round-account-box'
-          sx={{ ...(isRTL && { ml: 1 }) }}
-        />
-      ),
+      icon: <Iconify icon='ic:round-account-box' />,
       component: <UserProfileTab />,
     },
     {
       value: 'settings',
       label: 'settings',
-      icon: (
-        <Iconify
-          icon='ic:baseline-settings-applications'
-          sx={{ ...(isRTL && { ml: 1 }) }}
-        />
-      ),
+      icon: <Iconify icon='ic:baseline-settings-applications' />,
       component: <SettingsTab />,
     },
     {
       value: 'customization',
       label: 'customization',
-      icon: (
-        <Iconify
-          icon='ic:round-dashboard-customize'
-          sx={{ ...(isRTL && { ml: 1 }) }}
-        />
-      ),
+      icon: <Iconify icon='ic:round-dashboard-customize' />,
       component: <CustomizationTab />,
     },
     {
       value: 'contacts',
       label: 'Contacts',
-      icon: (
-        <Iconify
-          icon='ic:outline-contacts'
-          sx={{ ...(isRTL && { ml: 1 }) }}
-        />
-      ),
+      icon: <Iconify icon='ic:outline-contacts' />,
       component: <ContactsTab />,
     },
   ]
@@ -146,8 +123,8 @@ export default function UserProfilePage(): React.ReactElement {
               position: 'absolute',
               bgcolor: 'background.paper',
               '& .MuiTabs-flexContainer': {
-                ...(!isRTL && { pr: { xs: 0, md: 3 }, pl: { xs: 2, md: 0 } }),
-                ...(isRTL && { pl: { xs: 0, md: 3 }, pr: { xs: 2, md: 0 }, gap: 1 }),
+                pr: { xs: 0, md: 3 },
+                pl: { xs: 2, md: 0 },
                 justifyContent: {
                   sm: 'center',
                   md: 'flex-end',

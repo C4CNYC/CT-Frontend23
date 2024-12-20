@@ -2,7 +2,7 @@ import React from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, Grid, useTheme } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -40,8 +40,6 @@ export default function LinkForm({ studentId }: Props): React.ReactElement {
   const [createSocial] = usePostSocialMutation()
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
 
   const defaultValues = {
     studentId,
@@ -126,8 +124,8 @@ export default function LinkForm({ studentId }: Props): React.ReactElement {
                 pr: 1,
                 borderTopRightRadius: '8px',
                 borderBottomRightRadius: '8px',
-                ...(!isRTL && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
-                ...(isRTL && { borderTopRightRadius: 0, borderBottomRightRadius: 0 }),
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
               }}
             >
               {translate('actions_add')}

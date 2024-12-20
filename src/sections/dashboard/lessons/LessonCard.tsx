@@ -2,16 +2,7 @@ import { useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
-import {
-  Box,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import { useRouter } from 'next/router'
 
@@ -38,15 +29,15 @@ export default function LessonCard({
   lock,
 }: Props): React.ReactElement | null {
   const router = useRouter()
+  const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+
   const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
   const [deleteLesson] = useDeleteLessonMutation()
   const [cloneLesson] = useCloneLessonMutation()
-  const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
 
   const onDelete = async (): Promise<void> => {
     setLoading(true)
@@ -253,14 +244,7 @@ export default function LessonCard({
           refetch={refetch}
         >
           <MenuItem>
-            <Iconify
-              icon='eva:edit-fill'
-              sx={{
-                ...(isRTL && {
-                  ml: 2,
-                }),
-              }}
-            />
+            <Iconify icon='eva:edit-fill' />
             {translate('actions_edit')}
           </MenuItem>
         </CreateLessonDialog>
@@ -284,9 +268,6 @@ export default function LessonCard({
             }}
             sx={{
               color: 'error.main',
-              ...(isRTL && {
-                ml: 2,
-              }),
             }}
           >
             <Iconify icon='eva:trash-2-outline' />

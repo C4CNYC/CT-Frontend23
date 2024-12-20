@@ -1,16 +1,7 @@
 import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
-import {
-  Box,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import { CgArrowsExchangeV } from '@react-icons/all-files/cg/CgArrowsExchangeV'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -22,15 +13,12 @@ import { useTranslate } from '@/utils/translateHelper'
 
 export default function ModuleCard({ module, refetch }: any): React.ReactElement | null {
   const router = useRouter()
-  const theme = useTheme()
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
 
   const [openConfirm, setOpenConfirm] = useState(false)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [loading, setLoading] = useState(false)
-
-  const isRTL = theme.direction === 'rtl'
 
   const [deleteModule] = useDeleteModuleMutation()
 
@@ -188,14 +176,7 @@ export default function ModuleCard({ module, refetch }: any): React.ReactElement
           refetch={refetch}
         >
           <MenuItem>
-            <Iconify
-              icon='eva:edit-fill'
-              sx={{
-                ...(isRTL && {
-                  ml: 2,
-                }),
-              }}
-            />
+            <Iconify icon='eva:edit-fill' />
             {translate('actions_edit')}
           </MenuItem>
         </CreateModuleDialog>
@@ -218,14 +199,7 @@ export default function ModuleCard({ module, refetch }: any): React.ReactElement
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify
-            icon='eva:trash-2-outline'
-            sx={{
-              ...(isRTL && {
-                ml: 2,
-              }),
-            }}
-          />
+          <Iconify icon='eva:trash-2-outline' />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

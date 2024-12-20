@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, FormGroup, Stack, useTheme } from '@mui/material'
+import { Box, FormGroup, Stack } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -39,13 +39,13 @@ const UpdateLinkSchema = Yup.object().shape({
 })
 
 export default function LinkItem({ studentId, socialItem }: Props): React.ReactElement {
+  const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
   const [edit, setEdit] = useState(true)
+
   const [removeSocial, { isLoading: isRemoveLoading }] = useRemoveSocialsMutation()
   const [editSocial, { isLoading: isUpdateLoading }] = useUpdateSocialsMutation()
-  const { enqueueSnackbar } = useSnackbar()
-  const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
 
   const defaultValues = {
     link: socialItem.link,
@@ -122,18 +122,10 @@ export default function LinkItem({ studentId, socialItem }: Props): React.ReactE
                   display: 'flex',
                   color: '#627380',
                   border: '1px solid #919eab42',
-                  ...(!isRTL && {
-                    borderRight: 'none',
-                    borderRadius: '8px',
-                    borderTopRightRadius: 0,
-                    borderBottomRightRadius: 0,
-                  }),
-                  ...(isRTL && {
-                    borderLeft: 'none',
-                    borderRadius: '8px',
-                    borderTopLeftRadius: 0,
-                    borderBottomLeftRadius: 0,
-                  }),
+                  borderRight: 'none',
+                  borderRadius: '8px',
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
 
                   alignItems: 'center',
                   padding: '0 10px',
@@ -171,15 +163,8 @@ export default function LinkItem({ studentId, socialItem }: Props): React.ReactE
               disabled={edit ?? !methods.formState.isDirty}
               loading={isUpdateLoading}
               sx={{
-                ...(!isRTL && {
-                  borderTopLeftRadius: 0,
-                  borderBottomLeftRadius: 0,
-                }),
-                ...(isRTL && {
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
-                  ml: 2,
-                }),
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
                 textTransform: 'lowercase',
                 height: '40px',
               }}

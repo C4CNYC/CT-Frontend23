@@ -12,7 +12,6 @@ import {
   TableContainer,
   Tabs,
   Tooltip,
-  useTheme,
 } from '@mui/material'
 import Head from 'next/head'
 import NextLink from 'next/link'
@@ -105,8 +104,6 @@ export default function UserListPage(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const [deleteMember, { isLoading: loading }] = useDeleteOrgMemberMutation()
   const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
 
   const deleteMemberCb = async (userId: string): Promise<void> => {
     try {
@@ -183,12 +180,7 @@ export default function UserListPage(): React.ReactElement {
               component={NextLink}
               href={MANAGER_PATH_DASHBOARD.organization.new}
               variant='contained'
-              startIcon={
-                <Iconify
-                  icon='eva:plus-fill'
-                  sx={{ ...(isRTL && { ml: 1 }) }}
-                />
-              }
+              startIcon={<Iconify icon='eva:plus-fill' />}
             >
               {translate('members_btn_new_user')}
             </Button>

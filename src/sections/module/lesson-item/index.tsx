@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Box, Button, Collapse, Link, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
@@ -60,13 +60,10 @@ export default function LessonItem({
   const descRef = useRef<HTMLElement | null>(null)
 
   const courseId = useRouter().query.id
-  const isRTL = theme.direction === 'rtl'
   const lastLessonProgress = prevLesson?.progress ?? 100
   const isLastLessonInProgress = lastLessonProgress <= 90
   const isTablet = useMediaQuery(theme.breakpoints.up('xl'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
-  const startLinkSx = useMemo(() => getStartLinkSx(isRTL), [isRTL])
-  const locketBtnSx = useMemo(() => getLockedBtnSx(isRTL), [isRTL])
 
   const openDialog = () => {
     setOpen(true)
@@ -182,7 +179,7 @@ export default function LessonItem({
           !lesson.progress && index !== 0 && isLastLessonInProgress ? (
             <>
               <Box
-                sx={locketBtnSx}
+                sx={getLockedBtnSx()}
                 onClick={async () => {
                   openDialog()
                 }}
@@ -215,7 +212,7 @@ export default function LessonItem({
                   lessonId: lesson.id,
                 })}
                 underline='none'
-                sx={startLinkSx}
+                sx={getStartLinkSx()}
               >
                 <Typography variant='h5'> {translate('actions_start')} </Typography>
                 <Box sx={LINK_BTN_SX}>
@@ -230,7 +227,7 @@ export default function LessonItem({
         ) : !lesson.progress && isLastLessonInProgress ? (
           <>
             <Box
-              sx={locketBtnSx}
+              sx={getLockedBtnSx()}
               onClick={async () => {
                 openDialog()
               }}
@@ -259,7 +256,7 @@ export default function LessonItem({
                 lessonId: lesson.id,
               })}
               underline='none'
-              sx={startLinkSx}
+              sx={getStartLinkSx()}
             >
               <Typography variant='h5'> {translate('actions_start')} </Typography>
               <Box sx={LINK_BTN_SX}>

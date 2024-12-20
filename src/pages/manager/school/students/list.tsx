@@ -13,7 +13,6 @@ import {
   TableContainer,
   Tabs,
   Tooltip,
-  useTheme,
 } from '@mui/material'
 import Head from 'next/head'
 import NextLink from 'next/link'
@@ -85,24 +84,24 @@ export default function UserListPage(): React.ReactElement {
     onSort,
     onChangeDense,
   } = useTable()
-
   const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
-  const [openConfirm, setOpenConfirm] = useState(false)
-  const [value, setValue] = useState(0)
   const { push } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const { themeStretch } = useSettingsContext()
+
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [value, setValue] = useState(0)
+
   const schoolId = useSelector((state: RootState) => state.manager.schoolId)
+
   const { filters, setFilter, resetFilters } = useFilters({
     name: '',
     class_id: '',
   })
   const [deleteStudent, { isLoading: isDeleting }] = useDeleteStudentMutation()
-  const [resetPassword, { isLoading: isResettingPassword }] = useStudentResetPasswordMutation()
-
+  const [resetPassword] = useStudentResetPasswordMutation()
   const { data, isLoading } = useGetStudentsQuery({ schoolId, ...filters }, { skip: !schoolId })
+
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue)
   }
@@ -122,6 +121,7 @@ export default function UserListPage(): React.ReactElement {
     enqueueSnackbar(translate('member_actions_deleted'))
     setSelected([])
   }
+
   const handleResetPassword = async (studentId: string): Promise<void> => {
     try {
       const password = createWeakPassword()
@@ -133,6 +133,7 @@ export default function UserListPage(): React.ReactElement {
       })
     }
   }
+
   const handleDeleteRows = (selected: string[]): void => {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteMember(selected[i])
@@ -179,11 +180,6 @@ export default function UserListPage(): React.ReactElement {
                     <Iconify
                       icon='mdi:email-fast-outline'
                       width='23px'
-                      sx={{
-                        ...(isRTL && {
-                          ml: 2,
-                        }),
-                      }}
                     />
                   }
                 >
@@ -194,16 +190,7 @@ export default function UserListPage(): React.ReactElement {
                 component={NextLink}
                 href={MANAGER_PATH_DASHBOARD.school.new}
                 variant='contained'
-                startIcon={
-                  <Iconify
-                    icon='eva:plus-fill'
-                    sx={{
-                      ...(isRTL && {
-                        ml: 1,
-                      }),
-                    }}
-                  />
-                }
+                startIcon={<Iconify icon='eva:plus-fill' />}
               >
                 {translate('members_add_student')}
               </Button>

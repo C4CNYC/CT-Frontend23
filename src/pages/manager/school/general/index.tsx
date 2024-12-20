@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Box, Card, Container, Stack, Tab, Tabs, useTheme } from '@mui/material'
+import { Box, Card, Container, Stack, Tab, Tabs } from '@mui/material'
 import { BsPeopleFill } from '@react-icons/all-files/bs/BsPeopleFill'
 import { MdContacts } from '@react-icons/all-files/md/MdContacts'
 import Head from 'next/head'
@@ -30,51 +30,41 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 )
 
 export default function UserProfilePage(): React.ReactElement {
-  const schoolId = useSelector((state: RootState) => state.manager.schoolId)
   const translate = useTranslate()
-  const theme = useTheme()
-  const [currentTab, setCurrentTab] = useState('profile')
   const { themeStretch } = useSettingsContext()
+
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId)
+
+  const [currentTab, setCurrentTab] = useState('profile')
+
   const { data, isLoading, isFetching } = useGetSchoolProfileQuery(
     { schoolId },
     { skip: !schoolId }
   )
 
-  const isRTL = theme.direction === 'rtl'
-
   const TABS = [
     {
       value: 'profile',
       label: 'general',
-      icon: (
-        <Iconify
-          icon='ic:round-account-box'
-          sx={{ ...(isRTL && { ml: 1 }) }}
-        />
-      ),
+      icon: <Iconify icon='ic:round-account-box' />,
       component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
       value: 'settings',
       label: 'settings',
-      icon: (
-        <Iconify
-          icon='ic:baseline-settings-applications'
-          sx={{ ...(isRTL && { ml: 1 }) }}
-        />
-      ),
+      icon: <Iconify icon='ic:baseline-settings-applications' />,
       component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {
       value: 'contacts',
       label: 'contacts',
-      icon: <MdContacts style={{ marginLeft: isRTL ? '8px' : 0 }} />,
+      icon: <MdContacts />,
       component: <SchoolContactsTab schoolId={schoolId} />,
     },
     {
       value: 'socials',
       label: 'social_networks',
-      icon: <BsPeopleFill style={{ marginLeft: isRTL ? '8px' : 0 }} />,
+      icon: <BsPeopleFill />,
       component: <SchoolSocialsTab schoolId={schoolId} />,
     },
   ]
@@ -155,8 +145,8 @@ export default function UserProfilePage(): React.ReactElement {
               position: 'absolute',
               bgcolor: 'background.paper',
               '& .MuiTabs-flexContainer': {
-                ...(!isRTL && { pr: { xs: 0, md: 3 }, pl: { xs: 2, md: 0 } }),
-                ...(isRTL && { pl: { xs: 0, md: 3 }, pr: { xs: 2, md: 0 }, gap: 1 }),
+                pr: { xs: 0, md: 3 },
+                pl: { xs: 2, md: 0 },
                 justifyContent: {
                   sm: 'center',
                   md: 'flex-end',

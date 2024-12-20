@@ -22,7 +22,6 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
   const user = useSelector((state: RootState) => state.global.user)
   const theme = useTheme()
   const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
-  const isRTL = theme.direction === 'rtl'
 
   return (
     <Box
@@ -36,9 +35,7 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
       <NavToggleButton
         sx={{
           top: 22,
-          left: isRTL
-            ? `calc(100% - ${NAV_SIZES.W_DASHBOARD_MINI + 12}px)`
-            : NAV_SIZES.W_DASHBOARD_MINI - 12,
+          left: NAV_SIZES.W_DASHBOARD_MINI - 12,
         }}
       />
 
@@ -48,16 +45,14 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
           height: 1,
           position: 'fixed',
           width: NAV_SIZES.W_DASHBOARD_MINI,
-          ...(!isRTL && { borderRight: (theme) => `dashed 1px ${theme.palette.divider}` }),
-          ...(isRTL && { borderLeft: (theme) => `dashed 1px ${theme.palette.divider}` }),
+          borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
           ...hideScrollbarX,
         }}
       >
         <LogoMin
           sx={{
             my: 2,
-            ...(!isRTL && { ml: 2.6 }),
-            ...(isRTL && { mr: 2.6 }),
+            ml: 2.6,
           }}
         />
         {!isManager ? <LetsCodeBtn isMini /> : null}

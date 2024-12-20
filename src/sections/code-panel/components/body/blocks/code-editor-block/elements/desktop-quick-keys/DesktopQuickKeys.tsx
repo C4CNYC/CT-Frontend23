@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
 import { Box } from '@mui/material'
+import { useTheme } from '@mui/system'
+import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
 import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
 import { AnimatePresence, m } from 'framer-motion'
 
@@ -10,9 +12,11 @@ import PrimaryButtons from './PrimaryButtons'
 import SecondaryButtons from './SecondaryButtons'
 
 export default function DesktopQuickKeys() {
+  const theme = useTheme()
+  const isDesktop = useIsDesktop()
+
   const [open, setOpen] = useState<boolean>(false)
   const [isOpenButtons, setIsOpenButtons] = useState<boolean>(false)
-  const isDesktop = useIsDesktop()
 
   const handleOpen = () => {
     setOpen(!open)
@@ -25,6 +29,17 @@ export default function DesktopQuickKeys() {
   const handleChangeButtons = () => {
     setIsOpenButtons(!isOpenButtons)
   }
+
+  const OPEN_BTN_SX = {
+    width: 50,
+    height: 30,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: theme.direction === 'rtl' ? '8px 0 0 0' : '0 8px 0 0',
+    cursor: 'pointer',
+  }
+
   return (
     <>
       <Box
@@ -51,16 +66,28 @@ export default function DesktopQuickKeys() {
                 transition: { delay: 0.3 },
               },
             }}
-            style={{ display: 'flex', background: '#b36060', borderTopRightRadius: 8 }}
+            style={{
+              display: 'flex',
+              background: '#b36060',
+              borderRadius: theme.direction === 'rtl' ? '8px 0 0 0' : '0 8px 0 0',
+            }}
           >
-            <div className='toolbox'>
-              <Box sx={OPEN_BTN_SX}>
+            <Box
+              className='toolbox'
+              sx={OPEN_BTN_SX}
+            >
+              {theme.direction === 'rtl' ? (
+                <FaAngleLeft
+                  color='#fff'
+                  size={20}
+                />
+              ) : (
                 <FaAngleRight
                   color='#fff'
                   size={20}
                 />
-              </Box>
-            </div>
+              )}
+            </Box>
           </m.div>
         </AnimatePresence>
       </Box>
@@ -82,7 +109,7 @@ export default function DesktopQuickKeys() {
             style={{
               background: '#b36060',
               overflow: 'hidden',
-              borderTopRightRadius: 8,
+              borderRadius: theme.direction === 'rtl' ? '8px 0 0 0' : '0 8px 0 0',
             }}
           >
             {!isOpenButtons ? (
@@ -101,14 +128,4 @@ export default function DesktopQuickKeys() {
       </Box>
     </>
   )
-}
-
-const OPEN_BTN_SX = {
-  width: 50,
-  height: 30,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderTopRightRadius: 8,
-  cursor: 'pointer',
 }

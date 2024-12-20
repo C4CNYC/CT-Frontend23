@@ -111,8 +111,6 @@ export default function CreateLessonDialog({
     [theme.palette.mode]
   )
 
-  const isRTL = theme.direction === 'rtl'
-
   const [autoRun, autoRunSet, autoRunDelete] = useProperties({
     entityType: 'lesson',
     entityId: id,
@@ -249,20 +247,10 @@ export default function CreateLessonDialog({
                   <Tab
                     label={translate('skills')}
                     {...a11yProps(1)}
-                    sx={{
-                      ...(isRTL && {
-                        ml: 3,
-                      }),
-                    }}
                   />
                   <Tab
                     label={translate('integration')}
                     {...a11yProps(2)}
-                    sx={{
-                      ...(isRTL && {
-                        ml: 3,
-                      }),
-                    }}
                   />
                 </Tabs>
               </Box>

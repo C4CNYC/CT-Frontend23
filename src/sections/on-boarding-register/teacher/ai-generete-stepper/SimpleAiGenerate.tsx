@@ -52,7 +52,6 @@ const SimpleAiGenerate = ({
 
   const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
 
-  const isRTL = theme.direction === 'rtl'
   const nextBtnStyles = useMemo(
     () => getNextBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
@@ -80,7 +79,7 @@ const SimpleAiGenerate = ({
         <>
           <Stack
             direction='row'
-            sx={{ gap: 2, pl: isModal ? 1 : 0, alignItems: 'center', pr: isRTL ? 4 : 0 }}
+            sx={{ gap: 2, pl: isModal ? 1 : 0, alignItems: 'center' }}
           >
             {!isModal ? (
               <IconButton onClick={resetRoad}>
