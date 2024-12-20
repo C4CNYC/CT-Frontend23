@@ -51,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
       } catch (fetchError) {
         // eslint-disable-next-line no-console
-        console.log("fetchError", fetchError)
+        console.log('fetchError', fetchError)
       }
     }
 
