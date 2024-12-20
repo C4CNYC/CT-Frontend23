@@ -18,9 +18,10 @@ interface ILessonListProps {
 
 export default function LessonsList({ lessons, unitId }: ILessonListProps): React.ReactElement {
   const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
-  const isMobile = useMediaQuery(theme.breakpoints.down(600))
+
   const [isList, setIsList] = useState(true)
+
+  const isMobile = useMediaQuery(theme.breakpoints.down(600))
 
   const isLockedLessonCheck = (index: number) => {
     if (index === 0) return false
@@ -45,8 +46,8 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
           }}
           sx={{
             ...SWITCH_BTN_SX,
-            ...(isRTL && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
-            ...(!isRTL && { borderTopRightRadius: 0, borderBottomRightRadius: 0 }),
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
             background: theme.palette.mode === 'light' ? '#fff' : theme.palette.background.paper,
           }}
         >
@@ -61,8 +62,8 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
           }}
           sx={{
             ...SWITCH_BTN_SX,
-            ...(!isRTL && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }),
-            ...(isRTL && { borderTopRightRadius: 0, borderBottomRightRadius: 0 }),
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
             background: theme.palette.mode === 'light' ? '#fff' : theme.palette.background.paper,
           }}
         >

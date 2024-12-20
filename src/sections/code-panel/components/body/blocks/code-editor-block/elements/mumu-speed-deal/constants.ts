@@ -15,14 +15,14 @@ export const SPEED_DEAL_ACTION_FAB_PROPS = {
   },
 }
 
-export const BOX_PROPS = {
+export const getBoxProps = (theme: Theme) => ({
   display: 'flex',
   width: '60px',
   height: '60px',
-  pl: '20px',
-  background: 'top 0 left -2px / cover no-repeat url(/assets/code-panel/mumu.png)',
+  pr: '20px',
+  background: `top 0 ${theme.direction !== 'rtl' ? 'left' : 'right'} -2px / cover no-repeat url(/assets/code-panel/mumu.png)`,
   zIndex: '1051',
-}
+})
 
 export const getSpeedDealFabProps = (isSpeedDeal: boolean): Partial<FabProps> => ({
   sx: {

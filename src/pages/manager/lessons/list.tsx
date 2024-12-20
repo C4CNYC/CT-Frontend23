@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd'
-import { Box, Button, Container, useTheme } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
@@ -75,8 +75,11 @@ export default function LessonsListPage(): React.ReactElement {
   const router = useRouter()
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
+
+  const [lessons, setLessons] = useState<ILesson[]>([])
+
+  const userRole = useSelector((state) => state.global?.user?.role)
+
   const { filters, setFilter } = useFilters<ILessonSearchParams>(
     {
       module_id: '',
@@ -85,8 +88,6 @@ export default function LessonsListPage(): React.ReactElement {
     },
     FilterMode.global
   )
-
-  const userRole = useSelector((state) => state.global?.user?.role)
   const {
     data: ownLessonsData,
     isLoading: isOwnLessonDataLoading,
@@ -103,7 +104,6 @@ export default function LessonsListPage(): React.ReactElement {
   } = useGetAllAdminLessonsQuery(filters, {
     skip: userRole !== Role.Admin && userRole !== Role.SuperAdmin,
   })
-  const [lessons, setLessons] = useState<ILesson[]>([])
   const { data: propertyLocks } = useGetPropertiesQuery(
     {
       entityType: 'lesson',
@@ -111,6 +111,9 @@ export default function LessonsListPage(): React.ReactElement {
     },
     { skip: !lessons.length }
   )
+  const [updateModuleLesson] = useUpdateModuleLessonMutation()
+  const [createByCloningLesson] = useCreateByCloningLessonMutation()
+
   const data = userRole === Role.Admin || Role.SuperAdmin ? adminData : ownLessonsData
   const isLoading =
     userRole === Role.Admin || Role.SuperAdmin ? adminIsLoading : isOwnLessonDataLoading
@@ -128,10 +131,6 @@ export default function LessonsListPage(): React.ReactElement {
       refetchOwnLessons()
     }
   }
-
-  const [updateModuleLesson] = useUpdateModuleLessonMutation()
-  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
-    useCreateByCloningLessonMutation()
 
   const onDragEnd = useCallback(
     (result: DropResult): void => {
@@ -206,16 +205,7 @@ export default function LessonsListPage(): React.ReactElement {
             >
               <Button
                 variant='contained'
-                startIcon={
-                  <Iconify
-                    icon='eva:plus-fill'
-                    sx={{
-                      ...(isRTL && {
-                        ml: 2,
-                      }),
-                    }}
-                  />
-                }
+                startIcon={<Iconify icon='eva:plus-fill' />}
                 sx={{ mr: 2 }}
                 onClick={createByCloningLessonHandler}
               >

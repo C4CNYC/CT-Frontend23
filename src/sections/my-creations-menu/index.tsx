@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
-import { useTheme } from '@mui/system'
 import { useRouter } from 'next/router'
 
 import {
@@ -26,14 +25,12 @@ import { SelectTemplateDialog } from './select-template-dialog'
 
 export default function MyCreationsMenu(): React.ReactElement {
   const router = useRouter()
-  const theme = useTheme()
   const translate = useTranslate()
   const { themeLayout } = useSettingsContext()
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
   const isDesktop = useResponsive('up', 'md')
-  const isRTL = theme.direction === 'rtl'
 
   const [createLesson] = useCreateLessonMutation()
   const [createByCloningLesson] = useCreateByCloningLessonMutation()
@@ -133,11 +130,9 @@ export default function MyCreationsMenu(): React.ReactElement {
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
           <AiGenerateLessonDialog>
-            <MenuItem
-              sx={{ justifyContent: 'space-between', flexDirection: isRTL ? 'row-reverse' : 'row' }}
-            >
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
               {translate('sidebar_menu_my_creations_item_1')}
-              <ListItemIcon sx={{ pl: isRTL ? 0 : 2, mr: -2 }}>
+              <ListItemIcon sx={{ pl: 2, mr: -2 }}>
                 <Iconify
                   icon='mingcute:ai-line'
                   color='#FBDD3F'
@@ -146,16 +141,12 @@ export default function MyCreationsMenu(): React.ReactElement {
             </MenuItem>
           </AiGenerateLessonDialog>
           <SelectTemplateDialog>
-            <MenuItem sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
-              {' '}
-              {translate('sidebar_menu_my_creations_item_8')}
-            </MenuItem>
+            <MenuItem>{translate('sidebar_menu_my_creations_item_8')}</MenuItem>
           </SelectTemplateDialog>
           <MenuItem
             onClick={async () => {
               await createByCloningLessonHandler()
             }}
-            sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}
           >
             {translate('sidebar_menu_my_creations_item_2')}
           </MenuItem>
@@ -166,7 +157,6 @@ export default function MyCreationsMenu(): React.ReactElement {
               })
               handleClosePopover()
             }}
-            sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}
           >
             {translate('sidebar_menu_my_creations_item_3')}
           </MenuItem>
@@ -177,16 +167,13 @@ export default function MyCreationsMenu(): React.ReactElement {
               })
               handleClosePopover()
             }}
-            sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}
           >
             {translate('sidebar_menu_my_creations_item_4')}
           </MenuItem>
           <DiamondFeatureModal>
-            <MenuItem
-              sx={{ justifyContent: 'space-between', flexDirection: isRTL ? 'row-reverse' : 'row' }}
-            >
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
               {translate('sidebar_menu_my_creations_item_5')}
-              <ListItemIcon sx={{ pl: isRTL ? 0 : 2, mr: -2, ml: isRTL ? 2 : 0 }}>
+              <ListItemIcon sx={{ pl: 2, mr: -2 }}>
                 <Iconify
                   icon='ion:diamond-outline'
                   color='#43D4DD'
@@ -195,9 +182,7 @@ export default function MyCreationsMenu(): React.ReactElement {
             </MenuItem>
           </DiamondFeatureModal>
           <DiamondFeatureModal>
-            <MenuItem
-              sx={{ justifyContent: 'space-between', flexDirection: isRTL ? 'row-reverse' : 'row' }}
-            >
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
               {translate('sidebar_menu_my_creations_item_6')}
               <ListItemIcon
                 sx={{
@@ -213,13 +198,11 @@ export default function MyCreationsMenu(): React.ReactElement {
             </MenuItem>
           </DiamondFeatureModal>
           <DiamondFeatureModal>
-            <MenuItem
-              sx={{ justifyContent: 'space-between', flexDirection: isRTL ? 'row-reverse' : 'row' }}
-            >
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
               {translate('sidebar_menu_my_creations_item_7')}
               <ListItemIcon
                 sx={{
-                  pl: isRTL ? 0 : 2,
+                  pl: 2,
                   mr: -2,
                 }}
               >

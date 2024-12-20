@@ -1,7 +1,6 @@
 import ClearIcon from '@mui/icons-material/Clear'
 import { TextField, TextFieldProps, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { useTheme } from '@mui/system'
 import { Controller, useFormContext } from 'react-hook-form'
 
 type Props = TextFieldProps & {
@@ -14,16 +13,13 @@ export function RHFColorPicker({
   margin,
   ...other
 }: Props): React.ReactElement | null {
-  const theme = useTheme()
   const { control } = useFormContext()
-
-  const isRTL = theme.direction === 'rtl'
 
   const TransparentTextField = styled(TextField)<{ transparent: boolean }>(({ transparent }) => ({
     '& input[type="color"]': {
       backgroundColor: transparent ? 'transparent' : undefined, // Set transparent background if empty
       minHeight: '40px', // Adjust the height to make the color box bigger
-      padding: isRTL ? '8px 0 8px 0' : '8px 8px 8px 8px',
+      padding: '8px 8px 8px 8px',
       cursor: 'pointer',
       filter: transparent ? 'opacity(0.2)' : '',
     },
@@ -37,12 +33,7 @@ export function RHFColorPicker({
         <TransparentTextField
           {...field}
           InputLabelProps={{
-            sx: isRTL
-              ? {
-                  ml: 5,
-                  color: '#fff',
-                }
-              : { color: '#fff' },
+            sx: { color: '#fff' },
           }}
           fullWidth
           value={field.value || ''} // Set empty string if value is null or undefined

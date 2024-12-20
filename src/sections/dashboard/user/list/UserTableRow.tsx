@@ -13,7 +13,6 @@ import {
   TableRow,
   Tooltip,
   Typography,
-  useTheme,
 } from '@mui/material'
 import NextLink from 'next/link'
 
@@ -57,8 +56,6 @@ export default function UserTableRow({
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
 
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
@@ -85,7 +82,6 @@ export default function UserTableRow({
           <Checkbox
             checked={selected}
             onClick={onSelectRow}
-            sx={{ ...(isRTL && { mr: 1 }) }}
           />
         </TableCell>
         <TableCell>
@@ -201,7 +197,7 @@ export default function UserTableRow({
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow={isRTL ? 'left-center' : 'right-top'}
+        arrow={'right-top'}
         sx={{ width: 140 }}
       >
         <MenuItem
@@ -211,10 +207,7 @@ export default function UserTableRow({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify
-            icon='eva:trash-2-outline'
-            sx={{ ...(isRTL && { ml: 2 }) }}
-          />
+          <Iconify icon='eva:trash-2-outline' />
           {translate('actions_delete')}
         </MenuItem>
 
@@ -224,10 +217,7 @@ export default function UserTableRow({
             handleClosePopover()
           }}
         >
-          <Iconify
-            icon='eva:edit-fill'
-            sx={{ ...(isRTL && { ml: 2 }) }}
-          />
+          <Iconify icon='eva:edit-fill' />
           {translate('actions_edit')}
         </MenuItem>
       </MenuPopover>

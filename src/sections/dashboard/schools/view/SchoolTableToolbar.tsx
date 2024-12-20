@@ -1,4 +1,4 @@
-import { Box, Button, InputAdornment, Stack, TextField, useTheme } from '@mui/material'
+import { Box, Button, InputAdornment, Stack, TextField } from '@mui/material'
 
 import { Iconify } from '@/components/iconify'
 
@@ -16,8 +16,6 @@ export default function SchoolTableToolbar({
   onResetFilter,
 }: Props): React.ReactElement | null {
   const { translate } = useLocales()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
 
   return (
     <Stack
@@ -55,16 +53,7 @@ export default function SchoolTableToolbar({
           color='error'
           sx={{ flexShrink: 0 }}
           onClick={onResetFilter}
-          startIcon={
-            <Iconify
-              icon='eva:trash-2-outline'
-              sx={{
-                ...(isRTL && {
-                  ml: 2,
-                }),
-              }}
-            />
-          }
+          startIcon={<Iconify icon='eva:trash-2-outline' />}
         >
           {`${translate('actions_clear')}`}
         </Button>

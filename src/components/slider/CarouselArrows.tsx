@@ -1,5 +1,5 @@
 import { IconButton, IconButtonProps, Stack, StackProps } from '@mui/material'
-import { alpha, styled, useTheme } from '@mui/material/styles'
+import { alpha, styled } from '@mui/material/styles'
 
 import { IconifyProps } from '@/components'
 
@@ -66,10 +66,6 @@ export default function CarouselArrows({
   sx,
   ...other
 }: Props): React.ReactElement {
-  const theme = useTheme()
-
-  const isRTL = theme.direction === 'rtl'
-
   const hasChildren = !!children
 
   if (hasChildren) {
@@ -89,10 +85,7 @@ export default function CarouselArrows({
             ...leftButtonProps?.sx,
           }}
         >
-          <LeftIcon
-            icon={icon}
-            isRTL={isRTL}
-          />
+          <LeftIcon icon={icon} />
         </StyledIconButton>
 
         {children}
@@ -108,10 +101,7 @@ export default function CarouselArrows({
             ...rightButtonProps?.sx,
           }}
         >
-          <RightIcon
-            icon={icon}
-            isRTL={isRTL}
-          />
+          <RightIcon icon={icon} />
         </StyledIconButton>
       </Stack>
     )
@@ -131,10 +121,7 @@ export default function CarouselArrows({
         onClick={onPrevious}
         {...leftButtonProps}
       >
-        <LeftIcon
-          icon={icon}
-          isRTL={isRTL}
-        />
+        <LeftIcon icon={icon} />
       </StyledIconButton>
 
       <StyledIconButton
@@ -143,10 +130,7 @@ export default function CarouselArrows({
         onClick={onNext}
         {...rightButtonProps}
       >
-        <RightIcon
-          icon={icon}
-          isRTL={isRTL}
-        />
+        <RightIcon icon={icon} />
       </StyledIconButton>
     </Stack>
   )

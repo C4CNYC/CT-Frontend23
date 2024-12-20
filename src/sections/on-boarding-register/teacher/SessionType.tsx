@@ -28,7 +28,6 @@ export function SessionType({
   const translate = useTranslate()
 
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
-  const isRTL = theme.direction === 'rtl'
 
   return (
     <Stack
@@ -57,7 +56,7 @@ export function SessionType({
           </Box>
         </Badge>
       </Tooltip>
-      <Stack sx={{ pl: 2, pr: isRTL ? 3 : 0 }}>
+      <Stack sx={{ pl: 2 }}>
         {disabled || isNew ? (
           <Badge
             sx={{

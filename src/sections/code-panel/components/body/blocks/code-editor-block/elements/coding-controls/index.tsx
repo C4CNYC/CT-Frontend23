@@ -1,6 +1,6 @@
-import { type FC, memo } from 'react'
+import { type FC, memo, useMemo } from 'react'
 
-import { Box, Button, Divider } from '@mui/material'
+import { Box, Button, Divider, useTheme } from '@mui/material'
 import { styled } from '@mui/system'
 import { AiOutlineCopy } from '@react-icons/all-files/ai/AiOutlineCopy'
 import { BsClipboard } from '@react-icons/all-files/bs/BsClipboard'
@@ -29,7 +29,7 @@ import {
   SYMBOL_BTN_BRACKETS_SX,
   SYMBOL_BTN_PB,
   SYMBOL_BTN_PT,
-  SYMBOL_BTN_TOOL,
+  getSymbolBtnToolSx,
 } from './constants'
 import SettingDrawer from './setting-drawer'
 
@@ -59,6 +59,8 @@ export const CodingSymbols: FC<CodingSymbolsProps> = memo(
     const eventHandler = (symbol: string) => {
       window.dispatchEvent(pasteSymbolEvent({ detail: { symbol } }))
     }
+    const theme = useTheme()
+    const symbolBtnToolSx = useMemo(() => getSymbolBtnToolSx(theme), [theme])
 
     return (
       <Box sx={CODING_SYMBOLS_BOX_SX}>
@@ -228,7 +230,7 @@ export const CodingSymbols: FC<CodingSymbolsProps> = memo(
           onClick={() => {
             symbolsHandler()
           }}
-          sx={SYMBOL_BTN_TOOL}
+          sx={symbolBtnToolSx}
         >
           <TbTool
             size='20px'
@@ -242,6 +244,8 @@ export const CodingSymbols: FC<CodingSymbolsProps> = memo(
 // eslint-disable-next-line react/display-name
 export const CodingTools: FC<CodingSymbolsProps> = memo(
   ({ symbolsHandler }: CodingSymbolsProps) => {
+    const theme = useTheme()
+    const symbolBtnToolSx = useMemo(() => getSymbolBtnToolSx(theme), [theme])
     return (
       <Box sx={CODING_SYMBOLS_BOX_SX}>
         <SymbolBtn
@@ -371,7 +375,7 @@ export const CodingTools: FC<CodingSymbolsProps> = memo(
           onClick={() => {
             symbolsHandler()
           }}
-          sx={SYMBOL_BTN_TOOL}
+          sx={symbolBtnToolSx}
         >
           <TbBraces
             size='20px'

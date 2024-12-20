@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
-import { useTheme } from '@mui/system'
 
 import { Iconify, RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
@@ -21,12 +20,9 @@ export default function AddTeacher({
   isSubmitSuccessful,
   nextStep,
 }: Props): React.ReactElement {
-  const theme = useTheme()
   const translate = useTranslate()
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
-
-  const isRTL = theme.direction === 'rtl'
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -67,9 +63,6 @@ export default function AddTeacher({
           label={translate('password')}
           type={showPassword ? 'text' : 'password'}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
-          InputLabelProps={{
-            style: { marginLeft: isRTL ? '35px' : 0 },
-          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>

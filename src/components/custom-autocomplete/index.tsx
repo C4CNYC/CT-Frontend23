@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { useTheme } from '@mui/material'
 import Autocomplete, {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -43,8 +42,6 @@ export function CustomAutocomplete({
     setFilter,
     resetFilters: resetClassFilter,
   } = useFilters<ClassSearchParams>({ name: '' })
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
   const translate = useTranslate()
   const { data: clases } = useGetClassesQuery({ schoolId, ...filters }, { skip: !schoolId })
 
@@ -119,16 +116,7 @@ export function CustomAutocomplete({
         color='error'
         sx={{ flexShrink: 0, marginLeft: 2, px: 2 }}
         onClick={onReset}
-        startIcon={
-          <Iconify
-            icon='eva:trash-2-outline'
-            sx={{
-              ...(isRTL && {
-                ml: 2,
-              }),
-            }}
-          />
-        }
+        startIcon={<Iconify icon='eva:trash-2-outline' />}
       >
         {translate('actions_clear')}
       </Button>

@@ -22,18 +22,20 @@ import JoinClassModal from './JoinTribeModal'
 import TribeListItem from './TribesListItem'
 
 export default function MenuTribesList(): React.ReactElement {
+  const { query } = useRouter()
   const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
   const { themeLayout } = useSettingsContext()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const isNavMini = themeLayout === 'mini' && !isMobile
   const translate = useTranslate()
+
   const profile = useSelector((state) => state.global.user)
 
   const [containerHeignt, setContainerHeignt] = useState('auto')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
   const { data, isLoading } = useGetStudentClassesQuery({}, { skip: !profile })
-  const { query } = useRouter()
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const isNavMini = themeLayout === 'mini' && !isMobile
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -50,6 +52,7 @@ export default function MenuTribesList(): React.ReactElement {
       setContainerHeignt(data.data.length < 4 ? 'auto' : '150px')
     }
   }, [isLoading])
+
   return (
     <Stack
       sx={{ width: '100%' }}
@@ -58,8 +61,7 @@ export default function MenuTribesList(): React.ReactElement {
       {!isNavMini && (
         <Divider
           sx={{
-            ...(theme.direction === 'rtl' && { mr: 2 }),
-            ...(theme.direction !== 'rtl' && { ml: 2 }),
+            ml: 2,
           }}
         />
       )}
@@ -94,7 +96,7 @@ export default function MenuTribesList(): React.ReactElement {
           <>
             <Button
               onClick={handleOpenPopover}
-              sx={(theme) => ({ ...getAddTribeButtonSx(theme, isNavMini, isRTL) })}
+              sx={(theme) => ({ ...getAddTribeButtonSx(theme) })}
               className='studentJoinStep3'
             >
               <FaPlus size={20} />

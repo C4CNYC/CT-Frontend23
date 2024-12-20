@@ -36,14 +36,13 @@ interface IClassInfoTable {
 export default function ClassInfoTable({ classData }: IClassInfoTable) {
   const theme = useTheme()
   const translate = useTranslate()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const { user } = useAuthContext()
 
   const [value, setValue] = useState(0)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const isStudent = user?.role === Role.Student
-  const isRTL = theme.direction === 'rtl'
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -94,26 +93,26 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             label={!isMobile && translate('quests')}
             icon={<CiMountain1 size={20} />}
             {...customTabProps(0)}
-            sx={{ fontSize: '1.1rem', gap: isRTL ? 0.5 : 0 }}
+            sx={{ fontSize: '1.1rem' }}
           />
           {!isStudent ? (
             <Tab
               label={!isMobile && translate('members')}
               icon={<IoPeopleOutline size={20} />}
-              sx={{ fontSize: '1.1rem', gap: isRTL ? 0.5 : 0 }}
+              sx={{ fontSize: '1.1rem' }}
               {...customTabProps(1)}
             />
           ) : null}
           <Tab
             label={!isMobile && translate('details')}
             icon={<IoSettingsOutline size={20} />}
-            sx={{ fontSize: '1.1rem', gap: isRTL ? 0.5 : 0 }}
+            sx={{ fontSize: '1.1rem' }}
             {...customTabProps(isStudent ? 1 : 2)}
           />
           <Tab
             label={!isMobile && translate('progress')}
             icon={<GiProgression size={20} />}
-            sx={{ fontSize: '1.1rem', gap: isRTL ? 0.5 : 0 }}
+            sx={{ fontSize: '1.1rem' }}
             {...customTabProps(isStudent ? 2 : 3)}
           />
         </Tabs>
@@ -126,21 +125,6 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             gap: 2,
           }}
         >
-          {/* <Link
-            noWrap
-            href={STUDENT_PATH_DASHBOARD.gallery.root}
-            variant="body2"
-            underline="none"
-            sx={GALLERY_SX}
-          >
-            <Iconify icon="solar:gallery-wide-broken" width={20} />
-            {!isMobile && (
-              <Typography color="#637381" fontSize="1.1rem" mr="10px">
-                {translate("gallery")}
-                <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
-              </Typography>
-            )}
-          </Link> */}
           <RoleBasedGuard roles={[Role.Owner, Role.SuperAdmin, Role.Admin, Role.Manager]}>
             <Button
               onClick={handleOpenPopover}
@@ -211,7 +195,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           underline='none'
           color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
         >
-          <MenuItem sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
+          <MenuItem>
             <SiGoogleclassroom size={10} />
             {translate('assign_from_catalog')}
           </MenuItem>
@@ -223,7 +207,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             underline='none'
             color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
           >
-            <MenuItem sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
+            <MenuItem>
               <AiOutlineFundProjectionScreen size={20} />
               {translate('create_popup_lesson')}
             </MenuItem>
@@ -236,7 +220,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             underline='none'
             color={theme.palette.mode === 'dark' ? '#fff' : 'initial'}
           >
-            <MenuItem sx={{ flexDirection: isRTL ? 'row-reverse' : 'row' }}>
+            <MenuItem>
               <AiOutlineFundProjectionScreen size={20} />
               {translate('assign_my_creations')}
             </MenuItem>
@@ -245,24 +229,4 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
       </MenuPopover>
     </Stack>
   )
-}
-
-const BADGE_SX = {
-  '& .MuiBadge-badge': {
-    left: 55,
-    top: 28,
-    padding: 0,
-    height: 14,
-    width: '85px',
-  },
-}
-
-const GALLERY_SX = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 1,
-  color: 'inherit',
-  maxWidth: 360,
-  ml: 3.25,
-  justifyContent: 'center',
 }

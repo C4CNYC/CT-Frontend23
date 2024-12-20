@@ -33,8 +33,6 @@ export default function SingInPassword({
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [isDisabledBtn, setIsDisabletBtn] = useState<boolean>(true)
 
-  const isRTL = theme.direction === 'rtl'
-
   if (isError) {
     if (nextStep) {
       nextStep()
@@ -79,9 +77,6 @@ export default function SingInPassword({
           type={showPassword ? 'text' : 'password'}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           inputRef={(input) => input && isActive && input.focus()}
-          InputLabelProps={{
-            style: { marginLeft: isRTL ? '35px' : 0 },
-          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>

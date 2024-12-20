@@ -27,11 +27,8 @@ const StyledInfo = styled('div')(({ theme }) => ({
   position: 'absolute',
   marginTop: theme.spacing(5),
   [theme.breakpoints.up('md')]: {
-    ...(theme.direction === 'rtl' && { left: 'auto', rigth: theme.spacing(3) }),
-    ...(theme.direction !== 'rtl' && {
-      right: 'auto',
-      left: theme.spacing(3),
-    }),
+    right: 'auto',
+    left: theme.spacing(3),
     display: 'flex',
     alignItems: 'center',
     bottom: theme.spacing(3),
@@ -62,14 +59,12 @@ export default function ProfileCover({
             borderColor: 'common.white',
             width: { xs: 80, md: 128 },
             height: { xs: 80, md: 128 },
-            ...(theme.direction === 'rtl' && { mr: 2 }),
           }}
         />
 
         <Box
           sx={{
-            ...(theme.direction === 'rtl' && { mr: { md: 3 } }),
-            ...(theme.direction !== 'rtl' && { ml: { md: 3 } }),
+            ml: { md: 3 },
             mt: { xs: 1, md: 0 },
             color: 'common.white',
             textAlign: { xs: 'center', md: 'left' },

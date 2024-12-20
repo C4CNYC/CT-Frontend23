@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Button, useTheme } from '@mui/material'
+import { Button } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -42,11 +42,11 @@ export default function UpdateModalSkills({
     description: '',
   },
 }: Props): React.ReactElement {
+  const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
   const [createSkill, { isLoading: creatLoading }] = useCreateSkillMutation()
   const [updateSkill, { isLoading: updateLoading }] = useUpdateSkillMutation()
-  const { enqueueSnackbar } = useSnackbar()
-  const translate = useTranslate()
-  const theme = useTheme()
 
   const [open, setOpen] = useState(false)
   const handleOpen = (): void => {
@@ -61,6 +61,7 @@ export default function UpdateModalSkills({
   })
 
   const { handleSubmit } = methods
+
   const onSubmit = async (data: IntegrationForm): Promise<void> => {
     try {
       if (id) {
@@ -124,11 +125,6 @@ export default function UpdateModalSkills({
               variant='outlined'
               color='inherit'
               onClick={handleClose}
-              sx={{
-                ...(theme.direction === 'rtl' && {
-                  ml: 2,
-                }),
-              }}
             >
               {translate('actions_cancel')}
             </Button>

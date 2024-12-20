@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, DialogActions, Grid, Tab, Tabs, Typography, useTheme } from '@mui/material'
+import { Box, Button, DialogActions, Grid, Tab, Tabs, Typography } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -98,8 +98,6 @@ export default function CreateModuleDialog({
 }: Prop): React.ReactElement {
   const { query } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
-  const theme = useTheme()
-  const isRTL = theme.direction === 'rtl'
 
   const [open, setOpen] = useState(false)
   const [value, setValue] = React.useState(0)
@@ -233,20 +231,10 @@ export default function CreateModuleDialog({
                   <Tab
                     label={translate('lessons')}
                     {...a11yProps(1)}
-                    sx={{
-                      ...(isRTL && {
-                        ml: 3,
-                      }),
-                    }}
                   />
                   <Tab
                     label={translate('settings')}
                     {...a11yProps(2)}
-                    sx={{
-                      ...(isRTL && {
-                        ml: 3,
-                      }),
-                    }}
                   />
                 </Tabs>
               ) : null}

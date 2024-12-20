@@ -87,64 +87,63 @@ const Navigation: FC<INavigation> = ({
   return (
     <Box
       sx={BOX_SX}
-      dir='ltr'
+      className='controls'
+      dir={theme.direction}
     >
-      <div className='controls'>
-        <Box sx={nestedBox}>
-          <LessonFeedback lessonName={lessonName}>
-            <Button sx={FEEDBACK_BTN_SX}>
-              <FeedbackIcon
-                size={30}
-                color={'#91A5B1'}
-              />
-            </Button>
-          </LessonFeedback>
-          <NavigationElement
-            sx={stylePrev}
-            disabled={!hasPrev}
-            direction='prev'
-            onClick={onPrev}
-          />
+      <Box sx={nestedBox}>
+        <LessonFeedback lessonName={lessonName}>
+          <Button sx={FEEDBACK_BTN_SX}>
+            <FeedbackIcon
+              size={30}
+              color={'#91A5B1'}
+            />
+          </Button>
+        </LessonFeedback>
+        <NavigationElement
+          sx={stylePrev}
+          disabled={!hasPrev}
+          direction='prev'
+          onClick={onPrev}
+        />
 
-          <NavigationSpeedDial stepHasValidation={stepHasValidation} />
+        <NavigationSpeedDial stepHasValidation={stepHasValidation} />
 
-          <Tooltip
-            title={
-              stepHasValidation && !canMoveNext && !completedSlides[slideIndex] ? (
-                <Typography sx={TOOLTIP_CONTENT_SX}>{translate('btn_group_tooltip')}</Typography>
-              ) : (
-                ''
-              )
-            }
-            placement='top'
-            sx={{
-              width: 100,
-              textAlign: 'center',
-            }}
-          >
-            <Box sx={tooltipWrapperSx}>
-              <NavigationElement
-                sx={styleNext}
-                onClick={() => {
-                  onNext()
-                }}
-                backType={btnNext}
-              >
-                {stepHasValidation && !canMoveNext && !completedSlides[slideIndex] ? (
-                  <Button
-                    onClick={() => {
-                      onNext(true)
-                    }}
-                    sx={stylesSkip(theme)}
-                  >
-                    {translate('btn_group_skip')}
-                  </Button>
-                ) : null}
-              </NavigationElement>
-            </Box>
-          </Tooltip>
-        </Box>
-      </div>
+        <Tooltip
+          title={
+            stepHasValidation && !canMoveNext && !completedSlides[slideIndex] ? (
+              <Typography sx={TOOLTIP_CONTENT_SX}>{translate('btn_group_tooltip')}</Typography>
+            ) : (
+              ''
+            )
+          }
+          placement='top'
+          sx={{
+            width: 100,
+            textAlign: 'center',
+          }}
+        >
+          <Box sx={tooltipWrapperSx}>
+            <NavigationElement
+              sx={styleNext}
+              onClick={() => {
+                onNext()
+              }}
+              backType={btnNext}
+            >
+              {stepHasValidation && !canMoveNext && !completedSlides[slideIndex] ? (
+                <Button
+                  onClick={() => {
+                    onNext(true)
+                  }}
+                  sx={stylesSkip(theme)}
+                >
+                  {translate('btn_group_skip')}
+                </Button>
+              ) : null}
+            </NavigationElement>
+          </Box>
+        </Tooltip>
+      </Box>
     </Box>
   )
 }

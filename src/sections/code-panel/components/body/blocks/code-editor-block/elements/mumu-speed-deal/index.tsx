@@ -1,6 +1,6 @@
 import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography } from '@mui/material'
+import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography, useTheme } from '@mui/material'
 import { useSearchParams } from 'next/navigation'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -15,7 +15,7 @@ import TipsPopover from '../tips-popover'
 
 import { IActionDialogType, actions, actionsTips } from './config'
 import {
-  BOX_PROPS,
+  getBoxProps,
   SPEED_DEAL_ACTION_FAB_PROPS,
   getSpeedDealFabProps,
   getSpeedDealStyles,
@@ -27,18 +27,21 @@ interface MumuSpeedDialProps {
 }
 
 const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
+  const translate = useTranslate()
   const isDesktop = useIsDesktop()
-  const [actionsList, setActionsList] = useState<Array<Record<string, any>>>(actions)
+  const searchParams = useSearchParams()
+  const theme = useTheme()
+
   const popperRef = useRef<null | HTMLElement>(null)
+  const [actionsList, setActionsList] = useState<Array<Record<string, any>>>(actions)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [openPoper, setOpenPoper] = useState<boolean>(false)
   const [speedDeal, setSpeedDial] = useState<boolean>(false)
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null)
-  const translate = useTranslate()
+
   let lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   let courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const profile = useSelector((state) => state.global.user)
-  const searchParams = useSearchParams()
 
   if (!lessonId) {
     lessonId = searchParams.get('lessonId') || undefined
@@ -69,6 +72,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
 
   const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal])
   const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop])
+  const boxPropsSx = useMemo(() => getBoxProps(theme), [theme])
 
   const openSpeedDial = () => {
     setSpeedDial(true)
@@ -126,7 +130,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
           direction='up'
           icon={
             <Box
-              sx={BOX_PROPS}
+              sx={boxPropsSx}
               ref={popperRef}
             />
           }
@@ -159,19 +163,10 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
           })}
         </SpeedDial>
       </Tooltip>
-      {/* commented before V1 release */}
-      {/* <TipsMobileDialog
-        open={dialogType === IActionDialogType.tips}
-        onClose={handleCloseDialog}
-        isLoading={isLoading}
-        tips={[...(data?.tips ?? []), ...slideTips]}
-      /> */}
-
       <SolutionMobileDialog
         open={dialogType === IActionDialogType.solution}
         onClose={handleCloseDialog}
       />
-
       <UnstuckMobileDialog
         open={dialogType === IActionDialogType.stuck}
         onClose={handleCloseDialog}

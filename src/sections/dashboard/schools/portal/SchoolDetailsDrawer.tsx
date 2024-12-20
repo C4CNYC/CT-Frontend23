@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Divider, Drawer, DrawerProps, Stack, Typography, useTheme } from '@mui/material'
+import { Divider, Drawer, DrawerProps, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
 
 import { countries } from '@/assets/data'
@@ -24,6 +24,8 @@ export default function SchoolDetailsDrawer({
   onDelete,
   ...other
 }: Props): React.ReactElement | null {
+  const translate = useTranslate()
+
   const countryName = React.useMemo(() => {
     const country = countries.find(
       (country) => country?.code?.toLowerCase() === item?.country?.toLowerCase()
@@ -32,15 +34,12 @@ export default function SchoolDetailsDrawer({
     return ''
   }, [item])
 
-  const translate = useTranslate()
-  const theme = useTheme()
-
   return (
     <>
       <Drawer
         open={open}
         onClose={onClose}
-        anchor={theme.direction === 'rtl' ? 'left' : 'right'}
+        anchor={'right'}
         BackdropProps={{
           invisible: true,
         }}

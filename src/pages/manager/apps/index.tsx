@@ -9,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  useTheme,
 } from '@mui/material'
 import { Container, Stack } from '@mui/system'
 import { format } from 'date-fns'
@@ -42,14 +41,14 @@ import { useTranslate } from '@/utils/translateHelper'
 AppsPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function AppsPage(): React.ReactElement {
+  const translate = useTranslate()
   const { dense, onChangeDense } = useTable()
   const { enqueueSnackbar } = useSnackbar()
   const { themeStretch } = useSettingsContext()
   const { filters, setFilter } = useFilters({ name: '' })
+
   const { data, isLoading } = useGetIntegrationsListQuery({ ...filters })
   const [removeIntegration] = useDeleteIntegrationMutation()
-  const translate = useTranslate()
-  const theme = useTheme()
 
   const onDelete = async (id: string): Promise<void> => {
     try {
@@ -83,16 +82,7 @@ export default function AppsPage(): React.ReactElement {
               <ModalIntegration>
                 <Button
                   variant='contained'
-                  startIcon={
-                    <Iconify
-                      icon='eva:plus-fill'
-                      sx={{
-                        ...(theme.direction === 'rtl' && {
-                          ml: 2,
-                        }),
-                      }}
-                    />
-                  }
+                  startIcon={<Iconify icon='eva:plus-fill' />}
                 >
                   {translate('integrations_add_int')}
                 </Button>

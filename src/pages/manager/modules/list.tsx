@@ -1,14 +1,11 @@
-import { Box, Button, Container, useTheme } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import Head from 'next/head'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import { useIsAdmin } from '@/lib/use-is-admin'
-import {
-  useGetAdminModulesQuery,
-  // useGetAdminOwnModulesQuery,
-} from '@/redux/services/admin/modules-admin'
+import { useGetAdminModulesQuery } from '@/redux/services/admin/modules-admin'
 import { IModulesSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetOwnModulesQuery } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -24,10 +21,10 @@ import FilterModules from './filter'
 ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function ModulesListPage(): React.ReactElement | string {
-  const theme = useTheme()
   const translate = useTranslate()
   const { themeStretch } = useSettingsContext()
   const { isAdmin } = useIsAdmin()
+
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
       name: '',
@@ -35,7 +32,6 @@ export default function ModulesListPage(): React.ReactElement | string {
     },
     FilterMode.global
   )
-
   const {
     data: ownData,
     isLoading: isOwnLoading,
@@ -50,7 +46,6 @@ export default function ModulesListPage(): React.ReactElement | string {
     refetch: adminRefetch,
   } = useGetAdminModulesQuery(filters, { skip: !isAdmin })
 
-  const isRTL = theme.direction === 'rtl'
   const data = isAdmin ? adminData : ownData
   const isLoading = isAdmin ? adminIsLoading : isOwnLoading
   const isFetching = isAdmin ? adminFetching : isOwnFetching
@@ -95,16 +90,7 @@ export default function ModulesListPage(): React.ReactElement | string {
             <CreateModuleDialog refetch={refetch}>
               <Button
                 variant='contained'
-                startIcon={
-                  <Iconify
-                    icon='eva:plus-fill'
-                    sx={{
-                      ...(isRTL && {
-                        ml: 2,
-                      }),
-                    }}
-                  />
-                }
+                startIcon={<Iconify icon='eva:plus-fill' />}
               >
                 {translate('modules_create_module')}
               </Button>

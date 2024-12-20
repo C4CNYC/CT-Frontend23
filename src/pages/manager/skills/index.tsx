@@ -11,7 +11,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  useTheme,
 } from '@mui/material'
 import { Stack } from '@mui/system'
 import Container from '@mui/system/Container'
@@ -43,14 +42,14 @@ Skills.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dashbo
 
 export default function Skills(): React.ReactElement {
   const { dense, onChangeDense } = useTable()
-
   const { enqueueSnackbar } = useSnackbar()
   const { themeStretch } = useSettingsContext()
-  const { filters, setFilter } = useFilters({ name: '' })
   const translate = useTranslate()
+
+  const { filters, setFilter } = useFilters({ name: '' })
+
   const { data, isLoading } = useGetSkillQuery({ ...filters })
   const [removeSkill] = useRemoveSkillMutation()
-  const theme = useTheme()
 
   const onDelete = async (id: string): Promise<void> => {
     try {
@@ -84,16 +83,7 @@ export default function Skills(): React.ReactElement {
               <UpdateModalSkills>
                 <Button
                   variant='contained'
-                  startIcon={
-                    <Iconify
-                      icon='eva:plus-fill'
-                      sx={{
-                        ...(theme.direction === 'rtl' && {
-                          ml: 2,
-                        }),
-                      }}
-                    />
-                  }
+                  startIcon={<Iconify icon='eva:plus-fill' />}
                 >
                   {translate('skills')}
                 </Button>
