@@ -49,10 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           imageData = Buffer.from(await imageResponse.arrayBuffer())
           cache.set(cacheKey, imageData)
         }
-      } catch (fetchError) {
-        // eslint-disable-next-line no-console
-        console.log('fetchError', fetchError)
-      }
+      } catch (fetchError) {}
     }
 
     if (!imageData && !cachedData) {
