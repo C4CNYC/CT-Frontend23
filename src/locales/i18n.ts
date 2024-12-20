@@ -11,6 +11,7 @@ import enLocales from './langs/en'
 import esLocales from './langs/es'
 import frLocales from './langs/fr'
 import ptLocales from './langs/pt'
+import trLocales from './langs/tr'
 // import vnLocales from './langs/vn'
 
 let lng = defaultLang.value
@@ -33,6 +34,7 @@ i18n
       ar: { translations: arLocales },
       es: { translations: esLocales },
       pt: { translations: ptLocales },
+      tr: { translations: trLocales },
     },
     lng,
     fallbackLng: defaultLang.value,
