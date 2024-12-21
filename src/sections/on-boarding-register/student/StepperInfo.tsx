@@ -15,6 +15,7 @@ import {
   schort_month,
   years_list,
 } from '@root/src/assets/data/time-data'
+import { STUDENT_PATH_PAGE } from '@root/src/routes/student.paths'
 
 import { styledRegisterInput } from '../styles'
 import { SUBMIT_BTN_SX } from '../teacher/constants'
@@ -26,7 +27,7 @@ interface FormValueProps {
 }
 
 export default function StepperInfo(): React.ReactElement {
-  const { reload } = useRouter()
+  const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [updateUser] = useUpdateStudentProfileMutation()
   const translate = useTranslate()
@@ -48,7 +49,7 @@ export default function StepperInfo(): React.ReactElement {
       // country: data.country ? data.country.toLowerCase() : undefined,
       // birthDate: data.birthDate,
       // }).unwrap()
-      reload()
+      router.push(STUDENT_PATH_PAGE.home)
     } catch (error: any) {
       enqueueSnackbar(error.message, { variant: 'error' })
     }
