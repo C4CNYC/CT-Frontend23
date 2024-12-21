@@ -33,6 +33,12 @@ export const allLangs = [
     systemValue: arEG,
     icon: '/assets/icons/flags/ic_flag_sa.svg',
   },
+  {
+    label: 'Türkçe ',
+    value: 'tr',
+    systemValue: arEG,
+    icon: '/assets/icons/flags/ic_flag_tr.svg',
+  },
 ]
 
 export const defaultLang = allLangs[0] // English
