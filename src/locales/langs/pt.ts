@@ -479,7 +479,9 @@ const pt = {
     'Fizemos assim para que você possa começar qualquer lição a qualquer momento. 👀 🤩',
   lesson_to_lesson_code_copying_subtitle_2: `Mas se você quiser que seu código especial, com todas as suas personalizações, seja passado automaticamente, você precisa concluir pelo menos 90%.`,
   lesson_to_lesson_code_copying_subtitle_3: `Mas não se preocupe. Qualquer escolha que você fizer está ótima. Desde que você continue codificando. 🙌 Yay!`,
-
+  lesson_catalog_dialog_title: `Olá, estamos construindo um projeto juntos. 
+  Pegamos seu código da lição anterior para 
+  que você possa continuar construindo.`,
   // Modules pages
   modules: 'Módulos',
   module: 'Módulo',

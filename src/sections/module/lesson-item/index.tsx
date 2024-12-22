@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Box, Button, Collapse, Link, Stack, Typography, useMediaQuery } from '@mui/material'
+import { Button, Collapse, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
 import { GoTriangleDown } from '@react-icons/all-files/go/GoTriangleDown'
 import { GoTriangleUp } from '@react-icons/all-files/go/GoTriangleUp'
-import { HiLockClosed } from '@react-icons/all-files/hi2/HiLockClosed'
-import { TbPlayerPlay } from '@react-icons/all-files/tb/TbPlayerPlay'
-import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
@@ -20,18 +17,11 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import RocketIcon from '../icons/RocketIcon'
 
-import {
-  DURATION_SX,
-  LINK_BTN_SX,
-  getLockedBtnSx,
-  LOCKED_BTN_SX,
-  MODE_TITLE_SX,
-  SEE_MORE_SX,
-  getStartLinkSx,
-  getLessonSx,
-} from './constants'
+import { DURATION_SX, MODE_TITLE_SX, SEE_MORE_SX, getLessonSx } from './constants'
 import LessonDialog from './LessonDialog'
 import TrainingProgress from './LessonProgress'
+import LessonStartButton from './LessonStartButton'
+import LockedStartButton from './LockedStartButton'
 
 interface ILessonItemProps {
   lesson: ILesson
@@ -55,7 +45,6 @@ export default function LessonItem({
   const theme = useTheme()
 
   const [openDetails, setOpenDetails] = useState(false)
-  const [open, setOpen] = useState(false)
   const [maxDesc, setMaxDesc] = useState(50)
   const descRef = useRef<HTMLElement | null>(null)
 
@@ -64,14 +53,6 @@ export default function LessonItem({
   const isLastLessonInProgress = lastLessonProgress <= 90
   const isTablet = useMediaQuery(theme.breakpoints.up('xl'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
-
-  const openDialog = () => {
-    setOpen(true)
-  }
-
-  const closeDialog = () => {
-    setOpen(false)
-  }
 
   const fetchCodeFromPrevLesson = () => {
     dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
@@ -142,14 +123,15 @@ export default function LessonItem({
               }}
               sx={SEE_MORE_SX}
             >
-              See more {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
+              {translate('actions_see_more')} {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
             </Button>
           </>
         ) : null}
+
         <Stack
           direction='row'
           justifyContent='space-between'
-          alignItems='flex-end'
+          alignItems='end'
         >
           <Stack
             direction='row'
@@ -174,100 +156,40 @@ export default function LessonItem({
               20 mins
             </Typography>
           </Stack>
-        </Stack>
-        {!locked ? (
-          !lesson.progress && index !== 0 && isLastLessonInProgress ? (
-            <>
-              <Box
-                sx={getLockedBtnSx()}
-                onClick={async () => {
-                  openDialog()
-                }}
-              >
-                <Typography variant='h5'>{translate('actions_start')}</Typography>
-                <Box sx={LOCKED_BTN_SX}>
-                  <HiLockClosed
-                    size={30}
-                    style={{ color: '#C4CDD5' }}
-                  />
-                </Box>
-              </Box>
+          {!locked ? (
+            !lesson.progress && index !== 0 && isLastLessonInProgress ? (
               <CatalogLessonDialog
-                open={open}
-                confirmText={'OK'}
-                closeDialog={closeDialog}
+                confirmText={translate('actions_ok')}
                 confirmClick={fetchCodeFromPrevLesson}
-                title='Hey, we’re building a project together.
-                        So pulled your code from previous lesson, 
-                        so that you can keep building'
-              />
-            </>
-          ) : (
-            <>
-              <Link
-                component={NextLink}
-                href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+                title={translate('lesson_catalog_dialog_title')}
+              >
+                <LockedStartButton />
+              </CatalogLessonDialog>
+            ) : (
+              <LessonStartButton
+                customHref={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
                   courseId: courseId as string,
                   unitId,
                   lessonId: lesson.id,
                 })}
-                underline='none'
-                sx={getStartLinkSx()}
-              >
-                <Typography variant='h5'> {translate('actions_start')} </Typography>
-                <Box sx={LINK_BTN_SX}>
-                  <TbPlayerPlay
-                    size={30}
-                    style={{ color: '#364954' }}
-                  />
-                </Box>
-              </Link>
+              />
+            )
+          ) : !lesson.progress && isLastLessonInProgress ? (
+            <>
+              <LessonDialog onOpenLesson={fetchDefaultCodeFromPrevLesson}>
+                <LockedStartButton />
+              </LessonDialog>
             </>
-          )
-        ) : !lesson.progress && isLastLessonInProgress ? (
-          <>
-            <Box
-              sx={getLockedBtnSx()}
-              onClick={async () => {
-                openDialog()
-              }}
-            >
-              <Typography variant='h5'>{translate('actions_start')}</Typography>
-              <Box sx={LOCKED_BTN_SX}>
-                <HiLockClosed
-                  size={30}
-                  style={{ color: '#C4CDD5' }}
-                />
-              </Box>
-            </Box>
-            <LessonDialog
-              open={open}
-              closeDialog={closeDialog}
-              openLesson={fetchDefaultCodeFromPrevLesson}
-            />
-          </>
-        ) : (
-          <>
-            <Link
-              component={NextLink}
-              href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          ) : (
+            <LessonStartButton
+              customHref={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
                 courseId: courseId as string,
                 unitId,
                 lessonId: lesson.id,
               })}
-              underline='none'
-              sx={getStartLinkSx()}
-            >
-              <Typography variant='h5'> {translate('actions_start')} </Typography>
-              <Box sx={LINK_BTN_SX}>
-                <TbPlayerPlay
-                  size={30}
-                  style={{ color: '#364954' }}
-                />
-              </Box>
-            </Link>
-          </>
-        )}
+            />
+          )}
+        </Stack>
       </Stack>
     </Stack>
   )

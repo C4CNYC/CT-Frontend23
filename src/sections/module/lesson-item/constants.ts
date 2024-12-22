@@ -63,9 +63,8 @@ export const getLockedBtnSx = () => ({
   color: '#fff',
   borderRadius: '80px',
   p: 0.5,
-  pr: 2,
-  mt: 1,
-  mr: 'auto',
+  pl: 2,
+  ml: 'auto',
 })
 
 export const LOCKED_BTN_SX = {
@@ -106,12 +105,10 @@ export const getStartLinkSx = () => ({
   display: 'flex',
   gap: 3,
   p: 0.5,
-  pr: 2,
-
+  pl: 2,
   alignItems: 'center',
   borderRadius: '80px',
-  mt: 1,
-  mr: 'auto',
+  ml: 'auto',
   color: '#fff',
   background: 'linear-gradient(308.87deg, #FFF739 -19.29%, #FF6DC5 89.25%)',
 })

@@ -31,7 +31,7 @@ export const getRoadBoxSx = (
   firstItem: boolean,
   lastItem: boolean,
   oddItem: boolean,
-  compleatedColor: string
+  completedColor: string
 ): SxProps => ({
   display: 'flex',
   alignItems: 'flex-start',
@@ -41,11 +41,11 @@ export const getRoadBoxSx = (
   background: lastItem
     ? ''
     : oddItem
-      ? `top 50px left 270px / 140px url(/assets/projects/roadRight${compleatedColor}.svg) no-repeat`
-      : `top 30px left 60px / 140px url(/assets/projects/roadLeft${compleatedColor}.svg) no-repeat`,
+      ? `top 50px left 270px / 140px url(/assets/projects/roadRight${completedColor}.svg) no-repeat`
+      : `top 30px left 60px / 140px url(/assets/projects/roadLeft${completedColor}.svg) no-repeat`,
 })
 
-export const PROGRES_BOX_SX = {
+export const PROGRESS_BOX_SX = {
   display: 'flex',
   alignSelf: 'flex-start',
   position: 'relative',
@@ -53,7 +53,7 @@ export const PROGRES_BOX_SX = {
   borderRadius: '50%',
 }
 
-export const getIconWrapperSx = (compleated: boolean): SxProps => ({
+export const getIconWrapperSx = (completed: boolean): SxProps => ({
   position: 'absolute',
   top: '12px',
   left: '12px',
@@ -64,8 +64,8 @@ export const getIconWrapperSx = (compleated: boolean): SxProps => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  pt: compleated ? 0 : '2px',
-  pr: compleated ? 0 : '4px',
+  pt: completed ? 0 : '2px',
+  pr: completed ? 0 : '4px',
 })
 
 export const getButtonSx = (lastActive: boolean | undefined): SxProps =>
@@ -108,7 +108,7 @@ export const getSeeMoreBtnSx = (theme: Theme): SxProps => ({
 export const getMobileRoadBoxSx = (
   lastItem: boolean,
   firstItem: boolean,
-  compleatedColor: string
+  completedColor: string
 ): SxProps => ({
   display: 'flex',
   alignItems: 'flex-start',
@@ -116,7 +116,7 @@ export const getMobileRoadBoxSx = (
   mt: firstItem ? 0 : '-30px',
   pl: '20px',
   background: !lastItem
-    ? `top 65px left 5px / 100px url(/assets/projects/roadMobile${compleatedColor}.svg) no-repeat`
+    ? `top 65px left 5px / 100px url(/assets/projects/roadMobile${completedColor}.svg) no-repeat`
     : '',
 })
 

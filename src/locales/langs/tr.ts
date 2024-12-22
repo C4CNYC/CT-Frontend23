@@ -484,6 +484,8 @@ const tr = {
   aktarılmasını istiyorsanız, en az %90'ını tamamlamanız gerekiyor.`,
   lesson_to_lesson_code_copying_subtitle_3: ` Endişelenmeyin. Ne seçerseniz seçin sorun değil. Yeter ki kodlamaya devam edin. 🙌
    Yaay!`,
+  lesson_catalog_dialog_title: `Merhaba, birlikte bir proje yapıyoruz. Bu yüzden 
+  önceki dersten kodunuzu aldık, böylece inşa etmeye devam edebilirsiniz.`,
 
   // Modules pages
   modules: 'Modüller',

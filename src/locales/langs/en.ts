@@ -485,6 +485,9 @@ const en = {
           automatically, then you have to complete, at least, 90%.`,
   lesson_to_lesson_code_copying_subtitle_3: ` But don't worry. Whatever you choose is just fine. As long as you just keep coding. 🙌
           Yaay!`,
+  lesson_catalog_dialog_title: `Hey, we’re building a project together.
+                    So pulled your code from previous lesson, 
+                    so that you can keep building`,
 
   // Modules pages
   modules: 'Modules',
