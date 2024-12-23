@@ -25,7 +25,6 @@ import CreateHeader from '@/sections/main/create-class/createHeader'
 import CreatePalette, { CLASS_PALETTE } from '@/sections/main/create-class/createPalette'
 import { createRandomAvatar } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { SelectTemplateDialog } from '@root/src/sections/my-creations-menu/select-template-dialog'
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)]
@@ -44,7 +43,6 @@ export default function CreateClass(): React.ReactElement {
   const { push, query } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const [openDialog, setOpenDialog] = useState(false)
-  const [isLangSelectionOpen, setIsLangSelectionOpen] = useState(false)
   const [schoolId, setSchoolId] = useState('')
   const [choosenColor, setChoosenColor] = useState(randomInArray(CLASS_PALETTE))
   const translate = useTranslate()
@@ -85,7 +83,12 @@ export default function CreateClass(): React.ReactElement {
         }).unwrap()
         enqueueSnackbar(translate('messages_class_created'))
         if (query.onBoarding) {
-          setIsLangSelectionOpen(true)
+          push(
+            STUDENT_PATH_DASHBOARD.class.addQuest(classInfo.id, {
+              schoolId,
+              onBoarding: query.onBoarding as string,
+            })
+          )
           return
         } else {
           push(STUDENT_PATH_DASHBOARD.class.id(classInfo.id))
@@ -126,8 +129,6 @@ export default function CreateClass(): React.ReactElement {
           }}
           schools={data?.data}
         />
-        <SelectTemplateDialog isForceOpen={isLangSelectionOpen} />
-
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
