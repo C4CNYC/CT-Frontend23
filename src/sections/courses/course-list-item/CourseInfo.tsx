@@ -4,6 +4,8 @@ import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 
 import { ICourse } from '@/types'
 import { useTranslate } from '@/utils/translateHelper'
+import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
+import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 
 interface Props {
   course: ICourse
@@ -12,6 +14,10 @@ interface Props {
 export default function CourseInfo({ course }: Props): React.ReactElement {
   const { price, total_lessons: totalLessons, level } = course
   const translate = useTranslate()
+  let minutes =
+    course?.units
+      ?.map((unit) => convertDurationToMins(unit.duration))
+      .reduce((acc, unitDuration) => acc + unitDuration, 0) || 30
 
   return (
     <Stack
@@ -29,7 +35,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           variant='body2'
           sx={{ color: 'inherit' }}
         >
-          9 {translate('hours')}
+          {convertMinsToString(minutes, translate('hours'), translate('minutes'))}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

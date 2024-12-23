@@ -1263,7 +1263,8 @@ const tr = {
   diamond_feature_title: 'Elmas Özellik',
   diamond_feature_subtitle: 'Bu özellik DIAMOND hesapları için sınırlıdır.',
 
-  hours: 'Saatler',
+  hours: 'Saat',
+  minutes: 'Dakika',
   module_sidebar_skills: 'YETENEKLER',
   send_welcome_emails: 'Hoş geldin e-postalarını gönder',
 
