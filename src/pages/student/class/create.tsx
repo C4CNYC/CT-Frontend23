@@ -89,6 +89,7 @@ export default function CreateClass(): React.ReactElement {
               onBoarding: query.onBoarding as string,
             })
           )
+          return
         } else {
           push(STUDENT_PATH_DASHBOARD.class.id(classInfo.id))
         }

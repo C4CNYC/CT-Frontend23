@@ -1,12 +1,10 @@
 import { Box, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { CustomAvatar, Image } from '@/components'
 import { OrganizationResponce } from '@/redux/services/interfaces/organization.interface'
 import { bgBlur } from '@/utils'
-
-// auth
 
 const StyledRoot = styled('div')(({ theme }) => ({
   '&:before': {
@@ -30,9 +28,9 @@ const StyledInfo = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(5),
   [theme.breakpoints.up('md')]: {
     right: 'auto',
+    left: theme.spacing(3),
     display: 'flex',
     alignItems: 'center',
-    left: theme.spacing(3),
     bottom: theme.spacing(3),
   },
 }))
@@ -44,6 +42,8 @@ export default function ProfileCover({
   email,
 }: Pick<OrganizationResponce, 'email' | 'name' | 'cover' | 'avatar'>): React.ReactElement | null {
   const { user } = useAuthContext()
+  const theme = useTheme()
+
   return (
     <StyledRoot>
       <StyledInfo>

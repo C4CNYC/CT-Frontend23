@@ -103,7 +103,7 @@ export default function Validation({
             variant='h5'
             sx={{ pb: 1, pt: 2 }}
           >
-            {translate('validation_rules')} ({stepTitle})
+            {translate('validation_rules')}
           </DialogTitle>
           <IconButton
             onClick={() => {
@@ -233,10 +233,7 @@ export default function Validation({
               mt='25px'
             >
               <CreateEditValidation stepId={stepId}>
-                <Button
-                  sx={{ width: '150px' }}
-                  variant='contained'
-                >
+                <Button variant='contained'>
                   {translate('add_rule')}
                   <Iconify
                     ml='10px'

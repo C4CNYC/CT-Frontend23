@@ -5,4 +5,5 @@ export enum Role {
   Editor = 'editor',
   Student = 'student',
   Anonymous = 'anonymous',
+  SuperAdmin = 'super_admin',
 }

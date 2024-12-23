@@ -66,7 +66,7 @@ export default function BriefSection({
       </List>
       <Box sx={{ px: 2 }}>
         <Typography variant='body2'>{translate('courses_for_beginners_info')}</Typography>
-        <Typography variant='body2'>{translate('courses_entery_point')}</Typography>
+        <Typography variant='body2'>{translate('courses_entry_point')}</Typography>
       </Box>
     </Box>
   )

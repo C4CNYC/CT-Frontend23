@@ -14,6 +14,7 @@ interface ILoadingItem {
 }
 const LoadingItem = ({ isLoading, text, multiply }: ILoadingItem) => {
   const translate = useTranslate()
+
   const [loading, setLoading] = useState(true)
   const timer = useRef<any | null>(null)
 
@@ -27,7 +28,7 @@ const LoadingItem = ({ isLoading, text, multiply }: ILoadingItem) => {
         () => {
           setLoading(false)
         },
-        multiply ? getRandomArbitrary() * 300 * multiply : 300
+        multiply ? getRandomArbitrary() * 700 * multiply : 700
       )
     }
 

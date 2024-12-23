@@ -115,6 +115,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
             sx={{
               fontSize: '1rem',
               color: isLight ? '#364954' : theme.palette.text.primary,
+              gap: 1,
               '&:hover': {
                 background: 'none',
               },
@@ -124,11 +125,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
             }}
           >
             {open ? translate('actions_show_less') : translate('actions_see_more')}
-            {open ? (
-              <SlArrowUp style={{ marginLeft: '10px' }} />
-            ) : (
-              <SlArrowDown style={{ marginLeft: '10px' }} />
-            )}
+            {open ? <SlArrowUp /> : <SlArrowDown />}
           </Button>
           <CourseButtons
             redirect={redirect}

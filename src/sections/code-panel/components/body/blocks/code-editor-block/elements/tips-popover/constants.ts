@@ -18,7 +18,7 @@ export const BOX_STYLES = {
   transition: 'all .2s ease-in',
 }
 
-export const TYP_COLOR = { color: '#fff' }
+export const TYPO_SX = { color: '#fff', maxWidth: '250px' }
 
 export const BUTTON_STYLES = {
   alignSelf: 'flex-end',

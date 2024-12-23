@@ -197,7 +197,7 @@ export default function UserTableRow({
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow='right-top'
+        arrow={'right-top'}
         sx={{ width: 140 }}
       >
         <MenuItem

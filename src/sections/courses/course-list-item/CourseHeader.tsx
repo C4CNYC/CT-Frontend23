@@ -92,7 +92,7 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
               textTransform: 'uppercase',
             }}
           >
-            {translate('courses_enroled')}
+            {translate('courses_enrolled')}
           </Typography>{' '}
         </>
       )}

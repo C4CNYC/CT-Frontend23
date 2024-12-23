@@ -24,6 +24,8 @@ export default function SchoolDetailsDrawer({
   onDelete,
   ...other
 }: Props): React.ReactElement | null {
+  const translate = useTranslate()
+
   const countryName = React.useMemo(() => {
     const country = countries.find(
       (country) => country?.code?.toLowerCase() === item?.country?.toLowerCase()
@@ -32,14 +34,12 @@ export default function SchoolDetailsDrawer({
     return ''
   }, [item])
 
-  const translate = useTranslate()
-
   return (
     <>
       <Drawer
         open={open}
         onClose={onClose}
-        anchor='right'
+        anchor={'right'}
         BackdropProps={{
           invisible: true,
         }}

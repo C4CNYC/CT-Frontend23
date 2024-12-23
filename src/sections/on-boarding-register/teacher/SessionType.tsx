@@ -25,8 +25,9 @@ export function SessionType({
   isNew,
 }: Props): React.ReactElement {
   const theme = useTheme()
-  const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
   const translate = useTranslate()
+
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <Stack

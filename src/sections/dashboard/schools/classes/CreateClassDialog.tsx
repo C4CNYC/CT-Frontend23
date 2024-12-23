@@ -136,7 +136,7 @@ export default function AddClassDialog({
                         color: 'text.secondary',
                       }}
                     >
-                      {isEdit ? '' : translate('messages_updete_avatar_info')}
+                      {isEdit ? '' : translate('messages_update_avatar_info')}
                     </Typography>
                   }
                 />

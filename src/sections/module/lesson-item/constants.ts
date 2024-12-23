@@ -7,12 +7,14 @@ export const getLessonSx = (theme: Theme) => ({
   bgcolor: theme.palette.mode === 'light' ? '#fff' : theme.palette.background.paper,
   minHeight: '150px',
 })
+
 export const getLessonContentSx = (isMobile: boolean) => ({
   flexDirection: isMobile ? 'column' : 'row',
   alignItems: isMobile ? 'flex-start' : 'center',
   justifyContent: 'space-between',
   gap: isMobile ? 2 : 0,
 })
+
 export const SEE_MORE_SX = {
   alignSelf: 'flex-start',
   color: '#454F5B',
@@ -25,6 +27,7 @@ export const SEE_MORE_SX = {
     bgcolor: 'transparent',
   },
 }
+
 export const MODE_TITLE_SX = {
   whiteSpace: 'nowrap',
   display: 'flex',
@@ -35,12 +38,14 @@ export const MODE_TITLE_SX = {
   backgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
 }
+
 export const DURATION_SX = {
   whiteSpace: 'nowrap',
   display: 'flex',
   alignItems: 'center',
   gap: 1,
 }
+
 export const LINK_BTN_SX = {
   background: '#fff',
   borderRadius: '50%',
@@ -48,7 +53,8 @@ export const LINK_BTN_SX = {
   p: 1,
   boxShadow: 2,
 }
-export const LOCKED_BTN_CONT_SX = {
+
+export const getLockedBtnSx = () => ({
   cursor: 'pointer',
   display: 'flex',
   gap: 3,
@@ -58,8 +64,9 @@ export const LOCKED_BTN_CONT_SX = {
   borderRadius: '80px',
   p: 0.5,
   pl: 2,
-  mt: 'auto',
-}
+  ml: 'auto',
+})
+
 export const LOCKED_BTN_SX = {
   background: '#fff',
   borderRadius: '50%',
@@ -67,6 +74,7 @@ export const LOCKED_BTN_SX = {
   p: 1,
   boxShadow: 2,
 }
+
 export const PROGRESS_DOT_SX = {
   position: 'absolute',
   right: 0,
@@ -81,6 +89,7 @@ export const PROGRESS_DOT_SX = {
   borderRadius: '50%',
   border: '1px solid #919EAB3D',
 }
+
 export const getProgressStyles = (isStarted: boolean) => ({
   border: '1px solid #919EAB3D',
   '& .MuiLinearProgress-bar': {
@@ -92,17 +101,17 @@ export const getProgressStyles = (isStarted: boolean) => ({
   background: '#fff',
 })
 
-export const START_LINK_SX = {
+export const getStartLinkSx = () => ({
   display: 'flex',
   gap: 3,
   p: 0.5,
   pl: 2,
   alignItems: 'center',
   borderRadius: '80px',
-  mt: 'auto',
+  ml: 'auto',
   color: '#fff',
   background: 'linear-gradient(308.87deg, #FFF739 -19.29%, #FF6DC5 89.25%)',
-}
+})
 
 export const DIALOG_TITLE_WRAPPER_SX = {
   display: 'flex',

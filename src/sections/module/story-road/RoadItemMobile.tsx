@@ -7,15 +7,15 @@ import { FaChevronUp } from '@react-icons/all-files/fa/FaChevronUp'
 import { useRouter } from 'next/router'
 
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
-import CompleatedIcon from '../icons/CompleatedIcon'
+import CompletedIcon from '../icons/CompletedIcon'
 import RocketIcon from '../icons/RocketIcon'
-import LessonDialog from '../lesson-item/LessonDialog'
 
 import {
   DESCRIPTION_GRADIENT_TEXT_SX,
   LESSON_TIME_SX,
-  PROGRES_BOX_SX,
+  PROGRESS_BOX_SX,
   getDescriptionBoxSx,
   getIconWrapperSx,
   getMobileRoadBoxSx,
@@ -25,7 +25,7 @@ import RoadItemBtn from './RoadItemBtn'
 
 interface RoadItemMobileProps {
   firstItem: boolean
-  compleated: boolean
+  completed: boolean
   locked: boolean
   progress: number
   lastActive: boolean
@@ -36,8 +36,10 @@ interface RoadItemMobileProps {
   type: 'practical' | 'exercise'
 }
 
+const PROJECT_TIME = '20 mins'
+
 const RoadItemMobile = ({
-  compleated,
+  completed,
   locked,
   progress,
   lastActive,
@@ -50,22 +52,18 @@ const RoadItemMobile = ({
 }: RoadItemMobileProps) => {
   const theme = useTheme()
   const { query, push } = useRouter()
-  const [compleatedColor, setCompleatedColor] = useState('')
-  const [isOpen, setIsOpen] = useState(false)
-  const [open, setOpen] = useState(false)
+  const translate = useTranslate()
 
-  const projectTime = '20 mins'
+  const [completedColor, setCompletedColor] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
   const roadBoxSx = useMemo(
-    () => getMobileRoadBoxSx(lastItem, firstItem, compleatedColor),
-    [compleatedColor]
+    () => getMobileRoadBoxSx(lastItem, firstItem, completedColor),
+    [completedColor]
   )
-
-  const iconWrapperSx = useMemo(() => getIconWrapperSx(compleated), [compleated])
-
+  const iconWrapperSx = useMemo(() => getIconWrapperSx(completed), [completed])
   const seeMoreBtnSx = useMemo(() => getSeeMoreBtnSx(theme), [theme])
-
-  const descroptionGradientTesxtSx = {
+  const descriptionGradientTextSx = {
     ...DESCRIPTION_GRADIENT_TEXT_SX,
     fontSize: '14px',
   }
@@ -73,7 +71,13 @@ const RoadItemMobile = ({
 
   const redirectToCodePanel = () => {
     if (locked && !lastActive) {
-      openDialog()
+      push(
+        STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          courseId: query.id as string,
+          unitId: query.unit as string,
+          lessonId: lessonId,
+        })
+      )
     } else {
       void push(
         STUDENT_PATH_DASHBOARD.codePanel.workSpace({
@@ -85,29 +89,11 @@ const RoadItemMobile = ({
     }
   }
 
-  const fetchDefaultCodeFromPrevLesson = () => {
-    push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-        courseId: query.id as string,
-        unitId: query.unit as string,
-        lessonId: lessonId,
-      })
-    )
-  }
-
-  const openDialog = () => {
-    setOpen(true)
-  }
-
-  const closeDialog = () => {
-    setOpen(false)
-  }
-
   useEffect(() => {
     if (!locked) {
-      setCompleatedColor('')
+      setCompletedColor('')
     } else {
-      setCompleatedColor('Grey')
+      setCompletedColor('Grey')
     }
   }, [locked])
 
@@ -120,7 +106,7 @@ const RoadItemMobile = ({
       >
         <defs>
           <linearGradient
-            id='compleated'
+            id='completed'
             x1='50%'
             y1='0%'
             x2='0%'
@@ -167,7 +153,7 @@ const RoadItemMobile = ({
           flexDirection: 'column',
         }}
       >
-        <Box sx={PROGRES_BOX_SX}>
+        <Box sx={PROGRESS_BOX_SX}>
           <CircularProgress
             size={70}
             value={progress < 5 ? 5 : progress}
@@ -175,13 +161,13 @@ const RoadItemMobile = ({
             thickness={7}
             sx={{
               'svg circle': {
-                stroke: compleated ? 'url(#compleated)' : 'url(#started)',
+                stroke: completed ? 'url(#completed)' : 'url(#started)',
               },
             }}
           />
           <Box sx={iconWrapperSx}>
-            {compleated ? (
-              <CompleatedIcon
+            {completed ? (
+              <CompletedIcon
                 width={40}
                 height={40}
               />
@@ -194,11 +180,11 @@ const RoadItemMobile = ({
           </Box>
         </Box>
         <RoadItemBtn
-          compleated={compleated}
+          completed={completed}
           lastActive={lastActive}
           locked={locked}
           isMobile
-          redirectToCodePanel={redirectToCodePanel}
+          getLinkToCodePanel={redirectToCodePanel}
         />
       </Box>
       <Stack ml={lastActive ? -5 : 1}>
@@ -215,13 +201,14 @@ const RoadItemMobile = ({
           disableRipple
           sx={seeMoreBtnSx}
         >
-          See more {!isOpen ? <FaChevronDown size={14} /> : <FaChevronUp size={14} />}
+          {translate('actions_see_more')}{' '}
+          {!isOpen ? <FaChevronDown size={14} /> : <FaChevronUp size={14} />}
         </Button>
         <Collapse in={isOpen}>
           <Box sx={getDescriptionBoxSx}>
             <Typography mb={1}>{description}</Typography>
             <Box sx={{ display: 'flex', gap: '20px' }}>
-              <Typography sx={descroptionGradientTesxtSx}>
+              <Typography sx={descriptionGradientTextSx}>
                 <RocketIcon
                   width={20}
                   height={20}
@@ -230,17 +217,12 @@ const RoadItemMobile = ({
               </Typography>
               <Typography sx={lessonTimeSx}>
                 <AiOutlineClockCircle size={20} />
-                {projectTime}
+                {PROJECT_TIME}
               </Typography>
             </Box>
           </Box>
         </Collapse>
       </Stack>
-      <LessonDialog
-        open={open}
-        closeDialog={closeDialog}
-        openLesson={fetchDefaultCodeFromPrevLesson}
-      />
     </Box>
   )
 }

@@ -4,7 +4,7 @@ import { Role } from '@/redux/services/enums/role.enum'
 export const useIsAdmin = () => {
   const { user } = useAuthContext()
 
-  const isAdmin = user?.role === Role.Admin
+  const isAdmin = user?.role === Role.Admin || user?.role === Role.SuperAdmin
 
   return {
     isAdmin,

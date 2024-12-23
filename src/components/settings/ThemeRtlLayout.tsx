@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react'
 
-// emotion
 import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
-// rtl
 import { useTheme } from '@mui/material/styles'
-import { prefixer } from 'stylis'
 import rtlPlugin from 'stylis-plugin-rtl'
 
 interface Props {
@@ -21,7 +18,8 @@ export default function ThemeRtlLayout({ children }: Props): React.ReactElement 
 
   const cacheRtl = createCache({
     key: 'rtl',
-    stylisPlugins: [prefixer, rtlPlugin],
+    prepend: true,
+    stylisPlugins: [rtlPlugin],
   })
 
   if (theme.direction === 'rtl') {

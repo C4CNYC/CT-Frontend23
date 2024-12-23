@@ -11,7 +11,6 @@ export default function NavToggleButton({
   ...other
 }: IconButtonProps): React.ReactElement | null {
   const { themeLayout, onToggleLayout } = useSettingsContext()
-
   const isDesktop = useResponsive('up', 'md')
 
   if (!isDesktop) {
@@ -26,6 +25,7 @@ export default function NavToggleButton({
         p: 0.5,
         top: 32,
         position: 'fixed',
+
         left: NAV_SIZES.W_DASHBOARD - 12,
         bgcolor: 'background.default',
         zIndex: (theme) => theme.zIndex.appBar + 1,

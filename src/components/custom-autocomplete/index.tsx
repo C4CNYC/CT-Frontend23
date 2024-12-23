@@ -42,7 +42,6 @@ export function CustomAutocomplete({
     setFilter,
     resetFilters: resetClassFilter,
   } = useFilters<ClassSearchParams>({ name: '' })
-
   const translate = useTranslate()
   const { data: clases } = useGetClassesQuery({ schoolId, ...filters }, { skip: !schoolId })
 

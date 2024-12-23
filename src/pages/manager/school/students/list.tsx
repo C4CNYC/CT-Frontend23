@@ -84,23 +84,24 @@ export default function UserListPage(): React.ReactElement {
     onSort,
     onChangeDense,
   } = useTable()
-
   const translate = useTranslate()
-
-  const [openConfirm, setOpenConfirm] = useState(false)
-  const [value, setValue] = useState(0)
   const { push } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const { themeStretch } = useSettingsContext()
+
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [value, setValue] = useState(0)
+
   const schoolId = useSelector((state: RootState) => state.manager.schoolId)
+
   const { filters, setFilter, resetFilters } = useFilters({
     name: '',
     class_id: '',
   })
   const [deleteStudent, { isLoading: isDeleting }] = useDeleteStudentMutation()
-  const [resetPassword, { isLoading: isResettingPassword }] = useStudentResetPasswordMutation()
-
+  const [resetPassword] = useStudentResetPasswordMutation()
   const { data, isLoading } = useGetStudentsQuery({ schoolId, ...filters }, { skip: !schoolId })
+
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue)
   }
@@ -120,6 +121,7 @@ export default function UserListPage(): React.ReactElement {
     enqueueSnackbar(translate('member_actions_deleted'))
     setSelected([])
   }
+
   const handleResetPassword = async (studentId: string): Promise<void> => {
     try {
       const password = createWeakPassword()
@@ -131,6 +133,7 @@ export default function UserListPage(): React.ReactElement {
       })
     }
   }
+
   const handleDeleteRows = (selected: string[]): void => {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteMember(selected[i])
@@ -180,7 +183,7 @@ export default function UserListPage(): React.ReactElement {
                     />
                   }
                 >
-                  {translate('members_invate_student')}
+                  {translate('members_invite_student')}
                 </Button>
               </InviteStudentDialog>
               <Button

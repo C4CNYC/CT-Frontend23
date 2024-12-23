@@ -42,7 +42,7 @@ const StoryRoad = ({ lessons, isLockedLessonCheck }: StoryRoadProps) => {
             <RoadItemMobile
               key={l.id}
               locked={isLockedLessonCheck(i)}
-              compleated={l.progress ? l.progress > 90 : false}
+              completed={l.progress ? l.progress > 90 : false}
               progress={l.progress ?? 0}
               lastActive={isLastActive(i)}
               firstItem={i === 0}
@@ -57,7 +57,7 @@ const StoryRoad = ({ lessons, isLockedLessonCheck }: StoryRoadProps) => {
             <RoadItem
               key={l.id}
               locked={isLockedLessonCheck(i)}
-              compleated={l.progress ? l.progress > 90 : false}
+              completed={l.progress ? l.progress > 90 : false}
               progress={l.progress ?? 0}
               oddItem={!!(i % 2)}
               firstItem={i === 0}

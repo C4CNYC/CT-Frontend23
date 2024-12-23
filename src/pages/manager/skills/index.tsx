@@ -42,11 +42,12 @@ Skills.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</Dashbo
 
 export default function Skills(): React.ReactElement {
   const { dense, onChangeDense } = useTable()
-
   const { enqueueSnackbar } = useSnackbar()
   const { themeStretch } = useSettingsContext()
-  const { filters, setFilter } = useFilters({ name: '' })
   const translate = useTranslate()
+
+  const { filters, setFilter } = useFilters({ name: '' })
+
   const { data, isLoading } = useGetSkillQuery({ ...filters })
   const [removeSkill] = useRemoveSkillMutation()
 

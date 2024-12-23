@@ -105,6 +105,7 @@ export default function ClassCoursesAutocomplete({
       renderTags={(tagValue, getTagProps): React.ReactElement[] =>
         tagValue.map((option, index) => (
           <Chip
+            sx={{ direction: 'ltr !important' }}
             avatar={
               <CustomAvatar
                 alt={option.name}

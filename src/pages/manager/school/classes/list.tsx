@@ -145,7 +145,7 @@ export default function UserListPage(): React.ReactElement {
         file.append('file', uploadedFile)
         await updateClassAvatar({ schoolId, classId: id, file }).unwrap()
       }
-      enqueueSnackbar(translate('classes_class_updeted'))
+      enqueueSnackbar(translate('classes_class_updated'))
     } catch (error: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }

@@ -3,6 +3,7 @@ import { useTheme } from '@mui/system'
 import { BiLockOpenAlt } from '@react-icons/all-files/bi/BiLockOpenAlt'
 
 import { ILesson } from '@/redux/interfaces/content.interface'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import QuizItemsList from './QuizItemsList'
 
@@ -11,6 +12,7 @@ interface IQuizPanelProps {
 }
 
 export default function QuizPanel({ lessons }: IQuizPanelProps): React.ReactElement {
+  const translate = useTranslate()
   const theme = useTheme()
   return (
     <Box>
@@ -37,7 +39,7 @@ export default function QuizPanel({ lessons }: IQuizPanelProps): React.ReactElem
             mb: 2,
           }}
         >
-          <Typography variant='body1'> SKILLS</Typography>
+          <Typography variant='body1'> {translate('module_sidebar_skills')}</Typography>
           <BiLockOpenAlt
             size={20}
             style={{ marginLeft: '8px' }}

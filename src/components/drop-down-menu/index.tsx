@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { Button, Menu } from '@mui/material'
@@ -16,12 +16,15 @@ interface Props {
 
 export function RoleSelector({ userId, role, email }: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
-  const [updateUser] = useUpdateOrgMemberMutation()
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+
+  const [updateUser] = useUpdateOrgMemberMutation()
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = async (role: Role): Promise<void> => {
     setAnchorEl(null)
     try {

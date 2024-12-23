@@ -29,13 +29,15 @@ export default function LessonCard({
   lock,
 }: Props): React.ReactElement | null {
   const router = useRouter()
+  const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+
   const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
   const [deleteLesson] = useDeleteLessonMutation()
   const [cloneLesson] = useCloneLessonMutation()
-  const translate = useTranslate()
 
   const onDelete = async (): Promise<void> => {
     setLoading(true)
@@ -264,7 +266,9 @@ export default function LessonCard({
               handleOpenConfirm()
               handleClosePopover()
             }}
-            sx={{ color: 'error.main' }}
+            sx={{
+              color: 'error.main',
+            }}
           >
             <Iconify icon='eva:trash-2-outline' />
             {translate('actions_delete')}

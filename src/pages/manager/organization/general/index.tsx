@@ -19,33 +19,6 @@ import { ProfileCover } from '@/sections/dashboard/user/profile'
 import SkeletonSchool from '@/sections/schools/skeleton-school'
 import { useTranslate } from '@/utils/translateHelper'
 
-const TABS = [
-  {
-    value: 'profile',
-    label: 'profile',
-    icon: <Iconify icon='ic:round-account-box' />,
-    component: <UserProfileTab />,
-  },
-  {
-    value: 'settings',
-    label: 'settings',
-    icon: <Iconify icon='ic:baseline-settings-applications' />,
-    component: <SettingsTab />,
-  },
-  {
-    value: 'customization',
-    label: 'customization',
-    icon: <Iconify icon='ic:round-dashboard-customize' />,
-    component: <CustomizationTab />,
-  },
-  {
-    value: 'contacts',
-    label: 'Contacts',
-    icon: <Iconify icon='ic:outline-contacts' />,
-    component: <ContactsTab />,
-  },
-]
-
 UserProfilePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function UserProfilePage(): React.ReactElement {
@@ -70,6 +43,34 @@ export default function UserProfilePage(): React.ReactElement {
       })
     }
   }
+
+  const TABS = [
+    {
+      value: 'profile',
+      label: 'profile',
+      icon: <Iconify icon='ic:round-account-box' />,
+      component: <UserProfileTab />,
+    },
+    {
+      value: 'settings',
+      label: 'settings',
+      icon: <Iconify icon='ic:baseline-settings-applications' />,
+      component: <SettingsTab />,
+    },
+    {
+      value: 'customization',
+      label: 'customization',
+      icon: <Iconify icon='ic:round-dashboard-customize' />,
+      component: <CustomizationTab />,
+    },
+    {
+      value: 'contacts',
+      label: 'Contacts',
+      icon: <Iconify icon='ic:outline-contacts' />,
+      component: <ContactsTab />,
+    },
+  ]
+
   if (isLoading) {
     return (
       <>
@@ -122,7 +123,8 @@ export default function UserProfilePage(): React.ReactElement {
               position: 'absolute',
               bgcolor: 'background.paper',
               '& .MuiTabs-flexContainer': {
-                pr: { md: 3 },
+                pr: { xs: 0, md: 3 },
+                pl: { xs: 2, md: 0 },
                 justifyContent: {
                   sm: 'center',
                   md: 'flex-end',

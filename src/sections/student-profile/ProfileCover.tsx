@@ -13,9 +13,9 @@ const StyledInfo = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(5),
   [theme.breakpoints.up('md')]: {
     right: 'auto',
+    left: theme.spacing(3),
     display: 'flex',
     alignItems: 'center',
-    left: theme.spacing(3),
     bottom: theme.spacing(3),
   },
 }))

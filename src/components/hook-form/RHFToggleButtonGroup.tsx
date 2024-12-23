@@ -134,13 +134,16 @@ export function RHFToggleButtonGroup({
                   <Tooltip
                     sx={tooltipSx}
                     key={el.key}
+                    slotProps={{ popper: { disablePortal: true } }}
                     title={
-                      <Typography
-                        variant='body2'
-                        p={1}
-                      >
-                        {translate(el.tooltip ?? '')}
-                      </Typography>
+                      el.tooltip ? (
+                        <Typography
+                          variant='body2'
+                          p={1}
+                        >
+                          {translate(el.tooltip)}
+                        </Typography>
+                      ) : null
                     }
                   >
                     <ToggleButton

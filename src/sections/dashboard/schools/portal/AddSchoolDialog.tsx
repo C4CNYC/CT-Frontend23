@@ -25,9 +25,12 @@ interface FormValuesProps {
 
 export default function AddSchoolDialog(): React.ReactElement {
   const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [open, setOpen] = useState(false)
 
   const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation()
-  const [open, setOpen] = useState(false)
+
   const handleClickOpen = (): void => {
     setOpen(true)
   }
@@ -35,7 +38,6 @@ export default function AddSchoolDialog(): React.ReactElement {
   const handleClose = (): void => {
     setOpen(false)
   }
-  const { enqueueSnackbar } = useSnackbar()
 
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required(translate('required_name')),
@@ -78,13 +80,13 @@ export default function AddSchoolDialog(): React.ReactElement {
         variant='contained'
         startIcon={<AddIcon />}
       >
-        {translate('schools_add_aschool')}
+        {translate('schools_add_school')}
       </Button>
       <Dialog
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>{translate('schools_add_aschool')}</DialogTitle>
+        <DialogTitle>{translate('schools_add_school')}</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}

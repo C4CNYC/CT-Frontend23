@@ -41,11 +41,13 @@ const UpdateLinkSchema = Yup.object().shape({
 })
 
 export default function SocialItem({ schoolId, socialItem }: Props): React.ReactElement | null {
+  const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
   const [edit, setEdit] = useState(true)
+
   const [deleteSocial] = useDeleteSchoolSocialMutation()
   const [editSocial] = useUpdateSchoolSocialMutation()
-  const { enqueueSnackbar } = useSnackbar()
-  const translate = useTranslate()
 
   const defaultValues = {
     link: socialItem?.link ?? '',
@@ -116,8 +118,8 @@ export default function SocialItem({ schoolId, socialItem }: Props): React.React
                 sx={{
                   display: 'flex',
                   border: '1px solid #919eab42',
-                  borderRight: 'none',
                   color: '#627380',
+                  borderRight: 'none',
                   borderRadius: '8px',
                   borderTopRightRadius: 0,
                   borderBottomRightRadius: 0,

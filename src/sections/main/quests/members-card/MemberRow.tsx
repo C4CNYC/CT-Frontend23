@@ -119,7 +119,7 @@ export default function MemberRow({
         )}
 
         <TableCell align='right'>
-          <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner]}>
+          <RoleBasedGuard roles={[Role.Manager, Role.SuperAdmin, Role.Admin, Role.Owner]}>
             <IconButton
               color={openPopover ? 'inherit' : 'default'}
               onClick={handleOpenPopover}

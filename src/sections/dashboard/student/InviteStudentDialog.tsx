@@ -42,7 +42,7 @@ export default function InviteStudentDialog({ children, schoolId }: Props): Reac
   const onSubmit = async (data: FormValueProps): Promise<void> => {
     try {
       await inviteStudent({ schoolId, email: data.email }).unwrap()
-      enqueueSnackbar(translate('messages_sent_seccessfully'))
+      enqueueSnackbar(translate('messages_sent_successfully'))
       methods.reset()
       handleCloseDialog()
     } catch (error: any) {
@@ -62,7 +62,7 @@ export default function InviteStudentDialog({ children, schoolId }: Props): Reac
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <DialogTitle>{translate('members_invate_student')}</DialogTitle>
+          <DialogTitle>{translate('members_invite_student')}</DialogTitle>
           <DialogContent>
             <RHFTextField
               name='email'

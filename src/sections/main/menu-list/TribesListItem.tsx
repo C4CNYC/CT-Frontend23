@@ -17,10 +17,10 @@ interface Props {
 export default function TribeListItem({ active, classItem }: Props): React.ReactElement {
   const theme = useTheme()
   const { themeLayout } = useSettingsContext()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const [setLastActiveTribe] = useSetLastActiveTribeMutation()
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const isNavMini = themeLayout === 'mini' && !isMobile
 
   const onTribeClick = () => {

@@ -72,13 +72,14 @@ export default function CreateCourseDialog({
 }: Prop): React.ReactElement {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+
   const [open, setOpen] = useState(false)
   const [uploadedFile, setUploadedFile] = useState<null | File>(null)
+  const [value, setValue] = React.useState(0)
 
   const [editCourse, { isLoading: isEditLoading }] = useUpdateCourseMutation()
   const [createCourse, { isLoading: isCreateLoading }] = useCreateCourseMutation()
   const [updateCover] = useUpdateCourseCoverMutation()
-  const [value, setValue] = React.useState(0)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue)
@@ -189,7 +190,9 @@ export default function CreateCourseDialog({
                 value={value}
                 onChange={handleChange}
                 aria-label='basic tabs example'
-                sx={{ ml: 3 }}
+                sx={{
+                  ml: 3,
+                }}
               >
                 <Tab
                   label={translate('general')}
@@ -311,6 +314,7 @@ export default function CreateCourseDialog({
                       maxHeight: '56px',
                       bgcolor: 'grey.400',
                       color: 'grey.800',
+
                       borderTopRightRadius: 0,
                       borderBottomRightRadius: 0,
                     }}

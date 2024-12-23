@@ -5,10 +5,7 @@ import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } fr
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import { useIsAdmin } from '@/lib/use-is-admin'
-import {
-  useGetAdminModulesQuery,
-  // useGetAdminOwnModulesQuery,
-} from '@/redux/services/admin/modules-admin'
+import { useGetAdminModulesQuery } from '@/redux/services/admin/modules-admin'
 import { IModulesSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetOwnModulesQuery } from '@/redux/services/manager/modules-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -24,9 +21,10 @@ import FilterModules from './filter'
 ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function ModulesListPage(): React.ReactElement | string {
-  const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
+  const { themeStretch } = useSettingsContext()
   const { isAdmin } = useIsAdmin()
+
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
       name: '',
@@ -34,7 +32,6 @@ export default function ModulesListPage(): React.ReactElement | string {
     },
     FilterMode.global
   )
-
   const {
     data: ownData,
     isLoading: isOwnLoading,
@@ -69,6 +66,7 @@ export default function ModulesListPage(): React.ReactElement | string {
       />
     )
   }
+
   return (
     <>
       <Head>
@@ -130,10 +128,6 @@ export default function ModulesListPage(): React.ReactElement | string {
               ))}
               {isFetching
                 ? Array(3)
-                    // getCountTakingElment(
-                    //   Number(data.meta.itemCount),
-                    //   Number(filters.take)
-                    // )
                     .fill(null)
                     .map((v, i) => <DefaultSkeletonItem key={i} />)
                 : null}
@@ -156,10 +150,6 @@ export default function ModulesListPage(): React.ReactElement | string {
               ))}
               {isFetching
                 ? Array(3)
-                    // getCountTakingElment(
-                    //   Number(data.meta.itemCount),
-                    //   Number(filters.take)
-                    // )
                     .fill(null)
                     .map((v, i) => <DefaultSkeletonItem key={i} />)
                 : null}

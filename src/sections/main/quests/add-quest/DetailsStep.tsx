@@ -243,7 +243,7 @@ export default function DetailsStep({
               gutterBottom
               pl={2}
             >
-              {translate('auest_select_module')}
+              {translate('quest_select_module')}
             </Typography>
             {!isLoading ? (
               <RHFSelect

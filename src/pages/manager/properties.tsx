@@ -63,6 +63,7 @@ export default function ManagerProperties(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const { dense, onChangeDense } = useTable()
   const { themeStretch } = useSettingsContext()
+
   const { filters, setFilter } = useFilters<IPropertySearchParams>({ entityType: 'lesson' })
 
   const [deleteProperty] = useDeletePropertyMutation()
@@ -82,10 +83,12 @@ export default function ManagerProperties(): React.ReactElement {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
   }
+
   const onChangeHandler: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
     setFilter(e.target.name, e.target.value)
     methods.setValue(e.target.name as keyof IPropertySearchParams, e.target.value)
   }
+
   const LinkEntity = (row: IProperty) => {
     switch (row.entityType) {
       case 'lesson':
@@ -157,7 +160,7 @@ export default function ManagerProperties(): React.ReactElement {
             <FormProvider methods={methods}>
               <Stack
                 direction='row'
-                spacing={2}
+                gap={2}
               >
                 <RHFSelect
                   native
@@ -175,18 +178,17 @@ export default function ManagerProperties(): React.ReactElement {
                 </RHFSelect>
                 <RHFTextField
                   name='propertyName'
-                  placeholder='Property Name'
+                  placeholder={translate('property_name')}
                   onChange={onChangeHandler}
                 />
-
                 <RHFTextField
                   name='entityId'
-                  placeholder='Entity Id'
+                  placeholder={translate('entry_id')}
                   onChange={onChangeHandler}
                 />
                 <RHFTextField
                   name='propertyValue'
-                  placeholder='Property Value'
+                  placeholder={translate('property_value')}
                   onChange={onChangeHandler}
                 />
               </Stack>

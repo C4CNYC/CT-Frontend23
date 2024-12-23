@@ -75,6 +75,11 @@ export default function LessonsListPage(): React.ReactElement {
   const router = useRouter()
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
+
+  const [lessons, setLessons] = useState<ILesson[]>([])
+
+  const userRole = useSelector((state) => state.global?.user?.role)
+
   const { filters, setFilter } = useFilters<ILessonSearchParams>(
     {
       module_id: '',
@@ -83,21 +88,22 @@ export default function LessonsListPage(): React.ReactElement {
     },
     FilterMode.global
   )
-
-  const userRole = useSelector((state) => state.global?.user?.role)
   const {
     data: ownLessonsData,
     isLoading: isOwnLessonDataLoading,
     isFetching: isOwnLessonDataFetching,
     refetch: refetchOwnLessons,
-  } = useGetOwnLessonsQuery(filters, { skip: userRole === Role.Admin })
+  } = useGetOwnLessonsQuery(filters, {
+    skip: userRole === Role.Admin || userRole === Role.SuperAdmin,
+  })
   const {
     data: adminData,
     isLoading: adminIsLoading,
     isFetching: adminFetching,
     refetch: refetchAdminLessons,
-  } = useGetAllAdminLessonsQuery(filters, { skip: userRole !== Role.Admin })
-  const [lessons, setLessons] = useState<ILesson[]>([])
+  } = useGetAllAdminLessonsQuery(filters, {
+    skip: userRole !== Role.Admin && userRole !== Role.SuperAdmin,
+  })
   const { data: propertyLocks } = useGetPropertiesQuery(
     {
       entityType: 'lesson',
@@ -105,25 +111,26 @@ export default function LessonsListPage(): React.ReactElement {
     },
     { skip: !lessons.length }
   )
-  const data = userRole === Role.Admin ? adminData : ownLessonsData
-  const isLoading = userRole === Role.Admin ? adminIsLoading : isOwnLessonDataLoading
-  const isFetching = userRole === Role.Admin ? adminFetching : isOwnLessonDataFetching
+  const [updateModuleLesson] = useUpdateModuleLessonMutation()
+  const [createByCloningLesson] = useCreateByCloningLessonMutation()
+
+  const data = userRole === Role.Admin || Role.SuperAdmin ? adminData : ownLessonsData
+  const isLoading =
+    userRole === Role.Admin || Role.SuperAdmin ? adminIsLoading : isOwnLessonDataLoading
+  const isFetching =
+    userRole === Role.Admin || Role.SuperAdmin ? adminFetching : isOwnLessonDataFetching
 
   useEffect(() => {
     setLessons(data?.data ?? [])
   }, [data])
 
   const refetch = () => {
-    if (userRole === Role.Admin) {
+    if (userRole === Role.Admin || userRole === Role.SuperAdmin) {
       refetchAdminLessons()
     } else {
       refetchOwnLessons()
     }
   }
-
-  const [updateModuleLesson] = useUpdateModuleLessonMutation()
-  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
-    useCreateByCloningLessonMutation()
 
   const onDragEnd = useCallback(
     (result: DropResult): void => {

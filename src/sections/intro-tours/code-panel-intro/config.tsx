@@ -1,13 +1,14 @@
 import { Box, Button } from '@mui/material'
+import { Step } from 'react-joyride'
 
 import { Image } from '@/components'
 
 import LessonFeedback from '../../code-panel/components/footer/lesson-feedback/LessonFeedback'
 
-export const TOUR_STEPS_DECKTOP = [
+export const getTourStepsDesktop = (translate: (key: string) => string): Step[] => [
   {
     target: '.tourStart',
-    title: <div>💥 The Coding Panel 👩‍💻 💥</div>,
+    title: <div>{translate('intro_tour_step_1_desktop_title')}</div>,
     content: (
       <div>
         <Image
@@ -15,7 +16,7 @@ export const TOUR_STEPS_DECKTOP = [
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '290px' }}
         />
-        Here is where all the learning and building happens. 🤩
+        {translate('intro_tour_step_1_desktop_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -23,19 +24,14 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.instructions',
-    title: <div>The Slides</div>,
-    content: (
-      <div>
-        Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
-        step by step.
-      </div>
-    ),
+    title: <div>{translate('intro_tour_step_2_desktop_title')}</div>,
+    content: <div>{translate('intro_tour_step_2_desktop_subtitle')}</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },
   {
     target: '.instructions',
-    title: <div>Challenge Slides</div>,
+    title: <div>{translate('intro_tour_step_3_desktop_title')}</div>,
     content: (
       <div>
         <Image
@@ -43,7 +39,7 @@ export const TOUR_STEPS_DECKTOP = [
           alt='challenge preview'
           sx={{ py: 1, minHeight: '260px' }}
         />
-        See a Challenge ⚔️ slide? That means it’s time to code in the editor.
+        {translate('intro_tour_step_3_desktop_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -51,7 +47,7 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.controls',
-    title: <div>Controls</div>,
+    title: <div>{translate('intro_tour_step_4_desktop_title')}</div>,
     content: (
       <div>
         <Image
@@ -59,7 +55,7 @@ export const TOUR_STEPS_DECKTOP = [
           alt='controls preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
-        On “Challenge” slides you can also “Skip” ⏭️ and come back later 🔙 if you get stuck.
+        {translate('intro_tour_step_4_desktop_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -67,7 +63,7 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.codeEditorTour',
-    title: <div>Code Editor</div>,
+    title: <div>{translate('intro_tour_step_5_desktop_title')}</div>,
     content: (
       <div>
         <div>
@@ -79,7 +75,7 @@ export const TOUR_STEPS_DECKTOP = [
             allowFullScreen
           ></iframe>
         </div>
-        Here’s your Code Editor 👩🏽‍💻 where you’ll build cool stuff. 😎
+        {translate('intro_tour_step_5_desktop_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -87,7 +83,7 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.tourStart',
-    title: <div>Tests 🧪</div>,
+    title: <div>{translate('intro_tour_step_6_desktop_title')}</div>,
     content: (
       <div>
         <Image
@@ -95,7 +91,7 @@ export const TOUR_STEPS_DECKTOP = [
           alt='checkers preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
-        When available, click this to see what code is missing ⚔👀 for the challenge.
+        {translate('intro_tour_step_6_desktop_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -103,7 +99,7 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.toolbox',
-    title: <div> Toolbox 🧰 </div>,
+    title: <div> {translate('intro_tour_step_7_desktop_title')} </div>,
     content: (
       <div>
         <Image
@@ -111,7 +107,8 @@ export const TOUR_STEPS_DECKTOP = [
           alt='checkers preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
-        Here’s undo, redo, copy & paste. <br /> Tap on{' '}
+        <p> {translate('intro_tour_step_7_desktop_subtitle')}</p>
+        <p> {translate('intro_tour_step_7_desktop_subtitle_2')}</p>
         <Box
           sx={{
             display: 'inline-block',
@@ -123,7 +120,7 @@ export const TOUR_STEPS_DECKTOP = [
         >
           &#123; &#125;
         </Box>{' '}
-        see the characters.
+        {translate('intro_tour_step_7_desktop_subtitle_3')}
       </div>
     ),
     disableBeacon: true,
@@ -131,29 +128,24 @@ export const TOUR_STEPS_DECKTOP = [
   },
   {
     target: '.lessonsTour',
-    title: <div>Lessons List</div>,
-    content: (
-      <div>
-        See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉
-      </div>
-    ),
+    title: <div>{translate('intro_tour_step_8_desktop_title')} </div>,
+    content: <div>{translate('intro_tour_step_8_desktop_subtitle')}</div>,
     disableBeacon: true,
     placement: 'top' as const,
   },
   {
     target: '.tourStart',
-    title: <div>Most important: Have fun! 🤪</div>,
+    title: <div>{translate('intro_tour_step_9_desktop_title')}</div>,
     content: (
       <Box sx={{ py: 1 }}>
-        {' '}
-        And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?
+        {translate('intro_tour_step_9_desktop_subtitle')}
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2 }}>
           <LessonFeedback lessonName={'Intro tour'}>
             <Button
               variant='soft'
               sx={{ textTransform: 'uppercase' }}
             >
-              Leave a feedback
+              {translate('intro_tour_step_9_desktop_btn')}
             </Button>
           </LessonFeedback>
         </Box>
@@ -164,10 +156,10 @@ export const TOUR_STEPS_DECKTOP = [
   },
 ]
 
-export const TOUR_STEPS_MOBILE = [
+export const getTourStepsMobile = (translate: (key: string) => string): Step[] => [
   {
     target: '.tourStart',
-    title: <div>💥 The Coding Panel 👩‍💻 💥</div>,
+    title: <div>{translate('intro_tour_step_1_mobile_title')}</div>,
     content: (
       <div>
         <Image
@@ -175,7 +167,7 @@ export const TOUR_STEPS_MOBILE = [
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '180px' }}
         />
-        Here is where all the learning and building happens. 🤩
+        {translate('intro_tour_step_1_mobile_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -183,18 +175,13 @@ export const TOUR_STEPS_MOBILE = [
   },
   {
     target: '.sliderTour',
-    title: <div>The Slides</div>,
-    content: (
-      <div>
-        Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
-        step by step.
-      </div>
-    ),
+    title: <div>{translate('intro_tour_step_2_mobile_title')}</div>,
+    content: <div>{translate('intro_tour_step_2_mobile_subtitle')}</div>,
     disableBeacon: true,
   },
   {
     target: '.sliderTour',
-    title: <div>Challenge Slides</div>,
+    title: <div>{translate('intro_tour_step_3_mobile_title')}</div>,
     content: (
       <div>
         <Image
@@ -202,7 +189,7 @@ export const TOUR_STEPS_MOBILE = [
           alt='challenge preview'
           sx={{ py: 1 }}
         />
-        See a Challenge ⚔️ slide? That means it’s time to code in the editor.
+        {translate('intro_tour_step_3_mobile_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -210,7 +197,7 @@ export const TOUR_STEPS_MOBILE = [
   },
   {
     target: '.controls',
-    title: <div>Controls</div>,
+    title: <div>{translate('intro_tour_step_4_mobile_title')}</div>,
     content: (
       <div>
         <Image
@@ -218,7 +205,7 @@ export const TOUR_STEPS_MOBILE = [
           alt='controls preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
-        On “Challenge” slides you can also “Skip” ⏭️ and come back later 🔙 if you get stuck.
+        {translate('intro_tour_step_4_mobile_subtitle')}
       </div>
     ),
     disableBeacon: true,
@@ -226,31 +213,26 @@ export const TOUR_STEPS_MOBILE = [
   },
   {
     target: '.smallSliderTour',
-    title: <div>Navigation</div>,
-    content: <div>Here you can change this tabs</div>,
+    title: <div>{translate('intro_tour_step_5_mobile_title')}</div>,
+    content: <div>{translate('intro_tour_step_5_mobile_subtitle')}</div>,
     disableBeacon: true,
   },
   {
     target: '.lessonsTourMobile',
-    title: <div>Lessons List</div>,
-    content: (
-      <div>
-        See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉
-      </div>
-    ),
+    title: <div>{translate('intro_tour_step_6_mobile_title')}</div>,
+    content: <div>{translate('intro_tour_step_6_mobile_subtitle')}</div>,
     disableBeacon: true,
     placement: 'top' as const,
   },
   {
     target: '.tourStart',
-    title: <div>Most important: Have fun! 🤪</div>,
+    title: <div>{translate('intro_tour_step_7_mobile_title')}</div>,
     content: (
       <Box sx={{ py: 1 }}>
-        {' '}
-        And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?
+        {translate('intro_tour_step_7_mobile_subtitle')}
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <LessonFeedback lessonName={'Intro tour'}>
-            <Button>Feedback</Button>
+            <Button>{translate('intro_tour_step_7_mobile_btn')}</Button>
           </LessonFeedback>
         </Box>
       </Box>

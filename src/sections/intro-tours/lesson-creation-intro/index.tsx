@@ -5,10 +5,11 @@ import { useDispatch } from 'react-redux'
 
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import TooltipTourCodePanel from '../tour-tooltip'
 
-import { LESSON_CREATION_INTRO } from './config'
+import { getLessonCreationSteps } from './config'
 
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
 
@@ -17,11 +18,13 @@ interface LessonCreationIntroProps {
 }
 
 export const LessonCreationIntro = ({ deley }: LessonCreationIntroProps) => {
+  const translate = useTranslate()
   const dispatch = useDispatch()
-  const [slideIndex, setSlideIndex] = useState(0)
-  const isTourStarted = useSelector((state) => state.tour.isStarted)
 
+  const [slideIndex, setSlideIndex] = useState(0)
   const [isHidden, setIsHidden] = useState<boolean>(true)
+
+  const isTourStarted = useSelector((state) => state.tour.isStarted)
 
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { action, index, status, type } = data
@@ -60,7 +63,7 @@ export const LessonCreationIntro = ({ deley }: LessonCreationIntroProps) => {
       callback={handleJoyrideCallback}
       run={isTourStarted}
       tooltipComponent={TooltipTourCodePanel}
-      steps={LESSON_CREATION_INTRO}
+      steps={getLessonCreationSteps(translate)}
       showSkipButton={false}
       showProgress
       stepIndex={slideIndex}

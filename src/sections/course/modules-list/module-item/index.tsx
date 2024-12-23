@@ -96,6 +96,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
         <Stack
           direction={isMobile ? 'column-reverse' : 'row'}
           alignItems='center'
+          gap={isMobile ? 0 : 3}
         >
           <Button
             component={NextLink}

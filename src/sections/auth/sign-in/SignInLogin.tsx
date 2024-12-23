@@ -23,11 +23,13 @@ export default function SignInLogin({
   goToStep,
   nextStep,
 }: Partial<StepWizardChildProps> & IProps): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar()
-  const router = useRouter()
-  const { loginWithGoogle } = useAuthContext()
-  const [isLoading, setIsLoading] = useState(false)
   const translate = useTranslate()
+  const router = useRouter()
+
+  const { enqueueSnackbar } = useSnackbar()
+  const { loginWithGoogle } = useAuthContext()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const onLoginWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
@@ -41,9 +43,6 @@ export default function SignInLogin({
       setIsLoading(false)
     },
   })
-
-  // eslint-disable-next-line no-console
-  console.log('SignInLogin')
 
   return (
     <>
@@ -117,7 +116,7 @@ export default function SignInLogin({
           })}
         >
           <FcGoogle size='50px' />
-          {translate('ligin_with_google')}
+          {translate('login_with_google')}
         </LoadingButton>
       </Stack>
     </>

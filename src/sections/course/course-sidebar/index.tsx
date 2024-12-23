@@ -129,14 +129,14 @@ export default function CourseSidebar({
           variant='body1'
           gutterBottom
         >
-          {translate('courses_entery_point')}
+          {translate('courses_entry_point')}
         </Typography>
         <Typography variant='body1'>{translate('courses_for_beginners_info')}</Typography>
         <Typography
           variant='caption'
           sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 3 }}
         >
-          <TbFileCertificate size={20} /> {translate('courses_semple_cerificate')}
+          <TbFileCertificate size={20} /> {translate('courses_sample_certificate')}
         </Typography>
       </Stack>
       <Stack

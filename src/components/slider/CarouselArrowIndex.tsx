@@ -1,5 +1,5 @@
 import { Box, IconButton, SxProps, Typography } from '@mui/material'
-import { Theme, styled, useTheme } from '@mui/material/styles'
+import { Theme, styled } from '@mui/material/styles'
 
 import { IconifyProps } from '@/components'
 import { bgBlur } from '@/utils'
@@ -48,10 +48,6 @@ export default function CarouselArrowIndex({
   sx,
   ...other
 }: Props): React.ReactElement {
-  const theme = useTheme()
-
-  const isRTL = theme.direction === 'rtl'
-
   return (
     <StyledRoot
       sx={sx}
@@ -61,10 +57,7 @@ export default function CarouselArrowIndex({
         color='inherit'
         onClick={onPrevious}
       >
-        <LeftIcon
-          icon={icon}
-          isRTL={isRTL}
-        />
+        <LeftIcon icon={icon} />
       </StyledIconButton>
 
       <Typography
@@ -79,10 +72,7 @@ export default function CarouselArrowIndex({
         color='inherit'
         onClick={onNext}
       >
-        <RightIcon
-          icon={icon}
-          isRTL={isRTL}
-        />
+        <RightIcon icon={icon} />
       </StyledIconButton>
     </StyledRoot>
   )

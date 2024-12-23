@@ -14,6 +14,7 @@ import Validation from '@/sections/dashboard/lessons/LessonStep/Modals/Validatio
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { MediaModal } from '@root/src/sections/dashboard/medias/MediaModal'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
 import { MenuPopover } from '../menu-popover'
@@ -28,6 +29,8 @@ interface IMenuItems {
 }
 
 const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
+  const translate = useTranslate()
+
   const [open, setOpen] = useState<HTMLElement | null>(null)
   const [formatMenuState, formatMenuOpen, formatMenuClose] = useBoolean()
   const formatMenuButton = useRef<HTMLButtonElement | null>(null)
@@ -146,7 +149,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
           sx={sx}
         >
           <LuCheckCircle size={20} />
-          Challenge
+          {translate('remirror_toolbar_challenge_btn')}
         </Button>
         {editorInstance && (
           <>
@@ -156,12 +159,12 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
               ref={formatMenuButton}
             >
               <LuWrench size={20} />
-              Tools
+              {translate('remirror_toolbar_tools_btn')}
             </Button>
             <MediaModal insertImage={insertImage}>
               <Button sx={sx}>
                 <TbPhoto size={20} />
-                Insert Media
+                {translate('remirror_toolbar_insert_media_btn')}
               </Button>
             </MediaModal>
           </>
@@ -220,27 +223,27 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
           <>
             <Button
               onClick={capeHtml('Escape')}
-              title='Escapes HTML in the selection'
+              title={translate('remirror_toolbar_escape_html_btn_title')}
               sx={BUTTONS_STYLES}
             >
               <LuRemoveFormatting size={20} />
-              Escape HTML
+              {translate('remirror_toolbar_escape_html_btn')}
             </Button>
             <Button
               onClick={capeHtml('Unescape')}
-              title='Tangle this code'
+              title={translate('remirror_toolbar_cape_html_btn_title')}
               sx={BUTTONS_STYLES}
             >
               <LuScrollText size={20} />
-              Cape HTML
+              {translate('remirror_toolbar_cape_html_btn')}
             </Button>
             <Button
               sx={BUTTONS_STYLES}
               onClick={handleAutoFormat}
-              title='Format code'
+              title={translate('remirror_toolbar_format_btn_title')}
             >
               <TbIroning1 size={20} />
-              Format
+              {translate('remirror_toolbar_format_btn')}
             </Button>
           </>
         )}

@@ -233,10 +233,10 @@ export default function LessonFeedback({
             sx={{ pb: 1, pt: 2, pl: 4 }}
           >
             {feedbackType === feedbackTypes.general
-              ? translate('RATE THIS SITE')
+              ? translate('rate_slide_title')
               : feedbackType === feedbackTypes.training
-                ? translate('RATE THIS TRAINING')
-                : translate('RATE THIS SLIDE')}
+                ? translate('rate_training_title')
+                : translate('rate_slide_title')}
           </DialogTitle>
 
           <IconButton
@@ -252,13 +252,13 @@ export default function LessonFeedback({
               variant='body2'
               sx={{ mb: 2 }}
             >
-              Give us a rating
+              {translate('rate_modal_subtitle_1')}
               {feedbackType === feedbackTypes.general
-                ? ` in general`
+                ? translate('rate_modal_subtitle_2')
                 : feedbackType === feedbackTypes.training
-                  ? ` for the training`
-                  : ` for the slide`}
-              . Tell us if you like it or not.
+                  ? translate('rate_modal_subtitle_3')
+                  : translate('rate_modal_subtitle_4')}
+              {translate('rate_modal_subtitle_5')}
             </Typography>
             <Rating
               value={rating}

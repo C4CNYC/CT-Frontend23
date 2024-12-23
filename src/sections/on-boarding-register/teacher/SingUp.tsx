@@ -29,10 +29,12 @@ export default function SingUp({
   isTeacher,
   goToStep,
 }: Props): React.ReactElement {
-  const { registerWithGoogle } = useAuthContext()
-  const { enqueueSnackbar } = useSnackbar()
-  const [isLoading, setIsLoading] = useState(false)
   const translate = useTranslate()
+
+  const { enqueueSnackbar } = useSnackbar()
+  const { registerWithGoogle } = useAuthContext()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const onRegisterWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
@@ -43,7 +45,7 @@ export default function SingUp({
 
         goToStep(2)
       } catch (error: any) {
-        enqueueSnackbar(error.message, { variant: 'error' })
+        enqueueSnackbar(error?.data?.message ?? 'error', { variant: 'error' })
       }
       setIsLoading(false)
     },

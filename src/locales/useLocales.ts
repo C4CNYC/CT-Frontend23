@@ -1,8 +1,8 @@
 import { Localization } from '@mui/material/locale'
 import { useTranslation } from 'react-i18next'
 
-import { useSettingsContext } from '@/components/settings'
-import { localStorageAvailable } from '@/utils/localStorageAvailable'
+import { useSettingsContext } from '../components'
+import { localStorageAvailable } from '../utils'
 
 import { allLangs, defaultLang } from './config-lang'
 
@@ -28,11 +28,11 @@ export function useLocales(): IUseLocals {
   const storageAvailable = localStorageAvailable()
 
   const langStorage = storageAvailable ? localStorage.getItem('i18nextLng') : ''
-
   const currentLang = allLangs.find((_lang) => _lang.value === langStorage) ?? defaultLang
 
   const handleChangeLanguage = async (newlang: string): Promise<void> => {
     try {
+      localStorage.setItem('i18nextLng', newlang)
       await i18n.changeLanguage(newlang)
       onChangeDirectionByLang(newlang)
     } catch (e: any) {}

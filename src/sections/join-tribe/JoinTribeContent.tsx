@@ -36,7 +36,7 @@ export default function JoinTribeContent({
         push(STUDENT_PATH_DASHBOARD.class.id(classId))
         cleanJoinTribeStorage()
       } else {
-        enqueueSnackbar(translate('send_reques_for_join_to_class'))
+        enqueueSnackbar(translate('send_request_for_join_to_class'))
         setIsPending(true)
         cleanJoinTribeStorage()
       }

@@ -168,6 +168,7 @@ export default function ProfileInfoForm({
                   flexGrow: 1,
                   gap: 3,
                   pl: { sm: 0, md: 4 },
+
                   pt: { xs: 3, sm: 3, md: 1 },
                 }}
               >

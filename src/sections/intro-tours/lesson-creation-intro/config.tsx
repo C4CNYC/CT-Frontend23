@@ -1,13 +1,13 @@
 import { Step } from 'react-joyride'
 
-export const LESSON_CREATION_INTRO: Step[] = [
+export const getLessonCreationSteps = (translate: (key: string) => string): Step[] => [
   {
     target: '.lessonCreationStep1',
-    title: <div>Hi there 👋🏼</div>,
+    title: <div>{translate('intro_tour_lesson_creation_step_1_title')}</div>,
     content: (
       <div>
-        <p>This is the “Lesson Editor.” ✏️</p>
-        <p>You can edit or create new lessons here.</p>
+        <p>{translate('intro_tour_lesson_creation_step_1_subtitle')}</p>
+        <p>{translate('intro_tour_lesson_creation_step_1_subtitle_2')}</p>
       </div>
     ),
     disableBeacon: true,
@@ -15,22 +15,22 @@ export const LESSON_CREATION_INTRO: Step[] = [
   },
   {
     target: '.lessonCreationStep2',
-    title: <div>Slides 🛝</div>,
-    content: <div>These are the slides - The pages. Add, edit or re-order them here.</div>,
+    title: <div>{translate('intro_tour_lesson_creation_step_2_title')}</div>,
+    content: <div>{translate('intro_tour_lesson_creation_step_2_subtitle')}</div>,
     disableBeacon: true,
     placement: 'right' as const,
   },
   {
     target: '.lessonCreationStep3',
-    title: <div>Choose your Format 🎨</div>,
-    content: <div>You can create slides in a simple editor 📄 or in HTML.</div>,
+    title: <div>{translate('intro_tour_lesson_creation_step_3_title')}</div>,
+    content: <div>{translate('intro_tour_lesson_creation_step_3_subtitle')}</div>,
     disableBeacon: true,
     placement: 'auto' as const,
   },
   {
     target: '.lessonCreationStep4',
-    title: <div>Preview Student View 👩‍🎓🔍</div>,
-    content: <div>See how the slides look in the Coding Panel (Workspace). </div>,
+    title: <div>{translate('intro_tour_lesson_creation_step_4_title')}</div>,
+    content: <div>{translate('intro_tour_lesson_creation_step_4_subtitle')}</div>,
     disableBeacon: true,
     placement: 'auto' as const,
     styles: {

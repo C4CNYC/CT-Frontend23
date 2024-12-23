@@ -22,14 +22,14 @@ interface Props {
   lesson: ILesson
 }
 
-const BRIEFING = '#0198ED'
 const CUSTOM = '#364954'
-const CHALANGES = '#FBDD3F'
 
 export default function ModuleLessonItem({ onRemove, index, lesson }: Props): React.ReactElement {
   const router = useRouter()
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
+
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
   const isActive = router.query.lessonId === lesson.id
 
   const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {

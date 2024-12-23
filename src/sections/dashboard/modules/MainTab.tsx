@@ -2,6 +2,7 @@ import { Box, IconButton, Typography } from '@mui/material'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 
 import { RHFSwitch, RHFTextField, RHFUpload, SingleFilePreview } from '@/components'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { HELPER_IMG_TEXT, INPUT_SX, UPLOAD_IMG_BTN } from './constants'
 
@@ -18,6 +19,7 @@ const MainTab = ({
   uploadedBackground,
   setUploadedBackground,
 }: MainTabProps): React.ReactElement => {
+  const translate = useTranslate()
   return (
     <>
       <Box>
@@ -27,7 +29,7 @@ const MainTab = ({
           pl={1}
           mt={-3}
         >
-          Module image
+          {translate('modules_module_image')}
         </Typography>
         <Box sx={{ position: 'relative' }}>
           {uploadedFile ? (
@@ -66,7 +68,7 @@ const MainTab = ({
           pl={1}
           mt={-1}
         >
-          Module background
+          {translate('modules_module_background')}
         </Typography>
         <Box sx={{ position: 'relative' }}>
           {uploadedBackground ? (
@@ -103,13 +105,13 @@ const MainTab = ({
       <RHFTextField
         sx={INPUT_SX}
         name='name'
-        label='Module name'
+        label={translate('modules_module_name')}
         required
       />
 
       <RHFTextField
         name='description'
-        label='Module description'
+        label={translate('modules_module_description')}
         required
         multiline
         rows={3}
@@ -117,7 +119,7 @@ const MainTab = ({
 
       <RHFSwitch
         name='active'
-        label='Module active'
+        label={translate('modules_module_active')}
       />
     </>
   )

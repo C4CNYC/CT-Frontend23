@@ -104,6 +104,7 @@ export default function UserListPage(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const [deleteMember, { isLoading: loading }] = useDeleteOrgMemberMutation()
   const translate = useTranslate()
+
   const deleteMemberCb = async (userId: string): Promise<void> => {
     try {
       await deleteMember({

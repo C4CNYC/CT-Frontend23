@@ -223,7 +223,7 @@ function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
           variant='body2'
           sx={{ color: 'text.secondary', whiteSpace: 'pre-line' }}
         >
-          {translate('image_drope_file')}
+          {translate('image_drop_file')}
         </Typography>
       </div>
     </Stack>

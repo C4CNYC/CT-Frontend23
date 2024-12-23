@@ -86,7 +86,7 @@ export function PropertiesCreateEdit({
         onClose={handleClose}
         fullWidth
       >
-        <DialogTitle sx={{ pb: 2 }}>{translate('propertiess_create_int')}</DialogTitle>
+        <DialogTitle sx={{ pb: 2 }}>{translate('properties_create_int')}</DialogTitle>
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}

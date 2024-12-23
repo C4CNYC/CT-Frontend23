@@ -11,7 +11,6 @@ import {
   Typography,
 } from '@mui/material'
 import { CiCircleQuestion } from '@react-icons/all-files/ci/CiCircleQuestion'
-import { useRouter } from 'next/router'
 
 import { useTranslate } from '@/utils/translateHelper'
 import { MenuPopover } from '@root/src/components'
@@ -30,18 +29,17 @@ import {
 } from './constants'
 
 interface ILessonDialog {
-  open: boolean
-  closeDialog: VoidFunction
-  openLesson: VoidFunction
+  children: React.ReactElement
+  onOpenLesson: () => void
 }
 
 export default function LessonDialog({
-  open,
-  closeDialog,
-  openLesson,
+  children,
+  onOpenLesson,
 }: ILessonDialog): React.ReactElement {
-  const router = useRouter()
   const translate = useTranslate()
+
+  const [open, setOpenDialog] = useState(false)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
@@ -55,106 +53,108 @@ export default function LessonDialog({
   }
 
   return (
-    <Dialog
-      open={open}
-      onClose={closeDialog}
-      PaperProps={{
-        sx: PAPER_PROPS_SX,
-      }}
-    >
-      <DialogTitle sx={{ ...MODE_TITLE_SX, py: 0 }}>
-        <RocketIcon
-          width={20}
-          height={20}
-        />
-        Part of Project
-      </DialogTitle>
-      <Box sx={DIALOG_TITLE_WRAPPER_SX}>
-        <Typography
-          sx={DIALOG_TITLE_SX}
-          variant='h6'
-        >
-          This Lesson Builds on the Previous One 🏗️
-        </Typography>
-        <IconButton
-          onClick={closeDialog}
-          sx={CLOSE_DIALOG_ICON_SX}
-        >
-          <CloseIcon />
-        </IconButton>
+    <>
+      <Box
+        onClick={() => {
+          setOpenDialog(true)
+        }}
+      >
+        {children}
       </Box>
-      <DialogContent sx={DIALOG_CONTENT_WRAPPER_SX}>
-        <Box sx={DIALOG_SUBTITLE_SX}>
-          <Typography>
-            It looks like you haven’t finished (at least 90% ) of the previous lesson. 🙀
+      <Dialog
+        open={open}
+        onClose={() => setOpenDialog(false)}
+        PaperProps={{
+          sx: PAPER_PROPS_SX,
+        }}
+      >
+        <DialogTitle sx={{ ...MODE_TITLE_SX, py: 0 }}>
+          <RocketIcon
+            width={20}
+            height={20}
+          />
+          {translate('lesson_part_project_type')}
+        </DialogTitle>
+        <Box sx={DIALOG_TITLE_WRAPPER_SX}>
+          <Typography
+            sx={DIALOG_TITLE_SX}
+            variant='h6'
+          >
+            {translate('lesson_dialog_title_2')}
           </Typography>
-          <IconButton onClick={handleOpenPopover}>
-            <CiCircleQuestion />
+          <IconButton
+            onClick={() => setOpenDialog(false)}
+            sx={CLOSE_DIALOG_ICON_SX}
+          >
+            <CloseIcon />
           </IconButton>
         </Box>
-        <Typography>
-          So we'll insert "Standard" code, but if you go back NOW and finish, then your own code
-          will automatically be passed to this lesson. 😃
-        </Typography>
-        <Button
-          onClick={handleOpenPopover}
-          sx={{ ...SEE_MORE_SX, my: 0 }}
+        <DialogContent sx={DIALOG_CONTENT_WRAPPER_SX}>
+          <Box sx={DIALOG_SUBTITLE_SX}>
+            <Typography>{translate('lesson_dialog_subtitle_1')}</Typography>
+            <IconButton onClick={handleOpenPopover}>
+              <CiCircleQuestion />
+            </IconButton>
+          </Box>
+          <Typography>{translate('lesson_dialog_subtitle_2')}</Typography>
+          <Button
+            onClick={handleOpenPopover}
+            sx={{ ...SEE_MORE_SX, my: 0 }}
+          >
+            {translate('lesson_dialog_learn_more')}
+          </Button>
+          <Button
+            color='inherit'
+            variant='soft'
+            onClick={onOpenLesson}
+          >
+            {translate('lesson_dialog_btn_start')}
+          </Button>
+          <Button
+            color='info'
+            variant='soft'
+            onClick={() => {
+              setOpenDialog(false)
+            }}
+          >
+            {translate('lesson_dialog_go_back')}
+          </Button>
+        </DialogContent>
+        <MenuPopover
+          open={openPopover}
+          arrow='bottom-center'
+          onClose={handleClosePopover}
+          disabledArrow
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          transformOrigin={{ vertical: 50, horizontal: -50 }}
+          sx={{ p: 3, width: 400 }}
         >
-          Learn more
-        </Button>
-        <Button
-          color='inherit'
-          variant='soft'
-          onClick={openLesson}
-        >
-          {translate('lesson_dialog_btn_start')}
-        </Button>
-        <Button
-          color='info'
-          variant='soft'
-          onClick={() => {
-            closeDialog()
-          }}
-        >
-          No. I'll go back to finsh
-        </Button>
-      </DialogContent>
-      <MenuPopover
-        open={openPopover}
-        arrow='bottom-center'
-        onClose={handleClosePopover}
-        disabledArrow
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        transformOrigin={{ vertical: 50, horizontal: -50 }}
-        sx={{ p: 3, width: 400 }}
-      >
-        <Typography
-          variant='h4'
-          sx={{ pb: 2 }}
-        >
-          Lesson to Lesson Code Copying
-        </Typography>
-        <Typography
-          variant='body1'
-          sx={{ pb: 1 }}
-        >
-          We made it like this, so that you can start any lesson you want at any time. 👀 🤩
-        </Typography>
-        <Typography
-          variant='body1'
-          sx={{ pb: 1 }}
-        >
-          But if you want your special code, with all your personal customizations to be passed
-          automatically, then you have to complete, at least, 90%.
-        </Typography>
-        <Typography
-          variant='body1'
-          sx={{ pb: 1 }}
-        >
-          But don't worry. Whatever you choose is just fine. As long as you just keep coding. 🙌
-          Yaay!
-        </Typography>
-      </MenuPopover>
-    </Dialog>
+          <Typography
+            variant='h4'
+            sx={{ pb: 2 }}
+          >
+            {translate('lesson_to_lesson_code_copying')}
+          </Typography>
+          <Typography
+            variant='body1'
+            sx={{ pb: 1 }}
+          >
+            {translate('lesson_to_lesson_code_copying_subtitle_1')}
+          </Typography>
+          <Typography
+            variant='body1'
+            sx={{ pb: 1 }}
+          >
+            {translate('lesson_to_lesson_code_copying_subtitle_2')}
+          </Typography>
+          <Typography
+            variant='body1'
+            sx={{ pb: 1 }}
+          >
+            {translate('lesson_to_lesson_code_copying_subtitle_3')}
+          </Typography>
+        </MenuPopover>
+      </Dialog>
+    </>
   )
 }

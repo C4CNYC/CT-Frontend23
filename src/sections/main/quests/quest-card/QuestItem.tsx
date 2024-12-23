@@ -16,7 +16,6 @@ import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { IAssignmentReduced } from '@/redux/interfaces/assignment.interface'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useDeleteAssignmentMutation } from '@/redux/services/manager/assignments-manager'
-import { usePinAssignmentMutation } from '@/redux/services/manager/assignments-student'
 import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
@@ -29,30 +28,19 @@ interface IQuestItemProps {
 export default function QuestItem({ assignment, schoolId }: IQuestItemProps): React.ReactElement {
   const { query } = useRouter()
   const theme = useTheme()
-  const isLight = theme.palette.mode === 'light'
   const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
+
+  const isLight = theme.palette.mode === 'light'
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [openConfirm, setOpenConfirm] = useState(false)
-  const translate = useTranslate()
-  const [pinAssignment] = usePinAssignmentMutation()
-  // const [unpinAssignment, { isLoading: isLoadingUnpin }] =
-  //   useUnpinAssignmentMutation();
-  const [deleteAssignmet, { isLoading: isDeleting }] = useDeleteAssignmentMutation()
 
-  const pinTomblerAssignment = async () => {
-    try {
-      await pinAssignment({ assignmentId: assignment.id }).unwrap()
-      // await unpinAssignment({assignmentId: assignment.id}).unwrap();
-      enqueueSnackbar(translate('home_assignment_pined'))
-    } catch (e: any) {
-      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
-    }
-  }
+  const [deleteAssignment, { isLoading: isDeleting }] = useDeleteAssignmentMutation()
 
   const onDelete = async () => {
     try {
-      await deleteAssignmet({
+      await deleteAssignment({
         schoolId,
         assignmentId: assignment.id,
       }).unwrap()
@@ -120,18 +108,6 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                 gap={2}
                 sx={{ flexDirection: { sm: 'row' } }}
               >
-                {/* (
-                  <Typography
-                    sx={{ color: "#0198ED", display: "inline-flex" }}
-                    variant="subtitle2"
-                  >
-                    Live Now
-                    <HiOutlineStatusOnline
-                      size={20}
-                      style={{ marginLeft: "3px" }}
-                    />
-                  </Typography>
-                ) */}
                 <Typography variant='body2'>
                   {formatDistanceToNow(new Date(assignment.createdat), {
                     addSuffix: true,
@@ -212,7 +188,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                 <Iconify
                   icon='maki:arrow'
                   width={18}
-                  style={{ marginLeft: '3px' }}
+                  style={{ marginLeft: '3px', marginRight: '3px' }}
                 />
               </Link>
               <Link
@@ -251,35 +227,10 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
               flexDirection: { xs: 'row', sm: 'row', md: 'column' },
             })}
           >
-            {/* hided before release */}
-            {/* <IconButton
-              sx={{ alignSelf: "flex-end" }}
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                pinTomblerAssignment();
-              }}
-            > */}
-            {/* uncomment when pin \ unpin will work */}
-            {/* {isLoadingPin || isLoadingUnpin ? (
-                <CircularProgress variant="indeterminate" size={20} />
-              ) : !assignment?.pined ? (
-                <Iconify icon="bi:pin-fill" width={22} />
-              ) : (
-                <Iconify icon="bi:pin" width={22} />
-              )} */}
-            {/* <Iconify icon="bi:pin" width={22} />
-            </IconButton> */}
             <Stack direction='row'>
-              {/* <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                }}
+              <RoleBasedGuard
+                roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner, Role.Editor]}
               >
-                <Iconify icon="ion:share-outline" width={22} />
-              </IconButton> */}
-              <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner, Role.Editor]}>
                 <IconButton onClick={handleOpenPopover}>
                   <Iconify
                     icon='pepicons-pop:dots-y'

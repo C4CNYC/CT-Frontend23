@@ -22,17 +22,20 @@ import JoinClassModal from './JoinTribeModal'
 import TribeListItem from './TribesListItem'
 
 export default function MenuTribesList(): React.ReactElement {
+  const { query } = useRouter()
   const theme = useTheme()
   const { themeLayout } = useSettingsContext()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const isNavMini = themeLayout === 'mini' && !isMobile
   const translate = useTranslate()
+
   const profile = useSelector((state) => state.global.user)
 
   const [containerHeignt, setContainerHeignt] = useState('auto')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
   const { data, isLoading } = useGetStudentClassesQuery({}, { skip: !profile })
-  const { query } = useRouter()
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const isNavMini = themeLayout === 'mini' && !isMobile
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -49,6 +52,7 @@ export default function MenuTribesList(): React.ReactElement {
       setContainerHeignt(data.data.length < 4 ? 'auto' : '150px')
     }
   }, [isLoading])
+
   return (
     <Stack
       sx={{ width: '100%' }}
@@ -92,7 +96,7 @@ export default function MenuTribesList(): React.ReactElement {
           <>
             <Button
               onClick={handleOpenPopover}
-              sx={(theme) => ({ ...getAddTribeButtonSx(theme, isNavMini) })}
+              sx={(theme) => ({ ...getAddTribeButtonSx(theme) })}
               className='studentJoinStep3'
             >
               <FaPlus size={20} />
@@ -142,7 +146,7 @@ export default function MenuTribesList(): React.ReactElement {
         disabledArrow
         transformOrigin={{ vertical: -5, horizontal: 'center' }}
       >
-        <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+        <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
           <Link
             component={nextLink}
             href={STUDENT_PATH_DASHBOARD.class.createClass}

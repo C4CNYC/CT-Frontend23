@@ -25,39 +25,31 @@ export default function CourseSummarily({
         gap: 3,
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <AiOutlineClockCircle
           size='15px'
           style={{ marginBottom: '3px' }}
         />
-        <Typography
-          variant='body1'
-          ml={1}
-        >
-          9 Hours
-        </Typography>
+        <Typography variant='body1'>9 {translate('hours')}</Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <AiOutlineClockCircle
           size='15px'
           style={{ marginBottom: '3px' }}
         />
         <Typography
           variant='body1'
-          sx={{ ml: 1, textTransform: 'capitalize' }}
+          sx={{ textTransform: 'capitalize' }}
         >
           {translate('grade')} {level}
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <MdCelebration
           size='18px'
           style={{ marginBottom: '4px' }}
         />
-        <Typography
-          variant='body1'
-          sx={{ ml: 1 }}
-        >
+        <Typography variant='body1'>
           {lessonsCount} {`Training${lessonsCount !== 1 ? 's' : ''}`}
         </Typography>
       </Box>

@@ -26,6 +26,16 @@ export const StyledSection = styled('div')(({ theme }) => ({
   },
 }))
 
+export const StyledLogoCont = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  top: '24px',
+  left: 0,
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}))
+
 export const StyledSectionBg = styled('div')(({ theme }) => ({
   top: 0,
   left: 0,

@@ -1,3 +1,5 @@
+import { Theme } from '@mui/system'
+
 export const CODING_SYMBOLS_BOX_SX = {
   position: 'fixed',
   bottom: 0,
@@ -13,21 +15,25 @@ export const CODING_SYMBOLS_BOX_SX = {
 export const DIVIDER_SX = { borderStyle: 'solid' }
 
 export const SYMBOL_BTN_BRACKETS_SX = { fontSize: '1.2rem', pb: 1 }
+
 export const SYMBOL_BTN_PT = { pt: '10px' }
+
 export const SYMBOL_BTN_PB = { pb: '10px' }
-export const SYMBOL_BTN_TOOL = {
-  borderTopRightRadius: '15px',
-  borderBottomRightRadius: '15px',
+
+export const getSymbolBtnToolSx = (theme: Theme) => ({
+  borderRadius: theme.direction === 'ltr' ? '0 16px 16px 0' : '16px 0 0 16px',
   background: 'rgba(251, 221, 63, .2)',
   '&:hover': {
     background: 'rgba(251, 221, 63, .4)',
   },
-}
+})
+
 export const BRACES_WIDTH = { width: '25px' }
+
 export const BOTTOM_BOX = {
   display: 'flex',
   minWidth: 'auto',
   flexGrow: 1,
-  justifyContent: 'ceter',
+  justifyContent: 'center',
   alignItems: 'center',
 }

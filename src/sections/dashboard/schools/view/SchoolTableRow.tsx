@@ -4,7 +4,6 @@ import { Avatar, Button, Divider, IconButton, MenuItem, TableCell, TableRow } fr
 import { BiDotsVerticalRounded } from '@react-icons/all-files/bi/BiDotsVerticalRounded'
 import { enqueueSnackbar } from 'notistack'
 
-import { useAuthContext } from '@/auth/useAuthContext'
 import { ConfirmDialog, Iconify, Label, MenuPopover } from '@/components'
 import { useArchiveSchoolMutation } from '@/redux/services/admin/school-amdin'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
@@ -18,12 +17,12 @@ interface Props {
 
 export default function SchoolTableRow({ row }: Props): React.ReactElement {
   const translate = useTranslate()
+  const [archive] = useArchiveSchoolMutation()
+
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [openConfirm, setOpenConfirm] = useState(false)
-
   const [openDetails, setOpenDetails] = useState(false)
-  const [archive] = useArchiveSchoolMutation()
-  const { user } = useAuthContext()
+
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
   }
@@ -109,7 +108,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
-        arrow='right-top'
+        arrow={'right-top'}
         sx={{ width: 160 }}
       >
         <MenuItem

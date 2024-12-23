@@ -5,16 +5,20 @@ import { useDispatch } from 'react-redux'
 
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import TooltipTourCodePanel from '../tour-tooltip'
 
-import { STUDENT_DEFAULT_INTRO } from './config'
+import { getDefaultStudentIntroSteps } from './config'
 
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
 
 export const StudentDefaultIntro = () => {
   const dispatch = useDispatch()
+  const translate = useTranslate()
+
   const [slideIndex, setSlideIndex] = useState(0)
+
   const isTourStarted = useSelector((state) => state.tour.isStarted)
 
   const handleJoyrideCallback = (data: CallBackProps) => {
@@ -48,7 +52,7 @@ export const StudentDefaultIntro = () => {
       callback={handleJoyrideCallback}
       run={isTourStarted}
       tooltipComponent={TooltipTourCodePanel}
-      steps={STUDENT_DEFAULT_INTRO}
+      steps={getDefaultStudentIntroSteps(translate)}
       showSkipButton={false}
       showProgress
       stepIndex={slideIndex}

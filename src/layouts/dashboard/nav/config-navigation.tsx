@@ -45,6 +45,17 @@ export const admin = {
   ],
 }
 
+export const superAdmin = {
+  subheader: 'Administration',
+  items: [
+    {
+      title: 'Admin',
+      path: MANAGER_PATH_DASHBOARD.administration.root,
+      icon: <Iconify icon='eos-icons:admin' />,
+    },
+  ],
+}
+
 export const managment = {
   subheader: 'sidebar_menu_management',
   items: [
@@ -102,7 +113,7 @@ export const content = {
       disabled: true,
     },
     {
-      title: 'Properties',
+      title: 'sidebar_menu_properties',
       path: MANAGER_PATH_DASHBOARD.properties,
       icon: <FiCodesandbox />,
     },
@@ -214,6 +225,7 @@ export const socials = {
 }
 
 export const menuConfig = {
+  [Role.SuperAdmin]: [superAdmin, admin, managment, content],
   [Role.Owner]: [admin, managment, content],
   [Role.Admin]: [admin, managment, content],
   [Role.Student]: [courses, general, apps],

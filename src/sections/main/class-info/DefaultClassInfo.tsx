@@ -55,12 +55,18 @@ export default function DefaultClassInfo({
   classData,
 }: IDefaultClassInfoProps): React.ReactElement {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const translate = useTranslate()
   const { themeStretch } = useSettingsContext()
   const { copy } = useCopyToClipboard()
   const { enqueueSnackbar } = useSnackbar()
+
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
-  const translate = useTranslate()
+
+  const [updateClassByManager, { isLoading: updateResult }] = useUpdateClassesMutation()
+  const [updateClassAvatar] = useUpdateClassesAvatarMutation()
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget)
   }
@@ -78,9 +84,6 @@ export default function DefaultClassInfo({
       enqueueSnackbar(translate('messages_copied'))
     }
   }
-
-  const [updateClassByManager, { isLoading: updateResult }] = useUpdateClassesMutation()
-  const [updateClassAvatar] = useUpdateClassesAvatarMutation()
 
   const handleEditClass = async (
     id: string,
@@ -106,7 +109,7 @@ export default function DefaultClassInfo({
           file,
         }).unwrap()
       }
-      enqueueSnackbar(translate('classes_class_updeted'))
+      enqueueSnackbar(translate('classes_class_updated'))
     } catch (error: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
@@ -121,7 +124,9 @@ export default function DefaultClassInfo({
         className='tourMainStep3 studentJoinStep1'
         sx={{ mx: { lg: -2 } }}
       >
-        <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Editor, Role.Manager]}>
+        <RoleBasedGuard
+          roles={[Role.Owner, Role.SuperAdmin, Role.Admin, Role.Editor, Role.Manager]}
+        >
           <OnceOffNotification classData={classData} />
         </RoleBasedGuard>
         {/* <ClassInfoToggle /> */}
@@ -209,13 +214,13 @@ export default function DefaultClassInfo({
                     />
                     <Typography
                       variant='button'
-                      sx={{ ml: 0.5 }}
+                      sx={{ ml: 0.5, mr: 0.5 }}
                     >
                       {!isMobile ? translate('actions_share') : ''}
                     </Typography>
                   </Button>
                 </ShareGroupModal>
-                <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner]}>
+                <RoleBasedGuard roles={[Role.Manager, Role.SuperAdmin, Role.Admin, Role.Owner]}>
                   <IconButton
                     onClick={handleOpenPopover}
                     sx={{ ml: 2, p: 0.7 }}

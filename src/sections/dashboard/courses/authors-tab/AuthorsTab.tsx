@@ -42,7 +42,7 @@ export default function AuthorsTab({ courseId }: IAuthorsListProps): React.React
             sx={{ mt: 4, mb: 1 }}
             variant='contained'
           >
-            {translate('actions_create_authur')}
+            {translate('actions_create_author')}
           </Button>
         </AddAuthorDialog>
       </Stack>

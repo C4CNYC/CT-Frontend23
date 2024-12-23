@@ -22,14 +22,18 @@ export default function CourseCard({
   course,
   refetch,
 }: ICourseCardProps): React.ReactElement | null {
-  const { name, level, price, description, active, cover } = course
+  const translate = useTranslate()
+  const { isAdmin } = useIsAdmin()
   const { enqueueSnackbar } = useSnackbar()
+
   const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [deleteCourse] = useDeleteCourseMutation()
-  const translate = useTranslate()
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
+  const [deleteCourse] = useDeleteCourseMutation()
+
+  const { name, level, price, description, active, cover } = course
+
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
   }
@@ -62,8 +66,6 @@ export default function CourseCard({
       })
     }
   }
-
-  const { isAdmin } = useIsAdmin()
 
   return (
     <>

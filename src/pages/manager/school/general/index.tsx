@@ -30,14 +30,18 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 )
 
 export default function UserProfilePage(): React.ReactElement {
-  const schoolId = useSelector((state: RootState) => state.manager.schoolId)
   const translate = useTranslate()
-  const [currentTab, setCurrentTab] = useState('profile')
   const { themeStretch } = useSettingsContext()
+
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId)
+
+  const [currentTab, setCurrentTab] = useState('profile')
+
   const { data, isLoading, isFetching } = useGetSchoolProfileQuery(
     { schoolId },
     { skip: !schoolId }
   )
+
   const TABS = [
     {
       value: 'profile',
@@ -141,7 +145,8 @@ export default function UserProfilePage(): React.ReactElement {
               position: 'absolute',
               bgcolor: 'background.paper',
               '& .MuiTabs-flexContainer': {
-                pr: { md: 3 },
+                pr: { xs: 0, md: 3 },
+                pl: { xs: 2, md: 0 },
                 justifyContent: {
                   sm: 'center',
                   md: 'flex-end',

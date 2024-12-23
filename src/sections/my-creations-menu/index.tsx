@@ -4,8 +4,8 @@ import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import {
-  useCreateLessonMutation,
   useCreateByCloningLessonMutation,
+  useCreateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
@@ -15,23 +15,25 @@ import {
   StyledItem as StyledItemVertical,
 } from '@root/src/components/nav-section/vertical/styles'
 import { useResponsive } from '@root/src/hooks'
-import { useLocales } from '@root/src/locales'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import AiGenerateLessonDialog from './ai-generate-lesson-dialog'
 import DiamondFeatureModal from './diamond-feature-modal'
 import { SelectTemplateDialog } from './select-template-dialog'
 
 export default function MyCreationsMenu(): React.ReactElement {
-  const { translate } = useLocales()
-  const { themeLayout } = useSettingsContext()
-  const isDesktop = useResponsive('up', 'md')
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const router = useRouter()
-  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
-  const [createByCloningLesson, { isLoading: isCreateBCLLoading }] =
-    useCreateByCloningLessonMutation()
+  const translate = useTranslate()
+  const { themeLayout } = useSettingsContext()
+
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
+  const isDesktop = useResponsive('up', 'md')
+
+  const [createLesson] = useCreateLessonMutation()
+  const [createByCloningLesson] = useCreateByCloningLessonMutation()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation()
@@ -41,16 +43,6 @@ export default function MyCreationsMenu(): React.ReactElement {
 
   const handleClosePopover = (): void => {
     setOpenPopover(null)
-  }
-
-  const createNewLesson = async () => {
-    const lesson = await createLesson({
-      name: translate('my_new_lesson') as string,
-      description: translate('my_lesson_description') as string,
-      active: true,
-      duration: '60',
-    }).unwrap()
-    return lesson
   }
 
   async function createByCloningLessonHandler() {
@@ -66,9 +58,19 @@ export default function MyCreationsMenu(): React.ReactElement {
     }
   }
 
+  const createNewLesson = async () => {
+    const lesson = await createLesson({
+      name: translate('my_new_lesson') as string,
+      description: translate('my_lesson_description') as string,
+      active: true,
+      duration: '60',
+    }).unwrap()
+    return lesson
+  }
+
   return (
     <>
-      <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+      <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
         {themeLayout === 'vertical' || !isDesktop ? (
           <StyledItemVertical
             depth={1}
@@ -129,7 +131,7 @@ export default function MyCreationsMenu(): React.ReactElement {
         >
           <AiGenerateLessonDialog>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
-              Mumu AI Creator
+              {translate('sidebar_menu_my_creations_item_1')}
               <ListItemIcon sx={{ pl: 2, mr: -2 }}>
                 <Iconify
                   icon='mingcute:ai-line'
@@ -139,14 +141,14 @@ export default function MyCreationsMenu(): React.ReactElement {
             </MenuItem>
           </AiGenerateLessonDialog>
           <SelectTemplateDialog>
-            <MenuItem>Add From Templates</MenuItem>
+            <MenuItem>{translate('sidebar_menu_my_creations_item_8')}</MenuItem>
           </SelectTemplateDialog>
           <MenuItem
             onClick={async () => {
               await createByCloningLessonHandler()
             }}
           >
-            Add Blank Lesson
+            {translate('sidebar_menu_my_creations_item_2')}
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -156,7 +158,7 @@ export default function MyCreationsMenu(): React.ReactElement {
               handleClosePopover()
             }}
           >
-            My Lessons
+            {translate('sidebar_menu_my_creations_item_3')}
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -166,11 +168,11 @@ export default function MyCreationsMenu(): React.ReactElement {
               handleClosePopover()
             }}
           >
-            My Modules
+            {translate('sidebar_menu_my_creations_item_4')}
           </MenuItem>
           <DiamondFeatureModal>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
-              My Courses
+              {translate('sidebar_menu_my_creations_item_5')}
               <ListItemIcon sx={{ pl: 2, mr: -2 }}>
                 <Iconify
                   icon='ion:diamond-outline'
@@ -181,7 +183,7 @@ export default function MyCreationsMenu(): React.ReactElement {
           </DiamondFeatureModal>
           <DiamondFeatureModal>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
-              Integrations
+              {translate('sidebar_menu_my_creations_item_6')}
               <ListItemIcon
                 sx={{
                   pl: 2,
@@ -197,7 +199,7 @@ export default function MyCreationsMenu(): React.ReactElement {
           </DiamondFeatureModal>
           <DiamondFeatureModal>
             <MenuItem sx={{ justifyContent: 'space-between' }}>
-              Templates
+              {translate('sidebar_menu_my_creations_item_7')}
               <ListItemIcon
                 sx={{
                   pl: 2,

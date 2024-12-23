@@ -325,7 +325,7 @@ export default function StudentNewEditForm({
                 sx={{ mb: 3 }}
                 disabled={isEdit}
                 name='password'
-                label={translate('generated_passowrd')}
+                label={translate('generated_password')}
               />
             ) : null}
             <Box

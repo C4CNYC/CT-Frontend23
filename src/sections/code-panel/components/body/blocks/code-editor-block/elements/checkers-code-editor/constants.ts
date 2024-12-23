@@ -20,7 +20,7 @@ export const OPEN_HANDLER_ANIMATION = {
   },
 }
 
-export const getStackSx = (isBrowserHidden: boolean): SxProps<Theme> => ({
+export const getStackSx = (): SxProps<Theme> => ({
   top: '130px',
   right: 0,
   position: 'absolute',
@@ -28,20 +28,20 @@ export const getStackSx = (isBrowserHidden: boolean): SxProps<Theme> => ({
   flexDirection: 'row',
 })
 
-export const BOX_SX = {
+export const getBoxSx = (theme: Theme) => ({
   position: 'relative',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: 32,
   height: 35,
-  borderRadius: '15px 0px 0px 15px',
+  borderRadius: theme.direction === 'rtl' ? '0 14px 14px 0' : '14px 0 0 14px',
   zIndex: 301,
   background: 'rgba(21, 82, 117, 0.80)',
   ':hover': {
     cursor: 'pointer',
   },
-}
+})
 
 export const ICONIFY_SX = {
   '& path': {
@@ -49,11 +49,11 @@ export const ICONIFY_SX = {
   },
 }
 
-export const M_DIV_STYLE = {
+export const getMDivStyles = (theme: Theme) => ({
   background: '#155275CC',
-  borderRadius: '16px 0px 0px 16px',
+  borderRadius: theme.direction === 'rtl' ? '0 16px 16px 0' : '16px 0 0 16px',
   overflow: 'hidden',
-}
+})
 
 export const OPEN_BOX_SX = {
   position: 'absolute',
@@ -86,6 +86,7 @@ export const getIndicatorSx = (isValid: boolean): SxProps => ({
   width: 5,
   height: 20,
   color: 'red',
-  borderRadius: '4px 0px 0px 4px',
+  borderTopLeftRadius: '14px',
+  borderBottomLeftRadius: '14px',
   background: isValid ? '#75CF6D' : '#F44336',
 })

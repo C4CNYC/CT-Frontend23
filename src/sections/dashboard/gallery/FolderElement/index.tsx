@@ -2,6 +2,7 @@ import { Grid, Paper, Stack, Typography } from '@mui/material'
 
 import { Image } from '@/components'
 import TribesCounter from '@/sections/dashboard/tribes/tribesCounter'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface Props {
   title: string
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function FolderElement({ title, subtitle, projectCout }: Props): React.ReactElement {
+  const translate = useTranslate()
   return (
     <Paper elevation={5}>
       <Grid
@@ -38,7 +40,7 @@ export default function FolderElement({ title, subtitle, projectCout }: Props): 
                 sxText={{ color: 'rgb(183, 110, 0)' }}
                 count={projectCout}
               />
-              <Typography variant='body2'>projects inside</Typography>
+              <Typography variant='body2'>{translate('gallery_projects_inside')}</Typography>
             </Stack>
           </Stack>
         </Grid>

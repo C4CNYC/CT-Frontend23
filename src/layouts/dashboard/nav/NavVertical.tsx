@@ -29,9 +29,10 @@ export default function NavVertical({
   isManager,
   onCloseNav,
 }: INavVertical): React.ReactElement | null {
-  const user = useSelector((state: RootState) => state.global.user)
-  const { pathname } = useRouter()
   const theme = useTheme()
+  const { pathname } = useRouter()
+
+  const user = useSelector((state: RootState) => state.global.user)
 
   const isDesktop = useResponsive('up', 'md')
   const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
@@ -62,7 +63,10 @@ export default function NavVertical({
             flexShrink: 0,
           }}
         >
-          <Logo sx={{ ml: 2 }} />
+          <Logo
+            sx={{ ml: 2 }}
+            isLogoNav
+          />
           {!isManager ? <LetsCodeBtn /> : null}
         </Stack>
 
@@ -84,6 +88,7 @@ export default function NavVertical({
 
       {isDesktop ? (
         <Drawer
+          anchor={'left'}
           open
           variant='permanent'
           PaperProps={{
@@ -91,7 +96,7 @@ export default function NavVertical({
               zIndex: 0,
               width: NAV_SIZES.W_DASHBOARD,
               bgcolor: 'transparent',
-              borderRightStyle: 'dashed',
+              borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
             },
           }}
         >

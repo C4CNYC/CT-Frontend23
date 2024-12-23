@@ -7,14 +7,6 @@ type Props = TextFieldProps & {
   name: string
 }
 
-const TransparentTextField = styled(TextField)<{ transparent: boolean }>(({ transparent }) => ({
-  '& input[type="color"]': {
-    backgroundColor: transparent ? 'transparent' : undefined, // Set transparent background if empty
-    height: '40px', // Adjust the height to make the color box bigger
-    cursor: 'pointer',
-    filter: transparent ? 'opacity(0.2)' : '',
-  },
-}))
 export function RHFColorPicker({
   name,
   helperText,
@@ -23,6 +15,16 @@ export function RHFColorPicker({
 }: Props): React.ReactElement | null {
   const { control } = useFormContext()
 
+  const TransparentTextField = styled(TextField)<{ transparent: boolean }>(({ transparent }) => ({
+    '& input[type="color"]': {
+      backgroundColor: transparent ? 'transparent' : undefined, // Set transparent background if empty
+      minHeight: '40px', // Adjust the height to make the color box bigger
+      padding: '8px 8px 8px 8px',
+      cursor: 'pointer',
+      filter: transparent ? 'opacity(0.2)' : '',
+    },
+  }))
+
   return (
     <Controller
       name={name}
@@ -30,6 +32,9 @@ export function RHFColorPicker({
       render={({ field, fieldState: { error } }) => (
         <TransparentTextField
           {...field}
+          InputLabelProps={{
+            sx: { color: '#fff' },
+          }}
           fullWidth
           value={field.value || ''} // Set empty string if value is null or undefined
           error={!!error}

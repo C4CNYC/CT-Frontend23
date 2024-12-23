@@ -41,13 +41,14 @@ import { useTranslate } from '@/utils/translateHelper'
 AppsPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function AppsPage(): React.ReactElement {
+  const translate = useTranslate()
   const { dense, onChangeDense } = useTable()
   const { enqueueSnackbar } = useSnackbar()
   const { themeStretch } = useSettingsContext()
   const { filters, setFilter } = useFilters({ name: '' })
+
   const { data, isLoading } = useGetIntegrationsListQuery({ ...filters })
   const [removeIntegration] = useDeleteIntegrationMutation()
-  const translate = useTranslate()
 
   const onDelete = async (id: string): Promise<void> => {
     try {

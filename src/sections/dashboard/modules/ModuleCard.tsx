@@ -12,15 +12,15 @@ import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import { useTranslate } from '@/utils/translateHelper'
 
 export default function ModuleCard({ module, refetch }: any): React.ReactElement | null {
-  const { enqueueSnackbar } = useSnackbar()
-  const [openConfirm, setOpenConfirm] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const translate = useTranslate()
-
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
-  const [deleteModule] = useDeleteModuleMutation()
-
   const router = useRouter()
+  const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [openConfirm, setOpenConfirm] = useState(false)
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  const [deleteModule] = useDeleteModuleMutation()
 
   const openContentCreationTool = (): void => {
     router.push(`${router.pathname}?${new URLSearchParams({ moduleId: module.id })}`, undefined, {
@@ -60,6 +60,7 @@ export default function ModuleCard({ module, refetch }: any): React.ReactElement
   const handleClosePopover = (): void => {
     setOpenPopover(null)
   }
+
   const getDurationString = (obj: Record<string, number>) => {
     let str = ''
     for (const [key, value] of Object.entries(obj)) {
@@ -181,7 +182,11 @@ export default function ModuleCard({ module, refetch }: any): React.ReactElement
         </CreateModuleDialog>
 
         <MenuItem onClick={() => openContentCreationTool()}>
-          <CgArrowsExchangeV />
+          <CgArrowsExchangeV
+            style={{
+              marginLeft: '16px',
+            }}
+          />
           {translate('rearrange')}
         </MenuItem>
 

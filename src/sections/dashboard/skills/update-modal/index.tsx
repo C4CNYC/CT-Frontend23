@@ -42,10 +42,11 @@ export default function UpdateModalSkills({
     description: '',
   },
 }: Props): React.ReactElement {
+  const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
   const [createSkill, { isLoading: creatLoading }] = useCreateSkillMutation()
   const [updateSkill, { isLoading: updateLoading }] = useUpdateSkillMutation()
-  const { enqueueSnackbar } = useSnackbar()
-  const translate = useTranslate()
 
   const [open, setOpen] = useState(false)
   const handleOpen = (): void => {
@@ -60,6 +61,7 @@ export default function UpdateModalSkills({
   })
 
   const { handleSubmit } = methods
+
   const onSubmit = async (data: IntegrationForm): Promise<void> => {
     try {
       if (id) {

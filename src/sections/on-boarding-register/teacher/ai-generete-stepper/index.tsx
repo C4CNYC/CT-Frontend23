@@ -29,7 +29,7 @@ import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
 import SimpleAiGenerate from './SimpleAiGenerate'
 
-//@names according to avoid bots spam
+// @names according to avoid bots spam
 const defaultValues = {
   RlevelR: LEVELS[1].value,
   RgradesR: GRADES[2].value,
@@ -49,18 +49,6 @@ const defaultValues = {
   RcustomToneR: '',
   RcontextR: '',
 }
-const SpamBotPreventerToNormal = (d: FormAIGenerateProps) => ({
-  level: d.RlevelR,
-  grades: d.RgradesR,
-  lessonDuration: d.RlessonDurationR,
-  lessonLanguage: d.RlessonLanguageR,
-  track: d.RtrackR,
-  programmingLanguage: d.RprogrammingLanguageR,
-  persona: d.RpersonaR,
-  tone: d.RtoneR,
-  typeLesson: d.RtypeLessonR,
-  lessonPrompt: d.RpromptR,
-})
 
 export default function AIGenerateStepper({
   isModal,
@@ -71,12 +59,12 @@ export default function AIGenerateStepper({
   const { push } = useRouter()
 
   const [activeStep, setActiveStep] = useState(props?.activeStep || 0)
-  const [lessonId, setLessonId] = useState<null | string>(null)
+  const [lessonId, _] = useState<null | string>(null)
   const { enqueueSnackbar } = useSnackbar()
 
   const profile = useSelector((state) => state.global.user)
-  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
-  const [createAILesson, { isLoading: createLessonLoading }] = AiGenerate()
+  const [createLesson] = useCreateLessonMutation()
+  const [createAILesson] = AiGenerate()
 
   const generateAICourseSchema = Yup.object().shape({
     RlevelR: Yup.string(),

@@ -25,10 +25,12 @@ export default function ClassItem({
   schoolId,
 }: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
+
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
   const [updateClass] = useUpdateClassMutation()
   const [updateClassAvatar] = useUpdateClassesAvatarMutation()
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
-  const translate = useTranslate()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget)

@@ -26,12 +26,10 @@ HomeOverview.getLayout = (page: React.ReactElement) => (
 
 export default function HomeOverview(): React.ReactElement {
   const dispatch = useDispatch()
+  const translate = useTranslate()
   const { themeStretch } = useSettingsContext()
   const { query } = useRouter()
   const profile = useSelector((state) => state.global.user)
-
-  localStorage.setItem('classId', query.id as string)
-  localStorage.setItem('joinCode', query.joinCode as string)
 
   const { data: classData, isLoading: isClassLoading } = useGetClassQuery(
     { id: query.id as string },
@@ -41,18 +39,18 @@ export default function HomeOverview(): React.ReactElement {
     { id: query.id as string },
     { skip: !query.id || !!query.joinCode || !!profile }
   )
-
-  const data = classData ?? publicClass
-  const isLoading = isClassLoading ?? isPublicLoading
-
-  const translate = useTranslate()
-
   const { data: classInfo } = useGetPublicTribeQuery(
     {
       joinCode: query.joinCode as string,
     },
     { skip: !query.joinCode }
   )
+
+  const data = classData ?? publicClass
+  const isLoading = isClassLoading ?? isPublicLoading
+
+  localStorage.setItem('classId', query.id as string)
+  localStorage.setItem('joinCode', query.joinCode as string)
 
   useEffect(() => {
     if (data) {
@@ -73,7 +71,9 @@ export default function HomeOverview(): React.ReactElement {
       ) : null}
       {!(isLoading || !data) ? (
         <>
-          <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
+          <RoleBasedGuard
+            roles={[Role.Owner, Role.SuperAdmin, Role.SuperAdmin, Role.Admin, Role.Manager]}
+          >
             <MainPageTour />
           </RoleBasedGuard>
           <div>

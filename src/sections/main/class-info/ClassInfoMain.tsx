@@ -16,8 +16,8 @@ interface Props {
 
 export default function ClassInfoMain({ classData, teacher }: Props): React.ReactElement {
   const translate = useTranslate()
-
   const theme = useTheme()
+
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
@@ -50,7 +50,7 @@ export default function ClassInfoMain({ classData, teacher }: Props): React.Reac
             <FaSchool
               color='#fff'
               size='16px'
-              style={{ marginRight: '10px' }}
+              style={{ marginRight: '5px', marginLeft: '5px' }}
             />
             {classData?.school?.name}
           </Typography>

@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { Iconify, MenuPopover } from '@/components'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
@@ -14,7 +14,6 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { BRIEFING, CHALANGES, CUSTOM, GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
-import { LessonContentContext } from './LessonStepContent/LessonContent.context'
 import Preferences from './Modals/Preferences'
 import Validation from './Modals/Validation'
 
@@ -46,10 +45,10 @@ export default function LessonListItem({
   index,
 }: Props): React.ReactElement {
   const router = useRouter()
-  const { locked, lockedHandler } = useContext(LessonContentContext)
+  const translate = useTranslate()
+
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const [hasValidation, setHasValidation] = useState<boolean>(false)
-  const translate = useTranslate()
 
   const isSlideActive = router.query.stepId === step.id
 
@@ -61,18 +60,6 @@ export default function LessonListItem({
 
   const handleClosePopover = (): void => {
     setOpenPopover(null)
-  }
-
-  const selectStep = (): void => {
-    if (!locked || window.confirm('You have changes, abondon them?'))
-      router.push(
-        `${router.pathname}?${new URLSearchParams({
-          ...router.query,
-          stepId: step.id,
-        })}`,
-        undefined,
-        { shallow: true }
-      )
   }
 
   const chooseBorderColor = (): string => {
@@ -158,17 +145,16 @@ export default function LessonListItem({
                   title='Cover Image'
                   sx={LessonListCoverImageStyles}
                 >
-                  <Image
+                  <LazyLoadImage
                     src={step.cover}
                     alt={step.title}
-                    width={24}
-                    height={24}
+                    style={{ width: 24, height: 24 }}
                   />
-                  <Image
+                  <LazyLoadImage
                     className='hoverShow'
                     src={step.cover}
                     alt={step.title}
-                    width={240}
+                    style={{ width: 240 }}
                   />
                 </IconButton>
               ) : null}
@@ -176,7 +162,7 @@ export default function LessonListItem({
                 onClick={() => {
                   onDublicate(step)
                 }}
-                title='Duplicate'
+                title={translate('actions_duplicate')}
               >
                 <Iconify icon='material-symbols:content-copy-outline' />
               </IconButton>
@@ -211,6 +197,7 @@ export default function LessonListItem({
             sx={{ width: 160 }}
           >
             <MenuItem
+              sx={{ gap: 1 }}
               onClick={() => {
                 onRemove(step.id)
                 handleClosePopover()

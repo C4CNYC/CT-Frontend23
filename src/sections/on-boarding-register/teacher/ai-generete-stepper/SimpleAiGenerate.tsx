@@ -17,7 +17,6 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   BTN_CONTAINER_STYLES,
-  getSkipBtnSx,
   getNextBtnSx,
   PROMTS_VARIANTS,
   SIMPLE_GENERATE_TOGLE,
@@ -51,15 +50,12 @@ const SimpleAiGenerate = ({
 
   const [textFieldValue, setTextFieldValue] = useState<string>(getFormValue('RpromptR'))
 
-  const skipBtnStyles = useMemo(
-    () => getSkipBtnSx(theme.palette.mode === 'dark'),
-    [theme.palette.mode]
-  )
+  const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
+
   const nextBtnStyles = useMemo(
     () => getNextBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
-  const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
 
   const handleChangeTextField = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -70,15 +66,6 @@ const SimpleAiGenerate = ({
   const handlePresetChange = (event: React.MouseEvent<HTMLElement>, newPrompt: string) => {
     setTextFieldValue(newPrompt)
     updateForm('RpromptR', newPrompt)
-  }
-
-  const onSubmit = async () => {
-    if (!textFieldValue) return
-    const lesson = await generateLesson({ lessonPrompt: textFieldValue })
-    if ('data' in lesson) {
-      redirectAfterComplete(lesson.data.id)
-      if (closeModal) closeModal()
-    }
   }
 
   return (

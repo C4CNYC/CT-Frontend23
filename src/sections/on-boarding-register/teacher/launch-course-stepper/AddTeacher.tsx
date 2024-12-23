@@ -20,8 +20,9 @@ export default function AddTeacher({
   isSubmitSuccessful,
   nextStep,
 }: Props): React.ReactElement {
-  const [showPassword, setShowPassword] = useState<boolean>(false)
   const translate = useTranslate()
+
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   useEffect(() => {
     if (isSubmitSuccessful) {

@@ -38,9 +38,10 @@ interface SocialFormProps {
 }
 
 export default function SocialsForm({ schoolId }: SocialFormProps): React.ReactElement {
-  const [createSocial, { isLoading }] = useCreateSchoolSocialMutation()
-  const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [createSocial, { isLoading }] = useCreateSchoolSocialMutation()
 
   const defaultValues = {
     schoolId,
@@ -99,6 +100,7 @@ export default function SocialsForm({ schoolId }: SocialFormProps): React.ReactE
               sx={{
                 width: '125px !important',
                 height: '40px !important',
+
                 borderRight: 'none',
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,

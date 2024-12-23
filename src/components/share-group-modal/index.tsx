@@ -206,7 +206,9 @@ export default function ShareGroupModal({
               {translate('actions_copy')}
             </Button>
           </Box>
-          <RoleBasedGuard roles={[Role.Manager, Role.Editor, Role.Owner, Role.Admin]}>
+          <RoleBasedGuard
+            roles={[Role.Manager, Role.Editor, Role.Owner, Role.SuperAdmin, Role.Admin]}
+          >
             <Stack
               mt='20px'
               ml='15px'
@@ -269,7 +271,7 @@ export default function ShareGroupModal({
               <FormControlLabel
                 sx={{ width: '100%', justifyContent: 'space-between' }}
                 control={<Switch />}
-                label={<Typography variant='h6'>Send welcome emails</Typography>}
+                label={<Typography variant='h6'>{translate('send_welcome_emails')}</Typography>}
                 labelPlacement='start'
               />
             </Stack>

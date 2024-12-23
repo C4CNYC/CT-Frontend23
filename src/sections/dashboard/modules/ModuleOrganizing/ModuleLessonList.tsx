@@ -232,7 +232,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           }}
           sx={MENU_ITEM_SX}
         >
-          {translate('modules_add_lesson_new_exircises')}
+          {translate('modules_add_lesson_new_exercises')}
         </MenuItem>
       </CustomPopover>
     </>

@@ -7,18 +7,22 @@ import { useDispatch } from 'react-redux'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import TooltipTourCodePanel from '../tour-tooltip'
 
-import { TOUR_STEPS_DECKTOP, TOUR_STEPS_MOBILE } from './config'
+import { getTourStepsDesktop, getTourStepsMobile } from './config'
 
 const MS_IN_SECOND = 2592000
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
 
 export const CodePanelTour = () => {
+  const translate = useTranslate()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
+
   const [slideIndex, setSlideIndex] = useState(0)
+
   const isTourStarted = useSelector((state) => state.tour.isStarted)
   const userCreated = useSelector((state) => state.global.user?.createdAt)
 
@@ -63,7 +67,7 @@ export const CodePanelTour = () => {
       callback={handleJoyrideCallback}
       run={isTourStarted}
       tooltipComponent={TooltipTourCodePanel}
-      steps={isDesktop ? TOUR_STEPS_DECKTOP : TOUR_STEPS_MOBILE}
+      steps={isDesktop ? getTourStepsDesktop(translate) : getTourStepsMobile(translate)}
       showSkipButton={false}
       showProgress
       stepIndex={slideIndex}

@@ -8,7 +8,7 @@ import { Image } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { COURSE_INFO_IMAGE_SX, getCourseInfoWrapperSx, getSeeMoreBtnSx } from './constants'
-import CourseSummarily from './CourseSummarily.1'
+import CourseSummarily from './CourseSummarily'
 
 interface ICourseInfoProps {
   cover?: string
