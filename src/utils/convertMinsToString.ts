@@ -10,5 +10,5 @@
 export function convertMinsToString(mins: number, H = 'H', M = 'M'): string {
   const hours = Math.floor(mins / 60)
   const minutes = mins % 60
-  return M ? `${hours} ${H} ${minutes} ${M}` : `${hours}${H}`
+  return (H && hours ? `${hours} ${H}` : '') + (M && minutes ? ` ${minutes} ${M}` : '')
 }

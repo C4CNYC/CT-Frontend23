@@ -12,6 +12,7 @@ import CourseSidebar from '@/sections/course/course-sidebar'
 import CourseInfo from '@/sections/course/CourseInfo'
 import ModulesListBlock from '@/sections/course/modules-list'
 import { useTranslate } from '@/utils/translateHelper'
+import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 
 CoursePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -36,7 +37,6 @@ export default function CoursePage(): React.ReactElement {
 
   const data = courseContent ?? publicContent
   const isLoading = isContentLoading ?? isPublicLoading
-
   const translate = useTranslate()
 
   return (
@@ -63,7 +63,7 @@ export default function CoursePage(): React.ReactElement {
             minHeight: '100vh',
           }}
         >
-          {isLoading ? (
+          {isLoading || !data ? (
             <Stack>
               <Skeleton
                 variant='rounded'
@@ -80,18 +80,7 @@ export default function CoursePage(): React.ReactElement {
             </Stack>
           ) : (
             <>
-              <CourseInfo
-                name={data?.name ?? ''}
-                description={data?.description ?? ''}
-                cover={data?.cover}
-                duration={'9'}
-                level={data?.level ?? ''}
-                lessonsCount={
-                  data?.units.reduce((total, unit) => {
-                    return total + unit?.lessons?.length
-                  }, 0) ?? 0
-                }
-              />
+              <CourseInfo course={data} />
               <Stack
                 sx={{
                   flexDirection: {
@@ -104,11 +93,13 @@ export default function CoursePage(): React.ReactElement {
                   gap: { xs: 6, lg: 2, xl: 6 },
                 }}
               >
-                {data?.units?.length ? (
+                {data.units?.length ? (
                   <>
                     <ModulesListBlock modules={data?.units} />
                     <CourseSidebar
-                      duration={'9'}
+                      durationInMins={data.units
+                        .map((unit) => convertDurationToMins(unit.duration))
+                        .reduce((acc, unitDuration) => acc + unitDuration, 0)}
                       grade='5th-10th Grade'
                       lessons={data?.total_lessons ?? 0}
                       level={data?.level ?? '-'}
