@@ -35,7 +35,7 @@ export const getBoxSx = (theme: Theme) => ({
   alignItems: 'center',
   width: 32,
   height: 35,
-  borderRadius: theme.direction === 'ltr' ? '0 14px 14px 0' : '14px 0 0 14px',
+  borderRadius: theme.direction === 'rtl' ? '0 14px 14px 0' : '14px 0 0 14px',
   zIndex: 301,
   background: 'rgba(21, 82, 117, 0.80)',
   ':hover': {

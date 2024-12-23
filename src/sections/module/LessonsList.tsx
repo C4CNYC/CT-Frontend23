@@ -25,9 +25,9 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
 
   const isLockedLessonCheck = (index: number) => {
     if (index === 0) return false
-    const prewLesson = lessons[index - 1]
-    if (prewLesson.progress) {
-      if (prewLesson.progress >= 90) return false
+    const prevLesson = lessons[index - 1]
+    if (prevLesson.progress) {
+      if (prevLesson.progress >= 90) return false
     }
     return true
   }
@@ -46,8 +46,7 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
           }}
           sx={{
             ...SWITCH_BTN_SX,
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
+            borderRadius: '8px 0 0 8px',
             background: theme.palette.mode === 'light' ? '#fff' : theme.palette.background.paper,
           }}
         >
@@ -62,8 +61,7 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
           }}
           sx={{
             ...SWITCH_BTN_SX,
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
+            borderRadius: '0 8px 8px 0',
             background: theme.palette.mode === 'light' ? '#fff' : theme.palette.background.paper,
           }}
         >

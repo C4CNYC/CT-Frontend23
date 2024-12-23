@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Button, Dialog, DialogContent, IconButton, Typography } from '@mui/material'
 
@@ -10,64 +12,76 @@ import {
 } from './constants'
 
 interface ILessonDialog {
-  open: boolean
-  closeDialog: VoidFunction
   confirmClick: VoidFunction
   title: string
   confirmText: string
   closeText?: string | undefined
+  children: React.ReactElement
 }
 
 export default function CatalogLessonDialog({
   confirmText,
   closeText,
   title,
-  open,
-  closeDialog,
   confirmClick,
+  children,
 }: ILessonDialog): React.ReactElement {
+  const [open, setOpenDialog] = useState(false)
   return (
-    <Dialog
-      open={open}
-      onClose={closeDialog}
-      PaperProps={{
-        sx: PAPER_PROPS_SX,
-      }}
-    >
-      <Box sx={DIALOG_TITLE_WRAPPER_SX}>
-        <Typography
-          sx={DIALOG_TITLE_SX}
-          variant='h6'
-        >
-          {title}
-        </Typography>
-        <IconButton
-          onClick={closeDialog}
-          sx={CLOSE_DIALOG_ICON_SX}
-        >
-          <CloseIcon />
-        </IconButton>
+    <>
+      <Box
+        onClick={() => {
+          setOpenDialog(true)
+        }}
+      >
+        {children}
       </Box>
-      <DialogContent sx={DIALOG_CONTENT_WRAPPER_SX}>
-        <Button
-          color='inherit'
-          variant='soft'
-          onClick={confirmClick}
-        >
-          {confirmText}
-        </Button>
-        {closeText && (
-          <Button
-            color='info'
-            variant='soft'
-            onClick={() => {
-              closeDialog()
-            }}
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpenDialog(false)
+        }}
+        PaperProps={{
+          sx: PAPER_PROPS_SX,
+        }}
+      >
+        <Box sx={DIALOG_TITLE_WRAPPER_SX}>
+          <Typography
+            sx={DIALOG_TITLE_SX}
+            variant='h6'
           >
-            {closeText}
+            {title}
+          </Typography>
+          <IconButton
+            onClick={() => {
+              setOpenDialog(false)
+            }}
+            sx={CLOSE_DIALOG_ICON_SX}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <DialogContent sx={DIALOG_CONTENT_WRAPPER_SX}>
+          <Button
+            color='inherit'
+            variant='soft'
+            onClick={confirmClick}
+          >
+            {confirmText}
           </Button>
-        )}
-      </DialogContent>
-    </Dialog>
+          {closeText && (
+            <Button
+              color='info'
+              variant='soft'
+              onClick={() => {
+                setOpenDialog(false)
+              }}
+            >
+              {closeText}
+            </Button>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

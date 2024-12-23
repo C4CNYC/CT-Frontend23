@@ -482,6 +482,7 @@ const es = {
     'Lo hicimos así para que puedas empezar cualquier lección en cualquier momento. 👀 🤩',
   lesson_to_lesson_code_copying_subtitle_2: `Pero si quieres que tu código especial, con todas tus personalizaciones, se pase automáticamente, entonces debes completar al menos el 90%.`,
   lesson_to_lesson_code_copying_subtitle_3: ` Pero no te preocupes. Lo que elijas está bien. Mientras sigas programando. 🙌 ¡Yay!`,
+  lesson_catalog_dialog_title: `Hola, estamos construyendo un proyecto juntos. Hemos tomado tu código de la lección anterior para que puedas seguir construyendo.`,
 
   // Modules pages
   modules: 'Módulos',

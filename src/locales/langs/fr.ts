@@ -489,6 +489,7 @@ const fr = {
    alors vous devez terminer au moins 90%.`,
   lesson_to_lesson_code_copying_subtitle_3: ` Mais ne vous inquiétez pas. Quel que soit votre choix, c'est parfait. Tant que vous continuez à coder. 🙌
    Yay!`,
+  lesson_catalog_dialog_title: `Salut, nous construisons un projet ensemble. Nous avons repris ton code de la leçon précédente pour que tu puisses continuer à construire.`,
 
   // Modules pages
   modules: 'Modules',

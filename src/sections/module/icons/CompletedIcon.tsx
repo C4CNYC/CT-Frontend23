@@ -1,10 +1,10 @@
-interface CompleatedIconProps {
+interface CompletedIconProps {
   width?: number
   height?: number
   color?: string
 }
 
-const CompleatedIcon = ({ width, height, color = '#2E92DC' }: CompleatedIconProps) => {
+const CompletedIcon = ({ width, height, color = '#2E92DC' }: CompletedIconProps) => {
   return (
     <svg
       width={width ?? 63}
@@ -21,4 +21,4 @@ const CompleatedIcon = ({ width, height, color = '#2E92DC' }: CompleatedIconProp
   )
 }
 
-export default CompleatedIcon
+export default CompletedIcon
