@@ -85,7 +85,7 @@ export default function ClassCoursesAutocomplete({
   }
 
   return (
-    <Autocomplete<CourseType, true>
+    <Autocomplete<Omit<CourseType, 'units'>, true>
       multiple
       id='add-user-input'
       value={classCourses.data}
