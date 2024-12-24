@@ -75,7 +75,7 @@ const TABLE_HEAD = [
   },
   {
     id: 'type',
-    label: 'Home page type',
+    label: 'home_page_type',
     align: 'center',
   },
   { id: '' },

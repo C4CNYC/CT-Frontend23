@@ -87,7 +87,7 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
           <RHFSelect
             name='home_page_type'
             native
-            label='Home page type'
+            label={translate('home_page_type')}
           >
             {Object.keys(HomePageType).map((c) => (
               <option

@@ -17,7 +17,6 @@ import { Tb3DCubeSphere } from '@react-icons/all-files/tb/Tb3DCubeSphere'
 import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
 
 import { Iconify } from '@/components/iconify'
-import { Label } from '@/components/label'
 import { Role } from '@/redux/services/enums/role.enum'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -46,10 +45,10 @@ export const admin = {
 }
 
 export const superAdmin = {
-  subheader: 'Administration',
+  subheader: 'sidebar_menu_administration',
   items: [
     {
-      title: 'Admin',
+      title: 'sidebar_menu_admin',
       path: MANAGER_PATH_DASHBOARD.administration.root,
       icon: <Iconify icon='eos-icons:admin' />,
     },
@@ -109,7 +108,7 @@ export const content = {
       title: 'sidebar_menu_tasks',
       path: ' ',
       icon: <FaTasks />,
-      info: <Label color='success'>Coming soon</Label>,
+      info: 'coming_soon',
       disabled: true,
     },
     {

@@ -289,6 +289,7 @@ const ar = {
   sidebar_menu_invite_friends: 'دعوة الأصدقاء',
   sidebar_menu_feedback: 'التعليقات',
   sidebar_menu_administration: 'الإدارة',
+  sidebar_menu_admin: 'مدير',
   sidebar_menu_members: 'الأعضاء',
   sidebar_menu_schools: 'المدارس',
   sidebar_menu_management: 'الإدارة',
@@ -1006,8 +1007,6 @@ const ar = {
     'إنها المكان الذي ترى فيه النتيجة عند تشغيل جافا سكريبت (JS). لأن معظم الوقت تعمل جافا سكريبت في الخلفية وتقوم بحساباتها وردود أفعالها هناك.',
   console_tooltip_subtitle_2:
     'فقط عندما ترتبط دالة معينة بجزء معين من الصفحة ترى فعلاً جافا سكريبت تعدل "الصفحة الأمامية".',
-  console_tooltip_subtitle_3:
-    'المصطلح الفخم لهذا هو "التلاعب بـ DOM". - و "DOM" تعني نموذج كائن الوثيقة.',
   no_preview_available_title: 'المتصفح',
   no_preview_available_results: 'هنا سترى نتائج عملك في الوقت الفعلي',
   no_preview_available: 'لا توجد معاينة متوفرة؟',
@@ -1130,6 +1129,7 @@ const ar = {
   slug_validation_msg_2: 'الرابط مطلوب',
   home_page_type_validation_msg: 'اختر النوع',
   home_page_type_required_msg: 'نوع الصفحة الرئيسية مطلوب',
+  home_page_type: 'نوع الصفحة الرئيسية',
   add_custom_html_code: 'إضافة كود HTML مخصص',
 
   // CreateLesson

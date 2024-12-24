@@ -291,6 +291,7 @@ const tr = {
   sidebar_menu_invite_friends: 'Arkadaşları Davet Et',
   sidebar_menu_feedback: 'Geri Bildirim',
   sidebar_menu_administration: 'Yönetim',
+  sidebar_menu_admin: 'Yönetici',
   sidebar_menu_members: 'Üyeler',
   sidebar_menu_schools: 'Okullar',
   sidebar_menu_management: 'Yönetim',
@@ -1007,8 +1008,6 @@ const tr = {
     'JavaScript (JS) çalıştırdığınızda sonucu görebileceğiniz yerdir. Çoğu zaman JS, arka planda çalışır ve hesaplamalarını ve yanıtlarını orada yapar.',
   console_tooltip_subtitle_2:
     "Yalnızca belirli bir işlevi sayfanın belirli bir kısmına bağladığınızda, JS'nin 'Ön' sayfayı değiştirdiğini görürsünüz.",
-  console_tooltip_subtitle_3:
-    "Bunun şık terimi 'DOM Manipülasyonu'dur. - 'DOM', Belgeler Nesne Modeli'nin kısaltmasıdır.",
   no_preview_available_title: 'Tarayıcı',
   no_preview_available_results:
     'Burada çalışmanızın sonuçlarını gerçek zamanlı olarak göreceksiniz',
@@ -1129,6 +1128,7 @@ const tr = {
   slug_validation_msg_2: 'Slug gereklidir',
   home_page_type_validation_msg: 'Türü seçin',
   home_page_type_required_msg: 'Ana sayfa türü gereklidir',
+  home_page_type: 'Ana sayfa türü',
   add_custom_html_code: 'Özel HTML kodu ekle',
 
   // Code panel header

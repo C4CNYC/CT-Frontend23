@@ -292,6 +292,7 @@ const fr = {
   sidebar_menu_invite_friends: 'Inviter des amis',
   sidebar_menu_feedback: 'Retour',
   sidebar_menu_administration: 'Administration',
+  sidebar_menu_admin: 'Administrateur',
   sidebar_menu_members: 'Membres',
   sidebar_menu_schools: 'Écoles',
   sidebar_menu_management: 'Gestion',
@@ -1032,8 +1033,6 @@ const fr = {
     "C'est l'endroit où vous voyez un résultat lorsque vous exécutez du JavaScript (JS). Parce que la plupart du temps, JS s'exécute en arrière-plan et fait ses calculs et réponses là-bas.",
   console_tooltip_subtitle_2:
     'Ce n\'est que lorsque vous liez spécifiquement une fonction particulière à une partie spécifique de la page que vous voyez réellement JS modifier la page "avant".',
-  console_tooltip_subtitle_3:
-    'Le terme élégant pour cela est "Manipuler le DOM". - Et "DOM" signifie Document Object Model.',
   no_preview_available_title: 'Navigateur',
   no_preview_available_results: 'Ici, vous verrez les résultats de votre travail en temps réel',
   no_preview_available: 'Aucun aperçu disponible ?',
@@ -1161,6 +1160,7 @@ const fr = {
   slug_validation_msg_2: 'Le slug est requis',
   home_page_type_validation_msg: 'Sélectionnez le type',
   home_page_type_required_msg: "Le type de la page d'accueil est requis",
+  home_page_type: `Type de page d'accueil`,
   add_custom_html_code: 'Ajouter du code HTML personnalisé',
 
   // CreateLesson

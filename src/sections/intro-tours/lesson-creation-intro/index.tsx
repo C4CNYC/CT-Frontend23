@@ -14,10 +14,10 @@ import { getLessonCreationSteps } from './config'
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
 
 interface LessonCreationIntroProps {
-  deley: number
+  delay: number
 }
 
-export const LessonCreationIntro = ({ deley }: LessonCreationIntroProps) => {
+export const LessonCreationIntro = ({ delay }: LessonCreationIntroProps) => {
   const translate = useTranslate()
   const dispatch = useDispatch()
 
@@ -55,7 +55,7 @@ export const LessonCreationIntro = ({ deley }: LessonCreationIntroProps) => {
   useEffect(() => {
     const id = setTimeout(() => {
       setIsHidden(false)
-    }, deley)
+    }, delay)
   }, [])
 
   return isHidden ? null : (
