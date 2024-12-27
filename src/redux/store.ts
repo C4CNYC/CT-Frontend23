@@ -12,6 +12,7 @@ import { authApi } from './services/auth'
 import { feedbackApi } from './services/feedback'
 import { managerApi } from './services/manager'
 import { superAdmin } from './services/manager/super-admin'
+import { accessControlApi } from './services/public/access-control-public'
 import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
@@ -37,6 +38,7 @@ const store = configureStore({
       .concat(managerApi.middleware)
       .concat(studentPublicApi.middleware)
       .concat(publicApi.middleware)
+      .concat(accessControlApi.middleware)
       .concat(feedbackApi.middleware)
       .concat(tenantConfigApi.middleware),
 })

@@ -1,20 +1,27 @@
-import React from 'react';
-import { accessControlApi  } from '@/redux/services/public/access-control-public';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import React from 'react'
 
-type AccessControlTableType = React.FC<{userId: string}>
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material'
+
+import { accessControlApi } from '@/redux/services/public/access-control-public'
+
+import { UserAccessControlTableLine } from './UserAccessControlTableLine'
+
+type AccessControlTableType = React.FC<{ userId: string }>
 
 export const UserAccessControlTable: AccessControlTableType = ({ userId }) => {
-  const {
-    useGetAllFeaturesQuery,
-    useGetByUserIdQuery,
-    useAddFeatureMutation, } = accessControlApi;
+  const { useGetAllFeaturesQuery, useGetByUserIdQuery, useAddFeatureMutation } = accessControlApi
 
-  const { data: accessData } = useGetAllFeaturesQuery();
-  const { data: userAccessData } = useGetByUserIdQuery({ userId });
-  
-  const [addFeature] = useAddFeatureMutation(); 
- console.log(accessData, userAccessData);
+  const { data: accessData } = useGetAllFeaturesQuery()
+  const { data: userAccessData } = useGetByUserIdQuery({ userId })
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -27,17 +34,19 @@ export const UserAccessControlTable: AccessControlTableType = ({ userId }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {accessData?.map((accessControl) => (
-            <TableRow key={accessControl.id}>
-              <TableCell>{accessControl.id}</TableCell>
-              <TableCell>{accessControl.feature}</TableCell>
-              <TableCell>{accessControl.maxUsageCount}</TableCell>
-              <TableCell>{accessControl.userId === userId ? accessControl.userId : 'No Access'}</TableCell>
-            </TableRow>
-          ))}
+          {accessData?.map((accessControl) => {
+            let userACK = userAccessData?.find((item) => item.feature === accessControl.feature)
+            return (
+              <UserAccessControlTableLine
+                key={accessControl.feature}
+                accessControl={accessControl}
+                userACK={userACK}
+                userId={userId}
+              />
+            )
+          })}
         </TableBody>
       </Table>
     </TableContainer>
-  );
-};
- 
+  )
+}

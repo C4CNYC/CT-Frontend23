@@ -8,7 +8,7 @@ import { useGetOrgMemberQuery } from '@/redux/services/admin/members-admin'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import UserNewEditForm from '@/sections/dashboard/user/UserNewEditForm'
 import { useTranslate } from '@/utils/translateHelper'
-import UserAccessControlTable from '@root/src/sections/dashboard/user/UserAccessControlTable'
+import { UserAccessControlTable } from '@root/src/sections/dashboard/user/UserAccessControlTable'
 
 UserEditPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
@@ -45,8 +45,7 @@ export default function UserEditPage(): React.ReactElement {
           isEdit
           currentUser={data}
         />
-        {data?.id &&
-          <UserAccessControlTable user={data?.id} />}
+        {data?.id && <UserAccessControlTable userId={data?.id} />}
       </Container>
     </>
   )

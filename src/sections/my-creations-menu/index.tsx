@@ -15,6 +15,7 @@ import {
   StyledItem as StyledItemVertical,
 } from '@root/src/components/nav-section/vertical/styles'
 import { useResponsive } from '@root/src/hooks'
+import { useSelfAccess } from '@root/src/hooks/useSelfAccess'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { useTranslate } from '@root/src/utils/translateHelper'
@@ -27,6 +28,8 @@ export default function MyCreationsMenu(): React.ReactElement {
   const router = useRouter()
   const translate = useTranslate()
   const { themeLayout } = useSettingsContext()
+
+  const AC_Mumu = useSelfAccess('MumuAICreator')
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
@@ -129,17 +132,19 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
-          <AiGenerateLessonDialog>
-            <MenuItem sx={{ justifyContent: 'space-between' }}>
-              {translate('sidebar_menu_my_creations_item_1')}
-              <ListItemIcon sx={{ pl: 2, mr: -2 }}>
-                <Iconify
-                  icon='mingcute:ai-line'
-                  color='#FBDD3F'
-                />
-              </ListItemIcon>
-            </MenuItem>
-          </AiGenerateLessonDialog>
+          {AC_Mumu > 0 && (
+            <AiGenerateLessonDialog>
+              <MenuItem sx={{ justifyContent: 'space-between' }}>
+                {translate('sidebar_menu_my_creations_item_1')}
+                <ListItemIcon sx={{ pl: 2, mr: -2 }}>
+                  <Iconify
+                    icon='mingcute:ai-line'
+                    color='#FBDD3F'
+                  />
+                </ListItemIcon>
+              </MenuItem>
+            </AiGenerateLessonDialog>
+          )}
           <SelectTemplateDialog>
             <MenuItem>{translate('sidebar_menu_my_creations_item_8')}</MenuItem>
           </SelectTemplateDialog>

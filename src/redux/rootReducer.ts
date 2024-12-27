@@ -7,6 +7,7 @@ import { authApi } from './services/auth'
 import { feedbackApi } from './services/feedback'
 import { managerApi } from './services/manager'
 import { superAdmin } from './services/manager/super-admin'
+import { accessControlApi } from './services/public/access-control-public'
 import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
@@ -77,6 +78,7 @@ const rootReducer = combineReducers({
   mobileTabManager: mobileTabManagerReducer,
   chatHandler: chatHandlerReducer,
   codeEditorController: codeEditorCollabController,
+  [accessControlApi.reducerPath]: accessControlApi.reducer,
 })
 
 export default rootReducer
