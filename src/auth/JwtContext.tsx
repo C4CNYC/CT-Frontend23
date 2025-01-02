@@ -313,7 +313,12 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     reduxDispatch(cleanUser())
     reduxDispatch(cleanUserRole())
     const lang = localStorage.getItem('i18nextLng')
-    localStorage.clear()
+    // Tours has "HAS_SEEN_" pattern inside, we keep them
+    for (let i = localStorage.length; i >= 0; i--) {
+      if (!localStorage.key(i - 1)?.includes('SEEN')) {
+        localStorage.removeItem(localStorage.key(i - 1) ?? '')
+      }
+    }
     localStorage.setItem('i18nextLng', lang ?? defaultLang.value)
     dispatch({
       type: Types.LOGOUT,
