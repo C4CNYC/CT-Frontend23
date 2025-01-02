@@ -8,6 +8,7 @@ import { useBoolean } from '../hooks/useBoolean'
 import { HomePageType } from '../redux/services/enums/administration.enum'
 import { useGetOrgHomePageQuery } from '../redux/services/public/tribe-public'
 import { PATH_AUTH } from '../routes/paths'
+import { STUDENT_PATH_DASHBOARD } from '../routes/student.paths'
 import AIGenerateStepper from '../sections/on-boarding-register/teacher/ai-generete-stepper'
 
 const SLUG_PATTERN = /https?:\/\/([^.:/]+)/
@@ -60,6 +61,10 @@ export default function AiGeneratePage(): React.ReactElement {
       case HomePageType.Custom: {
         setPage(data.home_page_body ?? '')
         localStorage.setItem('tenantName', slug ?? 'codetribe')
+        break
+      }
+      case HomePageType.Catalog: {
+        router.push(STUDENT_PATH_DASHBOARD.courses.root)
         break
       }
       default:
