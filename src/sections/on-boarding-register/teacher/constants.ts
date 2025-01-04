@@ -10,7 +10,6 @@ export const StyledContentTeacher = styled('div', {
   display: 'flex',
   borderRadius: '8px',
   justifyContent: 'center',
-  overflowY: 'auto',
   padding: theme.spacing(3),
   ...bgBlur({ color: theme.palette.background.default }),
   [theme.breakpoints.up('sm')]: {
@@ -28,19 +27,19 @@ export const StyledContentTeacher = styled('div', {
   },
 }))
 
-export const WELCOM_STEP_WRAPPER_SX = {
+export const WELCOME_STEP_WRAPPER_SX = {
   ml: { xs: 3, sm: 3, md: 0 },
   mt: '10px',
   justifyContent: 'start',
 }
 
-export const WELCOM_STEP_SUBTITLE_SX = {
+export const WELCOME_STEP_SUBTITLE_SX = {
   pb: 3,
   ml: { xs: 3, sm: 3, md: 0 },
   textAlign: 'left',
 }
 
-export const POPUP_SESION_BTN_SX = {
+export const POPUP_SESSION_BTN_SX = {
   py: 2,
   mb: 1,
   borderRadius: '15px',

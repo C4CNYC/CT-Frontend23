@@ -9,7 +9,7 @@ import { StyledContentTeacher } from './constants'
 import WelcomeStep from './WelcomeStep'
 
 export default function TeacherOnboardingIntro(): React.ReactElement {
-  const { push } = useRouter()
+  const { push, asPath } = useRouter()
 
   return (
     <StyledContentTeacher>
@@ -21,7 +21,7 @@ export default function TeacherOnboardingIntro(): React.ReactElement {
           position: 'relative',
         }}
       >
-        <RegisterStudentTeacher isTeacher />
+        {asPath === PATH_AUTH.onBoardingTeacher.root && <RegisterStudentTeacher isTeacher />}
         <WelcomeStep
           selectLaunchCourse={() => push(PATH_AUTH.onBoardingTeacher.launchCourse)}
           selectAIGenerate={() => push(PATH_PAGE.create)}

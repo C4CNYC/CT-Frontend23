@@ -4,9 +4,9 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import {
   LAUNCH_SESSION_BTN_SX,
-  POPUP_SESION_BTN_SX,
-  WELCOM_STEP_SUBTITLE_SX,
-  WELCOM_STEP_WRAPPER_SX,
+  POPUP_SESSION_BTN_SX,
+  WELCOME_STEP_SUBTITLE_SX,
+  WELCOME_STEP_WRAPPER_SX,
 } from './constants'
 import { SessionType } from './SessionType'
 
@@ -25,7 +25,7 @@ export default function WelcomeStep({
     <>
       <Stack
         direction='row'
-        sx={WELCOM_STEP_WRAPPER_SX}
+        sx={WELCOME_STEP_WRAPPER_SX}
       >
         <Typography variant='h3'>{translate('login_hey_teachers')}</Typography>
         <Typography
@@ -37,7 +37,7 @@ export default function WelcomeStep({
       </Stack>
       <Typography
         variant='body1'
-        sx={WELCOM_STEP_SUBTITLE_SX}
+        sx={WELCOME_STEP_SUBTITLE_SX}
       >
         {translate('login_lets_start_learning')}
       </Typography>
@@ -63,7 +63,7 @@ export default function WelcomeStep({
       <Button
         disabled={true}
         onClick={() => {}}
-        sx={POPUP_SESION_BTN_SX}
+        sx={POPUP_SESSION_BTN_SX}
       >
         <SessionType
           {...POPUP_SESSION}
