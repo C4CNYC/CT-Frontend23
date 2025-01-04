@@ -1,5 +1,3 @@
-import { Box } from '@mui/material'
-
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 
 interface Props {
@@ -20,15 +18,13 @@ export function StepPreview({ integrations, staticValue, bgColor }: Props) {
     }
   }
   return (
-    <Box sx={{ bgcolor: bgColor }}>
-      <iframe
-        style={{
-          border: 0,
-          width: '100%',
-          height: '100%',
-        }}
-        src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
-      />
-    </Box>
+    <iframe
+      style={{
+        border: 0,
+        width: '100%',
+        height: '100%',
+      }}
+      src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
+    />
   )
 }

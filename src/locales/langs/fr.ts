@@ -744,7 +744,8 @@ const fr = {
   login_go_back: 'RETOURNER',
   login_with_email: 'Se connecter avec un email',
   login_lets_go: "C'est parti!",
-  login_sign_up: "S'inscrire",
+  login_sign_up_as_student: "S'inscrire en tant qu'étudiant",
+  login_sign_up_as_teacher: "S'inscrire en tant qu'enseignant",
   login_reset_password: 'Mot de passe oublié',
   login_my_first_time: "C'est ma première fois ici",
   login_sign_up_with_google: "S'inscrire avec Google",
@@ -753,7 +754,7 @@ const fr = {
   login_been_here: "J'ai déjà été ici",
   login_register_as: "S'inscrire en tant que",
   login_hey_teachers: 'Salut, enseignants',
-  login_lets_start_learning: "Commençons une aventure d'apprentissage",
+  login_lets_start_learning: "Commençons une aventure d'apprentissage.",
   login_popup_session_title: 'Session Pop-up',
   login_popup_session_subtitle:
     'Vue en temps réel de tous les participants pendant la diffusion du code et de la voix.',
@@ -1004,7 +1005,7 @@ const fr = {
   validation_removed: 'Règle de validation supprimée',
   validation_rules: 'Tests',
   not_recommend_count_validations:
-    'Nous ne recommandons pas de mettre plus de {{count}} règles pour une étape.',
+    'Nous recommandons de ne pas dépasser {{count}} tests par diapositive.',
   it_can_make_your_step: 'Cela peut rendre votre étape très compliquée et affecter',
   comfort_content: 'les apprenants sur les téléphones',
   updated_at: 'Mis à jour le',

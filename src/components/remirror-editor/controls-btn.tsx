@@ -11,13 +11,8 @@ import { MediaModal } from '@/sections/dashboard/medias/MediaModal'
 import { useTranslate } from '@/utils/translateHelper'
 
 export const BUTTONS_STYLES = {
-  width: '100%',
-  maxHeight: '40px',
   color: '#364954',
-  gap: 1,
-  textTransform: 'capitalize',
-  justifyContent: 'start',
-  pl: 2,
+  gap: 0.8,
   fontWeight: 400,
 }
 
@@ -26,7 +21,7 @@ export function TipsBtn(): React.ReactElement {
 
   return (
     <Button sx={BUTTONS_STYLES}>
-      <MdOutlineTipsAndUpdates size={20} /> {translate('tips')}
+      <MdOutlineTipsAndUpdates size={18} /> {translate('tips')}
     </Button>
   )
 }
@@ -35,7 +30,7 @@ export function ChallengeBtn(): React.ReactElement {
 
   return (
     <Button sx={BUTTONS_STYLES}>
-      <GrTest size={20} /> Tests
+      <GrTest size={17} /> Tests
     </Button>
   )
 }
@@ -44,7 +39,7 @@ export function SettingsBtn(): React.ReactElement {
 
   return (
     <Button sx={BUTTONS_STYLES}>
-      <FiSettings size={20} />
+      <FiSettings size={18} />
       {translate('settings')}
     </Button>
   )
@@ -60,7 +55,7 @@ export function MediaBtn(): React.ReactElement {
           key='left'
           sx={{ py: '4px', px: '10px' }}
         >
-          <TbPhoto size={20} />
+          <TbPhoto size={18} />
         </ToggleButton>
       </Tooltip>
     </MediaModal>
@@ -70,7 +65,7 @@ export function MediaBtn(): React.ReactElement {
 export function SolutionBtn(): React.ReactElement {
   return (
     <Button sx={BUTTONS_STYLES}>
-      <LuCheckCircle size={20} />
+      <LuCheckCircle size={18} />
       Solution
     </Button>
   )
@@ -79,7 +74,7 @@ export function SolutionBtn(): React.ReactElement {
 export function PreCodeBtn(): React.ReactElement {
   return (
     <Button sx={BUTTONS_STYLES}>
-      <IoCode size={20} />
+      <IoCode size={18} />
       Pre-code
     </Button>
   )

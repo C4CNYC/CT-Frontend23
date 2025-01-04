@@ -741,7 +741,8 @@ const en = {
   login_go_back: 'GO BACK',
   login_with_email: 'Sign in with Email',
   login_lets_go: "LET'S GO!",
-  login_sign_up: 'Register',
+  login_sign_up_as_student: 'Register as Student',
+  login_sign_up_as_teacher: 'Register as Teacher',
   login_reset_password: 'Forgot password',
   login_my_first_time: 'This is my first time here',
   login_sign_up_with_google: 'Sign up with Google',
@@ -750,7 +751,7 @@ const en = {
   login_been_here: 'I’ve been here before',
   login_register_as: 'Register as',
   login_hey_teachers: 'Hey, Teachers',
-  login_lets_start_learning: 'Let’s start a learning adventure',
+  login_lets_start_learning: 'Let’s start a learning adventure.',
   login_popup_session_title: 'Pop-up Session',
   login_popup_session_subtitle:
     'Real-time view of all participants while broadcasting code & voice.',
@@ -759,7 +760,7 @@ const en = {
   login_ai_generate_session_subtitle: 'Create a new lesson with A.I.',
   login_ai_generate_session_info:
     'Generate awesome new lessons, exercises or quizzes with AI - It’s fun and simple. Give it a try.',
-  login_launch_session_title: 'Launch Course',
+  login_launch_session_title: 'Launch a Course',
   login_launch_session_subtitle: 'Teacher-led or self-paced modules assigned to class or group.',
   login_launch_session_info: 'Real-time view of all participants while broadcasting code & voice.',
   login_mumu: 'Hi, I’m {{name}}',
@@ -994,8 +995,7 @@ const en = {
   file_name: 'File name',
   validation_removed: 'Validation rule removed',
   validation_rules: 'Tests',
-  not_recommend_count_validations:
-    ' We are not recommend put more then {{count}} rules for 1 step.',
+  not_recommend_count_validations: 'We recommend not more than {{count}} tests per slide.',
   it_can_make_your_step: 'It can make your step very complicated and can affect',
   comfort_content: 'learners on phones',
   updated_at: 'Updated At',

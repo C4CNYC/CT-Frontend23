@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { PATH_AUTH, PATH_PAGE } from '@root/src/routes/paths'
+import { PATH_AUTH } from '@root/src/routes/paths'
 
 import { RegisterStudentTeacher, SingLink } from '../links'
 
@@ -24,7 +24,7 @@ export default function TeacherOnboardingIntro(): React.ReactElement {
         {asPath === PATH_AUTH.onBoardingTeacher.root && <RegisterStudentTeacher isTeacher />}
         <WelcomeStep
           selectLaunchCourse={() => push(PATH_AUTH.onBoardingTeacher.launchCourse)}
-          selectAIGenerate={() => push(PATH_PAGE.create)}
+          // selectAIGenerate={() => push(PATH_PAGE.create)}
         />
         <SingLink />
       </Stack>

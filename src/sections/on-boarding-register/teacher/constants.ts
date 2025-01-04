@@ -10,19 +10,19 @@ export const StyledContentTeacher = styled('div', {
   display: 'flex',
   borderRadius: '8px',
   justifyContent: 'center',
-  padding: theme.spacing(3),
+  padding: theme.spacing(2),
   ...bgBlur({ color: theme.palette.background.default }),
   [theme.breakpoints.up('sm')]: {
     maxWidth: isAigenerated ? 'auto' : '460px',
   },
   [theme.breakpoints.up('md')]: {
     flexShrink: 0,
-    padding: theme.spacing(5),
+    padding: theme.spacing(3),
     width: isAigenerated ? 500 : 480,
   },
   [theme.breakpoints.up('lg')]: {
     flexShrink: 0,
-    padding: theme.spacing(5),
+    padding: theme.spacing(3),
     width: isAigenerated ? 800 : 480,
   },
 }))
@@ -34,7 +34,7 @@ export const WELCOME_STEP_WRAPPER_SX = {
 }
 
 export const WELCOME_STEP_SUBTITLE_SX = {
-  pb: 3,
+  pb: 1,
   ml: { xs: 3, sm: 3, md: 0 },
   textAlign: 'left',
 }
