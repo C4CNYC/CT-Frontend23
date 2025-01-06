@@ -58,7 +58,7 @@ export default function LessonStepMain(): React.ReactElement {
         <FullScreen handle={handle}>
           <LessonTopBar />
 
-          {stepId && <LessonCreationIntro deley={1000} />}
+          {stepId && <LessonCreationIntro delay={1000} />}
           <ResizerUi
             split='vertical'
             minSize={300}

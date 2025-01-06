@@ -7,6 +7,7 @@ import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
 import { ImPlus } from '@react-icons/all-files/im/ImPlus'
 import * as _ from 'lodash-es'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
@@ -278,6 +279,9 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
 
   return (
     <>
+      <Head>
+        <title>{lesson?.name} | CodeTribe</title>
+      </Head>
       <Box
         sx={{ p: 2 }}
         className='lessonCreationStep1 lessonCreationStep2'

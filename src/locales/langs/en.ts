@@ -291,6 +291,7 @@ const en = {
   sidebar_menu_invite_friends: 'Invite Friends',
   sidebar_menu_feedback: 'Feedback',
   sidebar_menu_administration: 'Administration',
+  sidebar_menu_admin: 'Admin',
   sidebar_menu_members: 'Members',
   sidebar_menu_schools: 'Schools',
   sidebar_menu_management: 'Management',
@@ -1023,8 +1024,6 @@ const en = {
     ' It’s the place you see a result when you run javascript (JS).Because most times JS runs in the background and does it’s calculations and response there.',
   console_tooltip_subtitle_2:
     'Only when you specifically link a particular function to a specific part of the page do you actually see JS modifying the “Front” page.',
-  console_tooltip_subtitle_3:
-    'The fancy term for this is “Manipulating the DOM”. - And “DOM” stands for Document Object Model.',
   no_preview_available_title: 'Browser',
   no_preview_available_results: 'Here you will see the results of your work in realtime',
   no_preview_available: 'No preview available?',
@@ -1149,6 +1148,7 @@ const en = {
   slug_validation_msg_2: 'Slug is required',
   home_page_type_validation_msg: 'Select type',
   home_page_type_required_msg: 'Home page type is required',
+  home_page_type: 'Home page type',
   add_custom_html_code: 'Add custom HTML code',
 
   // CreateLesson

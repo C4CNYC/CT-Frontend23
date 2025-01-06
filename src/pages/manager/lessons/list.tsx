@@ -179,7 +179,7 @@ export default function LessonsListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('lessons_list')} | CodeTribe</title>
+        {router.query.lessonId ? null : <title>{translate('lessons_list')} | CodeTribe</title>}
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

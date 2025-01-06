@@ -291,6 +291,7 @@ const es = {
   sidebar_menu_invite_friends: 'Invitar amigos',
   sidebar_menu_feedback: 'Comentarios',
   sidebar_menu_administration: 'Administración',
+  sidebar_menu_admin: 'Administrador',
   sidebar_menu_members: 'Miembros',
   sidebar_menu_schools: 'Escuelas',
   sidebar_menu_management: 'Gestión',
@@ -1026,8 +1027,6 @@ const es = {
     'Es el lugar donde ves un resultado cuando ejecutas javascript (JS). Porque la mayoría de las veces JS se ejecuta en segundo plano y realiza sus cálculos y respuestas allí.',
   console_tooltip_subtitle_2:
     'Solo cuando vinculas específicamente una función a una parte particular de la página, realmente ves cómo JS modifica la página "frontal".',
-  console_tooltip_subtitle_3:
-    'El término técnico para esto es "Manipular el DOM". - Y "DOM" significa Modelo de Objeto de Documento.',
   no_preview_available_title: 'Navegador',
   no_preview_available_results: 'Aquí verás los resultados de tu trabajo en tiempo real',
   no_preview_available: '¿No hay vista previa disponible?',
@@ -1140,6 +1139,7 @@ const es = {
   slug_validation_msg_2: 'El slug es obligatorio',
   home_page_type_validation_msg: 'Selecciona el tipo',
   home_page_type_required_msg: 'El tipo de página de inicio es obligatorio',
+  home_page_type: 'Tipo de página de inicio',
   add_custom_html_code: 'Agregar código HTML personalizado',
 
   // Code-editor save
