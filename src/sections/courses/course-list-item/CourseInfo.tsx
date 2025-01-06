@@ -4,6 +4,7 @@ import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 
 import { ICourse } from '@/types'
 import { useTranslate } from '@/utils/translateHelper'
+import { detectZeroAmount } from '@root/src/utils/detectZeroAmount'
 
 interface Props {
   course: ICourse
@@ -12,14 +13,14 @@ interface Props {
 export default function CourseInfo({ course }: Props): React.ReactElement {
   const { price, total_lessons: totalLessons, level } = course
   const translate = useTranslate()
-
+  const priceIsZero = detectZeroAmount(price)
   return (
     <Stack
       sx={{
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        maxWidth: '450px',
+        maxWidth: priceIsZero? '300px':'450px',
         flexWrap: 'wrap',
       }}
     >
@@ -41,15 +42,14 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           {level}
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <MdCelebration size='18px' />
-        <Typography
-          variant='body2'
-          sx={{ color: 'inherit' }}
-        >
-          {+price.charAt(1) === 0 ? translate('free') : price}
-        </Typography>
-      </Box>
+      {priceIsZero ?null: (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <MdCelebration size='18px' />
+          <Typography
+            variant='body2'
+            sx={{ color: 'inherit' }}
+          >{price}</Typography>
+        </Box>)}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <MdCelebration size='18px' />
         <Typography
