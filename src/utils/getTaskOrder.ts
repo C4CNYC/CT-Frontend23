@@ -22,19 +22,19 @@ export function getOrder(
   // case: when you put your task as first on in column
   if (!destination?.index) {
     const nextId = cardIds[Number(destination?.index)]
-    return nextId ? parseFloat(cards[nextId].meta.order as string) / 2 : 1
+    return nextId ? parseFloat(cards[nextId].meta.order || '0') / 2 : 1
   }
 
   // case: when you put your task as last on in the same column
   if (isSameColumn && destination?.index >= cardIds.length - 1) {
     const lastId = cardIds[cardIds.length - 1]
-    return parseFloat(cards[lastId].meta.order as string) + 1
+    return parseFloat(cards[lastId].meta.order || '0') + 1
   }
 
   // case: when you put your task as last on in another column
   if (!isSameColumn && destination?.index >= cardIds.length) {
     const lastId = cardIds[cardIds.length - 1]
-    return parseFloat(cards[lastId].meta.order as string) + 1
+    return parseFloat(cards[lastId].meta.order || '0') + 1
   }
 
   // case: when you put your task as after next task.
@@ -43,10 +43,10 @@ export function getOrder(
     const nextId = cardIds[Number(destination?.index) + 1]
 
     return nextId
-      ? (parseFloat(cards[nextId].meta.order as string) +
-          parseFloat(cards[prevId].meta.order as string)) /
+      ? (parseFloat(cards[nextId].meta.order || '0') +
+          parseFloat(cards[prevId].meta.order || '0')) /
           2
-      : parseFloat(cards[prevId].meta.order as string) + 1
+      : parseFloat(cards[prevId].meta.order || '0') + 1
   }
 
   // case: all other cases
@@ -54,9 +54,5 @@ export function getOrder(
   const nextId = cardIds[Number(destination?.index)]
   const prevId = cardIds[Number(destination?.index) - 1]
 
-  return (
-    (parseFloat(cards[nextId].meta.order as string) +
-      parseFloat(cards[prevId].meta.order as string)) /
-    2
-  )
+  return (parseFloat(cards[nextId].meta.order) + parseFloat(cards[prevId].meta.order)) / 2
 }

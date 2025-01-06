@@ -80,6 +80,7 @@
     "jotai": "^2.0.4",
     "jwt-decode": "^3.1.2",
     "lodash-es": "^4.17.21",
+    "lru-cache": "^10",
     "luxon": "^3.4.4",
     "mui-color-input": "^1.0.4",
     "mui-tel-input": "^5.0.0",
