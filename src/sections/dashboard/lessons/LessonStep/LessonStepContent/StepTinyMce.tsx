@@ -50,7 +50,8 @@ export function StepTinyMce(props: EditorSelectorProps) {
       <ResizerUi
         split='vertical'
         defaultSize={isAllColumnsVisible ? '70%' : '100%'}
-        allowResize={false}
+        minSize={480}
+        maxSize={750}
       >
         <Box className='lessonCreationStep3'>
           <style>{`.tox-promotion{filter:opacity(0)}`}</style>

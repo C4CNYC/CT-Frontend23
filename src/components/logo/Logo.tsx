@@ -49,7 +49,6 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
       <Link
         component={NextLink}
         href={STUDENT_PATH_DASHBOARD.class.root}
-        sx={{ display: 'contents' }}
       >
         {logo}
       </Link>

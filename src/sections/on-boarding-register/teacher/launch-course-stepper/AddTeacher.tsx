@@ -10,13 +10,13 @@ import { styledRegisterInput } from '../../styles'
 import { SUBMIT_BTN_SX } from '../constants'
 
 interface Props {
-  isSubmiting: boolean
+  isSubmitting: boolean
   isSubmitSuccessful: boolean
   nextStep: () => void
 }
 
 export default function AddTeacher({
-  isSubmiting,
+  isSubmitting,
   isSubmitSuccessful,
   nextStep,
 }: Props): React.ReactElement {
@@ -82,7 +82,7 @@ export default function AddTeacher({
       </Stack>
       <LoadingButton
         type='submit'
-        loading={isSubmiting}
+        loading={isSubmitting}
         sx={SUBMIT_BTN_SX}
       >
         {translate('register_whoopie')}

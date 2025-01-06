@@ -25,7 +25,7 @@ export const getLessonCreationSteps = (translate: (key: string) => string): Step
     title: <div>{translate('intro_tour_lesson_creation_step_3_title')}</div>,
     content: <div>{translate('intro_tour_lesson_creation_step_3_subtitle')}</div>,
     disableBeacon: true,
-    placement: 'auto' as const,
+    placement: 'left' as const,
   },
   {
     target: '.lessonCreationStep4',
@@ -35,8 +35,7 @@ export const getLessonCreationSteps = (translate: (key: string) => string): Step
     placement: 'auto' as const,
     styles: {
       spotlight: {
-        marginTop: '-750px',
-        height: '850px',
+        marginTop: '50px',
       },
     },
   },
