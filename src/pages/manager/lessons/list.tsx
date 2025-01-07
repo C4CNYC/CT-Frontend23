@@ -80,14 +80,23 @@ export default function LessonsListPage(): React.ReactElement {
 
   const userRole = useSelector((state) => state.global?.user?.role)
 
-  const { filters, setFilter } = useFilters<ILessonSearchParams>(
+  const [filters, setFilterState ] = useState<ILessonSearchParams>(
     {
       module_id: '',
       name: '',
       lessonId: '',
-    },
-    FilterMode.global
+      take: DEFAULT_TAKE_PER_PAGE,
+      page: 1,
+    }
   )
+  function setFilter(key: string | string[], value: string | number) {
+    if (typeof key === 'string') {
+      setFilterState({
+        ...filters,
+        [key]: value,
+      }) 
+    } 
+  }
   const {
     data: ownLessonsData,
     isLoading: isOwnLessonDataLoading,
