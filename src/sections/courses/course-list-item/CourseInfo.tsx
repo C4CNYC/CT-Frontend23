@@ -20,7 +20,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        maxWidth: priceIsZero? '300px':'450px',
+        maxWidth: priceIsZero ? '300px' : '450px',
         flexWrap: 'wrap',
       }}
     >
@@ -42,14 +42,17 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           {level}
         </Typography>
       </Box>
-      {priceIsZero ?null: (
+      {priceIsZero ? null : (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <MdCelebration size='18px' />
           <Typography
             variant='body2'
             sx={{ color: 'inherit' }}
-          >{price}</Typography>
-        </Box>)}
+          >
+            {price}
+          </Typography>
+        </Box>
+      )}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <MdCelebration size='18px' />
         <Typography
