@@ -361,7 +361,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
                     onDublicate={onDublicate}
                     onChangeSlide={onChangeSlide}
                     lessonId={lessonId}
-                    key={board.cards[el]?.meta?.order ? +board.cards[el]?.meta?.order + i : i}
+                    key={el}
                     step={board.cards[el]}
                     index={i}
                   />
