@@ -16,6 +16,7 @@ import FaviconTab from './FaviconTab'
 import LogoMiniTab from './LogoMiniTab'
 import LogoTab from './LogoTab'
 import MainTab from './MainTab'
+import OwnerTab from './OwnerTab'
 
 interface Prop {
   org?: IAdministration
@@ -131,10 +132,14 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
                   label={translate('Favicon')}
                   {...a11yProps(3)}
                 />
+                <Tab
+                  label={translate('owner')}
+                  {...a11yProps(4)}
+                />
                 {org.home_page_type === HomePageType.Custom ? (
                   <Tab
                     label={translate('Code')}
-                    {...a11yProps(4)}
+                    {...a11yProps(5)}
                   />
                 ) : null}
               </Tabs>
@@ -179,6 +184,15 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
           <TabPanel
             value={value}
             index={4}
+          >
+            <OwnerTab
+              handleClose={handleClose}
+              orgId={org?.id as string}
+            />
+          </TabPanel>
+          <TabPanel
+            value={value}
+            index={5}
           >
             <CustomCodeTab
               handleClose={handleClose}

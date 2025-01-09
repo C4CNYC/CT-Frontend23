@@ -50,6 +50,9 @@ export const MANAGER_PATH_DASHBOARD = {
   administration: {
     root: path(MANAGER_ROOTS_DASHBOARD, '/administration'),
   },
+  owner: {
+    root: path(MANAGER_ROOTS_DASHBOARD, '/owner'),
+  },
   organization: {
     root: path(MANAGER_ROOTS_DASHBOARD, '/organization'),
     general: path(MANAGER_ROOTS_DASHBOARD, '/organization/general'),

@@ -28,6 +28,17 @@ import MarketMenuItem from '@root/src/sections/menu-items-components/market-item
 import SandboxMenuItem from '@root/src/sections/menu-items-components/sandbox-item'
 import MyCreationsMenu from '@root/src/sections/my-creations-menu'
 
+export const owner = {
+  subheader: 'sidebar_menu_administration',
+  items: [
+    {
+      title: 'sidebar_menu_admin',
+      path: MANAGER_PATH_DASHBOARD.owner.root,
+      icon: <Iconify icon='eos-icons:admin' />,
+    },
+  ],
+}
+
 export const admin = {
   subheader: 'sidebar_menu_administration',
   items: [
@@ -226,7 +237,7 @@ export const socials = {
 export const menuConfig = {
   [Role.SuperAdmin]: [superAdmin, admin, managment, content],
   [Role.Owner]: [admin, managment, content],
-  [Role.Admin]: [admin, managment, content],
+  [Role.Admin]: [owner, admin, managment, content],
   [Role.Student]: [courses, general, apps],
   [Role.Anonymous]: [courses, general, apps],
   [Role.Manager]: [managment, content],

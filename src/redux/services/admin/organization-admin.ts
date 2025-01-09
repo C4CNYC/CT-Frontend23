@@ -1,3 +1,6 @@
+import { BaseResponseInterface } from '@root/src/utils'
+
+import { IAdministration, IAdministrationCreate } from '../interfaces/administration'
 import { OrganizationRequest, OrganizationResponce } from '../interfaces/organization.interface'
 
 import { adminApi } from '.'
@@ -60,6 +63,58 @@ const extendedApi = adminApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Organization' }],
     }),
+
+    getOwnerOrg: builder.query<IAdministration & BaseResponseInterface, void>({
+      query: () => ({
+        url: `/org`,
+        method: 'GET',
+      }),
+      providesTags: ['AdministrationOwner'],
+    }),
+    updateOwnerOrg: builder.mutation<
+      IAdministration & BaseResponseInterface,
+      { id: string } & Partial<IAdministrationCreate>
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/org/${id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['AdministrationOwner'],
+    }),
+    updateOwnerOrgFavicon: builder.mutation<
+      IAdministration & BaseResponseInterface,
+      { id: string; file: FormData }
+    >({
+      query: ({ id, file }) => ({
+        url: `/org/${id}/favicon`,
+        method: 'PATCH',
+        body: file,
+      }),
+      invalidatesTags: ['AdministrationOwner'],
+    }),
+    updateOwnerOrgLogoMini: builder.mutation<
+      IAdministration & BaseResponseInterface,
+      { id: string; file: FormData }
+    >({
+      query: ({ id, file }) => ({
+        url: `/org/${id}/mini-logo`,
+        method: 'PATCH',
+        body: file,
+      }),
+      invalidatesTags: ['AdministrationOwner'],
+    }),
+    updateOwnerOrgLogo: builder.mutation<
+      IAdministration & BaseResponseInterface,
+      { id: string; file: FormData }
+    >({
+      query: ({ id, file }) => ({
+        url: `/org/${id}/logo`,
+        method: 'PATCH',
+        body: file,
+      }),
+      invalidatesTags: ['AdministrationOwner'],
+    }),
   }),
 })
 
@@ -69,4 +124,11 @@ export const {
   useUpdateOrganizationMutation,
   useUpdateOrgAvatarMutation,
   useUpdateOrgCoverMutation,
+
+  //owner
+  useGetOwnerOrgQuery,
+  useUpdateOwnerOrgMutation,
+  useUpdateOwnerOrgLogoMutation,
+  useUpdateOwnerOrgFaviconMutation,
+  useUpdateOwnerOrgLogoMiniMutation,
 } = extendedApi

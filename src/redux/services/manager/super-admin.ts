@@ -52,6 +52,25 @@ export const superAdmin = createApi({
       }),
       invalidatesTags: ['Administration'],
     }),
+    updateOrgOwner: builder.mutation<
+      IAdministration & BaseResponseInterface,
+      { id: string } & { user_id: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/org/${id}/owner`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Administration'],
+    }),
+    deleteOrgOwner: builder.mutation<IAdministration & BaseResponseInterface, { id: string }>({
+      query: ({ id, ...body }) => ({
+        url: `/org/${id}/owner`,
+        method: 'DELETE',
+        body,
+      }),
+      invalidatesTags: ['Administration'],
+    }),
     deleteOrg: builder.mutation<IAdministration & BaseResponseInterface, { id: string }>({
       query: ({ id, ...body }) => ({
         url: `/org/${id}`,
@@ -102,8 +121,10 @@ export const {
 
   useCreateOrgMutation,
   useUpdateOrgMutation,
+  useUpdateOrgOwnerMutation,
   useUpdateOrgLogoMiniMutation,
   useUpdateOrgLogoMutation,
   useDeleteOrgMutation,
+  useDeleteOrgOwnerMutation,
   useUpdateOrgFaviconMutation,
 } = superAdmin

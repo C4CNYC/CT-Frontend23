@@ -18,6 +18,7 @@ export const adminApi = createApi({
     'Lessons',
     'Courses',
     'Modules',
+    'AdministrationOwner',
   ],
   endpoints: (builder) => ({}),
 })
