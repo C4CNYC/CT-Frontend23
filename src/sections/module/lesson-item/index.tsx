@@ -14,6 +14,8 @@ import { setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CatalogLessonDialog from '@/sections/module/lesson-item/CatalogLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
+import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 
 import RocketIcon from '../icons/RocketIcon'
 
@@ -153,7 +155,11 @@ export default function LessonItem({
               sx={DURATION_SX}
             >
               <AiOutlineClockCircle size={20} />
-              20 mins
+              {convertMinsToString(
+                convertDurationToMins(lesson.duration),
+                translate('hours'),
+                translate('minutes')
+              )}
             </Typography>
           </Stack>
           {!locked ? (
