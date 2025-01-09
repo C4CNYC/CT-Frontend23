@@ -3,8 +3,9 @@ import NextLink from 'next/link'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { Iconify } from '@/components/iconify'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { useLocales } from '../../../locales'
+import { Label } from '../../label'
 import { NavItemProps } from '../types'
 
 import { StyledDotIcon, StyledIcon, StyledItem } from './styles'
@@ -17,7 +18,7 @@ export default function NavItem({
   isExternalLink,
   ...other
 }: NavItemProps): React.ReactElement | null {
-  const { translate } = useLocales()
+  const translate = useTranslate()
 
   const { title, path, icon, info, children, caption, roles, component } = item
 
@@ -68,7 +69,7 @@ export default function NavItem({
           component='span'
           sx={{ lineHeight: 0 }}
         >
-          {info}
+          <Label color='success'>{translate(`${info}`)}</Label>
         </Box>
       )}
 

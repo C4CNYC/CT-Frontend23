@@ -291,6 +291,7 @@ const es = {
   sidebar_menu_invite_friends: 'Invitar amigos',
   sidebar_menu_feedback: 'Comentarios',
   sidebar_menu_administration: 'Administración',
+  sidebar_menu_admin: 'Administrador',
   sidebar_menu_members: 'Miembros',
   sidebar_menu_schools: 'Escuelas',
   sidebar_menu_management: 'Gestión',
@@ -735,7 +736,8 @@ const es = {
   login_go_back: 'REGRESAR',
   login_with_email: 'Iniciar sesión con correo electrónico',
   login_lets_go: '¡VAMOS ALLÁ!',
-  login_sign_up: 'Registrarse',
+  login_sign_up_as_student: 'Registrarse como estudiante',
+  login_sign_up_as_teacher: 'Registrarse como Profesor',
   login_reset_password: 'Olvidé mi contraseña',
   login_my_first_time: 'Es mi primera vez aquí',
   login_sign_up_with_google: 'Regístrate con Google',
@@ -744,7 +746,7 @@ const es = {
   login_been_here: 'Ya he estado aquí',
   login_register_as: 'Registrarse como',
   login_hey_teachers: 'Hola, Profesores',
-  login_lets_start_learning: 'Comencemos una aventura de aprendizaje',
+  login_lets_start_learning: 'Comencemos una aventura de aprendizaje.',
   login_popup_session_title: 'Sesión emergente',
   login_popup_session_subtitle:
     'Vista en tiempo real de todos los participantes mientras se transmite código y voz.',
@@ -997,7 +999,7 @@ const es = {
   file_name: 'Nombre del archivo',
   validation_removed: 'Regla de validación eliminada',
   validation_rules: 'Pruebas',
-  not_recommend_count_validations: 'No recomendamos poner más de {{count}} reglas por paso.',
+  not_recommend_count_validations: 'Recomendamos no más de {{count}} pruebas por diapositiva.',
   it_can_make_your_step: 'Esto puede hacer que tu paso sea muy complicado y afectar',
   comfort_content: 'el aprendizaje en teléfonos',
   updated_at: 'Actualizado en',
@@ -1025,8 +1027,6 @@ const es = {
     'Es el lugar donde ves un resultado cuando ejecutas javascript (JS). Porque la mayoría de las veces JS se ejecuta en segundo plano y realiza sus cálculos y respuestas allí.',
   console_tooltip_subtitle_2:
     'Solo cuando vinculas específicamente una función a una parte particular de la página, realmente ves cómo JS modifica la página "frontal".',
-  console_tooltip_subtitle_3:
-    'El término técnico para esto es "Manipular el DOM". - Y "DOM" significa Modelo de Objeto de Documento.',
   no_preview_available_title: 'Navegador',
   no_preview_available_results: 'Aquí verás los resultados de tu trabajo en tiempo real',
   no_preview_available: '¿No hay vista previa disponible?',
@@ -1139,6 +1139,7 @@ const es = {
   slug_validation_msg_2: 'El slug es obligatorio',
   home_page_type_validation_msg: 'Selecciona el tipo',
   home_page_type_required_msg: 'El tipo de página de inicio es obligatorio',
+  home_page_type: 'Tipo de página de inicio',
   add_custom_html_code: 'Agregar código HTML personalizado',
 
   // Code-editor save

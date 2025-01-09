@@ -10,7 +10,7 @@ export default function NavToggleButton({
   sx,
   ...other
 }: IconButtonProps): React.ReactElement | null {
-  const { themeLayout, onToggleLayout } = useSettingsContext()
+  const { themeLayout, themeDirection, onToggleLayout } = useSettingsContext()
   const isDesktop = useResponsive('up', 'md')
 
   if (!isDesktop) {
@@ -39,7 +39,15 @@ export default function NavToggleButton({
     >
       <Iconify
         width={16}
-        icon={themeLayout === 'vertical' ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'}
+        icon={
+          themeDirection === 'ltr'
+            ? themeLayout === 'vertical'
+              ? 'eva:arrow-ios-back-fill'
+              : 'eva:arrow-ios-forward-fill'
+            : themeLayout === 'vertical'
+              ? 'eva:arrow-ios-forward-fill'
+              : 'eva:arrow-ios-back-fill'
+        }
       />
     </IconButton>
   )

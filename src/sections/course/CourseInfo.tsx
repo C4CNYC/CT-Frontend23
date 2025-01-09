@@ -5,32 +5,32 @@ import { SlArrowDown } from '@react-icons/all-files/sl/SlArrowDown'
 import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
 
 import { Image } from '@/components'
+import { ICourse } from '@/types'
 import { useTranslate } from '@/utils/translateHelper'
+import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 
 import { COURSE_INFO_IMAGE_SX, getCourseInfoWrapperSx, getSeeMoreBtnSx } from './constants'
 import CourseSummarily from './CourseSummarily'
 
 interface ICourseInfoProps {
-  cover?: string
-  name: string
-  description: string
-  lessonsCount: number
-  duration: string
-  level: string
+  course: ICourse
 }
 
-export default function CourseInfo({
-  cover,
-  name,
-  description,
-  duration,
-  lessonsCount,
-  level,
-}: ICourseInfoProps): React.ReactElement {
+export default function CourseInfo({ course }: ICourseInfoProps): React.ReactElement {
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const translate = useTranslate()
   const descRef = useRef<HTMLElement | null>(null)
+  const { cover, name, description, level } = course
+  const durationInMins = course?.units
+    ?.filter((unit) => unit.active)
+    .map((unit) => convertDurationToMins(unit.duration))
+    .reduce((acc, unitDuration) => acc + unitDuration, 0)
+
+  const lessonsCount =
+    course?.units?.reduce((total, unit) => {
+      return total + unit?.lessons?.length
+    }, 0) ?? 0
 
   const ellipsisHandler = () => {
     if (descRef.current) {
@@ -80,7 +80,7 @@ export default function CourseInfo({
         ) : null}
 
         <CourseSummarily
-          duration={duration}
+          durationInMinutes={durationInMins || 60}
           lessonsCount={lessonsCount}
           level={level}
         />

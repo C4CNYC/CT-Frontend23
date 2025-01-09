@@ -95,6 +95,7 @@ export interface ILesson {
   contents: ILessonContent[]
   type: LessonType
   slug: string
+  duration: Duration
 }
 
 export interface ILessonCurrent {

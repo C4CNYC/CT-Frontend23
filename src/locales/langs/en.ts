@@ -291,6 +291,7 @@ const en = {
   sidebar_menu_invite_friends: 'Invite Friends',
   sidebar_menu_feedback: 'Feedback',
   sidebar_menu_administration: 'Administration',
+  sidebar_menu_admin: 'Admin',
   sidebar_menu_members: 'Members',
   sidebar_menu_schools: 'Schools',
   sidebar_menu_management: 'Management',
@@ -741,7 +742,8 @@ const en = {
   login_go_back: 'GO BACK',
   login_with_email: 'Sign in with Email',
   login_lets_go: "LET'S GO!",
-  login_sign_up: 'Register',
+  login_sign_up_as_student: 'Register as Student',
+  login_sign_up_as_teacher: 'Register as Teacher',
   login_reset_password: 'Forgot password',
   login_my_first_time: 'This is my first time here',
   login_sign_up_with_google: 'Sign up with Google',
@@ -750,7 +752,7 @@ const en = {
   login_been_here: 'I’ve been here before',
   login_register_as: 'Register as',
   login_hey_teachers: 'Hey, Teachers',
-  login_lets_start_learning: 'Let’s start a learning adventure',
+  login_lets_start_learning: 'Let’s start a learning adventure.',
   login_popup_session_title: 'Pop-up Session',
   login_popup_session_subtitle:
     'Real-time view of all participants while broadcasting code & voice.',
@@ -759,7 +761,7 @@ const en = {
   login_ai_generate_session_subtitle: 'Create a new lesson with A.I.',
   login_ai_generate_session_info:
     'Generate awesome new lessons, exercises or quizzes with AI - It’s fun and simple. Give it a try.',
-  login_launch_session_title: 'Launch Course',
+  login_launch_session_title: 'Launch a Course',
   login_launch_session_subtitle: 'Teacher-led or self-paced modules assigned to class or group.',
   login_launch_session_info: 'Real-time view of all participants while broadcasting code & voice.',
   login_mumu: 'Hi, I’m {{name}}',
@@ -994,8 +996,7 @@ const en = {
   file_name: 'File name',
   validation_removed: 'Validation rule removed',
   validation_rules: 'Tests',
-  not_recommend_count_validations:
-    ' We are not recommend put more then {{count}} rules for 1 step.',
+  not_recommend_count_validations: 'We recommend not more than {{count}} tests per slide.',
   it_can_make_your_step: 'It can make your step very complicated and can affect',
   comfort_content: 'learners on phones',
   updated_at: 'Updated At',
@@ -1023,8 +1024,6 @@ const en = {
     ' It’s the place you see a result when you run javascript (JS).Because most times JS runs in the background and does it’s calculations and response there.',
   console_tooltip_subtitle_2:
     'Only when you specifically link a particular function to a specific part of the page do you actually see JS modifying the “Front” page.',
-  console_tooltip_subtitle_3:
-    'The fancy term for this is “Manipulating the DOM”. - And “DOM” stands for Document Object Model.',
   no_preview_available_title: 'Browser',
   no_preview_available_results: 'Here you will see the results of your work in realtime',
   no_preview_available: 'No preview available?',
@@ -1149,6 +1148,7 @@ const en = {
   slug_validation_msg_2: 'Slug is required',
   home_page_type_validation_msg: 'Select type',
   home_page_type_required_msg: 'Home page type is required',
+  home_page_type: 'Home page type',
   add_custom_html_code: 'Add custom HTML code',
 
   // CreateLesson

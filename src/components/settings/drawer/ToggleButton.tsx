@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { Box, Tooltip } from '@mui/material'
+import { Box } from '@mui/material'
 import { alpha, useTheme } from '@mui/material/styles'
 
 import { bgBlur } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-
-import { IconButtonAnimate } from '../../animate'
-import { SvgColor } from '../../svg-color'
 
 import BadgeDot from './BadgeDot'
 
@@ -59,8 +56,8 @@ export default function ToggleButton({
           }}
         />
       )}
-
-      <Tooltip title={translate('settings')}>
+      {/* Hided Settings Button */}
+      {/* <Tooltip title={translate('settings')}>
         <IconButtonAnimate
           color='primary'
           onClick={onToggle}
@@ -68,7 +65,7 @@ export default function ToggleButton({
         >
           <SvgColor src='/assets/icons/setting/ic_setting.svg' />
         </IconButtonAnimate>
-      </Tooltip>
+      </Tooltip> */}
     </Box>
   )
 }

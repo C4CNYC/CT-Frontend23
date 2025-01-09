@@ -4,6 +4,9 @@ import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 
 import { ICourse } from '@/types'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetCoursContentQuery } from '@root/src/redux/services/manager/courses-student'
+import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
+import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 import { detectZeroAmount } from '@root/src/utils/detectZeroAmount'
 
 interface Props {
@@ -13,6 +16,15 @@ interface Props {
 export default function CourseInfo({ course }: Props): React.ReactElement {
   const { price, total_lessons: totalLessons, level } = course
   const translate = useTranslate()
+  const courseContent = useGetCoursContentQuery(
+    { id: course.id || '' },
+    { skip: !course.id || Boolean(course.units) }
+  ).data
+  let minutes =
+    [...(courseContent?.units ? courseContent?.units : []), ...(course.units ? course.units : [])]
+      .filter((unit) => unit.active)
+      .map((unit) => convertDurationToMins(unit.duration))
+      .reduce((acc, unitDuration) => acc + unitDuration, 0) || 30
   const priceIsZero = detectZeroAmount(price)
   return (
     <Stack
@@ -30,7 +42,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           variant='body2'
           sx={{ color: 'inherit' }}
         >
-          9 {translate('hours')}
+          {convertMinsToString(minutes, translate('hours'), translate('minutes'))}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
