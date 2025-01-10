@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 
 import { useTranslate } from '@/utils/translateHelper'
+import { IOwnerType } from '@root/src/components/org-owner-autocomplete/OrgOwnerAutocomplete'
 import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 
@@ -22,6 +23,7 @@ interface Prop {
   org?: IAdministration
   children: React.ReactElement
   isEdit?: boolean
+  owner: IOwnerType | null
 }
 
 interface TabPanelProps {
@@ -70,7 +72,7 @@ function a11yProps(index: number): Record<string, string> {
   }
 }
 
-export default function AddEditOrgModal({ children, org }: Prop): React.ReactElement {
+export default function AddEditOrgModal({ children, org, owner }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false)
   const [value, setValue] = React.useState(0)
 
@@ -188,6 +190,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
             <OwnerTab
               handleClose={handleClose}
               orgId={org?.id as string}
+              owner={owner}
             />
           </TabPanel>
           <TabPanel

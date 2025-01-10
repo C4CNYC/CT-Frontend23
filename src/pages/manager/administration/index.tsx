@@ -167,7 +167,7 @@ export default function AdministrationPage(): React.ReactElement {
             },
           ]}
           action={
-            <AddEditOrgModal>
+            <AddEditOrgModal owner={null}>
               <Button
                 sx={{ gap: 0.5 }}
                 variant='contained'

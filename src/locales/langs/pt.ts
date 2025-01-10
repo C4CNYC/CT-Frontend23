@@ -1146,6 +1146,11 @@ const pt = {
   home_page_type_required_msg: 'O tipo de página inicial é obrigatório',
   home_page_type: 'Tipo de página inicial',
   add_custom_html_code: 'Adicionar código HTML personalizado',
+  owner_added: 'Proprietário adicionado',
+  owner_removed: 'Proprietário removido',
+
+  // Owner page
+  owner_empty_text: 'Você não gerencia nenhuma organização.',
 
   // CreateLesson
   default_values: {

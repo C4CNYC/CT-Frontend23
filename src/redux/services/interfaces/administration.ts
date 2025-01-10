@@ -1,3 +1,5 @@
+import { IOwnerType } from '@root/src/components/org-owner-autocomplete/OrgOwnerAutocomplete'
+
 import { HomePageType } from '../enums/administration.enum'
 
 export interface AdminSearchParams {
@@ -13,6 +15,7 @@ export interface IAdministration {
   home_page_type: HomePageType
   favicon: string | null
   home_page_body?: string
+  owner: IOwnerType | null
 }
 
 export interface IAdministrationCreate {

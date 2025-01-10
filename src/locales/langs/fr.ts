@@ -1163,6 +1163,11 @@ const fr = {
   home_page_type_required_msg: "Le type de la page d'accueil est requis",
   home_page_type: `Type de page d'accueil`,
   add_custom_html_code: 'Ajouter du code HTML personnalisé',
+  owner_added: 'Propriétaire ajouté',
+  owner_removed: 'Propriétaire supprimé',
+
+  // Owner page
+  owner_empty_text: 'Vous ne gérez aucune organisation.',
 
   // CreateLesson
   default_values: {

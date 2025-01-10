@@ -25,9 +25,8 @@ export default function OrgTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props): React.ReactElement | null {
-  const { name, slug, logo, min_logo, favicon, home_page_type } = row
+  const { name, slug, logo, min_logo, favicon, home_page_type, owner } = row
   const [openConfirm, setOpenConfirm] = useState(false)
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
   const translate = useTranslate()
 
@@ -138,7 +137,10 @@ export default function OrgTableRow({
           {translate('actions_delete')}
         </MenuItem>
 
-        <AddEditOrgModal org={row}>
+        <AddEditOrgModal
+          org={row}
+          owner={owner}
+        >
           <MenuItem>
             <Iconify icon='eva:edit-fill' />
             {translate('actions_edit')}

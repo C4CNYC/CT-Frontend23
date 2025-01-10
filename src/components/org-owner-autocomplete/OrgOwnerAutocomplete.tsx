@@ -4,7 +4,6 @@ import {
   AutocompleteChangeReason,
   Avatar,
   Box,
-  Chip,
   Skeleton,
   TextField,
   Typography,
@@ -14,7 +13,7 @@ import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
-import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
+import { Iconify, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { useGetOrgMembersQuery } from '@/redux/services/admin/members-admin'
 import { Role } from '@/redux/services/enums/role.enum'
@@ -24,18 +23,20 @@ import {
   useDeleteOrgOwnerMutation,
   useUpdateOrgOwnerMutation,
 } from '@root/src/redux/services/manager/super-admin'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
-type UserType = IUser & BaseResponseInterface
+export type IOwnerType = IUser & BaseResponseInterface
 
 interface IOrgOwnerAutocompleteProps {
   orgId: string
-  owner?: UserType
+  owner: IOwnerType | null
 }
 
 export default function OrgOwnerAutocomplete({
   orgId,
   owner,
 }: IOrgOwnerAutocompleteProps): React.ReactElement {
+  const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
 
   const [updateOwner] = useUpdateOrgOwnerMutation()
@@ -59,9 +60,9 @@ export default function OrgOwnerAutocomplete({
 
   const onChange = async (
     _event: React.SyntheticEvent<any>,
-    _newValue: UserType[],
+    _newValue: IOwnerType | null,
     reason: AutocompleteChangeReason,
-    details?: AutocompleteChangeDetails<UserType>
+    details?: AutocompleteChangeDetails<IOwnerType>
   ): Promise<void> => {
     try {
       const payload = {
@@ -71,22 +72,23 @@ export default function OrgOwnerAutocomplete({
       switch (reason) {
         case 'selectOption': {
           await updateOwner(payload).unwrap()
-          enqueueSnackbar(`${details?.option.email ?? ''} became owner`)
+          enqueueSnackbar(translate('owner_added'))
           return
         }
-        case 'removeOption': {
+        case 'clear': {
+          if (!owner) return
           await deleteOwner(payload).unwrap()
-          enqueueSnackbar(`${details?.option.email ?? ''} is not a owner`)
+          enqueueSnackbar({ variant: 'warning', message: translate('owner_removed') })
         }
       }
-    } catch {
-      enqueueSnackbar('something went wrong', { variant: 'error' })
+    } catch (error: any) {
+      enqueueSnackbar(`${error?.message ?? translate('messages_error')}`, { variant: 'error' })
     }
   }
   return (
-    <Autocomplete<any, true>
+    <Autocomplete<IOwnerType>
       id='add-owner-input'
-      value={[owner]}
+      value={owner}
       onChange={onChange}
       options={admins.data}
       popupIcon={null}
@@ -96,26 +98,10 @@ export default function OrgOwnerAutocomplete({
           query={filters.name}
         />
       }
-      onInputChange={(event, value) => {
+      onInputChange={(_, value) => {
         setFilter('email', value)
       }}
       getOptionLabel={(option) => option.email}
-      renderTags={(tagValue, getTagProps): React.ReactElement[] =>
-        tagValue.map((option, index) => (
-          <Chip
-            sx={{ direction: 'ltr !important' }}
-            avatar={
-              <CustomAvatar
-                alt={option.email}
-                src='/assets/images/avatar_2.jpg'
-              />
-            }
-            label={option.email}
-            {...getTagProps({ index })}
-            key={option.email}
-          />
-        ))
-      }
       style={{ width: '100%' }}
       renderInput={(params) => (
         <TextField

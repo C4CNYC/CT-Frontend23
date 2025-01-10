@@ -36,7 +36,9 @@ export default function OwnerPage(): React.ReactElement {
   }
 
   if (isLoading) return <LoadingScreen />
-  if (!data) return <EmptyContent title={'You have 0 org'} />
+
+  if (!data) return <EmptyContent title={translate('owner_empty_text')} />
+
   return (
     <>
       <Head>

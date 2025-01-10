@@ -1141,6 +1141,11 @@ const es = {
   home_page_type_required_msg: 'El tipo de página de inicio es obligatorio',
   home_page_type: 'Tipo de página de inicio',
   add_custom_html_code: 'Agregar código HTML personalizado',
+  owner_added: 'Propietario añadido',
+  owner_removed: 'Propietario eliminado',
+
+  // Owner page
+  owner_empty_text: 'No gestionas ninguna organización.',
 
   // Code-editor save
   publish_to_gallery: 'Publicar en la Galería',

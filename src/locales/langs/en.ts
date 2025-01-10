@@ -1150,6 +1150,11 @@ const en = {
   home_page_type_required_msg: 'Home page type is required',
   home_page_type: 'Home page type',
   add_custom_html_code: 'Add custom HTML code',
+  owner_added: 'Owner added',
+  owner_removed: 'Owner removed',
+
+  // Owner page
+  owner_empty_text: 'You don`t manage any organization.',
 
   // CreateLesson
   default_values: {

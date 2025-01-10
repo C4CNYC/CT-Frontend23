@@ -1132,6 +1132,11 @@ const ar = {
   home_page_type_required_msg: 'نوع الصفحة الرئيسية مطلوب',
   home_page_type: 'نوع الصفحة الرئيسية',
   add_custom_html_code: 'إضافة كود HTML مخصص',
+  owner_added: 'تم إضافة المالك',
+  owner_removed: 'تم إزالة المالك',
+
+  // Owner page
+  owner_empty_text: 'أنت لا تدير أي منظمة.',
 
   // CreateLesson
   default_values: {
