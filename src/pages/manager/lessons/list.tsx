@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
+import { DEFAULT_TAKE_PER_PAGE } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import { useGetAllAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
 import { Role } from '@/redux/services/enums/role.enum'
@@ -80,22 +80,27 @@ export default function LessonsListPage(): React.ReactElement {
 
   const userRole = useSelector((state) => state.global?.user?.role)
 
-  const [filters, setFilterState ] = useState<ILessonSearchParams>(
-    {
-      module_id: '',
-      name: '',
-      lessonId: '',
-      take: DEFAULT_TAKE_PER_PAGE,
-      page: 1,
-    }
-  )
+  const [filters, setFilterState] = useState<ILessonSearchParams>({
+    module_id: '',
+    name: '',
+    lessonId: '',
+    take: DEFAULT_TAKE_PER_PAGE,
+    page: 1,
+  })
   function setFilter(key: string | string[], value: string | number) {
-    if (typeof key === 'string') {
+    if (Array.isArray(key)) {
+      key.forEach((k) => {
+        setFilterState({
+          ...filters,
+          [k]: value,
+        })
+      })
+    } else {
       setFilterState({
         ...filters,
         [key]: value,
-      }) 
-    } 
+      })
+    }
   }
   const {
     data: ownLessonsData,
