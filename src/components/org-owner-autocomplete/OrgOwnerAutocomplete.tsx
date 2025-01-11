@@ -13,7 +13,7 @@ import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
-import { Iconify, SearchNotFound } from '@/components'
+import { SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { useGetOrgMembersQuery } from '@/redux/services/admin/members-admin'
 import { Role } from '@/redux/services/enums/role.enum'
@@ -82,7 +82,7 @@ export default function OrgOwnerAutocomplete({
         }
       }
     } catch (error: any) {
-      enqueueSnackbar(`${error?.message ?? translate('messages_error')}`, { variant: 'error' })
+      enqueueSnackbar(`${error?.data.message ?? translate('messages_error')}`, { variant: 'error' })
     }
   }
   return (
@@ -163,9 +163,7 @@ export default function OrgOwnerAutocomplete({
                     color: 'primary.main',
                   }),
                 }}
-              >
-                <Iconify icon='eva:checkmark-fill' />
-              </Box>
+              ></Box>
             </Box>
 
             {parts.map((part, index) => (
