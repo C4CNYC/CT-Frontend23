@@ -65,7 +65,9 @@ export default function SingUp({
         direction='row'
         sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: '40px' }}
       >
-        <Typography variant='h3'>{translate('login_sign_up')}</Typography>
+        <Typography variant='h3'>
+          {translate(isTeacher ? 'login_sign_up_as_teacher' : 'login_sign_up_as_student')}
+        </Typography>
         <Typography
           variant='h3'
           sx={{ ml: 1, mb: 3 }}

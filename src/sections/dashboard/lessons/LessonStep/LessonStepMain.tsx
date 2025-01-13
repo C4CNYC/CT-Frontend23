@@ -36,6 +36,7 @@ export default function LessonStepMain(): React.ReactElement {
       fullScreenClose: handle.exit,
     }))
   }, [])
+  if (!Boolean(lessonId)) return <> </>
   return (
     <LessonContentContext.Provider
       value={{
@@ -50,15 +51,18 @@ export default function LessonStepMain(): React.ReactElement {
         }
       `}
       </style>
+
       <Dialog
         open={Boolean(lessonId)}
-        onClose={() => {}}
+        onClose={() => {
+          router.push(`${router.pathname}?lessonId=`, undefined, { shallow: true })
+        }}
         fullScreen
       >
         <FullScreen handle={handle}>
           <LessonTopBar />
 
-          {stepId && <LessonCreationIntro deley={1000} />}
+          {stepId && <LessonCreationIntro delay={1000} />}
           <ResizerUi
             split='vertical'
             minSize={300}

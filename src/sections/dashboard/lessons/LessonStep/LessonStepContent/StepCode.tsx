@@ -75,9 +75,13 @@ export default function StepCode({
     <ResizerUi
       split='vertical'
       defaultSize={isAllColumnsVisible ? '70%' : '100%'}
-      allowResize={false}
+      minSize={400}
+      maxSize={750}
     >
-      <Box position='relative'>
+      <Box
+        position='relative'
+        className='lessonCreationStep3'
+      >
         <MenuItems
           data={data}
           lessonId={lessonId}
@@ -93,7 +97,6 @@ export default function StepCode({
           onChange={(value) => {
             setValue(value)
           }}
-          className='lessonCreationStep3'
         />
         <SaveButton
           onClick={() => {

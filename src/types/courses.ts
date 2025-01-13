@@ -1,3 +1,5 @@
+import { IModule } from '../redux/interfaces/content.interface'
+
 export interface ICourse {
   id?: string | undefined
   name: string
@@ -8,6 +10,7 @@ export interface ICourse {
   active: boolean
   draft: boolean
   total_lessons?: number
+  units?: IModule[]
 }
 
 export interface IUserProfileSchool {

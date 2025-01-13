@@ -19,16 +19,17 @@ import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 import NextLink from 'next/link'
 
 import { useTranslate } from '@/utils/translateHelper'
+import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 
 interface ICourseSidebarPros {
-  duration: string
+  durationInMins: number
   level: string
   lessons: number
   grade: string
 }
 
 export default function CourseSidebar({
-  duration,
+  durationInMins,
   lessons,
   level,
   grade,
@@ -80,7 +81,13 @@ export default function CourseSidebar({
             <ListItemIcon>
               <AiOutlineClockCircle size={20} />
             </ListItemIcon>
-            <ListItemText primary={`${duration} Hr`} />
+            <ListItemText
+              primary={convertMinsToString(
+                durationInMins,
+                translate('hours'),
+                translate('minutes')
+              )}
+            />
           </ListItem>
           <ListItem>
             <ListItemIcon>

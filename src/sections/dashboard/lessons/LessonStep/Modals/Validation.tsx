@@ -122,10 +122,7 @@ export default function Validation({
             >
               {translate('not_recommend_count_validations', {
                 count: RECOMENDED_COUNT_VALIDATION,
-              })}{' '}
-              <br />
-              {translate('it_can_make_your_step')} <br />
-              {translate('comfort_content')}
+              })}
             </Alert>
           ) : null}
           <TableContainer

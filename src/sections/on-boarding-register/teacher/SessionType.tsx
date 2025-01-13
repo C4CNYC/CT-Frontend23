@@ -61,7 +61,6 @@ export function SessionType({
           <Badge
             sx={{
               '& .MuiBadge-anchorOriginTopRight': { top: 0 },
-              left: '-10px',
               '& .MuiBadge-badge	': { color: '#fff', background: isNew ? '#FBDD3F' : '#364954' },
             }}
             badgeContent={translate(isNew ? 'on_boarding_new' : 'coming_soon')}
@@ -79,6 +78,7 @@ export function SessionType({
             variant='h4'
             textAlign='start'
             gutterBottom
+            textTransform='none'
           >
             {translate(title)}
           </Typography>
@@ -87,7 +87,7 @@ export function SessionType({
         <Typography
           variant='body2'
           textAlign='start'
-          sx={{ maxWidth: '250px' }}
+          sx={{ maxWidth: '220px', textTransform: 'none' }}
         >
           {translate(subtitle)}
         </Typography>

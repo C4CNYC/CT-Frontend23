@@ -291,6 +291,7 @@ const tr = {
   sidebar_menu_invite_friends: 'Arkadaşları Davet Et',
   sidebar_menu_feedback: 'Geri Bildirim',
   sidebar_menu_administration: 'Yönetim',
+  sidebar_menu_admin: 'Yönetici',
   sidebar_menu_members: 'Üyeler',
   sidebar_menu_schools: 'Okullar',
   sidebar_menu_management: 'Yönetim',
@@ -723,7 +724,8 @@ const tr = {
   login_go_back: 'GERİ DÖN',
   login_with_email: 'E-posta ile giriş yap',
   login_lets_go: 'HADI GİDELİM!',
-  login_sign_up: 'Kayıt ol',
+  login_sign_up_as_student: 'Öğrenci Olarak Kayıt Ol',
+  login_sign_up_as_teacher: 'Öğretmen Olarak Kayıt Ol',
   login_reset_password: 'Şifreyi unuttum',
   login_my_first_time: 'İlk kez buradayım',
   login_sign_up_with_google: 'Google ile kayıt ol',
@@ -732,7 +734,7 @@ const tr = {
   login_been_here: 'Daha önce buradaydım',
   login_register_as: 'Şu şekilde kayıt ol',
   login_hey_teachers: 'Selam Öğretmenler',
-  login_lets_start_learning: 'Bir öğrenme macerasına başlayalım',
+  login_lets_start_learning: 'Bir öğrenme macerasına başlayalım.',
   login_popup_session_title: 'Pop-up Oturumu',
   login_popup_session_subtitle:
     'Kod ve ses yayınlarken tüm katılımcıların gerçek zamanlı görünümü.',
@@ -979,7 +981,7 @@ const tr = {
   file_name: 'Dosya adı',
   validation_removed: 'Doğrulama kuralı kaldırıldı',
   validation_rules: 'Testler',
-  not_recommend_count_validations: "Bir adım için {{count}}'den fazla kural koymanızı önermiyoruz.",
+  not_recommend_count_validations: 'Bir slaytta en fazla {{count}} test öneriyoruz.',
   it_can_make_your_step: 'Bu, adımınızı oldukça karmaşık hale getirebilir ve',
   comfort_content: 'telefonlarda öğrenicileri etkileyebilir',
   updated_at: 'Güncellenme Tarihi',
@@ -1007,8 +1009,6 @@ const tr = {
     'JavaScript (JS) çalıştırdığınızda sonucu görebileceğiniz yerdir. Çoğu zaman JS, arka planda çalışır ve hesaplamalarını ve yanıtlarını orada yapar.',
   console_tooltip_subtitle_2:
     "Yalnızca belirli bir işlevi sayfanın belirli bir kısmına bağladığınızda, JS'nin 'Ön' sayfayı değiştirdiğini görürsünüz.",
-  console_tooltip_subtitle_3:
-    "Bunun şık terimi 'DOM Manipülasyonu'dur. - 'DOM', Belgeler Nesne Modeli'nin kısaltmasıdır.",
   no_preview_available_title: 'Tarayıcı',
   no_preview_available_results:
     'Burada çalışmanızın sonuçlarını gerçek zamanlı olarak göreceksiniz',
@@ -1129,6 +1129,7 @@ const tr = {
   slug_validation_msg_2: 'Slug gereklidir',
   home_page_type_validation_msg: 'Türü seçin',
   home_page_type_required_msg: 'Ana sayfa türü gereklidir',
+  home_page_type: 'Ana sayfa türü',
   add_custom_html_code: 'Özel HTML kodu ekle',
 
   // Code panel header
@@ -1265,7 +1266,8 @@ const tr = {
   diamond_feature_title: 'Elmas Özellik',
   diamond_feature_subtitle: 'Bu özellik DIAMOND hesapları için sınırlıdır.',
 
-  hours: 'Saatler',
+  hours: 'Saat',
+  minutes: 'Dakika',
   module_sidebar_skills: 'YETENEKLER',
   send_welcome_emails: 'Hoş geldin e-postalarını gönder',
 

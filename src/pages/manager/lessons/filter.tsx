@@ -16,6 +16,8 @@ import { useGetOwnModulesQuery } from '@/redux/services/manager/modules-manager'
 import SkeletonFilter from '@/sections/dashboard/skeleton/skeletonFilter'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetOrgMembersQuery } from '@root/src/redux/services/admin/members-admin'
+import { IUser } from '@root/src/redux/services/interfaces/user.interface'
 
 interface Props {
   filters: ILessonSearchParams
@@ -32,6 +34,7 @@ export default function FilterLessons({ filters, setFilter }: Props): React.Reac
   const { data: managerModules, isLoading } = useGetOwnModulesQuery(moduleFilters, {
     skip: isAdmin,
   })
+  const { data: admins } = useGetOrgMembersQuery({ name: '' }, { skip: !isAdmin })
 
   const {
     data: adminData,
@@ -102,6 +105,30 @@ export default function FilterLessons({ filters, setFilter }: Props): React.Reac
             marginRight: 2,
           }}
         />
+        {admins ? (
+          <Autocomplete<IUser & BaseResponseInterface>
+            options={admins.data ?? []}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={translate('user')}
+              />
+            )}
+            onInputChange={(e, value) => {
+              setModuleFilters('user_id', value)
+            }}
+            onChange={(event, value, reason, details) => {
+              setFilter('teacherId', details?.option.id ?? '')
+            }}
+            getOptionLabel={(option) =>
+              option.first_name + ' ' + option.last_name + ' ' + option.role
+            }
+            sx={{
+              width: { xs: '100%', sm: '100%', md: '260px', lg: '260px' },
+              marginRight: 2,
+            }}
+          />
+        ) : null}
       </Stack>
     </>
   )

@@ -55,7 +55,7 @@ export default function CreateEditValidation({
   })
 
   const { enqueueSnackbar } = useSnackbar()
-  const [updateRule, { isLoading: updageLoading }] =
+  const [updateRule, { isLoading: updateLoading }] =
     useUpdateLessonContentValidationManagerMutation()
   const [createRule, { isLoading: createLoading }] =
     useCreateLessonContentValidationManagerMutation()
@@ -85,6 +85,7 @@ export default function CreateEditValidation({
       enqueueSnackbar(
         id ? translate('validation_rule_updated') : translate('validation_rule_created')
       )
+      methods.reset()
       setOpenDialog(false)
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
@@ -165,7 +166,7 @@ export default function CreateEditValidation({
                   <LoadingButton
                     type='submit'
                     variant='contained'
-                    loading={updageLoading || createLoading}
+                    loading={updateLoading || createLoading}
                   >
                     {translate('actions_save')}
                   </LoadingButton>

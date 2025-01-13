@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 
 import { SxProps } from '@mui/system'
 
-export const PAPER_SX = { py: 2, px: 3 }
+export const PAPER_SX = { py: 2, px: 2 }
 export const ICON_BTN_SX = { mt: -2, mr: '-20px' }
 export const BOX_CONTENT_SX = { maxWidth: '300px', py: 1 }
 export const BTN_BACK_SX = { mr: 2 }
