@@ -90,7 +90,7 @@ export default function LaunchCourseStepper() {
         width: '100%',
       }}
     >
-      <RegisterStudentTeacher isTeacher />
+      {activeStep === 0 || activeStep === 1 ? <RegisterStudentTeacher isTeacher /> : null}
 
       <FormProvider
         methods={methods}
@@ -114,7 +114,7 @@ export default function LaunchCourseStepper() {
         {activeStep === 1 && (
           <AddTeacher
             nextStep={nextStep}
-            isSubmiting={methods.formState.isSubmitting}
+            isSubmitting={methods.formState.isSubmitting}
             isSubmitSuccessful={methods.formState.isSubmitSuccessful}
           />
         )}

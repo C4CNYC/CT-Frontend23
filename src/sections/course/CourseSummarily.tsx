@@ -3,15 +3,16 @@ import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCi
 import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 
 import { useTranslate } from '@/utils/translateHelper'
+import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 
 interface ICourseSummarilyProps {
-  duration: string
+  durationInMinutes: number
   level: string
   lessonsCount: number
 }
 
 export default function CourseSummarily({
-  duration,
+  durationInMinutes,
   level,
   lessonsCount,
 }: ICourseSummarilyProps): React.ReactElement {
@@ -30,7 +31,9 @@ export default function CourseSummarily({
           size='15px'
           style={{ marginBottom: '3px' }}
         />
-        <Typography variant='body1'>9 {translate('hours')}</Typography>
+        <Typography variant='body1'>
+          {convertMinsToString(durationInMinutes, translate('hours'), translate('minutes'))}
+        </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <AiOutlineClockCircle

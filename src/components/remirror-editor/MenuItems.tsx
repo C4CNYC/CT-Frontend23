@@ -131,15 +131,11 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
   if (!data) return null
   sx = {
     display: 'flex',
-    gap: 1,
-    fontSize: '1.1rem',
+    fontSize: '1rem',
+    gap: 0.5,
     color: '#364954',
     fontWeight: 400,
     ...sx,
-  }
-  let sxSmall = {
-    ...sx,
-    fontSize: '.9rem',
   }
   return (
     <>
@@ -148,7 +144,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
           onClick={handleOpenChallengeMenu}
           sx={sx}
         >
-          <LuCheckCircle size={20} />
+          <LuCheckCircle size={18} />
           {translate('remirror_toolbar_challenge_btn')}
         </Button>
         {editorInstance && (
@@ -158,12 +154,12 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
               sx={sx}
               ref={formatMenuButton}
             >
-              <LuWrench size={20} />
+              <LuWrench size={18} />
               {translate('remirror_toolbar_tools_btn')}
             </Button>
             <MediaModal insertImage={insertImage}>
               <Button sx={sx}>
-                <TbPhoto size={20} />
+                <TbPhoto size={18} />
                 {translate('remirror_toolbar_insert_media_btn')}
               </Button>
             </MediaModal>
@@ -226,7 +222,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
               title={translate('remirror_toolbar_escape_html_btn_title')}
               sx={BUTTONS_STYLES}
             >
-              <LuRemoveFormatting size={20} />
+              <LuRemoveFormatting size={18} />
               {translate('remirror_toolbar_escape_html_btn')}
             </Button>
             <Button
@@ -234,7 +230,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
               title={translate('remirror_toolbar_cape_html_btn_title')}
               sx={BUTTONS_STYLES}
             >
-              <LuScrollText size={20} />
+              <LuScrollText size={18} />
               {translate('remirror_toolbar_cape_html_btn')}
             </Button>
             <Button
@@ -242,7 +238,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
               onClick={handleAutoFormat}
               title={translate('remirror_toolbar_format_btn_title')}
             >
-              <TbIroning1 size={20} />
+              <TbIroning1 size={18} />
               {translate('remirror_toolbar_format_btn')}
             </Button>
           </>

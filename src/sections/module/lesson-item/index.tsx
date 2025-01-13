@@ -12,16 +12,15 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { ILesson } from '@/redux/interfaces/content.interface'
 import { setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import CatalogLessonDialog from '@/sections/module/lesson-item/CatalogLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
+import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 
 import RocketIcon from '../icons/RocketIcon'
 
 import { DURATION_SX, MODE_TITLE_SX, SEE_MORE_SX, getLessonSx } from './constants'
-import LessonDialog from './LessonDialog'
+import { LessonItemButton } from './LessonItemButton'
 import TrainingProgress from './LessonProgress'
-import LessonStartButton from './LessonStartButton'
-import LockedStartButton from './LockedStartButton'
 
 interface ILessonItemProps {
   lesson: ILesson
@@ -153,42 +152,23 @@ export default function LessonItem({
               sx={DURATION_SX}
             >
               <AiOutlineClockCircle size={20} />
-              20 mins
+              {convertMinsToString(
+                convertDurationToMins(lesson.duration),
+                translate('hours'),
+                translate('minutes')
+              )}
             </Typography>
           </Stack>
-          {!locked ? (
-            !lesson.progress && index !== 0 && isLastLessonInProgress ? (
-              <CatalogLessonDialog
-                confirmText={translate('actions_ok')}
-                confirmClick={fetchCodeFromPrevLesson}
-                title={translate('lesson_catalog_dialog_title')}
-              >
-                <LockedStartButton />
-              </CatalogLessonDialog>
-            ) : (
-              <LessonStartButton
-                customHref={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-                  courseId: courseId as string,
-                  unitId,
-                  lessonId: lesson.id,
-                })}
-              />
-            )
-          ) : !lesson.progress && isLastLessonInProgress ? (
-            <>
-              <LessonDialog onOpenLesson={fetchDefaultCodeFromPrevLesson}>
-                <LockedStartButton />
-              </LessonDialog>
-            </>
-          ) : (
-            <LessonStartButton
-              customHref={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-                courseId: courseId as string,
-                unitId,
-                lessonId: lesson.id,
-              })}
-            />
-          )}
+          <LessonItemButton
+            locked={locked}
+            isLastLessonInProgress={isLastLessonInProgress}
+            fetchCodeFromPrevLesson={fetchCodeFromPrevLesson}
+            fetchDefaultCodeFromPrevLesson={fetchDefaultCodeFromPrevLesson}
+            courseId={courseId}
+            unitId={unitId}
+            lesson={lesson}
+            index={index}
+          />
         </Stack>
       </Stack>
     </Stack>

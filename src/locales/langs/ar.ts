@@ -289,6 +289,7 @@ const ar = {
   sidebar_menu_invite_friends: 'دعوة الأصدقاء',
   sidebar_menu_feedback: 'التعليقات',
   sidebar_menu_administration: 'الإدارة',
+  sidebar_menu_admin: 'مدير',
   sidebar_menu_members: 'الأعضاء',
   sidebar_menu_schools: 'المدارس',
   sidebar_menu_management: 'الإدارة',
@@ -729,7 +730,8 @@ const ar = {
   login_go_back: 'العودة',
   login_with_email: 'تسجيل الدخول باستخدام البريد الإلكتروني',
   login_lets_go: 'لنذهب!',
-  login_sign_up: 'التسجيل',
+  login_sign_up_as_student: 'التسجيل كطالب',
+  login_sign_up_as_teacher: 'التسجيل كمعلم',
   login_reset_password: 'نسيت كلمة المرور',
   login_my_first_time: 'هذه أول مرة لي هنا',
   login_sign_up_with_google: 'التسجيل باستخدام جوجل',
@@ -737,7 +739,7 @@ const ar = {
   login: 'تسجيل الدخول',
   login_been_here: 'لقد كنت هنا من قبل',
   login_register_as: 'سجل كـ',
-  login_hey_teachers: 'مرحبًا، المعلمون',
+  login_hey_teachers: 'مرحبًا، المعلمون.',
   login_lets_start_learning: 'لنبدأ مغامرة التعلم',
   login_popup_session_title: 'جلسة منبثقة',
   login_popup_session_subtitle: 'عرض مباشر لجميع المشاركين أثناء بث الكود والصوت.',
@@ -978,7 +980,7 @@ const ar = {
   file_name: 'اسم الملف',
   validation_removed: 'تم إزالة قاعدة التحقق',
   validation_rules: 'الاختبارات',
-  not_recommend_count_validations: 'نوصي بعدم وضع أكثر من {{count}} قواعد في خطوة واحدة.',
+  not_recommend_count_validations: 'نوصي بعدم إجراء أكثر من {{count}} اختبار لكل شريحة.',
   it_can_make_your_step: 'قد يجعل خطوتك معقدة جدًا وقد يؤثر على',
   comfort_content: 'التعلم على الهواتف المحمولة',
   updated_at: 'تم التحديث في',
@@ -1006,8 +1008,6 @@ const ar = {
     'إنها المكان الذي ترى فيه النتيجة عند تشغيل جافا سكريبت (JS). لأن معظم الوقت تعمل جافا سكريبت في الخلفية وتقوم بحساباتها وردود أفعالها هناك.',
   console_tooltip_subtitle_2:
     'فقط عندما ترتبط دالة معينة بجزء معين من الصفحة ترى فعلاً جافا سكريبت تعدل "الصفحة الأمامية".',
-  console_tooltip_subtitle_3:
-    'المصطلح الفخم لهذا هو "التلاعب بـ DOM". - و "DOM" تعني نموذج كائن الوثيقة.',
   no_preview_available_title: 'المتصفح',
   no_preview_available_results: 'هنا سترى نتائج عملك في الوقت الفعلي',
   no_preview_available: 'لا توجد معاينة متوفرة؟',
@@ -1130,6 +1130,7 @@ const ar = {
   slug_validation_msg_2: 'الرابط مطلوب',
   home_page_type_validation_msg: 'اختر النوع',
   home_page_type_required_msg: 'نوع الصفحة الرئيسية مطلوب',
+  home_page_type: 'نوع الصفحة الرئيسية',
   add_custom_html_code: 'إضافة كود HTML مخصص',
 
   // CreateLesson

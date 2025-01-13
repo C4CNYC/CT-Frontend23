@@ -174,6 +174,11 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   useEffect(() => {
+    if (!sandbox || !data.length) return
+    onBeforeChange(0, 0)
+  }, [sandbox, data])
+
+  useEffect(() => {
     if (carousel1.current !== null) {
       setNav2(carousel1.current)
       carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
