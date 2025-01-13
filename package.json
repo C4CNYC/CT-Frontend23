@@ -65,7 +65,7 @@
     "@uiw/react-codemirror": "4.21.21",
     "@uiw/react-split": "^5.9.3",
     "autosuggest-highlight": "^3.3.4",
-    "axios": "^1.6.5",
+    "axios": "^1.7.4",
     "chatgpttutor": "^0.3.0",
     "date-fns": "^2.29.3",
     "emoji-picker-react": "^4.4.9",
