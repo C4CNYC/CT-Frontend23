@@ -15,7 +15,7 @@ const extendedApi = managerApi.injectEndpoints({
       query: (params) => ({
         url: `/admin/properties`,
         method: 'GET',
-        params,
+        params: {...params, take: 1000},
       }),
       providesTags: ['Properties'],
     }),
