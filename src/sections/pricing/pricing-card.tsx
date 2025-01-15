@@ -6,6 +6,7 @@ import Link from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { addAlpha } from '@root/src/utils'
 import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from 'src/assets/icons'
 import { Iconify } from 'src/components/iconify'
@@ -19,11 +20,14 @@ type Props = CardProps & {
     lists: string[]
     labelAction: string
     subscription: string
+    action: string
   }
 }
 
 export function PricingCard({ card, sx, ...other }: Props) {
-  const { subscription, price, caption, lists, labelAction } = card
+  const { subscription, price, caption, lists, labelAction, action } = card
+
+  const { user } = useAuthContext()
 
   const basic = subscription === 'basic'
 
@@ -158,6 +162,7 @@ export function PricingCard({ card, sx, ...other }: Props) {
         variant='contained'
         disabled={basic}
         color={starter ? 'primary' : 'inherit'}
+        href={action + `?&client_reference_id=${user?.id}`}
       >
         {labelAction}
       </Button>

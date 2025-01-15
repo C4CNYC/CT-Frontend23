@@ -120,9 +120,7 @@ export default function FilterLessons({ filters, setFilter }: Props): React.Reac
             onChange={(event, value, reason, details) => {
               setFilter('teacherId', details?.option.id ?? '')
             }}
-            getOptionLabel={(option) =>
-              option.first_name + ' ' + option.last_name + ' '
-            }
+            getOptionLabel={(option) => option.first_name + ' ' + option.last_name + ' '}
             sx={{
               width: { xs: '100%', sm: '100%', md: '260px', lg: '260px' },
               marginRight: 2,

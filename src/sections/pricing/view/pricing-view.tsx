@@ -100,6 +100,7 @@ export const _pricingPlans = [
     caption: 'Forever',
     lists: ['3 prototypes', '3 boards', 'Up to 5 team members'],
     labelAction: 'Current plan',
+    action: '',
   },
   {
     subscription: 'starter',
@@ -113,6 +114,7 @@ export const _pricingPlans = [
       'Issue escalation',
     ],
     labelAction: 'Choose starter',
+    action: 'https://buy.stripe.com/test_7sIbKy6b3bIo5XOeUU',
   },
   {
     subscription: 'premium',
@@ -128,5 +130,6 @@ export const _pricingPlans = [
       'Permissions & workflows',
     ],
     labelAction: 'Choose premium',
+    action: 'https://buy.stripe.com/test_9AQg0Obvn9AgcmcfYZ',
   },
 ]

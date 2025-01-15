@@ -1,5 +1,5 @@
 export enum LessonContentType {
-  /** 
+  /**
    * @deprecated
    **/
   Editable = 'editable',

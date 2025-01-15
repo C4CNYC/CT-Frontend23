@@ -1,6 +1,5 @@
-import CompactLayout from '@root/src/layouts/compact' 
+import CompactLayout from '@root/src/layouts/compact'
 import { PaymentReceived } from '@root/src/sections/pricing/payment-received'
- 
 
 export const metadata = { title: `Pricing - ` }
 
