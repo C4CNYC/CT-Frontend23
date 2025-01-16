@@ -5,7 +5,6 @@ import { useTheme } from '@mui/system'
 import { FaCampground } from '@react-icons/all-files/fa/FaCampground'
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus'
 import { IoPeople } from '@react-icons/all-files/io5/IoPeople'
-import nextLink from 'next/link'
 import { useRouter } from 'next/router'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
@@ -16,6 +15,8 @@ import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-stud
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { PricingDialog } from '../../pricing/pricing-dialog'
 
 import { getAddTribeButtonSx } from './constants'
 import JoinClassModal from './JoinTribeModal'
@@ -147,18 +148,20 @@ export default function MenuTribesList(): React.ReactElement {
         transformOrigin={{ vertical: -5, horizontal: 'center' }}
       >
         <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
-          <Link
-            component={nextLink}
-            href={STUDENT_PATH_DASHBOARD.class.createClass}
-            onClick={handleClosePopover}
-            underline='none'
-            sx={{ color: 'inherit' }}
+          <PricingDialog
+            feature='Tribes per Teacher'
+            allowedChildren={STUDENT_PATH_DASHBOARD.class.createClass}
           >
-            <MenuItem>
-              <IoPeople size='20px' />
-              {translate('tribes_create_group')}
-            </MenuItem>
-          </Link>
+            <Link
+              underline='none'
+              sx={{ color: 'inherit' }}
+            >
+              <MenuItem>
+                <IoPeople size='20px' />
+                {translate('tribes_create_group')}
+              </MenuItem>
+            </Link>
+          </PricingDialog>
         </RoleBasedGuard>
         <JoinClassModal>
           <MenuItem>

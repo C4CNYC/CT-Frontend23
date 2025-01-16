@@ -84,7 +84,10 @@ export function PricingCard({ card, sx, ...other }: Props) {
   )
 
   const renderList = (
-    <Stack spacing={2}>
+    <Stack
+      spacing={2}
+      sx={{ flexGrow: 1 }}
+    >
       <Stack
         direction='row'
         alignItems='center'

@@ -29,7 +29,13 @@ const arrowIcon = (
 
 export function PricingView() {
   return (
-    <Container sx={{ pt: { xs: 3, md: 5 }, pb: 10 }}>
+    <Container
+      sx={{
+        pt: { xs: 3, md: 5 },
+        pb: 10,
+        overflow: 'auto',
+      }}
+    >
       <Typography
         variant='h3'
         align='center'
@@ -78,7 +84,7 @@ export function PricingView() {
       <Box
         gap={{ xs: 3, md: 0 }}
         display='grid'
-        alignItems={{ md: 'center' }}
+        alignItems={{ md: 'stretch' }}
         gridTemplateColumns={{ md: 'repeat(3, 1fr)' }}
       >
         {_pricingPlans.map((card, index) => (

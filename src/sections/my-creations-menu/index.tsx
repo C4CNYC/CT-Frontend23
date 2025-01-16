@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
+import { Dialog, DialogContent, ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { useRouter } from 'next/router'
 
 import {
@@ -20,7 +20,9 @@ import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import AiGenerateLessonDialog from './ai-generate-lesson-dialog'
+import AIGenerateStepper from '../on-boarding-register/teacher/ai-generete-stepper'
+import { PricingDialog } from '../pricing/pricing-dialog'
+
 import DiamondFeatureModal from './diamond-feature-modal'
 import { SelectTemplateDialog } from './select-template-dialog'
 
@@ -132,19 +134,34 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
-          {AC_Mumu > 0 && (
-            <AiGenerateLessonDialog>
-              <MenuItem sx={{ justifyContent: 'space-between' }}>
-                {translate('sidebar_menu_my_creations_item_1')}
-                <ListItemIcon sx={{ pl: 2, mr: -2 }}>
-                  <Iconify
-                    icon='mingcute:ai-line'
-                    color='#FBDD3F'
+          <PricingDialog
+            feature='MumuAICreator'
+            allowedChildren={
+              <Dialog
+                open={true}
+                fullWidth
+                maxWidth='md'
+                onClose={handleClosePopover}
+              >
+                <DialogContent sx={{ p: 2 }}>
+                  <AIGenerateStepper
+                    isModal
+                    closeModal={handleClosePopover}
                   />
-                </ListItemIcon>
-              </MenuItem>
-            </AiGenerateLessonDialog>
-          )}
+                </DialogContent>
+              </Dialog>
+            }
+          >
+            <MenuItem sx={{ justifyContent: 'space-between' }}>
+              {translate('sidebar_menu_my_creations_item_1')}
+              <ListItemIcon sx={{ pl: 2, mr: -2 }}>
+                <Iconify
+                  icon='mingcute:ai-line'
+                  color='#FBDD3F'
+                />
+              </ListItemIcon>
+            </MenuItem>
+          </PricingDialog>
           <SelectTemplateDialog>
             <MenuItem>{translate('sidebar_menu_my_creations_item_8')}</MenuItem>
           </SelectTemplateDialog>
