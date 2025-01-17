@@ -26,9 +26,9 @@ export const UserAccessControlTable: AccessControlTableType = ({ userId }) => {
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow> 
+          <TableRow>
             <TableCell>Feature</TableCell>
-            <TableCell>Max Usage Count</TableCell> 
+            <TableCell>Max Usage Count</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
