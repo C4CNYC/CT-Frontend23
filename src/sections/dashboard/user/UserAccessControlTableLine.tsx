@@ -33,8 +33,7 @@ export function UserAccessControlTableLine({ accessControl, userACK, userId }: P
   }
 
   return (
-    <TableRow key={accessControl.id}>
-      <TableCell>{accessControl.id}</TableCell>
+    <TableRow key={accessControl.id}> 
       <TableCell>{accessControl.feature}</TableCell>
       <TableCell>
         <Input
@@ -43,8 +42,7 @@ export function UserAccessControlTableLine({ accessControl, userACK, userId }: P
           onChange={(e) => onChange(e)}
         />
         {isLoading ? <CircleIcon sx={{ ml: 1 }} /> : null}
-      </TableCell>
-      <TableCell>{userACK?.maxUsageCount || 0}</TableCell>
+      </TableCell> 
     </TableRow>
   )
 }
