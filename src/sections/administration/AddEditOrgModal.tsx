@@ -8,12 +8,11 @@ import DialogTitle from '@mui/material/DialogTitle'
 
 import { useTranslate } from '@/utils/translateHelper'
 import { IOwnerType } from '@root/src/components/org-owner-autocomplete/OrgOwnerAutocomplete'
-import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 
 import { TAB_SX } from './constants'
-import CustomCodeTab from './CustomCodeTab'
 import FaviconTab from './FaviconTab'
+import LandingPageTab from './LandingPageTab'
 import LogoMiniTab from './LogoMiniTab'
 import LogoTab from './LogoTab'
 import MainTab from './MainTab'
@@ -138,12 +137,10 @@ export default function AddEditOrgModal({ children, org, owner }: Prop): React.R
                   label={translate('owner')}
                   {...a11yProps(4)}
                 />
-                {org.home_page_type === HomePageType.Custom ? (
-                  <Tab
-                    label={translate('Code')}
-                    {...a11yProps(5)}
-                  />
-                ) : null}
+                <Tab
+                  label={translate('Landing page')}
+                  {...a11yProps(5)}
+                />
               </Tabs>
             ) : null}
           </Box>
@@ -197,10 +194,11 @@ export default function AddEditOrgModal({ children, org, owner }: Prop): React.R
             value={value}
             index={5}
           >
-            <CustomCodeTab
+            <LandingPageTab
               handleClose={handleClose}
               code={org?.home_page_body}
               id={org?.id as string}
+              home_page_type={org?.home_page_type}
             />
           </TabPanel>
         </DialogContent>

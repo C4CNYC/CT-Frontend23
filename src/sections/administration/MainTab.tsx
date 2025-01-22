@@ -4,8 +4,7 @@ import { Button, Stack } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
-import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
+import { FormProvider, RHFTextField, useSnackbar } from '@/components'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 import {
   useCreateOrgMutation,
@@ -33,9 +32,6 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
       .matches(/^[a-z0-9-]+$/, translate('slug_validation_msg_1'))
       .transform((value) => (value ? value.toLowerCase().trim() : value))
       .required('slug_validation_msg_2'),
-    home_page_type: Yup.mixed<HomePageType>()
-      .oneOf(Object.values(HomePageType), translate('home_page_type_validation_msg'))
-      .required(translate('home_page_type_required_msg')),
   })
 
   const methods = useForm<FormValuesProps>({
@@ -43,7 +39,6 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
     defaultValues: {
       name: org?.name,
       slug: org?.slug,
-      home_page_type: org?.home_page_type ?? HomePageType.Default,
     },
   })
 
@@ -84,20 +79,6 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
             label={translate('create_new_slug_label')}
             required
           />
-          <RHFSelect
-            name='home_page_type'
-            native
-            label={translate('home_page_type')}
-          >
-            {Object.keys(HomePageType).map((c) => (
-              <option
-                key={HomePageType[c as keyof typeof HomePageType]}
-                value={HomePageType[c as keyof typeof HomePageType]}
-              >
-                {c}
-              </option>
-            ))}
-          </RHFSelect>
         </Stack>
         <Stack
           sx={{
