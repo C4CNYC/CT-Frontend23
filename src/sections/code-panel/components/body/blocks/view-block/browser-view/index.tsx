@@ -64,13 +64,24 @@ const BrowserView: FC<BrowserViewProps> = ({
       .filter(Boolean)
       .join('\n')
     let htmls = Array.isArray(htmlBody) ? htmlBody : [htmlBody]
-    htmls = htmls//.map((b) => b.replace(/<body\s/g, '<div ').replace(/<\/body>/g, '</div>'))
-    let htmlPart = false ? <body style={{height: "100vh", margin: 0, padding: 0
-  }} id="pageLesson">
-      <div className="lesson-page " style={{ backgroundColor: stepBgColor ? stepBgColor : '' }}>
-        {(document as any).length ? (document as any) : htmls}
-    </div>
-    </body>:(document as any).length ? document : htmls
+    htmls = htmls //.map((b) => b.replace(/<body\s/g, '<div ').replace(/<\/body>/g, '</div>'))
+    let htmlPart = false ? (
+      <body
+        style={{ height: '100vh', margin: 0, padding: 0 }}
+        id='pageLesson'
+      >
+        <div
+          className='lesson-page '
+          style={{ backgroundColor: stepBgColor ? stepBgColor : '' }}
+        >
+          {(document as any).length ? (document as any) : htmls}
+        </div>
+      </body>
+    ) : (document as any).length ? (
+      document
+    ) : (
+      htmls
+    )
 
     setDocSrc(`
       <html style="height: calc(100vh - 86px); box-sizing: border-box;">
