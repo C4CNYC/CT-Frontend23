@@ -135,8 +135,12 @@ export default function LessonsListPage(): React.ReactElement {
     userRole === Role.Admin || Role.SuperAdmin ? adminFetching : isOwnLessonDataFetching
 
   useEffect(() => {
-    setLessons(data?.data ?? [])
-  }, [data])
+    let l = adminData?.data ?? []
+    if (ownLessonsData?.data) {
+      l = l.concat(ownLessonsData?.data)
+    }
+    setLessons(l)
+  }, [adminData, ownLessonsData])
 
   const refetch = () => {
     if (userRole === Role.Admin || userRole === Role.SuperAdmin) {
