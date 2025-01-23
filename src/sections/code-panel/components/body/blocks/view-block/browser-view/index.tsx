@@ -63,19 +63,34 @@ const BrowserView: FC<BrowserViewProps> = ({
       .map((integration) => integration.scripts)
       .filter(Boolean)
       .join('\n')
+    let htmls = Array.isArray(htmlBody) ? htmlBody : [htmlBody]
+    htmls = htmls //.map((b) => b.replace(/<body\s/g, '<div ').replace(/<\/body>/g, '</div>'))
+    let htmlPart = false ? (
+      <body
+        style={{ height: '100vh', margin: 0, padding: 0 }}
+        id='pageLesson'
+      >
+        <div
+          className='lesson-page '
+          style={{ backgroundColor: stepBgColor ? stepBgColor : '' }}
+        >
+          {(document as any).length ? (document as any) : htmls}
+        </div>
+      </body>
+    ) : (document as any).length ? (
+      document
+    ) : (
+      htmls
+    )
 
     setDocSrc(`
-      <html style="height: 100%">
+      <html style="height: calc(100vh - 86px); box-sizing: border-box;">
         <head>
           ${fontCssLink}
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
         </head>
-        <body style="height: 100%; margin: 0;" id="pageLesson">
-        <div class="lesson-page " style=${stepBgColor ? 'background-color:' + stepBgColor : ''}>
-          ${(document as any).length ? document : htmlBody}
-        </div>
-        </body>
+        ${htmlPart}
       </html>
     `)
 
