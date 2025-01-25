@@ -21,7 +21,6 @@ const MobileBar: FC = () => {
           dispatch(setTab(value))
         }}
       />
-
       <Menu />
     </Stack>
   )
@@ -30,9 +29,8 @@ const MobileBar: FC = () => {
 const STACK_STYLES = {
   width: '100%',
   height: '25px',
-  direction: 'row',
+  flexDirection: 'row',
   alignItems: 'center',
-  position: 'relative',
 }
 
 export default MobileBar
