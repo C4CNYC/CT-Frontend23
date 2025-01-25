@@ -142,7 +142,6 @@ function CustomTabPanel(props: TabPanelProps) {
     >
       <Box
         sx={{
-          maxHeight: '460px',
           overflowY: 'auto',
           overflowX: 'none',
           scrollbarWidth: '2px',
