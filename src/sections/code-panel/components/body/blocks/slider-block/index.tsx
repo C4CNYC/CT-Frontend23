@@ -4,7 +4,6 @@ import { Box, TextField, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import * as _ from 'lodash-es'
-import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import Carousel from 'react-slick'
@@ -36,8 +35,6 @@ import BaseBlock from '../base-block'
 
 import { PROGRESS_ITEM_SX, getBoxSx, getCarouselSettings, getProgressWrapperSx } from './constants'
 import Navigation from './navigation'
-
-const ProsaMirrorView = dynamic(async () => await import('./prosa-mirror-view'), { ssr: false })
 
 interface ISliderBlock {
   data: Array<ILessonContent & BaseResponseInterface>
@@ -325,21 +322,12 @@ const View: FC<IView> = ({
   integrations,
 }) => {
   switch (type) {
+    default:
     case 'code':
       return (
         <BrowserView
           integrations={integrations}
           document={connectIntegrations(body)}
-          stepBgColor={stepBgColor}
-        />
-      )
-    default:
-    case 'editable':
-      return (
-        <ProsaMirrorView
-          title={title}
-          multimediaValue={body}
-          lessonType={lessonType}
           stepBgColor={stepBgColor}
         />
       )

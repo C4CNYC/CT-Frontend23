@@ -4,7 +4,6 @@ import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enu
 import { BaseResponseInterface } from '@root/src/utils'
 
 import StepCode from './StepCode'
-import StepMultimedia from './StepMultimedia'
 import { StepTinyMce } from './StepTinyMce'
 
 export type EditorSelectorProps = {
@@ -38,18 +37,6 @@ export function EditorSelector({
           onSubmit={onSubmit}
           data={data!}
           lessonId={lessonId as string}
-        />
-      )
-    case LessonContentType.Editable:
-      return (
-        <StepMultimedia
-          content={content}
-          integrations={integrations ?? []}
-          onSubmit={onSubmit}
-          data={data!}
-          lessonId={lessonId as string}
-          bgColor={bgColor}
-          setBgColor={setBgColor}
         />
       )
     case LessonContentType.TinyMce:

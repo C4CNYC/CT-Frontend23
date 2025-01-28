@@ -1276,7 +1276,7 @@ const tr = {
 
   remirror_toolbar_challenge_btn: 'Challenge',
   remirror_toolbar_tools_btn: 'Araçlar',
-  remirror_toolbar_insert_media_btn: 'Medya ekle',
+  insert_media_btn: 'Medya ekle',
   remirror_toolbar_escape_html_btn: 'HTML’den kaçış',
   remirror_toolbar_escape_html_btn_title: 'Seçili HTML’yi kaçırtır',
   remirror_toolbar_cape_html_btn: 'HTML’yi Sar',
