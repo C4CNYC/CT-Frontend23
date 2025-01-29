@@ -42,7 +42,7 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
     return (
       <Link
         component={NextLink}
-        href={STUDENT_PATH_DASHBOARD.class.root}
+        href={STUDENT_PATH_DASHBOARD.courses.root}
         sx={{ display: 'contents' }}
       >
         {logo}
