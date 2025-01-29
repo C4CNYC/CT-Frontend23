@@ -5,6 +5,7 @@ import Image from 'next/image'
 import NextLink from 'next/link'
 
 import { useSelector } from '@root/src/redux/store'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 interface LogoProps extends BoxProps {
   disabledLink?: boolean
@@ -41,7 +42,7 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
     return (
       <Link
         component={NextLink}
-        href='/'
+        href={STUDENT_PATH_DASHBOARD.class.root}
         sx={{ display: 'contents' }}
       >
         {logo}
