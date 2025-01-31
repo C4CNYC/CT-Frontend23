@@ -40,7 +40,7 @@ export default function ModuleSidebar({
   lessons,
 }: IModuleSidebarProps): React.ReactElement {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down(1200))
+  const isMobile = useMediaQuery(theme.breakpoints.down('xl'))
   const translate = useTranslate()
 
   return (

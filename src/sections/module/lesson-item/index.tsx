@@ -108,7 +108,7 @@ export default function LessonItem({
           variant='body1'
           mb={lesson?.description?.length < maxDesc ? 1 : 0}
           ref={descRef}
-          sx={{ textOverflow: 'ellipsis' }}
+          sx={{ textOverflow: 'ellipsis', maxWidth: { lg: 'none', xl: '830px' } }}
           noWrap
         >
           {lesson.description}

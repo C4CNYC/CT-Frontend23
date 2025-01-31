@@ -72,6 +72,7 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
           />
         </Button>
       </Stack>
+
       {isList ? (
         lessons.map((l, i) => (
           <LessonItem
