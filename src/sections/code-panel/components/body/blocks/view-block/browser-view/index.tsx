@@ -57,7 +57,10 @@ const BrowserView: FC<BrowserViewProps> = ({
     setIframeProcess(true)
 
     const fontPath = '/fonts/index.css'
-    const fontCssLink = `<link rel="stylesheet" href="${fontPath}">`
+    const fontCssLink = `<link rel="stylesheet" href="${fontPath}">
+    <style>* {   box-sizing: border-box; } body { margin: 0; padding: 0; 
+  height: 100%; 
+  max-height: ${iframeKey ? '97%' : '100%'}; }</style>`
     const { htmlBody = [], cssBody = [], jsBody = [] } = document
     let integrationsScripts = integrations
       .map((integration) => integration.scripts)
