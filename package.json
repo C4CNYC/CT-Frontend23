@@ -65,7 +65,7 @@
     "@uiw/react-codemirror": "4.21.21",
     "@uiw/react-split": "^5.9.3",
     "autosuggest-highlight": "^3.3.4",
-    "axios": "^1.6.5",
+    "axios": "^1.7.4",
     "chatgpttutor": "^0.3.0",
     "date-fns": "^2.29.3",
     "emoji-picker-react": "^4.4.9",
@@ -135,7 +135,7 @@
     "unique-names-generator": "^4.7.1",
     "uuid": "^9.0.1",
     "words-count": "^2.0.2",
-    "ws": "8.14.2",
+    "ws": "8.17.1",
     "yjs": "13.6.11",
     "yup": "^0.32.11"
   },
