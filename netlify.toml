@@ -5,3 +5,7 @@ included_files = [
   "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/head-manager-context*",
   "node_modules/next/dist/server/future/route-modules/pages/vendored/contexts/html-context*",
 ]
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

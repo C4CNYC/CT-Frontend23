@@ -87,7 +87,7 @@ const BrowserView: FC<BrowserViewProps> = ({
     )
 
     setDocSrc(`
-      <html style="height: calc(100vh - 86px); box-sizing: border-box;">
+      <html style="height: 100%; box-sizing: border-box;">
         <head>
           ${fontCssLink}
           ${getBody(cssBody as string, TagNames.Style)}
