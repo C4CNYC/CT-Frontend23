@@ -53,10 +53,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       if (autoRun) {
         setBrowserView(doc)
       }
-    } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('Error: ', error)
-    }
+    } catch (error: any) {}
   }
 
   const reloadBrowserView = () => {
@@ -158,6 +155,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
   return (
     <SwipeableViews
+      disabled
       index={activeTab}
       onChangeIndex={(index) => {
         dispatch(setTab(index))

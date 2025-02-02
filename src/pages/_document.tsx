@@ -21,6 +21,11 @@ const MyDocument = (props: DocumentProps & DocumentHeadTagsProps) => {
           href='/manifest.json'
         />
 
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1, interactive-widget=resizes-content'
+        />
+
         {/* PWA primary color */}
         <meta
           name='theme-color'

@@ -1,7 +1,7 @@
 import { SxProps, Theme } from '@mui/system'
 
 export const getBoxStyles = (isTabletAndMobile: boolean, theme: Theme): SxProps => ({
-  height: isTabletAndMobile ? 'calc(100vh - 25px)' : 'calc(100vh - 68px)',
+  height: isTabletAndMobile ? 'calc(100dvh - 25px)' : 'calc(100vh - 68px)',
   borderWidth: isTabletAndMobile ? 'none' : '3px',
   borderStyle: isTabletAndMobile ? 'none' : 'solid',
   borderColor:
@@ -10,6 +10,7 @@ export const getBoxStyles = (isTabletAndMobile: boolean, theme: Theme): SxProps 
   overflow: 'hidden',
   position: 'relative',
   borderRadius: isTabletAndMobile ? '0 0 20px 20px' : 2,
+  paddingBottom: isTabletAndMobile ? 'env(safe-area-inset-bottom)' : 0,
 })
 
 export const getButtonSx = (isDesktop: boolean): SxProps => ({

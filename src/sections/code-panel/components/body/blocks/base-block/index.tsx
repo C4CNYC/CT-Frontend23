@@ -75,10 +75,6 @@ const BaseBlock: FC<IBaseBlock> = ({
     )
   }
 
-  if (takeHeaderSettings) {
-    takeHeaderSettings(isClosedHeader?.browserTour)
-  }
-
   return (
     <Box
       className={className}

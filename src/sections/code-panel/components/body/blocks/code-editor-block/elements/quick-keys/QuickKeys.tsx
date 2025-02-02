@@ -6,14 +6,11 @@ import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
 import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
 import { AnimatePresence, m } from 'framer-motion'
 
-import useIsDesktop from '@root/src/hooks/useIsDesktop'
-
 import PrimaryButtons from './PrimaryButtons'
 import SecondaryButtons from './SecondaryButtons'
 
-export default function DesktopQuickKeys() {
+export default function QuickKeys() {
   const theme = useTheme()
-  const isDesktop = useIsDesktop()
 
   const [open, setOpen] = useState<boolean>(false)
   const [isOpenButtons, setIsOpenButtons] = useState<boolean>(false)
@@ -49,7 +46,6 @@ export default function DesktopQuickKeys() {
           zIndex: 300,
           bottom: 0,
           left: 0,
-          display: isDesktop ? 'block' : 'none',
         }}
       >
         <AnimatePresence>
