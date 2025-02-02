@@ -1,6 +1,6 @@
 import { type FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
@@ -54,6 +54,9 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
+
+  // TODO: move this logic to quick keys component
+
   const { isKeyboardOpen, keyboardHeight } = useMobileKeyboard()
 
   const codeRef = useRef(code)
@@ -134,6 +137,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
       />
+      {/* TODO: move this logic to quick keys component */}
       {isDesktop ? (
         <QuickKeys />
       ) : (
@@ -145,11 +149,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
             transition: 'bottom .2s easy-out',
           }}
         >
-          <Typography
-            zIndex={4000}
-            color={'red'}
-            pl={2}
-          ></Typography>
           <QuickKeys />
         </Box>
       )}
