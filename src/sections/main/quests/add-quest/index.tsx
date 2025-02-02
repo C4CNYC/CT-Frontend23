@@ -302,7 +302,7 @@ export default function AddQuest(): React.ReactElement {
               : translate('quest_type')}
           </Typography>
         </Stack>
-        <Box sx={{ px: { xs: 1, sm: 3, md: 5, lg: 12 } }}>
+        <Box sx={{ px: { xs: 0, sm: 0, md: 5, lg: 12 } }}>
           <FormProvider
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
