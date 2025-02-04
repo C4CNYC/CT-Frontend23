@@ -57,9 +57,11 @@ export const tokenExpired = (exp: number): void => {
 export const setSession = (accessToken: string | null, tenantName: string | null): void => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken)
+    const schoolId = localStorage.getItem('x-school-id')
 
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
     axios.defaults.headers.common['x-tenant-id'] = tenantName
+    axios.defaults.headers.common['x-school-id'] = schoolId
 
     // This function below will handle when token is expired
     const { exp } = jwtDecode(accessToken) // ~3 days by minimals server

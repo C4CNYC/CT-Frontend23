@@ -50,7 +50,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const { data } = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/student/public/project/${params?.id}`,
-      { headers: { 'X-Tenant-Id': 'codetribe' } }
+      {
+        headers: { 'X-Tenant-Id': 'codetribe', 'x-school-id': localStorage.getItem('x-school-id') },
+      }
     )
     return { props: { data } }
   } catch (error: any) {
