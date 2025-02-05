@@ -138,7 +138,8 @@ export default function ModulePage(): React.ReactElement {
               xs: 'column',
               sm: 'column',
               md: 'column',
-              lg: 'row',
+              lg: 'column',
+              xl: 'row',
             },
           }}
         >
