@@ -26,6 +26,7 @@ import BrowserView, {
 } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { useDebounceCallback } from '@root/src/hooks'
 import {
   useGetStudentLastVisitedSlideQuery,
   useUpdateStudentLastVisitedSlideMutation,
@@ -91,12 +92,14 @@ const SliderBlock: FC<ISliderBlock> = ({
   const [noteText, setNoteText] = useState(localStorage.getItem(`sandboxNotes${profile?.id}`) ?? '')
 
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
-  const { data: lastSlide } = useGetStudentLastVisitedSlideQuery(
+  const { data: lastSlide, isLoading: isLastSlideLoading } = useGetStudentLastVisitedSlideQuery(
     {
       id: lessonId as string,
     },
     { skip: !lessonId || !profile }
   )
+
+  const handleDebouncedCallback = useDebounceCallback(5000)
 
   const hasNextStep = slideIndex < data.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length
@@ -138,6 +141,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onUpdateLastSlide = (next: number) => {
+    if (isLastSlideLoading) return
     if (profile) {
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
     }
@@ -185,7 +189,9 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
-    onUpdateLastSlide(slideIndex)
+    handleDebouncedCallback(() => {
+      if (slideIndex > (lastSlide?.slideNumber || -1)) onUpdateLastSlide(slideIndex)
+    })
   }, [slideIndex])
 
   useEffect(() => {
