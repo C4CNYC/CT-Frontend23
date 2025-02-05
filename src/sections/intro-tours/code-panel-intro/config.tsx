@@ -66,15 +66,15 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     title: <div>{translate('intro_tour_step_5_desktop_title')}</div>,
     content: (
       <div>
-        <div>
-          <iframe
-            src='https://giphy.com/embed/7NoNw4pMNTvgc'
-            width='100%'
-            height='100%'
-            frameBorder='0'
-            allowFullScreen
-          ></iframe>
-        </div>
+        <video
+          src='/assets/tour_images/cat_typing.mp4'
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ width: '100%', height: 'auto' }}
+        ></video>
+
         {translate('intro_tour_step_5_desktop_subtitle')}
       </div>
     ),
