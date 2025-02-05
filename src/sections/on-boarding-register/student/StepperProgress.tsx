@@ -35,7 +35,7 @@ export default function StepperProgres({ prevStep, activeStep }: Props): React.R
       {activeStep === 1 && (
         <IconButton
           onClick={prevStep}
-          sx={{ position: 'absolute', top: '-22px', left: '-30px' }}
+          sx={{ position: 'absolute', top: '-22px', left: '-25px' }}
         >
           <MdArrowBackIosNew />
         </IconButton>

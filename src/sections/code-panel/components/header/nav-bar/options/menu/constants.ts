@@ -31,13 +31,6 @@ export const MENU_POPOVER_STYLES = {
   },
 }
 
-export const GLOBAL_BOX_STYLES = {
-  position: 'absolute',
-  top: 10,
-  right: -5,
-  zIndex: 1,
-}
-
 export const MENU_ICONIFY = {
   width: '35px!important',
   height: '35px!important',

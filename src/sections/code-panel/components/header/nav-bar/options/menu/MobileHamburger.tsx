@@ -1,9 +1,8 @@
-import { type MouseEventHandler, type FC, useMemo } from 'react'
+import { type MouseEventHandler, type FC } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close'
 import MenuIcon from '@mui/icons-material/Menu'
-import { Box, IconButton, SxProps, alpha } from '@mui/material'
-import { Theme } from '@mui/system'
+import { Box, IconButton } from '@mui/material'
 
 export interface MobileHamburgerProps {
   open: boolean | null
@@ -16,10 +15,8 @@ const MobileHamburger: FC<MobileHamburgerProps> = ({
   handleOpenPopover,
   handleClosePopover,
 }) => {
-  const boxStyles = useMemo(() => getBoxStyles(open), [open])
-
   return (
-    <Box sx={boxStyles}>
+    <Box sx={BOX_SX}>
       {!open ? (
         <IconButton onClick={handleOpenPopover}>
           <MenuIcon sx={MENU_ITEM_STYLES} />
@@ -33,18 +30,16 @@ const MobileHamburger: FC<MobileHamburgerProps> = ({
   )
 }
 
-const getBoxStyles = (isOpen: boolean | null): SxProps<Theme> => ({
-  width: '30px',
-  height: '30px',
-  borderRadius: '50%',
-  background: alpha('#155275CC', isOpen === true ? 1 : 0.4),
+const BOX_SX = () => ({
+  width: '24px',
+  height: '24px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
 })
 
 const MENU_ITEM_STYLES = {
-  color: '#fff',
+  color: '#333',
 }
 
 export default MobileHamburger

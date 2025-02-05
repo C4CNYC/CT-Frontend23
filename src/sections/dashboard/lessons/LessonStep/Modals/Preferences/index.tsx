@@ -130,7 +130,7 @@ export default function Preferences({
     try {
       await updateLessonContent({
         lessonId,
-        ..._.omit(data, ['createdAt', 'updatedAt']),
+        ..._.omit(data, ['body', 'createdAt', 'updatedAt']),
         type: defaultValues?.type,
         id: contentId,
       }).unwrap()

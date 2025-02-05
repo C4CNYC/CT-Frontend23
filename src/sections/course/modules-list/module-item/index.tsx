@@ -89,6 +89,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
           variant='body1'
           noWrap
           textOverflow='ellipsis'
+          maxWidth={550}
         >
           {unit?.description}
         </Typography>

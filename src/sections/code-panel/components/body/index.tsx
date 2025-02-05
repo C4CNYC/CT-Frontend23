@@ -177,7 +177,8 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
-        validations={lessonContents[slideIndex]?.validations}
+        validations={lessonContents[slideIndex]?.validations || ''}
+        contentId={lessonContents[slideIndex]?.id}
       />
 
       <ViewBlock

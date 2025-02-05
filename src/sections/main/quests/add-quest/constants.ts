@@ -50,7 +50,7 @@ export const statusSelect = (theme: Theme) => ({
 })
 
 export const mainContainerStyles = (theme: Theme, onboardingInfo: boolean) => ({
-  px: 5,
+  px: 3,
   pb: 5,
   pt: 1,
   border: theme.palette.mode === 'light' ? '' : '1px solid #fff',

@@ -56,7 +56,7 @@ export default function SingUp({
       {isTeacher && (
         <IconButton
           onClick={resetRoad}
-          sx={{ ml: '-30px', mt: '-30px' }}
+          sx={{ ml: '-20px', mt: '-20px' }}
         >
           <MdArrowBackIosNew />
         </IconButton>

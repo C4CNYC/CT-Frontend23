@@ -35,7 +35,7 @@ export default function StepperProgress({ prevStep, activeStep }: Props): React.
       {activeStep === 1 && (
         <IconButton
           onClick={prevStep}
-          sx={{ position: 'absolute', top: '-22px', left: '-30px' }}
+          sx={{ position: 'absolute', top: '-15px', left: '-25px' }}
         >
           <MdArrowBackIosNew />
         </IconButton>
@@ -61,7 +61,7 @@ export default function StepperProgress({ prevStep, activeStep }: Props): React.
           justifySelf: 'flex-start',
           width: '100%',
           pl: 1,
-          mt: '-13px',
+          mt: '-7px',
         })}
         connector={<ColorlibConnector />}
       >
