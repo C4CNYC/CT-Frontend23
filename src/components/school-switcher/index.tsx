@@ -9,6 +9,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import { useRouter } from 'next/router'
 
 import CustomPopover, { usePopover } from '@/components/custom-popover'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
@@ -21,6 +22,7 @@ import { Iconify } from '../iconify'
 function SchoolSwitcher() {
   const theme = useTheme()
   const popover = usePopover()
+  const { reload } = useRouter()
 
   const { data, isLoading } = useGetMySchoolsQuery({})
 
@@ -30,20 +32,25 @@ function SchoolSwitcher() {
 
   const handleSchoolSwitcher = useCallback(
     (newValue: ISchool) => {
-      if (!school) return
+      if (!school || school.id === newValue.id) return
       setSchool(newValue)
-      localStorage.setItem('x-school-id', school.id)
+      localStorage.setItem('x-school-id', newValue.id)
       popover.onClose()
+      reload()
     },
-    [popover]
+    [popover, school]
   )
 
   useEffect(() => {
-    if (!isLoading && data && !school) {
-      setSchool(data.data[0])
-      localStorage.setItem('x-school-id', data.data[0].id)
-    }
-  }, [isLoading])
+    if (isLoading || !data?.data?.length) return
+
+    const schoolInLocal = localStorage.getItem('x-school-id') || ''
+    const schoolLocalData = data.data.find((el) => String(el.id) === schoolInLocal)
+
+    const selectedSchool = schoolLocalData || data.data[0]
+    setSchool(selectedSchool)
+    localStorage.setItem('x-school-id', selectedSchool.id)
+  }, [isLoading, data])
 
   if (isLoading) {
     return (
