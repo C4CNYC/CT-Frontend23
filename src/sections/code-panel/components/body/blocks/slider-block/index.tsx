@@ -1,4 +1,4 @@
-import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Box, TextField, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
@@ -7,7 +7,6 @@ import * as _ from 'lodash-es'
 import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import Carousel from 'react-slick'
 
 import { EmptyContent } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
@@ -34,7 +33,7 @@ import {
 
 import BaseBlock from '../base-block'
 
-import { PROGRESS_ITEM_SX, getBoxSx, getCarouselSettings, getProgressWrapperSx } from './constants'
+import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
 import Navigation from './navigation'
 
 const ProsaMirrorView = dynamic(async () => await import('./prosa-mirror-view'), { ssr: false })
@@ -75,8 +74,6 @@ const SliderBlock: FC<ISliderBlock> = ({
   lessonName,
   lessonId,
 }) => {
-  const carousel1 = useRef<Carousel | null>(null)
-
   const theme = useTheme()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
@@ -90,7 +87,6 @@ const SliderBlock: FC<ISliderBlock> = ({
   const course = useSelector((state) => state.codePanelGlobal.courseId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
 
-  const [nav2, setNav2] = useState<Carousel>()
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
   const [noteText, setNoteText] = useState(localStorage.getItem(`sandboxNotes${profile?.id}`) ?? '')
 
@@ -113,7 +109,9 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [])
 
   const handlePrev = (): void => {
-    carousel1.current?.slickPrev()
+    if (slideIndex > 0) {
+      onBeforeChange(slideIndex, slideIndex - 1)
+    }
   }
 
   const handleNext = (skip = false): void => {
@@ -133,7 +131,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       onSubmitChallenge(data[slideIndex].id, '')
     }
     if (hasNextStep) {
-      carousel1.current?.slickNext()
+      onBeforeChange(slideIndex, slideIndex + 1)
     } else {
       onSubmitLesson()
     }
@@ -157,6 +155,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onBeforeChange = (_: number, next: number) => {
+    if (!data || !data.length) return
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
     dispatch(setSlideId(data[next].id))
@@ -179,25 +178,24 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [sandbox, data])
 
   useEffect(() => {
-    if (carousel1.current !== null) {
-      setNav2(carousel1.current)
-      carousel1.current.slickGoTo(lastSlide?.slideNumber ?? 0)
+    if (lastSlide?.slideNumber) {
+      onBeforeChange(slideIndex, lastSlide.slideNumber)
     }
   }, [data, lastSlide])
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
+    onUpdateLastSlide(slideIndex)
   }, [slideIndex])
 
   useEffect(() => {
     const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
+    if (!data || !lessonId || data.length == 0) return
     if (lessonId && progress) {
-      const lastSlide: number = progress[lessonId as string]
-      if (carousel1.current !== null && lastSlide) {
-        carousel1.current.slickGoTo(lastSlide)
-      }
+      const lastSlide: number = progress[lessonId as string] || 0
+      onBeforeChange(slideIndex, lastSlide)
     }
-  }, [lessonId, carousel1, data])
+  }, [lessonId, data])
 
   const slider = useMemo(() => {
     return (
@@ -206,14 +204,10 @@ const SliderBlock: FC<ISliderBlock> = ({
         height='100%'
         sx={boxSx}
       >
-        <Carousel
-          {...getCarouselSettings(onBeforeChange)}
-          asNavFor={nav2}
-          ref={carousel1}
-          afterChange={onUpdateLastSlide}
-        >
-          {data.map((step, stepSlideIndex) => {
-            return slideIndex == stepSlideIndex ? (
+        {data
+          .filter((slide, stepSlideIndex) => slideIndex == stepSlideIndex)
+          .map((step) => {
+            return (
               <View
                 title={step.title}
                 lessonType={lessonType}
@@ -224,14 +218,11 @@ const SliderBlock: FC<ISliderBlock> = ({
                 connectIntegrations={connectIntegrations}
                 stepBgColor={step.bg_color}
               />
-            ) : (
-              <div key={step.id}></div>
             )
           })}
-        </Carousel>
       </Box>
     )
-  }, [data, nav2, carousel1, slideIndex, integrations])
+  }, [data, slideIndex, integrations])
 
   return (
     <BaseBlock
