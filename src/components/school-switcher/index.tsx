@@ -57,7 +57,7 @@ function SchoolSwitcher() {
 
   return (
     <>
-      <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+      <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
         <ButtonBase
           disableRipple
           onClick={popover.onOpen}

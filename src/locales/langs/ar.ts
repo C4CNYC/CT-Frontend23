@@ -297,7 +297,6 @@ const ar = {
   sidebar_menu_students: 'الطلاب',
   sidebar_menu_classes: 'الفصول',
   sidebar_menu_assignments: 'الواجبات',
-  sidebar_menu_progress: 'التقدم',
   sidebar_menu_content: 'المحتوى',
   sidebar_menu_courses: 'الدورات',
   sidebar_menu_modules: 'الوحدات',

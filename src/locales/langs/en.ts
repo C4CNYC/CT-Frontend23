@@ -299,7 +299,6 @@ const en = {
   sidebar_menu_students: 'Students',
   sidebar_menu_classes: 'Classes',
   sidebar_menu_assignments: 'Assignments',
-  sidebar_menu_progress: 'Progress',
   sidebar_menu_content: 'Content',
   sidebar_menu_courses: 'Courses',
   sidebar_menu_modules: 'Modules',

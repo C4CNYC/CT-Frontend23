@@ -1,4 +1,3 @@
-import { AiOutlineSolution } from '@react-icons/all-files/ai/AiOutlineSolution'
 import { BiConversation } from '@react-icons/all-files/bi/BiConversation'
 import { FaRegStickyNote } from '@react-icons/all-files/fa/FaRegStickyNote'
 import { FaSchool } from '@react-icons/all-files/fa/FaSchool'
@@ -8,7 +7,6 @@ import { FaUsers } from '@react-icons/all-files/fa/FaUsers'
 import { FaUserShield } from '@react-icons/all-files/fa/FaUserShield'
 import { FiCodesandbox } from '@react-icons/all-files/fi/FiCodesandbox'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
-import { GiProgression } from '@react-icons/all-files/gi/GiProgression'
 import { GoFileSubmodule } from '@react-icons/all-files/go/GoFileSubmodule'
 import { IoMdSchool } from '@react-icons/all-files/io/IoMdSchool'
 import { MdPlayLesson } from '@react-icons/all-files/md/MdPlayLesson'
@@ -83,16 +81,6 @@ export const managment = {
       title: 'sidebar_menu_classes',
       path: MANAGER_PATH_DASHBOARD.school.classes,
       icon: <IoMdSchool />,
-    },
-    {
-      title: 'sidebar_menu_assignments',
-      path: MANAGER_PATH_DASHBOARD.school.assignments,
-      icon: <AiOutlineSolution />,
-    },
-    {
-      title: 'sidebar_menu_progress',
-      path: MANAGER_PATH_DASHBOARD.school.progress,
-      icon: <GiProgression />,
     },
   ],
 }

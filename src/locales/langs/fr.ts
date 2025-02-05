@@ -300,7 +300,6 @@ const fr = {
   sidebar_menu_students: 'Étudiants',
   sidebar_menu_classes: 'Cours',
   sidebar_menu_assignments: 'Devoirs',
-  sidebar_menu_progress: 'Progression',
   sidebar_menu_content: 'Contenu',
   sidebar_menu_courses: 'Cours',
   sidebar_menu_modules: 'Modules',

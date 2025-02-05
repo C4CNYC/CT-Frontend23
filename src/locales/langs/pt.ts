@@ -297,7 +297,6 @@ const pt = {
   sidebar_menu_students: 'Estudantes',
   sidebar_menu_classes: 'Turmas',
   sidebar_menu_assignments: 'Tarefas',
-  sidebar_menu_progress: 'Progresso',
   sidebar_menu_content: 'Conteúdo',
   sidebar_menu_courses: 'Cursos',
   sidebar_menu_modules: 'Módulos',

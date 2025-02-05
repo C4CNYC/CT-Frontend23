@@ -7,7 +7,6 @@ import { useTheme } from '@mui/system'
 import { AiOutlineFundProjectionScreen } from '@react-icons/all-files/ai/AiOutlineFundProjectionScreen'
 import { CiMountain1 } from '@react-icons/all-files/ci/CiMountain1'
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus'
-import { GiProgression } from '@react-icons/all-files/gi/GiProgression'
 import { IoPeopleOutline } from '@react-icons/all-files/io5/IoPeopleOutline'
 import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
 import { SiGoogleclassroom } from '@react-icons/all-files/si/SiGoogleclassroom'
@@ -26,7 +25,6 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import DetailsTab from './details-card'
 import MemberCard from './members-card'
-import ProgressCard from './progress-card'
 import QuestsTab from './quest-card'
 
 interface IClassInfoTable {
@@ -109,12 +107,6 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             sx={{ fontSize: '1.1rem' }}
             {...customTabProps(isStudent ? 1 : 2)}
           />
-          <Tab
-            label={!isMobile && translate('progress')}
-            icon={<GiProgression size={20} />}
-            sx={{ fontSize: '1.1rem' }}
-            {...customTabProps(isStudent ? 2 : 3)}
-          />
         </Tabs>
         <Stack
           direction='row'
@@ -172,12 +164,6 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           classData={classData}
           activeTab={value === 1}
         />
-      </CustomTabPanel>
-      <CustomTabPanel
-        value={value}
-        index={isStudent ? 2 : 3}
-      >
-        <ProgressCard activeTab={value === 2 || value === 3} />
       </CustomTabPanel>
       <MenuPopover
         open={openPopover}

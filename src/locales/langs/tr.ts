@@ -299,7 +299,6 @@ const tr = {
   sidebar_menu_students: 'Öğrenciler',
   sidebar_menu_classes: 'Sınıflar',
   sidebar_menu_assignments: 'Ödevler',
-  sidebar_menu_progress: 'İlerleme',
   sidebar_menu_content: 'İçerik',
   sidebar_menu_courses: 'Kurslar',
   sidebar_menu_modules: 'Modüller',

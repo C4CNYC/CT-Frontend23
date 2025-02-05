@@ -299,7 +299,6 @@ const es = {
   sidebar_menu_students: 'Estudiantes',
   sidebar_menu_classes: 'Clases',
   sidebar_menu_assignments: 'Tareas',
-  sidebar_menu_progress: 'Progreso',
   sidebar_menu_content: 'Contenido',
   sidebar_menu_courses: 'Cursos',
   sidebar_menu_modules: 'Módulos',
