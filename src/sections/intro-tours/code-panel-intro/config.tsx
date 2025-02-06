@@ -35,7 +35,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/tour_images/challenge.svg'
+          src='/assets/tour_images/challenge.webp'
           alt='challenge preview'
           sx={{ py: 1, minHeight: '260px' }}
         />
@@ -51,7 +51,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/tour_images/controls.svg'
+          src='/assets/tour_images/controls.webp'
           alt='controls preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
@@ -87,7 +87,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/tour_images/checkers.svg'
+          src='/assets/tour_images/checkers.webp'
           alt='checkers preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
@@ -103,7 +103,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/tour_images/toolbox.svg'
+          src='/assets/tour_images/toolbox.webp'
           alt='checkers preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
@@ -185,7 +185,7 @@ export const getTourStepsMobile = (translate: (key: string) => string): Step[] =
     content: (
       <div>
         <Image
-          src='/assets/tour_images/challenge.svg'
+          src='/assets/tour_images/challenge.webp'
           alt='challenge preview'
           sx={{ py: 1 }}
         />
@@ -201,7 +201,7 @@ export const getTourStepsMobile = (translate: (key: string) => string): Step[] =
     content: (
       <div>
         <Image
-          src='/assets/tour_images/controls.svg'
+          src='/assets/tour_images/controls.webp'
           alt='controls preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
