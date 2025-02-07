@@ -3,6 +3,7 @@ import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { ILesson } from '@/redux/interfaces/content.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import OnlyAdmin from '@root/src/auth/OnlyAdmin'
 
 import AuthorsSection from './AuthorsSection'
 import BriefSection from './BriefSection'
@@ -42,20 +43,21 @@ export default function ModuleSidebar({
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('xl'))
   const translate = useTranslate()
-
   return (
     <Stack
       width={350}
       gap={2}
       m={isMobile ? '0 auto' : ''}
     >
-      <CollasedItem title={translate('courses_author_and_ranking')}>
-        <AuthorsSection
-          certificate={certificate ?? 0}
-          likes={likes ?? 0}
-          rated={rated ?? 0}
-        />
-      </CollasedItem>
+      <OnlyAdmin>
+        <CollasedItem title={translate('courses_author_and_ranking')}>
+          <AuthorsSection
+            certificate={certificate ?? 0}
+            likes={likes ?? 0}
+            rated={rated ?? 0}
+          />
+        </CollasedItem>
+      </OnlyAdmin>
       <CollasedItem title={translate('courses_brief')}>
         <BriefSection
           lessons={lessonCount}
@@ -81,7 +83,10 @@ export default function ModuleSidebar({
           {description}
         </Typography>
       </CollasedItem>
-      <QuizPanel lessons={lessons ?? []} />
+      <OnlyAdmin>
+        {' '}
+        <QuizPanel lessons={lessons ?? []} />
+      </OnlyAdmin>
       <CollasedItem title={translate('courses_teacher_toolbox')}>
         <TeacherToolbox
           teacherForum={teacherForum}

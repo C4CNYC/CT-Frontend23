@@ -11,6 +11,7 @@ import { Scrollbar } from '@/components/scrollbar'
 import { useResponsive } from '@/hooks'
 import { Role } from '@/redux/services/enums/role.enum'
 import { RootState } from '@/redux/store'
+import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 import { NAV_SIZES } from '../../../theme/consts'
 
@@ -33,9 +34,12 @@ export default function NavVertical({
   const { pathname } = useRouter()
 
   const user = useSelector((state: RootState) => state.global.user)
-
+  const isAdmin = useIsAdmin()
   const isDesktop = useResponsive('up', 'md')
-  const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
+
+  const menu = isManager
+    ? menuConfig(user?.role as Role)[user?.role as Role]
+    : menuConfig(user?.role as Role)[Role.Student]
 
   useEffect(() => {
     if (openNav) {
@@ -67,7 +71,7 @@ export default function NavVertical({
             sx={{ ml: 2 }}
             isLogoNav
           />
-          {!isManager ? <LetsCodeBtn /> : null}
+          {!isManager && !isAdmin ? <LetsCodeBtn /> : null}
         </Stack>
 
         <NavSectionVertical data={menu} />
