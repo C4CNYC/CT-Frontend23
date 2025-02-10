@@ -1293,7 +1293,7 @@ const pt = {
   // Remirror Toolbar
   remirror_toolbar_challenge_btn: 'Desafio',
   remirror_toolbar_tools_btn: 'Ferramentas',
-  remirror_toolbar_insert_media_btn: 'Inserir mídia',
+  insert_media_btn: 'Inserir mídia',
   remirror_toolbar_escape_html_btn: 'Escapar HTML',
   remirror_toolbar_escape_html_btn_title: 'Escape o HTML na seleção',
   remirror_toolbar_cape_html_btn: 'Cobrir HTML',

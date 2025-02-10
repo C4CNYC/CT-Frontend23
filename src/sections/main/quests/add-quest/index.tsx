@@ -118,7 +118,7 @@ export default function AddQuest(): React.ReactElement {
       const type = query?.type ?? AssignmentTypes.COURSE
       methods.reset({
         name: assignment?.name,
-        description: JSON.parse(assignment?.description ?? '{}'),
+        description: assignment?.description ?? '',
         type: assignment?.type ?? type,
         module: assignment?.courseUnit?.id,
         lesson: assignment?.lessonId,
@@ -142,7 +142,7 @@ export default function AddQuest(): React.ReactElement {
     mode: 'all',
     defaultValues: {
       name: assignment?.name ?? RANDOM_NAME,
-      description: JSON.parse(assignment?.description ?? '{}'),
+      description: assignment?.description ?? '',
       type: assignment?.type ?? (query?.type as AssignmentTypes) ?? AssignmentTypes.COURSE,
       category: assignment?.category ?? AssignmentProjectCategories.CREATIVE_PROJECT,
       language: assignment?.language ?? AssignmentProjectLanguages.HTML_CSS_JSS,
@@ -169,9 +169,9 @@ export default function AddQuest(): React.ReactElement {
           language: formData.language,
           lessonTitle:
             query?.type === OPEN_PROJECT || assignment?.type === OPEN_PROJECT
-              ? JSON.stringify(formData.description)
+              ? formData.description
               : '',
-          description: JSON.stringify(formData.description ?? {}),
+          description: formData.description ?? '',
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,
@@ -208,11 +208,11 @@ export default function AddQuest(): React.ReactElement {
         const newAssignment = await createAssignment({
           schoolId: query.schoolId as string,
           name: formData.name,
-          description: JSON.stringify(formData.description),
+          description: formData.description,
           type: query?.type !== OPEN_PROJECT ? formData.type : AssignmentTypes.OPEN_PROJECT,
           category: formData.category,
           language: formData.language,
-          lessonTitle: query?.type === OPEN_PROJECT ? JSON.stringify(formData.description) : '',
+          lessonTitle: query?.type === OPEN_PROJECT ? formData.description : '',
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,
@@ -337,7 +337,6 @@ export default function AddQuest(): React.ReactElement {
               assignment?.type === OPEN_PROJECT ? (
                 <DetailsStepOpenProject
                   methods={methods}
-                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
                   initialCategory={assignment?.category}
                   initialLanguage={assignment?.language}
                   coursesData={{
@@ -348,7 +347,6 @@ export default function AddQuest(): React.ReactElement {
               ) : (
                 <DetailsStep
                   methods={methods}
-                  initialValue={JSON.parse(assignment?.description ?? '{}')?.doc}
                   initialType={assignment?.type ?? (query?.type as AssignmentTypes)}
                   initialLesson={assignment?.lessonId}
                   coursesData={{

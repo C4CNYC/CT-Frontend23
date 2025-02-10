@@ -7,7 +7,6 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import { Stack } from '@mui/system'
 import { useSnackbar } from 'notistack'
-import { ImageAttributes } from 'remirror/extensions'
 
 import { CustomBreadcrumbs } from '@/components'
 import FileManagerFileItem from '@/components/file-manager/file-manager-file-item'
@@ -25,6 +24,18 @@ import {
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { imageResize } from '@root/src/utils/imageResize'
+
+interface ImageAttributes {
+  align?: 'center' | 'end' | 'justify' | 'left' | 'match-parent' | 'right' | 'start'
+  alt?: string
+  height?: string | number
+  width?: string | number
+  rotate?: string
+  src: string
+  title?: string
+  /** The file name used to create the image. */
+  fileName?: string
+}
 
 export interface MediaModalProps {
   children: React.ReactElement
