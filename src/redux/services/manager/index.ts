@@ -51,6 +51,7 @@ export const managerApi = createApi({
     'Socials',
     'Goal',
     'LastVisitedUnitAndLesson',
+    'LastVisitedLessonSlide',
     'Media',
     'Properties',
     'LessonSlidePreload',

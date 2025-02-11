@@ -40,7 +40,7 @@ const icon = (
   />
 )
 const OPEN_POPOVER_DELEY = 15000
-const CLOSE_POPOVER_DELEY = 4000
+const CLOSE_POPOVER_DELEY = 7000
 const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({

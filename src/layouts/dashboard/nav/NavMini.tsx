@@ -7,6 +7,7 @@ import { NavSectionMini } from '@/components/nav-section'
 import { Role } from '@/redux/services/enums/role.enum'
 import { RootState } from '@/redux/store'
 import { hideScrollbarX } from '@/utils/cssStyles'
+import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 import { NAV_SIZES } from '../../../theme/consts'
 
@@ -20,8 +21,11 @@ interface INavMini {
 
 export default function NavMini({ isManager }: INavMini): React.ReactElement {
   const user = useSelector((state: RootState) => state.global.user)
+  const isAdmin = useIsAdmin()
   const theme = useTheme()
-  const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
+  const menu = isManager
+    ? menuConfig(user?.role as Role)[user?.role as Role]
+    : menuConfig(user?.role as Role)[Role.Student]
 
   return (
     <Box
@@ -55,7 +59,7 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
             ml: 2.6,
           }}
         />
-        {!isManager ? <LetsCodeBtn isMini /> : null}
+        {!isManager && !isAdmin ? <LetsCodeBtn isMini /> : null}
         <NavSectionMini data={menu} />
       </Stack>
     </Box>

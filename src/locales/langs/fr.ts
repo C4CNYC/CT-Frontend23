@@ -1311,7 +1311,7 @@ const fr = {
   // Remirror Toolbar
   remirror_toolbar_challenge_btn: 'Défi',
   remirror_toolbar_tools_btn: 'Outils',
-  remirror_toolbar_insert_media_btn: 'Insérer un média',
+  insert_media_btn: 'Insérer un média',
   remirror_toolbar_escape_html_btn: 'Échapper HTML',
   remirror_toolbar_escape_html_btn_title: 'Échappe le HTML dans la sélection',
   remirror_toolbar_cape_html_btn: 'Couvrir HTML',

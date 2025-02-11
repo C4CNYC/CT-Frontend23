@@ -1278,7 +1278,7 @@ const ar = {
   // Remirror Toolbar
   remirror_toolbar_challenge_btn: 'تحدي',
   remirror_toolbar_tools_btn: 'أدوات',
-  remirror_toolbar_insert_media_btn: 'إدراج الوسائط',
+  insert_media_btn: 'إدراج الوسائط',
   remirror_toolbar_escape_html_btn: 'تجاهل HTML',
   remirror_toolbar_escape_html_btn_title: 'يتجاهل HTML في التحديد',
   remirror_toolbar_cape_html_btn: 'إخفاء HTML',
