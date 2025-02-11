@@ -51,6 +51,7 @@ export const getBreadcrumbsSx = (isMobile: boolean, theme: Theme) => ({
 })
 export const CONTAINER_SX = {
   flex: '1',
+  maxWidth: 'calc(100% - 350px)',
 }
 export const getHeaderContainerSx = (isMobile: boolean, theme: Theme) => ({
   flexDirection: 'row',

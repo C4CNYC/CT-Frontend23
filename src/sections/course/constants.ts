@@ -6,6 +6,7 @@ export const getSeeMoreBtnSx = (theme: Theme) => ({
   fontSize: '1rem',
   gap: 1,
   color: theme.palette.mode === 'light' ? '#364954' : '#FFF',
+  whiteSpace: 'nowrap',
   '&:hover': {
     background: 'none',
   },
@@ -13,22 +14,26 @@ export const getSeeMoreBtnSx = (theme: Theme) => ({
 
 export const COURSE_INFO_IMAGE_SX = {
   flexShrink: 0,
-  width: '250px',
-  height: '250px',
+  width: '150px',
+  height: '150px',
   m: '0 auto',
   borderRadius: '25px',
+  position: { sx: 'initial', md: 'absolute' },
+  right: '16px',
+  top: '16px',
 }
 
 export const getCourseInfoWrapperSx = (theme: Theme) => ({
+  position: 'relative',
   flexDirection: {
-    xs: 'column-reverse',
-    sm: 'column-reverse',
-    md: 'row',
+    xs: 'column',
+    sm: 'column',
+    md: 'column',
   },
-  flexWrap: 'nowrap',
   justifyContent: 'space-between',
-  px: 8,
-  py: 4,
+  pl: 2,
+  pr: { xs: 2, md: '182px' },
+  py: 2,
   mb: 5,
   background: theme.palette.mode === 'light' ? '#ECF4FF' : theme.palette.background.paper,
   borderRadius: 2,

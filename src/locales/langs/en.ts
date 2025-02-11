@@ -457,7 +457,7 @@ const en = {
     'A “Teacher Toolbox” is found within each module with all the resources you will need.',
   courses_pacing_guides_link: 'Pacing Guides',
   courses_standards_alignment_link: 'Standards Alignment',
-  courses_author_and_ranking: 'Author & Ranking',
+  courses_author_and_ranking: 'Author & Reviews',
   courses_brief: 'The Brief',
   courses_teacher_toolbox: 'Teacher Toolbox',
   courses_module_slides: 'Module Slides',

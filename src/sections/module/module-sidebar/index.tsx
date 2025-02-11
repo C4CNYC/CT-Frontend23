@@ -7,7 +7,7 @@ import OnlyAdmin from '@root/src/auth/OnlyAdmin'
 
 import AuthorsSection from './AuthorsSection'
 import BriefSection from './BriefSection'
-import CollasedItem from './components/CollasedItem'
+import CollapsedItem from './components/CollasedItem'
 import QuizPanel from './quiz-panel'
 import TeacherToolbox from './TeacherToolbox'
 
@@ -45,34 +45,32 @@ export default function ModuleSidebar({
   const translate = useTranslate()
   return (
     <Stack
-      width={350}
+      maxWidth={350}
+      minWidth={150}
       gap={2}
       m={isMobile ? '0 auto' : ''}
     >
       <OnlyAdmin>
-        <CollasedItem title={translate('courses_author_and_ranking')}>
+        <CollapsedItem
+          title={translate('courses_author_and_ranking')}
+          isDefaultOpen={true}
+        >
           <AuthorsSection
             certificate={certificate ?? 0}
             likes={likes ?? 0}
             rated={rated ?? 0}
           />
-        </CollasedItem>
+        </CollapsedItem>
       </OnlyAdmin>
-      <CollasedItem title={translate('courses_brief')}>
+      <CollapsedItem title={translate('courses_brief')}>
         <BriefSection
           lessons={lessonCount}
           grade={grade}
           level={level}
           duration={duration ?? '20 min'}
         />
-      </CollasedItem>
-      {/* <CollasedItem title="What you’ll build">
-        <></>
-      </CollasedItem> */}
-      {/* <CollasedItem title="Sample Certificate">
-        <></>
-      </CollasedItem> */}
-      <CollasedItem title={translate('courses_course_who_is_this_for')}>
+      </CollapsedItem>
+      <CollapsedItem title={translate('courses_course_who_is_this_for')}>
         <Typography
           sx={{
             p: 2,
@@ -82,18 +80,18 @@ export default function ModuleSidebar({
         >
           {description}
         </Typography>
-      </CollasedItem>
+      </CollapsedItem>
       <OnlyAdmin>
         {' '}
         <QuizPanel lessons={lessons ?? []} />
       </OnlyAdmin>
-      <CollasedItem title={translate('courses_teacher_toolbox')}>
+      <CollapsedItem title={translate('courses_teacher_toolbox')}>
         <TeacherToolbox
           teacherForum={teacherForum}
           teacherSlides={teacherSlides}
           lessonPlans={lessonPlans}
         />
-      </CollasedItem>
+      </CollapsedItem>
     </Stack>
   )
 }

@@ -138,8 +138,7 @@ export default function ModulePage(): React.ReactElement {
               xs: 'column',
               sm: 'column',
               md: 'column',
-              lg: 'column',
-              xl: 'row',
+              lg: 'row',
             },
           }}
         >
@@ -186,6 +185,7 @@ export default function ModulePage(): React.ReactElement {
               </Stack>
             )}
           </Stack>
+
           <ModuleSidebar
             level='Beginner'
             grade='6th-10th Grade'
