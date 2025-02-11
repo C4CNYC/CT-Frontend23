@@ -50,6 +50,7 @@ export default function CourseInfo({ course }: ICourseInfoProps): React.ReactEle
           pb: 2,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         }}
       >
         {name}

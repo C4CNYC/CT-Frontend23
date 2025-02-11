@@ -1355,7 +1355,8 @@ const es = {
   intro_tour_step_1_desktop_subtitle:
     'Aquí es donde ocurre todo el aprendizaje y la construcción. 🤩',
   intro_tour_step_2_desktop_title: 'Las Diapositivas',
-  intro_tour_step_2_desktop_subtitle: `Aquí verás cosas emocionantes 💎💫 que te dirán qué programar. ✍🏽 🤖 Solo sigue paso a paso.`,
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
   intro_tour_step_3_desktop_title: 'Diapositivas de Desafío',
   intro_tour_step_3_desktop_subtitle: `¿Ves una diapositiva de Desafío ⚔️? Eso significa que es hora de programar en el editor.`,
   intro_tour_step_4_desktop_title: 'Controles',

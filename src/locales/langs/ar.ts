@@ -1326,7 +1326,8 @@ const ar = {
   intro_tour_step_1_desktop_subtitle: 'هنا تحدث كل عملية التعلم والبناء. 🤩',
   intro_tour_step_2_desktop_title: 'الشرائح',
   intro_tour_step_2_desktop_subtitle: `هنا سترى أشياء مثيرة 💎💫 وستخبرك بما عليك برمجته. ✍🏽 🤖 فقط اتبع الخطوات خطوة بخطوة.`,
-  intro_tour_step_3_desktop_title: 'شرائح التحدي',
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
   intro_tour_step_3_desktop_subtitle: `هل ترى شريحة تحدي ⚔️؟ هذا يعني أنه حان وقت البرمجة في المحرر.`,
   intro_tour_step_4_desktop_title: 'عناصر التحكم',
   intro_tour_step_4_desktop_subtitle:

@@ -24,14 +24,14 @@ export default function ModuleHeader({
   lessons,
 }: IModuleHeaderProps): React.ReactElement {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down(1000))
+  const isMobile = useMediaQuery(theme.breakpoints.down(500))
   const moduleCont = useMemo(() => getHeaderContainerSx(isMobile, theme), [isMobile, theme])
   const skills = getUniqueSkills(lessons.map((item: ILesson) => item.skills).flat())
 
   return (
     <Stack sx={moduleCont}>
       {isMobile ? (
-        <Box sx={{ mx: 'auto', mb: 3 }}>
+        <Box sx={{ mx: 'auto' }}>
           <ImageLightBox image={avatar ?? '/assets/courses/courseImg.png'}>
             <Image
               alt='module cover'
@@ -41,18 +41,19 @@ export default function ModuleHeader({
           </ImageLightBox>
         </Box>
       ) : null}
-      <Stack>
+      <Stack sx={{ overflow: 'hidden', pt: 2 }}>
         <Typography
           variant='h4'
-          maxWidth={400}
-          mb={2}
+          noWrap
+          textOverflow='ellipsis'
         >
           {name}
         </Typography>
         <Typography
           variant='body1'
-          maxWidth={400}
           mb={2}
+          noWrap
+          textOverflow='ellipsis'
         >
           {description}
         </Typography>

@@ -99,7 +99,12 @@ export default function LessonItem({
       <Stack>
         <Typography
           variant='h4'
-          mb={1}
+          gutterBottom
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
         >
           {lesson.name}
         </Typography>
@@ -107,8 +112,11 @@ export default function LessonItem({
           variant='body1'
           mb={lesson?.description?.length < maxDesc ? 1 : 0}
           ref={descRef}
-          sx={{ textOverflow: 'ellipsis', maxWidth: { lg: 'none', xl: '830px' } }}
-          noWrap
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
         >
           {lesson.description}
         </Typography>

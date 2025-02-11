@@ -25,7 +25,12 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
   {
     target: '.instructions',
     title: <div>{translate('intro_tour_step_2_desktop_title')}</div>,
-    content: <div>{translate('intro_tour_step_2_desktop_subtitle')}</div>,
+    content: (
+      <div>
+        <p>{translate('intro_tour_step_2_desktop_subtitle_1')}</p>
+        <p>{translate('intro_tour_step_2_desktop_subtitle_2')}</p>
+      </div>
+    ),
     disableBeacon: true,
     placement: 'right' as const,
   },

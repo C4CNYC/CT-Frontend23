@@ -1348,8 +1348,8 @@ const en = {
   intro_tour_step_1_desktop_title: '💥 The Coding Panel 👩‍💻 💥',
   intro_tour_step_1_desktop_subtitle: 'Here is where all the learning and building happens. 🤩',
   intro_tour_step_2_desktop_title: 'The Slides',
-  intro_tour_step_2_desktop_subtitle: `Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
-        step by step.`,
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
   intro_tour_step_3_desktop_title: 'Challenge Slides',
   intro_tour_step_3_desktop_subtitle: `See a Challenge ⚔️ slide? That means it’s time to code in the editor.`,
   intro_tour_step_4_desktop_title: 'Controls',
