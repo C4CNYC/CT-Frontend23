@@ -72,6 +72,7 @@ export const getHeaderContainerSx = (isMobile: boolean, theme: Theme) => ({
   background: theme.palette.mode === 'light' ? '#FFEDF2' : theme.palette.background.paper,
   borderRadius: 3,
   px: 2,
+  py: 1,
 })
 export const CHIP_SX = {
   background: 'transparent',
