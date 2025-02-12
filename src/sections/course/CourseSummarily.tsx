@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
 import { LuSchool } from '@react-icons/all-files/lu/LuSchool'
 import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
@@ -21,7 +21,6 @@ export default function CourseSummarily({
   durationInMinutes,
 }: ICourseSummarilyProps): React.ReactElement {
   const translate = useTranslate()
-
   return (
     <Stack
       sx={{
@@ -31,39 +30,35 @@ export default function CourseSummarily({
         flexWrap: 'wrap',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+      <Typography
+        variant='body2'
+        sx={{ textTransform: 'capitalize', display: 'flex', alignItems: 'baseline', gap: 1 }}
+      >
         <SiLevelsdotfyi size='17px' />
-        <Typography
-          variant='body1'
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {level}
-        </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+        {level}
+      </Typography>
+      <Typography
+        variant='body2'
+        sx={{ textTransform: 'capitalize', display: 'flex', alignItems: 'baseline', gap: 1 }}
+      >
         <LuSchool size='18px' />
-        <Typography
-          variant='body1'
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {translate('grade')} {grade}
-        </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
-        <AiOutlineClockCircle size='17px' />
-        <Typography
-          variant='body1'
-          sx={{ textTransform: 'capitalize' }}
-        >
-          {convertMinsToString(durationInMinutes, translate('hours'), translate('minutes'))}
-        </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+
+        {grade}
+      </Typography>
+      <Typography
+        variant='body2'
+        sx={{ textTransform: 'capitalize', display: 'flex', alignItems: 'center', gap: 1 }}
+      >
+        <AiOutlineClockCircle size='16px' />
+        {convertMinsToString(durationInMinutes, translate('hours'))}
+      </Typography>
+      <Typography
+        variant='body2'
+        sx={{ textTransform: 'capitalize', display: 'flex', alignItems: 'baseline', gap: 1 }}
+      >
         <MdCelebration size='18px' />
-        <Typography variant='body1'>
-          {lessonsCount} {`Training${lessonsCount !== 1 ? 's' : ''}`}
-        </Typography>
-      </Box>
+        {lessonsCount} {`Training${lessonsCount !== 1 ? 's' : ''}`}
+      </Typography>
     </Stack>
   )
 }

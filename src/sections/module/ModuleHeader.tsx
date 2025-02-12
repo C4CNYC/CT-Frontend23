@@ -41,22 +41,9 @@ export default function ModuleHeader({
           </ImageLightBox>
         </Box>
       ) : null}
-      <Stack sx={{ overflow: 'hidden', pt: 2 }}>
-        <Typography
-          variant='h4'
-          noWrap
-          textOverflow='ellipsis'
-        >
-          {name}
-        </Typography>
-        <Typography
-          variant='body1'
-          mb={2}
-          noWrap
-          textOverflow='ellipsis'
-        >
-          {description}
-        </Typography>
+      <Stack sx={{ overflow: 'hidden', pt: 2, pr: 2 }}>
+        <Typography variant='h4'>{name}</Typography>
+        <Typography variant='body1'>{description}</Typography>
         {!!skills?.length && (
           <Stack
             direction='row'

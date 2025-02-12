@@ -1,10 +1,10 @@
 import { Theme } from '@mui/material'
 
 export const getSeeMoreBtnSx = (theme: Theme) => ({
-  width: 130,
+  width: 'max-content',
   justifyContent: 'start',
-  fontSize: '1rem',
-  gap: 1,
+  fontSize: '.9rem',
+  pr: 0.5,
   color: theme.palette.mode === 'light' ? '#364954' : '#FFF',
   whiteSpace: 'nowrap',
   '&:hover': {
@@ -32,7 +32,7 @@ export const getCourseInfoWrapperSx = (theme: Theme) => ({
   },
   justifyContent: 'space-between',
   pl: 2,
-  pr: { xs: 2, md: '182px' },
+  pr: { xs: 2, md: '190px' },
   py: 2,
   mb: 5,
   background: theme.palette.mode === 'light' ? '#ECF4FF' : theme.palette.background.paper,

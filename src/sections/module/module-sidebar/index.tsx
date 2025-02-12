@@ -14,7 +14,7 @@ import TeacherToolbox from './TeacherToolbox'
 
 interface IModuleSidebarProps {
   module: IModule
-  moduleContent: IModuleContent
+  moduleContent?: IModuleContent
 }
 
 // until the api will be ready
@@ -35,22 +35,18 @@ export default function ModuleSidebar({
     lessons,
     description,
   } = module
-  const {
-    teacher_forum: teacherForum,
-    teacher_slides: slides,
-    lesson_plans: lessonPlans,
-  } = moduleContent
 
   const moduleDuration = useMemo(
     () =>
       duration
         ? Object.entries(duration)
-            .map(([dataType, count]) => `${count} ${dataType}`)
+            .map(([dataType, count]) => {
+              ;`${count} ${dataType}`
+            })
             .join(' ')
-        : '20 min',
+        : '.5 hour',
     [duration]
   )
-
   return (
     <Stack
       maxWidth={300}
@@ -74,7 +70,7 @@ export default function ModuleSidebar({
           lessons={`${lessons?.length} ${translate('lessons')}`}
           grade={grade}
           level={level}
-          duration={moduleDuration ?? '20 min'}
+          duration={moduleDuration ?? '.5 hour'}
         />
       </CollapsedItem>
       <CollapsedItem title={translate('courses_course_who_is_this_for')}>
@@ -93,9 +89,9 @@ export default function ModuleSidebar({
       </OnlyAdmin>
       <CollapsedItem title={translate('courses_teacher_toolbox')}>
         <TeacherToolbox
-          teacherForum={teacherForum}
-          teacherSlides={slides}
-          lessonPlans={lessonPlans}
+          teacherForum={moduleContent?.teacher_forum}
+          teacherSlides={moduleContent?.teacher_slides}
+          lessonPlans={moduleContent?.lesson_plans}
         />
       </CollapsedItem>
     </Stack>

@@ -1,4 +1,4 @@
-import { Theme } from '@mui/material'
+import { alpha, Theme } from '@mui/material'
 
 export const getPageContainerSx = (
   isMobile: boolean,
@@ -45,14 +45,15 @@ export const getPageContainerSx = (
 export const getBreadcrumbsSx = (theme: Theme, isMobile: boolean) =>
   !isMobile
     ? {
-        background: theme.palette.background.default,
+        background: alpha(theme.palette.background.default, 0.5),
         color:
           theme.palette.mode === 'light'
             ? theme.palette.text.primary
             : theme.palette.text.secondary,
         width: 'fit-content',
         px: 2,
-        py: 0.5,
+        pl: 3,
+        pb: 0.5,
         ml: -3,
         borderRadius: '0 0 24px 0',
         boxShadow:
@@ -88,10 +89,10 @@ export const HEADER_IMG_SX = {
 }
 export const getLessonListSx = (isMobile: boolean, theme: Theme) => ({
   gap: isMobile ? 2 : 4,
-  mt: isMobile ? 2 : 6,
+  mt: isMobile ? 2 : 4,
   background: theme.palette.mode === 'light' ? '#FFEDF2' : 'none',
   px: 2,
-  pb: isMobile ? 4 : 10,
+  pb: isMobile ? 4 : 8,
   pt: 2,
   borderRadius: 3,
 })

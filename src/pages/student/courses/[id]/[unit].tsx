@@ -170,7 +170,7 @@ export default function ModulePage(): React.ReactElement {
               </Stack>
             )}
           </Box>
-          {unitModule && currentModule ? (
+          {unitModule ? (
             <ModuleSidebar
               module={unitModule}
               moduleContent={currentModule}

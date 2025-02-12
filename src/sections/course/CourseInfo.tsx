@@ -47,7 +47,7 @@ export default function CourseInfo({ course }: ICourseInfoProps): React.ReactEle
       <Typography
         variant='h3'
         sx={{
-          pb: 2,
+          pb: 1,
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
