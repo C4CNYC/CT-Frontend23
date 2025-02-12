@@ -7,7 +7,7 @@ export const CreateQuestSchema = Yup.object().shape({
   type: Yup.mixed<AssignmentTypes>().oneOf(Object.values(AssignmentTypes)).required('Select type'),
   course: Yup.string().when('type', {
     is: AssignmentTypes.COURSE,
-    then: Yup.string(),
+    then: Yup.string().required('Select course'),
     otherwise: Yup.string().nullable(true),
   }),
   startDate: Yup.date().nullable(true).typeError('Start date must be a valid date'),
