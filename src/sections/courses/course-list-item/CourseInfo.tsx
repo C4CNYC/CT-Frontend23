@@ -42,7 +42,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           variant='body2'
           sx={{ color: 'inherit' }}
         >
-          {convertMinsToString(minutes, translate('hours'), translate('minutes'))}
+          {convertMinsToString(minutes, translate('hours'))}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
