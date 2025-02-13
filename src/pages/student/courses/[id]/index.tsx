@@ -101,7 +101,13 @@ export default function CoursePage(): React.ReactElement {
                         .map((unit) => convertDurationToMins(unit.duration))
                         .reduce((acc, unitDuration) => acc + unitDuration, 0)}
                       grade='5th-10th Grade'
-                      lessons={data?.total_lessons ?? 0}
+                      lessons={
+                        data?.total_lessons ??
+                        data?.units
+                          .map((u) => u?.lessonToUnits?.length || 0)
+                          .reduce((a, l) => (a + l ? l : 0), 0) ??
+                        0
+                      }
                       level={data?.level ?? '-'}
                     />
                   </>

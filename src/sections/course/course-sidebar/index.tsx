@@ -99,7 +99,7 @@ export default function CourseSidebar({
             <ListItemIcon>
               <MdOutlinePlayLesson size={20} />
             </ListItemIcon>
-            <ListItemText primary={`${lessons} Hr`} />
+            <ListItemText primary={`${lessons}  ${translate('lessons')}`} />
           </ListItem>
           <ListItem>
             <ListItemIcon>

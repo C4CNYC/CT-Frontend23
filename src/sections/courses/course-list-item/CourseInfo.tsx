@@ -32,7 +32,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        maxWidth: priceIsZero ? '300px' : '450px',
+        maxWidth: priceIsZero ? '400px' : '450px',
         flexWrap: 'wrap',
       }}
     >
