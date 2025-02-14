@@ -5,8 +5,8 @@ import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 import { ICourse } from '@/types'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetCoursContentQuery } from '@root/src/redux/services/manager/courses-student'
+import { convertDurationToHours } from '@root/src/utils/convertDurationToHours'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
-import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 import { detectZeroAmount } from '@root/src/utils/detectZeroAmount'
 
 interface Props {
@@ -42,7 +42,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           variant='body2'
           sx={{ color: 'inherit' }}
         >
-          {convertMinsToString(minutes, translate('hours'))}
+          {convertDurationToHours(minutes, translate('hours'))}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

@@ -5,7 +5,7 @@ import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 import { SiLevelsdotfyi } from '@react-icons/all-files/si/SiLevelsdotfyi'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { convertMinsToString } from '@root/src/utils/convertMinsToString'
+import { convertDurationToHours } from '@root/src/utils/convertDurationToHours'
 
 interface ICourseSummarilyProps {
   level: string
@@ -50,7 +50,7 @@ export default function CourseSummarily({
         sx={{ textTransform: 'capitalize', display: 'flex', alignItems: 'center', gap: 1 }}
       >
         <AiOutlineClockCircle size='16px' />
-        {convertMinsToString(durationInMinutes, translate('hours'))}
+        {convertDurationToHours(durationInMinutes, translate('hours'))}
       </Typography>
       <Typography
         variant='body2'
