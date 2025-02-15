@@ -55,7 +55,9 @@ export default function LessonDialog({
   return (
     <>
       <Box
-        onClick={() => {
+        onClick={(e: React.MouseEvent<HTMLElement>) => {
+          // e.preventDefault()
+          // e.stopPropagation()
           setOpenDialog(true)
         }}
       >
@@ -63,7 +65,11 @@ export default function LessonDialog({
       </Box>
       <Dialog
         open={open}
-        onClose={() => setOpenDialog(false)}
+        onClose={(e: React.MouseEvent<HTMLElement>) => {
+          // e.preventDefault()
+          // e.stopPropagation()
+          setOpenDialog(false)
+        }}
         PaperProps={{
           sx: PAPER_PROPS_SX,
         }}
@@ -83,7 +89,11 @@ export default function LessonDialog({
             {translate('lesson_dialog_title_2')}
           </Typography>
           <IconButton
-            onClick={() => setOpenDialog(false)}
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              // e.preventDefault()
+              // e.stopPropagation()
+              setOpenDialog(false)
+            }}
             sx={CLOSE_DIALOG_ICON_SX}
           >
             <CloseIcon />
@@ -98,7 +108,11 @@ export default function LessonDialog({
           </Box>
           <Typography>{translate('lesson_dialog_subtitle_2')}</Typography>
           <Button
-            onClick={handleOpenPopover}
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              // e.preventDefault()
+              // e.stopPropagation()
+              handleOpenPopover(e)
+            }}
             sx={{ ...SEE_MORE_SX, my: 0 }}
           >
             {translate('lesson_dialog_learn_more')}
@@ -106,14 +120,20 @@ export default function LessonDialog({
           <Button
             color='inherit'
             variant='soft'
-            onClick={onOpenLesson}
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              // e.preventDefault()
+              // e.stopPropagation()
+              onOpenLesson()
+            }}
           >
             {translate('lesson_dialog_btn_start')}
           </Button>
           <Button
             color='info'
             variant='soft'
-            onClick={() => {
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              // e.preventDefault()
+              // e.stopPropagation()
               setOpenDialog(false)
             }}
           >

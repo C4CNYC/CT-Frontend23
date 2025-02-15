@@ -1343,8 +1343,9 @@ const pt = {
   intro_tour_step_1_desktop_title: '💥 O Painel de Codificação 👩‍💻 💥',
   intro_tour_step_1_desktop_subtitle: 'Aqui é onde toda a aprendizagem e construção acontecem. 🤩',
   intro_tour_step_2_desktop_title: 'Os Slides',
-  intro_tour_step_2_desktop_subtitle: `Aqui você verá coisas empolgantes 💎💫 que dirão o que codificar. ✍🏽 🤖 Siga
-        passo a passo.`,
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
+
   intro_tour_step_3_desktop_title: 'Slides de Desafios',
   intro_tour_step_3_desktop_subtitle: `Viu um slide de Desafio ⚔️? Isso significa que é hora de codificar no editor.`,
   intro_tour_step_4_desktop_title: 'Controles',

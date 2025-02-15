@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Container, Skeleton, Stack, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Container, Skeleton, Stack, useMediaQuery, useTheme } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
@@ -17,12 +17,7 @@ import {
 } from '@/redux/services/manager/modules-student'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import {
-  CONTAINER_SX,
-  getBreadcrumbsSx,
-  getLessonListSx,
-  getPageContainerSx,
-} from '@/sections/module/constants'
+import { getBreadcrumbsSx, getLessonListSx, getPageContainerSx } from '@/sections/module/constants'
 import LessonsList from '@/sections/module/LessonsList'
 import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
@@ -79,16 +74,6 @@ export default function ModulePage(): React.ReactElement {
   const isLoadingModule = isLoadingLessonsModule ?? isLoadingPublicModule
   const refetch = refetchModule ?? refetchPublic
 
-  const moduleDuration = useMemo(
-    () =>
-      unitModule?.duration
-        ? Object.entries(unitModule.duration)
-            .map(([dataType, count]) => `${count} ${dataType}`)
-            .join(' ')
-        : '20 min',
-    [unitModule]
-  )
-
   useEffect(() => {
     if (modules) {
       setCurrentModule(modules.filter((m) => m.id === query.unit)[0])
@@ -107,12 +92,16 @@ export default function ModulePage(): React.ReactElement {
         <title>{unitModule?.name ?? translate('module')} | CodeTribe</title>
       </Head>
       <Container
-        maxWidth={themeStretch ? false : 'xl'}
-        disableGutters
-        sx={getPageContainerSx(isMobile, theme.palette.mode === 'light', currentModule?.background)}
+        maxWidth={themeStretch ? false : 'lg'}
+        sx={getPageContainerSx(
+          isMobile,
+          theme.palette.mode === 'light',
+          theme,
+          currentModule?.background
+        )}
       >
         <CustomBreadcrumbs
-          sx={getBreadcrumbsSx(isMobile, theme)}
+          sx={getBreadcrumbsSx(theme, isMobile)}
           links={[
             {
               name: translate('home'),
@@ -131,19 +120,14 @@ export default function ModulePage(): React.ReactElement {
             },
           ]}
         />
-        <Stack
+        <Box
           sx={{
-            gap: 3,
-            flexDirection: {
-              xs: 'column',
-              sm: 'column',
-              md: 'column',
-              lg: 'column',
-              xl: 'row',
-            },
+            gap: 2,
+            display: 'grid',
+            gridTemplateColumns: { xs: 'auto', md: 'auto 300px' },
           }}
         >
-          <Stack sx={CONTAINER_SX}>
+          <Box overflow={'hidden'}>
             {!isLoadingModules && !isLoadingModule && unitModule ? (
               <ModuleHeader
                 name={unitModule.name}
@@ -185,24 +169,14 @@ export default function ModulePage(): React.ReactElement {
                 ))}
               </Stack>
             )}
-          </Stack>
-          <ModuleSidebar
-            level='Beginner'
-            grade='6th-10th Grade'
-            duration={moduleDuration}
-            lessonCount={`${unitModule?.lessons?.length} ${translate('lessons')}`}
-            description={
-              unitModule?.description ? unitModule.description : translate('description')
-            }
-            certificate={unitModule?.initial_enrolled ?? 0}
-            likes={unitModule?.initial_likes ?? 0}
-            rated={unitModule?.initial_stars ?? 0}
-            teacherForum={currentModule?.teacher_forum ?? ''}
-            teacherSlides={currentModule?.teacher_slides}
-            lessonPlans={currentModule?.lesson_plans}
-            lessons={unitModule?.lessons}
-          />
-        </Stack>
+          </Box>
+          {unitModule ? (
+            <ModuleSidebar
+              module={unitModule}
+              moduleContent={currentModule}
+            />
+          ) : null}
+        </Box>
       </Container>
     </>
   )
