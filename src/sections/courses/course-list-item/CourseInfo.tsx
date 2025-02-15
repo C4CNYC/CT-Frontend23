@@ -61,16 +61,18 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           </Typography>
         </Box>
       )}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <MdCelebration size='18px' />
-        <Typography
-          variant='body2'
-          sx={{ color: 'inherit' }}
-        >
-          {totalLessons}{' '}
-          {totalLessons && totalLessons > 1 ? translate('lessons') : translate('lesson')}
-        </Typography>
-      </Box>
+      {totalLessons ? (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <MdCelebration size='18px' />
+          <Typography
+            variant='body2'
+            sx={{ color: 'inherit' }}
+          >
+            {totalLessons}{' '}
+            {totalLessons && totalLessons > 1 ? translate('lessons') : translate('lesson')}
+          </Typography>
+        </Box>
+      ) : null}
     </Stack>
   )
 }

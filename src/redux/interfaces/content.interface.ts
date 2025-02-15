@@ -49,6 +49,7 @@ export interface IModule {
   progress?: number
   total_progress?: number
   lessons: Array<ILesson & BaseResponseInterface>
+  lessonToUnits?: { lesson: ILesson }[]
   description?: string
   initial_enrolled: number
   initial_likes: number
