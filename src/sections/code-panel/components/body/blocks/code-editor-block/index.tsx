@@ -1,6 +1,5 @@
 import { type FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Box } from '@mui/material'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
@@ -12,7 +11,6 @@ import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
-import useMobileKeyboard from '@root/src/hooks/useMobileKeyboard'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
@@ -54,10 +52,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
-
-  // TODO: move this logic to quick keys component
-
-  const { isKeyboardOpen, keyboardHeight } = useMobileKeyboard()
 
   const codeRef = useRef(code)
   const openPopoverTimer = useRef<NodeJS.Timeout | null>(null)
@@ -137,21 +131,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
       />
-      {/* TODO: move this logic to quick keys component */}
-      {isDesktop ? (
-        <QuickKeys />
-      ) : (
-        <Box
-          sx={{
-            position: 'absolute',
-            left: 0,
-            bottom: isKeyboardOpen ? `${Math.abs(keyboardHeight)}px` : 0,
-            transition: 'bottom .2s easy-out',
-          }}
-        >
-          <QuickKeys />
-        </Box>
-      )}
+      <QuickKeys />
     </BaseBlock>
   )
 }

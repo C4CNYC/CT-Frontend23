@@ -20,7 +20,7 @@ const EditorWordWrap = ({ onUpdateWordWrap }: IEditorWordWrap): React.ReactEleme
       abandonmentIcon={
         <IconButton sx={{ pointerEvents: 'none' }}>
           <Iconify
-            width='27px'
+            width='22px'
             icon='material-symbols:wrap-text-rounded'
           />
         </IconButton>
@@ -28,7 +28,6 @@ const EditorWordWrap = ({ onUpdateWordWrap }: IEditorWordWrap): React.ReactEleme
     >
       <Stack
         direction='row'
-        spacing={1}
         alignItems='center'
         justifyContent='center'
       >

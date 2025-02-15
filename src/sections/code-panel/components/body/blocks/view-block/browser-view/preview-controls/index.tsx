@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 
-import { Button, Stack } from '@mui/material'
+import { Button, Divider, Stack } from '@mui/material'
 
 import { Iconify } from '@root/src/components'
+import useIsDesktop from '@root/src/hooks/useIsDesktop'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
@@ -22,6 +23,7 @@ interface PreviewControlsProps {
 
 const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsProps) => {
   const translate = useTranslate()
+  const isDesktop = useIsDesktop()
   const btnStartStop = useMemo(
     () => btnStyles(!!disabled, isRunning ? RUN_COLOR : STOP_COLOR),
     [disabled, isRunning]
@@ -42,6 +44,12 @@ const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsP
           height={18}
         />
       </Button>
+      {!isDesktop ? (
+        <Divider
+          flexItem
+          orientation='vertical'
+        />
+      ) : null}
       <Button
         disabled={disabled}
         sx={btnRefresh}

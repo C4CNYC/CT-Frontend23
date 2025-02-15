@@ -22,4 +22,5 @@ export const COLLAPSE_BOX_SX = {
   whiteSpace: 'pre-wrap',
   overflowY: 'auto',
   padding: '0px 10px',
+  borderBottom: '3px solid #FBDD3F',
 }

@@ -6,11 +6,16 @@ import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
 import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
 import { AnimatePresence, m } from 'framer-motion'
 
+import useIsDesktop from '@root/src/hooks/useIsDesktop'
+import useMobileKeyboard from '@root/src/hooks/useMobileKeyboard'
+
 import PrimaryButtons from './PrimaryButtons'
 import SecondaryButtons from './SecondaryButtons'
 
 export default function QuickKeys() {
   const theme = useTheme()
+  const isDesktop = useIsDesktop()
+  const { isKeyboardOpen, keyboardHeight } = useMobileKeyboard()
 
   const [open, setOpen] = useState<boolean>(false)
   const [isOpenButtons, setIsOpenButtons] = useState<boolean>(false)
@@ -37,7 +42,7 @@ export default function QuickKeys() {
     cursor: 'pointer',
   }
 
-  return (
+  const QuickKey = (
     <>
       <Box
         onClick={handleOpen}
@@ -123,5 +128,20 @@ export default function QuickKeys() {
         </AnimatePresence>
       </Box>
     </>
+  )
+
+  if (isDesktop) return QuickKey
+
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        left: 0,
+        bottom: isKeyboardOpen ? `${Math.abs(keyboardHeight)}px` : 0,
+        transition: 'bottom .2s easy-out',
+      }}
+    >
+      {QuickKey}
+    </Box>
   )
 }

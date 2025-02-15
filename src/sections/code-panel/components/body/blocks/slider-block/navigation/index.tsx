@@ -4,6 +4,7 @@ import { Box, Button, Tooltip, Typography, useTheme } from '@mui/material'
 
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
+import useIsDesktop from '@root/src/hooks/useIsDesktop'
 
 import LessonFeedback from '../../../../footer/lesson-feedback/LessonFeedback'
 
@@ -47,6 +48,7 @@ const Navigation: FC<INavigation> = ({
   const theme = useTheme()
   const [btnNext, setBtnNext] = useState<BtnType>(BtnType.next)
   const translate = useTranslate()
+  const isDesktop = useIsDesktop()
   const nestedBox = useMemo(() => getNestedBoxSx(theme), [theme])
   const tooltipWrapperSx = useMemo(() => getTooltipWrapperSx(theme), [theme])
 
@@ -91,22 +93,24 @@ const Navigation: FC<INavigation> = ({
       dir={theme.direction}
     >
       <Box sx={nestedBox}>
-        <LessonFeedback lessonName={lessonName}>
-          <Button sx={FEEDBACK_BTN_SX}>
-            <FeedbackIcon
-              size={30}
-              color={'#91A5B1'}
-            />
-          </Button>
-        </LessonFeedback>
+        {isDesktop ? (
+          <LessonFeedback lessonName={lessonName}>
+            <Button sx={FEEDBACK_BTN_SX}>
+              <FeedbackIcon
+                size={30}
+                color={'#91A5B1'}
+              />
+            </Button>
+          </LessonFeedback>
+        ) : (
+          <NavigationSpeedDial lessonName={lessonName} />
+        )}
         <NavigationElement
           sx={stylePrev}
           disabled={!hasPrev}
           direction='prev'
           onClick={onPrev}
         />
-
-        <NavigationSpeedDial stepHasValidation={stepHasValidation} />
 
         <Tooltip
           title={

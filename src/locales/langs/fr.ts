@@ -1062,6 +1062,9 @@ const fr = {
   coding_editor: 'ÉDITEUR DE CODAGE :',
   customize: 'PERSONNALISER :',
   reset_lesson: 'Réinitialiser la leçon',
+  reset_lesson_confirm:
+    'Êtes-vous sûr de vouloir réinitialiser la progression et le code saisi pour cette leçon ?',
+  reset_lesson_submit_btn: 'Oui, réinitialiser la progression',
   reset_code: 'Réinitialiser le code',
   intro_tour: 'Visite introductive',
   launch_intro_tour: 'Lancer la visite introductive',

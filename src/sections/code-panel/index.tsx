@@ -6,7 +6,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import type ConfettiType from 'react-confetti/dist/types/Confetti'
-import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
@@ -43,6 +42,7 @@ import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
 import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
+import { FullScreenProvider } from './lib/FullScreenContext'
 
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
   ssr: false,
@@ -75,7 +75,6 @@ export default function CodePanelLayout(): ReactElement | null {
   const dispatch = useDispatch()
   const translate = useTranslate()
   const { user } = useAuthContext()
-  const handle = useFullScreenHandle()
   const { isAuthenticated } = useAuthContext()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -332,7 +331,7 @@ export default function CodePanelLayout(): ReactElement | null {
         <title> CodePanel: CodeTribe </title>
       </Head>
 
-      <FullScreen handle={handle}>
+      <FullScreenProvider>
         {router.query.ai ? (
           <AIGeneratorTour withModals />
         ) : showTour || isShowTour ? (
@@ -348,8 +347,6 @@ export default function CodePanelLayout(): ReactElement | null {
         >
           <CodePanelHeader
             chatComponent={<CodePanelChat />}
-            onHandleFullScreen={handle.active ? handle.exit : handle.enter}
-            isFullScreenView={handle.active}
             language={DEFAULT_LANGUAGE}
             lessonManagerComponent={
               <LessonsManager
@@ -369,7 +366,7 @@ export default function CodePanelLayout(): ReactElement | null {
             onSubmitLesson={onSubmitLesson}
           />
         </Box>
-      </FullScreen>
+      </FullScreenProvider>
 
       {!profile && <SignUpDialog />}
 

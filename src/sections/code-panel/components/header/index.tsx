@@ -13,8 +13,6 @@ import MobileBar from './nav-bar/mobile-bar'
 
 interface ITopPanel {
   chatComponent?: ReactNode | null
-  onHandleFullScreen: () => void
-  isFullScreenView: boolean
   lessonManagerComponent: ReactNode
   language: SupportedLang
   publicPage?: boolean
@@ -22,8 +20,6 @@ interface ITopPanel {
 
 const TopPanel: FC<ITopPanel> = ({
   chatComponent,
-  onHandleFullScreen,
-  isFullScreenView,
   lessonManagerComponent,
   language,
   publicPage = false,
@@ -49,8 +45,6 @@ const TopPanel: FC<ITopPanel> = ({
         <DesktopBar
           language={language}
           chatComponent={chatComponent}
-          onHandleFullScreen={onHandleFullScreen}
-          isFullScreenView={isFullScreenView}
         />
       ) : (
         <MobileBar />

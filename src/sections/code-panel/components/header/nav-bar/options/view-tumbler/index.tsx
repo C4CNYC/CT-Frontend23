@@ -4,22 +4,17 @@ import { IconButton, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
 import { Iconify } from '@/components/iconify'
+import { useFullScreen } from '@root/src/sections/code-panel/lib/FullScreenContext'
 
 interface ViewToomblerProps {
-  isFullScreenView: boolean
   isColumnHidden: boolean
   onChangeColumnVisability: (value: boolean) => void
-  onHandleFullScreen: () => void
 }
 
-const ViewTumbler: FC<ViewToomblerProps> = ({
-  isFullScreenView,
-  isColumnHidden,
-  onChangeColumnVisability,
-  onHandleFullScreen,
-}) => {
+const ViewTumbler: FC<ViewToomblerProps> = ({ isColumnHidden, onChangeColumnVisability }) => {
+  const handle = useFullScreen()
   const columnIcon = isColumnHidden ? 'tabler:columns-3' : 'tabler:columns-1'
-  const screenViewIcon = isFullScreenView ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'
+  const screenViewIcon = handle.active ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'
 
   return (
     <Box
@@ -52,7 +47,7 @@ const ViewTumbler: FC<ViewToomblerProps> = ({
         </IconButton>
       </Tooltip>
 
-      <IconButton onClick={onHandleFullScreen}>
+      <IconButton onClick={handle.active ? handle.exit : handle.enter}>
         <Iconify icon={screenViewIcon} />
       </IconButton>
     </Box>

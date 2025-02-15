@@ -1037,6 +1037,9 @@ const tr = {
   coding_editor: 'KODLAMA EDITÖRÜ:',
   customize: 'ÖZELLEŞTİR:',
   reset_lesson: 'Ders sıfırlama',
+  reset_lesson_confirm:
+    'Bu dersin ilerlemesini ve yazılan kodu sıfırlamak istediğinizden emin misiniz?',
+  reset_lesson_submit_btn: 'Evet, ilerlemeyi sıfırla',
   reset_code: 'Kodu sıfırlama',
   intro_tour: 'Tanıtım Turu',
   launch_intro_tour: 'Tanıtım Turunu Başlat',

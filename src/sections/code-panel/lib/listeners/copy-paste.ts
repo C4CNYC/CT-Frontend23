@@ -10,13 +10,13 @@ export async function copyPaste(view: EditorView, type: string) {
         view.state.selection.ranges[0].from,
         view.state.selection.ranges[0].to
       )
-      navigator.clipboard.writeText(text)
+      navigator?.clipboard?.writeText(text)
     } else {
-      navigator.clipboard.writeText('')
+      navigator?.clipboard?.writeText('')
     }
   }
   if (type === 'paste') {
-    const text = await navigator.clipboard.readText()
+    const text = await navigator?.clipboard?.readText()
     if (text) {
       view.dispatch({
         changes: {

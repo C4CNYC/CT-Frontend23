@@ -24,7 +24,17 @@ const EditorFontSize = ({ onUpdateFontSize }: IEditorFontSize): React.ReactEleme
   }, [fontSize])
 
   return (
-    <BasePreference title={translate('font_size')}>
+    <BasePreference
+      title={translate('font_size')}
+      abandonmentIcon={
+        <IconButton sx={{ pointerEvents: 'none' }}>
+          <Iconify
+            width='22px'
+            icon='bx:font-size'
+          />
+        </IconButton>
+      }
+    >
       <Box
         display='flex'
         alignItems='center'

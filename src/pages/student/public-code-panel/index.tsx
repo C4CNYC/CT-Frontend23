@@ -6,7 +6,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import type ConfettiType from 'react-confetti/dist/types/Confetti'
-import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
 import { animals, colors, uniqueNamesGenerator } from 'unique-names-generator'
 
@@ -32,6 +31,7 @@ import {
   useGetPublicLessonContentQuery,
   useGetPublicLessonQuery,
 } from '@root/src/redux/services/public-student'
+import { FullScreenProvider } from '@root/src/sections/code-panel/lib/FullScreenContext'
 
 const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'), {
   ssr: false,
@@ -80,7 +80,6 @@ const DEFAULT_LANGUAGE = 'html'
 export default function CodePanelPage(): ReactElement | null {
   const dispatch = useDispatch()
   const translate = useTranslate()
-  const handle = useFullScreenHandle()
   const { enqueueSnackbar } = useSnackbar()
   const { query, push, replace } = useRouter()
 
@@ -246,7 +245,7 @@ export default function CodePanelPage(): ReactElement | null {
         <title> CodePanel: CodeTribe </title>
       </Head>
 
-      <FullScreen handle={handle}>
+      <FullScreenProvider>
         {showTour || isShowTour ? <CodePanelTour /> : null}
         <Box
           sx={{
@@ -258,8 +257,6 @@ export default function CodePanelPage(): ReactElement | null {
         >
           <CodePanelHeader
             chatComponent={<CodePanelChat />}
-            onHandleFullScreen={handle.active ? handle.exit : handle.enter}
-            isFullScreenView={handle.active}
             lessonManagerComponent={
               <LessonsManager
                 onChooseLesson={onChooseLesson}
@@ -291,7 +288,7 @@ export default function CodePanelPage(): ReactElement | null {
             }
           />
         </Box>
-      </FullScreen>
+      </FullScreenProvider>
 
       {showConfetti && (
         <Confetti
