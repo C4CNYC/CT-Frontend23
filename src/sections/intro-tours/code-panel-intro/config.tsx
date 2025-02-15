@@ -1,9 +1,7 @@
-import { Box, Button } from '@mui/material'
+import { Box } from '@mui/material'
 import { Step } from 'react-joyride'
 
 import { Image } from '@/components'
-
-import LessonFeedback from '../../code-panel/components/footer/lesson-feedback/LessonFeedback'
 
 export const getTourStepsDesktop = (translate: (key: string) => string): Step[] => [
   {
@@ -134,25 +132,15 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     placement: 'top' as const,
   },
   {
-    target: '.tourStart',
+    target: '.feedback-button',
     title: <div>{translate('intro_tour_step_9_desktop_title')}</div>,
     content: (
-      <Box sx={{ py: 1 }}>
+      <Box sx={{ py: 1, textAlign: 'center' }}>
         {translate('intro_tour_step_9_desktop_subtitle')}
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2 }}>
-          <LessonFeedback lessonName={'Intro tour'}>
-            <Button
-              variant='soft'
-              sx={{ textTransform: 'uppercase' }}
-            >
-              {translate('intro_tour_step_9_desktop_btn')}
-            </Button>
-          </LessonFeedback>
-        </Box>
       </Box>
     ),
     disableBeacon: true,
-    placement: 'center' as const,
+    placement: 'top' as const,
   },
 ]
 
@@ -225,19 +213,14 @@ export const getTourStepsMobile = (translate: (key: string) => string): Step[] =
     placement: 'top' as const,
   },
   {
-    target: '.tourStart',
+    target: '.feedback-button',
     title: <div>{translate('intro_tour_step_7_mobile_title')}</div>,
     content: (
-      <Box sx={{ py: 1 }}>
+      <Box sx={{ py: 1, textAlign: 'center' }}>
         {translate('intro_tour_step_7_mobile_subtitle')}
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <LessonFeedback lessonName={'Intro tour'}>
-            <Button>{translate('intro_tour_step_7_mobile_btn')}</Button>
-          </LessonFeedback>
-        </Box>
       </Box>
     ),
     disableBeacon: true,
-    placement: 'center' as const,
+    placement: 'top' as const,
   },
 ]
