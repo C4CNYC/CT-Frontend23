@@ -40,7 +40,7 @@ const icon = (
   />
 )
 const OPEN_POPOVER_DELAY = 15000
-const CLOSE_POPOVER_DELAY = 4000
+const CLOSE_POPOVER_DELAY = 7000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   user,

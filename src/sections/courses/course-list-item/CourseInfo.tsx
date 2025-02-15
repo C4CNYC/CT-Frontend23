@@ -5,8 +5,9 @@ import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 import { ICourse } from '@/types'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetCoursContentQuery } from '@root/src/redux/services/manager/courses-student'
+import { convertDurationToHours } from '@root/src/utils/convertDurationToHours'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
-import { convertMinsToString } from '@root/src/utils/convertMinsToString'
+import { detectZeroAmount } from '@root/src/utils/detectZeroAmount'
 
 interface Props {
   course: ICourse
@@ -24,14 +25,14 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
       .filter((unit) => unit.active)
       .map((unit) => convertDurationToMins(unit.duration))
       .reduce((acc, unitDuration) => acc + unitDuration, 0) || 30
-
+  const priceIsZero = detectZeroAmount(price)
   return (
     <Stack
       sx={{
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        maxWidth: '450px',
+        maxWidth: priceIsZero ? '300px' : '450px',
         flexWrap: 'wrap',
       }}
     >
@@ -41,7 +42,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           variant='body2'
           sx={{ color: 'inherit' }}
         >
-          {convertMinsToString(minutes, translate('hours'), translate('minutes'))}
+          {convertDurationToHours(minutes, translate('hours'))}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -53,15 +54,17 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           {level}
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <MdCelebration size='18px' />
-        <Typography
-          variant='body2'
-          sx={{ color: 'inherit' }}
-        >
-          {+price.charAt(1) === 0 ? translate('free') : price}
-        </Typography>
-      </Box>
+      {priceIsZero ? null : (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <MdCelebration size='18px' />
+          <Typography
+            variant='body2'
+            sx={{ color: 'inherit' }}
+          >
+            {price}
+          </Typography>
+        </Box>
+      )}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <MdCelebration size='18px' />
         <Typography

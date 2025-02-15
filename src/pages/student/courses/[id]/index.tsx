@@ -1,4 +1,4 @@
-import { Box, Container, Skeleton, Stack } from '@mui/material'
+import { Box, Container, Skeleton } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
@@ -12,7 +12,6 @@ import CourseSidebar from '@/sections/course/course-sidebar'
 import CourseInfo from '@/sections/course/CourseInfo'
 import ModulesListBlock from '@/sections/course/modules-list'
 import { useTranslate } from '@/utils/translateHelper'
-import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 
 CoursePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -58,66 +57,44 @@ export default function CoursePage(): React.ReactElement {
             { name: data?.name ?? translate('course') },
           ]}
         />
-        <Box
-          sx={{
-            minHeight: '100vh',
-          }}
-        >
-          {isLoading || !data ? (
-            <Stack>
-              <Skeleton
-                variant='rounded'
-                sx={{
-                  mb: { sx: '24px', sm: '40px' },
-                  height: {
-                    xs: '954px',
-                    sm: '483px',
-                    md: '400px',
-                  },
-                  width: '100%',
-                }}
-              />
-            </Stack>
-          ) : (
-            <>
+
+        {isLoading || !data ? (
+          <Skeleton
+            variant='rounded'
+            sx={{
+              mb: { sx: '24px', sm: '40px' },
+              height: {
+                xs: '954px',
+                sm: '483px',
+                md: '400px',
+              },
+              width: '100%',
+            }}
+          />
+        ) : (
+          <Box
+            sx={{
+              display: 'grid',
+              gap: { xs: 1, md: 2, lg: 3 },
+              gridTemplateColumns: { xs: 'auto', md: 'auto 250px' },
+            }}
+          >
+            <Box overflow={'hidden'}>
               <CourseInfo course={data} />
-              <Stack
-                sx={{
-                  flexDirection: {
-                    xs: 'column',
-                    sm: 'column',
-                    md: 'column',
-                    lg: 'row',
-                    xl: 'row',
-                  },
-                  gap: { xs: 6, lg: 2, xl: 6 },
-                }}
-              >
-                {data.units?.length ? (
-                  <>
-                    <ModulesListBlock modules={data?.units} />
-                    <CourseSidebar
-                      durationInMins={data.units
-                        .map((unit) => convertDurationToMins(unit.duration))
-                        .reduce((acc, unitDuration) => acc + unitDuration, 0)}
-                      grade='5th-10th Grade'
-                      lessons={data?.total_lessons ?? 0}
-                      level={data?.level ?? '-'}
-                    />
-                  </>
-                ) : (
-                  <Box
-                    width='100%'
-                    display='flex'
-                    justifyContent='center'
-                  >
-                    <EmptyContent title='No modules' />
-                  </Box>
-                )}
-              </Stack>
-            </>
-          )}
-        </Box>
+              {data.units?.length ? (
+                <ModulesListBlock modules={data?.units} />
+              ) : (
+                <EmptyContent
+                  title='No modules'
+                  m='0 auto'
+                />
+              )}
+            </Box>
+            <Box>
+              <CourseSidebar />
+            </Box>
+          </Box>
+        )}
       </Container>
     </>
   )

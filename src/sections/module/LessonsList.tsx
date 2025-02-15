@@ -37,7 +37,6 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
       <Stack
         direction='row'
         alignSelf='flex-end'
-        mr={isMobile ? 0 : -4}
         gap={0.5}
       >
         <Button
@@ -72,6 +71,7 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
           />
         </Button>
       </Stack>
+
       {isList ? (
         lessons.map((l, i) => (
           <LessonItem

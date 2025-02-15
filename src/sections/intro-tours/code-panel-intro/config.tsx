@@ -25,7 +25,12 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
   {
     target: '.instructions',
     title: <div>{translate('intro_tour_step_2_desktop_title')}</div>,
-    content: <div>{translate('intro_tour_step_2_desktop_subtitle')}</div>,
+    content: (
+      <div>
+        <p>{translate('intro_tour_step_2_desktop_subtitle_1')}</p>
+        <p>{translate('intro_tour_step_2_desktop_subtitle_2')}</p>
+      </div>
+    ),
     disableBeacon: true,
     placement: 'right' as const,
   },
@@ -35,7 +40,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/tour_images/challenge.svg'
+          src='/assets/tour_images/challenge.webp'
           alt='challenge preview'
           sx={{ py: 1, minHeight: '260px' }}
         />
@@ -51,7 +56,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/tour_images/controls.svg'
+          src='/assets/tour_images/controls.webp'
           alt='controls preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
@@ -66,15 +71,15 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     title: <div>{translate('intro_tour_step_5_desktop_title')}</div>,
     content: (
       <div>
-        <div>
-          <iframe
-            src='https://giphy.com/embed/7NoNw4pMNTvgc'
-            width='100%'
-            height='100%'
-            frameBorder='0'
-            allowFullScreen
-          ></iframe>
-        </div>
+        <video
+          src='/assets/tour_images/cat_typing.mp4'
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ width: '100%', height: 'auto' }}
+        ></video>
+
         {translate('intro_tour_step_5_desktop_subtitle')}
       </div>
     ),
@@ -87,7 +92,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/tour_images/checkers.svg'
+          src='/assets/tour_images/checkers.webp'
           alt='checkers preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
@@ -103,7 +108,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/tour_images/toolbox.svg'
+          src='/assets/tour_images/toolbox.webp'
           alt='checkers preview'
           sx={{ py: 1, minHeight: '160px' }}
         />
@@ -185,7 +190,7 @@ export const getTourStepsMobile = (translate: (key: string) => string): Step[] =
     content: (
       <div>
         <Image
-          src='/assets/tour_images/challenge.svg'
+          src='/assets/tour_images/challenge.webp'
           alt='challenge preview'
           sx={{ py: 1 }}
         />
@@ -201,7 +206,7 @@ export const getTourStepsMobile = (translate: (key: string) => string): Step[] =
     content: (
       <div>
         <Image
-          src='/assets/tour_images/controls.svg'
+          src='/assets/tour_images/controls.webp'
           alt='controls preview'
           sx={{ py: 1, minHeight: '160px' }}
         />

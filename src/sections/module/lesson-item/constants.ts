@@ -6,6 +6,11 @@ export const getLessonSx = (theme: Theme) => ({
   pr: 3,
   bgcolor: theme.palette.mode === 'light' ? '#fff' : theme.palette.background.paper,
   minHeight: '150px',
+  '&:hover': {
+    cursor: 'pointer',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+  },
+  transition: 'box-shadow 0.3s ease-in-out',
 })
 
 export const getLessonContentSx = (isMobile: boolean) => ({

@@ -49,8 +49,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const onChangeStreamingDocInfo = (doc: CodeDocument) => {
     try {
       setDocument(doc)
-
-      if (autoRun) {
+      if (autoRun && doc?.htmlBody) {
         setBrowserView(doc)
       }
     } catch (error: any) {}

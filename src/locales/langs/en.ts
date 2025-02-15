@@ -457,7 +457,7 @@ const en = {
     'A “Teacher Toolbox” is found within each module with all the resources you will need.',
   courses_pacing_guides_link: 'Pacing Guides',
   courses_standards_alignment_link: 'Standards Alignment',
-  courses_author_and_ranking: 'Author & Ranking',
+  courses_author_and_ranking: 'Author & Reviews',
   courses_brief: 'The Brief',
   courses_teacher_toolbox: 'Teacher Toolbox',
   courses_module_slides: 'Module Slides',
@@ -1295,7 +1295,7 @@ const en = {
   // Remirror Toolbar
   remirror_toolbar_challenge_btn: 'Challenge',
   remirror_toolbar_tools_btn: 'Tools',
-  remirror_toolbar_insert_media_btn: 'Insert media',
+  insert_media_btn: 'Insert media',
   remirror_toolbar_escape_html_btn: 'Escape HTML',
   remirror_toolbar_escape_html_btn_title: 'Escapes HTML in the selection',
   remirror_toolbar_cape_html_btn: 'Cape HTML',
@@ -1348,8 +1348,8 @@ const en = {
   intro_tour_step_1_desktop_title: '💥 The Coding Panel 👩‍💻 💥',
   intro_tour_step_1_desktop_subtitle: 'Here is where all the learning and building happens. 🤩',
   intro_tour_step_2_desktop_title: 'The Slides',
-  intro_tour_step_2_desktop_subtitle: `Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
-        step by step.`,
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
   intro_tour_step_3_desktop_title: 'Challenge Slides',
   intro_tour_step_3_desktop_subtitle: `See a Challenge ⚔️ slide? That means it’s time to code in the editor.`,
   intro_tour_step_4_desktop_title: 'Controls',

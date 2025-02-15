@@ -12,9 +12,9 @@ import {
   ToggleButton,
 } from '@mui/material'
 import { BsAspectRatio } from '@react-icons/all-files/bs/BsAspectRatio'
-import { BsClipboard } from '@react-icons/all-files/bs/BsClipboard'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
+import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
@@ -25,7 +25,6 @@ import {
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
 import { Iconify, Label } from '@root/src/components'
-import { SettingsBtn } from '@root/src/components/remirror-editor/controls-btn'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
@@ -193,13 +192,6 @@ export default function StepContentEditor(): React.ReactElement {
             >
               <BsCodeSlash size='20px' /> {translate('slide_switch_tabs_html')}
             </ToggleButton>
-            <ToggleButton
-              value={LessonContentType.Editable}
-              aria-label='Remirror'
-              sx={{ gap: 1 }}
-            >
-              <BsClipboard size='20px' /> {translate('slide_switch_tabs_remirror')}
-            </ToggleButton>
           </StyledToggleButtonGroup>
           {locked ? <Label color='info'>{translate('slide_content_changed_barge')}</Label> : null}
           <Stack direction='row'>
@@ -209,7 +201,16 @@ export default function StepContentEditor(): React.ReactElement {
               lessonId={lessonId as string}
               defaultTab={0}
             >
-              <SettingsBtn />
+              <Button
+                sx={{
+                  color: '#364954',
+                  gap: 0.8,
+                  fontWeight: 400,
+                }}
+              >
+                <FiSettings size={18} />
+                {translate('settings')}
+              </Button>
             </Preferences>
 
             <LessonSchareModal>

@@ -1,13 +1,10 @@
-import { Button, ToggleButton, Tooltip } from '@mui/material'
+import { Button } from '@mui/material'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
 import { GrTest } from '@react-icons/all-files/gr/GrTest'
 import { IoCode } from '@react-icons/all-files/io5/IoCode'
 import { LuCheckCircle } from '@react-icons/all-files/lu/LuCheckCircle'
 import { MdOutlineTipsAndUpdates } from '@react-icons/all-files/md/MdOutlineTipsAndUpdates'
-import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
-import { useCommands } from '@remirror/react'
 
-import { MediaModal } from '@/sections/dashboard/medias/MediaModal'
 import { useTranslate } from '@/utils/translateHelper'
 
 export const BUTTONS_STYLES = {
@@ -42,23 +39,6 @@ export function SettingsBtn(): React.ReactElement {
       <FiSettings size={18} />
       {translate('settings')}
     </Button>
-  )
-}
-export function MediaBtn(): React.ReactElement {
-  const translate = useTranslate()
-  const commands = useCommands()
-  return (
-    <MediaModal insertImage={commands.insertImage}>
-      <Tooltip title='Media'>
-        <ToggleButton
-          value='left'
-          key='left'
-          sx={{ py: '4px', px: '10px' }}
-        >
-          <TbPhoto size={18} />
-        </ToggleButton>
-      </Tooltip>
-    </MediaModal>
   )
 }
 

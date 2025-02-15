@@ -178,7 +178,7 @@ export default function StepperInfo(): React.ReactElement {
                 },
               }),
             })}
-            defaultValue={'YYYY'}
+            defaultValue={'2010'}
           >
             <MenuItem
               value={'YYYY'}
@@ -188,7 +188,7 @@ export default function StepperInfo(): React.ReactElement {
               YYYY
             </MenuItem>
 
-            {years_list.reverse().map((year) => (
+            {years_list.map((year) => (
               <MenuItem
                 sx={{ '&.MuiMenuItem-root': { fontSize: '1.2rem!important' } }}
                 key={year}
