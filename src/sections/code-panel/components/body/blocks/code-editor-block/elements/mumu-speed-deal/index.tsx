@@ -51,9 +51,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
     courseId = searchParams.get('courseId') || undefined
   }
 
-  const {
-    data: lessonContent,
-  } = useGetLessonContentStudentQuery(
+  const { data: lessonContent } = useGetLessonContentStudentQuery(
     { id: lessonId as string },
     { skip: !lessonId || !profile }
   )
