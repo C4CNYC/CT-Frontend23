@@ -7,9 +7,19 @@ import NextLink from 'next/link'
 
 import { useTranslate } from '@/utils/translateHelper'
 
-interface ICourseSidebarPros {}
+interface ICourseSidebarPros {
+  durationInMins: number
+  level: string
+  lessons: number
+  grade: string
+}
 
-export default function CourseSidebar({}: ICourseSidebarPros): React.ReactElement {
+export default function CourseSidebar({
+  durationInMins,
+  lessons,
+  level,
+  grade,
+}: ICourseSidebarPros): React.ReactElement {
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
   const translate = useTranslate()

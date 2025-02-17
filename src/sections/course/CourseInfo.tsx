@@ -29,7 +29,7 @@ export default function CourseInfo({ course }: ICourseInfoProps): React.ReactEle
 
   const lessonsCount =
     course?.units?.reduce((total, unit) => {
-      return total + unit?.lessons?.length
+      return total + (unit?.lessons?.length || unit?.lessonToUnits?.length || 0)
     }, 0) ?? 0
 
   const ellipsisHandler = () => {
@@ -73,7 +73,8 @@ export default function CourseInfo({ course }: ICourseInfoProps): React.ReactEle
           <Collapse in={open}>{description}</Collapse>
           <Button
             sx={seeMoreBtnStyles}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               setOpen(!open)
             }}
           >
