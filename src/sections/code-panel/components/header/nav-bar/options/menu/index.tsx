@@ -22,7 +22,6 @@ import { useTranslate } from '@/utils/translateHelper'
 import config, { ILinks } from './config'
 import {
   DESKTOP_ANCHOR_ORIGIN,
-  GLOBAL_BOX_STYLES,
   HUMBURGER_SIZE,
   MENU_ICONIFY,
   MENU_ITEM_STYLES,
@@ -38,16 +37,21 @@ interface CustomMultiEvent {
 }
 
 const Menu = (): React.ReactElement => {
-  const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
   const { replace } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const { themeMode } = useSettingsContext()
   const { isAuthenticated, logout } = useAuthContext()
+  const translate = useTranslate()
+  const isDesktop = useIsDesktop()
+
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
+
   const userName = useSelector((state) => state.global.user?.first_name)
   const userId = useSelector((state) => state.global.user?.id)
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
-  const translate = useTranslate()
+
+  const anchorOriginProps = isDesktop ? DESKTOP_ANCHOR_ORIGIN : MOBILE_ANCHOR_ORIGIN
+
   const handleLogout = (): void => {
     try {
       logout()
@@ -80,13 +84,8 @@ const Menu = (): React.ReactElement => {
     )
   }
 
-  const anchorOriginProps = isDesktop ? DESKTOP_ANCHOR_ORIGIN : MOBILE_ANCHOR_ORIGIN
-
   return (
-    <Box
-      sx={!isDesktop ? GLOBAL_BOX_STYLES : null}
-      className='defaultIntroStudentStep3'
-    >
+    <Box className='defaultIntroStudentStep3'>
       <Box
         onClick={handleOpenPopover}
         sx={{ color: palette(themeMode).text.secondary }}

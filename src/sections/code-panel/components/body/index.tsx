@@ -49,8 +49,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const onChangeStreamingDocInfo = (doc: CodeDocument) => {
     try {
       setDocument(doc)
-
-      if (autoRun) {
+      if (autoRun && doc?.htmlBody) {
         setBrowserView(doc)
       }
     } catch (error: any) {
@@ -177,7 +176,8 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
-        validations={lessonContents[slideIndex]?.validations}
+        validations={lessonContents[slideIndex]?.validations || ''}
+        contentId={lessonContents[slideIndex]?.id}
       />
 
       <ViewBlock

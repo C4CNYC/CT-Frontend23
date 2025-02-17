@@ -108,6 +108,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'GET',
       }),
       keepUnusedDataFor: 0,
+      providesTags: ['LastVisitedLessonSlide'],
     }),
     updateStudentLastVisitedSlide: builder.mutation<void, ILastVisitedSlideBody>({
       query: ({ ...body }) => ({
@@ -115,6 +116,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['LastVisitedLessonSlide'],
     }),
     updateStudentLastVisitedData: builder.mutation<void, LastVisitedBody>({
       query: ({ ...body }) => ({

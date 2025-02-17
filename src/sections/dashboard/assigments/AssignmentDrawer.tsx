@@ -22,7 +22,6 @@ import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
-import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
 import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import { useUpdateAssignmentMutation } from '@/redux/services/manager/assignments-manager'
@@ -153,7 +152,10 @@ export default function AssignmentDrawer({
               {translate('description')}:
             </Typography>
             <Box width='100%'>
-              <RHFRemirror name='description' />
+              <RHFTextField
+                name='description'
+                sx={{ width: '100%' }}
+              />
             </Box>
           </ListItem>
           <ListItem>

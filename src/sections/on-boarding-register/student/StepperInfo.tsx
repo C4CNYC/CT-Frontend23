@@ -55,15 +55,15 @@ export default function StepperInfo(): React.ReactElement {
     }
   }
 
-  const curentMonth = methods.watch('mounth')
-  const curentYear = methods.watch('year')
+  const currentMonth = methods.watch('mounth')
+  const currentYear = methods.watch('year')
 
   const getDaysCount = () => {
-    if (schort_month.includes(curentMonth)) {
+    if (schort_month.includes(currentMonth)) {
       return days_list.slice(0, -1)
     }
-    if (curentMonth === 'Feb') {
-      if (leap_years.includes(curentYear)) {
+    if (currentMonth === 'Feb') {
+      if (leap_years.includes(currentYear)) {
         return days_list.slice(0, -2)
       } else {
         return days_list.slice(0, -3)
@@ -178,7 +178,7 @@ export default function StepperInfo(): React.ReactElement {
                 },
               }),
             })}
-            defaultValue={'YYYY'}
+            defaultValue={'2010'}
           >
             <MenuItem
               value={'YYYY'}
@@ -188,7 +188,7 @@ export default function StepperInfo(): React.ReactElement {
               YYYY
             </MenuItem>
 
-            {years_list.reverse().map((year) => (
+            {years_list.map((year) => (
               <MenuItem
                 sx={{ '&.MuiMenuItem-root': { fontSize: '1.2rem!important' } }}
                 key={year}

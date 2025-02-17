@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Button, Collapse, Stack, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Collapse, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
 import { GoTriangleDown } from '@react-icons/all-files/go/GoTriangleDown'
@@ -14,7 +14,6 @@ import { setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
-import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 
 import RocketIcon from '../icons/RocketIcon'
 
@@ -46,6 +45,7 @@ export default function LessonItem({
   const [openDetails, setOpenDetails] = useState(false)
   const [maxDesc, setMaxDesc] = useState(50)
   const descRef = useRef<HTMLElement | null>(null)
+  const btnRef = useRef<HTMLDivElement | null>(null)
 
   const courseId = useRouter().query.id
   const lastLessonProgress = prevLesson?.progress ?? 100
@@ -74,6 +74,21 @@ export default function LessonItem({
     )
   }
 
+  const btnTrigger = (e: React.MouseEvent<HTMLElement>) => {
+    const container = document.getElementById(lesson.id)
+
+    if (!btnRef.current || !container) return
+
+    const button = btnRef.current.querySelector('button, a, div')
+
+    if (!button?.contains(e.target as HTMLElement) && !container.contains(e.target as HTMLElement))
+      return
+
+    if (button instanceof HTMLElement) {
+      button.click()
+    }
+  }
+
   const ellipsisHandler = () => {
     if (descRef.current) {
       return descRef.current.offsetWidth < descRef.current.scrollWidth
@@ -91,7 +106,11 @@ export default function LessonItem({
   }, [])
 
   return (
-    <Stack sx={getLessonSx(theme)}>
+    <Stack
+      sx={getLessonSx(theme)}
+      onClick={btnTrigger}
+      id={lesson.id}
+    >
       <TrainingProgress
         progress={lesson?.progress ?? 0}
         locked={locked}
@@ -100,7 +119,12 @@ export default function LessonItem({
       <Stack>
         <Typography
           variant='h4'
-          mb={1}
+          gutterBottom
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
         >
           {lesson.name}
         </Typography>
@@ -108,8 +132,11 @@ export default function LessonItem({
           variant='body1'
           mb={lesson?.description?.length < maxDesc ? 1 : 0}
           ref={descRef}
-          sx={{ textOverflow: 'ellipsis' }}
-          noWrap
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
         >
           {lesson.description}
         </Typography>
@@ -117,7 +144,8 @@ export default function LessonItem({
           <>
             <Collapse in={openDetails}>{lesson.description}</Collapse>
             <Button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation()
                 setOpenDetails(!openDetails)
               }}
               sx={SEE_MORE_SX}
@@ -152,23 +180,21 @@ export default function LessonItem({
               sx={DURATION_SX}
             >
               <AiOutlineClockCircle size={20} />
-              {convertMinsToString(
-                convertDurationToMins(lesson.duration),
-                translate('hours'),
-                translate('minutes')
-              )}
+              {`${convertDurationToMins(lesson.duration)} ${translate('minutes')}`}
             </Typography>
           </Stack>
-          <LessonItemButton
-            locked={locked}
-            isLastLessonInProgress={isLastLessonInProgress}
-            fetchCodeFromPrevLesson={fetchCodeFromPrevLesson}
-            fetchDefaultCodeFromPrevLesson={fetchDefaultCodeFromPrevLesson}
-            courseId={courseId}
-            unitId={unitId}
-            lesson={lesson}
-            index={index}
-          />
+          <Box ref={btnRef}>
+            <LessonItemButton
+              locked={locked}
+              isLastLessonInProgress={isLastLessonInProgress}
+              fetchCodeFromPrevLesson={fetchCodeFromPrevLesson}
+              fetchDefaultCodeFromPrevLesson={fetchDefaultCodeFromPrevLesson}
+              courseId={courseId}
+              unitId={unitId}
+              lesson={lesson}
+              index={index}
+            />
+          </Box>
         </Stack>
       </Stack>
     </Stack>

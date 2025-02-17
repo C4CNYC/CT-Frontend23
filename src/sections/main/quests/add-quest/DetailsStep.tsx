@@ -4,12 +4,10 @@ import { Avatar, FormGroup, Skeleton, Stack, Typography, useTheme } from '@mui/m
 import { UseFormReturn } from 'react-hook-form'
 
 import { RHFSelect, RHFTextField } from '@/components'
-import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
 import { FilterMode, useFilters } from '@/hooks'
-import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
+import { AssignmentTypes, AssignmentTypesForQuest } from '@/redux/enums/assignment-types.enum'
 import { ICourse, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
-import { InitialDescriptionValueType } from '@/types'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -18,7 +16,6 @@ import { AVATAR_SX, INPUT_TEXT_SX, inputNameStyles, selectStyle } from './consta
 export default function DetailsStep({
   coursesData,
   methods,
-  initialValue,
   initialType,
   initialLesson,
 }: {
@@ -27,7 +24,6 @@ export default function DetailsStep({
     isLoading: boolean
   }
   methods: UseFormReturn<any>
-  initialValue: InitialDescriptionValueType
   initialType: AssignmentTypes | undefined
   initialLesson: string | undefined
 }): React.ReactElement {
@@ -99,10 +95,10 @@ export default function DetailsStep({
               key='empty'
               value='empty'
             ></option>
-            {Object.keys(AssignmentTypes).map((t) => (
+            {Object.keys(AssignmentTypesForQuest).map((t) => (
               <option
-                key={AssignmentTypes[t as keyof typeof AssignmentTypes]}
-                value={AssignmentTypes[t as keyof typeof AssignmentTypes]}
+                key={AssignmentTypesForQuest[t as keyof typeof AssignmentTypesForQuest]}
+                value={AssignmentTypesForQuest[t as keyof typeof AssignmentTypesForQuest]}
               >
                 {t.split('_').join(' ').charAt(0).toUpperCase() +
                   t.split('_').join(' ').slice(1).toLowerCase()}
@@ -136,13 +132,18 @@ export default function DetailsStep({
                 disabled={!data?.length}
                 sx={selectStyle(theme)}
               >
-                {!data?.length && (
+                {!data?.length ? (
                   <option
                     key='empty'
                     value='empty'
                   >
                     {translate('quest_you_dont_have_courses_msg')}
                   </option>
+                ) : (
+                  <option
+                    key='empty'
+                    value='empty'
+                  ></option>
                 )}
                 {data
                   ? data.map((course) => (
@@ -328,10 +329,7 @@ export default function DetailsStep({
         >
           {translate('quest_description')}
         </Typography>
-        <RHFRemirror
-          initialValue={initialValue}
-          name='description'
-        />
+        <RHFTextField name='description' />
       </FormGroup>
     </Stack>
   )

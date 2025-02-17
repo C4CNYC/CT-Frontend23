@@ -1311,7 +1311,7 @@ const fr = {
   // Remirror Toolbar
   remirror_toolbar_challenge_btn: 'Défi',
   remirror_toolbar_tools_btn: 'Outils',
-  remirror_toolbar_insert_media_btn: 'Insérer un média',
+  insert_media_btn: 'Insérer un média',
   remirror_toolbar_escape_html_btn: 'Échapper HTML',
   remirror_toolbar_escape_html_btn_title: 'Échappe le HTML dans la sélection',
   remirror_toolbar_cape_html_btn: 'Couvrir HTML',
@@ -1368,7 +1368,8 @@ const fr = {
   intro_tour_step_1_desktop_subtitle:
     'C’est ici que tout l’apprentissage et la création se passent. 🤩',
   intro_tour_step_2_desktop_title: 'Les Diapositives',
-  intro_tour_step_2_desktop_subtitle: `Ici, vous découvrirez des choses passionnantes 💎💫 qui vous guideront sur quoi coder. ✍🏽 🤖 Suivez simplement étape par étape.`,
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
   intro_tour_step_3_desktop_title: 'Diapositives Défi',
   intro_tour_step_3_desktop_subtitle: `Vous voyez une diapositive Défi ⚔️ ? Cela signifie qu’il est temps de coder dans l’éditeur.`,
   intro_tour_step_4_desktop_title: 'Contrôles',

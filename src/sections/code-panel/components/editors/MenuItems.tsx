@@ -13,13 +13,12 @@ import Preferences from '@/sections/dashboard/lessons/LessonStep/Modals/Preferen
 import Validation from '@/sections/dashboard/lessons/LessonStep/Modals/Validation'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useBoolean } from '@root/src/hooks/useBoolean'
+import { ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import { MediaModal } from '@root/src/sections/dashboard/medias/MediaModal'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { ILessonContent } from '../../redux/services/interfaces/courseUnits.interface'
-import { MenuPopover } from '../menu-popover'
-
 import { BUTTONS_STYLES, ChallengeBtn, PreCodeBtn, SolutionBtn, TipsBtn } from './controls-btn'
+import { MenuPopover } from './MenuPopover'
 
 interface IMenuItems {
   data: ILessonContent & BaseResponseInterface
@@ -160,7 +159,7 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
             <MediaModal insertImage={insertImage}>
               <Button sx={sx}>
                 <TbPhoto size={18} />
-                {translate('remirror_toolbar_insert_media_btn')}
+                {translate('insert_media_btn')}
               </Button>
             </MediaModal>
           </>
