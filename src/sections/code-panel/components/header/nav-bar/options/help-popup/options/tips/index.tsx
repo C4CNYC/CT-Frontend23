@@ -4,7 +4,7 @@ import { Alert, Box, Skeleton } from '@mui/material'
 import { Stack } from '@mui/system'
 
 import { EmptyContent } from '@/components'
-import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetLessonStudentWithoutContentsQuery } from '@/redux/services/manager/lesson-student'
 import { useGetPublicLessonQuery } from '@/redux/services/public-student'
 import { useSelector } from '@/redux/store'
 
@@ -12,7 +12,7 @@ const Tips: FC = () => {
   const profile = useSelector((state) => state.global.user)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const courseId = useSelector((state) => state.codePanelGlobal.courseId)
-  const { data, isLoading } = useGetLessonStudentQuery(
+  const { data, isLoading } = useGetLessonStudentWithoutContentsQuery(
     { id: lessonId as string },
     { skip: !lessonId || !profile }
   )
