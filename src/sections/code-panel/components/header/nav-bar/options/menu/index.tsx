@@ -22,7 +22,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import config, { ILinks } from './config'
 import {
   DESKTOP_ANCHOR_ORIGIN,
-  HUMBURGER_SIZE,
+  HAMBURGER_SIZE,
   MENU_ICONIFY,
   MENU_ITEM_STYLES,
   MENU_ITEM_TYPOGRAFY,
@@ -69,10 +69,10 @@ const Menu = (): React.ReactElement => {
     setOpenPopover(null)
   }
 
-  const getHumburger = (isDesktop: boolean): ReactNode => {
+  const getHamburger = (isDesktop: boolean): ReactNode => {
     return isDesktop ? (
       <Hamburger
-        size={HUMBURGER_SIZE}
+        size={HAMBURGER_SIZE}
         toggled={Boolean(openPopover)}
       />
     ) : (
@@ -90,7 +90,7 @@ const Menu = (): React.ReactElement => {
         onClick={handleOpenPopover}
         sx={{ color: palette(themeMode).text.secondary }}
       >
-        {getHumburger(isDesktop)}
+        {getHamburger(isDesktop)}
       </Box>
 
       <MenuPopover

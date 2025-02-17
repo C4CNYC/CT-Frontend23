@@ -1,8 +1,10 @@
-import { type FC, type ReactNode } from 'react'
+import { type FC } from 'react'
 
 import { Button } from '@mui/material'
 import { Stack } from '@mui/system'
 import dynamic from 'next/dynamic'
+
+import LessonManager from '../lesson-manager'
 
 import LessonFeedback from './lesson-feedback/LessonFeedback'
 import type { MenuProps } from './menu'
@@ -10,17 +12,9 @@ import { type ProgressBottomBarProps } from './progress-bottom-bar'
 
 const Menu = dynamic(async () => await import('./menu'))
 
-export interface CodePanelFooterProps extends ProgressBottomBarProps, MenuProps {
-  lessonManagerComponent: ReactNode
-}
+export interface CodePanelFooterProps extends ProgressBottomBarProps, MenuProps {}
 
-const CodePanelFooter: FC<CodePanelFooterProps> = ({
-  publicPage = false,
-  sliderSteps,
-  language,
-  lessonManagerComponent,
-}) => {
-  // const activeTab = useSelector((state) => state.mobileTabManager.activeTab)
+const CodePanelFooter: FC<CodePanelFooterProps> = ({ publicPage = false, language }) => {
   return (
     <Stack
       pl='20px'
@@ -32,7 +26,7 @@ const CodePanelFooter: FC<CodePanelFooterProps> = ({
       position='relative'
       gap={10}
     >
-      {lessonManagerComponent}
+      <LessonManager />
 
       <LessonFeedback>
         <Button

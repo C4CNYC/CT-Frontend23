@@ -1,13 +1,13 @@
 import { type ReactNode } from 'react'
 
 import { IconButton } from '@mui/material'
-import { MdOutlineNoteAlt } from '@react-icons/all-files/md/MdOutlineNoteAlt'
 import { FullScreenHandle } from 'react-full-screen'
 
 import { Iconify } from '@root/src/components'
 import LessonFeedback from '@root/src/sections/code-panel/components/footer/lesson-feedback/LessonFeedback'
 import SettingDrawer from '@root/src/sections/code-panel/components/header/nav-bar/options/setting-drawer'
 import ResetLessonConfirm from '@root/src/sections/code-panel/components/header/nav-bar/options/setting-drawer/preferences/ResetLessonConfirm'
+import LessonManager from '@root/src/sections/code-panel/components/lesson-manager'
 
 interface Action {
   icon: ReactNode
@@ -64,12 +64,7 @@ export const getActions = ({ lessonName, handle }: IGetActions): Action[] => {
       name: 'Full screen',
     },
     {
-      icon: (
-        <MdOutlineNoteAlt
-          color='#FBDD3F'
-          size='20px'
-        />
-      ),
+      icon: <LessonManager iconColor={'#FBDD3F'} />,
       name: 'Menu',
     },
   ]

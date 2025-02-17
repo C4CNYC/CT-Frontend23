@@ -30,7 +30,6 @@ import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
-import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
@@ -43,6 +42,7 @@ import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
+import { LessonManagerProvider } from './lib/LessonManagerContext'
 
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
   ssr: false,
@@ -63,10 +63,6 @@ const CodePanelHeader = dynamic(
 )
 
 const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
-
-const LessonsManager = dynamic(
-  async () => await import('@/sections/code-panel/components/lesson-manager')
-)
 
 const DEFAULT_LANGUAGE = 'html'
 
@@ -157,25 +153,6 @@ export default function CodePanelLayout(): ReactElement | null {
   const onConfettiComplete = (confetti?: ConfettiType) => {
     setShowConfetti(false)
     confetti?.reset()
-  }
-
-  const onOpenLesson = (lessonId: string, unitId: string): void => {
-    if (!router.query.courseId && !unitId) return
-
-    void router.push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-        courseId: router.query.courseId as string,
-        unitId,
-        lessonId,
-      })
-    )
-  }
-
-  const onChooseLesson = (lessonId: string, unitId: string) => {
-    if (router.query.lessonId === lessonId) return
-
-    window.dispatchEvent(resetLessonEvent)
-    onOpenLesson(lessonId, unitId)
   }
 
   useEffect(() => {
@@ -332,40 +309,38 @@ export default function CodePanelLayout(): ReactElement | null {
       </Head>
 
       <FullScreenProvider>
-        {router.query.ai ? (
-          <AIGeneratorTour withModals />
-        ) : showTour || isShowTour ? (
-          <CodePanelTour />
-        ) : null}
-        <Box
-          sx={{
-            bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
-            position: 'relative',
-            overflow: 'hidden',
-          }}
+        <LessonManagerProvider
+          data={courseContent}
+          isLoading={isLoadingCourseContent}
+          lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
         >
-          <CodePanelHeader
-            chatComponent={<CodePanelChat />}
-            language={DEFAULT_LANGUAGE}
-            lessonManagerComponent={
-              <LessonsManager
-                onChooseLesson={onChooseLesson}
-                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-                data={courseContent}
-                isLoading={isLoadingCourseContent}
-              />
-            }
-          />
-          <CodePanelBody
-            lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-            lessonContents={lessonContent ?? []}
-            user={user?.student_profile}
-            language={DEFAULT_LANGUAGE}
-            onSubmitChallenge={onSubmitChallenge}
-            onSubmitLesson={onSubmitLesson}
-          />
-        </Box>
+          {router.query.ai ? (
+            <AIGeneratorTour withModals />
+          ) : showTour || isShowTour ? (
+            <CodePanelTour />
+          ) : null}
+          <Box
+            sx={{
+              bgcolor: (theme) =>
+                theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            <CodePanelHeader
+              chatComponent={<CodePanelChat />}
+              language={DEFAULT_LANGUAGE}
+            />
+            <CodePanelBody
+              lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+              lessonContents={lessonContent ?? []}
+              user={user?.student_profile}
+              language={DEFAULT_LANGUAGE}
+              onSubmitChallenge={onSubmitChallenge}
+              onSubmitLesson={onSubmitLesson}
+            />
+          </Box>
+        </LessonManagerProvider>
       </FullScreenProvider>
 
       {!profile && <SignUpDialog />}

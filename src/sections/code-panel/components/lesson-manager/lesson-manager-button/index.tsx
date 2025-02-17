@@ -7,14 +7,15 @@ import { type ILesson } from '@/redux/interfaces/content.interface'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { ICON_BTN_SX, GetTypSx, getButtonSx, getSubtitleSx } from './constants'
+import { GetTypSx, getButtonSx, getSubtitleSx } from './constants'
 
 interface LessonManagerButtonProps {
   onOpen: () => void
   lesson?: ILesson & BaseResponseInterface
+  iconColor?: string
 }
 
-const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson }) => {
+const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson, iconColor }) => {
   const theme = useTheme()
   const buttonSx = useMemo(() => getButtonSx(theme), [theme])
   const typSx = useMemo(() => GetTypSx(theme), [theme])
@@ -32,11 +33,11 @@ const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson }) =
         title={translate('lesson_list')}
         placement='top'
       >
-        <IconButton
-          className='lessonsTourMobile'
-          sx={ICON_BTN_SX}
-        >
-          <Iconify icon='iconoir:page' />
+        <IconButton className='lessonsTourMobile'>
+          <Iconify
+            icon='iconoir:page'
+            color={iconColor ?? 'inherit'}
+          />
         </IconButton>
       </Tooltip>
       <Tooltip

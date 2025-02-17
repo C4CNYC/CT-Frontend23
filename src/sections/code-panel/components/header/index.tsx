@@ -7,23 +7,19 @@ import { useSelector } from '@/redux/store'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 import { LogoMin } from '@root/src/components'
 
+import LessonManager from '../lesson-manager'
+
 import GroupHeader from './group-header'
 import DesktopBar from './nav-bar/desktop-bar'
 import MobileBar from './nav-bar/mobile-bar'
 
 interface ITopPanel {
   chatComponent?: ReactNode | null
-  lessonManagerComponent: ReactNode
   language: SupportedLang
   publicPage?: boolean
 }
 
-const TopPanel: FC<ITopPanel> = ({
-  chatComponent,
-  lessonManagerComponent,
-  language,
-  publicPage = false,
-}) => {
+const TopPanel: FC<ITopPanel> = ({ chatComponent, language }) => {
   const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
   const profile = useSelector((state) => state.global.user)
@@ -38,7 +34,7 @@ const TopPanel: FC<ITopPanel> = ({
         gap={2}
       >
         {isDesktop && <LogoMin sx={{ width: 'auto' }} />}
-        {lessonManagerComponent}
+        {isDesktop && <LessonManager />}
       </Box>
       {profile ? <GroupHeader /> : ''}
       {isDesktop ? (
@@ -57,7 +53,7 @@ const getBoxStyles = (isDesktop: boolean): SxProps => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  height: isDesktop ? '50px' : '25px',
+  height: isDesktop ? '50px' : '',
   px: '24px',
 })
 

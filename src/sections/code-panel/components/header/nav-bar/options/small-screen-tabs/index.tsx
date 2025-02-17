@@ -15,7 +15,7 @@ interface ISmallScreenTabs {
 
 const SmallScreenTabs: FC<ISmallScreenTabs> = ({ index, onChangeIndex }) => {
   return (
-    <Box sx={{ m: '0 auto' }}>
+    <Box sx={styles.Box}>
       <Tabs
         aria-label='lesson tabs'
         id='unit-page-tabs'

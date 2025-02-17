@@ -32,6 +32,7 @@ import {
   useGetPublicLessonQuery,
 } from '@root/src/redux/services/public-student'
 import { FullScreenProvider } from '@root/src/sections/code-panel/lib/FullScreenContext'
+import { LessonManagerProvider } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
 const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'), {
   ssr: false,
@@ -54,10 +55,6 @@ const CodePanelHeader = dynamic(
 const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
 
 const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/components/footer'))
-
-const LessonsManager = dynamic(
-  async () => await import('@/sections/code-panel/components/lesson-manager')
-)
 
 interface ILocalUser {
   id: string
@@ -246,48 +243,38 @@ export default function CodePanelPage(): ReactElement | null {
       </Head>
 
       <FullScreenProvider>
-        {showTour || isShowTour ? <CodePanelTour /> : null}
-        <Box
-          sx={{
-            bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
-            position: 'relative',
-            overflow: 'hidden',
-          }}
+        <LessonManagerProvider
+          data={courseContent}
+          isLoading={isLoadingCourseContent}
+          lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
         >
-          <CodePanelHeader
-            chatComponent={<CodePanelChat />}
-            lessonManagerComponent={
-              <LessonsManager
-                onChooseLesson={onChooseLesson}
-                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-                data={courseContent}
-                isLoading={isLoadingCourseContent}
-              />
-            }
-            language={DEFAULT_LANGUAGE}
-          />
-          <CodePanelBody
-            lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-            lessonContents={data ?? []}
-            user={user?.student_profile as ILocalUser}
-            language={DEFAULT_LANGUAGE}
-            onSubmitChallenge={onSubmitChallenge}
-            onSubmitLesson={onSubmitLesson}
-          />
-          <CodePanelFooter
-            language={DEFAULT_LANGUAGE}
-            sliderSteps={data?.length ?? 0}
-            lessonManagerComponent={
-              <LessonsManager
-                onChooseLesson={onChooseLesson}
-                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-                data={courseContent}
-                isLoading={isLoadingCourseContent}
-              />
-            }
-          />
-        </Box>
+          {showTour || isShowTour ? <CodePanelTour /> : null}
+          <Box
+            sx={{
+              bgcolor: (theme) =>
+                theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            <CodePanelHeader
+              chatComponent={<CodePanelChat />}
+              language={DEFAULT_LANGUAGE}
+            />
+            <CodePanelBody
+              lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+              lessonContents={data ?? []}
+              user={user?.student_profile as ILocalUser}
+              language={DEFAULT_LANGUAGE}
+              onSubmitChallenge={onSubmitChallenge}
+              onSubmitLesson={onSubmitLesson}
+            />
+            <CodePanelFooter
+              language={DEFAULT_LANGUAGE}
+              sliderSteps={data?.length ?? 0}
+            />
+          </Box>
+        </LessonManagerProvider>
       </FullScreenProvider>
 
       {showConfetti && (

@@ -34,15 +34,7 @@ interface IHeaderSettings {
 
 const localStorageKey = 'HeadersSettings'
 
-const BaseBlock: FC<IBaseBlock> = ({
-  children,
-  className,
-  title,
-  icon,
-  closeIcon,
-  hideTabsHandler,
-  takeHeaderSettings,
-}) => {
+const BaseBlock: FC<IBaseBlock> = ({ children, className, title, icon, hideTabsHandler }) => {
   const theme = useTheme()
   const storageAvailable = localStorageAvailable()
   const isDesktop = useIsDesktop()
@@ -78,8 +70,6 @@ const BaseBlock: FC<IBaseBlock> = ({
   return (
     <Box
       className={className}
-      flex={'1 1 0px'}
-      position='relative'
       sx={boxStyles}
     >
       <Collapse in={isClosedHeader?.[className]}>

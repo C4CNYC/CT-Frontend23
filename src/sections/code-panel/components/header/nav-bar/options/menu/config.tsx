@@ -1,6 +1,5 @@
 import { PATH_AUTH } from '@/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import InviteFriendsModal from '@/sections/invite-friends/InviteFriendsModal'
 import { UserType } from '@/utils'
 
 import MenuHugDialog from './MenuHugDialog'
@@ -40,10 +39,10 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
     target: '_blank',
   },
   {
-    title: 'gallery',
+    title: 'catalog',
     subTitle: '',
     icon: 'solar:gallery-line-duotone',
-    href: STUDENT_PATH_DASHBOARD.gallery.root,
+    href: STUDENT_PATH_DASHBOARD.courses.root,
   },
   {
     title: 'need_hug',
@@ -55,19 +54,15 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
       </div>
     ),
   },
-  {
-    title: 'sidebar_menu_invite_friends',
-    icon: 'ph:mask-happy',
-    href: ILinks.modal,
-    component: (children, key) => (
-      <div key={key}>
-        <InviteFriendsModal>{children}</InviteFriendsModal>
-      </div>
-    ),
-  },
 ]
 
 export const anonimUserConfig: IMenuConfigItem[] = [
+  {
+    title: 'home',
+    subTitle: '',
+    icon: 'ant-design:home-outlined',
+    href: STUDENT_PATH_DASHBOARD.class.root,
+  },
   {
     title: 'i_brand_new',
     subTitle: 'register',
@@ -79,6 +74,12 @@ export const anonimUserConfig: IMenuConfigItem[] = [
     subTitle: 'login',
     icon: 'mdi:human-hello',
     href: PATH_AUTH.signIn,
+  },
+  {
+    title: 'catalog',
+    subTitle: '',
+    icon: 'solar:gallery-line-duotone',
+    href: STUDENT_PATH_DASHBOARD.courses.root,
   },
   {
     title: 'sidebar_menu_invite_friends',
