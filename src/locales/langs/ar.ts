@@ -1124,6 +1124,7 @@ const ar = {
   update_org_dialog_title: 'تحديث المنظمة',
   create_new_name_label: 'اسم المنظمة',
   create_new_slug_label: 'اسم الرابط',
+  create_new_domain_label: 'نطاق',
   name_validation_msg: 'الاسم مطلوب',
   slug_validation_msg_1:
     'يجب أن يكون الرابط بالخط الصغير، ولا يحتوي على مسافات أو أرقام، ويستخدم الحروف والشرطات فقط',

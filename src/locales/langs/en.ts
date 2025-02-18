@@ -1142,6 +1142,7 @@ const en = {
   update_org_dialog_title: 'Update Organisation',
   create_new_name_label: 'Organisation name',
   create_new_slug_label: 'Slug',
+  create_new_domain_label: 'Domain',
   name_validation_msg: 'Name is reqired',
   slug_validation_msg_1:
     'Slug must be lowercase, contain no spaces or numbers, and only use letters and hyphens',
