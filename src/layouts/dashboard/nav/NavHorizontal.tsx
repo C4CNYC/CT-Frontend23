@@ -20,7 +20,9 @@ interface INavHorizontal {
 function NavHorizontal({ isManager }: INavHorizontal): React.ReactElement {
   const theme = useTheme()
   const user = useSelector((state: RootState) => state.global.user)
-  const menu = isManager ? menuConfig[user?.role as Role] : menuConfig[Role.Student]
+  const menu = isManager
+    ? menuConfig(user?.role as Role)[user?.role as Role]
+    : menuConfig(user?.role as Role)[Role.Student]
 
   return (
     <AppBar

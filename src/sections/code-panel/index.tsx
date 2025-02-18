@@ -18,7 +18,7 @@ import {
 import {
   useGetContentCheckersQuery,
   useGetLessonContentStudentQuery,
-  useGetLessonStudentQuery,
+  useGetLessonStudentWithoutContentsQuery,
 } from '@/redux/services/manager/lesson-student'
 import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
 import {
@@ -117,7 +117,7 @@ export default function CodePanelLayout(): ReactElement | null {
   const isLoadingCourseContent =
     isLoadingAuthCourseContent || isLoadingPublicCourse || isLoadingUnitContent
 
-  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
+  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentWithoutContentsQuery(
     { id: router.query.lessonId as string },
     { skip: !router.query.lessonId }
   )

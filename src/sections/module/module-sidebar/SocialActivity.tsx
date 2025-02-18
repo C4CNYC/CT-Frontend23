@@ -25,7 +25,7 @@ export default function SocialActivity({
         alignSelf: 'flex-end',
         py: 2,
         px: { xs: 3, lg: 4 },
-        gap: { xs: 2, md: 3, lg: 6 },
+        gap: { xs: 2, lg: 3 },
       }}
     >
       <Stack

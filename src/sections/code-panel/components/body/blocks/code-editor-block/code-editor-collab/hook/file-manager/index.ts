@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { ILesson, LessonType } from '@root/src/redux/interfaces/content.interface'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
-import { useGetLessonStudentQuery } from '@root/src/redux/services/manager/lesson-student'
+import { useGetLessonStudentWithoutContentsQuery } from '@root/src/redux/services/manager/lesson-student'
 import {
   useCreateStudentFileMutation,
   useDeleteStudentFileMutation,
@@ -69,7 +69,7 @@ export const useFileManager = (): UseFileManagerReturn => {
     data: lesson,
     isLoading: isLessonLoading,
     isFetching: isLessonFetching,
-  } = useGetLessonStudentQuery({ id: lessonId! }, { skip: !lessonId })
+  } = useGetLessonStudentWithoutContentsQuery({ id: lessonId! }, { skip: !lessonId })
 
   const {
     refetch,
@@ -115,24 +115,12 @@ export const useFileManager = (): UseFileManagerReturn => {
   }, [lessonId, slideId, lesson, sandbox])
 
   const localstorageCode = useMemo(() => {
-    if (!lessonId && !query?.lessonId && isAuthenticated) {
-      return
-    }
-
+    if (!lessonId) return
     return getLocalStorageCode(localStorageKey)
-  }, [
-    query?.lessonId,
-    lessonId,
-    activeFile,
-    slideIndex,
-    searchParams,
-    isAuthenticated,
-    localStorageKey,
-  ])
+  }, [lessonId, localStorageKey])
 
   const unauthFilesList = useMemo(() => {
     if (
-      isAuthenticated ||
       isUnauthFilesFetching ||
       IsUnauthFilesLoading ||
       isLessonLoading ||
@@ -175,7 +163,6 @@ export const useFileManager = (): UseFileManagerReturn => {
   }, [
     unauthFiles,
     localStorageKey,
-    isAuthenticated,
     activeFile,
     isLessonFetching,
     isUnauthFilesFetching,
@@ -183,6 +170,20 @@ export const useFileManager = (): UseFileManagerReturn => {
     lesson,
     slideId,
   ])
+  useEffect(() => {
+    if (!isAuthenticated || !files || !lessonId || !slideId || !localstorageCode) return
+    let file = getLocalStorageFile(localStorageKey, 'default')
+    if (file && file?.body) {
+      killLocalStorageFile(localStorageKey, 'default')
+      createStudentFile({
+        name: file.name,
+        extension: file.extension,
+        lessonId,
+        body: file.body,
+        lessonContentId: slideId,
+      })
+    }
+  }, [isAuthenticated, files, lessonId, slideId, localstorageCode])
 
   const onAddFile = useCallback(
     async (fileName: string): Promise<void> => {
@@ -415,12 +416,44 @@ function getLocalStorageCode(key: string) {
   if (localStorageCodeValue) {
     try {
       const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
-      const code = (docInfo?.htmlBody as unknown as string[])?.join('')
+      const code =
+        (docInfo?.htmlBody as unknown as string[])?.join('') ??
+        (docInfo?.default as unknown as { body?: string })?.body ??
+        ''
       if (code) {
         return code
       }
     } catch (e) {
       return localStorageCodeValue
+    }
+  }
+}
+function getLocalStorageFile(key: string, fileName: string = 'default'): StudentFile | undefined {
+  const localStorageCodeValue = localStorage.getItem(key)
+  if (localStorageCodeValue) {
+    try {
+      const docInfo = JSON.parse(localStorageCodeValue) as Record<string, StudentFile>
+      const file = docInfo?.[fileName] as StudentFile
+      if (file) {
+        return file
+      }
+    } catch (e) {
+      return
+    }
+  }
+}
+function killLocalStorageFile(key: string, fileName: string = 'default'): void {
+  const localStorageCodeValue = localStorage.getItem(key)
+  if (localStorageCodeValue) {
+    try {
+      const docInfo = JSON.parse(localStorageCodeValue) as Record<string, StudentFile>
+      const file = docInfo?.[fileName] as StudentFile
+      if (file) {
+        delete docInfo[fileName]
+        localStorage.setItem(key, JSON.stringify(docInfo))
+      }
+    } catch (e) {
+      return
     }
   }
 }

@@ -29,7 +29,7 @@ export default function CourseInfo({ course }: ICourseInfoProps): React.ReactEle
 
   const lessonsCount =
     course?.units?.reduce((total, unit) => {
-      return total + unit?.lessons?.length
+      return total + (unit?.lessons?.length || unit?.lessonToUnits?.length || 0)
     }, 0) ?? 0
 
   const ellipsisHandler = () => {
@@ -44,47 +44,55 @@ export default function CourseInfo({ course }: ICourseInfoProps): React.ReactEle
 
   return (
     <Stack sx={containerStyles}>
-      <Stack maxWidth='680px'>
-        <Typography
-          variant='h3'
-          pb={2}
-        >
-          {name}
-        </Typography>
-        <Typography
-          variant='subtitle1'
-          sx={{ pb: !open ? 1 : 1 }}
-          ref={descRef}
-          noWrap
-          textOverflow='ellipsis'
-        >
-          {description}
-        </Typography>
-        {ellipsisHandler() ? (
-          <>
-            <Collapse in={open}>{description}</Collapse>
-            <Button
-              sx={seeMoreBtnStyles}
-              onClick={() => {
-                setOpen(!open)
-              }}
-            >
-              {open ? translate('actions_show_less') : translate('actions_see_more')}
-              {open ? (
-                <SlArrowUp style={{ marginLeft: '10px' }} />
-              ) : (
-                <SlArrowDown style={{ marginLeft: '10px' }} />
-              )}
-            </Button>
-          </>
-        ) : null}
+      <Typography
+        variant='h3'
+        sx={{
+          pb: 1,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {name}
+      </Typography>
 
-        <CourseSummarily
-          durationInMinutes={durationInMins || 60}
-          lessonsCount={lessonsCount}
-          level={level}
-        />
-      </Stack>
+      <Typography
+        variant='subtitle1'
+        sx={{
+          pb: !open ? 1 : 1,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+        ref={descRef}
+      >
+        {description}
+      </Typography>
+      {ellipsisHandler() ? (
+        <>
+          <Collapse in={open}>{description}</Collapse>
+          <Button
+            sx={seeMoreBtnStyles}
+            onClick={(e) => {
+              e.stopPropagation()
+              setOpen(!open)
+            }}
+          >
+            {open ? translate('actions_show_less') : translate('actions_see_more')}
+            {open ? (
+              <SlArrowUp style={{ marginLeft: '10px' }} />
+            ) : (
+              <SlArrowDown style={{ marginLeft: '10px' }} />
+            )}
+          </Button>
+        </>
+      ) : null}
+      <CourseSummarily
+        lessonsCount={lessonsCount}
+        level={level}
+        grade='6th-10th Grade'
+        durationInMinutes={durationInMins || 60}
+      />
       <Image
         alt='course cover'
         src={cover ?? '/assets/courses/courseImg.png'}

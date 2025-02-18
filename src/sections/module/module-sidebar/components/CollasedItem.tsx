@@ -7,10 +7,11 @@ import { ImPlus } from '@react-icons/all-files/im/ImPlus'
 interface CollapsedItemProps {
   title: string
   children: React.ReactElement
+  isDefaultOpen?: boolean
 }
 
-const CollapsedItem = ({ title, children }: CollapsedItemProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+const CollapsedItem = ({ title, isDefaultOpen = false, children }: CollapsedItemProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(isDefaultOpen)
 
   const handleOpen = () => {
     setIsOpen(!isOpen)

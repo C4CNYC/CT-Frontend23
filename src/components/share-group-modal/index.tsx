@@ -30,6 +30,7 @@ import { useUpdateClassesSettingsMutation } from '@/redux/services/manager/class
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import OnlyAdmin from '@root/src/auth/OnlyAdmin'
 import { setReadyToStartMainTour } from '@root/src/redux/slices/tour'
 import { useDispatch } from '@root/src/redux/store'
 
@@ -291,25 +292,27 @@ export default function ShareGroupModal({
               >
                 {translate('share_other_ways_to_add')}
               </Typography>
-              <GoogleOAuthProvider
-                clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}
-              >
-                <ClassroomModal schoolId={schoolClass?.school?.id ?? ''}>
-                  <Button
-                    fullWidth
-                    sx={CLASS_ROOM_BTN_SX}
-                  >
-                    <Box
-                      display='flex'
-                      alignItems='center'
+              <OnlyAdmin>
+                <GoogleOAuthProvider
+                  clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}
+                >
+                  <ClassroomModal schoolId={schoolClass?.school?.id ?? ''}>
+                    <Button
+                      fullWidth
+                      sx={CLASS_ROOM_BTN_SX}
                     >
-                      <SiGoogleclassroom size={24} />
-                      <Typography ml={2}>{translate('share_google_classroom')}</Typography>
-                    </Box>
-                    <AiOutlineArrowRight />
-                  </Button>
-                </ClassroomModal>
-              </GoogleOAuthProvider>
+                      <Box
+                        display='flex'
+                        alignItems='center'
+                      >
+                        <SiGoogleclassroom size={24} />
+                        <Typography ml={2}>{translate('share_google_classroom')}</Typography>
+                      </Box>
+                      <AiOutlineArrowRight />
+                    </Button>
+                  </ClassroomModal>
+                </GoogleOAuthProvider>
+              </OnlyAdmin>
               <EmailAddressModal
                 schoolId={schoolClass?.school?.id ?? ''}
                 classId={schoolClass?.id}

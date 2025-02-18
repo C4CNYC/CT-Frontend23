@@ -30,7 +30,9 @@ export default function CatalogLessonDialog({
   return (
     <>
       <Box
-        onClick={() => {
+        onClick={(e: React.MouseEvent<HTMLElement>) => {
+          // e.preventDefault()
+          // e.stopPropagation()
           setOpenDialog(true)
         }}
       >
@@ -38,7 +40,9 @@ export default function CatalogLessonDialog({
       </Box>
       <Dialog
         open={open}
-        onClose={() => {
+        onClose={(e: React.MouseEvent<HTMLElement>) => {
+          // e.preventDefault()
+          // e.stopPropagation()
           setOpenDialog(false)
         }}
         PaperProps={{
@@ -53,7 +57,9 @@ export default function CatalogLessonDialog({
             {title}
           </Typography>
           <IconButton
-            onClick={() => {
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              // e.preventDefault()
+              // e.stopPropagation()
               setOpenDialog(false)
             }}
             sx={CLOSE_DIALOG_ICON_SX}
@@ -65,7 +71,11 @@ export default function CatalogLessonDialog({
           <Button
             color='inherit'
             variant='soft'
-            onClick={confirmClick}
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              // e.preventDefault()
+              // e.stopPropagation()
+              confirmClick()
+            }}
           >
             {confirmText}
           </Button>
@@ -73,7 +83,9 @@ export default function CatalogLessonDialog({
             <Button
               color='info'
               variant='soft'
-              onClick={() => {
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                // e.preventDefault()
+                // e.stopPropagation()
                 setOpenDialog(false)
               }}
             >
