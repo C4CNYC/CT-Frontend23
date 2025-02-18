@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { ILesson, LessonType } from '@root/src/redux/interfaces/content.interface'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
-import { useGetLessonStudentQuery } from '@root/src/redux/services/manager/lesson-student'
+import { useGetLessonStudentWithoutContentsQuery } from '@root/src/redux/services/manager/lesson-student'
 import {
   useCreateStudentFileMutation,
   useDeleteStudentFileMutation,
@@ -69,7 +69,7 @@ export const useFileManager = (): UseFileManagerReturn => {
     data: lesson,
     isLoading: isLessonLoading,
     isFetching: isLessonFetching,
-  } = useGetLessonStudentQuery({ id: lessonId! }, { skip: !lessonId })
+  } = useGetLessonStudentWithoutContentsQuery({ id: lessonId! }, { skip: !lessonId })
 
   const {
     refetch,

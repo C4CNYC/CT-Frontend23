@@ -93,7 +93,7 @@ export interface ILesson {
   progress: number | null
   skills: ISkill[]
   independent?: boolean
-  contents: ILessonContent[]
+  contents?: ILessonContent[]
   type: LessonType
   slug: string
   duration: Duration
