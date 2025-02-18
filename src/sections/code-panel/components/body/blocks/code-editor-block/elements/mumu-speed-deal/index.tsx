@@ -4,7 +4,7 @@ import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography, useTheme } from '
 import { useSearchParams } from 'next/navigation'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetLessonContentStudentQuery } from '@/redux/services/manager/lesson-student'
 import { useGetPublicLessonQuery } from '@/redux/services/public-student'
 import { useSelector } from '@/redux/store'
 import SolutionMobileDialog from '@/sections/code-panel/components/header/nav-bar/options/help-popup/options/solution-mobile-dialog'
@@ -51,7 +51,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
     courseId = searchParams.get('courseId') || undefined
   }
 
-  const { data: studentData } = useGetLessonStudentQuery(
+  const { data: lessonContent } = useGetLessonContentStudentQuery(
     { id: lessonId as string },
     { skip: !lessonId || !profile }
   )
@@ -61,7 +61,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
     { skip: !lessonId || !courseId || !!profile }
   )
 
-  const data = studentData ?? publicData
+  const data = lessonContent ? { contents: lessonContent } : publicData
   const slideTips = data?.contents?.find((ct) => ct.id == contentId)?.tips
 
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)

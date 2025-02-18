@@ -122,7 +122,8 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
                 background: 'none',
               },
             }}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               setOpen(!open)
             }}
           >

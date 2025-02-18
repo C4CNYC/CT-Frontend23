@@ -12,6 +12,7 @@ import CourseSidebar from '@/sections/course/course-sidebar'
 import CourseInfo from '@/sections/course/CourseInfo'
 import ModulesListBlock from '@/sections/course/modules-list'
 import { useTranslate } from '@/utils/translateHelper'
+import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 
 CoursePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -91,7 +92,20 @@ export default function CoursePage(): React.ReactElement {
               )}
             </Box>
             <Box>
-              <CourseSidebar />
+              <CourseSidebar
+                durationInMins={data.units
+                  .map((unit) => convertDurationToMins(unit.duration))
+                  .reduce((acc, unitDuration) => acc + unitDuration, 0)}
+                grade='5th-10th Grade'
+                lessons={
+                  data?.total_lessons ??
+                  data?.units
+                    .map((u) => u?.lessonToUnits?.length || 0)
+                    .reduce((a, l) => (a + l ? l : 0), 0) ??
+                  0
+                }
+                level={data?.level ?? '-'}
+              />
             </Box>
           </Box>
         )}
