@@ -15,9 +15,8 @@ interface Props {
 export default function CourseInfo({ course }: Props): React.ReactElement {
   const { price, total_lessons: totalLessons, level } = course
   const translate = useTranslate()
-  const courseContent = course
   let minutes =
-    [...(courseContent?.units ? courseContent?.units : []), ...(course.units ? course.units : [])]
+    (course.units ? course.units : [])
       .filter((unit) => unit.active)
       .map((unit) => convertDurationToMins(unit.duration))
       .reduce((acc, unitDuration) => acc + unitDuration, 0) || 30
