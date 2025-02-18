@@ -12,10 +12,12 @@ const nextConfig = {
   images: {
     domains: ['devnest.s3.amazonaws.com'],
   },
+  compress: true,
   async headers() {
     return [
       {
         source: '/fonts/:font*',
+        // source: '/(.*).(js|css|png|jpg|jpeg|svg|woff|woff2|ttf|otf)',
         headers: [
           {
             key: 'Cache-Control',
