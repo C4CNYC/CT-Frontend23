@@ -10,6 +10,7 @@ import { useOffSetTop } from '@/hooks/useOffSetTop'
 import { useResponsive } from '@/hooks/useResponsive'
 import { useSelector } from '@/redux/store'
 import { bgBlur } from '@/utils/cssStyles'
+import SchoolSwitcher from '@root/src/components/school-switcher'
 
 import Menu from '../../../sections/code-panel/components/header/nav-bar/options/menu'
 import { HEADER_SIZES, NAV_SIZES } from '../../../theme/consts'
@@ -71,6 +72,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
         justifyContent='flex-end'
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
+        <SchoolSwitcher />
         <ThemeSwitcher />
         <LanguagePopover />
         {user ? <AccountPopover /> : <Menu />}
