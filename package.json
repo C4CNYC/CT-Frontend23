@@ -48,7 +48,6 @@
     "@mui/system": "^5.15.7",
     "@mui/x-date-pickers": "^5.0.9",
     "@next/bundle-analyzer": "^14.1.0",
-    "@next/third-parties": "^15.1.7",
     "@react-hook/resize-observer": "^1.2.6",
     "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v4.12.0/react-icons-all-files-4.12.0.tgz",
     "@react-oauth/google": "^0.11.0",
