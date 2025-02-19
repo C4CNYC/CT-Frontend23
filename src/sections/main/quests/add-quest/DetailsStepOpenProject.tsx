@@ -4,13 +4,11 @@ import { Avatar, FormGroup, Stack, Typography, useTheme } from '@mui/material'
 import { UseFormReturn } from 'react-hook-form'
 
 import { RHFSelect, RHFTextField } from '@/components'
-import { RHFRemirror } from '@/components/hook-form/RHFRemirror'
 import {
   AssignmentProjectCategories,
   AssignmentProjectLanguages,
 } from '@/redux/enums/assignment-types.enum'
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
-import { InitialDescriptionValueType } from '@/types'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -19,7 +17,6 @@ import { AVATAR_SX, INPUT_TEXT_SX, inputNameStyles, selectStyle } from './consta
 export default function DetailsStepOpenProject({
   coursesData,
   methods,
-  initialValue,
   initialCategory,
   initialLanguage,
 }: {
@@ -28,7 +25,6 @@ export default function DetailsStepOpenProject({
     isLoading: boolean
   }
   methods: UseFormReturn<any>
-  initialValue: InitialDescriptionValueType
   initialCategory: AssignmentProjectCategories | undefined
   initialLanguage: string | undefined
 }): React.ReactElement {
@@ -155,10 +151,7 @@ export default function DetailsStepOpenProject({
         >
           {translate('quest_description')}
         </Typography>
-        <RHFRemirror
-          initialValue={initialValue}
-          name='description'
-        />
+        <RHFTextField name='description' />
       </FormGroup>
     </Stack>
   )

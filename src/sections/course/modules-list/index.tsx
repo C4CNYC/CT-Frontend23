@@ -25,7 +25,6 @@ export default function ModulesListBlock({ modules }: ModulesListBlockProps): Re
         py: 4,
         borderRadius: 3,
         gap: 3,
-        flex: 1,
       }}
     >
       {modules?.length

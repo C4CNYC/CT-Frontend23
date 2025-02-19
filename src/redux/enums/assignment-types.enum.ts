@@ -6,6 +6,10 @@ export enum AssignmentTypes {
   EXERCISE = 'exercise',
   MY_CREATIONS = 'my_creations',
 }
+export enum AssignmentTypesForQuest {
+  COURSE = 'course',
+  MY_CREATIONS = 'my_creations',
+}
 export enum AssignmentProjectCategories {
   CREATIVE_PROJECT = 'creative_project',
   RESEARCH_PROJECT = 'research_project',

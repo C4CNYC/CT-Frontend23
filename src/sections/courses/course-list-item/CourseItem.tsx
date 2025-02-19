@@ -35,10 +35,12 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
   }
   return (
     <Stack
+      onClick={redirect}
       sx={{
         background: isLight ? '#ECF4FF' : theme.palette.background.paper,
         borderRadius: '25px',
         color: isLight ? '#212B36' : theme.palette.text.primary,
+        cursor: 'pointer',
         p: {
           xs: '20px 20px 20px 20px',
           sm: '20px 20px 20px 20px',
@@ -120,7 +122,8 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
                 background: 'none',
               },
             }}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               setOpen(!open)
             }}
           >

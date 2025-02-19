@@ -1282,7 +1282,7 @@ const ar = {
   // Remirror Toolbar
   remirror_toolbar_challenge_btn: 'تحدي',
   remirror_toolbar_tools_btn: 'أدوات',
-  remirror_toolbar_insert_media_btn: 'إدراج الوسائط',
+  insert_media_btn: 'إدراج الوسائط',
   remirror_toolbar_escape_html_btn: 'تجاهل HTML',
   remirror_toolbar_escape_html_btn_title: 'يتجاهل HTML في التحديد',
   remirror_toolbar_cape_html_btn: 'إخفاء HTML',
@@ -1330,7 +1330,8 @@ const ar = {
   intro_tour_step_1_desktop_subtitle: 'هنا تحدث كل عملية التعلم والبناء. 🤩',
   intro_tour_step_2_desktop_title: 'الشرائح',
   intro_tour_step_2_desktop_subtitle: `هنا سترى أشياء مثيرة 💎💫 وستخبرك بما عليك برمجته. ✍🏽 🤖 فقط اتبع الخطوات خطوة بخطوة.`,
-  intro_tour_step_3_desktop_title: 'شرائح التحدي',
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
   intro_tour_step_3_desktop_subtitle: `هل ترى شريحة تحدي ⚔️؟ هذا يعني أنه حان وقت البرمجة في المحرر.`,
   intro_tour_step_4_desktop_title: 'عناصر التحكم',
   intro_tour_step_4_desktop_subtitle:

@@ -1,25 +1,11 @@
-import {
-  Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-  Typography,
-  useMediaQuery,
-} from '@mui/material'
+import { Link, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material'
-import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
 import { GrOverview } from '@react-icons/all-files/gr/GrOverview'
 import { IoImageOutline } from '@react-icons/all-files/io5/IoImageOutline'
-import { LuSchool } from '@react-icons/all-files/lu/LuSchool'
-import { MdOutlinePlayLesson } from '@react-icons/all-files/md/MdOutlinePlayLesson'
-import { SiLevelsdotfyi } from '@react-icons/all-files/si/SiLevelsdotfyi'
 import { TbFileCertificate } from '@react-icons/all-files/tb/TbFileCertificate'
 import NextLink from 'next/link'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 
 interface ICourseSidebarPros {
   durationInMins: number
@@ -38,88 +24,39 @@ export default function CourseSidebar({
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
   const translate = useTranslate()
 
+  const CONT_SX = {
+    borderRadius: 1,
+    background:
+      theme.palette.mode === 'light' ? 'rgba(248, 248, 248, 1)' : theme.palette.background.neutral,
+    p: 1,
+    flex: isDesktop ? '0' : '1 0',
+  }
+
   return (
     <Stack
       sx={{
         flexDirection: {
           xs: 'column',
-          sm: 'column',
-          md: 'row',
-          lg: 'column',
-          xl: 'column',
+          sm: 'row',
+          md: 'column',
         },
-        width: { lg: '250px', xl: '300px' },
-        gap: 3,
-        flexShrink: 0,
-        flexGrow: 0,
+        gap: 1,
       }}
     >
-      <Stack
-        sx={{
-          borderRadius: 1,
-          background:
-            theme.palette.mode === 'light'
-              ? 'rgba(248, 248, 248, 1)'
-              : theme.palette.background.neutral,
-          p: 2,
-          flex: isDesktop ? '0' : '1 0',
-        }}
-      >
+      <Stack sx={CONT_SX}>
         <Typography
           variant='h5'
           sx={{
             display: 'flex',
             alignItems: 'center',
             fontWeight: 400,
-            gap: 2,
+            gap: 1,
           }}
         >
           <GrOverview size={25} /> {translate('courses_course_overview')}
         </Typography>
-        <List>
-          <ListItem>
-            <ListItemIcon>
-              <AiOutlineClockCircle size={20} />
-            </ListItemIcon>
-            <ListItemText
-              primary={convertMinsToString(
-                durationInMins,
-                translate('hours'),
-                translate('minutes')
-              )}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <SiLevelsdotfyi size={20} />
-            </ListItemIcon>
-            <ListItemText primary={level} />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <MdOutlinePlayLesson size={20} />
-            </ListItemIcon>
-            <ListItemText primary={`${lessons} Hr`} />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <LuSchool size={20} />
-            </ListItemIcon>
-            <ListItemText primary={grade} />
-          </ListItem>
-        </List>
       </Stack>
-      <Stack
-        sx={{
-          borderRadius: 1,
-          background:
-            theme.palette.mode === 'light'
-              ? 'rgba(248, 248, 248, 1)'
-              : theme.palette.background.neutral,
-          p: 2,
-          flex: isDesktop ? '0' : '1 0',
-        }}
-      >
+      <Stack sx={CONT_SX}>
         <Typography
           variant='h5'
           gutterBottom
@@ -146,17 +83,7 @@ export default function CourseSidebar({
           <TbFileCertificate size={20} /> {translate('courses_sample_certificate')}
         </Typography>
       </Stack>
-      <Stack
-        sx={{
-          borderRadius: 1,
-          background:
-            theme.palette.mode === 'light'
-              ? 'rgba(248, 248, 248, 1)'
-              : theme.palette.background.neutral,
-          p: 2,
-          flex: isDesktop ? '0 0' : '1 0',
-        }}
-      >
+      <Stack sx={CONT_SX}>
         <Typography
           variant='h5'
           gutterBottom
@@ -164,7 +91,7 @@ export default function CourseSidebar({
             display: 'flex',
             alignItems: 'center',
             fontWeight: 400,
-            gap: 2,
+            gap: 1,
           }}
         >
           <IoImageOutline size={25} /> {translate('courses_for_teachers')}

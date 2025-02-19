@@ -137,6 +137,11 @@ export const courses = {
       icon: <FaUserFriends size={20} />,
       component: () => <CatalogMenuItem />,
     },
+  ],
+}
+export const market_sandbox = {
+  subheader: '',
+  items: [
     {
       path: '',
       title: 'sidebar_menu_market',
@@ -222,12 +227,23 @@ export const socials = {
   items: [],
 }
 
-export const menuConfig = {
-  [Role.SuperAdmin]: [superAdmin, admin, managment, content],
-  [Role.Owner]: [admin, managment, content],
-  [Role.Admin]: [owner, admin, managment, content],
-  [Role.Student]: [courses, general, apps],
-  [Role.Anonymous]: [courses, general, apps],
-  [Role.Manager]: [managment, content],
-  [Role.Editor]: [content],
-}
+export const menuConfig = (currentRole: Role) =>
+  currentRole == Role.Admin || currentRole == Role.SuperAdmin
+    ? {
+        [Role.SuperAdmin]: [superAdmin, admin, managment, content],
+        [Role.Owner]: [admin, managment, content],
+        [Role.Admin]: [admin, managment, content, market_sandbox],
+        [Role.Student]: [courses, general, apps],
+        [Role.Anonymous]: [courses, general, apps],
+        [Role.Manager]: [managment, content],
+        [Role.Editor]: [content],
+      }
+    : {
+        [Role.SuperAdmin]: [superAdmin, admin, managment, content],
+        [Role.Owner]: [admin, managment, content],
+        [Role.Admin]: [admin, managment, content, market_sandbox],
+        [Role.Student]: [courses, general, apps],
+        [Role.Anonymous]: [courses, general, apps],
+        [Role.Manager]: [managment, content],
+        [Role.Editor]: [content],
+      }

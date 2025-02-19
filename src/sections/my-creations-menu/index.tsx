@@ -7,6 +7,7 @@ import {
   useCreateByCloningLessonMutation,
   useCreateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
+import OnlyAdmin from '@root/src/auth/OnlyAdmin'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
@@ -129,20 +130,22 @@ export default function MyCreationsMenu(): React.ReactElement {
           anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
           transformOrigin={{ vertical: 'center', horizontal: 'left' }}
         >
-          <AiGenerateLessonDialog>
-            <MenuItem sx={{ justifyContent: 'space-between' }}>
-              {translate('sidebar_menu_my_creations_item_1')}
-              <ListItemIcon sx={{ pl: 2, mr: -2 }}>
-                <Iconify
-                  icon='mingcute:ai-line'
-                  color='#FBDD3F'
-                />
-              </ListItemIcon>
-            </MenuItem>
-          </AiGenerateLessonDialog>
-          <SelectTemplateDialog>
-            <MenuItem>{translate('sidebar_menu_my_creations_item_8')}</MenuItem>
-          </SelectTemplateDialog>
+          <OnlyAdmin>
+            <AiGenerateLessonDialog>
+              <MenuItem sx={{ justifyContent: 'space-between' }}>
+                {translate('sidebar_menu_my_creations_item_1')}
+                <ListItemIcon sx={{ pl: 2, mr: -2 }}>
+                  <Iconify
+                    icon='mingcute:ai-line'
+                    color='#FBDD3F'
+                  />
+                </ListItemIcon>
+              </MenuItem>
+            </AiGenerateLessonDialog>
+            <SelectTemplateDialog>
+              <MenuItem>{translate('sidebar_menu_my_creations_item_8')}</MenuItem>
+            </SelectTemplateDialog>
+          </OnlyAdmin>
           <MenuItem
             onClick={async () => {
               await createByCloningLessonHandler()
@@ -170,49 +173,53 @@ export default function MyCreationsMenu(): React.ReactElement {
           >
             {translate('sidebar_menu_my_creations_item_4')}
           </MenuItem>
-          <DiamondFeatureModal>
-            <MenuItem sx={{ justifyContent: 'space-between' }}>
-              {translate('sidebar_menu_my_creations_item_5')}
-              <ListItemIcon sx={{ pl: 2, mr: -2 }}>
-                <Iconify
-                  icon='ion:diamond-outline'
-                  color='#43D4DD'
-                />
-              </ListItemIcon>
-            </MenuItem>
-          </DiamondFeatureModal>
-          <DiamondFeatureModal>
-            <MenuItem sx={{ justifyContent: 'space-between' }}>
-              {translate('sidebar_menu_my_creations_item_6')}
-              <ListItemIcon
-                sx={{
-                  pl: 2,
-                  mr: -2,
-                }}
-              >
-                <Iconify
-                  icon='ion:diamond-outline'
-                  color='#43D4DD'
-                />
-              </ListItemIcon>
-            </MenuItem>
-          </DiamondFeatureModal>
-          <DiamondFeatureModal>
-            <MenuItem sx={{ justifyContent: 'space-between' }}>
-              {translate('sidebar_menu_my_creations_item_7')}
-              <ListItemIcon
-                sx={{
-                  pl: 2,
-                  mr: -2,
-                }}
-              >
-                <Iconify
-                  icon='ion:diamond-outline'
-                  color='#43D4DD'
-                />
-              </ListItemIcon>
-            </MenuItem>
-          </DiamondFeatureModal>
+          <OnlyAdmin>
+            <DiamondFeatureModal>
+              <MenuItem sx={{ justifyContent: 'space-between' }}>
+                {translate('sidebar_menu_my_creations_item_5')}
+                <ListItemIcon sx={{ pl: 2, mr: -2 }}>
+                  <Iconify
+                    icon='ion:diamond-outline'
+                    color='#43D4DD'
+                  />
+                </ListItemIcon>
+              </MenuItem>
+            </DiamondFeatureModal>
+          </OnlyAdmin>
+          <OnlyAdmin>
+            <DiamondFeatureModal>
+              <MenuItem sx={{ justifyContent: 'space-between' }}>
+                {translate('sidebar_menu_my_creations_item_6')}
+                <ListItemIcon
+                  sx={{
+                    pl: 2,
+                    mr: -2,
+                  }}
+                >
+                  <Iconify
+                    icon='ion:diamond-outline'
+                    color='#43D4DD'
+                  />
+                </ListItemIcon>
+              </MenuItem>
+            </DiamondFeatureModal>
+            <DiamondFeatureModal>
+              <MenuItem sx={{ justifyContent: 'space-between' }}>
+                {translate('sidebar_menu_my_creations_item_7')}
+                <ListItemIcon
+                  sx={{
+                    pl: 2,
+                    mr: -2,
+                  }}
+                >
+                  <Iconify
+                    icon='ion:diamond-outline'
+                    color='#43D4DD'
+                  />
+                </ListItemIcon>
+              </MenuItem>
+            </DiamondFeatureModal>
+          </OnlyAdmin>
         </MenuPopover>
       </RoleBasedGuard>
     </>

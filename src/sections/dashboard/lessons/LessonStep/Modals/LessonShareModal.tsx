@@ -13,6 +13,7 @@ import {
   Link,
 } from '@mui/material'
 import { Box } from '@mui/system'
+import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -122,7 +123,9 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             {translate('share_modal_assign_class')}
           </Typography>
           <Button
-            onClick={() => push(STUDENT_PATH_DASHBOARD.class.root)}
+            component={NextLink}
+            href={STUDENT_PATH_DASHBOARD.class.root}
+            target='_blank'
             fullWidth
             sx={CREATE_QUEST_BTN_SX}
           >
