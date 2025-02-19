@@ -9,7 +9,7 @@ export const DEFAULT_TAKE_PER_PAGE = 10
 
 const defaultFilter: BaseSearchInterface = {
   page: 1,
-  take: 5,
+  take: DEFAULT_TAKE_PER_PAGE,
 }
 
 export enum FilterMode {

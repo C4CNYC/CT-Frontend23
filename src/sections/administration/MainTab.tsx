@@ -14,6 +14,7 @@ import {
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { FormValuesProps } from './constants'
+import { DomainFields } from './DomainFields'
 
 interface MainTabProps {
   handleClose: () => void
@@ -33,6 +34,9 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
       .matches(/^[a-z0-9-]+$/, translate('slug_validation_msg_1'))
       .transform((value) => (value ? value.toLowerCase().trim() : value))
       .required('slug_validation_msg_2'),
+    domain: Yup.string()
+      .transform((value) => ',' + value.join(',') + ',')
+      .required('domain_validation_msg'),
     home_page_type: Yup.mixed<HomePageType>()
       .oneOf(Object.values(HomePageType), translate('home_page_type_validation_msg'))
       .required(translate('home_page_type_required_msg')),
@@ -43,23 +47,25 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
     defaultValues: {
       name: org?.name,
       slug: org?.slug,
+      domain: org?.domain?.split(',').filter(Boolean) ?? [],
       home_page_type: org?.home_page_type ?? HomePageType.Default,
     },
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
+      let domain = Array.isArray(data.domain) ? data.domain.join(',') : data.domain || ''
       if (org) {
-        await updateOrg({ id: org.id, ...data }).unwrap()
+        await updateOrg({ id: org.id, ...data, domain }).unwrap()
         enqueueSnackbar(translate('messages_update_success'))
       } else {
-        await createOrg(data).unwrap()
+        await createOrg({ ...data, domain }).unwrap()
         enqueueSnackbar(translate('messages_create_success'))
         methods.reset()
         handleClose()
       }
     } catch (e: any) {
-      enqueueSnackbar(e.data.message ?? translate('message_error'), { variant: 'error' })
+      enqueueSnackbar(e?.data?.message ?? translate('message_error'), { variant: 'error' })
     }
   }
 
@@ -84,6 +90,7 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
             label={translate('create_new_slug_label')}
             required
           />
+          <DomainFields />
           <RHFSelect
             name='home_page_type'
             native
