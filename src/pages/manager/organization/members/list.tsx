@@ -13,6 +13,7 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -44,7 +45,6 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { UserTableRow, UserTableToolbar } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { useTranslate } from '@/utils/translateHelper'
-
 const STATUS_OPTIONS = ['all']
 
 const TABLE_HEAD = [
@@ -234,7 +234,7 @@ export default function UserListPage(): React.ReactElement {
                       color='primary'
                       onClick={handleOpenConfirm}
                     >
-                      <Iconify icon='eva:trash-2-outline' />
+                      <FiTrash2 />
                     </IconButton>
                   </Tooltip>
                 }

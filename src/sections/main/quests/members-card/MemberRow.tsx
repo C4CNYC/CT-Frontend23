@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Avatar, Checkbox, IconButton, MenuItem, Stack, TableCell, TableRow } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { useRouter } from 'next/router'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { ConfirmDialog, Iconify, MenuPopover, useSnackbar } from '@/components'
+import { ConfirmDialog, MenuPopover, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import { useUpdateClassPendingMutation } from '@/redux/services/manager/students-manager'
 import { useTranslate } from '@/utils/translateHelper'
-
 interface IMemberRowProps {
   row: IStudent
   selected: boolean
@@ -124,7 +126,7 @@ export default function MemberRow({
               color={openPopover ? 'inherit' : 'default'}
               onClick={handleOpenPopover}
             >
-              <Iconify icon='eva:more-vertical-fill' />
+              <CgMoreVerticalAlt />
             </IconButton>
           </RoleBasedGuard>
         </TableCell>
@@ -143,7 +145,7 @@ export default function MemberRow({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
 
@@ -153,7 +155,7 @@ export default function MemberRow({
             handleClosePopover()
           }}
         >
-          <Iconify icon='eva:edit-fill' />
+          <GoPencil />
           {translate('actions_edit')}
         </MenuItem>
       </MenuPopover>

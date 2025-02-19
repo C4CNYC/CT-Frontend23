@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Avatar, Checkbox, IconButton, MenuItem, Stack, TableCell, TableRow } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
@@ -137,7 +139,7 @@ export default function ClassesTableRow({
               setOpenPopover(e.currentTarget)
             }}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <CgMoreVerticalAlt />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -185,7 +187,7 @@ export default function ClassesTableRow({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

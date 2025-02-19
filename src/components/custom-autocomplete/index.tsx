@@ -8,6 +8,7 @@ import Button from '@mui/material/Button'
 import InputAdornment from '@mui/material/InputAdornment'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
 import { Iconify } from '@/components/iconify'
 import { useFilters } from '@/hooks'
@@ -116,7 +117,7 @@ export function CustomAutocomplete({
         color='error'
         sx={{ flexShrink: 0, marginLeft: 2, px: 2 }}
         onClick={onReset}
-        startIcon={<Iconify icon='eva:trash-2-outline' />}
+        startIcon={<FiTrash2 />}
       >
         {translate('actions_clear')}
       </Button>

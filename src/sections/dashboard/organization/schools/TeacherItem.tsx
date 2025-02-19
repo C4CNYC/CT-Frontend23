@@ -9,11 +9,11 @@ import {
   MenuItem,
   Tooltip,
 } from '@mui/material'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
 import { Iconify, MenuPopover } from '@/components'
 import { IUser } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
-
 interface Props {
   person: IUser & BaseResponseInterface
   handleDeleteTeacher: () => void
@@ -87,7 +87,7 @@ export default function TeacherItem({
             }}
             sx={{ color: 'error.main' }}
           >
-            <Iconify icon='eva:trash-2-outline' />
+            <FiTrash2 />
             Remove
           </MenuItem>
         </>

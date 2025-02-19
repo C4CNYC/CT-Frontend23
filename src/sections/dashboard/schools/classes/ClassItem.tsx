@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
 import { Avatar, Button, ListItem, ListItemAvatar, ListItemText, MenuItem } from '@mui/material'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { useSnackbar } from 'notistack'
 
 import { Iconify, MenuPopover } from '@/components'
@@ -132,7 +134,7 @@ export default function ClassItem({
             }}
           >
             <MenuItem>
-              <Iconify icon='eva:edit-fill' />
+              <GoPencil />
               {translate('actions_edit')}
             </MenuItem>
           </AddClassDialog>
@@ -143,7 +145,7 @@ export default function ClassItem({
             }}
             sx={{ color: 'error.main' }}
           >
-            <Iconify icon='eva:trash-2-outline' />
+            <FiTrash2 />
             {translate('actions_remove')}
           </MenuItem>
         </>

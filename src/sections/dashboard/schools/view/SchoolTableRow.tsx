@@ -2,9 +2,11 @@ import { useState } from 'react'
 
 import { Avatar, Button, Divider, IconButton, MenuItem, TableCell, TableRow } from '@mui/material'
 import { BiDotsVerticalRounded } from '@react-icons/all-files/bi/BiDotsVerticalRounded'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { enqueueSnackbar } from 'notistack'
 
-import { ConfirmDialog, Iconify, Label, MenuPopover } from '@/components'
+import { ConfirmDialog, Label, MenuPopover } from '@/components'
 import { useArchiveSchoolMutation } from '@/redux/services/admin/school-amdin'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
 import { useTranslate } from '@/utils/translateHelper'
@@ -118,7 +120,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           }}
         >
           <>
-            <Iconify icon='eva:edit-fill' />
+            <GoPencil />
             {translate('actions_edit')}
           </>
         </MenuItem>
@@ -131,7 +133,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_archive')}
         </MenuItem>
       </MenuPopover>

@@ -2,8 +2,10 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Box, Card, IconButton, MenuItem, Stack } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
-import { ConfirmDialog, Iconify, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
+import { ConfirmDialog, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { ITask } from '@/redux/services/interfaces/task.interface'
 import { useDeleteTaskMutation } from '@/redux/services/manager/tasks-manager'
 import CreateCodeDialog from '@/sections/dashboard/tasks/CodeDialog'
@@ -78,7 +80,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
             color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <CgMoreVerticalAlt />
           </IconButton>
         </Stack>
         <CreateCodeDialog
@@ -131,7 +133,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>
