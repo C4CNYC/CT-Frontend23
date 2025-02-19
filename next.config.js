@@ -4,7 +4,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const nextConfig = {
   i18n: {
-    // locales: ["en", "ar", "es", "pt", "fr", "vn"],
     locales: ['en'],
     defaultLocale: 'en',
   },
@@ -17,7 +16,6 @@ const nextConfig = {
     return [
       {
         source: '/fonts/:font*',
-        // source: '/(.*).(js|css|png|jpg|jpeg|svg|woff|woff2|ttf|otf)',
         headers: [
           {
             key: 'Cache-Control',

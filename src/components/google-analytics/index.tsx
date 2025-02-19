@@ -1,4 +1,4 @@
-import { GoogleTagManager } from '@next/third-parties/google'
+import Script from 'next/script'
 
 declare global {
   interface Window {
@@ -9,8 +9,7 @@ declare global {
 export default function GoogleAnalytics(): React.ReactElement {
   return (
     <>
-      <GoogleTagManager gtmId='G-7F2RYWZ875' />
-      {/* <Script
+      <Script
         src={`https://www.googletagmanager.com/gtag/js?id=G-7F2RYWZ875`}
         strategy='afterInteractive'
       />
@@ -37,7 +36,7 @@ export default function GoogleAnalytics(): React.ReactElement {
 
           gtag('config', 'G-7F2RYWZ875');
         `}
-      </Script> */}
+      </Script>
     </>
   )
 }

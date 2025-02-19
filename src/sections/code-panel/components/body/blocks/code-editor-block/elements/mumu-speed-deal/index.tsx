@@ -39,12 +39,12 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
   const [speedDeal, setSpeedDial] = useState<boolean>(false)
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null)
 
+  const [isVisible, setIsVisible] = useState(false)
+  const speedDialRef = useRef(null)
+
   let lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   let courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const profile = useSelector((state) => state.global.user)
-
-  const [isVisible, setIsVisible] = useState(false)
-  const speedDialRef = useRef(null)
 
   if (!lessonId) {
     lessonId = searchParams.get('lessonId') || undefined
