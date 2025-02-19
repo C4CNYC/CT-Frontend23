@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useRef } from 'react'
 
-import _ from 'lodash'
+import omitBy from 'lodash/omitBy'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
@@ -15,7 +15,7 @@ const CodePanelLayout = dynamic(async () => await import('@root/src/sections/cod
 })
 
 const buildQueryFromObject = (query: Record<string, string>) => {
-  return Object.keys(_.omitBy(query, (value) => !value))
+  return Object.keys(omitBy(query, (value) => !value))
     .map((key) => `${key}=${query[key]}`)
     .join('&')
 }
