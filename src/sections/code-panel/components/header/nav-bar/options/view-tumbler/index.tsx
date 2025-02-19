@@ -2,9 +2,10 @@ import { type FC } from 'react'
 
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { IoExpandOutline } from 'react-icons/io5'
-import { LiaCompressArrowsAltSolid } from 'react-icons/lia'
-import { TbColumns3, TbColumns1 } from 'react-icons/tb'
+import { IoExpandOutline } from '@react-icons/all-files/io5/IoExpandOutline'
+import { LiaCompressArrowsAltSolid } from '@react-icons/all-files/lia/LiaCompressArrowsAltSolid'
+import { TbColumns1 } from '@react-icons/all-files/tb/TbColumns1'
+import { TbColumns3 } from '@react-icons/all-files/tb/TbColumns3'
 interface ViewToomblerProps {
   isFullScreenView: boolean
   isColumnHidden: boolean

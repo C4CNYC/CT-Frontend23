@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { TfiReload } from '@react-icons/all-files/tfi/TfiReload'
 import { MuiColorInput, matchIsValidColor } from 'mui-color-input'
-import { TfiReload } from 'react-icons/tfi'
 
 import { useTranslate } from '@/utils/translateHelper'
 

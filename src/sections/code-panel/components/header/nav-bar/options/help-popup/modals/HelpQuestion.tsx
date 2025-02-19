@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Button, Dialog, DialogActions, DialogContent, TextField, Typography } from '@mui/material'
-import { IoIosSend } from 'react-icons/io'
+import { IoIosSend } from '@react-icons/all-files/io/IoIosSend'
 interface IHelpQuestion {
   children: React.ReactElement
 }

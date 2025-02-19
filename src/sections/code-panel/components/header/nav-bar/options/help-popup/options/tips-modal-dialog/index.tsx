@@ -12,8 +12,8 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { MdOutlineTipsAndUpdates } from '@react-icons/all-files/md/MdOutlineTipsAndUpdates'
-import { IoClose } from 'react-icons/io5'
 
 import { EmptyContent } from '@/components'
 

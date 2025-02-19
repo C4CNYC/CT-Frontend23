@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { FaMinus } from 'react-icons/fa'
-import { FaPlus } from 'react-icons/fa6'
+import { FaMinus } from '@react-icons/all-files/fa/FaMinus'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 
 import { useTranslate } from '@/utils/translateHelper'
 

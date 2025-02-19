@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
 import { Collapse, IconButton, List, ListItem, Stack, Typography } from '@mui/material'
+import { FaChevronUp } from '@react-icons/all-files/fa/FaChevronUp'
+import { FaChevronDown } from '@react-icons/all-files/fa6/FaChevronDown'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import Image from 'next/image'
 import { useSnackbar } from 'notistack'
-import { FaChevronUp } from 'react-icons/fa'
-import { FaChevronDown, FaPlus } from 'react-icons/fa6'
 
 import { useCreateClassMutation, useGetClassListQuery } from '@/redux/services/admin/school-amdin'
 import {

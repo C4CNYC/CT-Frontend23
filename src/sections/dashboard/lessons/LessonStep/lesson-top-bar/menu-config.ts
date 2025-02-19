@@ -1,8 +1,8 @@
-import { IconType } from 'react-icons'
-import { FaRunning } from 'react-icons/fa'
-import { IoIosLogOut } from 'react-icons/io'
-import { IoCloseOutline } from 'react-icons/io5'
-import { SlSpeedometer } from 'react-icons/sl'
+import { IconType } from '@react-icons/all-files'
+import { FaRunning } from '@react-icons/all-files/fa/FaRunning'
+import { IoIosLogOut } from '@react-icons/all-files/io/IoIosLogOut'
+import { IoCloseOutline } from '@react-icons/all-files/io5/IoCloseOutline'
+import { SlSpeedometer } from '@react-icons/all-files/sl/SlSpeedometer'
 
 import { STUDENT_PATH_DASHBOARD, STUDENT_PATH_PAGE } from '@/routes/student.paths'
 interface IMenuConfigItem {

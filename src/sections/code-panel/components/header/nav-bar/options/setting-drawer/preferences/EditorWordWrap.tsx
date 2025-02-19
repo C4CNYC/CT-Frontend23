@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { IconButton, Stack, Switch, Typography } from '@mui/material'
-import { MdOutlineWrapText } from 'react-icons/md'
+import { MdOutlineWrapText } from '@react-icons/all-files/md/MdOutlineWrapText'
 
 import { useTranslate } from '@/utils/translateHelper'
 

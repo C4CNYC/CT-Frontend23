@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Button, Stack, Typography } from '@mui/material'
-import { RiResetLeftFill } from 'react-icons/ri'
+import { GrPowerReset } from '@react-icons/all-files/gr/GrPowerReset'
 
 import { useTranslate } from '@/utils/translateHelper'
 import { ConfirmDialog } from '@root/src/components'
@@ -31,7 +31,7 @@ const ResetCode = ({ onReset }: IResetCode): React.ReactElement => {
           variant='contained'
           sx={{ gap: 1 }}
         >
-          <RiResetLeftFill size={18} />
+          <GrPowerReset size={18} />
           {translate('reset_code')}
         </Button>
       </BasePreference>

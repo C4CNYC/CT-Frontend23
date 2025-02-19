@@ -10,7 +10,7 @@ import {
   useTheme,
 } from '@mui/material'
 import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
-import { IoClose } from 'react-icons/io5'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'

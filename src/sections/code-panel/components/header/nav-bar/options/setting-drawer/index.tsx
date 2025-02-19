@@ -3,7 +3,7 @@ import { useState } from 'react'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { IconButton, Stack, SwipeableDrawer, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { IoSettingsOutline } from 'react-icons/io5'
+import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
 import { useDispatch } from 'react-redux'
 
 import { setSlideIndex } from '@/redux/slices/code-panel-global'

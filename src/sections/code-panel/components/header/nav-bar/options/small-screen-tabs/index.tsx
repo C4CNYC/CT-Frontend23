@@ -2,9 +2,9 @@ import { type FC } from 'react'
 
 import { Tab, Tabs } from '@mui/material'
 import { Box } from '@mui/system'
-import { FaCode } from 'react-icons/fa6'
-import { IoDesktopOutline } from 'react-icons/io5'
-import { MdOutlinePlayLesson } from 'react-icons/md'
+import { FaCode } from '@react-icons/all-files/fa6/FaCode'
+import { IoDesktopOutline } from '@react-icons/all-files/io5/IoDesktopOutline'
+import { MdOutlinePlayLesson } from '@react-icons/all-files/md/MdOutlinePlayLesson'
 
 import { voidFunction } from '@/utils'
 
