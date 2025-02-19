@@ -1,6 +1,7 @@
-// node modules
 import { type FC, type SetStateAction, useState } from 'react'
 
+import ChatIcon from '@mui/icons-material/Chat'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Divider, IconButton, MenuItem } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Box } from '@mui/system'
@@ -12,7 +13,6 @@ import HelpQuestionModal from './modals/HelpQuestion'
 import Solution from './options/solution'
 import Tips from './options/tips'
 import Unstack from './options/unstack-dialogs/Unstuck'
-
 const MENU_POPOVER_STYLES = {
   width: 350,
   p: 0,
@@ -22,11 +22,6 @@ const MENU_POPOVER_STYLES = {
 const MENU_ITEM_STYLES = {
   pl: '22px!important',
   height: 52,
-}
-
-const ICONIFY_STYLES = {
-  width: '30px!important',
-  height: '30px!important',
 }
 
 const HelpPopup: FC = () => {
@@ -50,7 +45,7 @@ const HelpPopup: FC = () => {
   return (
     <Box>
       <IconButton onClick={handleOpenPopover}>
-        <Iconify icon='clarity:help-line' />
+        <HelpOutlineIcon />
       </IconButton>
       <MenuPopover
         open={openPopover}
@@ -119,10 +114,7 @@ const HelpPopup: FC = () => {
         <Divider />
         <HelpQuestionModal>
           <MenuItem sx={MENU_ITEM_STYLES}>
-            <Iconify
-              sx={ICONIFY_STYLES}
-              icon='mdi:chat-outline'
-            />
+            <ChatIcon />
             <Typography variant='h6'>{translate('i_need_help')}</Typography>
           </MenuItem>
         </HelpQuestionModal>

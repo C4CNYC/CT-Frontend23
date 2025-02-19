@@ -3,8 +3,9 @@ import { useState } from 'react'
 import { Collapse, IconButton, List, ListItem, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
 import { useSnackbar } from 'notistack'
+import { FaChevronUp } from 'react-icons/fa'
+import { FaChevronDown, FaPlus } from 'react-icons/fa6'
 
-import { Iconify } from '@/components/iconify'
 import { useCreateClassMutation, useGetClassListQuery } from '@/redux/services/admin/school-amdin'
 import {
   useDeleteClassesMutation,
@@ -101,7 +102,7 @@ export default function ClassesSection({
           variant='subtitle2'
         >
           {translate('classes')}
-          <Iconify icon={open ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />
+          {open ? <FaChevronUp /> : <FaChevronDown />}
         </Typography>
 
         <AddClassDialog createClass={createClassByAdmin}>
@@ -118,11 +119,7 @@ export default function ClassesSection({
               },
             }}
           >
-            {' '}
-            <Iconify
-              sx={{ width: 24 }}
-              icon='eva:plus-fill'
-            />{' '}
+            <FaPlus size={24} />
           </IconButton>
         </AddClassDialog>
       </Stack>

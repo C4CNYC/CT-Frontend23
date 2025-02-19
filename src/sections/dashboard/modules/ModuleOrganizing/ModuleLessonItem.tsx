@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
@@ -15,7 +16,6 @@ import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDia
 import { GREEN_DOT_SX, getLessonItemPaperSx } from '../../lessons/LessonStep/constants'
 
 import { LESSON_DESCRIPTION_SX, LESSON_NAME_SX } from './constants'
-
 interface Props {
   index: number
   onRemove: (id: string) => void
@@ -139,7 +139,7 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                 }}
               >
                 <IconButton>
-                  <Iconify icon='ep:setting' />
+                  <SettingsIcon />
                 </IconButton>
               </CreateLessonDialog>
             </Stack>

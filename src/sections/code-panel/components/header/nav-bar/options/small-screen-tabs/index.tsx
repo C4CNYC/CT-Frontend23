@@ -2,8 +2,10 @@ import { type FC } from 'react'
 
 import { Tab, Tabs } from '@mui/material'
 import { Box } from '@mui/system'
+import { FaCode } from 'react-icons/fa6'
+import { IoDesktopOutline } from 'react-icons/io5'
+import { MdOutlinePlayLesson } from 'react-icons/md'
 
-import { Iconify } from '@/components/iconify'
 import { voidFunction } from '@/utils'
 
 import { styles } from './styles'
@@ -34,21 +36,21 @@ const SmallScreenTabs: FC<ISmallScreenTabs> = ({ index, onChangeIndex }) => {
           {...a11yProps(0)}
           onClick={voidFunction}
           aria-label='Lesson'
-          icon={<Iconify icon='material-symbols:play-lesson-outline' />}
+          icon={<MdOutlinePlayLesson size={20} />}
           sx={index === 0 ? styles.activeTab : styles.Tab}
           label={index === 0 ? <div style={styles.slides}>Slides</div> : ''}
         />
         <Tab
           {...a11yProps(1)}
           aria-label='Code'
-          icon={<Iconify icon='material-symbols:code' />}
+          icon={<FaCode size={20} />}
           sx={index === 1 ? styles.activeTab : styles.Tab}
           label={index === 1 ? <div style={styles.slides}>Editor</div> : ''}
         />
         <Tab
           {...a11yProps(0)}
           aria-label='Preview'
-          icon={<Iconify icon='material-symbols:desktop-windows-outline' />}
+          icon={<IoDesktopOutline size={20} />}
           sx={index === 2 ? styles.activeTab : styles.Tab}
           label={index === 2 ? <div style={styles.slides}>Browser</div> : ''}
         />

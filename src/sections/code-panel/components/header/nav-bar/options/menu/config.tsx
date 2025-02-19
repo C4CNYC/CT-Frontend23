@@ -1,3 +1,15 @@
+import { ReactNode } from 'react'
+
+import { FaBus } from 'react-icons/fa'
+import { FaRegHeart } from 'react-icons/fa6'
+import { FaChildReaching } from 'react-icons/fa6'
+import { IoHomeOutline } from 'react-icons/io5'
+import { LuBaby } from 'react-icons/lu'
+import { MdConnectWithoutContact } from 'react-icons/md'
+import { PiVideoBold } from 'react-icons/pi'
+import { PiMaskHappyLight } from 'react-icons/pi'
+import { RiGalleryLine } from 'react-icons/ri'
+
 import { PATH_AUTH } from '@/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import InviteFriendsModal from '@/sections/invite-friends/InviteFriendsModal'
@@ -8,7 +20,7 @@ import MenuHugDialog from './MenuHugDialog'
 interface IMenuConfigItem {
   title: string
   subTitle?: string
-  icon: string
+  icon: ReactNode
   href: string | ILinks
   component?: (children: React.ReactElement, key: string | number) => React.ReactElement
   target?: '_self' | '_blank'
@@ -22,32 +34,32 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
   {
     title: 'home',
     subTitle: '',
-    icon: 'ant-design:home-outlined',
+    icon: <IoHomeOutline />,
     href: STUDENT_PATH_DASHBOARD.class.root,
   },
   {
     title: 'take_tour',
     subTitle: '',
-    icon: 'ph:bus-light',
+    icon: <FaBus />,
     href: ILinks.modal,
     component: (children, key) => <div key={key}>{children}</div>,
   },
   {
     title: 'how_to_video',
     subTitle: '',
-    icon: 'ph:video',
+    icon: <PiVideoBold />,
     href: 'https://www.youtube.com/@freecodecamp',
     target: '_blank',
   },
   {
     title: 'gallery',
     subTitle: '',
-    icon: 'solar:gallery-line-duotone',
+    icon: <RiGalleryLine />,
     href: STUDENT_PATH_DASHBOARD.gallery.root,
   },
   {
     title: 'need_hug',
-    icon: 'icon-park-outline:like',
+    icon: <FaRegHeart />,
     href: ILinks.modal,
     component: (children, key) => (
       <div key={key}>
@@ -57,7 +69,7 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
   },
   {
     title: 'sidebar_menu_invite_friends',
-    icon: 'ph:mask-happy',
+    icon: <PiMaskHappyLight />,
     href: ILinks.modal,
     component: (children, key) => (
       <div key={key}>
@@ -71,18 +83,18 @@ export const anonimUserConfig: IMenuConfigItem[] = [
   {
     title: 'i_brand_new',
     subTitle: 'register',
-    icon: 'icon-park-outline:baby',
+    icon: <LuBaby />,
     href: PATH_AUTH.onBoardingStudent,
   },
   {
     title: 'login_been_here',
     subTitle: 'login',
-    icon: 'mdi:human-hello',
+    icon: <FaChildReaching />,
     href: PATH_AUTH.signIn,
   },
   {
     title: 'sidebar_menu_invite_friends',
-    icon: 'mdi:invite',
+    icon: <MdConnectWithoutContact />,
     href: '#',
   },
 ]

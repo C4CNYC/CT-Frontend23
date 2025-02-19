@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import SettingsIcon from '@mui/icons-material/Settings'
 import { IconButton, SwipeableDrawer, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
@@ -11,7 +12,6 @@ import EditorFontSize from './preferences/EditorFontSize'
 import EditorWordWrap from './preferences/EditorWordWrap'
 import IntroTour from './preferences/IntroTour'
 import ResetCode from './preferences/ResetCode'
-
 const SettingDrawer = (): React.ReactElement => {
   const [openDrawer, setDrawer] = useState<boolean>(false)
 
@@ -37,7 +37,7 @@ const SettingDrawer = (): React.ReactElement => {
           setDrawer(true)
         }}
       >
-        <Iconify icon='ep:setting' />
+        <SettingsIcon />
       </IconButton>
       <SwipeableDrawer
         anchor='right'

@@ -13,8 +13,9 @@ import {
   useTheme,
 } from '@mui/material'
 import { MdOutlineTipsAndUpdates } from '@react-icons/all-files/md/MdOutlineTipsAndUpdates'
+import { IoClose } from 'react-icons/io5'
 
-import { EmptyContent, Iconify } from '@/components'
+import { EmptyContent } from '@/components'
 
 import {
   DIALOG_PAPER_PROPS,
@@ -23,7 +24,6 @@ import {
   TYPS_TYP_STYLES,
   getDialogContentStyles,
 } from './constants'
-
 interface TipsMobileDialogProps {
   open: boolean
   onClose: () => void
@@ -59,10 +59,7 @@ const TipsMobileDialog: FC<TipsMobileDialogProps> = ({ open, onClose, tips, isLo
           onClick={onClose}
           sx={ICON_BUTTON}
         >
-          <Iconify
-            width='20px'
-            icon='ic:round-close'
-          />
+          <IoClose />
         </IconButton>
       </DialogTitle>
 

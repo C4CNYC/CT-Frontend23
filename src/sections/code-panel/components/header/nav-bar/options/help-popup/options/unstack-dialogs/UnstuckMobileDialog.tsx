@@ -15,8 +15,8 @@ import {
   Typography,
 } from '@mui/material'
 import { BsChatText } from '@react-icons/all-files/bs/BsChatText'
+import { IoClose } from 'react-icons/io5'
 
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
 
 import FullCodeSolutionModal from '../../modals/FullCodeSolution'
@@ -77,10 +77,7 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({ open, onClose }) =>
           onClick={onClose}
           sx={ICON_BTN_SX}
         >
-          <Iconify
-            width='20px'
-            icon='ic:round-close'
-          />
+          <IoClose />
         </IconButton>
       </DialogTitle>
 

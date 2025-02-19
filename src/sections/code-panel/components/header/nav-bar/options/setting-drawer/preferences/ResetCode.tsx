@@ -1,13 +1,12 @@
 import { useState } from 'react'
 
 import { Button, Stack, Typography } from '@mui/material'
+import { RiResetLeftFill } from 'react-icons/ri'
 
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
 import { ConfirmDialog } from '@root/src/components'
 
 import BasePreference from './BasePreference'
-
 interface IResetCode {
   onReset: () => void
 }
@@ -30,11 +29,9 @@ const ResetCode = ({ onReset }: IResetCode): React.ReactElement => {
           onClick={handleOpenConfirm}
           fullWidth
           variant='contained'
+          sx={{ gap: 1 }}
         >
-          <Iconify
-            mr='7px'
-            icon='carbon:reset'
-          />
+          <RiResetLeftFill size={18} />
           {translate('reset_code')}
         </Button>
       </BasePreference>

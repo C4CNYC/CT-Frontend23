@@ -10,8 +10,8 @@ import {
   useTheme,
 } from '@mui/material'
 import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
+import { IoClose } from 'react-icons/io5'
 
-import { Iconify } from '@/components/iconify'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -63,10 +63,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
             onClick={onClose}
             sx={ICON_BUTTON_SX}
           >
-            <Iconify
-              width='20px'
-              icon='ic:round-close'
-            />
+            <IoClose />
           </IconButton>
         </DialogTitle>
 

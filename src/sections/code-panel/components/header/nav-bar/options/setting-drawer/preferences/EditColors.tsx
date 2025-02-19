@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import { IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { MuiColorInput, matchIsValidColor } from 'mui-color-input'
+import { TfiReload } from 'react-icons/tfi'
 
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
 
 import BasePreference from './BasePreference'
@@ -39,10 +39,7 @@ const EditColors = ({ onUpdateColors }: IEditColors): React.ReactElement => {
             })
           }}
         >
-          <Iconify
-            width='25px'
-            icon='ci:arrow-reload-02'
-          />
+          <TfiReload size={20} />
         </IconButton>
       }
     >

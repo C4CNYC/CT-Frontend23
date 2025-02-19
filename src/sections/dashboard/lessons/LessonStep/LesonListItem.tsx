@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
@@ -16,7 +17,6 @@ import { useTranslate } from '@/utils/translateHelper'
 import { BRIEFING, CHALANGES, CUSTOM, GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
 import Preferences from './Modals/Preferences'
 import Validation from './Modals/Validation'
-
 interface Props {
   lessonId: string
   step: ILessonContent & BaseResponseInterface
@@ -181,7 +181,7 @@ export default function LessonListItem({
                 lessonId={lessonId}
               >
                 <IconButton>
-                  <Iconify icon='ep:setting' />
+                  <SettingsIcon />
                 </IconButton>
               </Preferences>
             </Stack>
