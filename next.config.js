@@ -4,7 +4,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const nextConfig = {
   i18n: {
-    // locales: ["en", "ar", "es", "pt", "fr", "vn"],
     locales: ['en'],
     defaultLocale: 'en',
   },
@@ -12,6 +11,7 @@ const nextConfig = {
   images: {
     domains: ['devnest.s3.amazonaws.com'],
   },
+  compress: true,
   async headers() {
     return [
       {

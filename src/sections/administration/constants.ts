@@ -29,5 +29,13 @@ export const TAB_SX = {
 export interface FormValuesProps {
   name: string
   slug: string
+  domain: string[] | string
+  home_page_type: HomePageType
+}
+
+export interface FormValuesPropsR {
+  name: string
+  slug: string
+  domain: string[]
   home_page_type: HomePageType
 }

@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { BiCopy } from '@react-icons/all-files/bi/BiCopy'
-import * as _ from 'lodash-es'
+import pick from 'lodash-es/pick'
 
 import { ConfirmDialog, Image, TextMaxLine, useSnackbar } from '@/components'
 import CustomPopover, { usePopover } from '@/components/custom-popover'
@@ -266,7 +266,7 @@ export default function FileManagerFileItem({
           <MenuItem
             onClick={async () => {
               await updateMedia({
-                ...(_.pick(file, ['id', 'size', 'type', 'url', 'active', 'name']) as Omit<
+                ...(pick(file, ['id', 'size', 'type', 'url', 'active', 'name']) as Omit<
                   IMediaUpdate,
                   'acl'
                 >),
@@ -301,7 +301,7 @@ export default function FileManagerFileItem({
         onUpdate={async () => {
           setEditItem(false)
           await updateMedia({
-            ...(_.pick(file, ['id', 'size', 'type', 'url', 'active', 'acl']) as Omit<
+            ...(pick(file, ['id', 'size', 'type', 'url', 'active', 'acl']) as Omit<
               IMediaUpdate,
               'name'
             >),
@@ -318,7 +318,7 @@ export default function FileManagerFileItem({
         onUpdate={async () => {
           setEditItem(false)
           await updateMedia({
-            ...(_.pick(file, ['id', 'size', 'type', 'url', 'active', 'acl']) as Omit<
+            ...(pick(file, ['id', 'size', 'type', 'url', 'active', 'acl']) as Omit<
               IMediaUpdate,
               'name'
             >),

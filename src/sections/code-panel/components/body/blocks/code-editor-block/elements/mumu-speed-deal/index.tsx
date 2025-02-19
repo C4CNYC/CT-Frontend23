@@ -39,6 +39,9 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
   const [speedDeal, setSpeedDial] = useState<boolean>(false)
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null)
 
+  const [isVisible, setIsVisible] = useState(false)
+  const speedDialRef = useRef(null)
+
   let lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   let courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const profile = useSelector((state) => state.global.user)
@@ -72,7 +75,35 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
 
   const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal])
   const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop])
-  const boxPropsSx = useMemo(() => getBoxProps(theme), [theme])
+  const boxPropsSx = useMemo(() => getBoxProps(theme, isVisible), [theme, isVisible])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      {
+        rootMargin: '0px',
+        threshold: 0.1,
+      }
+    )
+
+    const element = speedDialRef.current
+    if (element) {
+      observer.observe(element)
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element)
+      }
+    }
+  }, [])
 
   const openSpeedDial = () => {
     setSpeedDial(true)
@@ -120,6 +151,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
 
       <Tooltip title={<Typography>{translate('code_editor_mumu_menu_tooltip')}</Typography>}>
         <SpeedDial
+          ref={speedDialRef}
           aria-describedby={'popper'}
           ariaLabel='SpeedDial basic example'
           open={speedDeal}

@@ -15,12 +15,14 @@ export const SPEED_DEAL_ACTION_FAB_PROPS = {
   },
 }
 
-export const getBoxProps = (theme: Theme) => ({
+export const getBoxProps = (theme: Theme, isVisible: boolean) => ({
   display: 'flex',
   width: '60px',
   height: '60px',
   pr: '20px',
-  background: `top 0 ${theme.direction !== 'rtl' ? 'left' : 'right'} -2px / cover no-repeat url(/assets/code-panel/mumu.png)`,
+  background: isVisible
+    ? `top 0 ${theme.direction !== 'rtl' ? 'left' : 'right'} -2px / cover no-repeat url(/assets/code-panel/mumu.webp)`
+    : 'transparent',
   zIndex: '1051',
 })
 

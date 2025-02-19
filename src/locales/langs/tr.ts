@@ -1123,6 +1123,7 @@ const tr = {
   update_org_dialog_title: 'Organizasyonu güncelle',
   create_new_name_label: 'Organizasyon adı',
   create_new_slug_label: 'Slug',
+  create_new_domain_label: 'Domain',
   name_validation_msg: 'İsim gereklidir',
   slug_validation_msg_1:
     'Slug küçük harflerle olmalı, boşluk veya rakam içermemeli ve yalnızca harfler ile tireler kullanılmalıdır',
