@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es'
+import values from 'lodash-es/values'
 import { Socket, io } from 'socket.io-client'
 
 export enum SubscribedEvents {
@@ -54,7 +54,7 @@ export enum EmitCommentsEvents {
 export const unsubscribeSocket = (socket?: Socket): void => {
   if (!socket) return
 
-  _.values(SubscribedEvents).forEach((event) => {
+  values(SubscribedEvents).forEach((event) => {
     socket?.off(event)
   })
 }

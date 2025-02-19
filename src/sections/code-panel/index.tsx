@@ -29,7 +29,7 @@ import {
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import CodePanelBody from '@/sections/code-panel/components/body'
+// import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
@@ -43,6 +43,10 @@ import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
 import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
+
+const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
+  ssr: false,
+})
 
 const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
   ssr: false,

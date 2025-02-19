@@ -10,7 +10,7 @@ import ListItemText from '@mui/material/ListItemText'
 import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
-import { pick } from 'lodash-es'
+import pick from 'lodash-es/pick'
 
 import { ConfirmDialog } from '@/components'
 import CustomPopover, { usePopover } from '@/components/custom-popover'

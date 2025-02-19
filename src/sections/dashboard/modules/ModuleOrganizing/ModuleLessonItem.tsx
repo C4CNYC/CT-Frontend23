@@ -4,7 +4,7 @@ import { Draggable } from '@hello-pangea/dnd'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
-import * as _ from 'lodash-es'
+import toUpper from 'lodash-es/toUpper'
 import { useRouter } from 'next/router'
 
 import { Iconify, MenuPopover } from '@/components'
@@ -97,7 +97,7 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                   sx={LESSON_NAME_SX}
                   gutterBottom
                 >
-                  {_.toUpper(lesson.name)}
+                  {toUpper(lesson.name)}
                 </Typography>
                 <Typography
                   sx={LESSON_DESCRIPTION_SX}

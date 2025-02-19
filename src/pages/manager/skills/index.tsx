@@ -15,7 +15,7 @@ import {
 import { Stack } from '@mui/system'
 import Container from '@mui/system/Container'
 import { format } from 'date-fns'
-import * as _ from 'lodash-es'
+import omit from 'lodash-es/omit'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
@@ -143,7 +143,7 @@ export default function Skills(): React.ReactElement {
                           >
                             <UpdateModalSkills
                               id={row.id}
-                              defaultValues={_.omit(row, ['updatedAt', 'createdAt', 'id'])}
+                              defaultValues={omit(row, ['updatedAt', 'createdAt', 'id'])}
                             >
                               <IconButton>
                                 <Iconify icon='material-symbols:edit' />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Avatar, Conversation } from '@chatscope/chat-ui-kit-react'
-import * as _ from 'lodash-es'
+import capitalize from 'lodash-es/capitalize'
 
 import { IFriend } from '../../../../redux/interfaces/friends.interface'
 import { BaseResponseInterface } from '../../../../utils/baseResponse.interface'
@@ -37,12 +37,12 @@ IUserList): React.ReactElement => {
   return (
     <Conversation
       key={user.id}
-      name={`${_.capitalize(user.first_name)} ${_.capitalize(user.last_name)}`}
+      name={`${capitalize(user.first_name)} ${capitalize(user.last_name)}`}
       {...(lastMessage
         ? {
             lastSenderName:
               lastMessage.sender_id === user.id
-                ? `${_.capitalize(user.first_name)} ${_.capitalize(user.last_name)}`
+                ? `${capitalize(user.first_name)} ${capitalize(user.last_name)}`
                 : 'Me',
           }
         : {})}
@@ -59,7 +59,7 @@ IUserList): React.ReactElement => {
         src={
           user.avatar || 'https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png'
         }
-        name={`${_.capitalize(user.first_name)} ${_.capitalize(user.last_name)}`}
+        name={`${capitalize(user.first_name)} ${capitalize(user.last_name)}`}
       />
     </Conversation>
   )
