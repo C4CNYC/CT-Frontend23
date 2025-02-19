@@ -60,7 +60,7 @@ export default function AiGeneratePage(): React.ReactElement {
       default:
         router.push(PATH_AUTH.onBoardingStudent)
     }
-  }, [data])
+  }, [data, tenant])
 
   if (!page) return <></>
 
