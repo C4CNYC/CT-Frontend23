@@ -20,11 +20,11 @@ function getDomain() {
     let subdomain = window.location.hostname
 
     if (subdomain) {
-      return subdomain === 'localhost' ? 'codejika' : subdomain
+      return subdomain === 'localhost' ? 'codetribe' : subdomain
     }
   }
 
-  return 'codejika'
+  return 'codetribe'
 }
 
 export function useTenants() {
