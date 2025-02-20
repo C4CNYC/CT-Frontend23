@@ -14,6 +14,8 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -51,7 +53,6 @@ import PendingInvitesTab from '@/sections/dashboard/student/PendingInvitesTab'
 import { UserTableRow } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { useTranslate } from '@/utils/translateHelper'
-
 const STATUS_OPTIONS = ['all', 'invites']
 
 const TABLE_HEAD = [
@@ -190,7 +191,7 @@ export default function UserListPage(): React.ReactElement {
                 component={NextLink}
                 href={MANAGER_PATH_DASHBOARD.school.new}
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus />}
               >
                 {translate('members_add_student')}
               </Button>
@@ -246,7 +247,7 @@ export default function UserListPage(): React.ReactElement {
                         setOpenConfirm(true)
                       }}
                     >
-                      <Iconify icon='eva:trash-2-outline' />
+                      <FiTrash2 />
                     </IconButton>
                   </Tooltip>
                 }

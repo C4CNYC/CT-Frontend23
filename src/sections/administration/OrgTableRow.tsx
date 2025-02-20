@@ -2,8 +2,11 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Avatar, Checkbox, IconButton, MenuItem, Stack, TableCell, TableRow } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 
-import { ConfirmDialog, Iconify, MenuPopover } from '@/components'
+import { ConfirmDialog, MenuPopover } from '@/components'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
@@ -116,7 +119,7 @@ export default function OrgTableRow({
             color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <CgMoreVerticalAlt />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -134,13 +137,13 @@ export default function OrgTableRow({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
 
         <AddEditOrgModal org={row}>
           <MenuItem>
-            <Iconify icon='eva:edit-fill' />
+            <GoPencil />
             {translate('actions_edit')}
           </MenuItem>
         </AddEditOrgModal>

@@ -1,8 +1,9 @@
 import { IconButton } from '@mui/material'
 import { Box } from '@mui/system'
-
-import { Iconify } from '@/components/iconify'
-
+import { IoExpandOutline } from '@react-icons/all-files/io5/IoExpandOutline'
+import { LiaCompressArrowsAltSolid } from '@react-icons/all-files/lia/LiaCompressArrowsAltSolid'
+import { TbColumns2 } from '@react-icons/all-files/tb/TbColumns2'
+import { TbColumns3 } from '@react-icons/all-files/tb/TbColumns3'
 interface ViewToomblerProps {
   fullScreenView: boolean
   allColumnsVisible: boolean
@@ -20,9 +21,6 @@ const ViewTumbler = ({
   fullScreenClose,
   allColumnsVisible,
 }: ViewToomblerProps): React.ReactElement => {
-  const columnIcon = allColumnsVisible ? 'iconoir:view-columns-3' : 'iconoir:view-columns-2'
-  const screenViewIcon = fullScreenView ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'
-
   return (
     <Box
       sx={{
@@ -39,7 +37,7 @@ const ViewTumbler = ({
           onChangeColumnVisability(!allColumnsVisible)
         }}
       >
-        <Iconify icon={columnIcon} />
+        {allColumnsVisible ? <TbColumns3 /> : <TbColumns2 />}
       </IconButton>
       <IconButton
         onClick={() => {
@@ -47,7 +45,7 @@ const ViewTumbler = ({
           onChangeSreenView(!fullScreenView)
         }}
       >
-        <Iconify icon={screenViewIcon} />
+        {fullScreenView ? <LiaCompressArrowsAltSolid /> : <IoExpandOutline />}
       </IconButton>
     </Box>
   )

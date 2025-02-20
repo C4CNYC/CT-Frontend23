@@ -11,13 +11,15 @@ import {
   Typography,
 } from '@mui/material'
 // hooks
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import Image from 'next/image'
 
-import { TextMaxLine, MenuPopover, Iconify, ConfirmDialog } from '@/components'
+import { TextMaxLine, MenuPopover, ConfirmDialog } from '@/components'
 //
 // import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 import { IUserProfileSchool } from '@/types'
-
 interface Props extends CardProps {
   school: IUserProfileSchool
   selected?: boolean
@@ -88,7 +90,7 @@ export default function ContactsCard({
             color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <CgMoreVerticalAlt />
           </IconButton>
         </Stack>
 
@@ -131,7 +133,7 @@ export default function ContactsCard({
             handleClosePopover()
           }}
         >
-          <Iconify icon='eva:edit-fill' />
+          <GoPencil />
           Edit
         </MenuItem>
 
@@ -144,7 +146,7 @@ export default function ContactsCard({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           Archive
         </MenuItem>
       </MenuPopover>

@@ -10,13 +10,14 @@ import { FiCodesandbox } from '@react-icons/all-files/fi/FiCodesandbox'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
 import { GiProgression } from '@react-icons/all-files/gi/GiProgression'
 import { GoFileSubmodule } from '@react-icons/all-files/go/GoFileSubmodule'
+import { HiOutlineLightBulb } from '@react-icons/all-files/hi2/HiOutlineLightBulb'
 import { IoMdSchool } from '@react-icons/all-files/io/IoMdSchool'
+import { MdAdminPanelSettings } from '@react-icons/all-files/md/MdAdminPanelSettings'
 import { MdPlayLesson } from '@react-icons/all-files/md/MdPlayLesson'
 import { RiOrganizationChart } from '@react-icons/all-files/ri/RiOrganizationChart'
 import { Tb3DCubeSphere } from '@react-icons/all-files/tb/Tb3DCubeSphere'
 import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
 
-import { Iconify } from '@/components/iconify'
 import { Role } from '@/redux/services/enums/role.enum'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -50,7 +51,7 @@ export const superAdmin = {
     {
       title: 'sidebar_menu_admin',
       path: MANAGER_PATH_DASHBOARD.administration.root,
-      icon: <Iconify icon='eos-icons:admin' />,
+      icon: <MdAdminPanelSettings />,
     },
   ],
 }
@@ -124,7 +125,7 @@ export const content = {
     {
       title: 'sidebar_menu_skills',
       path: MANAGER_PATH_DASHBOARD.skills.root,
-      icon: <Iconify icon='ion:bulb' />,
+      icon: <HiOutlineLightBulb />,
     },
   ],
 }

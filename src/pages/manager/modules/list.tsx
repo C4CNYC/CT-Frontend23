@@ -1,7 +1,8 @@
 import { Box, Button, Container } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
+import { CustomBreadcrumbs, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import { useIsAdmin } from '@/lib/use-is-admin'
@@ -90,7 +91,7 @@ export default function ModulesListPage(): React.ReactElement | string {
             <CreateModuleDialog refetch={refetch}>
               <Button
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus />}
               >
                 {translate('modules_create_module')}
               </Button>

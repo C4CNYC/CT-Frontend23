@@ -18,7 +18,6 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { Iconify } from '../iconify'
 import CarouselArrows from '../slider/CarouselArrows'
 
 type Props = ToggleButtonGroupProps & {
@@ -26,7 +25,7 @@ type Props = ToggleButtonGroupProps & {
   helperText?: string
   sxGroup?: SxProps
   sxButton?: SxProps
-  options: Array<{ key: string; value: string; tooltip?: string; icon?: string }>
+  options: Array<{ key: string; value: string; tooltip?: string; icon?: React.ReactNode }>
   error?: FieldError
   tooltip?: boolean
   tooltipSx?: SxProps
@@ -151,7 +150,7 @@ export function RHFToggleButtonGroup({
                       value={el.key}
                     >
                       {translate(el.value)}
-                      <Iconify icon={el.icon ?? ''} />
+                      {el.icon}
                     </ToggleButton>
                   </Tooltip>
                 ) : (

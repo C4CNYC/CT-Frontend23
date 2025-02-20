@@ -11,11 +11,12 @@ import {
   Typography,
   alpha,
 } from '@mui/material'
+import { FaCheck } from '@react-icons/all-files/fa/FaCheck'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
-import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
+import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import {
   useAddCourseToClassMutation,
@@ -179,7 +180,7 @@ export default function ClassCoursesAutocomplete({
                   }),
                 }}
               >
-                <Iconify icon='eva:checkmark-fill' />
+                <FaCheck />
               </Box>
             </Box>
 

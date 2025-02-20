@@ -20,10 +20,12 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { Stack } from '@mui/system'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { IoAddCircleOutline } from '@react-icons/all-files/io5/IoAddCircleOutline'
+import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
 import { format } from 'date-fns'
 import { useSnackbar } from 'notistack'
 
-import { Iconify } from '@/components/iconify'
 import {
   useGetLessonContentValidationsManagerQuery,
   useRemoveLessonContentValiationManagerMutation,
@@ -201,17 +203,17 @@ export default function Validation({
                             }}
                           >
                             <IconButton>
-                              <Iconify icon='material-symbols:edit' />
+                              <MdOutlineModeEdit />
                             </IconButton>
                           </CreateEditValidation>
-                          <IconButton sx={{ ml: 1 }}>
-                            <Iconify
-                              color='red'
-                              onClick={async () => {
-                                await onDeleteRule(row.id)
-                              }}
-                              icon='material-symbols:delete-outline'
-                            />
+                          <IconButton
+                            sx={{ ml: 1 }}
+                            color='error'
+                            onClick={async () => {
+                              await onDeleteRule(row.id)
+                            }}
+                          >
+                            <FiTrash2 />
                           </IconButton>
                         </StyledTableCell>
                       </StyledTableRow>
@@ -230,12 +232,12 @@ export default function Validation({
               mt='25px'
             >
               <CreateEditValidation stepId={stepId}>
-                <Button variant='contained'>
+                <Button
+                  variant='contained'
+                  sx={{ gap: 1 }}
+                >
                   {translate('add_rule')}
-                  <Iconify
-                    ml='10px'
-                    icon='material-symbols:add-circle-outline'
-                  />
+                  <IoAddCircleOutline />
                 </Button>
               </CreateEditValidation>
             </Stack>

@@ -1,11 +1,11 @@
 import { Box, Button } from '@mui/material'
 import { Container } from '@mui/system'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import Head from 'next/head'
 
 import {
   CustomBreadcrumbs,
   EmptyContent,
-  Iconify,
   SimpleInfiniteList,
   useSettingsContext,
 } from '@/components'
@@ -74,7 +74,7 @@ export default function CoursesListPage(): React.ReactElement {
               >
                 <Button
                   variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
+                  startIcon={<FaPlus />}
                 >
                   {translate('courses_add')}
                 </Button>
