@@ -262,6 +262,7 @@ export default function CodePanelPage(): ReactElement | null {
               language={DEFAULT_LANGUAGE}
             />
             <CodePanelBody
+              isLoadingLessonContent={isLoading}
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
               lessonContents={data ?? []}
               user={user?.student_profile as ILocalUser}

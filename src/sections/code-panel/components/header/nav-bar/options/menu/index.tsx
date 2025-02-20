@@ -38,7 +38,7 @@ interface CustomMultiEvent {
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch()
-  const { replace } = useRouter()
+  const { replace, pathname } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const { themeMode } = useSettingsContext()
   const { isAuthenticated, logout } = useAuthContext()
@@ -75,11 +75,16 @@ const Menu = (): React.ReactElement => {
         size={HAMBURGER_SIZE}
         toggled={Boolean(openPopover)}
       />
-    ) : (
+    ) : pathname.includes('code-panel') ? (
       <MobileHamburger
         open={Boolean(openPopover)}
         handleOpenPopover={handleOpenPopover}
         handleClosePopover={handleClosePopover}
+      />
+    ) : (
+      <Hamburger
+        size={HAMBURGER_SIZE}
+        toggled={Boolean(openPopover)}
       />
     )
   }

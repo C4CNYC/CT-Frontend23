@@ -11,4 +11,5 @@ export interface CodePanelBodyProps {
   onSubmitChallenge: (lessonContentId: string) => Promise<void>
   onSubmitLesson: () => Promise<void>
   lastLessonCode?: string
+  isLoadingLessonContent: boolean
 }

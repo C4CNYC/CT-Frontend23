@@ -1,8 +1,6 @@
 import { SpeedDial, SpeedDialAction } from '@mui/material'
 import { BsLightningCharge } from '@react-icons/all-files/bs/BsLightningCharge'
 
-import { useFullScreen } from '@root/src/sections/code-panel/lib/FullScreenContext'
-
 import { getActions } from './config'
 import { SPEED_DIAL_ACTION_FAB_PROPS, SPEED_DIAL_FAB_PROPS, SPEED_DIAL_SX } from './constants'
 
@@ -11,7 +9,6 @@ interface NavigationSpeedDialProps {
 }
 
 const NavigationSpeedDial = ({ lessonName = '' }: NavigationSpeedDialProps) => {
-  const handle = useFullScreen()
   return (
     <SpeedDial
       ariaLabel='SpeedDial basic example'
@@ -19,7 +16,7 @@ const NavigationSpeedDial = ({ lessonName = '' }: NavigationSpeedDialProps) => {
       sx={SPEED_DIAL_SX}
       icon={<BsLightningCharge size='30px' />}
     >
-      {getActions({ lessonName, handle }).map((action) => (
+      {getActions({ lessonName }).map((action) => (
         <SpeedDialAction
           key={action.name}
           icon={action.icon}

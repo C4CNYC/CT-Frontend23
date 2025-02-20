@@ -2,9 +2,10 @@ import { type FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Box, Button, Tooltip, Typography, useTheme } from '@mui/material'
 
-import { useSelector } from '@/redux/store'
+import { useDispatch, useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 import useIsDesktop from '@root/src/hooks/useIsDesktop'
+import { setTab } from '@root/src/redux/slices/mobile-tab-manager'
 
 import LessonFeedback from '../../../../footer/lesson-feedback/LessonFeedback'
 
@@ -49,6 +50,7 @@ const Navigation: FC<INavigation> = ({
   const [btnNext, setBtnNext] = useState<BtnType>(BtnType.next)
   const translate = useTranslate()
   const isDesktop = useIsDesktop()
+  const dispatch = useDispatch()
   const nestedBox = useMemo(() => getNestedBoxSx(theme), [theme])
   const tooltipWrapperSx = useMemo(() => getTooltipWrapperSx(theme), [theme])
 
@@ -126,7 +128,14 @@ const Navigation: FC<INavigation> = ({
             textAlign: 'center',
           }}
         >
-          <Box sx={tooltipWrapperSx}>
+          <Box
+            sx={tooltipWrapperSx}
+            onClick={() => {
+              if (!isDesktop && btnNext === BtnType.coding) {
+                dispatch(setTab(1))
+              }
+            }}
+          >
             <NavigationElement
               sx={styleNext}
               onClick={() => {
@@ -136,7 +145,8 @@ const Navigation: FC<INavigation> = ({
             >
               {stepHasValidation && !canMoveNext && !completedSlides[slideIndex] ? (
                 <Button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation()
                     onNext(true)
                   }}
                   sx={stylesSkip(theme)}

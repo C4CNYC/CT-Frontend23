@@ -337,6 +337,7 @@ export default function CodePanelLayout(): ReactElement | null {
             />
             <CodePanelBody
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+              isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}
               lessonContents={lessonContent ?? []}
               user={user?.student_profile}
               language={DEFAULT_LANGUAGE}

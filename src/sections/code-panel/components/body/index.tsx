@@ -30,6 +30,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   onSubmitLesson,
   lessonContents,
   user,
+  isLoadingLessonContent,
 }) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
 
@@ -77,6 +78,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       >
         {!isInstructionsHidden ? (
           <SliderBlock
+            isLoadingLessonContent={isLoadingLessonContent}
             data={lessonContents}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
@@ -161,6 +163,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       }}
     >
       <SliderBlock
+        isLoadingLessonContent={isLoadingLessonContent}
         onSubmitLesson={onSubmitLesson}
         onSubmitChallenge={onSubmitChallenge}
         data={lessonContents}

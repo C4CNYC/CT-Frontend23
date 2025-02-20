@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react'
 
 import { IconButton } from '@mui/material'
-import { FullScreenHandle } from 'react-full-screen'
 
 import { Iconify } from '@root/src/components'
 import LessonFeedback from '@root/src/sections/code-panel/components/footer/lesson-feedback/LessonFeedback'
@@ -16,10 +15,9 @@ interface Action {
 
 interface IGetActions {
   lessonName: string
-  handle: FullScreenHandle
 }
 
-export const getActions = ({ lessonName, handle }: IGetActions): Action[] => {
+export const getActions = ({ lessonName }: IGetActions): Action[] => {
   return [
     {
       icon: (
@@ -52,17 +50,17 @@ export const getActions = ({ lessonName, handle }: IGetActions): Action[] => {
       ),
       name: 'Feedback',
     },
-    {
-      icon: (
-        <IconButton>
-          <Iconify
-            icon={handle.active ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'}
-            color='#FBDD3F'
-          />
-        </IconButton>
-      ),
-      name: 'Full screen',
-    },
+    // {
+    //   icon: (
+    //     <IconButton onClick={toggleFullscreen}>
+    //       <Iconify
+    //         icon={handle.active ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'}
+    //         color='#FBDD3F'
+    //       />
+    //     </IconButton>
+    //   ),
+    //   name: 'Full screen',
+    // },
     {
       icon: <LessonManager iconColor={'#FBDD3F'} />,
       name: 'Menu',
