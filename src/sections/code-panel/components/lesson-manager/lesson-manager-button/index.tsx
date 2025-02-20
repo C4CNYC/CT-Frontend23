@@ -1,8 +1,8 @@
 import { type FC, useMemo } from 'react'
 
 import { Button, IconButton, Stack, Tooltip, Typography, useTheme } from '@mui/material'
+import { FiFileText } from '@react-icons/all-files/fi/FiFileText'
 
-import { Iconify } from '@/components/iconify'
 import { type ILesson } from '@/redux/interfaces/content.interface'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
@@ -34,9 +34,9 @@ const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson, ico
         placement='top'
       >
         <IconButton className='lessonsTourMobile'>
-          <Iconify
-            icon='iconoir:page'
-            color={iconColor ?? 'inherit'}
+          <FiFileText
+            size={20}
+            style={{ color: iconColor ?? 'inherit' }}
           />
         </IconButton>
       </Tooltip>

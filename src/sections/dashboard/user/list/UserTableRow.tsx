@@ -14,6 +14,9 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import NextLink from 'next/link'
 
 import { SOCIAL_ICONS } from '@/assets/data'
@@ -189,7 +192,7 @@ export default function UserTableRow({
             color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <CgMoreVerticalAlt />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -207,7 +210,7 @@ export default function UserTableRow({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
 
@@ -217,7 +220,7 @@ export default function UserTableRow({
             handleClosePopover()
           }}
         >
-          <Iconify icon='eva:edit-fill' />
+          <GoPencil />
           {translate('actions_edit')}
         </MenuItem>
       </MenuPopover>

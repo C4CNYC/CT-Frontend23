@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useRef } from 'react'
 
-import omitBy from 'lodash/omitBy'
+import { omitBy } from 'lodash'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 

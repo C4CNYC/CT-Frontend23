@@ -1,5 +1,6 @@
 import { IconButton, Stack, Typography } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { AnimatePresence, m } from 'framer-motion'
 
 import { fData } from '@/utils'
@@ -128,7 +129,7 @@ export default function MultiFilePreview({
                   onRemove(file)
                 }}
               >
-                <Iconify icon='eva:close-fill' />
+                <IoClose />
               </IconButton>
             )}
           </Stack>

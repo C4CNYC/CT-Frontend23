@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
+import { HiEye } from '@react-icons/all-files/hi/HiEye'
+import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
 
-import { Iconify, RHFTextField } from '@/components'
+import { RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { styledRegisterInput } from '../../styles'
@@ -73,7 +75,7 @@ export default function AddTeacher({
                   edge='end'
                   sx={{ color: '#02D3D7' }}
                 >
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </IconButton>
               </InputAdornment>
             ),

@@ -2,6 +2,7 @@ import { useRef } from 'react'
 
 import { Box, IconButton } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { SnackbarProvider, SnackbarKey } from 'notistack'
 
 import { Iconify, IconifyProps } from '../iconify'
@@ -71,7 +72,7 @@ export function SnackbarProviderWrapper({
             onClick={onClose(key)}
             sx={{ p: 0.5 }}
           >
-            <Iconify icon='eva:close-fill' />
+            <IoClose />
           </IconButton>
         )}
       >

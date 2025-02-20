@@ -188,7 +188,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   useEffect(() => {
     dispatch(setNextStepAble(false))
     handleDebouncedCallback(() => {
-      if (slideIndex > (lastSlide?.slideNumber || -1)) onUpdateLastSlide(slideIndex)
+      if (slideIndex >= 0) onUpdateLastSlide(slideIndex)
     })
   }, [slideIndex])
 

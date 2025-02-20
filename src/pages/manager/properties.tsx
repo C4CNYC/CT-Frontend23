@@ -14,6 +14,8 @@ import {
   TableRow,
 } from '@mui/material'
 import { Container, Stack } from '@mui/system'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
 import { format } from 'date-fns'
 import omit from 'lodash-es/omit'
 import Head from 'next/head'
@@ -53,7 +55,6 @@ import {
   useGetPropertiesQuery,
   useDeletePropertyMutation,
 } from '@root/src/redux/services/manager/properties-manager'
-
 ManagerProperties.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 )
@@ -127,7 +128,7 @@ export default function ManagerProperties(): React.ReactElement {
               <PropertiesCreateEdit>
                 <Button
                   variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
+                  startIcon={<FaPlus />}
                 >
                   {translate('properties')}
                 </Button>
@@ -234,7 +235,7 @@ export default function ManagerProperties(): React.ReactElement {
                                 defaultValues={omit(row, ['updatedAt', 'createdAt', 'id'])}
                               >
                                 <IconButton>
-                                  <Iconify icon='material-symbols:edit' />
+                                  <MdOutlineModeEdit />
                                 </IconButton>
                               </PropertiesCreateEdit>
                               <IconButton

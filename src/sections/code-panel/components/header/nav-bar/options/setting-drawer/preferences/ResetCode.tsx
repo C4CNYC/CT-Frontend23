@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
+import { GrPowerReset } from '@react-icons/all-files/gr/GrPowerReset'
 
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
 
 import BasePreference from './BasePreference'
@@ -16,12 +16,9 @@ const ResetCode = (): React.ReactElement => {
           <Button
             fullWidth
             variant='contained'
-            sx={{ mt: 1 }}
+            sx={{ gap: 1 }}
           >
-            <Iconify
-              mr='7px'
-              icon='carbon:reset'
-            />
+            <GrPowerReset size={18} />
             {translate('reset_code')}
           </Button>
         </ResetLessonConfirm>

@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardProps, IconButton, Typography } from '@mui/material'
-import { FaPlus } from '@react-icons/all-files/fa/FaPlus'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 
 import { IGoals } from '@/redux/interfaces/goals.interface'
 import { useTranslate } from '@/utils/translateHelper'

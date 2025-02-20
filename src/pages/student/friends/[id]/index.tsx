@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
 import { Box, Card, Container, Skeleton, Tab, Tabs } from '@mui/material'
+import { RiAccountBoxFill } from '@react-icons/all-files/ri/RiAccountBoxFill'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, Iconify, useSettingsContext } from '@/components'
+import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { IUser } from '@/redux/interfaces/auth.interface'
 import { useGetFriendQuery } from '@/redux/services/manager/friends-manager'
@@ -28,7 +29,7 @@ export default function FriendProfile(): React.ReactElement {
     {
       value: 'profile',
       label: 'Profile',
-      icon: <Iconify icon='ic:round-account-box' />,
+      icon: <RiAccountBoxFill />,
       component: (
         <ProfileMain
           data={data as unknown as IUser}

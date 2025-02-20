@@ -9,7 +9,7 @@ import { useSnackbar } from 'notistack'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { Iconify, MenuPopover } from '@/components'
+import { MenuPopover } from '@/components'
 import { useSettingsContext } from '@/components/settings'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { setStartTour } from '@/redux/slices/tour'
@@ -23,7 +23,6 @@ import config, { ILinks } from './config'
 import {
   DESKTOP_ANCHOR_ORIGIN,
   HAMBURGER_SIZE,
-  MENU_ICONIFY,
   MENU_ITEM_STYLES,
   MENU_ITEM_TYPOGRAFY,
   MENU_POPOVER_STYLES,
@@ -129,11 +128,7 @@ const Menu = (): React.ReactElement => {
                   }
                 }}
               >
-                <Iconify
-                  sx={MENU_ICONIFY}
-                  icon={menuItem.icon}
-                />
-
+                {menuItem.icon}
                 <Box pr={1}>
                   <Typography
                     sx={MENU_ITEM_TYPOGRAFY}
@@ -163,10 +158,7 @@ const Menu = (): React.ReactElement => {
                   sx={MENU_ITEM_STYLES}
                   onClick={handleClosePopover}
                 >
-                  <Iconify
-                    sx={MENU_ICONIFY}
-                    icon={menuItem.icon}
-                  />
+                  {menuItem.icon}
 
                   <Box pr={1}>
                     <Typography

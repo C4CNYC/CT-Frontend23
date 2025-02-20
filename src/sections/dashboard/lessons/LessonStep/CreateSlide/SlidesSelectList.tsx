@@ -1,4 +1,5 @@
 import { Box, Card, IconButton, ListItemText, Link, Stack } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 
 import { Image } from '@/components/image/Image'
 import { Iconify } from '@root/src/components'
@@ -66,7 +67,7 @@ export const SlideSelectList = (props: SlideSelectListProps) => {
                 sx={{ position: 'relative', p: (theme) => theme.spacing(0, 2.5, 2.5, 2.5) }}
               >
                 <IconButton sx={{ position: 'absolute', bottom: 20, right: 8 }}>
-                  <Iconify icon='eva:more-vertical-fill' />
+                  <CgMoreVerticalAlt />
                 </IconButton>
 
                 {[

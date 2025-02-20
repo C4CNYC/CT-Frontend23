@@ -3,11 +3,13 @@ import { useState } from 'react'
 import { Box, Card, Container, Stack, Tab, Tabs } from '@mui/material'
 import { BsPeopleFill } from '@react-icons/all-files/bs/BsPeopleFill'
 import { MdContacts } from '@react-icons/all-files/md/MdContacts'
+import { MdSettingsApplications } from '@react-icons/all-files/md/MdSettingsApplications'
+import { RiAccountBoxFill } from '@react-icons/all-files/ri/RiAccountBoxFill'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
-import { Iconify, UploadImageModal, useSettingsContext } from '@/components'
+import { UploadImageModal, useSettingsContext } from '@/components'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
 import {
   useGetSchoolProfileQuery,
@@ -46,13 +48,13 @@ export default function UserProfilePage(): React.ReactElement {
     {
       value: 'profile',
       label: 'general',
-      icon: <Iconify icon='ic:round-account-box' />,
+      icon: <RiAccountBoxFill />,
       component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
       value: 'settings',
       label: 'settings',
-      icon: <Iconify icon='ic:baseline-settings-applications' />,
+      icon: <MdSettingsApplications />,
       component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {

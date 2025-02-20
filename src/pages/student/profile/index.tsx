@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
 import { Box, Card, Container, Skeleton, Tab, Tabs } from '@mui/material'
+import { IoEarthOutline } from '@react-icons/all-files/io5/IoEarthOutline'
+import { RiAccountBoxFill } from '@react-icons/all-files/ri/RiAccountBoxFill'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, Iconify, useSettingsContext } from '@/components'
+import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useProfileQuery } from '@/redux/services/auth'
 import { useSelector } from '@/redux/store'
@@ -12,7 +14,6 @@ import ProfileCover from '@/sections/student-profile/ProfileCover'
 import ProfileLinks from '@/sections/student-profile/ProfileLinks'
 import ProfileMain from '@/sections/student-profile/ProfileMain'
 import { useTranslate } from '@/utils/translateHelper'
-
 UserProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 )
@@ -31,7 +32,7 @@ export default function UserProfile(): React.ReactElement {
     {
       value: 'profile',
       label: 'profile',
-      icon: <Iconify icon='ic:round-account-box' />,
+      icon: <RiAccountBoxFill />,
       component: (
         <ProfileMain
           data={data}
@@ -43,7 +44,7 @@ export default function UserProfile(): React.ReactElement {
     {
       value: 'links',
       label: 'profile_links',
-      icon: <Iconify icon='nimbus:planet' />,
+      icon: <IoEarthOutline />,
       component: <ProfileLinks studentId={data?.student_profile?.id ?? ''} />,
     },
   ]

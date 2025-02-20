@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { IconButton, InputAdornment, Stack } from '@mui/material'
+import { HiEye } from '@react-icons/all-files/hi/HiEye'
+import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, Iconify, RHFTextField, useSnackbar } from '@/components'
+import { FormProvider, RHFTextField, useSnackbar } from '@/components'
 import { useInviteSubmitMutation } from '@/redux/services/admin/invite-admin'
 
 import { PATH_AUTH } from '../../routes/paths'
-
 interface FormValuesProps {
   password: string
   inviteId: string
@@ -84,7 +85,7 @@ export default function InviteForm(): React.ReactElement {
                   }}
                   edge='end'
                 >
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </IconButton>
               </InputAdornment>
             ),
@@ -103,7 +104,7 @@ export default function InviteForm(): React.ReactElement {
                   }}
                   edge='end'
                 >
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </IconButton>
               </InputAdornment>
             ),
