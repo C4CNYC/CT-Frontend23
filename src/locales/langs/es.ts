@@ -1136,6 +1136,7 @@ const es = {
   update_org_dialog_title: 'Actualizar Organización',
   create_new_name_label: 'Nombre de la organización',
   create_new_slug_label: 'Slug',
+  create_new_domain_label: 'Dominio',
   name_validation_msg: 'El nombre es obligatorio',
   slug_validation_msg_1:
     'El slug debe estar en minúsculas, no contener espacios ni números, y usar solo letras y guiones',

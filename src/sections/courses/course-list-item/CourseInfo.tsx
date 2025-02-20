@@ -4,7 +4,6 @@ import { MdCelebration } from '@react-icons/all-files/md/MdCelebration'
 
 import { ICourse } from '@/types'
 import { useTranslate } from '@/utils/translateHelper'
-import { useGetCoursContentQuery } from '@root/src/redux/services/manager/courses-student'
 import { convertDurationToHours } from '@root/src/utils/convertDurationToHours'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 import { detectZeroAmount } from '@root/src/utils/detectZeroAmount'
@@ -16,12 +15,8 @@ interface Props {
 export default function CourseInfo({ course }: Props): React.ReactElement {
   const { price, total_lessons: totalLessons, level } = course
   const translate = useTranslate()
-  const courseContent = useGetCoursContentQuery(
-    { id: course.id || '' },
-    { skip: !course.id || Boolean(course.units) }
-  ).data
   let minutes =
-    [...(courseContent?.units ? courseContent?.units : []), ...(course.units ? course.units : [])]
+    (course.units ? course.units : [])
       .filter((unit) => unit.active)
       .map((unit) => convertDurationToMins(unit.duration))
       .reduce((acc, unitDuration) => acc + unitDuration, 0) || 30
@@ -32,7 +27,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        maxWidth: priceIsZero ? '300px' : '450px',
+        maxWidth: priceIsZero ? '400px' : '450px',
         flexWrap: 'wrap',
       }}
     >
@@ -65,16 +60,18 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
           </Typography>
         </Box>
       )}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <MdCelebration size='18px' />
-        <Typography
-          variant='body2'
-          sx={{ color: 'inherit' }}
-        >
-          {totalLessons}{' '}
-          {totalLessons && totalLessons > 1 ? translate('lessons') : translate('lesson')}
-        </Typography>
-      </Box>
+      {totalLessons ? (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <MdCelebration size='18px' />
+          <Typography
+            variant='body2'
+            sx={{ color: 'inherit' }}
+          >
+            {totalLessons}{' '}
+            {totalLessons && totalLessons > 1 ? translate('lessons') : translate('lesson')}
+          </Typography>
+        </Box>
+      ) : null}
     </Stack>
   )
 }

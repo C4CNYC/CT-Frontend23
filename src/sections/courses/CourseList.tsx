@@ -24,15 +24,22 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
     FilterMode.global
   )
   const profile = useSelector((state) => state.global.user)
-  const { data, isLoading, isFetching } = useGetCourseQuery(
-    { take: 50 },
-    { skip: publicPage || !profile }
-  )
+  const publicOrNotProfile = publicPage || !profile
+  const {
+    data: privateData,
+    isLoading: privateLoading,
+    isFetching: privateFetching,
+  } = useGetCourseQuery({ take: 50 }, { skip: publicOrNotProfile })
+
   const {
     data: publicData,
-    isLoading: publicIsLoading,
+    isLoading: publicLoading,
     isFetching: publicFetching,
-  } = useGetPublicCourseQuery(filters, { skip: !!profile })
+  } = useGetPublicCourseQuery(filters, { skip: !publicOrNotProfile })
+
+  const data = publicOrNotProfile ? publicData : privateData
+  const isLoading = privateLoading || publicLoading
+  const isFetching = privateFetching || publicFetching
 
   const translate = useTranslate()
 
@@ -42,7 +49,7 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
       .map((v, i) => <SkeletonCourse key={i + 14} />)
   }
 
-  if ((!publicPage && isLoading) || (publicPage && publicIsLoading)) {
+  if (isLoading) {
     return (
       <Stack
         direction='column'
@@ -68,22 +75,9 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
         gap={3}
         sx={{ pb: 4 }}
       >
-        {publicPage || !profile ? (
-          publicFetching ? (
-            <>{createSkeletonList()}</>
-          ) : publicData?.data?.length ? (
-            publicData?.data?.map((el) => (
-              <CoursesItem
-                course={el}
-                key={el.id}
-              />
-            ))
-          ) : (
-            <EmptyContent title={translate('courses_empty')} />
-          )
-        ) : isFetching ? (
+        {isFetching ? (
           <>{createSkeletonList()}</>
-        ) : data?.data.length ? (
+        ) : data?.data?.length ? (
           data?.data?.map((el) => (
             <CoursesItem
               course={el}
@@ -91,7 +85,7 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
             />
           ))
         ) : (
-          <EmptyContent title={translate('messages_no_data')} />
+          <EmptyContent title={translate('courses_empty')} />
         )}
       </Stack>
     </SimpleInfiniteList>

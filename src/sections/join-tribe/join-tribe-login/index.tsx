@@ -50,7 +50,7 @@ export default function JoinTribeLogin({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      await login(data.email, data.password, 'codetribe')
+      await login(data.email, data.password)
       push(
         `${STUDENT_PATH_DASHBOARD.class.id(classId)}?` +
           `${new URLSearchParams({ joinCode: query.id as string })}`

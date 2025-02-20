@@ -5,23 +5,22 @@ import DialogContent from '@mui/material/DialogContent'
 import { useRouter } from 'next/router'
 
 import { useBoolean } from '../hooks/useBoolean'
+import { useTenants } from '../hooks/useTenants'
 import { HomePageType } from '../redux/services/enums/administration.enum'
 import { useGetOrgHomePageQuery } from '../redux/services/public/tribe-public'
 import { PATH_AUTH } from '../routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '../routes/student.paths'
 import AIGenerateStepper from '../sections/on-boarding-register/teacher/ai-generete-stepper'
 
-const SLUG_PATTERN = /https?:\/\/([^.:/]+)/
-
 export default function AiGeneratePage(): React.ReactElement {
   const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
   const [prompt, promptSet] = useState('')
   const [open, setOpen, setClose] = useBoolean(false)
-  const [slug, setSlug] = useState<null | string>(null)
   const [page, setPage] = useState<string>('')
+  const tenant = useTenants()
 
-  const { data } = useGetOrgHomePageQuery({ slug: slug as string }, { skip: !slug })
+  const { data } = useGetOrgHomePageQuery({ tenantName: tenant?.name || '' }, { skip: !tenant })
 
   useEffect(() => {
     if (containerRef.current) {
@@ -35,14 +34,6 @@ export default function AiGeneratePage(): React.ReactElement {
         }
         elGenerate.onclick = setOpen
       }
-    }
-
-    const origin =
-      typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
-    const originSlug = origin.match(SLUG_PATTERN)
-
-    if (originSlug) {
-      setSlug(originSlug[1])
     }
   }, [])
 
@@ -60,7 +51,6 @@ export default function AiGeneratePage(): React.ReactElement {
       }
       case HomePageType.Custom: {
         setPage(data.home_page_body ?? '')
-        localStorage.setItem('tenantName', slug ?? 'codetribe')
         break
       }
       case HomePageType.Catalog: {
@@ -70,7 +60,7 @@ export default function AiGeneratePage(): React.ReactElement {
       default:
         router.push(PATH_AUTH.onBoardingStudent)
     }
-  }, [data])
+  }, [data, tenant])
 
   if (!page) return <></>
 

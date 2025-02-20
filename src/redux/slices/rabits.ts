@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import * as _ from 'lodash-es'
+import omit from 'lodash-es/omit'
 
 const initialState: {
   items: Record<string, { id: string; email: string; avatar: string }>
@@ -17,7 +17,7 @@ export const rabitsSlice = createSlice({
     },
     removeRabit: (state, action: PayloadAction<{ id: string }>) => {
       state.items = {
-        ..._.omit(state.items, action.payload.id),
+        ...omit(state.items, action.payload.id),
       }
     },
   },

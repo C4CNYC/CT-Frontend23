@@ -17,9 +17,9 @@ export const publicApi = createApi({
         method: 'GET',
       }),
     }),
-    getOrgHomePage: builder.query<IAdministration & BaseResponseInterface, { slug: string }>({
-      query: ({ slug }) => ({
-        url: `tenant/${slug}/home-page`,
+    getOrgHomePage: builder.query<IAdministration & BaseResponseInterface, { tenantName: string }>({
+      query: ({ tenantName }) => ({
+        url: `tenant/${tenantName}/home-page`,
         method: 'GET',
       }),
     }),

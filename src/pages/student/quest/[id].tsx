@@ -14,7 +14,7 @@ import {
   useGetAssignmentStudentPublicQuery,
 } from '@/redux/services/manager/assignments-student'
 import { useGetCoursQuery } from '@/redux/services/manager/courses-student'
-import { useGetLessonStudentQuery } from '@/redux/services/manager/lesson-student'
+import { useGetLessonStudentWithoutContentsQuery } from '@/redux/services/manager/lesson-student'
 import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import LessonItem from '@/sections/module/lesson-item'
@@ -50,7 +50,7 @@ export default function Quest(): React.ReactElement | null {
     { skip: !data?.course?.id || !profile }
   )
 
-  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
+  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentWithoutContentsQuery(
     { id: data?.lessonId as string },
     { skip: !data?.lessonId }
   )

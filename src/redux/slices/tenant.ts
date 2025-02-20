@@ -6,6 +6,7 @@ export interface Tenant {
   logo: string
   min_logo: string
   favicon: string
+  home_page_type?: string
 }
 
 export const DEFAULT_TENANT: Tenant = {
