@@ -107,7 +107,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     try {
       const accessToken = storageAvailable ? localStorage.getItem('accessToken') : ''
 
-      const tenantName = localStorage.getItem('tenantName') ?? 'codetribe'
+      const tenantName = getTenantFromDomain()
       const isManagerRoute = window.location.pathname.includes('manager/')
 
       if (accessToken && isValidToken(accessToken)) {
@@ -169,8 +169,27 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     })
   }
 
+  const getTenantFromDomain = (): string => {
+    const domain = window.location.hostname
+    const subdomain = domain.split('.')[0]
+    let tenantName = ''
+
+    switch (subdomain) {
+      case 'localhost':
+        tenantName = 'codetribe'
+        break
+      default:
+        tenantName = subdomain ?? 'codetribe'
+    }
+
+    localStorage.setItem('tenantName', tenantName)
+
+    return tenantName
+  }
+
   // LOGIN
-  const login = useCallback(async (email: string, password: string, tenantName?: string) => {
+  const login = useCallback(async (email: string, password: string) => {
+    const tenantName = getTenantFromDomain()
     try {
       if (tenantName) localStorage.setItem('tenantName', tenantName)
       const { data } = await axios.post<any, any>('auth/signin', {
@@ -195,13 +214,15 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
 
   // LOGIN WITH GOOGLE
   const loginWithGoogle = async (token: string) => {
+    const tenantName = getTenantFromDomain()
+
     const { data } = await axios.post<any, any>('auth/google-signin', {
       auth_token: token,
     })
 
     const { access_token: accessToken, user } = data
     reduxDispatch(setUser(user))
-    setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
+    setSession(accessToken, tenantName)
 
     dispatch({
       type: Types.LOGIN,
@@ -213,6 +234,8 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
 
   // Register WITH GOOGLE
   const registerWithGoogle = async (token: string, role: Role) => {
+    const tenantName = getTenantFromDomain()
+
     try {
       const { data } = await axios.post<any, any>('auth/google-signup', {
         auth_token: token,
@@ -221,7 +244,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
 
       const { access_token: accessToken, user } = data
       reduxDispatch(setUser(user))
-      setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
+      setSession(accessToken, tenantName)
 
       dispatch({
         type: Types.REGISTER,
@@ -243,7 +266,6 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       lastName,
       emojiAvatar,
       role,
-      tenantName,
     }: {
       email: string
       password: string
@@ -251,14 +273,9 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       lastName: string
       emojiAvatar?: string
       role: Role
-      tenantName?: string
     }) => {
-      if (tenantName) {
-        await axios.post('/tenant', {
-          name: tenantName,
-        })
-        localStorage.setItem('tenantName', tenantName)
-      }
+      const tenantName = getTenantFromDomain()
+
       const { data } = await axios.post('/auth/signup', {
         email,
         password,
@@ -273,33 +290,10 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       localStorage.setItem('accessToken', accessToken)
 
       reduxDispatch(setUser(user))
-      setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
+      setSession(accessToken, tenantName)
 
       dispatch({
         type: Types.REGISTER,
-        payload: {
-          user,
-        },
-      })
-    },
-    []
-  )
-
-  const registerToOrganization = useCallback(
-    async (email: string, password: string, firstName: string, lastName: string) => {
-      const { data } = await axios.post('/auth/signup', {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-      })
-      const { access_token: accessToken, user } = data
-      reduxDispatch(setUser(user))
-
-      localStorage.setItem('accessToken', accessToken)
-
-      dispatch({
-        type: Types.REGISTER_TO_ORGANIZATION,
         payload: {
           user,
         },
@@ -334,7 +328,6 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       loginWithGithub: voidFunction,
       loginWithTwitter: voidFunction,
       register,
-      registerToOrganization,
       logout,
     }),
     [
