@@ -30,6 +30,8 @@ export function TablePaginationCustom({
   return (
     <Box sx={{ position: 'relative', ...sx }}>
       <TablePagination
+        labelRowsPerPage={translate('rows_per_page')}
+        labelDisplayedRows={({ from, to, count }) => `${from}-${to} ${translate('of')} ${count}`}
         rowsPerPageOptions={rowsPerPageOptions}
         component='div'
         {...other}

@@ -8,8 +8,8 @@ import { axios } from '@/utils/axios'
 import { localStorageAvailable } from '@/utils/localStorageAvailable'
 import { voidFunction } from '@/utils/voidFunction'
 
-import { defaultLang } from '../locales/config-lang'
 import { resetTenant, setTenant, Tenant } from '../redux/slices/tenant'
+import { LocalStorageWhitelist } from '../utils/localStorageWhitelist'
 
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
 import { isValidToken, setSession } from './utils'
@@ -312,14 +312,11 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     setSession(null, null)
     reduxDispatch(cleanUser())
     reduxDispatch(cleanUserRole())
-    const lang = localStorage.getItem('i18nextLng')
-    // Tours has "HAS_SEEN_" pattern inside, we keep them
-    for (let i = localStorage.length; i >= 0; i--) {
-      if (!localStorage.key(i - 1)?.includes('SEEN')) {
-        localStorage.removeItem(localStorage.key(i - 1) ?? '')
+    Object.keys(localStorage).forEach((key) => {
+      if (!LocalStorageWhitelist.includes(key)) {
+        localStorage.removeItem(key)
       }
-    }
-    localStorage.setItem('i18nextLng', lang ?? defaultLang.value)
+    })
     dispatch({
       type: Types.LOGOUT,
     })
