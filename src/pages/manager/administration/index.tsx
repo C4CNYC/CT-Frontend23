@@ -13,6 +13,7 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
@@ -20,7 +21,6 @@ import { useSnackbar } from 'notistack'
 import {
   ConfirmDialog,
   CustomBreadcrumbs,
-  Iconify,
   Scrollbar,
   TableEmptyRows,
   TableHeadCustom,
@@ -171,7 +171,7 @@ export default function AdministrationPage(): React.ReactElement {
               <Button
                 sx={{ gap: 0.5 }}
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus />}
               >
                 {translate('create_new_org')}
               </Button>

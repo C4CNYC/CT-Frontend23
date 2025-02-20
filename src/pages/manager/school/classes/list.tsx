@@ -14,6 +14,7 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
@@ -22,7 +23,6 @@ import { useSelector } from 'react-redux'
 import {
   ConfirmDialog,
   CustomBreadcrumbs,
-  Iconify,
   Scrollbar,
   TableHeadCustom,
   TableNoData,
@@ -212,7 +212,7 @@ export default function UserListPage(): React.ReactElement {
             >
               <Button
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus />}
               >
                 {translate('classes_add_class')}
               </Button>

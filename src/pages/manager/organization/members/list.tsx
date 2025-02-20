@@ -13,6 +13,7 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import NextLink from 'next/link'
@@ -22,7 +23,6 @@ import { useSnackbar } from 'notistack'
 import {
   ConfirmDialog,
   CustomBreadcrumbs,
-  Iconify,
   Scrollbar,
   TableEmptyRows,
   TableHeadCustom,
@@ -180,7 +180,7 @@ export default function UserListPage(): React.ReactElement {
               component={NextLink}
               href={MANAGER_PATH_DASHBOARD.organization.new}
               variant='contained'
-              startIcon={<Iconify icon='eva:plus-fill' />}
+              startIcon={<FaPlus />}
             >
               {translate('members_btn_new_user')}
             </Button>

@@ -2,9 +2,8 @@ import { useState } from 'react'
 
 import { Avatar, Button, Dialog, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-
-import { Iconify } from '../iconify'
-
+import { GoPeople } from '@react-icons/all-files/go/GoPeople'
+import { SlLocationPin } from '@react-icons/all-files/sl/SlLocationPin'
 interface Prop {
   children: React.ReactElement
 }
@@ -45,7 +44,7 @@ export default function JoinLinkModal({ children }: Prop) {
             pt='13px'
             pr='34px'
           >
-            <Iconify icon='octicon:people-16' />
+            <GoPeople />
             <Typography
               fontSize='16px'
               ml='13px'
@@ -76,7 +75,7 @@ export default function JoinLinkModal({ children }: Prop) {
               display='flex'
               alignItems='center'
             >
-              <Iconify icon='bytesize:location' />
+              <SlLocationPin />
               <Typography
                 variant='h6'
                 ml='8px'

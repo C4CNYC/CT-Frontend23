@@ -10,8 +10,9 @@ import {
   Tooltip,
 } from '@mui/material'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 
-import { Iconify, MenuPopover } from '@/components'
+import { MenuPopover } from '@/components'
 import { IUser } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 interface Props {
@@ -58,7 +59,7 @@ export default function TeacherItem({
         <Button
           size='small'
           color='inherit'
-          endIcon={<Iconify icon='eva:chevron-down-fill' />}
+          endIcon={<IoIosArrowDown />}
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,

@@ -2,13 +2,14 @@ import { useState } from 'react'
 
 import { Box, Divider, Drawer, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { alpha, useTheme } from '@mui/material/styles'
+import { GrRefresh } from '@react-icons/all-files/gr/GrRefresh'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useRouter } from 'next/router'
 
 import { bgBlur } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { NAV_SIZES } from '../../../theme/consts'
-import { Iconify } from '../../iconify'
 import { Scrollbar } from '../../scrollbar'
 import { defaultSettings } from '../config-setting'
 import { useSettingsContext } from '../SettingsContext'
@@ -23,7 +24,6 @@ import LayoutOptions from './LayoutOptions'
 import ModeOptions from './ModeOptions'
 import StretchOptions from './StretchOptions'
 import ToggleButton from './ToggleButton'
-
 const SPACING = 2.5
 
 export default function SettingsDrawer(): React.ReactElement {
@@ -108,13 +108,13 @@ export default function SettingsDrawer(): React.ReactElement {
             <Box sx={{ position: 'relative' }}>
               {notDefault && <BadgeDot />}
               <IconButton onClick={onResetSetting}>
-                <Iconify icon='ic:round-refresh' />
+                <GrRefresh />
               </IconButton>
             </Box>
           </Tooltip>
 
           <IconButton onClick={handleClose}>
-            <Iconify icon='eva:close-fill' />
+            <IoClose />
           </IconButton>
         </Stack>
 

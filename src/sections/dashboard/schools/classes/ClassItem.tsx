@@ -1,11 +1,12 @@
 import { useState } from 'react'
 
 import { Avatar, Button, ListItem, ListItemAvatar, ListItemText, MenuItem } from '@mui/material'
+import { FiMoreVertical } from '@react-icons/all-files/fi/FiMoreVertical'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { useSnackbar } from 'notistack'
 
-import { Iconify, MenuPopover } from '@/components'
+import { MenuPopover } from '@/components'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { useUpdateClassMutation } from '@/redux/services/admin/school-amdin'
 import { useUpdateClassesAvatarMutation } from '@/redux/services/manager/classes-manager'
@@ -94,7 +95,7 @@ export default function ClassItem({
         <Button
           size='small'
           color='inherit'
-          endIcon={<Iconify icon='eva:more-vertical-fill' />}
+          endIcon={<FiMoreVertical />}
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,

@@ -11,6 +11,8 @@ import {
   TableRow,
 } from '@mui/material'
 import { Container, Stack } from '@mui/system'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
 import { format } from 'date-fns'
 import omit from 'lodash-es/omit'
 import Head from 'next/head'
@@ -37,7 +39,6 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
 import { useTranslate } from '@/utils/translateHelper'
-
 AppsPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function AppsPage(): React.ReactElement {
@@ -82,7 +83,7 @@ export default function AppsPage(): React.ReactElement {
               <ModalIntegration>
                 <Button
                   variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
+                  startIcon={<FaPlus />}
                 >
                   {translate('integrations_add_int')}
                 </Button>
@@ -148,7 +149,7 @@ export default function AppsPage(): React.ReactElement {
                               defaultValues={omit(row, ['updatedAt', 'createdAt', 'id'])}
                             >
                               <IconButton>
-                                <Iconify icon='material-symbols:edit' />
+                                <MdOutlineModeEdit />
                               </IconButton>
                             </ModalIntegration>
                             <IconButton

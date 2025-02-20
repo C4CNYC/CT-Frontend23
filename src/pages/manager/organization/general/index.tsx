@@ -1,10 +1,14 @@
 import { useState } from 'react'
 
 import { Box, Card, Container, Stack, Tab, Tabs } from '@mui/material'
+import { MdDashboardCustomize } from '@react-icons/all-files/md/MdDashboardCustomize'
+import { MdOutlineContacts } from '@react-icons/all-files/md/MdOutlineContacts'
+import { MdSettingsApplications } from '@react-icons/all-files/md/MdSettingsApplications'
+import { RiAccountBoxFill } from '@react-icons/all-files/ri/RiAccountBoxFill'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
-import { Iconify, UploadImageModal, useSettingsContext } from '@/components'
+import { UploadImageModal, useSettingsContext } from '@/components'
 import DashboardLayout from '@/layouts/dashboard'
 import {
   useGetOrganizationQuery,
@@ -18,7 +22,6 @@ import SettingsTab from '@/sections/dashboard/organization/general/tabs/settings
 import { ProfileCover } from '@/sections/dashboard/user/profile'
 import SkeletonSchool from '@/sections/schools/skeleton-school'
 import { useTranslate } from '@/utils/translateHelper'
-
 UserProfilePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function UserProfilePage(): React.ReactElement {
@@ -48,25 +51,25 @@ export default function UserProfilePage(): React.ReactElement {
     {
       value: 'profile',
       label: 'profile',
-      icon: <Iconify icon='ic:round-account-box' />,
+      icon: <RiAccountBoxFill />,
       component: <UserProfileTab />,
     },
     {
       value: 'settings',
       label: 'settings',
-      icon: <Iconify icon='ic:baseline-settings-applications' />,
+      icon: <MdSettingsApplications />,
       component: <SettingsTab />,
     },
     {
       value: 'customization',
       label: 'customization',
-      icon: <Iconify icon='ic:round-dashboard-customize' />,
+      icon: <MdDashboardCustomize />,
       component: <CustomizationTab />,
     },
     {
       value: 'contacts',
       label: 'Contacts',
-      icon: <Iconify icon='ic:outline-contacts' />,
+      icon: <MdOutlineContacts />,
       component: <ContactsTab />,
     },
   ]
