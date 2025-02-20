@@ -95,6 +95,7 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
             'https://devnest.s3.amazonaws.com/tenant_f072bcf3-5957-4f04-97da-f8e4c4c53439/students/1d549244-d686-40f9-8e23-15f6efcb1a08/avatar_1704981148061_.png'
           }
           sx={{ width: 32, height: 32, mr: 2 }}
+          imgProps={{ loading: 'lazy' }}
         />
       )}
 

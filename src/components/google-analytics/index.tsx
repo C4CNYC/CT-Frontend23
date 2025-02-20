@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Script from 'next/script'
 
 declare global {
@@ -9,13 +10,23 @@ declare global {
 export default function GoogleAnalytics(): React.ReactElement {
   return (
     <>
+      <Head>
+        <link
+          rel='preconnect'
+          href='https://www.googletagmanager.com'
+        />
+        <link
+          rel='preconnect'
+          href='https://analytics.google.com'
+        />
+      </Head>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=G-7F2RYWZ875`}
-        strategy='afterInteractive'
+        strategy='lazyOnload'
       />
       <Script
         id='google-tag'
-        strategy='afterInteractive'
+        strategy='lazyOnload'
       >
         {`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -27,7 +38,7 @@ export default function GoogleAnalytics(): React.ReactElement {
       </Script>
       <Script
         id='google-analytics'
-        strategy='afterInteractive'
+        strategy='lazyOnload'
       >
         {`
           window.dataLayer = window.dataLayer || [];
