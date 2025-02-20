@@ -2,8 +2,7 @@ import MuiAccordion, { AccordionProps } from '@mui/material/Accordion'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary'
 import { styled } from '@mui/material/styles'
-
-import { Iconify } from '../iconify'
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 
 export const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion
@@ -28,12 +27,7 @@ export const Accordion = styled((props: AccordionProps) => (
 
 export const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    expandIcon={
-      <Iconify
-        width='30px'
-        icon='material-symbols:keyboard-arrow-down'
-      />
-    }
+    expandIcon={<IoIosArrowDown />}
     {...props}
   />
 ))(({ theme }) => ({
