@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
+import SettingsIcon from '@mui/icons-material/Settings'
 import { IconButton, Stack, SwipeableDrawer, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
 import { useDispatch } from 'react-redux'
 
-import { Iconify } from '@/components/iconify'
 import { setSlideIndex } from '@/redux/slices/code-panel-global'
 import { setStartTour } from '@/redux/slices/tour'
 import { useTranslate } from '@/utils/translateHelper'
@@ -21,7 +22,6 @@ import EditorFontSize from './preferences/EditorFontSize'
 import EditorWordWrap from './preferences/EditorWordWrap'
 import IntroTour from './preferences/IntroTour'
 import ResetCode from './preferences/ResetCode'
-
 const SettingDrawer = (): React.ReactElement => {
   const dispatch = useDispatch()
   const translate = useTranslate()
@@ -45,7 +45,7 @@ const SettingDrawer = (): React.ReactElement => {
           setDrawer(true)
         }}
       >
-        <Iconify icon='ep:setting' />
+        <SettingsIcon />
       </IconButton>
       <SwipeableDrawer
         swipeAreaWidth={0}
@@ -71,13 +71,9 @@ const SettingDrawer = (): React.ReactElement => {
             <Box
               display='flex'
               alignItems='center'
+              gap={1}
             >
-              <Iconify
-                mr='10px'
-                width='35px'
-                height='30px'
-                icon='ep:setting'
-              />
+              <IoSettingsOutline size={25} />
 
               <Typography variant='h5'>{translate('settings')}</Typography>
             </Box>

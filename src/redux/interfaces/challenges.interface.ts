@@ -5,6 +5,7 @@ import { ILesson, IModule } from './content.interface'
 export type Unit = IModule &
   BaseResponseInterface & {
     lessons: Array<ILesson & BaseResponseInterface>
+    lessonToUnits?: { lesson: ILesson }[]
   }
 
 export interface IChallenges {

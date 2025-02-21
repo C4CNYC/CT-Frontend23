@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 
 import { Button, Stack } from '@mui/material'
+import { GrRefresh } from '@react-icons/all-files/gr/GrRefresh'
 
 import { Iconify } from '@root/src/components'
 import { useTranslate } from '@root/src/utils/translateHelper'
@@ -48,7 +49,7 @@ const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsP
         onClick={reloadIframe}
       >
         {translate('preview_controls_refresh')}
-        <Iconify icon='ic:round-refresh' />
+        <GrRefresh />
       </Button>
       {/* TODO:
       <Button
@@ -56,7 +57,7 @@ const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsP
         sx={{ ...btnPublish, ml: 'auto' }}
       >
         {translate('preview_controls_publish')}
-        <Iconify icon='mage:megaphone-a' />
+       
       </Button> */}
     </Stack>
   )

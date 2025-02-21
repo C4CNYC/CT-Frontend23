@@ -13,6 +13,8 @@ import {
   Link,
 } from '@mui/material'
 import { Box } from '@mui/system'
+import { FaXTwitter } from '@react-icons/all-files/fa6/FaXTwitter'
+import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -21,7 +23,6 @@ import { FormProvider, Iconify, RHFTextField, useSnackbar } from '@root/src/comp
 import { useCopyToClipboard } from '@root/src/hooks'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { useTranslate } from '@root/src/utils/translateHelper'
-
 interface LessonSchareModalProps {
   children?: React.ReactElement
 }
@@ -122,7 +123,9 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             {translate('share_modal_assign_class')}
           </Typography>
           <Button
-            onClick={() => push(STUDENT_PATH_DASHBOARD.class.root)}
+            component={NextLink}
+            href={STUDENT_PATH_DASHBOARD.class.root}
+            target='_blank'
             fullWidth
             sx={CREATE_QUEST_BTN_SX}
           >
@@ -162,17 +165,15 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
               href={`https://twitter.com/intent/tweet?text=${socialText}%20@codetriber%20%23AIForEducation`}
             >
               <Button sx={SHARE_BTN_SX}>
-                <Iconify icon='ri:twitter-x-line' />
+                <FaXTwitter />
               </Button>
             </Link>
             {/* <Link href=''>
               <Button sx={SHARE_BTN_SX}>
-                <Iconify icon='basil:facebook-outline' />
               </Button>
             </Link>
             <Link href=''>
               <Button sx={SHARE_BTN_SX}>
-                <Iconify icon='basil:linkedin-outline' />
               </Button>
             </Link> */}
           </Stack>

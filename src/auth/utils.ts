@@ -59,17 +59,14 @@ export const setSession = (accessToken: string | null, tenantName: string | null
     localStorage.setItem('accessToken', accessToken)
 
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
-    axios.defaults.headers.common['x-tenant-id'] = tenantName
 
     // This function below will handle when token is expired
     const { exp } = jwtDecode(accessToken) // ~3 days by minimals server
     tokenExpired(Number(exp))
   } else {
     localStorage.removeItem('accessToken')
-    localStorage.removeItem('tenantName')
 
     delete axios.defaults.headers.common.Authorization
-    delete axios.defaults.headers.common['x-tenant-id']
   }
 }
 

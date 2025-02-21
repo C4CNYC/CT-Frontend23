@@ -12,12 +12,13 @@ import {
   Typography,
   alpha,
 } from '@mui/material'
+import { FaCheck } from '@react-icons/all-files/fa/FaCheck'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
-import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
+import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import {
@@ -28,7 +29,6 @@ import {
 import { RootState } from '@/redux/store'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-
 type StudentType = IStudent & BaseResponseInterface
 
 interface IClassMembersAutocompleteProps {
@@ -194,7 +194,7 @@ export default function ClassMembersAutocomplete({
                   }),
                 }}
               >
-                <Iconify icon='eva:checkmark-fill' />
+                <FaCheck />
               </Box>
             </Box>
 

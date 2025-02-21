@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import { AppCacheProvider as EmotionAppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter'
 import { LocalizationProvider } from '@mui/x-date-pickers'
@@ -25,8 +25,8 @@ import 'simplebar/dist/simplebar.css'
 import '@/lib/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import { useAuthContext } from '../auth/useAuthContext'
+import { useTenants } from '../hooks/useTenants'
 import { setSocket } from '../redux/slices/code-panel-global'
-import { DEFAULT_TENANT, Tenant } from '../redux/slices/tenant'
 import generateId from '../utils/generate-id'
 
 type NextPageWithLayout = NextPage & {
@@ -38,20 +38,8 @@ interface MyAppProps extends AppProps {
 }
 
 export default function MyApp({ Component, pageProps, ...props }: MyAppProps): React.ReactElement {
-  const [tenant, setTenant] = useState<Tenant>()
+  const tenant = useTenants()
   const getLayout = Component.getLayout ?? ((page) => page)
-
-  const subdomain = useMemo(() => {
-    if (typeof window === 'object') {
-      let subdomain = window.location.hostname.split('.')[0]
-
-      if (subdomain) {
-        return subdomain === 'localhost' ? 'codetribe' : subdomain
-      }
-    }
-
-    return 'codetribe'
-  }, [])
 
   const favicon = useMemo(() => {
     return (
@@ -76,20 +64,6 @@ export default function MyApp({ Component, pageProps, ...props }: MyAppProps): R
       </>
     )
   }, [tenant])
-
-  useEffect(() => {
-    async function fetchTenant() {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tenant/${subdomain}`)
-        const data = await res.json()
-        setTenant(data)
-      } catch (error) {
-        setTenant(DEFAULT_TENANT)
-      }
-    }
-
-    fetchTenant()
-  }, [subdomain])
 
   return (
     <EmotionAppCacheProvider {...props}>

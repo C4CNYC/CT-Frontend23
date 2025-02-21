@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
 import { Collapse, IconButton, List, ListItem, Stack, Typography } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
+import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
 import Image from 'next/image'
 import { useSnackbar } from 'notistack'
 
-import { Iconify } from '@/components/iconify'
 import {
   useDeleteTeacherMutation,
   useGetTeacherListQuery,
@@ -71,7 +73,7 @@ export default function TeacherSection({
               variant='subtitle2'
             >
               {translate('teachers')}
-              <Iconify icon={open ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />
+              {open ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </Typography>
 
             <IconButton
@@ -91,7 +93,7 @@ export default function TeacherSection({
                 },
               }}
             >
-              <Iconify icon='eva:plus-fill' />
+              <FaPlus />
             </IconButton>
           </Stack>
           <Collapse in={open}>

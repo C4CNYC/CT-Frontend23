@@ -79,6 +79,15 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       keepUnusedDataFor: 0,
     }),
+    getLessonStudentWithoutContents: builder.query<ILesson & BaseResponseInterface, { id: string }>(
+      {
+        query: ({ id }) => ({
+          url: `/student/lesson/without-contents/${id}`,
+          method: 'GET',
+        }),
+        keepUnusedDataFor: 0,
+      }
+    ),
     getLessonsListStudent: builder.query<
       BaseListResponseInterface<ILesson & BaseResponseInterface>,
       ILessonSearchParams
@@ -133,6 +142,7 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetLessonContentStudentQuery,
+  useGetLessonStudentWithoutContentsQuery,
   useGetLessonStudentQuery,
   useGetLessonsListStudentQuery,
   useGetStudentLastVisitedUnitAndLessonQuery,

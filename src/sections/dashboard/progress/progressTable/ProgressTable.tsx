@@ -13,7 +13,9 @@ import { HiOutlineSquares2X2 } from '@react-icons/all-files/hi2/HiOutlineSquares
 import { LuPencil } from '@react-icons/all-files/lu/LuPencil'
 import { MdOutlineAutoMode } from '@react-icons/all-files/md/MdOutlineAutoMode'
 import { MdOutlineHome } from '@react-icons/all-files/md/MdOutlineHome'
-import * as _ from 'lodash-es'
+import at from 'lodash-es/at'
+import cloneDeep from 'lodash-es/cloneDeep'
+import uniqBy from 'lodash-es/uniqBy'
 
 import { TablePaginationCustom } from '@/components'
 import { SetFilterType } from '@/hooks'
@@ -95,7 +97,7 @@ export default function ProgressTable({
   const [orderedData, setOrderedData] = useState(data ?? [])
   const [selectedCourseIdx, setSelectedCourseIdx] = useState<number>(0)
   const [selectedModuleIdx, setSelectedModuleIdx] = useState<number>(0)
-  const courses = useMemo(() => _.uniqBy(orderedData?.[0]?.courses, 'id'), [orderedData])
+  const courses = useMemo(() => uniqBy(orderedData?.[0]?.courses, 'id'), [orderedData])
   const [selectedData, setSelectedData] = useState<DataType>([])
   const [orderBy, setOrderBy] = useState<string>('')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
@@ -145,12 +147,12 @@ export default function ProgressTable({
   }, [filters, courses])
 
   useEffect(() => {
-    const newData = _.cloneDeep(data)
+    const newData = cloneDeep(data)
     newData?.sort((a, b) => {
       // @ts-ignore
-      const valueA = _.at(a, orderBy)
+      const valueA = at(a, orderBy)
       // @ts-ignore
-      const valueB = _.at(b, orderBy)
+      const valueB = at(b, orderBy)
       if (valueA < valueB) return sortDirection === 'asc' ? -1 : 1
       if (valueA > valueB) return sortDirection === 'asc' ? 1 : -1
       return 0

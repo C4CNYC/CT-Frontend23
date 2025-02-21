@@ -14,8 +14,10 @@ import {
 } from '@mui/material'
 import { Stack } from '@mui/system'
 import Container from '@mui/system/Container'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
 import { format } from 'date-fns'
-import * as _ from 'lodash-es'
+import omit from 'lodash-es/omit'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
@@ -83,7 +85,7 @@ export default function Skills(): React.ReactElement {
               <UpdateModalSkills>
                 <Button
                   variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
+                  startIcon={<FaPlus />}
                 >
                   {translate('skills')}
                 </Button>
@@ -143,10 +145,10 @@ export default function Skills(): React.ReactElement {
                           >
                             <UpdateModalSkills
                               id={row.id}
-                              defaultValues={_.omit(row, ['updatedAt', 'createdAt', 'id'])}
+                              defaultValues={omit(row, ['updatedAt', 'createdAt', 'id'])}
                             >
                               <IconButton>
-                                <Iconify icon='material-symbols:edit' />
+                                <MdOutlineModeEdit />
                               </IconButton>
                             </UpdateModalSkills>
                             <IconButton

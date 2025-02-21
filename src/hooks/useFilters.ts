@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import * as _ from 'lodash-es'
+import omitBy from 'lodash-es/omitBy'
+import pick from 'lodash-es/pick'
 import { useRouter } from 'next/router'
 
 import { BaseSearchInterface } from '@/utils'
@@ -9,7 +10,7 @@ export const DEFAULT_TAKE_PER_PAGE = 10
 
 const defaultFilter: BaseSearchInterface = {
   page: 1,
-  take: 5,
+  take: DEFAULT_TAKE_PER_PAGE,
 }
 
 export enum FilterMode {
@@ -38,7 +39,7 @@ export const useFilters = <T>(filters: T, mode: FilterMode = FilterMode.local): 
     if (!query || mode !== FilterMode.global) return
     setFilter((prev) => ({
       ...filter,
-      ..._.pick(query, Object.keys(filter)),
+      ...pick(query, Object.keys(filter)),
     }))
   }, [query])
 
@@ -72,7 +73,7 @@ export const useFilters = <T>(filters: T, mode: FilterMode = FilterMode.local): 
         if (mode === FilterMode.global) {
           router.push(
             `${router.pathname}?${new URLSearchParams(
-              _.omitBy({ ...filter, page: 1, [name]: value }, (v) => !v) as Record<string, string>
+              omitBy({ ...filter, page: 1, [name]: value }, (v) => !v) as Record<string, string>
             )}`,
             undefined,
             { shallow: true }

@@ -1,78 +1,79 @@
-import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { useMemo } from 'react'
 
-import { ILesson } from '@/redux/interfaces/content.interface'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { Stack, Typography, useTheme } from '@mui/material'
+
+import { IModule, IModuleContent } from '@/redux/interfaces/content.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import OnlyAdmin from '@root/src/auth/OnlyAdmin'
 
 import AuthorsSection from './AuthorsSection'
 import BriefSection from './BriefSection'
-import CollasedItem from './components/CollasedItem'
+import CollapsedItem from './components/CollasedItem'
 import QuizPanel from './quiz-panel'
 import TeacherToolbox from './TeacherToolbox'
 
 interface IModuleSidebarProps {
-  description: string
-  level: string
-  lessonCount: string
-  grade: string
-  duration: string | null
-  teacherSlides?: string
-  lessonPlans?: string
-  teacherForum: string
-  certificate: number
-  likes: number
-  rated: number
-  lessons?: Array<ILesson & BaseResponseInterface>
+  module: IModule
+  moduleContent?: IModuleContent
 }
 
+// until the api will be ready
+
+const level = 'Beginner'
+const grade = '6th-10th Grade'
 export default function ModuleSidebar({
-  description,
-  level,
-  lessonCount,
-  duration,
-  grade,
-  certificate,
-  likes,
-  rated,
-  teacherSlides,
-  teacherForum,
-  lessonPlans,
-  lessons,
+  module,
+  moduleContent,
 }: IModuleSidebarProps): React.ReactElement {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('xl'))
   const translate = useTranslate()
+  const {
+    duration,
+    initial_enrolled: enrolled,
+    initial_likes: likes,
+    initial_stars: stars,
+    lessons,
+    description,
+  } = module
+
+  const moduleDuration = useMemo(
+    () =>
+      duration
+        ? Object.entries(duration)
+            .map(([dataType, count]) => {
+              ;`${count} ${dataType}`
+            })
+            .join(' ')
+        : '.5 hour',
+    [duration]
+  )
   return (
     <Stack
-      width={350}
+      maxWidth={300}
       gap={2}
-      m={isMobile ? '0 auto' : ''}
+      m={'0 auto'}
     >
       <OnlyAdmin>
-        <CollasedItem title={translate('courses_author_and_ranking')}>
+        <CollapsedItem
+          title={translate('courses_author_and_ranking')}
+          isDefaultOpen={true}
+        >
           <AuthorsSection
-            certificate={certificate ?? 0}
+            certificate={enrolled ?? 0}
             likes={likes ?? 0}
-            rated={rated ?? 0}
+            rated={stars ?? 0}
           />
-        </CollasedItem>
+        </CollapsedItem>
       </OnlyAdmin>
-      <CollasedItem title={translate('courses_brief')}>
+      <CollapsedItem title={translate('courses_brief')}>
         <BriefSection
-          lessons={lessonCount}
+          lessons={`${lessons?.length} ${translate('lessons')}`}
           grade={grade}
           level={level}
-          duration={duration ?? '20 min'}
+          duration={moduleDuration ?? '.5 hour'}
         />
-      </CollasedItem>
-      {/* <CollasedItem title="What you’ll build">
-        <></>
-      </CollasedItem> */}
-      {/* <CollasedItem title="Sample Certificate">
-        <></>
-      </CollasedItem> */}
-      <CollasedItem title={translate('courses_course_who_is_this_for')}>
+      </CollapsedItem>
+      <CollapsedItem title={translate('courses_course_who_is_this_for')}>
         <Typography
           sx={{
             p: 2,
@@ -82,18 +83,17 @@ export default function ModuleSidebar({
         >
           {description}
         </Typography>
-      </CollasedItem>
+      </CollapsedItem>
       <OnlyAdmin>
-        {' '}
         <QuizPanel lessons={lessons ?? []} />
       </OnlyAdmin>
-      <CollasedItem title={translate('courses_teacher_toolbox')}>
+      <CollapsedItem title={translate('courses_teacher_toolbox')}>
         <TeacherToolbox
-          teacherForum={teacherForum}
-          teacherSlides={teacherSlides}
-          lessonPlans={lessonPlans}
+          teacherForum={moduleContent?.teacher_forum}
+          teacherSlides={moduleContent?.teacher_slides}
+          lessonPlans={moduleContent?.lesson_plans}
         />
-      </CollasedItem>
+      </CollapsedItem>
     </Stack>
   )
 }

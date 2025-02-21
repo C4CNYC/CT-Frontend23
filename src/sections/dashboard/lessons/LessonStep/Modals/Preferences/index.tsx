@@ -14,7 +14,7 @@ import {
   Tabs,
 } from '@mui/material'
 import { TbPhoto } from '@react-icons/all-files/tb/TbPhoto'
-import * as _ from 'lodash-es'
+import omit from 'lodash-es/omit'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -130,7 +130,7 @@ export default function Preferences({
     try {
       await updateLessonContent({
         lessonId,
-        ..._.omit(data, ['body', 'createdAt', 'updatedAt']),
+        ...omit(data, ['body', 'createdAt', 'updatedAt']),
         type: defaultValues?.type,
         id: contentId,
       }).unwrap()

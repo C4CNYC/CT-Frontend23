@@ -1,7 +1,8 @@
 import { Box, Button, CircularProgress, Container } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, Iconify, useSettingsContext } from '@/components'
+import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import { ITaskSearchParams } from '@/redux/services/interfaces/task.interface'
@@ -46,7 +47,7 @@ export default function TasksListPage(): React.ReactElement {
             <CreateCodeDialog>
               <Button
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus />}
               >
                 Create Task
               </Button>

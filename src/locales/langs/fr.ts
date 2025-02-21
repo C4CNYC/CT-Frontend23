@@ -1155,6 +1155,7 @@ const fr = {
   update_org_dialog_title: "Mettre à jour l'organisation",
   create_new_name_label: "Nom de l'organisation",
   create_new_slug_label: 'Slug',
+  create_new_domain_label: 'Domaine',
   name_validation_msg: 'Le nom est requis',
   slug_validation_msg_1:
     'Le slug doit être en minuscules, ne contenir ni espaces ni chiffres, et utiliser uniquement des lettres et des tirets',
@@ -1368,7 +1369,8 @@ const fr = {
   intro_tour_step_1_desktop_subtitle:
     'C’est ici que tout l’apprentissage et la création se passent. 🤩',
   intro_tour_step_2_desktop_title: 'Les Diapositives',
-  intro_tour_step_2_desktop_subtitle: `Ici, vous découvrirez des choses passionnantes 💎💫 qui vous guideront sur quoi coder. ✍🏽 🤖 Suivez simplement étape par étape.`,
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
   intro_tour_step_3_desktop_title: 'Diapositives Défi',
   intro_tour_step_3_desktop_subtitle: `Vous voyez une diapositive Défi ⚔️ ? Cela signifie qu’il est temps de coder dans l’éditeur.`,
   intro_tour_step_4_desktop_title: 'Contrôles',

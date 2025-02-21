@@ -3,7 +3,7 @@ import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react
 import { Box, TextField, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
-import * as _ from 'lodash-es'
+import isEmpty from 'lodash-es/isEmpty'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 
@@ -187,7 +187,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   useEffect(() => {
     dispatch(setNextStepAble(false))
     handleDebouncedCallback(() => {
-      if (slideIndex > (lastSlide?.slideNumber || -1)) onUpdateLastSlide(slideIndex)
+      if (slideIndex >= 0) onUpdateLastSlide(slideIndex)
     })
   }, [slideIndex])
 
@@ -260,7 +260,7 @@ const SliderBlock: FC<ISliderBlock> = ({
             localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
           }}
         />
-      ) : _.isEmpty(data) ? (
+      ) : isEmpty(data) ? (
         <EmptyContent title={translate('messages_no_data')} />
       ) : (
         <>

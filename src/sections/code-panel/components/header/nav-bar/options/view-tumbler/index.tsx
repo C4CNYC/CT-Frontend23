@@ -2,9 +2,10 @@ import { type FC } from 'react'
 
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-
-import { Iconify } from '@/components/iconify'
-
+import { IoExpandOutline } from '@react-icons/all-files/io5/IoExpandOutline'
+import { LiaCompressArrowsAltSolid } from '@react-icons/all-files/lia/LiaCompressArrowsAltSolid'
+import { TbColumns1 } from '@react-icons/all-files/tb/TbColumns1'
+import { TbColumns3 } from '@react-icons/all-files/tb/TbColumns3'
 interface ViewToomblerProps {
   isFullScreenView: boolean
   isColumnHidden: boolean
@@ -18,9 +19,6 @@ const ViewTumbler: FC<ViewToomblerProps> = ({
   onChangeColumnVisability,
   onHandleFullScreen,
 }) => {
-  const columnIcon = isColumnHidden ? 'tabler:columns-3' : 'tabler:columns-1'
-  const screenViewIcon = isFullScreenView ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'
-
   return (
     <Box
       display='flex'
@@ -48,12 +46,12 @@ const ViewTumbler: FC<ViewToomblerProps> = ({
             onChangeColumnVisability(!isColumnHidden)
           }}
         >
-          <Iconify icon={columnIcon} />
+          {isColumnHidden ? <TbColumns3 /> : <TbColumns1 />}
         </IconButton>
       </Tooltip>
 
       <IconButton onClick={onHandleFullScreen}>
-        <Iconify icon={screenViewIcon} />
+        {isFullScreenView ? <LiaCompressArrowsAltSolid /> : <IoExpandOutline />}
       </IconButton>
     </Box>
   )

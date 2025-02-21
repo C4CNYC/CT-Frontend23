@@ -10,7 +10,7 @@ import {
 // import { Firestore } from "firebase/firestore";
 import { IconButton, keyframes, styled, useMediaQuery, useTheme } from '@mui/material'
 import { useAtom } from 'jotai'
-import * as _ from 'lodash-es'
+import capitalize from 'lodash-es/capitalize'
 import { useSelector } from 'react-redux'
 
 import { Iconify } from '../../iconify'
@@ -143,7 +143,7 @@ export const Chat = ({
         ) : null}
         <ConversationHeader.Content
           userName={
-            user ? `${_.capitalize(user?.first_name)} ${_.capitalize(user?.last_name)}` : 'Chat'
+            user ? `${capitalize(user?.first_name)} ${capitalize(user?.last_name)}` : 'Chat'
           }
         />
         <ConversationHeader.Actions>

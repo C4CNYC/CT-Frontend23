@@ -169,9 +169,9 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
   }
 
   // LOGIN
-  const login = useCallback(async (email: string, password: string, tenantName: string) => {
+  const login = useCallback(async (email: string, password: string, tenantName?: string) => {
     try {
-      localStorage.setItem('tenantName', tenantName)
+      if (tenantName) localStorage.setItem('tenantName', tenantName)
       const { data } = await axios.post<any, any>('auth/signin', {
         email,
         password,

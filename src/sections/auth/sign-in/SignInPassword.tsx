@@ -3,17 +3,18 @@ import { useEffect, useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/system'
+import { HiEye } from '@react-icons/all-files/hi/HiEye'
+import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
 import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import NextLink from 'next/link'
 import { StepWizardChildProps } from 'react-step-wizard'
 
-import { Iconify, RHFTextField } from '@/components'
+import { RHFTextField } from '@/components'
 import { PATH_AUTH } from '@/routes/paths'
 import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { RESER_PASS_SX, TYPO_CONT_SX, SINGIN_BTN_SX } from './constants'
-
 interface Props {
   isSubmiting: boolean
   isError: string
@@ -87,7 +88,7 @@ export default function SingInPassword({
                   edge='end'
                   sx={{ color: '#02D3D7' }}
                 >
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </IconButton>
               </InputAdornment>
             ),

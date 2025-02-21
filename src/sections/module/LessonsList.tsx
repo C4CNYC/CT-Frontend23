@@ -37,7 +37,6 @@ export default function LessonsList({ lessons, unitId }: ILessonListProps): Reac
       <Stack
         direction='row'
         alignSelf='flex-end'
-        mr={isMobile ? 0 : -4}
         gap={0.5}
       >
         <Button

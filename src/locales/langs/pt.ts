@@ -1138,6 +1138,7 @@ const pt = {
   update_org_dialog_title: 'Atualizar Organização',
   create_new_name_label: 'Nome da organização',
   create_new_slug_label: 'Slug',
+  create_new_domain_label: 'Domínio',
   name_validation_msg: 'Nome é obrigatório',
   slug_validation_msg_1:
     'O slug deve estar em minúsculas, não conter espaços ou números, e usar apenas letras e hífens',
@@ -1343,8 +1344,9 @@ const pt = {
   intro_tour_step_1_desktop_title: '💥 O Painel de Codificação 👩‍💻 💥',
   intro_tour_step_1_desktop_subtitle: 'Aqui é onde toda a aprendizagem e construção acontecem. 🤩',
   intro_tour_step_2_desktop_title: 'Os Slides',
-  intro_tour_step_2_desktop_subtitle: `Aqui você verá coisas empolgantes 💎💫 que dirão o que codificar. ✍🏽 🤖 Siga
-        passo a passo.`,
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
+
   intro_tour_step_3_desktop_title: 'Slides de Desafios',
   intro_tour_step_3_desktop_subtitle: `Viu um slide de Desafio ⚔️? Isso significa que é hora de codificar no editor.`,
   intro_tour_step_4_desktop_title: 'Controles',

@@ -12,11 +12,12 @@ import SvgIcon from '@mui/material/SvgIcon'
 import Tab from '@mui/material/Tab'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { MdDoneAll } from '@react-icons/all-files/md/MdDoneAll'
 import { m } from 'framer-motion'
 
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { varHover } from 'src/components/animate'
-import { Iconify } from 'src/components/iconify'
 import { Label } from 'src/components/label'
 import { Scrollbar } from 'src/components/scrollbar'
 
@@ -24,7 +25,6 @@ import { CustomTabs } from '../custom-tabs'
 
 import { NotificationItem } from './notification-item'
 import type { NotificationItemProps } from './notification-item'
-
 const TABS = [
   { value: 'all', label: 'All', count: 1 },
   { value: 'unread', label: 'Unread', count: 1 },
@@ -70,7 +70,7 @@ export function NotificationsDrawer({ data = [], sx, ...other }: NotificationsDr
             color='primary'
             onClick={handleMarkAllAsRead}
           >
-            <Iconify icon='eva:done-all-fill' />
+            <MdDoneAll />
           </IconButton>
         </Tooltip>
       )}
@@ -79,7 +79,7 @@ export function NotificationsDrawer({ data = [], sx, ...other }: NotificationsDr
         onClick={drawer.onFalse}
         sx={{ display: { xs: 'inline-flex', sm: 'none' } }}
       >
-        <Iconify icon='mingcute:close-line' />
+        <IoClose />
       </IconButton>
     </Stack>
   )

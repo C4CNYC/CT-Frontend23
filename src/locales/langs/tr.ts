@@ -1123,6 +1123,7 @@ const tr = {
   update_org_dialog_title: 'Organizasyonu güncelle',
   create_new_name_label: 'Organizasyon adı',
   create_new_slug_label: 'Slug',
+  create_new_domain_label: 'Domain',
   name_validation_msg: 'İsim gereklidir',
   slug_validation_msg_1:
     'Slug küçük harflerle olmalı, boşluk veya rakam içermemeli ve yalnızca harfler ile tireler kullanılmalıdır',
@@ -1330,7 +1331,8 @@ const tr = {
   intro_tour_step_1_desktop_title: '💥 Kodlama Paneli 👩‍💻 💥',
   intro_tour_step_1_desktop_subtitle: 'Burada tüm öğrenme ve yapma işlemleri gerçekleşir. 🤩',
   intro_tour_step_2_desktop_title: 'Slaytlar',
-  intro_tour_step_2_desktop_subtitle: `Burada heyecan verici şeyler göreceksiniz 💎💫 ve size ne kodlayacağınızı söyleyecekler. ✍🏽 🤖 Adım adım takip edin.`,
+  intro_tour_step_2_desktop_subtitle_1: `Şimdi heyecanlı bişeyler olacak. 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Sadece adım adım takip edin.`,
   intro_tour_step_3_desktop_title: 'Meydan Okuma Slaytları',
   intro_tour_step_3_desktop_subtitle: `Bir Meydan Okuma ⚔️ slaytı mı gördünüz? O zaman kodlamaya başlama zamanı.`,
   intro_tour_step_4_desktop_title: 'Kontroller',

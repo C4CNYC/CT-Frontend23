@@ -42,7 +42,7 @@ export default function SignInMain(): React.ReactElement {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await login(data.email, data.password, 'codetribe')
+      await login(data.email, data.password)
       replace(STUDENT_PATH_PAGE.home)
     } catch (e: any) {
       setError(e.message)
