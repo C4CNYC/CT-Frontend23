@@ -15,7 +15,6 @@ import {
 } from '@/redux/services/manager/assignments-student'
 import { useGetCoursQuery } from '@/redux/services/manager/courses-student'
 import { useGetLessonStudentWithoutContentsQuery } from '@/redux/services/manager/lesson-student'
-import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import LessonItem from '@/sections/module/lesson-item'
 import QuestDescription from '@/sections/quest/QuestDescription'
