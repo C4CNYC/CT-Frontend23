@@ -181,8 +181,9 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       default:
         tenantName = subdomain ?? 'codetribe'
     }
-
-    localStorage.setItem('tenantName', tenantName)
+    if (!localStorage.getItem('tenantName')) {
+      localStorage.setItem('tenantName', tenantName)
+    }
 
     return tenantName
   }
