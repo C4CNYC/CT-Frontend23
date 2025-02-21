@@ -72,16 +72,16 @@ function SchoolSwitcher() {
             py: 0.5,
             pl: 1,
             pr: 0.5,
-            gap: { xs: 0.5, [mediaQuery]: 1 },
+            gap: { xs: 0, [mediaQuery]: 1 },
             background: popover.open ? theme.palette.grey[300] : 'initial',
             borderRadius: '10px',
-            width: '160px',
+            width: { xs: '80px', [mediaQuery]: '160px' },
           }}
         >
           <Avatar
             alt={school?.name}
             src={school?.avatar ?? '/assets/icons/shool/school-icon.svg'}
-            sx={{ width: 24, height: 24 }}
+            sx={{ width: 24, height: 24, display: { xs: 'none', [mediaQuery]: 'block' } }}
             variant='square'
           />
 
