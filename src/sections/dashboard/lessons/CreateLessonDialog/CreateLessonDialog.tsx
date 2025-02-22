@@ -1,90 +1,30 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import {
-  Box,
-  Button,
-  DialogActions,
-  Stack,
-  Tab,
-  Tabs,
-  Tooltip,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Box, Button, DialogActions, Tab, Tabs, useTheme } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import InputAdornment from '@mui/material/InputAdornment'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSwitch, RHFTextField, useSnackbar } from '@/components'
+import { FormProvider, useSnackbar } from '@/components'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useProperties } from '@root/src/hooks/useProperties'
-import {
-  getToggleBtnGroupSx,
-  TOGGLE_BUTTON_GROUP_STYLES,
-} from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/constants'
 
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
+import { FormValuesProps, ICreateLessonDialogProps, timeConvertorToSeconds } from './constants'
+import { MainTab } from './MainTab'
 import SkillsTab from './SkillsTab'
-
-interface FormValuesProps {
-  name: string
-  description: string
-  active: boolean
-  independent: boolean
-  head?: string
-  type: 'practical' | 'exercise' | 'quiz'
-  duration: number
-  slug: string
-  autoRun: boolean
-  lock: boolean
-}
-
-export enum LessonTypeEnum {
-  simple = 'simple',
-  practical = 'practical',
-  start_project = 'start_project',
-  part_project = 'part_project',
-  exercise = 'exercise',
-  concept_exercises = 'concept_exercises',
-  quiz = 'quiz',
-  other = 'other',
-}
-
-interface IDefaultProps {
-  name: string
-  description: string
-  active: boolean
-  independent: boolean
-  head?: string
-  type: 'practical' | 'exercise' | 'quiz'
-  duration?: Record<string, number> | null | undefined
-  slug?: string
-  autoRun?: boolean
-  lock?: boolean
-}
-
-interface ICreateLessonDialogProps {
-  defaultValues?: IDefaultProps
-  children: React.ReactElement
-  isEdit?: boolean
-  id?: string
-  contentId?: string
-  refetch?: () => void
-}
 
 export default function CreateLessonDialog({
   id,
@@ -96,7 +36,6 @@ export default function CreateLessonDialog({
   const theme = useTheme()
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
-
   const translate = useTranslate()
 
   const [value, setValue] = useState(0)
@@ -105,11 +44,6 @@ export default function CreateLessonDialog({
   const [editLesson, { isLoading: isLoadingUpdate }] = useUpdateLessonMutation()
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
-
-  const toggleButtonStyles = useMemo(
-    () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
-    [theme.palette.mode]
-  )
 
   const [autoRun, autoRunSet, autoRunDelete] = useProperties({
     entityType: 'lesson',
@@ -122,18 +56,6 @@ export default function CreateLessonDialog({
     propertyName: 'lock',
   })
 
-  const timeConvertorToSeconds = (time: Record<string, number> | null | undefined) => {
-    if (time) {
-      return Object.entries(time).reduce((acc, [timeTipe, time]) => {
-        if (timeTipe === 'minutes') {
-          return (acc += time)
-        }
-        return (acc += time * 60 + acc * 60)
-      }, 0)
-    }
-    return 0
-  }
-
   const defaultLessonValue = {
     name: translate('default_values.createLesson.name'),
     description: translate('default_values.createLesson.description'),
@@ -143,13 +65,10 @@ export default function CreateLessonDialog({
     duration: timeConvertorToSeconds(defaultValues?.duration),
   }
 
-  useEffect(() => {
-    methods.reset({
-      ...defaultLessonValue,
-      autoRun: autoRun ? true : false,
-      lock: lessonLock ? true : false,
-    })
-  }, [autoRun, lessonLock])
+  const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
+    setValue(newValue)
+  }
+
   const handleClickOpen = (): void => {
     setOpen(true)
   }
@@ -158,13 +77,13 @@ export default function CreateLessonDialog({
     setOpen(false)
   }
 
-  const CreateCourseSchema = Yup.object().shape({
+  const CreateLessonSchema = Yup.object().shape({
     name: Yup.string().required(translate('required_name')),
     description: Yup.string().required(translate('required_description')),
   })
 
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(CreateCourseSchema),
+    resolver: yupResolver(CreateLessonSchema),
     defaultValues: defaultLessonValue,
   })
 
@@ -179,14 +98,10 @@ export default function CreateLessonDialog({
     try {
       if (isEdit && id) {
         lesson = await editLesson({ id, ...lessonData }).unwrap()
-        data.autoRun ? autoRunSet('true') : autoRunDelete()
         data.lock ? lessonLockSet('true') : lessonLockDelete()
         if (refetch) refetch()
       } else {
         lesson = await createLesson(lessonData).unwrap()
-        if (data.autoRun) {
-          autoRunSet('true')
-        }
         if (data.lock) {
           lessonLockSet('true')
         }
@@ -209,9 +124,13 @@ export default function CreateLessonDialog({
     handleClose()
   }
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
-    setValue(newValue)
-  }
+  useEffect(() => {
+    methods.reset({
+      ...defaultLessonValue,
+      lock: lessonLock ? true : false,
+    })
+  }, [autoRun, lessonLock])
+
   return (
     <>
       <Box onClick={handleClickOpen}>{children}</Box>
@@ -259,109 +178,7 @@ export default function CreateLessonDialog({
               value={value}
               index={0}
             >
-              <Stack gap={2}>
-                <RHFTextField
-                  name='name'
-                  label={translate('lessons_name')}
-                  required
-                />
-
-                <RHFTextField
-                  name='description'
-                  label={translate('lessons_description')}
-                  required
-                  multiline
-                  rows={3}
-                />
-                <Stack
-                  direction='row'
-                  gap={1}
-                  mb={-1}
-                  ml={1}
-                >
-                  <Typography
-                    variant='h6'
-                    color='#5C5C5C'
-                  >
-                    {translate('lessons_type')}
-                  </Typography>
-                  <Typography
-                    variant='body2'
-                    color='#5C5C5C'
-                  >
-                    {translate('lessons_type_select_one')}
-                    <sup>{translate('lessons_type_select_one_star')}</sup>
-                  </Typography>
-                </Stack>
-                <RHFToggleButtonGroup
-                  name='type'
-                  options={_mochLessonTypes}
-                  sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
-                  sxButton={toggleButtonStyles}
-                  tooltip
-                />
-
-                <RHFTextField
-                  name='slug'
-                  label={translate('lessons_slug')}
-                  size='small'
-                />
-
-                <RHFTextField
-                  name='duration'
-                  label={translate('lessons_duration')}
-                  size='small'
-                  type='number'
-                  InputProps={{
-                    startAdornment: <InputAdornment position='start'>min</InputAdornment>,
-                  }}
-                />
-
-                <Stack
-                  direction='row'
-                  flexWrap='wrap'
-                  justifyContent='space-between'
-                  sx={{ '& > *': { width: '45%' } }}
-                >
-                  <Tooltip
-                    slotProps={{ popper: { disablePortal: true } }}
-                    title={translate('lessons_active_tooltip')}
-                  >
-                    <Box>
-                      <RHFSwitch
-                        name='active'
-                        label={translate('lessons_active')}
-                      />
-                    </Box>
-                  </Tooltip>
-                  <RHFSwitch
-                    name='independent'
-                    label={translate('lessons_independent_lesson')}
-                  />
-                  <Tooltip
-                    slotProps={{ popper: { disablePortal: true } }}
-                    title={translate('lessons_autoRun_tooltip')}
-                  >
-                    <Box>
-                      <RHFSwitch
-                        name='autoRun'
-                        label={translate('lessons_autoRun')}
-                      />
-                    </Box>
-                  </Tooltip>
-                  <Tooltip
-                    slotProps={{ popper: { disablePortal: true } }}
-                    title={translate('lesson_lock_tooltip')}
-                  >
-                    <Box>
-                      <RHFSwitch
-                        name='lock'
-                        label={translate('lessons_lock')}
-                      />
-                    </Box>
-                  </Tooltip>
-                </Stack>
-              </Stack>
+              <MainTab />
             </TabPanel>
             <TabPanel
               value={value}
@@ -466,55 +283,3 @@ function a11yProps(index: number): Record<string, string> {
     'aria-controls': `simple-tabpanel-${index}`,
   }
 }
-
-// @TODO: uncomment after updating backend
-
-const _mochLessonTypes = [
-  // {
-  //   key: LessonTypeEnum.simple,
-  //   value: 'Simple',
-  //   tooltip: 'An engaging, single-page lesson with coding exercises.',
-  //   icon: 'material-symbols:info-outline',
-  // },
-  {
-    key: LessonTypeEnum.practical,
-    value: 'Practical',
-    tooltip: 'Building a project line-by-line with explanations and step-by-step guidance.',
-    icon: 'material-symbols:info-outline',
-  },
-  // {
-  //   key: LessonTypeEnum.start_project,
-  //   value: 'Start of Project',
-  //   tooltip:
-  //     'The beginning lesson of a project. Subsequent lessons will build on the code typed here.',
-  //   icon: 'material-symbols:info-outline',
-  // },
-  // {
-  //   key: LessonTypeEnum.part_project,
-  //   value: 'Part of Project',
-  //   tooltip:
-  //     'Build things with this lesson type: The code you type in one lesson, flows to the next, if the lesson is completed.',
-  //   icon: 'material-symbols:info-outline',
-  // },
-  {
-    key: LessonTypeEnum.exercise,
-    value: 'Exercises',
-    tooltip:
-      'Exercises with instructions and examples. Great for reinforcing learning or evaluating competency.',
-    icon: 'material-symbols:info-outline',
-  },
-  // {
-  //   key: LessonTypeEnum.concept_exercises,
-  //   value: 'Concept & Exercises',
-  //   tooltip: 'Learn a concept, then immediately practice it in different ways.',
-  //   icon: 'material-symbols:info-outline',
-  // },
-  // {
-  //   key: LessonTypeEnum.quiz,
-  //   value: 'Quiz',
-  // },
-  // {
-  //   key: LessonTypeEnum.other,
-  //   value: 'Other',
-  // },
-]

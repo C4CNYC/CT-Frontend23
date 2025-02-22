@@ -30,6 +30,7 @@ import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { useCounter } from '@root/src/hooks/useCounter'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { LessonTypeEnum } from '@root/src/redux/services/enums/lesson-type.enum'
 import { LoaderStepDialog } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/LoaderStepDialog'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
@@ -301,8 +302,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
               description: lesson?.description as string,
               active: lesson?.active as boolean,
               head: lesson?.head || '',
-              independent: lesson?.independent ?? false,
-              type: lesson?.type ?? 'practical',
+              type: lesson?.type ?? LessonTypeEnum.practical,
               duration: lesson?.duration,
               slug: lesson?.slug,
             }}

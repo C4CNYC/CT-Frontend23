@@ -527,6 +527,7 @@ const pt = {
   lessons_edit_lesson: 'Editar aula',
   lessons_name: 'Nome da aula',
   lessons_description: 'Descrição da aula',
+  lessons_language_select: 'Selecionar linguagem de programação',
   lessons_slug: 'Slug',
   lessons_duration: 'Duração',
   lessons_active: 'Aula ativa',
@@ -535,6 +536,7 @@ const pt = {
   lessons_exercise: 'Exercício',
   lessons_independent_lesson: 'Aula independente',
   lessons_type: 'Tipo de aula',
+  lessons_grading_method: 'Método de avaliação',
   lessons_type_select_one: 'Selecione um',
   lessons_type_select_one_star: '*',
   lessons_active_tooltip:

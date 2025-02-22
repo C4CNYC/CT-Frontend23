@@ -239,7 +239,6 @@ export default function LessonCard({
             description: lesson.description,
             active: lesson.active,
             head: lesson?.head || '',
-            independent: lesson.independent,
             type: lesson.type,
             duration: lesson.duration,
             slug: lesson.slug,

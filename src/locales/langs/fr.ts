@@ -536,6 +536,7 @@ const fr = {
   lessons_edit_lesson: 'Modifier la leçon',
   lessons_name: 'Nom de la leçon',
   lessons_description: 'Description de la leçon',
+  lessons_language_select: 'Sélectionner le langage de programmation',
   lessons_slug: 'Slug',
   lessons_duration: 'Durée',
   lessons_active: 'Leçon active',
@@ -544,6 +545,7 @@ const fr = {
   lessons_exercise: 'Exercice',
   lessons_independent_lesson: 'Leçon indépendante',
   lessons_type: 'Type de leçon',
+  lessons_grading_method: 'Méthode de notation',
   lessons_type_select_one: 'Sélectionner un',
   lessons_type_select_one_star: '*',
   lessons_active_tooltip:

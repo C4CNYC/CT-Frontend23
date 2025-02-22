@@ -524,6 +524,7 @@ const tr = {
   lessons_edit_lesson: 'Dersi Düzenle',
   lessons_name: 'Ders Adı',
   lessons_description: 'Ders açıklaması',
+  lessons_language_select: 'Kodlama dilini seçin',
   lessons_active: 'Ders aktif',
   lessons_deleted_msg: 'Ders silindi!',
   lessons_practical: 'Pratik',

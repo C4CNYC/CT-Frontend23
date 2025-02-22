@@ -534,6 +534,7 @@ const en = {
   lessons_edit_lesson: 'Edit Lesson',
   lessons_name: 'Lesson Name',
   lessons_description: 'Lesson description',
+  lessons_language_select: 'Select code language',
   lessons_slug: 'Slug',
   lessons_duration: 'Duration',
   lessons_active: 'Lesson active',
@@ -542,6 +543,7 @@ const en = {
   lessons_exercise: 'Exercise',
   lessons_independent_lesson: 'Independent lesson',
   lessons_type: 'Lesson Type',
+  lessons_grading_method: 'Grading Method',
   lessons_type_select_one: 'Select one',
   lessons_type_select_one_star: '*',
   lessons_active_tooltip:

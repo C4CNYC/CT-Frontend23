@@ -62,7 +62,6 @@ export default function LessonDetails(): React.ReactElement {
                 description: lesson?.description,
                 active: lesson?.active,
                 head: lesson?.head || '',
-                independent: lesson?.independent,
                 type: lesson?.type,
                 duration: lesson?.duration,
                 slug: lesson?.slug,
@@ -119,9 +118,6 @@ export default function LessonDetails(): React.ReactElement {
 
         <Typography sx={(theme) => ({ color: theme.palette.text.secondary, mb: 2 })}>
           {translate('type')}: {lesson?.type}
-        </Typography>
-        <Typography sx={(theme) => ({ color: theme.palette.text.secondary, mb: 2 })}>
-          {translate('sequence')}: {lesson?.independent ? 'Independent' : 'Non-Independent'}
         </Typography>
         <Typography sx={(theme) => ({ color: theme.palette.text.secondary, mb: 2 })}>
           {translate('lessons_starter_code')}: {translate('lessons_starter_code_from_previous')}

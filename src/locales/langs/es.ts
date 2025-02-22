@@ -529,6 +529,7 @@ const es = {
   lessons_edit_lesson: 'Editar lección',
   lessons_name: 'Nombre de la lección',
   lessons_description: 'Descripción de la lección',
+  lessons_language_select: 'Seleccionar lenguaje de programación',
   lessons_slug: 'Slug',
   lessons_duration: 'Duración',
   lessons_active: 'Lección activa',
@@ -537,6 +538,7 @@ const es = {
   lessons_exercise: 'Ejercicio',
   lessons_independent_lesson: 'Lección independiente',
   lessons_type: 'Tipo de lección',
+  lessons_grading_method: 'Método de calificación',
   lessons_type_select_one: 'Seleccionar uno',
   lessons_type_select_one_star: '*',
   lessons_active_tooltip:

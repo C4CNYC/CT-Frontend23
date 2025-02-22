@@ -3,6 +3,8 @@ import { FileExtension } from '@root/src/types/lessons'
 
 import { LessonContentComplexity } from '../enums/lesson-content-complexity.enum'
 import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { LessonLanguage } from '../enums/lesson-language.enum'
+import { LessonTypeEnum } from '../enums/lesson-type.enum'
 
 import { ILessonContentValidation } from './lessonContentValidation.interface'
 
@@ -26,8 +28,8 @@ export interface ILesson {
   head?: string
   duration: Record<string, number> | null
   meta: Record<string, Record<string, any>>
-  independent: boolean
-  type: 'practical' | 'exercise' | 'quiz'
+  language: LessonLanguage
+  type: LessonTypeEnum
   sort?: number
   slug?: string
 }

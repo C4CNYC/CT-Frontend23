@@ -11,6 +11,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { FiInfo } from '@react-icons/all-files/fi/FiInfo'
 import { Controller, FieldError, useFormContext } from 'react-hook-form'
 import Carousel from 'react-slick'
 
@@ -20,12 +21,19 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 
 import CarouselArrows from '../slider/CarouselArrows'
 
+type ToggleButtonOption = {
+  key: string
+  value: string
+  tooltip?: string
+  icon?: React.ReactNode
+}
+
 type Props = ToggleButtonGroupProps & {
   name: string
   helperText?: string
   sxGroup?: SxProps
   sxButton?: SxProps
-  options: Array<{ key: string; value: string; tooltip?: string; icon?: React.ReactNode }>
+  options: Array<ToggleButtonOption>
   error?: FieldError
   tooltip?: boolean
   tooltipSx?: SxProps
@@ -150,7 +158,7 @@ export function RHFToggleButtonGroup({
                       value={el.key}
                     >
                       {translate(el.value)}
-                      {el.icon}
+                      {el.icon ?? <FiInfo />}
                     </ToggleButton>
                   </Tooltip>
                 ) : (
