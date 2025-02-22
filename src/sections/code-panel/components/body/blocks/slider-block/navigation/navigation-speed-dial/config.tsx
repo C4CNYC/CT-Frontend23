@@ -62,10 +62,7 @@ export const getActions = ({ lessonName, handle }: IGetActions): Action[] => {
               } else {
                 await handle.enter()
               }
-            } catch (error) {
-              // eslint-disable-next-line no-console
-              console.error('Fullscreen toggle failed:', error)
-            }
+            } catch (error) {}
           }}
         >
           <Iconify
