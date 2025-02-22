@@ -272,7 +272,13 @@ const tr = {
   required_slug: 'Slug gereklidir',
   required_title: 'Başlık gereklidir',
   required_regex: 'Regex gereklidir',
-
+  rule_testing_method_title: 'Test yöntemi',
+  rule_testing_method_required: 'Birini seçin*',
+  regex_must_be_empty_for_manual: 'Düzenli ifade manuel için boş olmalıdır',
+  rule_manual_tooltip: 'Manuel test: kuralların otomatik araçlar kullanılmadan doğrulanması.',
+  rule_regex_tooltip: 'Manuel test: kuralların otomatik araçlar kullanılmadan doğrulanması.',
+  rule_mocha_tooltip: 'Manuel test: kuralların otomatik araçlar kullanılmadan doğrulanması.',
+  rule_chai_tooltip: 'Manuel test: kuralların otomatik araçlar kullanılmadan doğrulanması.',
   // sidebar menu locales
   sidebar_menu_code_btn: 'Hadi Kodlayalım',
   sidebar_menu_catalog: 'Katalog',

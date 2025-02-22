@@ -2,6 +2,7 @@ import { Unit } from '@/redux/interfaces/challenges.interface'
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { ILessonContentValidation } from '../services/interfaces/lessonContentValidation.interface'
 
 import { IIntegration } from './integration.interface'
 
@@ -121,7 +122,7 @@ export interface ILessonContent {
   preload_body: string
   tips: string
   solution_body: string
-  validations: Array<IValidation & BaseResponseInterface>
+  validations: Array<ILessonContentValidation & BaseResponseInterface>
   type: LessonContentType
   meta: Record<string, any>
   integrations: IIntegration[]

@@ -12,7 +12,9 @@ import {
   DialogTitle,
   Grid,
   IconButton,
+  Typography,
 } from '@mui/material'
+import { IoMdInformationCircleOutline } from '@react-icons/all-files/io/IoMdInformationCircleOutline'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -23,11 +25,13 @@ import {
   useUpdateLessonContentValidationManagerMutation,
 } from '@/redux/services/manager/lesson-content-validation-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { ValidationTestingMethod } from '@root/src/redux/services/interfaces/lessonContentValidation.interface'
 import { isValidRegex } from '@root/src/utils/isValidRegex'
-
 interface FormValuesProps {
   regex: string
   name: string
+  testing_method: ValidationTestingMethod
 }
 
 interface Props {
@@ -44,14 +48,25 @@ export default function CreateEditValidation({
   defaultValues = {
     regex: '',
     name: '',
+    testing_method: ValidationTestingMethod.Regex,
   },
 }: Props): React.ReactElement {
   const [open, setOpenDialog] = useState<boolean>(false)
   const isEdit = Boolean(id)
   const translate = useTranslate()
   const CreateLessonDemonSchema = Yup.object().shape({
-    regex: Yup.string().required(translate('required_regex')),
+    regex: Yup.string().when('testing_method', {
+      is: (method: string) => method !== 'manual',
+      then: (schema) => schema.required(translate('required_regex')),
+      otherwise: (schema) =>
+        schema
+          .notRequired()
+          .test('empty-if-manual', translate('regex_must_be_empty_for_manual'), (value, context) =>
+            context.parent.testing_method === 'manual' ? !value : true
+          ),
+    }),
     name: Yup.string().required(translate('required_name')),
+    testing_method: Yup.string().required(),
   })
 
   const { enqueueSnackbar } = useSnackbar()
@@ -148,6 +163,24 @@ export default function CreateEditValidation({
                   name='regex'
                   label={translate('regex')}
                 />
+                <Typography
+                  variant='h6'
+                  sx={TYPO_SX}
+                  gutterBottom
+                >
+                  {translate('rule_testing_method_title')}
+                  <Typography variant='caption'>
+                    {translate('rule_testing_method_required')}
+                  </Typography>
+                </Typography>
+                <RHFToggleButtonGroup
+                  options={TESTING_METHODS}
+                  sxGroup={BTN_GROUP_SX}
+                  sxButton={BUTTON_SX}
+                  name='testing_method'
+                  tooltip
+                  size='small'
+                />
                 <Box
                   sx={{
                     display: 'flex',
@@ -178,4 +211,56 @@ export default function CreateEditValidation({
       </Dialog>
     </>
   )
+}
+
+const TESTING_METHODS = [
+  {
+    key: ValidationTestingMethod.Manual,
+    value: 'Manual',
+    tooltip: 'rule_manual_tooltip',
+    icon: <IoMdInformationCircleOutline size={20} />,
+  },
+  {
+    key: ValidationTestingMethod.Regex,
+    value: 'Regex',
+    tooltip: 'rule_regex_tooltip',
+    icon: <IoMdInformationCircleOutline size={20} />,
+  },
+  {
+    key: ValidationTestingMethod.Mocha,
+    value: 'Mocha',
+    tooltip: 'rule_mocha_tooltip',
+    icon: <IoMdInformationCircleOutline size={20} />,
+  },
+  {
+    key: ValidationTestingMethod.Chai,
+    value: 'Chai',
+    tooltip: 'rule_chai_tooltip',
+    icon: <IoMdInformationCircleOutline size={20} />,
+  },
+]
+
+const BUTTON_SX = {
+  m: '0!important',
+  borderRadius: '10px!important',
+  gap: 1,
+  '&.Mui-selected, &.Mui-selected:hover': {
+    background: '#364954',
+    color: '#fff',
+  },
+  '&>svg': { mb: '2px' },
+}
+
+const BTN_GROUP_SX = {
+  border: '1px solid #364954',
+  borderRadius: '10px',
+}
+
+const TYPO_SX = {
+  pl: 1,
+  color: '#5C5C5C',
+  display: 'flex',
+  alignItems: 'baseline',
+  gap: 1,
+  fontWeight: 400,
 }

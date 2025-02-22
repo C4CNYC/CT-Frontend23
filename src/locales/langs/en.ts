@@ -274,7 +274,13 @@ const en = {
   required_slug: 'Slug is required',
   required_title: 'Title is required',
   required_regex: 'Regex is required',
-
+  rule_testing_method_title: 'Testing Method',
+  rule_testing_method_required: 'Select one*',
+  regex_must_be_empty_for_manual: 'Regex must be empty for manual',
+  rule_manual_tooltip: 'Manual testing: validation of rules without using automated tools.',
+  rule_regex_tooltip: 'Manual testing: validation of rules without using automated tools.',
+  rule_mocha_tooltip: 'Manual testing: validation of rules without using automated tools.',
+  rule_chai_tooltip: 'Manual testing: validation of rules without using automated tools.',
   // sidebar menu locales
   sidebar_menu_code_btn: "Let's code",
   sidebar_menu_catalog: 'Catalog',

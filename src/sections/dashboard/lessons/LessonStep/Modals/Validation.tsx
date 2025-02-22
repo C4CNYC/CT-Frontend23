@@ -200,6 +200,7 @@ export default function Validation({
                             defaultValues={{
                               name: row.name,
                               regex: row.regex,
+                              testing_method: row.testing_method,
                             }}
                           >
                             <IconButton>

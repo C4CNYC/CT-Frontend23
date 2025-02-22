@@ -272,7 +272,13 @@ const ar = {
   required_slug: 'الرمز القصير مطلوب',
   required_title: 'العنوان مطلوب',
   required_regex: 'التعبير العادي مطلوب',
-
+  rule_testing_method_title: 'طريقة الاختبار',
+  rule_testing_method_required: 'اختر واحدًا*',
+  regex_must_be_empty_for_manual: 'يجب أن تكون التعبير النمطي فارغة للاختبار اليدوي',
+  rule_manual_tooltip: 'الاختبار اليدوي: التحقق من القواعد دون استخدام الأدوات الآلية.',
+  rule_regex_tooltip: 'الاختبار اليدوي: التحقق من القواعد دون استخدام الأدوات الآلية.',
+  rule_mocha_tooltip: 'الاختبار اليدوي: التحقق من القواعد دون استخدام الأدوات الآلية.',
+  rule_chai_tooltip: 'الاختبار اليدوي: التحقق من القواعد دون استخدام الأدوات الآلية.',
   // sidebar menu locales
   sidebar_menu_code_btn: 'لنبرمج',
   sidebar_menu_catalog: 'الدليل',

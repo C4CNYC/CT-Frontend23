@@ -7,11 +7,11 @@ import { useDispatch } from 'react-redux'
 
 import { type AuthUserType } from '@/auth/types'
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { type IValidation } from '@/redux/interfaces/content.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
+import { ILessonContentValidation } from '@root/src/redux/services/interfaces/lessonContentValidation.interface'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import BaseBlock from '../base-block'
@@ -28,7 +28,7 @@ interface ICodeEditorBlock {
   user: AuthUserType | null
   code: string
   onChangeStreamingDocInfo: (doc: Record<string, string>) => void
-  validations: Array<IValidation & BaseResponseInterface>
+  validations: Array<ILessonContentValidation & BaseResponseInterface>
   preloadedCode: string
   contentId?: string
 }

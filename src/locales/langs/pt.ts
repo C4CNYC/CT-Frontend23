@@ -271,6 +271,13 @@ const pt = {
   required_slug: 'Slug é obrigatório',
   required_title: 'Título é obrigatório',
   required_regex: 'Regex é obrigatório',
+  rule_testing_method_title: 'Método de teste',
+  rule_testing_method_required: 'Selecione um*',
+  regex_must_be_empty_for_manual: 'A expressão regular deve estar vazia para manual',
+  rule_manual_tooltip: 'Teste manual: validação de regras sem o uso de ferramentas automatizadas.',
+  rule_regex_tooltip: 'Teste manual: validação de regras sem o uso de ferramentas automatizadas.',
+  rule_mocha_tooltip: 'Teste manual: validação de regras sem o uso de ferramentas automatizadas.',
+  rule_chai_tooltip: 'Teste manual: validação de regras sem o uso de ferramentas automatizadas.',
 
   // sidebar menu locales
   sidebar_menu_code_btn: 'Vamos programar',

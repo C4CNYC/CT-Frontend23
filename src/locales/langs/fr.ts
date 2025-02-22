@@ -273,6 +273,13 @@ const fr = {
   required_slug: 'Le slug est requis',
   required_title: 'Le titre est requis',
   required_regex: 'Le regex est requis',
+  rule_testing_method_title: 'Méthode de test',
+  rule_testing_method_required: 'Sélectionnez-en un*',
+  regex_must_be_empty_for_manual: "L'expression régulière doit être vide pour le mode manuel",
+  rule_manual_tooltip: "Test manuel : validation des règles sans utiliser d'outils automatisés.",
+  rule_regex_tooltip: "Test manuel : validation des règles sans utiliser d'outils automatisés.",
+  rule_mocha_tooltip: "Test manuel : validation des règles sans utiliser d'outils automatisés.",
+  rule_chai_tooltip: "Test manuel : validation des règles sans utiliser d'outils automatisés.",
 
   // sidebar menu locales
   sidebar_menu_code_btn: "C'est parti, codons",
