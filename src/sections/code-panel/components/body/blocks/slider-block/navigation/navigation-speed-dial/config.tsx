@@ -54,7 +54,20 @@ export const getActions = ({ lessonName, handle }: IGetActions): Action[] => {
     },
     {
       icon: (
-        <IconButton onClick={handle.active ? handle.exit : handle.enter}>
+        <IconButton
+          onClick={async () => {
+            try {
+              if (handle.active) {
+                await handle.exit()
+              } else {
+                await handle.enter()
+              }
+            } catch (error) {
+              // eslint-disable-next-line no-console
+              console.error('Fullscreen toggle failed:', error)
+            }
+          }}
+        >
           <Iconify
             icon={handle.active ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'}
             color='#FBDD3F'
