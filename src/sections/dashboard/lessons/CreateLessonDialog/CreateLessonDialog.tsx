@@ -192,7 +192,7 @@ export default function CreateLessonDialog({
             >
               <IntegrationsTab contentId={id as string} />
             </TabPanel>
-            {value === 0 ? (
+            {value !== 1 ? (
               <DialogActions>
                 <Box
                   sx={{
