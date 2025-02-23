@@ -1,0 +1,79 @@
+import { Stack, Typography } from '@mui/material'
+
+import { RHFSelect, RHFTextField } from '@root/src/components'
+import { useTranslate } from '@root/src/utils/translateHelper'
+
+import CustomLabel from './_components/CustomLabel'
+import NextBtn from './_components/NextBtn'
+import { OrgType, styledRegisterInput } from './constants'
+import { useStepperContext } from './stepper-context'
+
+const OrgInfoStep = () => {
+  const { handleValidation, isError } = useStepperContext()
+  const translate = useTranslate()
+
+  return (
+    <Stack sx={{ gap: 3 }}>
+      <CustomLabel translationKey='Add org info org' />
+      <RHFSelect
+        native
+        name='orgType'
+        size='small'
+        sx={(theme) => ({ ...styledRegisterInput(theme) })}
+        label={translate('Org type')}
+      >
+        <option
+          key='empty'
+          value='empty'
+        ></option>
+        {Object.keys(OrgType).map((t) => (
+          <option
+            key={OrgType[t as keyof typeof OrgType]}
+            value={OrgType[t as keyof typeof OrgType]}
+          >
+            {t.split('_').join(' ').charAt(0).toUpperCase() +
+              t.split('_').join(' ').slice(1).toLowerCase()}
+          </option>
+        ))}
+      </RHFSelect>
+      <Stack
+        sx={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          gap: 2,
+        }}
+      >
+        <Typography>Current student count:</Typography>
+        <RHFTextField
+          type='number'
+          placeholder='2300'
+          name='studentCountCurrent'
+          sx={(theme) => ({ ...styledRegisterInput(theme, { maxWidth: '150px' }) })}
+        />
+      </Stack>
+      <Stack
+        sx={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          gap: 2,
+        }}
+      >
+        <Typography>Current student count:</Typography>
+        <RHFTextField
+          type='number'
+          placeholder='10000'
+          name='studentCountExpected'
+          sx={(theme) => ({ ...styledRegisterInput(theme, { maxWidth: '150px' }) })}
+        />
+      </Stack>
+      <NextBtn
+        onClick={handleValidation}
+        disabled={isError}
+      />
+    </Stack>
+  )
+}
+
+export default OrgInfoStep

@@ -274,6 +274,12 @@ const en = {
   required_slug: 'Slug is required',
   required_title: 'Title is required',
   required_regex: 'Regex is required',
+  required_org_type: 'Organization type is require',
+  required_brand_name: 'Brand name is require',
+  required_brand_subdomain: 'Brand subdomain is require',
+  must_be_a_number: 'Must be a number',
+  must_be_not_an_empty_string: 'Must be not an empty string',
+  // Org register flow
 
   // sidebar menu locales
   sidebar_menu_code_btn: "Let's code",
