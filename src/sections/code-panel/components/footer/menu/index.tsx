@@ -1,7 +1,6 @@
 import { type FC, useMemo, useState } from 'react'
 
 import { Chip, SpeedDial, SpeedDialAction, Typography, useTheme } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles'
 import { Box } from '@mui/system'
 import { IoShareOutline } from '@react-icons/all-files/io5/IoShareOutline'
 
@@ -17,8 +16,9 @@ import {
   getActionFabPropsSx,
   getChipSx,
   getSpeedDialFabProps,
+  tooltipRewrite,
 } from './constants'
-
+import ShareAction from './ShareAction'
 export interface MenuProps {
   language: SupportedLang
   publicPage?: boolean
@@ -26,6 +26,7 @@ export interface MenuProps {
 
 const Menu: FC<MenuProps> = ({ language, publicPage }) => {
   const classes = tooltipRewrite()
+  const translate = useTranslate()
   const code = useSelector((state) => state.codePanelGlobal.code)
 
   const theme = useTheme()
@@ -44,7 +45,6 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
     () => getSpeedDialFabProps(speedDial, isDarkMode),
     [speedDial, isDarkMode]
   )
-  const actionFabProps = useMemo(() => getActionFabPropsSx(isDarkMode, theme), [isDarkMode, theme])
 
   const actions = useMemo(
     () =>
@@ -54,7 +54,6 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
       }),
     [code, language]
   )
-  const translate = useTranslate()
 
   const isContentExist = !publicPage && isDesktop
 
@@ -91,6 +90,7 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
             />
           }
         >
+          <ShareAction />
           {actions.map((action) => (
             <SpeedDialAction
               key={action.name}
@@ -100,12 +100,12 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
                 <Box sx={BOX_SX}>
                   <Chip
                     label={action.isPublic ? translate('public') : translate('private')}
-                    sx={getChipSx(action)}
+                    sx={getChipSx(action.color)}
                   />
                   <Typography variant='subtitle2'>{translate(action.name)}</Typography>
                 </Box>
               }
-              FabProps={actionFabProps}
+              FabProps={getActionFabPropsSx()}
             />
           ))}
         </SpeedDial>
@@ -113,12 +113,5 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
     </Box>
   )
 }
-
-const tooltipRewrite = makeStyles(() => ({
-  tooltip: {
-    color: '#364954',
-    background: '#fff',
-  },
-}))
 
 export default Menu
