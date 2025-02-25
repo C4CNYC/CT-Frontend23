@@ -5,11 +5,11 @@ import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 export const CreateQuestSchema = Yup.object().shape({
   name: Yup.string(),
   type: Yup.mixed<AssignmentTypes>().oneOf(Object.values(AssignmentTypes)).required('Select type'),
-  // course: Yup.string().when('type', {
-  //   is: AssignmentTypes.COURSE,
-  //   then: Yup.string().required('Select course'),
-  //   otherwise: Yup.string().nullable(true),
-  // }),
+  course: Yup.string().when('type', {
+    is: AssignmentTypes.COURSE,
+    then: Yup.string().required('Select course'),
+    otherwise: Yup.string().nullable(true),
+  }),
   startDate: Yup.date().nullable(true).typeError('Start date must be a valid date'),
   dueDate: Yup.date()
     .nullable(true)
