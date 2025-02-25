@@ -127,8 +127,8 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           </div>
           <div
             style={{
-              width: !isBrowserHidden ? '44%' : '0%',
-              minWidth: isBrowserHidden ? 30 : '41%',
+              width: !isBrowserHidden ? '40%' : '0%',
+              minWidth: isBrowserHidden ? 30 : '40%',
             }}
           >
             {!isBrowserHidden ? (

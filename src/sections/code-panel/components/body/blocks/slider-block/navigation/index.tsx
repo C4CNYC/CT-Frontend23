@@ -92,7 +92,10 @@ const Navigation: FC<INavigation> = ({
     >
       <Box sx={nestedBox}>
         <LessonFeedback lessonName={lessonName}>
-          <Button sx={FEEDBACK_BTN_SX}>
+          <Button
+            sx={FEEDBACK_BTN_SX}
+            className='feedback-button'
+          >
             <FeedbackIcon
               size={30}
               color={'#91A5B1'}

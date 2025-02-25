@@ -1377,7 +1377,7 @@ const en = {
     'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
   intro_tour_step_9_desktop_title: 'Most important: Have fun! 🤪',
   intro_tour_step_9_desktop_subtitle:
-    'And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?',
+    'And on Feedback 💬 let us know what you think: awesome 🏆 or not-so-awesome 💩?',
   intro_tour_step_9_desktop_btn: 'Leave feedback',
 
   intro_tour_step_1_mobile_title: '💥 The Coding Panel 👩‍💻 💥',
@@ -1397,7 +1397,7 @@ const en = {
     'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
   intro_tour_step_7_mobile_title: 'Most important: Have fun! 🤪',
   intro_tour_step_7_mobile_subtitle:
-    'And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?',
+    'And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?',
   intro_tour_step_7_mobile_btn: 'Leave feedback',
 }
 
