@@ -83,7 +83,7 @@ export const anonimUserConfig: IMenuConfigItem[] = [
   {
     title: 'home',
     subTitle: '',
-    icon: 'ant-design:home-outlined',
+    icon: <IoHomeOutline />,
     href: STUDENT_PATH_DASHBOARD.class.root,
   },
   {
@@ -101,7 +101,7 @@ export const anonimUserConfig: IMenuConfigItem[] = [
   {
     title: 'catalog',
     subTitle: '',
-    icon: 'solar:gallery-line-duotone',
+    icon: <RiGalleryLine />,
     href: STUDENT_PATH_DASHBOARD.courses.root,
   },
   {
