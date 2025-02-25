@@ -1374,6 +1374,14 @@ const tr = {
   intro_tour_step_7_mobile_subtitle:
     'Ve Geri Bildirim 💬 ile ne düşündüğünüzü bize bildirin: Harika 🏆 mi yoksa Kötü mü 💩?',
   intro_tour_step_7_mobile_btn: 'Geri bildirim bırak',
+
+  to_payment_dialog_text_1: 'Deneyin',
+  to_payment_dialog_text_2_1: 'pro',
+  to_payment_dialog_text_2_2: 'sürümünü',
+  to_payment_dialog_text_3_1: 'ücretsiz',
+  to_payment_dialog_text_3_2: '14 gün boyunca',
+  to_payment_dialog_btn_1: 'Denemeyi şimdi başlat',
+  to_payment_dialog_btn_2: 'Temel sürümü kullan',
 }
 
 export default tr

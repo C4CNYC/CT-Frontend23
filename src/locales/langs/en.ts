@@ -1393,6 +1393,14 @@ const en = {
   intro_tour_step_7_mobile_subtitle:
     'And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?',
   intro_tour_step_7_mobile_btn: 'Leave feedback',
+
+  to_payment_dialog_text_1: 'Try out the',
+  to_payment_dialog_text_2_1: 'pro',
+  to_payment_dialog_text_2_2: 'version',
+  to_payment_dialog_text_3_1: 'free',
+  to_payment_dialog_text_3_2: 'per 14 days',
+  to_payment_dialog_btn_1: 'start trial now ',
+  to_payment_dialog_btn_2: 'Use basic version',
 }
 
 export default en

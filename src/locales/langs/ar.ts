@@ -1366,5 +1366,13 @@ const ar = {
   intro_tour_step_7_mobile_title: 'الأهم: استمتع! 🤪',
   intro_tour_step_7_mobile_subtitle: 'وفي التعليقات 💬 أخبرنا برأيك: رائع 🏆 أم سيئ 💩؟',
   intro_tour_step_7_mobile_btn: 'اترك تعليقًا',
+
+  to_payment_dialog_text_1: 'جرّب',
+  to_payment_dialog_text_2_1: 'الإصدار',
+  to_payment_dialog_text_2_2: 'الاحترافي',
+  to_payment_dialog_text_3_1: 'مجانًا',
+  to_payment_dialog_text_3_2: 'لمدة 14 يومًا',
+  to_payment_dialog_btn_1: 'ابدأ التجربة الآن',
+  to_payment_dialog_btn_2: 'استخدم الإصدار الأساسي',
 }
 export default ar

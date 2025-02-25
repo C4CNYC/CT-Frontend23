@@ -27,7 +27,7 @@ export const PATH_PAGE = {
   components: '/components',
   profile: '/profile',
   studentProfile: '/student/profile',
-  pricing: '/student/pricing',
+  pricing: '/pricing',
   home: '/main',
   create: '/create',
 }

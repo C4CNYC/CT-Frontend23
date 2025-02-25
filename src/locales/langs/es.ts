@@ -1400,6 +1400,14 @@ const es = {
   intro_tour_step_7_mobile_subtitle:
     'Y en los comentarios 💬 cuéntanos qué opinas: ¿Maravilloso 🏆 o Poopie 💩?',
   intro_tour_step_7_mobile_btn: 'Dejar comentario',
+
+  to_payment_dialog_text_1: 'Prueba la',
+  to_payment_dialog_text_2_1: 'versión',
+  to_payment_dialog_text_2_2: 'pro',
+  to_payment_dialog_text_3_1: 'gratis',
+  to_payment_dialog_text_3_2: 'por 14 días',
+  to_payment_dialog_btn_1: 'Iniciar prueba ahora',
+  to_payment_dialog_btn_2: 'Usar versión básica',
 }
 
 export default es

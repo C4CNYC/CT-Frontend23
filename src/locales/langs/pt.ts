@@ -1389,6 +1389,14 @@ const pt = {
   intro_tour_step_7_mobile_subtitle:
     'E no Feedback 💬 nos diga o que achou: Maravilhoso 🏆 ou Ruim 💩?',
   intro_tour_step_7_mobile_btn: 'Deixe um feedback',
+
+  to_payment_dialog_text_1: 'Experimente a',
+  to_payment_dialog_text_2_1: 'versão',
+  to_payment_dialog_text_2_2: 'pro',
+  to_payment_dialog_text_3_1: 'grátis',
+  to_payment_dialog_text_3_2: 'por 14 dias',
+  to_payment_dialog_btn_1: 'Iniciar teste agora',
+  to_payment_dialog_btn_2: 'Usar versão básica',
 }
 
 export default pt

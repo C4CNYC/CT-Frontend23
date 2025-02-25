@@ -33,6 +33,7 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
 import StudentJoinIntro from '../../intro-tours/student-join-intro'
+import ToPaymentDialog from '../../on-boarding-register/teacher/ToPaymentDialog'
 
 import ClassInfoMain from './ClassInfoMain'
 import {
@@ -128,6 +129,7 @@ export default function DefaultClassInfo({
           roles={[Role.Owner, Role.SuperAdmin, Role.Admin, Role.Editor, Role.Manager]}
         >
           <OnceOffNotification classData={classData} />
+          <ToPaymentDialog delay={20000} />
         </RoleBasedGuard>
         {/* <ClassInfoToggle /> */}
         <Stack

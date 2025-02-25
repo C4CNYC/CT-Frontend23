@@ -1413,6 +1413,14 @@ const fr = {
   intro_tour_step_7_mobile_subtitle:
     'Et dans la section Feedback 💬, dites-nous ce que vous en pensez : Génial 🏆 ou Nul 💩 ?',
   intro_tour_step_7_mobile_btn: 'Laisser un avis',
+
+  to_payment_dialog_text_1: 'Essayez la',
+  to_payment_dialog_text_2_1: 'version',
+  to_payment_dialog_text_2_2: 'pro',
+  to_payment_dialog_text_3_1: 'gratuite',
+  to_payment_dialog_text_3_2: 'pendant 14 jours',
+  to_payment_dialog_btn_1: 'Commencer l’essai maintenant',
+  to_payment_dialog_btn_2: 'Utiliser la version basique',
 }
 
 export default fr

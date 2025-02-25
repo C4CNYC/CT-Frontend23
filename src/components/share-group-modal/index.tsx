@@ -67,7 +67,7 @@ export default function ShareGroupModal({
   const theme = useTheme()
   const dispatch = useDispatch()
   const isLight = theme.palette.mode === 'light'
-  const { query } = useRouter()
+  const { query, pathname, replace } = useRouter()
   const { copy } = useCopyToClipboard()
   const { enqueueSnackbar } = useSnackbar()
   const [open, setOpen] = useState(false)
@@ -115,6 +115,8 @@ export default function ShareGroupModal({
   useEffect(() => {
     if (query.onBoarding) {
       handleOpen()
+      delete query.onBoarding
+      replace({ pathname, query }, undefined, { shallow: true })
     }
   }, [])
 
