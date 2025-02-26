@@ -1051,6 +1051,8 @@ const en = {
   coding_editor: 'CODING EDITOR:',
   customize: 'CUSTOMIZE:',
   reset_lesson: 'Reset Lesson',
+  reset_lesson_confirm: 'Are you sure you want to reset progress and code typed for this lesson?',
+  reset_lesson_submit_btn: 'Yes, Reset Progress',
   reset_code: 'Reset code',
   intro_tour: 'Intro Tour',
   launch_intro_tour: 'Launch Intro Tour',

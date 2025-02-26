@@ -12,8 +12,8 @@ import { RiGalleryLine } from '@react-icons/all-files/ri/RiGalleryLine'
 
 import { PATH_AUTH } from '@/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import InviteFriendsModal from '@/sections/invite-friends/InviteFriendsModal'
 import { UserType } from '@/utils'
+import InviteFriendsModal from '@root/src/sections/invite-friends/InviteFriendsModal'
 
 import MenuHugDialog from './MenuHugDialog'
 
@@ -52,10 +52,10 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
     target: '_blank',
   },
   {
-    title: 'gallery',
+    title: 'catalog',
     subTitle: '',
     icon: <RiGalleryLine />,
-    href: STUDENT_PATH_DASHBOARD.gallery.root,
+    href: STUDENT_PATH_DASHBOARD.courses.root,
   },
   {
     title: 'need_hug',
@@ -81,6 +81,12 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
 
 export const anonimUserConfig: IMenuConfigItem[] = [
   {
+    title: 'home',
+    subTitle: '',
+    icon: <IoHomeOutline />,
+    href: STUDENT_PATH_DASHBOARD.class.root,
+  },
+  {
     title: 'i_brand_new',
     subTitle: 'register',
     icon: <LuBaby />,
@@ -91,6 +97,12 @@ export const anonimUserConfig: IMenuConfigItem[] = [
     subTitle: 'login',
     icon: <FaChildReaching />,
     href: PATH_AUTH.signIn,
+  },
+  {
+    title: 'catalog',
+    subTitle: '',
+    icon: <RiGalleryLine />,
+    href: STUDENT_PATH_DASHBOARD.courses.root,
   },
   {
     title: 'sidebar_menu_invite_friends',

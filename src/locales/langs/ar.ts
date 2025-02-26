@@ -1035,6 +1035,8 @@ const ar = {
   coding_editor: 'محرر الأكواد:',
   customize: 'تخصيص:',
   reset_lesson: 'إعادة تعيين الدرس',
+  reset_lesson_confirm: 'هل أنت متأكد أنك تريد إعادة تعيين التقدم والرمز المكتوب لهذا الدرس؟',
+  reset_lesson_submit_btn: 'نعم، إعادة تعيين التقدم',
   reset_code: 'إعادة تعيين الكود',
   intro_tour: 'الجولة التعريفية',
   launch_intro_tour: 'بدء الجولة التعريفية',

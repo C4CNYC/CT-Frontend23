@@ -1055,6 +1055,9 @@ const es = {
   coding_editor: 'EDITOR DE CÓDIGO:',
   customize: 'PERSONALIZAR:',
   reset_lesson: 'Restablecer lección',
+  reset_lesson_confirm:
+    '¿Estás seguro de que quieres restablecer el progreso y el código escrito para esta lección?',
+  reset_lesson_submit_btn: 'Sí, restablecer el progreso',
   reset_code: 'Restablecer código',
   intro_tour: 'Tour de introducción',
   launch_intro_tour: 'Iniciar tour de introducción',

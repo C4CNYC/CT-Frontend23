@@ -6,19 +6,16 @@ import { IoExpandOutline } from '@react-icons/all-files/io5/IoExpandOutline'
 import { LiaCompressArrowsAltSolid } from '@react-icons/all-files/lia/LiaCompressArrowsAltSolid'
 import { TbColumns1 } from '@react-icons/all-files/tb/TbColumns1'
 import { TbColumns3 } from '@react-icons/all-files/tb/TbColumns3'
+
+import { useFullScreen } from '@root/src/sections/code-panel/lib/FullScreenContext'
 interface ViewToomblerProps {
-  isFullScreenView: boolean
   isColumnHidden: boolean
   onChangeColumnVisability: (value: boolean) => void
-  onHandleFullScreen: () => void
 }
 
-const ViewTumbler: FC<ViewToomblerProps> = ({
-  isFullScreenView,
-  isColumnHidden,
-  onChangeColumnVisability,
-  onHandleFullScreen,
-}) => {
+const ViewTumbler: FC<ViewToomblerProps> = ({ isColumnHidden, onChangeColumnVisability }) => {
+  const handle = useFullScreen()
+
   return (
     <Box
       display='flex'
@@ -50,8 +47,8 @@ const ViewTumbler: FC<ViewToomblerProps> = ({
         </IconButton>
       </Tooltip>
 
-      <IconButton onClick={onHandleFullScreen}>
-        {isFullScreenView ? <LiaCompressArrowsAltSolid /> : <IoExpandOutline />}
+      <IconButton onClick={handle.active ? handle.exit : handle.enter}>
+        {handle.active ? <LiaCompressArrowsAltSolid /> : <IoExpandOutline />}
       </IconButton>
     </Box>
   )

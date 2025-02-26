@@ -1051,6 +1051,9 @@ const pt = {
   coding_editor: 'EDITOR DE CÓDIGO:',
   customize: 'PERSONALIZAR:',
   reset_lesson: 'Redefinir Aula',
+  reset_lesson_confirm:
+    'Tem certeza de que deseja redefinir o progresso e o código digitado para esta lição?',
+  reset_lesson_submit_btn: 'Sim, redefinir progresso',
   reset_code: 'Redefinir código',
   intro_tour: 'Tour de Introdução',
   launch_intro_tour: 'Iniciar Tour de Introdução',
