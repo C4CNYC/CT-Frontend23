@@ -115,19 +115,24 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const handleNext = (skip = false): void => {
-    if (window.gtag) {
-      window.gtag('event', 'Slide_Swiped', {
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'Slide_Swiped',
         event_category: `Course ${course} > Unit ${unit} > Lesson ${lessonName}`,
         event_label: `SlideNumber ${slideIndex + 1}`,
+        slideIndex: slideIndex + 1,
       })
     }
     if (stepHasValidation && !skip) {
-      if (window.gtag) {
-        window.gtag('event', 'Challenge_Completed', {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'Challenge_Completed',
           event_category: `Course ${course} > Unit (Module) ${unit} > Training (Lesson) ${lessonName}`,
           event_label: `SlideNumber ${slideIndex + 1}`,
+          slideIndex: slideIndex + 1,
         })
       }
+
       onSubmitChallenge(data[slideIndex].id, '')
     }
     if (hasNextStep) {

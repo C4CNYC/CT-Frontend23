@@ -29,7 +29,6 @@ import {
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-// import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
@@ -250,8 +249,10 @@ export default function CodePanelLayout(): ReactElement | null {
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-    if (window.gtag) {
-      window.gtag('event', 'Lesson_Completed', {
+
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'Lesson_Completed',
         event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unit_id} > Training (Lesson) ${router.query.lessonId}`,
         event_label: lessonContentId,
       })
