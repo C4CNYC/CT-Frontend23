@@ -1,15 +1,7 @@
-export const NO_SOLUTION_TEXT = 'no_solution'
-
 export const getDialogPaperProps = (isDark: boolean) => {
   return {
     sx: {
-      minWidth: {
-        xs: 'calc(90% - 32px)',
-        sm: '400px',
-        md: '400px',
-        lg: '450px',
-      },
-      height: {
+      minHeight: {
         xs: '50vh',
         sm: '50vh',
         md: '450px',
@@ -34,17 +26,4 @@ export const DIALOG_TITLE_TYP_SX = {
 export const ICON_BUTTON_SX = {
   selfAlign: 'flex-end',
   mr: '-10px',
-}
-
-export const DIALOG_CONTENT_SX = {
-  py: 2,
-}
-
-export const COPY_BLOCK_CUSTOM_STYLES = {
-  height: '100%',
-  width: '100%',
-  overflowY: 'visible',
-  borderRadius: '0',
-  boxShadow: 'none',
-  fontSize: '0.75rem',
 }

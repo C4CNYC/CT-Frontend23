@@ -1032,6 +1032,8 @@ const ar = {
   are_you_sure_see_solution: 'هل أنت متأكد أنك تريد رؤية الكود الكامل للحل لهذا الدرس؟',
   not_available_for_this_step: 'غير متوفر لهذه الخطوة.',
   no_solution: 'لا يوجد حل متاح لهذه الشريحة.',
+  solution_code_title: 'كود الحل',
+  my_code_title: 'كودي',
   coding_editor: 'محرر الأكواد:',
   customize: 'تخصيص:',
   reset_lesson: 'إعادة تعيين الدرس',

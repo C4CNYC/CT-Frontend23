@@ -1059,6 +1059,8 @@ const fr = {
     'Êtes-vous sûr de vouloir voir le code de solution complet pour cette leçon ?',
   not_available_for_this_step: 'Non disponible pour cette étape.',
   no_solution: 'Aucune solution disponible pour cette diapositive.',
+  solution_code_title: 'Code de solution',
+  my_code_title: 'Mon code',
   coding_editor: 'ÉDITEUR DE CODAGE :',
   customize: 'PERSONNALISER :',
   reset_lesson: 'Réinitialiser la leçon',
