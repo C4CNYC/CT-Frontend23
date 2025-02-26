@@ -1048,6 +1048,8 @@ const pt = {
     'Tem certeza de que deseja ver o código completo da solução para esta aula?',
   not_available_for_this_step: 'Não disponível para esta etapa.',
   no_solution: 'Não há solução disponível para este slide.',
+  solution_code_title: 'Código da solução',
+  my_code_title: 'Meu código',
   coding_editor: 'EDITOR DE CÓDIGO:',
   customize: 'PERSONALIZAR:',
   reset_lesson: 'Redefinir Aula',

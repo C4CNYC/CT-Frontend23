@@ -1034,6 +1034,8 @@ const tr = {
   are_you_sure_see_solution: 'Bu dersin tam çözüm kodunu görmek istediğinizden emin misiniz?',
   not_available_for_this_step: 'Bu adım için mevcut değil.',
   no_solution: 'Bu slayt için çözüm mevcut değil.',
+  solution_code_title: 'Çözüm kodu',
+  my_code_title: 'Kodum',
   coding_editor: 'KODLAMA EDITÖRÜ:',
   customize: 'ÖZELLEŞTİR:',
   reset_lesson: 'Ders sıfırlama',
