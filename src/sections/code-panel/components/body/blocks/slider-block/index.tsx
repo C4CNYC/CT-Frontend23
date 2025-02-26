@@ -143,14 +143,17 @@ const SliderBlock: FC<ISliderBlock> = ({
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
     }
     if (localStorage) {
+      let currentProgress = 0
       const progress = localStorage.getItem(`${lessonId}_progress`)
       let newProgress: any = {}
       if (progress) {
         newProgress = JSON.parse(progress)
+        currentProgress = newProgress[lessonId as string] ?? 0
       }
       if (lessonId) {
         newProgress[lessonId as string] = next
       }
+      if (currentProgress && !next) return // if the next slide is empty, it's end of lesson, we dont need to reset the progress
       localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
   }
@@ -159,7 +162,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     if (!data || !data.length) return
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    dispatch(setSlideId(data[next].id))
+    if (data?.[next]?.id) dispatch(setSlideId(data[next].id))
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {
