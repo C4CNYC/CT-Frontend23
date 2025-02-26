@@ -1,6 +1,7 @@
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 import { FileExtension } from '@root/src/types/lessons'
 
+import { LessonType } from '../../interfaces/content.interface'
 import { LessonContentComplexity } from '../enums/lesson-content-complexity.enum'
 import { LessonContentType } from '../enums/lesson-content-type.enum'
 
@@ -27,7 +28,7 @@ export interface ILesson {
   duration: Record<string, number> | null
   meta: Record<string, Record<string, any>>
   independent: boolean
-  type: 'practical' | 'exercise' | 'quiz'
+  type: LessonType
   sort?: number
   slug?: string
 }
