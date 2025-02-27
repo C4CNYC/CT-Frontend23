@@ -15,15 +15,14 @@ const BasePreference = ({
   const theme = useTheme()
   return (
     <Box
-      p='16px 30px 16px 30px'
+      p='8px 16px 8px 16px'
       bgcolor={theme.palette.mode === 'light' ? '#F0EEEE' : theme.palette.background.neutral}
       borderRadius='15px'
     >
       <Box
-        mb='20px'
         display='flex'
-        gap={1}
         alignItems='center'
+        justifyContent='flex-start'
       >
         {abandonmentIcon ?? null}
         <Typography variant='subtitle1'>{title.toUpperCase()}</Typography>
