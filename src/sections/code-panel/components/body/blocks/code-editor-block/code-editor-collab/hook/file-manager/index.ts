@@ -160,7 +160,7 @@ export const useFileManager = (): UseFileManagerReturn => {
         id: DEFAULT_FILE_ID,
         name: 'hello',
         extension: 'html',
-        body: '',
+        body: ' ',
         lessonContentId: slideId,
       })
     }
