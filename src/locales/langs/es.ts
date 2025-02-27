@@ -678,6 +678,13 @@ const es = {
   tribes_code_example: '12asd5',
   tribes_want_leave: '¿Estás seguro de que \n quieres dejar la tribu?',
   tribes_you_left_tribe: 'Dejaste la tribu',
+  added_to_tribe: 'Has sido añadido a la tribu',
+  added_to_tribe_success: '¡Genial! ¡Gracias!',
+  join_class_dialog_title: 'Tengo un código de unión',
+  join_class_dialog_title_1: 'No podemos encontrar esta tribu o misión',
+  join_class_dialog_enter_code: 'Introduce tu código de unión abajo',
+  join_class_dialog_enter_code_1:
+    'O lo escribiste mal o esta tribu ya no está disponible. Pregunta a tu líder o profesor.',
 
   // Create class page
   class_create: 'Crear una clase',

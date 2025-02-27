@@ -677,6 +677,13 @@ const pt = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'Tem certeza de que quer \n sair da tribo?',
   tribes_you_left_tribe: 'Você saiu da tribo',
+  added_to_tribe: 'Você foi adicionado à tribo',
+  added_to_tribe_success: 'Incrível! Obrigado!',
+  join_class_dialog_title: 'Tenho um código de ingresso',
+  join_class_dialog_title_1: 'Não conseguimos encontrar esta tribo ou missão',
+  join_class_dialog_enter_code: 'Digite seu código de ingresso abaixo',
+  join_class_dialog_enter_code_1:
+    'Ou você digitou errado ou esta tribo não está mais disponível. Pergunte ao seu líder ou professor.',
 
   // Create class page
   class_create: 'Criar uma classe',

@@ -684,6 +684,13 @@ const en = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'Are you sure you \n want to leave tribe?',
   tribes_you_left_tribe: 'You left the tribe',
+  added_to_tribe: 'You have been added to the tribe',
+  added_to_tribe_success: 'Awesome. Thanks!',
+  join_class_dialog_title: 'I got a join-code',
+  join_class_dialog_title_1: 'We can’t find this tribe or quest',
+  join_class_dialog_enter_code: 'Enter your join-code below',
+  join_class_dialog_enter_code_1:
+    'Either you typed it wrong or this tribe is no longer available. Ask your lead or teacher.',
 
   // Create class page
   class_create: 'Create a class',

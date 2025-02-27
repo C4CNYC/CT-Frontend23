@@ -673,6 +673,13 @@ const ar = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'هل أنت متأكد أنك \n تريد مغادرة القبيلة؟',
   tribes_you_left_tribe: 'لقد غادرت القبيلة',
+  added_to_tribe: 'تمت إضافتك إلى القبيلة',
+  added_to_tribe_success: 'رائع! شكرًا لك!',
+  join_class_dialog_title: 'لدي رمز انضمام',
+  join_class_dialog_title_1: 'لا يمكننا العثور على هذه القبيلة أو المهمة',
+  join_class_dialog_enter_code: 'أدخل رمز الانضمام أدناه',
+  join_class_dialog_enter_code_1:
+    'إما أنك كتبته بشكل خاطئ أو أن هذه القبيلة لم تعد متاحة. اسأل قائدك أو معلمك.',
 
   // Create class page
   class_create: 'إنشاء فصل دراسي',

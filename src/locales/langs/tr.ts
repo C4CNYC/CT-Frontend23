@@ -666,6 +666,13 @@ const tr = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'Tayfayı terk etmek istediğinizden emin misiniz?',
   tribes_you_left_tribe: 'Tayfadan çıktınız',
+  added_to_tribe: 'Kabileye eklendiniz',
+  added_to_tribe_success: 'Harika! Teşekkürler!',
+  join_class_dialog_title: 'Bir katılım kodum var',
+  join_class_dialog_title_1: 'Bu kabileyi veya görevi bulamıyoruz',
+  join_class_dialog_enter_code: 'Aşağıya katılım kodunuzu girin',
+  join_class_dialog_enter_code_1:
+    'Ya yanlış yazdınız ya da bu kabile artık mevcut değil. Liderinize veya öğretmeninize sorun.',
 
   // Create class page
   class_create: 'Bir sınıf oluştur',
