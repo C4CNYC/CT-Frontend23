@@ -57,7 +57,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   }
 
   const reloadBrowserView = () => {
-    setBrowserView(document)
+    setBrowserView({ ...document })
   }
 
   const openInstruction = () => {
