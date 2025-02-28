@@ -30,7 +30,9 @@ import {
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { useBoolean } from '@root/src/hooks/useBoolean'
 import { useProperties } from '@root/src/hooks/useProperties'
+import { LessonType } from '@root/src/redux/interfaces/content.interface'
 import {
   getToggleBtnGroupSx,
   TOGGLE_BUTTON_GROUP_STYLES,
@@ -38,6 +40,7 @@ import {
 
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
+import { usePseudoType } from './PseudoType'
 import SkillsTab from './SkillsTab'
 
 interface FormValuesProps {
@@ -47,30 +50,34 @@ interface FormValuesProps {
   independent: boolean
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
+  pseudoType: LessonTypeEnum
   duration: number
   slug: string
   autoRun: boolean
   lock: boolean
 }
 
-export enum LessonTypeEnum {
-  simple = 'simple',
-  practical = 'practical',
-  start_project = 'start_project',
-  part_project = 'part_project',
-  exercise = 'exercise',
-  concept_exercises = 'concept_exercises',
-  quiz = 'quiz',
-  other = 'other',
-}
+export const LessonTypeEnum = {
+  simple: 'simple',
+  practical: 'practical',
+  start_project: 'start_project',
+  part_project: 'part_project',
+  exercise: 'exercise',
+  concept_exercises: 'concept_exercises',
+  quiz: 'quiz',
+  other: 'other',
+} as const
 
-interface IDefaultProps {
+export type LessonTypeEnum = keyof typeof LessonTypeEnum
+
+export interface CreateLessonIDefaultProps {
   name: string
   description: string
   active: boolean
   independent: boolean
   head?: string
   type: 'practical' | 'exercise' | 'quiz'
+  pseudoType: LessonTypeEnum
   duration?: Record<string, number> | null | undefined
   slug?: string
   autoRun?: boolean
@@ -78,7 +85,7 @@ interface IDefaultProps {
 }
 
 interface ICreateLessonDialogProps {
-  defaultValues?: IDefaultProps
+  defaultValues?: CreateLessonIDefaultProps
   children: React.ReactElement
   isEdit?: boolean
   id?: string
@@ -100,11 +107,13 @@ export default function CreateLessonDialog({
   const translate = useTranslate()
 
   const [value, setValue] = useState(0)
-  const [open, setOpen] = useState(false)
+  const [open, handleClickOpen, handleClose] = useBoolean(false)
 
   const [editLesson, { isLoading: isLoadingUpdate }] = useUpdateLessonMutation()
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
+
+  const { toPseudoType, toDbFields } = usePseudoType({ lessonId: id, defaultValues })
 
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
@@ -141,6 +150,7 @@ export default function CreateLessonDialog({
     lock: false,
     ...defaultValues,
     duration: timeConvertorToSeconds(defaultValues?.duration),
+    pseudoType: toPseudoType(defaultValues?.type as LessonType),
   }
 
   useEffect(() => {
@@ -150,13 +160,6 @@ export default function CreateLessonDialog({
       lock: lessonLock ? true : false,
     })
   }, [autoRun, lessonLock])
-  const handleClickOpen = (): void => {
-    setOpen(true)
-  }
-
-  const handleClose = (): void => {
-    setOpen(false)
-  }
 
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required(translate('required_name')),
@@ -170,21 +173,24 @@ export default function CreateLessonDialog({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     let lesson
+    let pseudoType = toDbFields(data.pseudoType)
     let lessonData = {
       ...data,
       duration: `${data.duration * 60}`,
       autoRun: undefined,
       lock: undefined,
+      independent: pseudoType.independent,
+      type: pseudoType.type,
     }
     try {
       if (isEdit && id) {
         lesson = await editLesson({ id, ...lessonData }).unwrap()
-        data.autoRun ? autoRunSet('true') : autoRunDelete()
+        pseudoType.autoRun ? autoRunSet('true') : autoRunDelete()
         data.lock ? lessonLockSet('true') : lessonLockDelete()
         if (refetch) refetch()
       } else {
         lesson = await createLesson(lessonData).unwrap()
-        if (data.autoRun) {
+        if (pseudoType.autoRun) {
           autoRunSet('true')
         }
         if (data.lock) {
@@ -294,7 +300,7 @@ export default function CreateLessonDialog({
                   </Typography>
                 </Stack>
                 <RHFToggleButtonGroup
-                  name='type'
+                  name='pseudoType'
                   options={_mochLessonTypes}
                   sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
                   sxButton={toggleButtonStyles}
@@ -375,22 +381,17 @@ export default function CreateLessonDialog({
             >
               <IntegrationsTab contentId={id as string} />
             </TabPanel>
-            {value === 0 ? (
-              <DialogActions>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    gap: 2,
-                  }}
-                >
-                  <Button
-                    onClick={() => {
-                      setOpen(false)
-                    }}
-                  >
-                    {translate('actions_close')}
-                  </Button>
+            <DialogActions>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  gap: 2,
+                }}
+              >
+                <Button onClick={handleClose}>{translate('actions_close')}</Button>
+
+                {value === 0 ? (
                   <LoadingButton
                     type='submit'
                     variant='contained'
@@ -398,27 +399,9 @@ export default function CreateLessonDialog({
                   >
                     {translate('actions_save')}
                   </LoadingButton>
-                </Box>
-              </DialogActions>
-            ) : (
-              <DialogActions>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    gap: 2,
-                  }}
-                >
-                  <Button
-                    onClick={() => {
-                      setOpen(false)
-                    }}
-                  >
-                    {translate('actions_close')}
-                  </Button>
-                </Box>
-              </DialogActions>
-            )}
+                ) : null}
+              </Box>
+            </DialogActions>
           </FormProvider>
         </DialogContent>
       </Dialog>
@@ -470,12 +453,12 @@ function a11yProps(index: number): Record<string, string> {
 // @TODO: uncomment after updating backend
 
 const _mochLessonTypes = [
-  // {
-  //   key: LessonTypeEnum.simple,
-  //   value: 'Simple',
-  //   tooltip: 'An engaging, single-page lesson with coding exercises.',
-  //   icon: 'material-symbols:info-outline',
-  // },
+  {
+    key: LessonTypeEnum.simple,
+    value: 'Simple',
+    tooltip: 'An engaging, single-page lesson with coding exercises.',
+    icon: 'material-symbols:info-outline',
+  },
   {
     key: LessonTypeEnum.practical,
     value: 'Practical',
