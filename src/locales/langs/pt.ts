@@ -1,6 +1,7 @@
 const pt = {
   // action words
   actions_delete: 'Excluir',
+  actions_deleted: 'Excluído com sucesso',
   actions_password: 'Alterar Senha',
   actions_remove: 'Remover',
   actions_edit: 'Editar',
@@ -1283,6 +1284,13 @@ const pt = {
   gallery_folder_private_title: 'Privado',
   gallery_folder_private_subtitle: 'Esta pasta é só para você.',
   gallery_projects_inside: 'projetos dentro',
+  gallery_projects_empty: 'Você ainda não tem projetos',
+  gallery_delete_project: 'Excluir projeto',
+  gallery_delete_confirm: 'Tem certeza de que deseja excluir este projeto?',
+  gallery_edit_dialog_title: 'Editar projeto',
+  gallery_edit_dialog_name: 'Título do projeto',
+  gallery_edit_dialog_description: 'Descrição do projeto',
+  gallery_edit_dialog_visibility: 'Visibilidade pública',
 
   sidebar_menu_my_creations_item_1: 'Mumu AI Creator',
   sidebar_menu_my_creations_item_2: 'Adicionar uma lição em branco',

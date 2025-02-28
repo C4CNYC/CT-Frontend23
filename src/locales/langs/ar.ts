@@ -1,6 +1,7 @@
 const ar = {
   // action words
   actions_delete: 'حذف',
+  actions_deleted: 'تم الحذف بنجاح',
   actions_password: 'تغيير كلمة المرور',
   actions_remove: 'إزالة',
   actions_edit: 'تعديل',
@@ -1267,6 +1268,13 @@ const ar = {
   gallery_folder_private_title: 'خاص',
   gallery_folder_private_subtitle: 'هذا المجلد مخصص لك فقط',
   gallery_projects_inside: 'مشاريع بالداخل',
+  gallery_projects_empty: 'ليس لديك أي مشاريع بعد',
+  gallery_delete_project: 'حذف المشروع',
+  gallery_delete_confirm: 'هل أنت متأكد أنك تريد حذف هذا المشروع؟',
+  gallery_edit_dialog_title: 'تحرير المشروع',
+  gallery_edit_dialog_name: 'عنوان المشروع',
+  gallery_edit_dialog_description: 'وصف المشروع',
+  gallery_edit_dialog_visibility: 'الرؤية العامة',
 
   sidebar_menu_my_creations_item_1: 'منشئ Mumu AI',
   sidebar_menu_my_creations_item_2: 'إضافة درس فارغ',

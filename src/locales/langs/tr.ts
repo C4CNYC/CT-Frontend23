@@ -1,6 +1,7 @@
 const tr = {
   // action words
   actions_delete: 'Sil',
+  actions_deleted: 'Başarıyla silindi',
   actions_password: 'Şifre Değiştir',
   actions_remove: 'Kaldır',
   actions_edit: 'Düzenle',
@@ -1266,6 +1267,13 @@ const tr = {
   gallery_folder_private_title: 'Özel',
   gallery_folder_private_subtitle: 'Bu klasör sadece sizin için',
   gallery_projects_inside: 'içerideki projeler',
+  gallery_projects_empty: 'Henüz hiç projeniz yok',
+  gallery_delete_project: 'Projeyi sil',
+  gallery_delete_confirm: 'Bu projeyi silmek istediğinizden emin misiniz?',
+  gallery_edit_dialog_title: 'Projeyi düzenle',
+  gallery_edit_dialog_name: 'Proje başlığı',
+  gallery_edit_dialog_description: 'Proje açıklaması',
+  gallery_edit_dialog_visibility: 'Genel görünürlük',
 
   sidebar_menu_my_creations_item_1: 'Mumu AI Sihirbazı',
   sidebar_menu_my_creations_item_2: 'Boş Ders Ekle',

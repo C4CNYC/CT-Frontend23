@@ -3,23 +3,22 @@ import { AiTwotoneEdit } from '@react-icons/all-files/ai/AiTwotoneEdit'
 import { RiDeleteBin6Line } from '@react-icons/all-files/ri/RiDeleteBin6Line'
 
 import { MenuPopover } from '@/components'
-import { IGallery } from '@/redux/interfaces/gallary.interface'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
-import EditProjectDialog from '../EditProjectDialog'
+import EditProjectDialog from './EditProjectDialog'
 
 interface Props {
   openPopover: HTMLElement | null
   handleClosePopover: () => void
   handleOpenConfirm: () => void
-  item: IGallery
 }
 
 export default function ElementMenu({
   openPopover,
   handleClosePopover,
-  item,
   handleOpenConfirm,
 }: Props): React.ReactElement {
+  const translate = useTranslate()
   return (
     <MenuPopover
       anchorOrigin={{
@@ -33,12 +32,7 @@ export default function ElementMenu({
       open={openPopover}
       onClose={handleClosePopover}
     >
-      <EditProjectDialog
-        title={item.title}
-        publicProject={item.public ?? false}
-        description={item.description}
-        id={item.id ?? ''}
-      >
+      <EditProjectDialog>
         <Button
           color='primary'
           sx={{
@@ -48,7 +42,7 @@ export default function ElementMenu({
             gap: 2,
           }}
         >
-          Edit
+          {translate('actions_edit')}
           <AiTwotoneEdit size='20px' />
         </Button>
       </EditProjectDialog>
@@ -66,7 +60,7 @@ export default function ElementMenu({
           gap: 2,
         }}
       >
-        Delete
+        {translate('actions_delete')}
         <RiDeleteBin6Line
           size='20px'
           style={{ marginLeft: '5px' }}

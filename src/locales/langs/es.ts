@@ -1,6 +1,7 @@
 const es = {
   // action words
   actions_delete: 'Eliminar',
+  actions_deleted: 'Eliminado con éxito',
   actions_password: 'Cambiar Contraseña',
   actions_remove: 'Eliminar',
   actions_edit: 'Editar',
@@ -1293,6 +1294,13 @@ const es = {
   gallery_folder_private_title: 'Privado',
   gallery_folder_private_subtitle: 'Esta carpeta es solo para ti.',
   gallery_projects_inside: 'proyectos dentro',
+  gallery_projects_empty: 'Aún no tienes proyectos',
+  gallery_delete_project: 'Eliminar proyecto',
+  gallery_delete_confirm: '¿Estás seguro de que quieres eliminar este proyecto?',
+  gallery_edit_dialog_title: 'Editar proyecto',
+  gallery_edit_dialog_name: 'Título del proyecto',
+  gallery_edit_dialog_description: 'Descripción del proyecto',
+  gallery_edit_dialog_visibility: 'Visibilidad pública',
 
   sidebar_menu_my_creations_item_1: 'Mumu AI Creator',
   sidebar_menu_my_creations_item_2: 'Agregar una lección en blanco',
