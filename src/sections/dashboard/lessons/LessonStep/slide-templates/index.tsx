@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
 import { Box, Dialog, DialogContent, IconButton } from '@mui/material'
-
-import { Iconify } from '@root/src/components'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
 import { CLOSE_BTN_POSITION } from './constants'
 import TeamplatesMenu from './TemplatesMenu'
@@ -35,7 +34,7 @@ const SlideTemplateDialog = ({ children }: ISlideTemplateDialog) => {
           sx={CLOSE_BTN_POSITION}
           onClick={handleClose}
         >
-          <Iconify icon='ic:round-close' />
+          <IoClose />
         </IconButton>
         <DialogContent id='drawer-container'>
           <TeamplatesMenu />

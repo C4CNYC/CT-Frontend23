@@ -14,6 +14,8 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
@@ -21,7 +23,6 @@ import { useSelector } from 'react-redux'
 import {
   ConfirmDialog,
   CustomBreadcrumbs,
-  Iconify,
   Scrollbar,
   TableHeadCustom,
   TableNoData,
@@ -49,7 +50,6 @@ import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { createRandomAvatar, getRandomColor } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-
 const STATUS_OPTIONS = ['all']
 
 const TABLE_HEAD = [
@@ -212,7 +212,7 @@ export default function UserListPage(): React.ReactElement {
             >
               <Button
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus />}
               >
                 {translate('classes_add_class')}
               </Button>
@@ -264,7 +264,7 @@ export default function UserListPage(): React.ReactElement {
                         setOpenConfirm(true)
                       }}
                     >
-                      <Iconify icon='eva:trash-2-outline' />
+                      <FiTrash2 />
                     </IconButton>
                   </Tooltip>
                 }

@@ -1,28 +1,26 @@
-import { type FC, useState } from 'react'
+import { type FC } from 'react'
 
-import { type IChallenges } from '@/redux/interfaces/challenges.interface'
-import { type ILesson } from '@/redux/interfaces/content.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import { type BaseResponseInterface } from '@/utils'
+
+import { useLessonManager } from '../../lib/LessonManagerContext'
 
 import LessonItem from './lesson-item'
 import LessonManagerButton from './lesson-manager-button'
 import LessonManagerSideBar from './lesson-manger-side-bar'
 import SkeletonDrawer from './skeleton-drawer'
 
-export interface LessonManagerProps {
-  lesson?: ILesson & BaseResponseInterface
-  data?: IChallenges & BaseResponseInterface
-  isLoading: boolean
-  onChooseLesson: (lessonId: string, moduleId: string) => void
+interface LessonManagerProps {
+  iconColor?: string
 }
 
-const LessonManager: FC<LessonManagerProps> = ({ lesson, onChooseLesson, isLoading, data }) => {
-  const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+const LessonManager: FC<LessonManagerProps> = ({ iconColor }) => {
+  const { lesson, isLoading, isOpenDrawer, setIsOpenDrawer, data, onChooseLesson } =
+    useLessonManager()
 
   return (
     <>
       <LessonManagerButton
+        iconColor={iconColor}
         onOpen={() => {
           setIsOpenDrawer(true)
         }}

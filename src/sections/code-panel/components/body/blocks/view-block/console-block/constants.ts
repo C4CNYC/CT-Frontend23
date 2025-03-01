@@ -9,7 +9,6 @@ export const CONSOLE_CONT_SX = {
 export const CONSOLE_HEADER_SX = {
   flexDirection: 'row',
   alignItems: 'center',
-  gap: 1,
   pl: 1,
   '&:hover': { cursor: 'pointer' },
 }
@@ -22,4 +21,5 @@ export const COLLAPSE_BOX_SX = {
   whiteSpace: 'pre-wrap',
   overflowY: 'auto',
   padding: '0px 10px',
+  borderBottom: '3px solid #FBDD3F',
 }

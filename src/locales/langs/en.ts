@@ -1048,9 +1048,13 @@ const en = {
   are_you_sure_see_solution: 'Are you sure you want to see the full solution code for this lesson?',
   not_available_for_this_step: 'Not available for this step.',
   no_solution: 'A solution is not available for this slide.',
+  solution_code_title: 'Solution code',
+  my_code_title: 'My code',
   coding_editor: 'CODING EDITOR:',
   customize: 'CUSTOMIZE:',
   reset_lesson: 'Reset Lesson',
+  reset_lesson_confirm: 'Are you sure you want to reset progress and code typed for this lesson?',
+  reset_lesson_submit_btn: 'Yes, Reset Progress',
   reset_code: 'Reset code',
   intro_tour: 'Intro Tour',
   launch_intro_tour: 'Launch Intro Tour',
@@ -1371,7 +1375,7 @@ const en = {
     'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
   intro_tour_step_9_desktop_title: 'Most important: Have fun! 🤪',
   intro_tour_step_9_desktop_subtitle:
-    'And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?',
+    'And on Feedback 💬 let us know what you think: awesome 🏆 or not-so-awesome 💩?',
   intro_tour_step_9_desktop_btn: 'Leave feedback',
 
   intro_tour_step_1_mobile_title: '💥 The Coding Panel 👩‍💻 💥',
@@ -1391,7 +1395,7 @@ const en = {
     'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
   intro_tour_step_7_mobile_title: 'Most important: Have fun! 🤪',
   intro_tour_step_7_mobile_subtitle:
-    'And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?',
+    'And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?',
   intro_tour_step_7_mobile_btn: 'Leave feedback',
 }
 

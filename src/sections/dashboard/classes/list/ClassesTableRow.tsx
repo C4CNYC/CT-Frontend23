@@ -2,11 +2,16 @@ import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Avatar, Checkbox, IconButton, MenuItem, Stack, TableCell, TableRow } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
+import { MdOutlineConnectWithoutContact } from '@react-icons/all-files/md/MdOutlineConnectWithoutContact'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
-import { ConfirmDialog, Iconify, Label, MenuPopover, useSnackbar } from '@/components'
+import { ConfirmDialog, Label, MenuPopover, useSnackbar } from '@/components'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { useStudentJoinClassMutation } from '@/redux/services/manager/students-manager'
 import { RootState } from '@/redux/store'
@@ -15,7 +20,6 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 
 import ClassPreferences from '../modal'
-
 interface IClassesTableRowProps {
   row: IClass & BaseResponseInterface
   selected: boolean
@@ -137,7 +141,7 @@ export default function ClassesTableRow({
               setOpenPopover(e.currentTarget)
             }}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <CgMoreVerticalAlt />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -151,14 +155,14 @@ export default function ClassesTableRow({
         sx={{ width: 160 }}
       >
         <MenuItem onClick={onJoinHandle}>
-          <Iconify icon='gala:add' />
+          <FaPlus />
           {translate('actions_join')}
         </MenuItem>
         <MenuItem
           component={Link}
           href={MANAGER_PATH_DASHBOARD.school.controller(row.id)}
         >
-          <Iconify icon='material-symbols:connect-without-contact' />
+          <MdOutlineConnectWithoutContact />
           {translate('actions_connect')}
         </MenuItem>
         <ClassPreferences
@@ -174,7 +178,7 @@ export default function ClassesTableRow({
           updateResult={updateResult}
         >
           <MenuItem>
-            <Iconify icon='ant-design:setting-outlined' />
+            <IoSettingsOutline />
             {translate('settings')}
           </MenuItem>
         </ClassPreferences>
@@ -185,7 +189,7 @@ export default function ClassesTableRow({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

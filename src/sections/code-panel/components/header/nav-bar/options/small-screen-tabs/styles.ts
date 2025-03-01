@@ -1,5 +1,12 @@
 export const styles = {
-  Box: { m: '0 auto' },
+  Box: {
+    position: 'fixed',
+    top: 0,
+    left: 'calc(50% - 76px)',
+    zIndex: 400,
+    background: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: '0 0 10px 10px',
+  },
   Tabs: {
     backgroundColor: 'rgba(21, 82, 117, 0.8)',
     borderRadius: '0 0 10px 10px',

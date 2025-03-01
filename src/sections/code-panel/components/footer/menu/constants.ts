@@ -1,7 +1,5 @@
 import { type FabProps, type SxProps } from '@mui/material'
-import { Theme } from '@mui/system'
-
-import { type Action } from './config'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const SPEED_DIAL_SX = {
   position: 'absolute',
@@ -17,7 +15,7 @@ export const BOX_SX = {
   position: 'relative',
 }
 
-export const getActionFabPropsSx = (isDarkMode: boolean, theme: Theme): Partial<FabProps> => ({
+export const getActionFabPropsSx = (): Partial<FabProps> => ({
   size: 'small',
   sx: {
     width: 36,
@@ -31,12 +29,13 @@ export const getActionFabPropsSx = (isDarkMode: boolean, theme: Theme): Partial<
     },
   },
 })
-export const getChipSx = (action: Action): SxProps => ({
+
+export const getChipSx = (color: string): SxProps => ({
   position: 'absolute',
   left: '-80px',
   top: 'calc(50% - 10px)',
   zIndex: 1000,
-  background: action.color,
+  background: color,
   height: '20px',
   width: '68px',
   '& .MuiChip-label': {
@@ -59,3 +58,10 @@ export const getSpeedDialFabProps = (
     },
   },
 })
+
+export const tooltipRewrite = makeStyles(() => ({
+  tooltip: {
+    color: '#364954',
+    background: '#fff',
+  },
+}))

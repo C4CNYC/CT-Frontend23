@@ -1,6 +1,7 @@
 import { Box, Stack } from '@mui/material'
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
 
-import { Iconify } from '../../iconify'
 import { useSettingsContext } from '../SettingsContext'
 import { StyledCard } from '../styles'
 
@@ -25,11 +26,11 @@ export default function StretchOptions(): React.ReactElement {
           }),
         }}
       >
-        <Iconify icon={themeStretch ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'} />
+        {themeStretch ? <IoIosArrowBack /> : <IoIosArrowForward />}
 
         <Box sx={{ flexGrow: 1, borderBottom: 'dashed 1.5px currentcolor' }} />
 
-        <Iconify icon={themeStretch ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-back-fill'} />
+        {themeStretch ? <IoIosArrowForward /> : <IoIosArrowBack />}
       </Stack>
     </StyledCard>
   )

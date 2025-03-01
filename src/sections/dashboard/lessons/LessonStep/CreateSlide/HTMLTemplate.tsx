@@ -14,6 +14,7 @@ import {
 } from '@mui/material'
 import Box from '@mui/system/Box'
 import Stack from '@mui/system/Stack'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -153,7 +154,7 @@ export function HTMLTemplate({ open, onClose, lessonId, lessonName }: Props) {
                       sx={{ position: 'relative', p: (theme) => theme.spacing(0, 2.5, 2.5, 2.5) }}
                     >
                       <IconButton sx={{ position: 'absolute', bottom: 20, right: 8 }}>
-                        <Iconify icon='eva:more-vertical-fill' />
+                        <CgMoreVerticalAlt />
                       </IconButton>
 
                       {[

@@ -1,9 +1,7 @@
 import { useState } from 'react'
 
 import { Button, Dialog, DialogActions, DialogContent, TextField, Typography } from '@mui/material'
-
-import { Iconify } from '@/components/iconify'
-
+import { IoIosSend } from '@react-icons/all-files/io/IoIosSend'
 interface IHelpQuestion {
   children: React.ReactElement
 }
@@ -62,12 +60,10 @@ const HelpQuestionModal = ({ children }: IHelpQuestion): React.ReactElement => {
             variant='outlined'
             // TODO-PH add after integration new chat
             onClick={() => {}}
+            sx={{ gap: 1 }}
           >
             SEND
-            <Iconify
-              ml={1}
-              icon='ic:round-send'
-            />
+            <IoIosSend />
           </Button>
         </DialogActions>
       </Dialog>

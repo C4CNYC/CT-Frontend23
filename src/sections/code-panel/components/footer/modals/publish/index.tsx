@@ -87,59 +87,61 @@ const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic })
         {children}
       </Box>
 
-      <Dialog
-        maxWidth='sm'
-        open={open}
-        keepMounted
-        onClose={handleClose}
-        fullWidth
-        sx={DIALOG_SX}
-      >
-        <DialogTitle>{isPublic ? 'PUBLISH' : 'SAVE'}</DialogTitle>
-
-        <FormProvider
-          methods={methods}
-          onSubmit={methods.handleSubmit(onSubmit)}
+      {open ? (
+        <Dialog
+          maxWidth='sm'
+          open={open}
+          keepMounted
+          onClose={handleClose}
+          fullWidth
+          sx={DIALOG_SX}
         >
-          <DialogContent>
-            <Stack
-              gap={3}
-              p={1}
-            >
-              <RHFTextField
-                name='title'
-                label='Title'
-                required
-              />
+          <DialogTitle>{isPublic ? 'PUBLISH' : 'SAVE'}</DialogTitle>
 
-              <RHFTextField
-                multiline
-                rows={5}
-                name='description'
-                label='Description'
-                required
-              />
-            </Stack>
-          </DialogContent>
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <DialogContent>
+              <Stack
+                gap={3}
+                p={1}
+              >
+                <RHFTextField
+                  name='title'
+                  label='Title'
+                  required
+                />
 
-          <DialogActions>
-            <Button
-              color='error'
-              onClick={handleClose}
-            >
-              CANCEL
-            </Button>
+                <RHFTextField
+                  multiline
+                  rows={5}
+                  name='description'
+                  label='Description'
+                  required
+                />
+              </Stack>
+            </DialogContent>
 
-            <LoadingButton
-              type='submit'
-              variant='contained'
-              loading={isLoading || isUpdatingCover}
-            >
-              SAVE
-            </LoadingButton>
-          </DialogActions>
-        </FormProvider>
-      </Dialog>
+            <DialogActions>
+              <Button
+                color='error'
+                onClick={handleClose}
+              >
+                CANCEL
+              </Button>
+
+              <LoadingButton
+                type='submit'
+                variant='contained'
+                loading={isLoading || isUpdatingCover}
+              >
+                SAVE
+              </LoadingButton>
+            </DialogActions>
+          </FormProvider>
+        </Dialog>
+      ) : null}
     </>
   )
 }

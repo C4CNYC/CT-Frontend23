@@ -10,12 +10,13 @@ import {
   Typography,
   alpha,
 } from '@mui/material'
+import { FaCheck } from '@react-icons/all-files/fa/FaCheck'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
-import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
+import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { useGetOrgMembersQuery } from '@/redux/services/admin/members-admin'
 import { Role } from '@/redux/services/enums/role.enum'
@@ -27,7 +28,6 @@ import {
 } from '@/redux/services/manager/class-mentor-manager'
 import { RootState } from '@/redux/store'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
-
 type UserType = IUser & BaseResponseInterface
 
 interface IClassMentorsAutocompleteProps {
@@ -184,7 +184,7 @@ export default function ClassMentorsAutocomplete({
                   }),
                 }}
               >
-                <Iconify icon='eva:checkmark-fill' />
+                <FaCheck />
               </Box>
             </Box>
 

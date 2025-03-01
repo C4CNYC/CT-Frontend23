@@ -1,8 +1,8 @@
 import { AppBar, IconButton, Stack, Toolbar } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { TfiMenuAlt } from '@react-icons/all-files/tfi/TfiMenuAlt'
 import { useRouter } from 'next/router'
 
-import { Iconify } from '@/components/iconify'
 import { Logo } from '@/components/logo'
 import { useSettingsContext } from '@/components/settings'
 import ThemeSwitcher from '@/components/theme-switcher'
@@ -51,7 +51,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
           onClick={onOpenNav}
           sx={{ mr: 1, color: 'text.primary' }}
         >
-          <Iconify icon='eva:menu-2-fill' />
+          <TfiMenuAlt />
         </IconButton>
       )}
 

@@ -12,8 +12,12 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
+import { CgEyeAlt } from '@react-icons/all-files/cg/CgEyeAlt'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 
-import { ConfirmDialog, Iconify, Label, MenuPopover } from '@/components'
+import { ConfirmDialog, Label, MenuPopover } from '@/components'
 import { Status } from '@/redux/enums/assignments.enum'
 import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
 import { fDate } from '@/utils/formatTime'
@@ -129,7 +133,7 @@ export default function AssignmentsTableRow({ row, selected, onSelectRow, onDele
             color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
           >
-            <Iconify icon='eva:more-vertical-fill' />
+            <CgMoreVerticalAlt />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -145,7 +149,7 @@ export default function AssignmentsTableRow({ row, selected, onSelectRow, onDele
             handleClosePopover()
           }}
         >
-          <Iconify icon='eva:eye-fill' />
+          <CgEyeAlt />
           {translate('actions_view')}
         </MenuItem>
 
@@ -155,7 +159,7 @@ export default function AssignmentsTableRow({ row, selected, onSelectRow, onDele
             handleOpenDetails()
           }}
         >
-          <Iconify icon='eva:edit-fill' />
+          <GoPencil />
           {translate('actions_edit')}
         </MenuItem>
 
@@ -168,7 +172,7 @@ export default function AssignmentsTableRow({ row, selected, onSelectRow, onDele
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

@@ -13,12 +13,16 @@ import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import { AiFillEye } from '@react-icons/all-files/ai/AiFillEye'
 import { BiCopy } from '@react-icons/all-files/bi/BiCopy'
+import { BsArrowsMove } from '@react-icons/all-files/bs/BsArrowsMove'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import pick from 'lodash-es/pick'
 
 import { ConfirmDialog, Image, TextMaxLine, useSnackbar } from '@/components'
 import CustomPopover, { usePopover } from '@/components/custom-popover'
-import { Iconify } from '@/components/iconify'
 import { useCopyToClipboard } from '@/hooks'
 import { fData } from '@/utils/formatNumber'
 import { fDateTime } from '@/utils/formatTime'
@@ -97,7 +101,7 @@ export default function FileManagerFileItem({
         color={popover.open ? 'inherit' : 'default'}
         onClick={popover.onOpen}
       >
-        <Iconify icon='eva:more-vertical-fill' />
+        <CgMoreVerticalAlt />
       </IconButton>
     </Stack>
   )
@@ -248,7 +252,7 @@ export default function FileManagerFileItem({
             popover.onClose()
           }}
         >
-          <Iconify icon='mdi:pencil-outline' />
+          <GoPencil />
           Rename
         </MenuItem>
 
@@ -258,7 +262,7 @@ export default function FileManagerFileItem({
             popover.onClose()
           }}
         >
-          <Iconify icon='mdi:arrow-all' />
+          <BsArrowsMove />
           Move
         </MenuItem>
 
@@ -275,7 +279,7 @@ export default function FileManagerFileItem({
               popover.onClose()
             }}
           >
-            <Iconify icon='mdi:eye-outline' />
+            <AiFillEye />
             Make it {file.acl === 'public' ? 'private' : 'public'}
           </MenuItem>
         )}
@@ -289,7 +293,7 @@ export default function FileManagerFileItem({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='solar:trash-bin-trash-bold' />
+          <FiTrash2 />
           Delete
         </MenuItem>
       </CustomPopover>

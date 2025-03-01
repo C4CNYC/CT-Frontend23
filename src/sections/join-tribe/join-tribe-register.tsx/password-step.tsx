@@ -2,9 +2,11 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, InputAdornment, Stack } from '@mui/material'
+import { HiEye } from '@react-icons/all-files/hi/HiEye'
+import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
 import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 
-import { Iconify, RHFTextField } from '@/components'
+import { RHFTextField } from '@/components'
 
 interface IPasswordStepProps {
   prevStep: () => void
@@ -78,7 +80,7 @@ export default function PasswordStep({
                   edge='end'
                   sx={{ color: '#02D3D7' }}
                 >
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </IconButton>
               </InputAdornment>
             ),

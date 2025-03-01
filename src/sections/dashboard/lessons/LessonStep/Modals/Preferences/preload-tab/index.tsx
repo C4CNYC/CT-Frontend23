@@ -2,9 +2,10 @@ import { useMemo } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Skeleton, Stack, useTheme } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { useSnackbar } from 'notistack'
 
-import { EmptyContent, Iconify } from '@root/src/components'
+import { EmptyContent } from '@root/src/components'
 import {
   useAddLessonStepPreloadFileMutation,
   useGetLessonSlidePreloadFilesQuery,
@@ -86,7 +87,7 @@ const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
           loading={isCreating}
           sx={addAssetSx}
         >
-          <Iconify icon='humbleicons:plus' />
+          <FaPlus />
           {translate('lesson_file_add_asset')}
         </LoadingButton>
       </Stack>

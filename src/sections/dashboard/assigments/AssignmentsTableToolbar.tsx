@@ -1,5 +1,6 @@
 import { Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
 import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
@@ -131,7 +132,7 @@ export default function AssignmentsTableToolbar({
           color='error'
           sx={{ flexShrink: 0 }}
           onClick={onResetFilter}
-          startIcon={<Iconify icon='eva:trash-2-outline' />}
+          startIcon={<FiTrash2 />}
         >
           {translate('actions_clear')}
         </Button>
