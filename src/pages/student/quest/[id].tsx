@@ -70,10 +70,12 @@ export default function Quest(): React.ReactElement | null {
 
   useEffect(() => {
     if (data) {
-      const content = isJson(data.description)
-        ? JSON.parse(data.description)?.doc?.content
-        : data.description
-      setHasContent(content.some((el: any) => el.content))
+      if (isJson(data.description)) {
+        let content = JSON.parse(data.description)?.doc?.content
+        setHasContent(content.some((el: any) => el.content))
+      } else {
+        setHasContent(data?.description ? true : false)
+      }
     }
   }, [data])
 
