@@ -1,4 +1,5 @@
-export function isJson(data: string): boolean {
+export function isJson(data: string | undefined): boolean {
+  if (typeof data !== 'string') return false
   try {
     JSON.parse(data)
     return true
