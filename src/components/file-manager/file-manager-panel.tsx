@@ -2,8 +2,9 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Stack, { StackProps } from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-
-import { Iconify } from '@/components/iconify'
+import { HiPlus } from '@react-icons/all-files/hi/HiPlus'
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
+import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
 
 interface Props extends StackProps {
   title: string
@@ -53,7 +54,7 @@ export default function FileManagerPanel({
                 },
               }}
             >
-              <Iconify icon='mingcute:add-line' />
+              <HiPlus />
             </IconButton>
           )}
         </Stack>
@@ -63,7 +64,7 @@ export default function FileManagerPanel({
 
       {onCollapse && (
         <IconButton onClick={onCollapse}>
-          <Iconify icon={collapse ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-upward-fill'} />
+          {collapse ? <IoIosArrowDown /> : <IoIosArrowUp />}
         </IconButton>
       )}
     </Stack>

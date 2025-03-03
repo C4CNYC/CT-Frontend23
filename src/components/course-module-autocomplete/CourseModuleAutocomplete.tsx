@@ -12,11 +12,12 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import { FaCheck } from '@react-icons/all-files/fa/FaCheck'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
-import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
+import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { IModule } from '@/redux/services/interfaces/courseUnits.interface'
 import {
@@ -168,7 +169,7 @@ export default function CourseModuleAutocomplete({ id }: Props): React.ReactElem
                   }),
                 }}
               >
-                <Iconify icon='eva:checkmark-fill' />
+                <FaCheck />
               </Box>
             </Box>
 

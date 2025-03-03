@@ -6,7 +6,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import type ConfettiType from 'react-confetti/dist/types/Confetti'
-import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
@@ -30,7 +29,6 @@ import {
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
-import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
@@ -42,6 +40,8 @@ import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
 import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
+import { FullScreenProvider } from './lib/FullScreenContext'
+import { LessonManagerProvider } from './lib/LessonManagerContext'
 
 const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
   ssr: false,
@@ -67,10 +67,6 @@ const CodePanelHeader = dynamic(
 
 const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
 
-const LessonsManager = dynamic(
-  async () => await import('@/sections/code-panel/components/lesson-manager')
-)
-
 const DEFAULT_LANGUAGE = 'html'
 
 export default function CodePanelLayout(): ReactElement | null {
@@ -78,7 +74,6 @@ export default function CodePanelLayout(): ReactElement | null {
   const dispatch = useDispatch()
   const translate = useTranslate()
   const { user } = useAuthContext()
-  const handle = useFullScreenHandle()
   const { isAuthenticated } = useAuthContext()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -161,25 +156,6 @@ export default function CodePanelLayout(): ReactElement | null {
   const onConfettiComplete = (confetti?: ConfettiType) => {
     setShowConfetti(false)
     confetti?.reset()
-  }
-
-  const onOpenLesson = (lessonId: string, unitId: string): void => {
-    if (!router.query.courseId && !unitId) return
-
-    void router.push(
-      STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-        courseId: router.query.courseId as string,
-        unitId,
-        lessonId,
-      })
-    )
-  }
-
-  const onChooseLesson = (lessonId: string, unitId: string) => {
-    if (router.query.lessonId === lessonId) return
-
-    window.dispatchEvent(resetLessonEvent)
-    onOpenLesson(lessonId, unitId)
   }
 
   useEffect(() => {
@@ -330,47 +306,48 @@ export default function CodePanelLayout(): ReactElement | null {
       studentCode=''
     >
       <Head>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+        />
         <title> CodePanel: CodeTribe </title>
       </Head>
 
-      <FullScreen handle={handle}>
-        {router.query.ai ? (
-          <AIGeneratorTour withModals />
-        ) : showTour || isShowTour ? (
-          <CodePanelTour />
-        ) : null}
-        <Box
-          sx={{
-            bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
-            position: 'relative',
-            overflow: 'hidden',
-          }}
+      <FullScreenProvider>
+        <LessonManagerProvider
+          data={courseContent}
+          isLoading={isLoadingCourseContent}
+          lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
         >
-          <CodePanelHeader
-            chatComponent={<CodePanelChat />}
-            onHandleFullScreen={handle.active ? handle.exit : handle.enter}
-            isFullScreenView={handle.active}
-            language={DEFAULT_LANGUAGE}
-            lessonManagerComponent={
-              <LessonsManager
-                onChooseLesson={onChooseLesson}
-                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-                data={courseContent}
-                isLoading={isLoadingCourseContent}
-              />
-            }
-          />
-          <CodePanelBody
-            lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-            lessonContents={lessonContent ?? []}
-            user={user?.student_profile}
-            language={DEFAULT_LANGUAGE}
-            onSubmitChallenge={onSubmitChallenge}
-            onSubmitLesson={onSubmitLesson}
-          />
-        </Box>
-      </FullScreen>
+          {router.query.ai ? (
+            <AIGeneratorTour withModals />
+          ) : showTour || isShowTour ? (
+            <CodePanelTour />
+          ) : null}
+          <Box
+            sx={{
+              bgcolor: (theme) =>
+                theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            <CodePanelHeader
+              chatComponent={<CodePanelChat />}
+              language={DEFAULT_LANGUAGE}
+            />
+            <CodePanelBody
+              lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+              isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}
+              lessonContents={lessonContent ?? []}
+              user={user?.student_profile}
+              language={DEFAULT_LANGUAGE}
+              onSubmitChallenge={onSubmitChallenge}
+              onSubmitLesson={onSubmitLesson}
+            />
+          </Box>
+        </LessonManagerProvider>
+      </FullScreenProvider>
 
       {!profile && <SignUpDialog />}
 

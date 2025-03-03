@@ -3,11 +3,10 @@ import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react
 import { Box, TextField, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
-import isEmpty from 'lodash-es/isEmpty'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 
-import { EmptyContent } from '@/components'
+import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
@@ -44,6 +43,7 @@ interface ISliderBlock {
   lessonType?: string
   lessonName?: string
   lessonId?: string
+  isLoadingLessonContent: boolean
 }
 
 interface IView {
@@ -71,6 +71,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   lessonType,
   lessonName,
   lessonId,
+  isLoadingLessonContent,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
@@ -148,14 +149,17 @@ const SliderBlock: FC<ISliderBlock> = ({
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
     }
     if (localStorage) {
+      let currentProgress = 0
       const progress = localStorage.getItem(`${lessonId}_progress`)
       let newProgress: any = {}
       if (progress) {
         newProgress = JSON.parse(progress)
+        currentProgress = newProgress[lessonId as string] ?? 0
       }
       if (lessonId) {
         newProgress[lessonId as string] = next
       }
+      if (currentProgress && !next) return // if the next slide is empty, it's end of lesson, we dont need to reset the progress
       localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
   }
@@ -164,7 +168,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     if (!data || !data.length) return
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    dispatch(setSlideId(data[next].id))
+    if (data?.[next]?.id) dispatch(setSlideId(data[next].id))
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {
@@ -192,7 +196,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   useEffect(() => {
     dispatch(setNextStepAble(false))
     handleDebouncedCallback(() => {
-      if (slideIndex > (lastSlide?.slideNumber || -1)) onUpdateLastSlide(slideIndex)
+      if (slideIndex >= 0) onUpdateLastSlide(slideIndex)
     })
   }, [slideIndex])
 
@@ -212,22 +216,26 @@ const SliderBlock: FC<ISliderBlock> = ({
         height='100%'
         sx={boxSx}
       >
-        {data
-          .filter((slide, stepSlideIndex) => slideIndex == stepSlideIndex)
-          .map((step) => {
-            return (
-              <View
-                title={step.title}
-                lessonType={lessonType}
-                key={step.id}
-                type={step.type}
-                body={step.body}
-                integrations={integrations}
-                connectIntegrations={connectIntegrations}
-                stepBgColor={step.bg_color}
-              />
-            )
-          })}
+        {isLoadingLessonContent ? (
+          <LoadingScreen />
+        ) : (
+          data
+            .filter((slide, stepSlideIndex) => slideIndex == stepSlideIndex)
+            .map((step) => {
+              return (
+                <View
+                  title={step.title}
+                  lessonType={lessonType}
+                  key={step.id}
+                  type={step.type}
+                  body={step.body}
+                  integrations={integrations}
+                  connectIntegrations={connectIntegrations}
+                  stepBgColor={step.bg_color}
+                />
+              )
+            })
+        )}
       </Box>
     )
   }, [data, slideIndex, integrations])
@@ -265,8 +273,6 @@ const SliderBlock: FC<ISliderBlock> = ({
             localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
           }}
         />
-      ) : isEmpty(data) ? (
-        <EmptyContent title={translate('messages_no_data')} />
       ) : (
         <>
           {slider}

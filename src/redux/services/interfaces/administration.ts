@@ -7,6 +7,7 @@ export interface AdminSearchParams {
 export interface IAdministration {
   name: string
   slug: string
+  domain: string
   id: string
   min_logo: string | null
   logo: string | null
@@ -18,6 +19,7 @@ export interface IAdministration {
 export interface IAdministrationCreate {
   name: string
   slug: string
+  domain: string
   home_page_type?: HomePageType
   home_page_body?: string
 }

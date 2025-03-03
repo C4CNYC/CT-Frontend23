@@ -13,13 +13,14 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
 import {
   ConfirmDialog,
   CustomBreadcrumbs,
-  Iconify,
   Scrollbar,
   TableEmptyRows,
   TableHeadCustom,
@@ -43,7 +44,6 @@ import {
 } from '@root/src/redux/services/manager/super-admin'
 import AddEditOrgModal from '@root/src/sections/administration/AddEditOrgModal'
 import OrgTableRow from '@root/src/sections/administration/OrgTableRow'
-
 const STATUS_OPTIONS = ['all']
 
 const TABLE_HEAD = [
@@ -171,7 +171,7 @@ export default function AdministrationPage(): React.ReactElement {
               <Button
                 sx={{ gap: 0.5 }}
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus />}
               >
                 {translate('create_new_org')}
               </Button>
@@ -221,7 +221,7 @@ export default function AdministrationPage(): React.ReactElement {
                       color='primary'
                       onClick={handleOpenConfirm}
                     >
-                      <Iconify icon='eva:trash-2-outline' />
+                      <FiTrash2 />
                     </IconButton>
                   </Tooltip>
                 }

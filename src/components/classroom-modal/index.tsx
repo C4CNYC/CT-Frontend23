@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, Dialog, IconButton, Skeleton, Typography } from '@mui/material'
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
@@ -11,7 +13,6 @@ import {
 } from '@/redux/services/manager/students-manager'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { Iconify } from '../iconify'
 import { useSnackbar } from '../snackbar'
 
 import { GoogleBtn } from './GoogleBtn'
@@ -87,15 +88,12 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
             p: 1,
           }}
         >
-          <IconButton>
-            <Iconify
-              icon='ep:close'
-              width={24}
-              height={24}
-              onClick={() => {
-                setOpen(false)
-              }}
-            />
+          <IconButton
+            onClick={() => {
+              setOpen(false)
+            }}
+          >
+            <IoClose />
           </IconButton>
         </Box>
         <Box
@@ -109,6 +107,9 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
             ml='-20px'
           >
             <Button
+              onClick={() => {
+                setOpen(false)
+              }}
               sx={{
                 color: 'inherit',
                 background: 'none',
@@ -119,14 +120,7 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
                 },
               }}
             >
-              <Iconify
-                icon='iconamoon:arrow-left-2-bold'
-                width={28}
-                height={28}
-                onClick={() => {
-                  setOpen(false)
-                }}
-              />
+              <IoIosArrowBack size={28} />
             </Button>
             <Typography
               variant='h4'

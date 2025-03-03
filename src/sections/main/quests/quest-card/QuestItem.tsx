@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, Link, MenuItem, Stack, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { RiExternalLinkLine } from '@react-icons/all-files/ri/RiExternalLinkLine'
 import { format, formatDistanceToNow } from 'date-fns'
 import NextLink from 'next/link'
@@ -19,13 +21,17 @@ import { useDeleteAssignmentMutation } from '@/redux/services/manager/assignment
 import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
-
 interface IQuestItemProps {
   assignment: IAssignmentReduced
   schoolId: string
+  index: number
 }
 
-export default function QuestItem({ assignment, schoolId }: IQuestItemProps): React.ReactElement {
+export default function QuestItem({
+  assignment,
+  schoolId,
+  index,
+}: IQuestItemProps): React.ReactElement {
   const { query } = useRouter()
   const theme = useTheme()
   const { enqueueSnackbar } = useSnackbar()
@@ -89,6 +95,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
         href={assignmentPath}
         underline='none'
         color={isLight ? 'initial' : '#E6F5FD'}
+        className={index === 0 ? 'studentJoinStep4 tourMainStep4' : ''}
       >
         <Stack
           sx={{
@@ -256,7 +263,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
           color={isLight ? 'initial' : '#E6F5FD'}
         >
           <MenuItem>
-            <Iconify icon='eva:edit-fill' />
+            <GoPencil />
             {translate('actions_edit')}
           </MenuItem>
         </Link>
@@ -267,7 +274,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

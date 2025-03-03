@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 
 import { IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { FaMinus } from '@react-icons/all-files/fa/FaMinus'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
+import { Iconify } from '@root/src/components'
 
 import BasePreference from './BasePreference'
 
@@ -24,7 +26,17 @@ const EditorFontSize = ({ onUpdateFontSize }: IEditorFontSize): React.ReactEleme
   }, [fontSize])
 
   return (
-    <BasePreference title={translate('font_size')}>
+    <BasePreference
+      title={translate('font_size')}
+      abandonmentIcon={
+        <IconButton sx={{ pointerEvents: 'none' }}>
+          <Iconify
+            width='22px'
+            icon='bx:font-size'
+          />
+        </IconButton>
+      }
+    >
       <Box
         display='flex'
         alignItems='center'
@@ -37,10 +49,7 @@ const EditorFontSize = ({ onUpdateFontSize }: IEditorFontSize): React.ReactEleme
             setFontSize((prev) => --prev)
           }}
         >
-          <Iconify
-            width='20px'
-            icon='ic:baseline-minus'
-          />
+          <FaMinus size={20} />
         </IconButton>
         <Typography variant='h6'>{fontSize}</Typography>
         <IconButton
@@ -49,10 +58,7 @@ const EditorFontSize = ({ onUpdateFontSize }: IEditorFontSize): React.ReactEleme
             setFontSize((prev) => ++prev)
           }}
         >
-          <Iconify
-            width='20px'
-            icon='ic:round-plus'
-          />
+          <FaPlus size={20} />
         </IconButton>
       </Box>
     </BasePreference>

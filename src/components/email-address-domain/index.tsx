@@ -12,6 +12,8 @@ import {
   Typography,
 } from '@mui/material'
 import { AiFillPlusCircle } from '@react-icons/all-files/ai/AiFillPlusCircle'
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -20,7 +22,6 @@ import { useInviteStudentMutation } from '@/redux/services/manager/students-mana
 import { useTranslate } from '@/utils/translateHelper'
 
 import { FormProvider, RHFTextField } from '../hook-form'
-import { Iconify } from '../iconify'
 
 interface FormValuesProps {
   email: string
@@ -87,15 +88,12 @@ export default function EmailAddressModal({
             p: 1,
           }}
         >
-          <IconButton>
-            <Iconify
-              icon='ep:close'
-              width={24}
-              height={24}
-              onClick={() => {
-                setOpen(false)
-              }}
-            />
+          <IconButton
+            onClick={() => {
+              setOpen(false)
+            }}
+          >
+            <IoClose />
           </IconButton>
         </Box>
         <FormProvider
@@ -123,15 +121,11 @@ export default function EmailAddressModal({
                     boxShadow: 'none',
                   },
                 }}
+                onClick={() => {
+                  setOpen(false)
+                }}
               >
-                <Iconify
-                  icon='iconamoon:arrow-left-2-bold'
-                  width={28}
-                  height={28}
-                  onClick={() => {
-                    setOpen(false)
-                  }}
-                />
+                <IoIosArrowBack size={24} />
               </Button>
               <Typography
                 variant='h4'

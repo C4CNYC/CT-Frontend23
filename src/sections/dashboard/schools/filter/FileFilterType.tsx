@@ -2,8 +2,10 @@ import { useState } from 'react'
 
 import { Box, Button, CardActionArea, Stack, Typography } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
+import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
 
-import { FileThumbnail, Iconify, Label, MenuPopover } from '@/components'
+import { FileThumbnail, Label, MenuPopover } from '@/components'
 
 import FileFilterButton from './FileFilterButton'
 
@@ -38,7 +40,7 @@ export default function FileFilterType({
     <>
       <FileFilterButton
         isSelected={isSelected}
-        endIcon={<Iconify icon={openPopover ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />}
+        endIcon={openPopover ? <IoIosArrowUp /> : <IoIosArrowDown />}
         onClick={handleOpenPopover}
       >
         {renderLabel}

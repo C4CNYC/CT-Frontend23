@@ -1,23 +1,24 @@
-import { useMemo, type FC } from 'react'
+import { useMemo, useRef, type FC } from 'react'
 
+import { html } from '@codemirror/lang-html'
 import {
-  Box,
   Dialog,
   DialogContent,
   DialogTitle,
   IconButton,
+  Stack,
   Typography,
   useTheme,
 } from '@mui/material'
 import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { dracula } from '@uiw/codemirror-theme-dracula'
+import CodeMirror, { EditorView } from '@uiw/react-codemirror'
 
-import { Iconify } from '@/components/iconify'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 
 import {
-  COPY_BLOCK_CUSTOM_STYLES,
-  DIALOG_CONTENT_SX,
   DIALOG_TITLE_SX,
   DIALOG_TITLE_TYP_SX,
   getDialogPaperProps,
@@ -30,9 +31,13 @@ interface SolutionMobileDialogProps {
 }
 
 export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onClose }) => {
+  const editorRef = useRef(null)
   const theme = useTheme()
-  const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
   const translate = useTranslate()
+
+  const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
+  const userCode = useSelector((state) => state.codePanelGlobal.code)
+
   const dialogPaperProps = useMemo(
     () => getDialogPaperProps(theme.palette.mode === 'dark'),
     [theme.palette.mode === 'dark']
@@ -43,7 +48,9 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
       <Dialog
         open={open}
         onClose={onClose}
-        scroll='paper'
+        scroll='body'
+        fullWidth
+        maxWidth='lg'
         PaperProps={dialogPaperProps}
       >
         <DialogTitle sx={DIALOG_TITLE_SX}>
@@ -63,26 +70,52 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
             onClick={onClose}
             sx={ICON_BUTTON_SX}
           >
-            <Iconify
-              width='20px'
-              icon='ic:round-close'
-            />
+            <IoClose />
           </IconButton>
         </DialogTitle>
 
-        <DialogContent sx={DIALOG_CONTENT_SX}>
-          {/* <CopyBlock */}
-          {/*   text={solutionCode || translate(NO_SOLUTION_TEXT)} */}
-          {/*   language="html" */}
-          {/*   theme={dracula} */}
-          {/*   customStyle={COPY_BLOCK_CUSTOM_STYLES} */}
-          {/* /> */}
-          <Box
-            component='div'
-            style={COPY_BLOCK_CUSTOM_STYLES as any}
+        <DialogContent>
+          <Stack
+            direction={'row'}
+            pb={1}
           >
-            {solutionCode || <Typography>{translate('no_solution')}</Typography>}
-          </Box>
+            <Stack width={'50%'}>
+              <Typography
+                variant='h6'
+                pl={1}
+                gutterBottom
+              >
+                {translate('my_code_title')}
+              </Typography>
+              <CodeMirror
+                ref={editorRef}
+                value={userCode ?? ''}
+                theme={dracula}
+                height='100%'
+                maxHeight='85vh'
+                extensions={[html(), EditorView.lineWrapping]}
+                editable={false}
+              />
+            </Stack>
+            <Stack width={'50%'}>
+              <Typography
+                variant='h6'
+                pl={1}
+                gutterBottom
+              >
+                {translate('solution_code_title')}
+              </Typography>
+              <CodeMirror
+                ref={editorRef}
+                value={solutionCode ?? translate('no_solution')}
+                theme={dracula}
+                height='100%'
+                maxHeight='85vh'
+                extensions={[html(), EditorView.lineWrapping]}
+                editable={false}
+              />
+            </Stack>
+          </Stack>
         </DialogContent>
       </Dialog>
     </>

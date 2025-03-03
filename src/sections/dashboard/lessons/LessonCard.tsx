@@ -3,10 +3,14 @@ import { useState } from 'react'
 import { Draggable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
 import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FaRegCopy } from '@react-icons/all-files/fa6/FaRegCopy'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import { useRouter } from 'next/router'
 
-import { ConfirmDialog, Iconify, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
+import { ConfirmDialog, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useDeleteLessonMutation,
@@ -14,7 +18,6 @@ import {
 } from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
-
 interface Props {
   lesson: ILesson
   index?: number
@@ -142,7 +145,7 @@ export default function LessonCard({
                 color={openPopover ? 'inherit' : 'default'}
                 onClick={handleOpenPopover}
               >
-                <Iconify icon='eva:more-vertical-fill' />
+                <CgMoreVerticalAlt />
               </IconButton>
             </Stack>
             <Label
@@ -244,7 +247,7 @@ export default function LessonCard({
           refetch={refetch}
         >
           <MenuItem>
-            <Iconify icon='eva:edit-fill' />
+            <GoPencil />
             {translate('actions_edit')}
           </MenuItem>
         </CreateLessonDialog>
@@ -254,7 +257,7 @@ export default function LessonCard({
             handleClone(lesson.id)
           }}
         >
-          <Iconify icon='eva:copy-outline' />
+          <FaRegCopy />
           {translate('actions_clone')}
         </MenuItem>
         <Divider sx={{ borderStyle: 'dashed' }} />
@@ -270,7 +273,7 @@ export default function LessonCard({
               color: 'error.main',
             }}
           >
-            <Iconify icon='eva:trash-2-outline' />
+            <FiTrash2 />
             {translate('actions_delete')}
           </MenuItem>
         )}

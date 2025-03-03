@@ -1,13 +1,17 @@
 import { useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
+import { FaRegCopy } from '@react-icons/all-files/fa6/FaRegCopy'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { IoMdCheckmarkCircleOutline } from '@react-icons/all-files/io/IoMdCheckmarkCircleOutline'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import { useRouter } from 'next/router'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
-import { Iconify, MenuPopover } from '@/components'
+import { MenuPopover } from '@/components'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
@@ -16,7 +20,6 @@ import { useTranslate } from '@/utils/translateHelper'
 import { BRIEFING, CHALANGES, CUSTOM, GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
 import Preferences from './Modals/Preferences'
 import Validation from './Modals/Validation'
-
 interface Props {
   lessonId: string
   step: ILessonContent & BaseResponseInterface
@@ -164,7 +167,7 @@ export default function LessonListItem({
                 }}
                 title={translate('actions_duplicate')}
               >
-                <Iconify icon='material-symbols:content-copy-outline' />
+                <FaRegCopy />
               </IconButton>
               <Validation
                 stepId={step.id}
@@ -172,7 +175,7 @@ export default function LessonListItem({
                 setHasValidation={setHasValidation}
               >
                 <IconButton>
-                  <Iconify icon='fluent-mdl2:completed' />
+                  <IoMdCheckmarkCircleOutline />
                 </IconButton>
               </Validation>
               <Preferences
@@ -181,7 +184,7 @@ export default function LessonListItem({
                 lessonId={lessonId}
               >
                 <IconButton>
-                  <Iconify icon='ep:setting' />
+                  <SettingsIcon />
                 </IconButton>
               </Preferences>
             </Stack>
@@ -203,7 +206,7 @@ export default function LessonListItem({
                 handleClosePopover()
               }}
             >
-              <Iconify icon='eva:trash-2-outline' />
+              <FiTrash2 />
               {translate('actions_remove')}
             </MenuItem>
           </MenuPopover>

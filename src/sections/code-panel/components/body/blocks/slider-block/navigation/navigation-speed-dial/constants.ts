@@ -1,51 +1,31 @@
-import { type Theme, type FabProps, type SxProps } from '@mui/material'
-
-export const BADGE_SX = { '& .MuiBadge-badge': { top: '-5px' } }
-
-export const SPEED_DIAL_ACTION_FAB_PROPS: Partial<FabProps> = {
-  sx: {
-    background: '#364954',
-  },
+export const SPEED_DIAL_ACTION_FAB_PROPS = {
+  background: '#364954',
+  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+  '&:hover': { background: 'rgba(54, 73, 84, 0.7)' },
 }
 
-export const getSpeedDialFabProps = (isStepHasValidation: boolean): Partial<FabProps> => ({
+export const SPEED_DIAL_FAB_PROPS = {
   sx: {
-    justifyContent: 'ceter',
+    justifyContent: 'center',
     color: '#D9D9D9',
-    backgroundColor: !isStepHasValidation ? '#fff' : '#364954',
+    backgroundColor: '#364954',
     boxShadow: ' 0px 4px 4px rgba(0, 0, 0, 0.25)',
     width: '50px',
     minHeight: '50px',
     '&:hover': {
-      backgroundColor: !isStepHasValidation ? '#fff' : '#364954',
+      backgroundColor: '#364954',
     },
   },
-})
+}
 
-export const getSpeedDealSx = (theme: Theme): SxProps => ({
-  display: 'none',
-  [theme.breakpoints.down(1000)]: {
-    display: 'flex',
-    ml: '30%',
-  },
-  [theme.breakpoints.down(450)]: {
-    ml: '36%',
-  },
-  '&  .MuiSpeedDial-actions': {
-    flexDirection: 'row',
-    gap: 2,
-    pl: 20,
-    [theme.breakpoints.down(450)]: {
-      pl: 6,
-    },
-  },
+export const SPEED_DIAL_SX = {
   background: '#fff',
   borderRadius: '50%',
-  ml: '75px',
+  ml: 0.5,
   width: '50px',
   height: '50px',
   position: 'absolute',
   top: 0,
   left: 0,
   zIndex: 500,
-})
+}

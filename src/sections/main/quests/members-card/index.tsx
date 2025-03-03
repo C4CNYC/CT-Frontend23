@@ -13,12 +13,12 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import {
   ConfirmDialog,
-  Iconify,
   Label,
   Scrollbar,
   TableEmptyRows,
@@ -45,7 +45,6 @@ import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import { useTranslate } from '@/utils/translateHelper'
 
 import MemberRow from './MemberRow'
-
 const TABLE_HEAD = [
   { id: 'avatar', label: 'avatar', align: 'left' },
   { id: 'firstName', label: 'first_name', align: 'left' },
@@ -287,7 +286,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
                   color='primary'
                   onClick={handleOpenConfirm}
                 >
-                  <Iconify icon='eva:trash-2-outline' />
+                  <FiTrash2 />
                 </IconButton>
               </Tooltip>
             }

@@ -15,6 +15,7 @@ import { BsAspectRatio } from '@react-icons/all-files/bs/BsAspectRatio'
 import { BsCodeSlash } from '@react-icons/all-files/bs/BsCodeSlash'
 import { CgScreen } from '@react-icons/all-files/cg/CgScreen'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
+import { PiShareFatLight } from '@react-icons/all-files/pi/PiShareFatLight'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
@@ -24,7 +25,7 @@ import {
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { Iconify, Label } from '@root/src/components'
+import { Label } from '@root/src/components'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
@@ -36,7 +37,6 @@ import { EditorSelector } from './EditorSelector'
 import { LessonContentContext } from './LessonContent.context'
 import SkeletonContentCode from './SkeletonContentCode'
 import SkeletonContentMulti from './SkeletonContentMulti'
-
 export default function StepContentEditor(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const { locked } = useContext(LessonContentContext)
@@ -215,7 +215,7 @@ export default function StepContentEditor(): React.ReactElement {
 
             <LessonSchareModal>
               <Button sx={BTNSX}>
-                <Iconify icon='ph:share-fat' />
+                <PiShareFatLight />
                 {translate('lesson_share_button')}
               </Button>
             </LessonSchareModal>

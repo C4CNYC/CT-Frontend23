@@ -2,9 +2,12 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import Link from 'next/link'
 
-import { ConfirmDialog, Iconify, Image, Label, MenuPopover, useSnackbar } from '@/components'
+import { ConfirmDialog, Image, Label, MenuPopover, useSnackbar } from '@/components'
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
 import { useDeleteCourseMutation } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -12,7 +15,6 @@ import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
-
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface
   refetch: () => void
@@ -94,7 +96,7 @@ export default function CourseCard({
               color={openPopover ? 'inherit' : 'default'}
               onClick={handleOpenPopover}
             >
-              <Iconify icon='eva:more-vertical-fill' />
+              <CgMoreVerticalAlt />
             </IconButton>
           </Stack>
         ) : (
@@ -206,7 +208,7 @@ export default function CourseCard({
           refetch={refetch}
         >
           <MenuItem>
-            <Iconify icon='eva:edit-fill' />
+            <GoPencil />
             {translate('actions_edit')}
           </MenuItem>
         </CreateCourseDialog>
@@ -219,7 +221,7 @@ export default function CourseCard({
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

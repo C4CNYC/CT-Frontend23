@@ -1,6 +1,7 @@
 const ar = {
   // action words
   actions_delete: 'حذف',
+  actions_deleted: 'تم الحذف بنجاح',
   actions_password: 'تغيير كلمة المرور',
   actions_remove: 'إزالة',
   actions_edit: 'تعديل',
@@ -673,6 +674,13 @@ const ar = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'هل أنت متأكد أنك \n تريد مغادرة القبيلة؟',
   tribes_you_left_tribe: 'لقد غادرت القبيلة',
+  added_to_tribe: 'تمت إضافتك إلى القبيلة',
+  added_to_tribe_success: 'رائع! شكرًا لك!',
+  join_class_dialog_title: 'لدي رمز انضمام',
+  join_class_dialog_title_1: 'لا يمكننا العثور على هذه القبيلة أو المهمة',
+  join_class_dialog_enter_code: 'أدخل رمز الانضمام أدناه',
+  join_class_dialog_enter_code_1:
+    'إما أنك كتبته بشكل خاطئ أو أن هذه القبيلة لم تعد متاحة. اسأل قائدك أو معلمك.',
 
   // Create class page
   class_create: 'إنشاء فصل دراسي',
@@ -1032,9 +1040,13 @@ const ar = {
   are_you_sure_see_solution: 'هل أنت متأكد أنك تريد رؤية الكود الكامل للحل لهذا الدرس؟',
   not_available_for_this_step: 'غير متوفر لهذه الخطوة.',
   no_solution: 'لا يوجد حل متاح لهذه الشريحة.',
+  solution_code_title: 'كود الحل',
+  my_code_title: 'كودي',
   coding_editor: 'محرر الأكواد:',
   customize: 'تخصيص:',
   reset_lesson: 'إعادة تعيين الدرس',
+  reset_lesson_confirm: 'هل أنت متأكد أنك تريد إعادة تعيين التقدم والرمز المكتوب لهذا الدرس؟',
+  reset_lesson_submit_btn: 'نعم، إعادة تعيين التقدم',
   reset_code: 'إعادة تعيين الكود',
   intro_tour: 'الجولة التعريفية',
   launch_intro_tour: 'بدء الجولة التعريفية',
@@ -1124,6 +1136,7 @@ const ar = {
   update_org_dialog_title: 'تحديث المنظمة',
   create_new_name_label: 'اسم المنظمة',
   create_new_slug_label: 'اسم الرابط',
+  create_new_domain_label: 'نطاق',
   name_validation_msg: 'الاسم مطلوب',
   slug_validation_msg_1:
     'يجب أن يكون الرابط بالخط الصغير، ولا يحتوي على مسافات أو أرقام، ويستخدم الحروف والشرطات فقط',
@@ -1255,6 +1268,13 @@ const ar = {
   gallery_folder_private_title: 'خاص',
   gallery_folder_private_subtitle: 'هذا المجلد مخصص لك فقط',
   gallery_projects_inside: 'مشاريع بالداخل',
+  gallery_projects_empty: 'ليس لديك أي مشاريع بعد',
+  gallery_delete_project: 'حذف المشروع',
+  gallery_delete_confirm: 'هل أنت متأكد أنك تريد حذف هذا المشروع؟',
+  gallery_edit_dialog_title: 'تحرير المشروع',
+  gallery_edit_dialog_name: 'عنوان المشروع',
+  gallery_edit_dialog_description: 'وصف المشروع',
+  gallery_edit_dialog_visibility: 'الرؤية العامة',
 
   sidebar_menu_my_creations_item_1: 'منشئ Mumu AI',
   sidebar_menu_my_creations_item_2: 'إضافة درس فارغ',

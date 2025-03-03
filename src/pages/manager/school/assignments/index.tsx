@@ -15,13 +15,13 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import {
   ConfirmDialog,
   CustomBreadcrumbs,
-  Iconify,
   Label,
   Scrollbar,
   TableEmptyRows,
@@ -360,7 +360,7 @@ export default function AsssignmentsListPage() {
                         color='error'
                         onClick={handleOpenConfirm}
                       >
-                        <Iconify icon='eva:trash-2-outline' />
+                        <FiTrash2 />
                       </IconButton>
                     </Tooltip>
                   </Stack>

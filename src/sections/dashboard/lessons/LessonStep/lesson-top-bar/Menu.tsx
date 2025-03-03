@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { Iconify, MenuPopover } from '@/components'
+import { MenuPopover } from '@/components'
 import { PATH_AUTH } from '@/routes/paths'
 import { useTranslate } from '@/utils/translateHelper'
 
@@ -109,10 +109,7 @@ const Menu = (): React.ReactElement => {
               sx={{ pl: '20px!important', height: 59, color: '#212B36' }}
               onClick={handleClosePopover}
             >
-              <Iconify
-                sx={{ width: '35px!important', height: '35px!important' }}
-                icon={menuItem.icon}
-              />
+              <>{menuItem.icon}</>
               <Box>
                 <Typography
                   sx={{ color: '#EE467A' }}
