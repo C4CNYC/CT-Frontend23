@@ -71,7 +71,7 @@ export default function Quest(): React.ReactElement | null {
   useEffect(() => {
     if (data) {
       const content = isJson(data.description)
-        ? JSON.parse(data.description).doc.content
+        ? JSON.parse(data.description)?.doc?.content
         : data.description
       setHasContent(content.some((el: any) => el.content))
     }
