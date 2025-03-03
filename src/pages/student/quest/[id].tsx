@@ -23,6 +23,7 @@ import QuestHeader from '@/sections/quest/QuestHeader'
 import QuestMain from '@/sections/quest/QuestMain'
 import QuestRating from '@/sections/quest/QuestRating'
 import { useTranslate } from '@/utils/translateHelper'
+import { isJson } from '@root/src/utils'
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -69,7 +70,9 @@ export default function Quest(): React.ReactElement | null {
 
   useEffect(() => {
     if (data) {
-      const content = JSON.parse(data?.description as string).doc.content
+      const content = isJson(data.description)
+        ? JSON.parse(data.description).doc.content
+        : data.description
       setHasContent(content.some((el: any) => el.content))
     }
   }, [data])
