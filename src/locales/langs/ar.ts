@@ -1,6 +1,7 @@
 const ar = {
   // action words
   actions_delete: 'حذف',
+  actions_deleted: 'تم الحذف بنجاح',
   actions_password: 'تغيير كلمة المرور',
   actions_remove: 'إزالة',
   actions_edit: 'تعديل',
@@ -673,6 +674,13 @@ const ar = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'هل أنت متأكد أنك \n تريد مغادرة القبيلة؟',
   tribes_you_left_tribe: 'لقد غادرت القبيلة',
+  added_to_tribe: 'تمت إضافتك إلى القبيلة',
+  added_to_tribe_success: 'رائع! شكرًا لك!',
+  join_class_dialog_title: 'لدي رمز انضمام',
+  join_class_dialog_title_1: 'لا يمكننا العثور على هذه القبيلة أو المهمة',
+  join_class_dialog_enter_code: 'أدخل رمز الانضمام أدناه',
+  join_class_dialog_enter_code_1:
+    'إما أنك كتبته بشكل خاطئ أو أن هذه القبيلة لم تعد متاحة. اسأل قائدك أو معلمك.',
 
   // Create class page
   class_create: 'إنشاء فصل دراسي',
@@ -1260,6 +1268,13 @@ const ar = {
   gallery_folder_private_title: 'خاص',
   gallery_folder_private_subtitle: 'هذا المجلد مخصص لك فقط',
   gallery_projects_inside: 'مشاريع بالداخل',
+  gallery_projects_empty: 'ليس لديك أي مشاريع بعد',
+  gallery_delete_project: 'حذف المشروع',
+  gallery_delete_confirm: 'هل أنت متأكد أنك تريد حذف هذا المشروع؟',
+  gallery_edit_dialog_title: 'تحرير المشروع',
+  gallery_edit_dialog_name: 'عنوان المشروع',
+  gallery_edit_dialog_description: 'وصف المشروع',
+  gallery_edit_dialog_visibility: 'الرؤية العامة',
 
   sidebar_menu_my_creations_item_1: 'منشئ Mumu AI',
   sidebar_menu_my_creations_item_2: 'إضافة درس فارغ',

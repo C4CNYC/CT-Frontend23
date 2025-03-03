@@ -1,8 +1,7 @@
-import { Box, Divider, useTheme } from '@mui/material'
-import { FaAngleLeft } from '@react-icons/all-files/fa6/FaAngleLeft'
-import { FaAngleRight } from '@react-icons/all-files/fa6/FaAngleRight'
+import { Box, Divider } from '@mui/material'
 import { FaKeyboard } from '@react-icons/all-files/fa6/FaKeyboard'
 import { FaRegClipboard } from '@react-icons/all-files/fa6/FaRegClipboard'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { MdOutlineContentCopy } from '@react-icons/all-files/md/MdOutlineContentCopy'
 import { MdRedo } from '@react-icons/all-files/md/MdRedo'
 import { MdUndo } from '@react-icons/all-files/md/MdUndo'
@@ -23,9 +22,19 @@ export default function PrimaryButtons({
   handleClose: VoidFunction
   handleChangeButtons: VoidFunction
 }) {
-  const theme = useTheme()
   return (
     <Box sx={{ height: 30, display: 'flex' }}>
+      <QuickButton
+        tooltipTitle='Close'
+        onClick={handleClose}
+      >
+        <IoClose size={20} />
+      </QuickButton>
+      <Divider
+        orientation='vertical'
+        variant='middle'
+        sx={{ bgcolor: '#d6d6d6', height: 'auto', my: '4px' }}
+      />
       <QuickButton
         tooltipTitle='Undo'
         tooltipSubtitle='Shortcut: Ctrl + Z'
@@ -79,14 +88,10 @@ export default function PrimaryButtons({
         tooltipTitle='Symbols'
         onClick={handleChangeButtons}
       >
-        <FaKeyboard size={20} />
-      </QuickButton>
-
-      <QuickButton
-        tooltipTitle='Close'
-        onClick={handleClose}
-      >
-        {theme.direction === 'rtl' ? <FaAngleRight size={20} /> : <FaAngleLeft size={20} />}
+        <FaKeyboard
+          size={20}
+          color='#FBDD3F'
+        />
       </QuickButton>
     </Box>
   )

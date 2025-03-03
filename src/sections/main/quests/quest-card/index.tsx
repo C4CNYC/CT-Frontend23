@@ -39,10 +39,7 @@ export default function QuestsTab({ classId, schoolId, activeTab }: IQuestTabPro
   }
 
   return (
-    <Stack
-      sx={{ flexDirection: { lg: 'row' } }}
-      className='studentJoinStep4'
-    >
+    <Stack sx={{ flexDirection: { lg: 'row' } }}>
       <Stack
         gap={2}
         flexGrow={1}
@@ -55,9 +52,10 @@ export default function QuestsTab({ classId, schoolId, activeTab }: IQuestTabPro
           }}
           loading={isLoading ?? isFetching}
         >
-          {assignments?.data.map((el) => (
+          {assignments?.data.map((el, i) => (
             <QuestItem
               key={el.id}
+              index={i}
               assignment={el}
               schoolId={schoolId}
             />

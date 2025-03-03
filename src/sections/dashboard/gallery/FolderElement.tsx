@@ -7,10 +7,14 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 interface Props {
   title: string
   subtitle: string
-  projectCout: number
+  projectCount: number
 }
 
-export default function FolderElement({ title, subtitle, projectCout }: Props): React.ReactElement {
+export default function FolderElement({
+  title,
+  subtitle,
+  projectCount,
+}: Props): React.ReactElement {
   const translate = useTranslate()
   return (
     <Paper elevation={5}>
@@ -38,7 +42,7 @@ export default function FolderElement({ title, subtitle, projectCout }: Props): 
               <TribesCounter
                 sx={{ background: 'rgba(255, 171, 0, 0.16)', ml: 0 }}
                 sxText={{ color: 'rgb(183, 110, 0)' }}
-                count={projectCout}
+                count={projectCount}
               />
               <Typography variant='body2'>{translate('gallery_projects_inside')}</Typography>
             </Stack>

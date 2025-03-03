@@ -1,10 +1,9 @@
 import React from 'react'
 
-interface Props {
-  code: string
-}
+import { useGalleryDrawerContext } from '../context/gallery-drawer-context'
 
-export default function BrowserTab({ code }: Props): React.ReactElement {
+export default function BrowserTab(): React.ReactElement {
+  const { code } = useGalleryDrawerContext()
   return (
     <iframe
       style={{

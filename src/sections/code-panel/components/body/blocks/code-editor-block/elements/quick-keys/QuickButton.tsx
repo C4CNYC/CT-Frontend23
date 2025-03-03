@@ -36,6 +36,7 @@ export default function QuickButton({
         sx={{
           borderRadius: 0,
           minWidth: 40,
+          flexShrink: 0,
           color: '#fff',
           '&:hover': { color: '#FBDD3F', bgcolor: '#fbdc3f26' },
           ...sx,

@@ -1,6 +1,7 @@
 const es = {
   // action words
   actions_delete: 'Eliminar',
+  actions_deleted: 'Eliminado con éxito',
   actions_password: 'Cambiar Contraseña',
   actions_remove: 'Eliminar',
   actions_edit: 'Editar',
@@ -678,6 +679,13 @@ const es = {
   tribes_code_example: '12asd5',
   tribes_want_leave: '¿Estás seguro de que \n quieres dejar la tribu?',
   tribes_you_left_tribe: 'Dejaste la tribu',
+  added_to_tribe: 'Has sido añadido a la tribu',
+  added_to_tribe_success: '¡Genial! ¡Gracias!',
+  join_class_dialog_title: 'Tengo un código de unión',
+  join_class_dialog_title_1: 'No podemos encontrar esta tribu o misión',
+  join_class_dialog_enter_code: 'Introduce tu código de unión abajo',
+  join_class_dialog_enter_code_1:
+    'O lo escribiste mal o esta tribu ya no está disponible. Pregunta a tu líder o profesor.',
 
   // Create class page
   class_create: 'Crear una clase',
@@ -1286,6 +1294,13 @@ const es = {
   gallery_folder_private_title: 'Privado',
   gallery_folder_private_subtitle: 'Esta carpeta es solo para ti.',
   gallery_projects_inside: 'proyectos dentro',
+  gallery_projects_empty: 'Aún no tienes proyectos',
+  gallery_delete_project: 'Eliminar proyecto',
+  gallery_delete_confirm: '¿Estás seguro de que quieres eliminar este proyecto?',
+  gallery_edit_dialog_title: 'Editar proyecto',
+  gallery_edit_dialog_name: 'Título del proyecto',
+  gallery_edit_dialog_description: 'Descripción del proyecto',
+  gallery_edit_dialog_visibility: 'Visibilidad pública',
 
   sidebar_menu_my_creations_item_1: 'Mumu AI Creator',
   sidebar_menu_my_creations_item_2: 'Agregar una lección en blanco',
