@@ -1,8 +1,9 @@
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
+import { IoMdCheckmarkCircleOutline } from '@react-icons/all-files/io/IoMdCheckmarkCircleOutline'
+import { IoLockClosed } from '@react-icons/all-files/io5/IoLockClosed'
+import { IoPlayCircleOutline } from '@react-icons/all-files/io5/IoPlayCircleOutline'
 
-import { Iconify } from '@/components/iconify'
 import { ILesson } from '@/redux/interfaces/content.interface'
-
 export enum LessonStatus {
   DONE = 'done',
   READY = 'ready',
@@ -16,9 +17,9 @@ interface Prop {
 }
 
 const statusIcons = {
-  [LessonStatus.DONE]: 'material-symbols:check-circle-outline',
-  [LessonStatus.LOCK]: 'material-symbols:lock-outline',
-  [LessonStatus.READY]: 'material-symbols:play-circle-outline',
+  [LessonStatus.DONE]: <IoMdCheckmarkCircleOutline />,
+  [LessonStatus.LOCK]: <IoLockClosed />,
+  [LessonStatus.READY]: <IoPlayCircleOutline />,
 }
 
 export default function ListItemCourse({ lessons, status, onClick }: Prop): React.ReactElement {
@@ -38,15 +39,16 @@ export default function ListItemCourse({ lessons, status, onClick }: Prop): Reac
           },
         }}
       >
-        <ListItemIcon>
-          <Iconify
-            icon={statusIcons[status]}
-            width='34px'
-            padding='3px'
-            border='1px solid #e5e8eb'
-            borderRadius={2}
-            sx={{ backgroundColor: '#e5e8eb' }}
-          />
+        <ListItemIcon
+          sx={{
+            width: '34px',
+            padding: '3px',
+            border: '1px solid #e5e8eb',
+            borderRadius: 2,
+            backgroundColor: '#e5e8eb',
+          }}
+        >
+          {statusIcons[status]}
         </ListItemIcon>
         <ListItemText>
           <Typography

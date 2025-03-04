@@ -1,5 +1,8 @@
 import { SxProps, Theme } from '@mui/material'
-
+import { BsQuestionSquare } from '@react-icons/all-files/bs/BsQuestionSquare'
+import { FaChalkboardUser } from '@react-icons/all-files/fa6/FaChalkboardUser'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
+import { MdTerminal } from '@react-icons/all-files/md/MdTerminal'
 export interface FormAIGenerateProps {
   RlevelR: string
   RgradesR: string
@@ -180,26 +183,42 @@ export const PROMTS_VARIANTS = [
   {
     text: 'ai_gen_simple_step_prompt_1',
     key: 'Python variables with exercises in Armenian',
-    icon: 'mdi:console',
-    color: '#FBDD3F',
+    icon: (
+      <MdTerminal
+        color='#FBDD3F'
+        size={25}
+      />
+    ),
   },
   {
     text: 'ai_gen_simple_step_prompt_2',
     key: '6th graders build weather app with api',
-    icon: 'tabler:user-screen',
-    color: '#d901ed',
+    icon: (
+      <FaChalkboardUser
+        color='#d901ed'
+        size={22}
+      />
+    ),
   },
   {
     text: 'ai_gen_simple_step_prompt_3',
     key: 'Nested functions in javascript with exercises',
-    icon: 'mdi:question-box-multiple-outline',
-    color: '#EE467A',
+    icon: (
+      <BsQuestionSquare
+        color='#EE467A'
+        size={22}
+      />
+    ),
   },
   {
     text: 'ai_gen_simple_step_prompt_4',
     key: 'Auto-graded infinite loop exercises',
-    icon: 'material-symbols:info-outline',
-    color: '#FBDD3F',
+    icon: (
+      <LuInfo
+        color='#FBDD3F'
+        size={22}
+      />
+    ),
   },
 ]
 
@@ -208,13 +227,13 @@ export const TYPE_LESSON = [
     key: 'simple',
     value: 'simple',
     tooltip: 'ai_gen_type_1_tooltip',
-    icon: 'material-symbols:info-outline',
+    icon: <LuInfo size={18} />,
   },
   {
     key: 'exercises',
     value: 'exercises',
     tooltip: 'ai_gen_type_2_tooltip',
-    icon: 'material-symbols:info-outline',
+    icon: <LuInfo size={18} />,
   } /*
   {
     key: 'project',

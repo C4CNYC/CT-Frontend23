@@ -13,7 +13,7 @@ import { useAtom } from 'jotai'
 import capitalize from 'lodash-es/capitalize'
 import { useSelector } from 'react-redux'
 
-import { Iconify } from '../../iconify'
+// import { Iconify } from '../../iconify'
 // import { useAuthContext } from "src/auth/useAuthContext";
 import { IFriend } from '../../../redux/interfaces/friends.interface'
 import { RootState } from '../../../redux/store'
@@ -153,10 +153,10 @@ export const Chat = ({
                 updateChat((prev) => ({ ...prev, user: null }))
               }}
             >
-              <Iconify
+              {/* <Iconify
                 color='#6ea9d7'
                 icon='ph:users-fill'
-              />
+              /> */}
             </IconButton>
           ) : null}
           {!isDesktop ? (
@@ -165,12 +165,12 @@ export const Chat = ({
                 setChatVisible(false)
               }}
             >
-              <Iconify
+              {/* <Iconify
                 width='30px'
                 height='30px'
                 color='#6ea9d7'
                 icon='ic:round-close'
-              />
+              /> */}
             </IconButton>
           ) : null}
         </ConversationHeader.Actions>

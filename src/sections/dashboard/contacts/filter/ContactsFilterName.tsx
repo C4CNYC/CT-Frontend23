@@ -1,6 +1,5 @@
 import { InputAdornment, TextField } from '@mui/material'
-
-import { Iconify } from '@/components/iconify'
+import { FiSearch } from '@react-icons/all-files/fi/FiSearch'
 
 interface Props {
   filterName: string
@@ -20,10 +19,7 @@ export default function ContactsFilterName({
       InputProps={{
         startAdornment: (
           <InputAdornment position='start'>
-            <Iconify
-              icon='eva:search-fill'
-              sx={{ color: 'text.disabled' }}
-            />
+            <FiSearch style={{ color: 'text.disabled' }} />
           </InputAdornment>
         ),
       }}

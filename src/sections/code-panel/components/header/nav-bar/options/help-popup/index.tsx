@@ -5,14 +5,18 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Divider, IconButton, MenuItem } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Box } from '@mui/system'
+import { FaRegSquare } from '@react-icons/all-files/fa6/FaRegSquare'
+import { HiOutlineLightBulb } from '@react-icons/all-files/hi2/HiOutlineLightBulb'
+import { IoHelpBuoyOutline } from '@react-icons/all-files/io5/IoHelpBuoyOutline'
 
-import { Accordion, AccordionDetails, AccordionSummary, Iconify, MenuPopover } from '@/components'
+import { Accordion, AccordionDetails, AccordionSummary, MenuPopover } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
 import HelpQuestionModal from './modals/HelpQuestion'
 import Solution from './options/solution'
 import Tips from './options/tips'
 import Unstack from './options/unstack-dialogs/Unstuck'
+
 const MENU_POPOVER_STYLES = {
   width: 350,
   p: 0,
@@ -60,10 +64,9 @@ const HelpPopup: FC = () => {
             aria-controls='panel1d-content'
             id='panel1d-header'
           >
-            <Iconify
-              width='27px'
-              mr='15px'
-              icon='icons8:idea'
+            <HiOutlineLightBulb
+              size={27}
+              style={{ marginRight: '15px' }}
             />
             <Typography variant='h6'>{translate('tips')}</Typography>
           </AccordionSummary>
@@ -80,10 +83,9 @@ const HelpPopup: FC = () => {
             aria-controls='panel2d-content'
             id='panel2d-header'
           >
-            <Iconify
-              width='27px'
-              mr='15px'
-              icon='fluent:square-hint-sparkles-16-regular'
+            <FaRegSquare
+              size={27}
+              style={{ marginRight: '15px' }}
             />
             <Typography variant='h6'>{translate('solutions')}</Typography>
           </AccordionSummary>
@@ -100,10 +102,9 @@ const HelpPopup: FC = () => {
             aria-controls='panel3d-content'
             id='panel3d-header'
           >
-            <Iconify
-              width='27px'
-              mr='15px'
-              icon='ion:help-buoy-outline'
+            <IoHelpBuoyOutline
+              size={27}
+              style={{ marginRight: '15px' }}
             />
             <Typography variant='h6'>{translate('get_unstuck')}</Typography>
           </AccordionSummary>

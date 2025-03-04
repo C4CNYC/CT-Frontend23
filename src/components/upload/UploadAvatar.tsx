@@ -1,14 +1,13 @@
 import { Typography } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
+import { MdAddAPhoto } from '@react-icons/all-files/md/MdAddAPhoto'
 import { useDropzone } from 'react-dropzone'
 
 import { useLocales } from '../../locales/useLocales'
-import { Iconify } from '../iconify'
 
 import RejectionFiles from './errors/RejectionFiles'
 import AvatarPreview from './preview/AvatarPreview'
 import { UploadProps } from './types'
-
 const StyledDropZone = styled('div')(({ theme }) => ({
   width: 144,
   height: 144,
@@ -110,12 +109,10 @@ export default function UploadAvatar({
             }),
           }}
         >
-          <Iconify
-            icon='ic:round-add-a-photo'
-            width={24}
-            sx={{ mb: 1 }}
+          <MdAddAPhoto
+            size={24}
+            style={{ marginBottom: 1 }}
           />
-
           <Typography variant='caption'>
             {file ? `${translate('avatar__update_text')}` : `${translate('avatar__upload_text')}`}
           </Typography>
