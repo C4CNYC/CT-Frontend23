@@ -13,8 +13,8 @@ import {
   usePostProjectMutation,
   useUpdateProjectCoverMutation,
 } from '@/redux/services/manager/gallery-student'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
-// import { getImageFromCode } from "src/lib/utils/getImageFromCode";
 import { DIALOG_SX, BASE_BOX_SX } from './constants'
 
 interface IPublishModal {
@@ -33,6 +33,7 @@ interface FormValuesProps {
 const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic }) => {
   const defaultValues = useMemo(() => getDefaultValues(isPublic), [isPublic])
   const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
 
   const [open, setOpen] = useState(false)
   const [postProject, { isLoading }] = usePostProjectMutation()
@@ -53,7 +54,8 @@ const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic })
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     const file = new FormData()
     const { getImageFromCode } = await import('@/utils/getImageFromCode')
-    const cover = await getImageFromCode(code)
+
+    const cover = await getImageFromCode()
     try {
       const postedProject = await postProject({
         ...data,
@@ -87,59 +89,63 @@ const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic })
         {children}
       </Box>
 
-      <Dialog
-        maxWidth='sm'
-        open={open}
-        keepMounted
-        onClose={handleClose}
-        fullWidth
-        sx={DIALOG_SX}
-      >
-        <DialogTitle>{isPublic ? 'PUBLISH' : 'SAVE'}</DialogTitle>
-
-        <FormProvider
-          methods={methods}
-          onSubmit={methods.handleSubmit(onSubmit)}
+      {open ? (
+        <Dialog
+          maxWidth='sm'
+          open={open}
+          keepMounted
+          onClose={handleClose}
+          fullWidth
+          sx={DIALOG_SX}
         >
-          <DialogContent>
-            <Stack
-              gap={3}
-              p={1}
-            >
-              <RHFTextField
-                name='title'
-                label='Title'
-                required
-              />
+          <DialogTitle>{isPublic ? 'PUBLISH' : 'SAVE'}</DialogTitle>
 
-              <RHFTextField
-                multiline
-                rows={5}
-                name='description'
-                label='Description'
-                required
-              />
-            </Stack>
-          </DialogContent>
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <DialogContent>
+              <Stack
+                gap={3}
+                p={1}
+              >
+                <RHFTextField
+                  name='title'
+                  label='Title'
+                  required
+                />
 
-          <DialogActions>
-            <Button
-              color='error'
-              onClick={handleClose}
-            >
-              CANCEL
-            </Button>
+                <RHFTextField
+                  multiline
+                  rows={5}
+                  name='description'
+                  label='Description'
+                  required
+                />
+              </Stack>
+            </DialogContent>
 
-            <LoadingButton
-              type='submit'
-              variant='contained'
-              loading={isLoading || isUpdatingCover}
-            >
-              SAVE
-            </LoadingButton>
-          </DialogActions>
-        </FormProvider>
-      </Dialog>
+            <DialogActions>
+              <Button
+                color='error'
+                onClick={handleClose}
+                sx={{ textTransform: 'uppercase' }}
+              >
+                {translate('actions_cancel')}
+              </Button>
+
+              <LoadingButton
+                type='submit'
+                variant='contained'
+                loading={isLoading || isUpdatingCover}
+                sx={{ textTransform: 'uppercase' }}
+              >
+                {translate('actions_save')}
+              </LoadingButton>
+            </DialogActions>
+          </FormProvider>
+        </Dialog>
+      ) : null}
     </>
   )
 }

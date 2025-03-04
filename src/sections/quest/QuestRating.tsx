@@ -9,7 +9,7 @@ import NextLink from 'next/link'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { QUEST_DIVIDER, QUEST_LINK_SX, getQuestCardWraperSx } from './constants'
+import { QUEST_DIVIDER, QUEST_LINK_SX, getQuestCardWrapperSx } from './constants'
 
 interface IQuestRatingProps {
   courseName: string
@@ -24,7 +24,7 @@ export default function QuestRating({
 }: IQuestRatingProps): React.ReactElement {
   const translate = useTranslate()
   const theme = useTheme()
-  const cardWrapperSx = useMemo(() => getQuestCardWraperSx(theme), [theme])
+  const cardWrapperSx = useMemo(() => getQuestCardWrapperSx(theme), [theme])
 
   return (
     <>
@@ -33,6 +33,7 @@ export default function QuestRating({
           display='flex'
           alignItems='center'
           justifyContent='space-between'
+          gap={1}
         >
           <Stack gap={1}>
             <Tooltip
@@ -57,6 +58,9 @@ export default function QuestRating({
           <Stack
             direction='row'
             alignItems='center'
+            flexWrap={{ xs: 'wrap', sm: 'nowrap' }}
+            gap={2}
+            justifyContent={{ xs: 'flex-end', sm: 'center' }}
           >
             <Typography variant='h6'>{progress} %</Typography>
             <Divider

@@ -92,7 +92,7 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     height: 3,
     border: 0,
     backgroundColor:
-      theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.grey[300],
+      theme.palette.mode === 'dark' ? theme.palette.background.neutral : theme.palette.grey[300],
     borderRadius: 1,
   },
 }))

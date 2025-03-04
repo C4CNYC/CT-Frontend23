@@ -4,12 +4,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { Box, IconButton, alpha } from '@mui/material'
 
-interface Props {
-  setValue: (value: number) => void
-  value: number
-}
+import { useGalleryDrawerContext } from '../context/gallery-drawer-context'
 
-export function ArrowLeft({ setValue, value }: Props): React.ReactElement {
+export function ArrowLeft(): React.ReactElement {
+  const { handlePrevProject, isDisabledPrev } = useGalleryDrawerContext()
   return (
     <Box
       sx={{
@@ -24,9 +22,8 @@ export function ArrowLeft({ setValue, value }: Props): React.ReactElement {
       }}
     >
       <IconButton
-        onClick={() => {
-          setValue(value ? 0 : 1)
-        }}
+        onClick={handlePrevProject}
+        disabled={isDisabledPrev}
       >
         <ArrowBackIosNewIcon />
       </IconButton>
@@ -34,7 +31,8 @@ export function ArrowLeft({ setValue, value }: Props): React.ReactElement {
   )
 }
 
-export function ArrowRight({ setValue, value }: Props): React.ReactElement {
+export function ArrowRight(): React.ReactElement {
+  const { handleNextProject, isDisabledNext } = useGalleryDrawerContext()
   return (
     <Box
       sx={{
@@ -49,9 +47,8 @@ export function ArrowRight({ setValue, value }: Props): React.ReactElement {
       }}
     >
       <IconButton
-        onClick={() => {
-          setValue(value ? 0 : 1)
-        }}
+        onClick={handleNextProject}
+        disabled={isDisabledNext}
       >
         <ArrowForwardIosIcon />
       </IconButton>

@@ -1,6 +1,7 @@
 const tr = {
   // action words
   actions_delete: 'Sil',
+  actions_deleted: 'Başarıyla silindi',
   actions_password: 'Şifre Değiştir',
   actions_remove: 'Kaldır',
   actions_edit: 'Düzenle',
@@ -667,6 +668,13 @@ const tr = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'Tayfayı terk etmek istediğinizden emin misiniz?',
   tribes_you_left_tribe: 'Tayfadan çıktınız',
+  added_to_tribe: 'Kabileye eklendiniz',
+  added_to_tribe_success: 'Harika! Teşekkürler!',
+  join_class_dialog_title: 'Bir katılım kodum var',
+  join_class_dialog_title_1: 'Bu kabileyi veya görevi bulamıyoruz',
+  join_class_dialog_enter_code: 'Aşağıya katılım kodunuzu girin',
+  join_class_dialog_enter_code_1:
+    'Ya yanlış yazdınız ya da bu kabile artık mevcut değil. Liderinize veya öğretmeninize sorun.',
 
   // Create class page
   class_create: 'Bir sınıf oluştur',
@@ -1035,9 +1043,14 @@ const tr = {
   are_you_sure_see_solution: 'Bu dersin tam çözüm kodunu görmek istediğinizden emin misiniz?',
   not_available_for_this_step: 'Bu adım için mevcut değil.',
   no_solution: 'Bu slayt için çözüm mevcut değil.',
+  solution_code_title: 'Çözüm kodu',
+  my_code_title: 'Kodum',
   coding_editor: 'KODLAMA EDITÖRÜ:',
   customize: 'ÖZELLEŞTİR:',
   reset_lesson: 'Ders sıfırlama',
+  reset_lesson_confirm:
+    'Bu dersin ilerlemesini ve yazılan kodu sıfırlamak istediğinizden emin misiniz?',
+  reset_lesson_submit_btn: 'Evet, ilerlemeyi sıfırla',
   reset_code: 'Kodu sıfırlama',
   intro_tour: 'Tanıtım Turu',
   launch_intro_tour: 'Tanıtım Turunu Başlat',
@@ -1255,6 +1268,13 @@ const tr = {
   gallery_folder_private_title: 'Özel',
   gallery_folder_private_subtitle: 'Bu klasör sadece sizin için',
   gallery_projects_inside: 'içerideki projeler',
+  gallery_projects_empty: 'Henüz hiç projeniz yok',
+  gallery_delete_project: 'Projeyi sil',
+  gallery_delete_confirm: 'Bu projeyi silmek istediğinizden emin misiniz?',
+  gallery_edit_dialog_title: 'Projeyi düzenle',
+  gallery_edit_dialog_name: 'Proje başlığı',
+  gallery_edit_dialog_description: 'Proje açıklaması',
+  gallery_edit_dialog_visibility: 'Genel görünürlük',
 
   sidebar_menu_my_creations_item_1: 'Mumu AI Sihirbazı',
   sidebar_menu_my_creations_item_2: 'Boş Ders Ekle',
