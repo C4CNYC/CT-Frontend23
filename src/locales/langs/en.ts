@@ -1,6 +1,7 @@
 const en = {
   // action words
   actions_delete: 'Delete',
+  actions_deleted: 'Deleted successfully',
   actions_password: 'Change Password',
   actions_remove: 'Remove',
   actions_edit: 'Edit',
@@ -690,6 +691,13 @@ const en = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'Are you sure you \n want to leave tribe?',
   tribes_you_left_tribe: 'You left the tribe',
+  added_to_tribe: 'You have been added to the tribe',
+  added_to_tribe_success: 'Awesome. Thanks!',
+  join_class_dialog_title: 'I got a join-code',
+  join_class_dialog_title_1: 'We can’t find this tribe or quest',
+  join_class_dialog_enter_code: 'Enter your join-code below',
+  join_class_dialog_enter_code_1:
+    'Either you typed it wrong or this tribe is no longer available. Ask your lead or teacher.',
 
   // Create class page
   class_create: 'Create a class',
@@ -1027,7 +1035,7 @@ const en = {
   console_title: 'Console',
   console_tooltip_title: 'What is a console?',
   console_tooltip_subtitle_1:
-    ' It’s the place you see a result when you run javascript (JS).Because most times JS runs in the background and does it’s calculations and response there.',
+    ' It’s the place you see a result when you run javascript (JS). Because most times JS runs in the background and does it’s calculations and response there.',
   console_tooltip_subtitle_2:
     'Only when you specifically link a particular function to a specific part of the page do you actually see JS modifying the “Front” page.',
   no_preview_available_title: 'Browser',
@@ -1054,9 +1062,13 @@ const en = {
   are_you_sure_see_solution: 'Are you sure you want to see the full solution code for this lesson?',
   not_available_for_this_step: 'Not available for this step.',
   no_solution: 'A solution is not available for this slide.',
+  solution_code_title: 'Solution code',
+  my_code_title: 'My code',
   coding_editor: 'CODING EDITOR:',
   customize: 'CUSTOMIZE:',
   reset_lesson: 'Reset Lesson',
+  reset_lesson_confirm: 'Are you sure you want to reset progress and code typed for this lesson?',
+  reset_lesson_submit_btn: 'Yes, Reset Progress',
   reset_code: 'Reset code',
   intro_tour: 'Intro Tour',
   launch_intro_tour: 'Launch Intro Tour',
@@ -1279,6 +1291,13 @@ const en = {
   gallery_folder_private_title: 'Private',
   gallery_folder_private_subtitle: 'This folder is only for you',
   gallery_projects_inside: 'projects inside',
+  gallery_projects_empty: 'You have no projects yet',
+  gallery_delete_project: 'Delete project',
+  gallery_delete_confirm: 'Are you sure want to delete this project?',
+  gallery_edit_dialog_title: 'Edit project',
+  gallery_edit_dialog_name: 'Project title',
+  gallery_edit_dialog_description: 'Project description',
+  gallery_edit_dialog_visibility: 'Public visibility',
 
   sidebar_menu_my_creations_item_1: 'Mumu AI Creator',
   sidebar_menu_my_creations_item_2: 'Add Blank Lesson',
@@ -1377,7 +1396,7 @@ const en = {
     'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
   intro_tour_step_9_desktop_title: 'Most important: Have fun! 🤪',
   intro_tour_step_9_desktop_subtitle:
-    'And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?',
+    'And on Feedback 💬 let us know what you think: awesome 🏆 or not-so-awesome 💩?',
   intro_tour_step_9_desktop_btn: 'Leave feedback',
 
   intro_tour_step_1_mobile_title: '💥 The Coding Panel 👩‍💻 💥',
@@ -1397,7 +1416,7 @@ const en = {
     'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
   intro_tour_step_7_mobile_title: 'Most important: Have fun! 🤪',
   intro_tour_step_7_mobile_subtitle:
-    'And on Feedback 💬 let us know what you think: Wonderful 🏆 or Poopie 💩?',
+    'And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?',
   intro_tour_step_7_mobile_btn: 'Leave feedback',
 }
 

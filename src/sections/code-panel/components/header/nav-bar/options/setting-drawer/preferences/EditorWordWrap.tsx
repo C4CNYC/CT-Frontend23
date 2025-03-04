@@ -25,7 +25,6 @@ const EditorWordWrap = ({ onUpdateWordWrap }: IEditorWordWrap): React.ReactEleme
     >
       <Stack
         direction='row'
-        spacing={1}
         alignItems='center'
         justifyContent='center'
       >

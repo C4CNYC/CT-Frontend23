@@ -22,7 +22,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import config, { ILinks } from './config'
 import {
   DESKTOP_ANCHOR_ORIGIN,
-  HUMBURGER_SIZE,
+  HAMBURGER_SIZE,
   MENU_ITEM_STYLES,
   MENU_ITEM_TYPOGRAFY,
   MENU_POPOVER_STYLES,
@@ -37,7 +37,7 @@ interface CustomMultiEvent {
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch()
-  const { replace } = useRouter()
+  const { replace, pathname } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const { themeMode } = useSettingsContext()
   const { isAuthenticated, logout } = useAuthContext()
@@ -68,17 +68,22 @@ const Menu = (): React.ReactElement => {
     setOpenPopover(null)
   }
 
-  const getHumburger = (isDesktop: boolean): ReactNode => {
+  const getHamburger = (isDesktop: boolean): ReactNode => {
     return isDesktop ? (
       <Hamburger
-        size={HUMBURGER_SIZE}
+        size={HAMBURGER_SIZE}
         toggled={Boolean(openPopover)}
       />
-    ) : (
+    ) : pathname.includes('code-panel') ? (
       <MobileHamburger
         open={Boolean(openPopover)}
         handleOpenPopover={handleOpenPopover}
         handleClosePopover={handleClosePopover}
+      />
+    ) : (
+      <Hamburger
+        size={HAMBURGER_SIZE}
+        toggled={Boolean(openPopover)}
       />
     )
   }
@@ -89,7 +94,7 @@ const Menu = (): React.ReactElement => {
         onClick={handleOpenPopover}
         sx={{ color: palette(themeMode).text.secondary }}
       >
-        {getHumburger(isDesktop)}
+        {getHamburger(isDesktop)}
       </Box>
 
       <MenuPopover

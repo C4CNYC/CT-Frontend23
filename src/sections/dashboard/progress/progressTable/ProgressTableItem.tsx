@@ -1,4 +1,4 @@
-import { Checkbox, LinearProgress, TableCell, Tooltip } from '@mui/material'
+import { Checkbox, LinearProgress, TableCell, Tooltip, Typography } from '@mui/material'
 
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -26,14 +26,20 @@ export default function TableItemProgress({
       <Tooltip
         placement='top'
         title={
-          <div>
+          <Typography variant='caption'>
             {translate('student')}: {studentName}
             <br />
-            {type}: {name}
+            <Typography
+              variant='caption'
+              textTransform='capitalize'
+            >
+              {type}:
+            </Typography>
+            {name}
             <br />
             {translate('progress')}:{' '}
             {hasNextLink ? `${Math.floor(progress)}%` : `${progress ? 'done' : 'not done'}`}
-          </div>
+          </Typography>
         }
       >
         <div onClick={onClick}>
@@ -41,7 +47,7 @@ export default function TableItemProgress({
             <LinearProgress
               variant='determinate'
               value={progress}
-              sx={{ height: '16px', width: '100%' }}
+              sx={{ height: '16px', width: '100%', '&:hover': { cursor: 'pointer' } }}
             />
           ) : (
             <Checkbox checked={!!progress} />

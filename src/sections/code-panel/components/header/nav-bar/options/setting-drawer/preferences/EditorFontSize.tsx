@@ -6,6 +6,7 @@ import { FaMinus } from '@react-icons/all-files/fa/FaMinus'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 
 import { useTranslate } from '@/utils/translateHelper'
+import { Iconify } from '@root/src/components'
 
 import BasePreference from './BasePreference'
 
@@ -25,7 +26,17 @@ const EditorFontSize = ({ onUpdateFontSize }: IEditorFontSize): React.ReactEleme
   }, [fontSize])
 
   return (
-    <BasePreference title={translate('font_size')}>
+    <BasePreference
+      title={translate('font_size')}
+      abandonmentIcon={
+        <IconButton sx={{ pointerEvents: 'none' }}>
+          <Iconify
+            width='22px'
+            icon='bx:font-size'
+          />
+        </IconButton>
+      }
+    >
       <Box
         display='flex'
         alignItems='center'

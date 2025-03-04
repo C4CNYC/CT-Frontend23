@@ -8,8 +8,8 @@ import {
   ILesson,
   ILessonContent,
 } from '@/redux/interfaces/content.interface'
-import { IGallery } from '@/redux/interfaces/gallary.interface'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
+import { IGallery } from '@root/src/redux/interfaces/gallery.interface'
 
 import { baseQueryWrapper } from './helpers/base_query_wrapper'
 import { ILesson as ILessonFromCourseUnits } from './interfaces/courseUnits.interface'

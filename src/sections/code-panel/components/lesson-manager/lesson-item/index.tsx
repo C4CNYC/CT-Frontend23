@@ -73,7 +73,6 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
                   onClose()
                 }}
                 sx={getButtonSx(lesson.id === currentLessonId, theme.palette.mode === 'light')}
-                style={{ pointerEvents: 'none' }}
               >
                 <Box display='flex'>
                   <Typography

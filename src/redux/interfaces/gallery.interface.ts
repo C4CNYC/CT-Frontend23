@@ -1,5 +1,5 @@
 export interface IGallery {
-  id?: string
+  id: string
   title: string
   description: string
   body: string

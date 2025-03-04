@@ -1,4 +1,4 @@
-import { type FC, type ReactNode, useMemo, useState } from 'react'
+import { type FC, type ReactNode, useEffect, useMemo, useState } from 'react'
 
 import { Box, Collapse, useTheme } from '@mui/material'
 
@@ -34,15 +34,7 @@ interface IHeaderSettings {
 
 const localStorageKey = 'HeadersSettings'
 
-const BaseBlock: FC<IBaseBlock> = ({
-  children,
-  className,
-  title,
-  icon,
-  closeIcon,
-  hideTabsHandler,
-  takeHeaderSettings,
-}) => {
+const BaseBlock: FC<IBaseBlock> = ({ children, className, title, icon, hideTabsHandler }) => {
   const theme = useTheme()
   const storageAvailable = localStorageAvailable()
   const isDesktop = useIsDesktop()
@@ -75,15 +67,14 @@ const BaseBlock: FC<IBaseBlock> = ({
     )
   }
 
-  if (takeHeaderSettings) {
-    takeHeaderSettings(isClosedHeader?.browserTour)
-  }
+  useEffect(() => {
+    const closeTimeout = setTimeout(closeHeaderHandler, 1000 * 60 * 5)
+    return () => clearTimeout(closeTimeout)
+  }, [])
 
   return (
     <Box
       className={className}
-      flex={'1 1 0px'}
-      position='relative'
       sx={boxStyles}
     >
       <Collapse in={isClosedHeader?.[className]}>

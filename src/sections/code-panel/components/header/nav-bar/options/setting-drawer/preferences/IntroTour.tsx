@@ -17,6 +17,7 @@ const IntroTour = ({ onStartIntro }: IIntroTour): React.ReactElement => {
         onClick={onStartIntro}
         fullWidth
         variant='contained'
+        sx={{ mt: 1 }}
       >
         {translate('launch_intro_tour')}
       </Button>

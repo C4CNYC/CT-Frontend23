@@ -7,10 +7,8 @@ import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-glob
 import { useSelector } from '@/redux/store'
 import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
-// import { NotificationsDrawer } from '@root/src/components/notifications-drawer'
 
 import ChatPopup from '../options/chat-popup'
-// import HelpPopup from "../options/help-popup";
 import Menu from '../options/menu'
 import SettingDrawer from '../options/setting-drawer'
 import Timer from '../options/timer'
@@ -18,19 +16,11 @@ import ViewTumbler from '../options/view-tumbler'
 
 interface IDesktopBar {
   chatComponent: ReactNode
-  onHandleFullScreen: () => void
-  isFullScreenView: boolean
   language: SupportedLang
   publicPage?: boolean
 }
 
-const DesktopBar: FC<IDesktopBar> = ({
-  chatComponent,
-  onHandleFullScreen,
-  isFullScreenView,
-  language,
-  publicPage,
-}) => {
+const DesktopBar: FC<IDesktopBar> = ({ chatComponent, language, publicPage }) => {
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
@@ -47,14 +37,12 @@ const DesktopBar: FC<IDesktopBar> = ({
       alignItems='center'
     >
       <Timer />
-      {/* {Hide Help Popover before v1} */}
-      {/* <HelpPopup /> */}
 
       <ChatPopup chatComponent={chatComponent} />
       {/* <NotificationsDrawer
         data={[
           {
-            id: 'sdcsdsc',
+            id: '023842034320',
             type: 'project',
             category: 'Project UI',
             avatarUrl: '/assets/icons/home/ic_development.svg',
@@ -72,8 +60,6 @@ const DesktopBar: FC<IDesktopBar> = ({
       />
 
       <ViewTumbler
-        onHandleFullScreen={onHandleFullScreen}
-        isFullScreenView={isFullScreenView}
         isColumnHidden={isBrowserHidden && isInstructionsHidden}
         onChangeColumnVisability={onChangeColumnVisability}
       />

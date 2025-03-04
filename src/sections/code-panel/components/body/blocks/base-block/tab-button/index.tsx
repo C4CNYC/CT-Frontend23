@@ -1,12 +1,11 @@
 import { type FC, useMemo } from 'react'
 
 import { Box, IconButton } from '@mui/material'
-import { MdOutlineSwipeLeft } from '@react-icons/all-files/md/MdOutlineSwipeLeft'
-import { MdOutlineSwipeRight } from '@react-icons/all-files/md/MdOutlineSwipeRight'
 import { useDispatch } from 'react-redux'
 
 import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'
+import { Iconify } from '@root/src/components'
 
 import { SWIPE_LEFT_STYLE, SWIPE_RIGHT_STYLE, getBoxStyles } from './constants'
 
@@ -30,14 +29,16 @@ const TabButton: FC<TabButtonProps> = ({ orientation }) => {
     <Box sx={boxStyles}>
       <IconButton onClick={changeTab}>
         {isLeftOrientation ? (
-          <MdOutlineSwipeRight
-            size='20px'
+          <Iconify
+            icon='akar-icons:arrow-back'
+            width={25}
             color='#EE467A'
             style={SWIPE_RIGHT_STYLE}
           />
         ) : (
-          <MdOutlineSwipeLeft
-            size='20px'
+          <Iconify
+            icon='akar-icons:arrow-forward'
+            width={25}
             color='#EE467A'
             style={SWIPE_LEFT_STYLE}
           />

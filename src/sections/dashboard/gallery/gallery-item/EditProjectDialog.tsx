@@ -21,13 +21,12 @@ import * as Yup from 'yup'
 import { FormProvider, RHFSwitch, RHFTextField } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { useUpdateProjectMutation } from '@/redux/services/manager/gallery-student'
+import { useTranslate } from '@root/src/utils/translateHelper'
+
+import { useGalleryContext } from '../context/gallery-context'
 
 interface Props {
   children: React.ReactElement
-  title: string
-  description: string
-  publicProject: boolean
-  id: string
 }
 interface FormValuesProps {
   name: string
@@ -36,45 +35,48 @@ interface FormValuesProps {
   language: string
 }
 
-export default function EditProjectDialog({
-  children,
-  title,
-  description,
-  publicProject,
-  id,
-}: Props): React.ReactElement {
+export default function EditProjectDialog({ children }: Props): React.ReactElement {
+  const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const { title, description, public: projectPublic, id } = useGalleryContext()
+
   const [open, setOpen] = useState<boolean>(false)
-  const [updataeProject, { isLoading }] = useUpdateProjectMutation()
+
+  const [updateProject, { isLoading }] = useUpdateProjectMutation()
+
   const handleClickOpen = (): void => {
     setOpen(true)
   }
   const handleClickClose = (): void => {
     setOpen(false)
   }
+
   const defaultValues = {
     title,
     description,
-    public: publicProject,
+    public: projectPublic,
     language: 'html',
   }
+
   const CreateProjectSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
     public: Yup.bool(),
     language: Yup.string(),
   })
+
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateProjectSchema),
     defaultValues,
   })
+
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      await updataeProject({
+      await updateProject({
         id,
         ...data,
       }).unwrap()
-      enqueueSnackbar('Updated successfully')
+      enqueueSnackbar(translate('messages_success'))
     } catch (error: any) {
       const typedError = error as APIError
       enqueueSnackbar(typedError.data.message, {
@@ -83,6 +85,7 @@ export default function EditProjectDialog({
     }
     handleClickClose()
   }
+
   return (
     <>
       <Box onClick={handleClickOpen}>{children}</Box>
@@ -98,7 +101,7 @@ export default function EditProjectDialog({
             py: 1,
           }}
         >
-          <Typography variant='h6'>Edit project</Typography>
+          <Typography variant='h6'>{translate('gallery_edit_dialog_title')}</Typography>
           <IconButton
             onClick={handleClickClose}
             edge='end'
@@ -124,13 +127,13 @@ export default function EditProjectDialog({
                 <RHFTextField
                   sx={{ width: { xs: '300px', sm: '350px' } }}
                   name='title'
-                  label='Project title'
+                  label={translate('gallery_edit_dialog_name')}
                   required
                 />
 
                 <RHFTextField
                   name='description'
-                  label='Project description'
+                  label={translate('gallery_edit_dialog_description')}
                   required
                   multiline
                   rows={5}
@@ -138,7 +141,7 @@ export default function EditProjectDialog({
 
                 <RHFSwitch
                   name='public'
-                  label='Project publicity'
+                  label={translate('gallery_edit_dialog_visibility')}
                 />
               </Box>
             </Grid>
@@ -155,14 +158,14 @@ export default function EditProjectDialog({
                     setOpen(false)
                   }}
                 >
-                  Close
+                  {translate('actions_close')}
                 </Button>
                 <LoadingButton
                   type='submit'
                   variant='contained'
                   loading={isLoading}
                 >
-                  Save
+                  {translate('actions_save')}
                 </LoadingButton>
               </Box>
             </DialogActions>
