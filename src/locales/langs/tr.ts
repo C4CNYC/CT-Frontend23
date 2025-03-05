@@ -1125,6 +1125,25 @@ const tr = {
   save_to_folder: "'Benim Klasörüm'e Kaydet",
   open_folder: "'Benim Klasörüm'ü Aç",
 
+  // code-panel next-lesson-modal
+  next_lesson_snackbar_text: 'Sonraki ders açılıyor',
+  next_lesson_modal_title: 'Tebrikler!',
+  next_lesson_modal_subtitle_1: 'İsterseniz',
+  next_lesson_modal_subtitle_2: 'Bu dersi değerlendirebilirsiniz',
+  next_lesson_modal_select_label_1: 'Sorunu seçin',
+  next_lesson_modal_select_label_2: 'Beğendiğim şey',
+  next_lesson_modal_textfield: 'Yorum bırakın',
+  next_lesson_modal_btn_1: 'Burada kal',
+  next_lesson_modal_btn_2: 'Sonraki ders',
+
+  feedback_negative_codeTest: 'Kod testleri çalıştırılamadı',
+  feedback_negative_instructions: 'Talimatlar net değildi veya kafa karıştırıcıydı',
+  feedback_negative_learn: 'Hiçbir şey öğrenmedim',
+  feedback_negative_notLike: 'Sonucu beğenmedim',
+  feedback_negative_other: 'Diğer',
+
+  feedback_positive_codeOutcome: 'Kod sonucu',
+  feedback_positive_other: 'Diğer',
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: 'Merhaba, Ben Mumu. Takıldığında yardımcı olmak için buradayım.',
 

@@ -1120,6 +1120,25 @@ const ar = {
   save_to_folder: "حفظ في 'مجلدي'",
   open_folder: "فتح 'مجلدي'",
 
+  // code-panel next-lesson-modal
+  next_lesson_snackbar_text: 'جاري فتح الدرس التالي',
+  next_lesson_modal_title: 'مبروك!',
+  next_lesson_modal_subtitle_1: 'إذا أردت يمكنك',
+  next_lesson_modal_subtitle_2: 'تقييم هذا الدرس',
+  next_lesson_modal_select_label_1: 'حدد المشكلة',
+  next_lesson_modal_select_label_2: 'ما أعجبني',
+  next_lesson_modal_textfield: 'اترك تعليقًا',
+  next_lesson_modal_btn_1: 'البقاء هنا',
+  next_lesson_modal_btn_2: 'الدرس التالي',
+
+  feedback_negative_codeTest: 'لم يتم تشغيل اختبارات الكود',
+  feedback_negative_instructions: 'التعليمات لم تكن واضحة أو كانت مربكة',
+  feedback_negative_learn: 'لم أتعلم شيئًا',
+  feedback_negative_notLike: 'لم يعجبني النتيجة',
+  feedback_negative_other: 'أخرى',
+
+  feedback_positive_codeOutcome: 'نتيجة الكود',
+  feedback_positive_other: 'أخرى',
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: 'مرحبًا، أنا مومو. أنا هنا للمساعدة عندما تكون عالقًا.',
 

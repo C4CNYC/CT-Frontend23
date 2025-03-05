@@ -1139,6 +1139,25 @@ const pt = {
   save_to_folder: 'Salvar em "Minha Pasta"',
   open_folder: 'Abrir "Minha Pasta"',
 
+  // code-panel next-lesson-modal
+  next_lesson_snackbar_text: 'Abrindo a próxima lição',
+  next_lesson_modal_title: 'Parabéns!',
+  next_lesson_modal_subtitle_1: 'Se quiser, você pode',
+  next_lesson_modal_subtitle_2: 'Avaliar esta lição',
+  next_lesson_modal_select_label_1: 'Selecionar problema',
+  next_lesson_modal_select_label_2: 'O que eu gostei',
+  next_lesson_modal_textfield: 'Deixe um comentário',
+  next_lesson_modal_btn_1: 'Ficar aqui',
+  next_lesson_modal_btn_2: 'Próxima lição',
+
+  feedback_negative_codeTest: 'Os testes de código não foram acionados',
+  feedback_negative_instructions: 'As instruções não estavam claras ou eram confusas',
+  feedback_negative_learn: 'Não aprendi nada',
+  feedback_negative_notLike: 'Não gostei do resultado',
+  feedback_negative_other: 'Outro',
+
+  feedback_positive_codeOutcome: 'O resultado do código',
+  feedback_positive_other: 'Outro',
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip:
     'Oi, eu sou o Mumu. Estou aqui para ajudar quando você ficar preso.',

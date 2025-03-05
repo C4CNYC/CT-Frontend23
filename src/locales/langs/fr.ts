@@ -1152,6 +1152,25 @@ const fr = {
   save_to_folder: 'Enregistrer dans "Mon Dossier"',
   open_folder: 'Ouvrir "Mon Dossier"',
 
+  // code-panel next-lesson-modal
+  next_lesson_snackbar_text: 'Ouverture de la leçon suivante',
+  next_lesson_modal_title: 'Félicitations !',
+  next_lesson_modal_subtitle_1: 'Si vous le souhaitez, vous pouvez',
+  next_lesson_modal_subtitle_2: 'Évaluer cette leçon',
+  next_lesson_modal_select_label_1: 'Sélectionner un problème',
+  next_lesson_modal_select_label_2: 'Ce que j’ai aimé',
+  next_lesson_modal_textfield: 'Laisser un commentaire',
+  next_lesson_modal_btn_1: 'Rester ici',
+  next_lesson_modal_btn_2: 'Leçon suivante',
+
+  feedback_negative_codeTest: 'Les tests de code ne se sont pas déclenchés',
+  feedback_negative_instructions: 'Les instructions n’étaient pas claires ou étaient confuses',
+  feedback_negative_learn: 'Je n’ai rien appris',
+  feedback_negative_notLike: 'Je n’ai pas aimé le résultat',
+  feedback_negative_other: 'Autre',
+
+  feedback_positive_codeOutcome: 'Le résultat du code',
+  feedback_positive_other: 'Autre',
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: "Salut, je suis Mumu. Je suis là pour t'aider quand tu es bloqué.",
 
