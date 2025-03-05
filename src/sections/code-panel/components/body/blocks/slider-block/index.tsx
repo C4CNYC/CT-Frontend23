@@ -99,7 +99,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const handleDebouncedCallback = useDebounceCallback(5000)
 
-  const hasNextStep = slideIndex < data.length - 1
+  const hasNextStep = slideIndex < data?.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length
   const title = sandbox ? translate('Notes') : translate('instructions')
   const progressWrapperSx = useMemo(() => getProgressWrapperSx(theme), [theme])
@@ -165,7 +165,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onBeforeChange = (_: number, next: number) => {
-    if (!data || !data.length) return
+    if (!data || !data?.length) return
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
     if (data?.[next]?.id) dispatch(setSlideId(data[next].id))
@@ -183,7 +183,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   useEffect(() => {
-    if (!sandbox || !data.length) return
+    if (!sandbox || !data?.length) return
     onBeforeChange(0, 0)
   }, [sandbox, data])
 
@@ -202,7 +202,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   useEffect(() => {
     const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
-    if (!data || !lessonId || data.length == 0) return
+    if (!data || !lessonId || data?.length == 0) return
     if (lessonId && progress) {
       const lastSlide: number = progress[lessonId as string] || 0
       onBeforeChange(slideIndex, lastSlide)
@@ -210,6 +210,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [lessonId, data])
 
   const slider = useMemo(() => {
+    const currentSlide = data[slideIndex]
+
     return (
       <Box
         className='sliderTour'
@@ -219,26 +221,22 @@ const SliderBlock: FC<ISliderBlock> = ({
         {isLoadingLessonContent ? (
           <LoadingScreen />
         ) : (
-          data
-            .filter((slide, stepSlideIndex) => slideIndex == stepSlideIndex)
-            .map((step) => {
-              return (
-                <View
-                  title={step.title}
-                  lessonType={lessonType}
-                  key={step.id}
-                  type={step.type}
-                  body={step.body}
-                  integrations={integrations}
-                  connectIntegrations={connectIntegrations}
-                  stepBgColor={step.bg_color}
-                />
-              )
-            })
+          currentSlide && (
+            <View
+              title={currentSlide?.title}
+              lessonType={lessonType}
+              key={currentSlide?.id}
+              type={currentSlide?.type}
+              body={currentSlide?.body}
+              integrations={integrations}
+              connectIntegrations={connectIntegrations}
+              stepBgColor={currentSlide?.bg_color}
+            />
+          )
         )}
       </Box>
     )
-  }, [data, slideIndex, integrations])
+  }, [data, slideIndex, integrations, isLoadingLessonContent])
 
   return (
     <BaseBlock

@@ -97,6 +97,7 @@
     "react-timer-hook": "^3.0.5",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
+    "sharp": "^0.33.5",
     "simplebar": "^5.3.9",
     "simplebar-react": "^2.4.3",
     "slick-carousel": "^1.8.1",

@@ -98,16 +98,14 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
         <DialogTitle>
           {translate('add_file_modal_title')}
           <IconButton
+            onClick={() => setOpenDialog(false)}
             sx={{
               position: 'absolute',
               top: 18,
               right: 12,
             }}
           >
-            <IoCloseOutline
-              size={20}
-              onClick={() => setOpenDialog(false)}
-            />
+            <IoCloseOutline size={20} />
           </IconButton>
         </DialogTitle>
         <DialogContent>
