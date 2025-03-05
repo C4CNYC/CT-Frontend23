@@ -62,7 +62,7 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
             <LuInfo
               style={{
                 top: 11,
-                right: 6,
+                left: 6,
                 position: 'absolute',
               }}
             />
