@@ -1,16 +1,12 @@
 import { ReactElement, useEffect, useRef } from 'react'
 
 import { omitBy } from 'lodash'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
 import { useSelector } from '@/redux/store'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useSetLastWorkspaceQueryMutation } from '@root/src/redux/services/manager/activity-student'
-
-const CodePanelLayout = dynamic(async () => await import('@root/src/sections/code-panel'), {
-  ssr: false,
-})
+import { CodePanelLayout } from '@root/src/sections/code-panel'
 
 const buildQueryFromObject = (query: Record<string, string>) => {
   return Object.keys(omitBy(query, (value) => !value))
