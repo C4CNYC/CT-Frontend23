@@ -1,4 +1,4 @@
-import { enUS, frFR, ptPT, esES, arEG } from '@mui/material/locale'
+import { enUS, frFR, ptPT, esES, arEG, trTR } from '@mui/material/locale'
 
 // PLEASE REMOVE `LOCAL STORAGE` WHEN YOU CHANGE SETTINGS.
 
@@ -36,7 +36,7 @@ export const allLangs = [
   {
     label: 'Türkçe ',
     value: 'tr',
-    systemValue: arEG,
+    systemValue: trTR,
     icon: '/assets/icons/flags/ic_flag_tr.svg',
   },
 ]
