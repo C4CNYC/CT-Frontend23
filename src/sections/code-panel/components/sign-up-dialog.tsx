@@ -5,7 +5,7 @@ import { Box, Dialog, IconButton } from '@mui/material'
 
 import StudentStepper from '@/sections/on-boarding-register/student/StudentStepper'
 
-export default function SignUpDialog(): React.ReactElement | null {
+export function SignUpDialog(): React.ReactElement | null {
   const [open, setOpen] = useState(false)
 
   const handleClose = () => {

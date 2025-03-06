@@ -19,7 +19,7 @@ interface ITopPanel {
   publicPage?: boolean
 }
 
-const TopPanel: FC<ITopPanel> = ({ chatComponent, language }) => {
+export const TopPanel: FC<ITopPanel> = ({ chatComponent, language }) => {
   const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
   const profile = useSelector((state) => state.global.user)

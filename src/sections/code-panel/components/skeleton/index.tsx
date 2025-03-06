@@ -6,7 +6,7 @@ import useIsDesktop from '@/hooks/useIsDesktop'
 
 import { getSkeletonCodePanelStyles, getTopBarSkeletonStyles } from './styles'
 
-const SkeletonCodePanel: FC = () => {
+export const SkeletonCodePanel: FC = () => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
   const styles = useMemo(() => getSkeletonCodePanelStyles(isDesktop), [isDesktop])

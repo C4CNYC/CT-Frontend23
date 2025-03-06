@@ -96,5 +96,5 @@ const Chat = (): React.ReactElement => {
     </Stack>
   )
 }
-
+export const CodePanelChat = Chat
 export default Chat

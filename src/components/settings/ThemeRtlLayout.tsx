@@ -9,7 +9,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export default function ThemeRtlLayout({ children }: Props): React.ReactElement | null {
+export function ThemeRtlLayout({ children }: Props): React.ReactElement | null {
   const theme = useTheme()
 
   useEffect(() => {

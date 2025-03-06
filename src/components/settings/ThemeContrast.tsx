@@ -10,7 +10,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export default function ThemeContrast({ children }: Props): React.ReactElement | null {
+export function ThemeContrast({ children }: Props): React.ReactElement | null {
   const outerTheme = useTheme()
 
   const { themeContrast, themeMode } = useSettingsContext()
