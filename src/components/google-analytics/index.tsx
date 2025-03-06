@@ -1,4 +1,8 @@
+import { useEffect } from 'react'
+
 import Script from 'next/script'
+
+import { useBoolean } from '@root/src/hooks/useBoolean'
 
 declare global {
   interface Window {
@@ -7,6 +11,16 @@ declare global {
 }
 
 export default function GoogleAnalytics(): React.ReactElement {
+  const [open, setOpen, setClose] = useBoolean(false)
+  useEffect(() => {
+    let t = setTimeout(() => {
+      setOpen()
+    }, 5000)
+    return () => clearTimeout(t)
+  }, [])
+
+  if (!open) return <></>
+
   return (
     <>
       <Script
