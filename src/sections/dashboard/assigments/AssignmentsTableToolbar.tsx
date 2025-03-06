@@ -1,5 +1,5 @@
 import { Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
-import { DatePicker } from '@mui/x-date-pickers'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
 import { Iconify } from '@/components/iconify'

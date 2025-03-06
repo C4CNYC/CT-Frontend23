@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useTheme } from '@mui/system'
-import { DatePicker } from '@mui/x-date-pickers'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'

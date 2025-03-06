@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export default function ThemeLocalization({ children }: Props): React.ReactElement | null {
+export function ThemeLocalization({ children }: Props): React.ReactElement | null {
   const outerTheme = useTheme()
 
   const { currentLang } = useLocales()

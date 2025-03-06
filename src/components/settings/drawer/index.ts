@@ -1,1 +1,1 @@
-export { default } from './SettingsDrawer'
+export { SettingsDrawer } from './SettingsDrawer'

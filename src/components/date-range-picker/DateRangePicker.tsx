@@ -10,7 +10,8 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import { CalendarPicker, DatePicker } from '@mui/x-date-pickers'
+import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { useResponsive } from '@/hooks'
 

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react'
 
 import { AppCacheProvider as EmotionAppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter'
-import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
@@ -15,7 +15,7 @@ import GoogleAnalytics from '@/components/google-analytics'
 import { ProgressBar } from '@/components/progress-bar'
 import { SettingsProvider, ThemeSettings } from '@/components/settings'
 import { SnackbarProviderWrapper } from '@/components/snackbar'
-import ThemeLocalization from '@/locales'
+import { ThemeLocalization } from '@/locales'
 import { store, useDispatch } from '@/redux/store'
 import { ThemeProvider } from '@/theme'
 
