@@ -8,14 +8,6 @@ import { localStorageAvailable } from '@/utils'
 import { defaultLang } from './config-lang'
 import { i18nBackend } from './i18n-backend'
 
-//
-// import arLocales from "./langs/ar";
-// import cnLocales from "./langs/cn";
-// import esLocales from "./langs/es";
-// import frLocales from "./langs/fr";
-// import ptLocales from "./langs/pt";
-// import vnLocales from "./langs/vn";
-
 let lng = defaultLang.value
 
 const storageAvailable = localStorageAvailable()
@@ -33,9 +25,7 @@ i18n
     lng,
     fallbackLng: defaultLang.value,
     keySeparator: '.',
-    debug: true,
-    ns: ['translations'],
-    defaultNS: 'translations',
+    debug: false,
     interpolation: {
       escapeValue: false,
     },
