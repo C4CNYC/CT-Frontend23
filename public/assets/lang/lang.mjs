@@ -1,57 +1,13 @@
-
 const en = {
-  demo: {
-    title: 'English',
-    introduction:
-      'CodeTribe.com | The No.1 Platform to teach Text-based Coding in Middle and High Schools </br> Like repl.it but for Teachers. Create lessons, quests or open projects in a snap. Mobile-friendly, collaborative and incredibly fun. Try it!',
-  },
-  docs: {
-    hi: 'Hi',
-    description: 'Need help? \n Please check our docs.',
-    documentation: 'Documentation',
-  },
-  app: 'App',
-  edit: 'Edit',
-  shop: 'Shop',
-  blog: 'Blog',
-  post: 'Post',
-  mail: 'Mail',
-  cards: 'Cards',
-  posts: 'Posts',
-  create: 'Create',
-  kanban: 'Kanban',
-  banking: 'Banking',
-  booking: 'Booking',
-  account: 'Account',
-  product: 'Product',
-  invoice: 'Invoice',
-  checkout: 'Checkout',
-  calendar: 'Calendar',
-  analytics: 'Analytics',
-  ecommerce: 'E-commerce',
-  management: 'Management',
-  organization: 'Organizations',
-  menu_level: 'menu level',
-  menu_level_2a: 'menu level 2a',
-  menu_level_2b: 'menu level 2b',
-  menu_level_3a: 'menu level 3a',
-  menu_level_3b: 'menu level 3b',
-  menu_level_4a: 'menu level 4a',
-  menu_level_4b: 'menu level 4b',
-  item_disabled: 'item disabled',
-  item_label: 'item label',
-  item_caption: 'item caption',
-  item_external_link: 'item external link',
-  other_cases: 'other cases',
-  item_by_roles: 'item by roles',
-
   // action words
   actions_delete: 'Delete',
+  actions_deleted: 'Deleted successfully',
   actions_password: 'Change Password',
   actions_remove: 'Remove',
   actions_edit: 'Edit',
   actions_add: 'Add',
   actions_clone: 'Clone',
+  actions_duplicate: 'Duplicate',
   actions_archive: 'Archive',
   actions_close: 'Close',
   actions_save: 'Save',
@@ -65,7 +21,7 @@ const en = {
   actions_connect: 'Connect',
   actions_view: 'View',
   actions_create: 'Create',
-  actions_create_authur: 'Create author',
+  actions_create_author: 'Create author',
   actions_delete_author: 'Delete author',
   actions_add_tip: 'Add tip',
   actions_enter_tip: 'Enter tip',
@@ -83,6 +39,7 @@ const en = {
   actions_previous: 'Previous',
   actions_next: 'Next',
   actions_send: 'Send',
+  actions_back: 'Back',
   actions_sort_by: 'Sort by',
   actions_invite: 'Invite',
   actions_copy: 'Copy',
@@ -131,7 +88,7 @@ const en = {
   avatar: 'Avatar',
   all: 'All',
   invites: 'Invites',
-  generated_passowrd: 'Generated password',
+  generated_password: 'Generated password',
   zip: 'Zip',
   start_date: 'Start date',
   icon: 'Icon',
@@ -212,12 +169,13 @@ const en = {
   preload: 'Preload',
   slug: 'Slug',
   files: 'Files',
-  rule: 'Rule',
-  regex: 'Regex',
+  rule: 'Description',
+  regex: 'Test',
   private: 'Private',
   open_catalog: 'Open Catalog',
   sequence: 'Sequence',
   rearrange: 'Rearrange',
+  remirror: 'Remirror',
 
   // avatar upload
   avatar__upload_text: 'Upload photo',
@@ -226,7 +184,8 @@ const en = {
 
   // image upload
   image_choose_image: 'Choose image',
-  image_drope_file: 'Drop files or click here',
+  image_drop_file: `Drop files Paste 
+  screenshot Click here`,
 
   // messages
   messages_success: 'Success',
@@ -241,14 +200,14 @@ const en = {
   messages_email_verified: 'Email Verified',
   messages_user_verified: 'User Verified',
   messages_delete_dialog_content: 'Are you sure want to delete {{items}} items?',
-  messages_updete_avatar_info: 'Leave empty and we will generate it randomly',
+  messages_update_avatar_info: 'Leave empty and we will generate it randomly',
   messages_delete_question: 'Are you sure you want to delete?',
   messages_tip_deleted: 'Tip deleted!',
   messages_archive_question: 'Are you sure want to archive?',
   messages_img_updated: 'Image updated',
   messages_img_not_updated: 'Image not updated',
   messages_no_image_selected: 'No image selected',
-  messages_sent_seccessfully: 'Message was sent successfully',
+  messages_sent_successfully: 'Message was sent successfully',
   messages_sth_added: '{{name}} added',
   messages_sth_removed: '{{name}} removed',
   messages_copied: 'Copied!',
@@ -269,7 +228,7 @@ const en = {
   messages_content_type_not_supported: 'CONTENT TYPE NOT SUPPORTED',
   messages_lesson_complete: 'Lesson successfully completed',
   messages_course_complete: 'Course successfully completed',
-  messages_chalage_comleted: 'Challange successfully completed',
+  messages_challenge_completed: 'Challenge successfully completed',
   messages_course_doesnt_exist: "Course doesn't exist",
   messages_lesson_removed: 'Lesson removed from the module',
   messages_lesson_file_delete: 'Delete',
@@ -333,6 +292,7 @@ const en = {
   sidebar_menu_invite_friends: 'Invite Friends',
   sidebar_menu_feedback: 'Feedback',
   sidebar_menu_administration: 'Administration',
+  sidebar_menu_admin: 'Admin',
   sidebar_menu_members: 'Members',
   sidebar_menu_schools: 'Schools',
   sidebar_menu_management: 'Management',
@@ -346,6 +306,7 @@ const en = {
   sidebar_menu_modules: 'Modules',
   sidebar_menu_lessons: 'Lessons',
   sidebar_menu_tasks: 'Tasks',
+  sidebar_menu_properties: 'Properties',
   sidebar_menu_integrations: 'Integrations',
   sidebar_menu_skills: 'Skills',
   sidebar_menu_apps: 'Apps',
@@ -370,7 +331,7 @@ const en = {
   schools: 'Schools',
   schools_organization: 'Organizations',
   schools_table_active: 'Active',
-  schools_add_aschool: 'Add School',
+  schools_add_school: 'Add School',
   schools_school_info: 'School Info',
   schools_teacher_deleted_act: 'Teacher deleted',
   schools_teacher_added_act: 'Teacher added',
@@ -388,7 +349,7 @@ const en = {
   general_settings_sso_note:
     'Note: Single-sign-on allows interfacing with: Google Classroom & ClassLink \n More about Edu SSO: ',
   general_user_settings: 'User Settings',
-  general_user_invate_only: 'Invite-only users',
+  general_user_invite_only: 'Invite-only users',
   general_user_settings_note: 'Note: Only allow users to sign-up when invited by a teacher',
   general_lang_settings: 'Language Settings:',
   general_lang_settings_default: 'Default Language:',
@@ -401,7 +362,7 @@ const en = {
 
   // General > Contacts tab
   contacts_tab_technical_contacts: 'Technical Contacts',
-  contacts_tab_buling_contacts: 'Billing Contacts',
+  contacts_tab_billing_contacts: 'Billing Contacts',
 
   // General > Networks tab
   networks_tab_your_networks: 'Your networks',
@@ -412,17 +373,17 @@ const en = {
   // Students page locales
   member_actions_deleted: 'Member deleted',
   members_actions_deleted: 'Members deleted',
-  members_invate_student: 'Invite Student',
+  members_invite_student: 'Invite Student',
   members_add_student: 'Add Student',
   members_send_invite: 'Send Invite',
-  students_creatr_new: 'Create a new student',
+  students_create_new: 'Create a new student',
   students_new_student: 'New student',
   students_new_avatar_subtitle: 'Live empty and we will generate it randomly',
   students_new_cover_color: 'Cover color',
   students_new_email_notification:
     'Disabling this will automatically send the user a verification email',
   students_new_user_notification: "Disabled users don't have access to this resource",
-  students_edite_student: 'Student: Edit student',
+  students_edit_student: 'Student: Edit student',
 
   // Classes page
   classes: 'Classes',
@@ -431,7 +392,7 @@ const en = {
   classes_total_courses: 'Total (Courses)',
   classes_class_deleted: 'Class deleted',
   classes_classes_deleted: 'Classes deleted',
-  classes_class_updeted: 'Class updated successfully!',
+  classes_class_updated: 'Class updated successfully!',
   classes_class_created: 'Class {{name}} created successfully!',
   classes_class_name: 'Class name',
   classes_class_description: 'Class description',
@@ -454,9 +415,10 @@ const en = {
   assignments_updated_msg: 'Assignment updated!',
   assignments_assign_to: 'Assign to',
   assignments_add_tags_info: 'This will help others know what the theme is.',
-  assignments_updated_successfuly: 'Assignment updated successfully!',
-  assignments_created_successfuly: 'Assignment created successfully!',
-  assigments_onboarding_info: 'This is how you assign a course or module to your class.',
+  assignments_updated_successfully: 'Assignment updated successfully!',
+  assignments_created_successfully: 'Assignment created successfully!',
+  assignments_onboarding_info: 'This is how you assign a course or module to your class.',
+
   // Progress page
   progress: 'Progress',
   progress_tooltip_info: 'Click on a column to expand it and see details',
@@ -482,21 +444,21 @@ const en = {
   courses_initial_enrolled: 'Initial enrolled',
   courses_catalog: 'Courses Catalog',
   courses_empty: "You don't have any courses",
-  courses_enroled: 'ENROLLED',
+  courses_enrolled: 'ENROLLED',
   courses_certificate_tooltip_info: 'This course is eligible for a certificate.',
   courses_certificate_link: 'See sample certificate',
   courses_course_overview: 'Course Overview',
   courses_course_who_is_this_for: 'Who is this for',
-  courses_entery_point: 'A fantastic entry-point for understanding....',
+  courses_entry_point: 'A fantastic entry-point for understanding....',
   courses_for_beginners_info:
     'For curious beginners who want to understand the basics of web dev and who.',
-  courses_semple_cerificate: 'Sample Certificate',
+  courses_sample_certificate: 'Sample Certificate',
   courses_for_teachers: 'For Teachers',
   courses_for_teachers_info:
     'A “Teacher Toolbox” is found within each module with all the resources you will need.',
   courses_pacing_guides_link: 'Pacing Guides',
   courses_standards_alignment_link: 'Standards Alignment',
-  courses_author_and_ranking: 'Author & Ranking',
+  courses_author_and_ranking: 'Author & Reviews',
   courses_brief: 'The Brief',
   courses_teacher_toolbox: 'Teacher Toolbox',
   courses_module_slides: 'Module Slides',
@@ -510,6 +472,24 @@ const en = {
     'The Situation: This “Training” builds on the code of the previous “Training.” If you start this “Training” now, the “Code Solution” from the previous training will be added. The “Code Solution” is the correct code of the previous “Training” without any personalization',
   lesson_dialog_btn_start: 'Yes. Start the lesson',
   lesson_dialog_btn_back: "No. I'll go back",
+  lesson_part_project_type: 'Part of Project',
+  lesson_dialog_title_2: 'This Lesson Builds on the Previous One 🏗️',
+  lesson_dialog_subtitle_1:
+    'It looks like you haven’t finished (at least 90% ) of the previous lesson. 🙀',
+  lesson_dialog_subtitle_2: `So we'll insert "Standard" code, but if you go back NOW and finish, then your own code
+          will automatically be passed to this lesson. 😃`,
+  lesson_dialog_learn_more: 'Learn more',
+  lesson_dialog_go_back: "No. I'll go back to finish",
+  lesson_to_lesson_code_copying: 'Lesson to Lesson Code Copying',
+  lesson_to_lesson_code_copying_subtitle_1:
+    'We made it like this, so that you can start any lesson you want at any time. 👀 🤩',
+  lesson_to_lesson_code_copying_subtitle_2: ` But if you want your special code, with all your personal customizations to be passed
+          automatically, then you have to complete, at least, 90%.`,
+  lesson_to_lesson_code_copying_subtitle_3: ` But don't worry. Whatever you choose is just fine. As long as you just keep coding. 🙌
+          Yaay!`,
+  lesson_catalog_dialog_title: `Hey, we’re building a project together.
+                    So pulled your code from previous lesson, 
+                    so that you can keep building`,
 
   // Modules pages
   modules: 'Modules',
@@ -517,8 +497,16 @@ const en = {
   modules_create_module: 'Create Module',
   modules_update_module: 'Update Module',
   modules_module_name: 'Module name',
+  modules_module_image: 'Module image',
+  modules_module_background: 'Module background',
   modules_module_description: 'Module description',
   modules_module_duration: 'Module duration',
+  modules_module_likes: 'Initial likes',
+  modules_module_stars: 'Initial stars',
+  modules_module_enrolled: 'Initial enrolled',
+  modules_module_teacher_link: 'Teacher slides link',
+  modules_module_teacher_forum_link: 'Teacher forum link',
+  modules_module_lesson_plan_link: 'Lesson plans link',
   modules_enter_tip: 'Enter tip',
   modules_add_tip: 'Add tip',
   modules_module_active: 'Module active',
@@ -532,7 +520,7 @@ const en = {
   modules_add_lesson_existing: 'Insert Existing Lesson',
   modules_add_lesson_new_lesson: 'Add New Lesson',
   modules_add_lesson_new_quiz: 'Add New Quiz',
-  modules_add_lesson_new_exircises: 'Add New Exercises',
+  modules_add_lesson_new_exercises: 'Add New Exercises',
   modules_view_lesson: 'View Lesson',
   modules_add_lesson_slide_link: 'Add/Edit Lesson Slides',
   modules_pls_select_lesson: 'PLS SELECT LESSON',
@@ -542,19 +530,37 @@ const en = {
   lesson: 'Lesson',
   lessons_list: 'Lessons List',
   lessons_create_lesson: 'Create Lesson',
+  lessons_create_lesson_desc: 'Select a template to start your lesson',
+  lesson_cloned_msg: 'Lesson created successfully',
   lessons_edit_lesson: 'Edit Lesson',
   lessons_name: 'Lesson Name',
   lessons_description: 'Lesson description',
+  lessons_slug: 'Slug',
+  lessons_duration: 'Duration',
   lessons_active: 'Lesson active',
   lessons_deleted_msg: 'Lesson deleted!',
   lessons_practical: 'Practical',
   lessons_exercise: 'Exercise',
-  lessons_inependent_lesson: 'Independent lesson',
+  lessons_independent_lesson: 'Independent lesson',
+  lessons_type: 'Lesson Type',
+  lessons_type_select_one: 'Select one',
+  lessons_type_select_one_star: '*',
+  lessons_active_tooltip:
+    'The lesson will show in the catalog or is shareable to the class or in a Quest.',
+  lessons_autoRun_tooltip:
+    'The browser will update on every keystroke. Only available to html files.',
+  lesson_lock_tooltip:
+    'Editing of this lesson is locked until lock is removed. This protects from accidental changes to key content.',
+  lessons_autoRun: 'Auto-run Tests',
+  lessons_lock: 'Lesson Locked',
   lessons_settings: 'Lesson Settings',
   lessons_starter_code: 'Starter Code',
   lessons_starter_code_from_previous: 'Copy from the previous lesson',
   lesson_file_name: 'File name:',
   lesson_file_add_asset: 'Add Asset',
+  lesson_share_button: 'Share',
+  lesson_create_favorite_input: 'Favorites',
+  lesson_create_favorite_btn: 'GO',
 
   // Integrations page
   integrations: 'Integrations',
@@ -571,13 +577,17 @@ const en = {
 
   //Properties
   properties: 'Property',
-  properties_removed: 'Propery Removed',
+  properties_removed: 'Property Removed',
   entityType: 'Entity type',
   entityId: 'Entity Id',
   propertyName: 'Property Name',
   propertyValue: 'Property Value',
   properties_updated_msg: 'Property updated',
   properties_created_msg: 'Property created',
+  properties_create_int: 'Create integration',
+  property_name: 'Property Name',
+  entry_id: 'Entity Id',
+  property_value: 'Property Value',
 
   // Skills page
   skills: 'Skills',
@@ -589,7 +599,7 @@ const en = {
   // Home Overview
   home_overview: 'Home Overview',
   joined_to_class_msg: 'You joined the class!',
-  send_reques_for_join_to_class: 'You sent a request to join the class!',
+  send_request_for_join_to_class: 'You sent a request to join the class!',
   home_join_tribe: 'Join this tribe',
   been_invited_msg: 'You’ve been invited to join this tribe.',
   home_not_now: 'Not now',
@@ -627,7 +637,7 @@ const en = {
   quest_whats_quest: "What's a quest?",
   quest_select_type: 'Select type',
   quest_select_course: 'Select a course',
-  auest_select_module: 'Select module',
+  quest_select_module: 'Select module',
   quest_you_dont_have_courses_msg: "You don't have any courses",
   quest_you_dont_have_module_msg: "You don't have any module",
   quest_all_modules: 'All modules',
@@ -641,7 +651,10 @@ const en = {
   quest_close_date: 'Close Date:',
   quest_close_date_info:
     'After this submissions are no longer received. The default is 3 days after the “Due date.”',
-  quest_no_descr: 'No details available for this quest.',
+  quest_no_descriptioniption: 'No details available for this quest.',
+  assign_from_catalog: 'Assign from Catalog',
+  create_popup_lesson: 'Create Pop-Up Lesson',
+  assign_my_creations: 'Assign from My Creations',
 
   // My Notes
   notes_my: 'My Notes',
@@ -672,6 +685,13 @@ const en = {
   tribes_code_example: '12asd5',
   tribes_want_leave: 'Are you sure you \n want to leave tribe?',
   tribes_you_left_tribe: 'You left the tribe',
+  added_to_tribe: 'You have been added to the tribe',
+  added_to_tribe_success: 'Awesome. Thanks!',
+  join_class_dialog_title: 'I got a join-code',
+  join_class_dialog_title_1: 'We can’t find this tribe or quest',
+  join_class_dialog_enter_code: 'Enter your join-code below',
+  join_class_dialog_enter_code_1:
+    'Either you typed it wrong or this tribe is no longer available. Ask your lead or teacher.',
 
   // Create class page
   class_create: 'Create a class',
@@ -723,14 +743,15 @@ const en = {
   login_hi: 'Hi',
   sign_in: 'Login',
   login_or: 'OR',
-  ligin_with_google: 'Sign in with Google',
+  login_with_google: 'Sign in with Google',
   login_email_not_found: 'Email not found',
   login_or_wrong_password: 'or wrong password',
   login_try_again: 'Please try again or register as a new user',
   login_go_back: 'GO BACK',
   login_with_email: 'Sign in with Email',
   login_lets_go: "LET'S GO!",
-  login_sign_up: 'Register',
+  login_sign_up_as_student: 'Register as Student',
+  login_sign_up_as_teacher: 'Register as Teacher',
   login_reset_password: 'Forgot password',
   login_my_first_time: 'This is my first time here',
   login_sign_up_with_google: 'Sign up with Google',
@@ -739,7 +760,7 @@ const en = {
   login_been_here: 'I’ve been here before',
   login_register_as: 'Register as',
   login_hey_teachers: 'Hey, Teachers',
-  login_lets_start_learning: 'Let’s start a learning adventure',
+  login_lets_start_learning: 'Let’s start a learning adventure.',
   login_popup_session_title: 'Pop-up Session',
   login_popup_session_subtitle:
     'Real-time view of all participants while broadcasting code & voice.',
@@ -748,7 +769,7 @@ const en = {
   login_ai_generate_session_subtitle: 'Create a new lesson with A.I.',
   login_ai_generate_session_info:
     'Generate awesome new lessons, exercises or quizzes with AI - It’s fun and simple. Give it a try.',
-  login_launch_session_title: 'Launch Course',
+  login_launch_session_title: 'Launch a Course',
   login_launch_session_subtitle: 'Teacher-led or self-paced modules assigned to class or group.',
   login_launch_session_info: 'Real-time view of all participants while broadcasting code & voice.',
   login_mumu: 'Hi, I’m {{name}}',
@@ -805,12 +826,12 @@ const en = {
   ai_gen_type_5_tooltip:
     'Building a project line by line with explanations and step-by-step guidance.',
 
-  ai_gen_progr_lng_title: 'Programming Language ',
-  ai_gen_progr_lng_opt_1: 'Javascript',
-  ai_gen_progr_lng_opt_2: 'Python (Brython)',
-  ai_gen_progr_lng_opt_3: 'HTML/CSS',
-  ai_gen_progr_lng_opt_4: 'HTML/CSS/JS',
-  ai_gen_progr_lng_opt_5: 'Kaboom.js',
+  ai_gen_programming_lng_title: 'Programming Language ',
+  ai_gen_programming_lng_opt_1: 'Javascript',
+  ai_gen_programming_lng_opt_2: 'Python (Brython)',
+  ai_gen_programming_lng_opt_3: 'HTML/CSS',
+  ai_gen_programming_lng_opt_4: 'HTML/CSS/JS',
+  ai_gen_programming_lng_opt_5: 'Kaboom.js',
 
   ai_gen_track_title: 'Track',
   ai_gen_track_option_1: 'AI & API',
@@ -864,8 +885,7 @@ const en = {
   ai_gen_persona_tone_3: 'Lively',
   ai_gen_persona_tone_4: 'Boring',
   ai_gen_persona_context_title: 'Context',
-  ai_gen_persona_context_placeholder: 'Any additional context or preferences within the prompt.',
-
+  ai_gen_persona_context_placeholder: 'Contextual details like "focus on teamwork skills".',
   ai_gen_addons_title: 'Add any of the following to your lesson?',
   ai_gen_addons_text_main_1: 'Quiz  |',
   ai_gen_addons_text_sub_1: 'Multiple-choice, matching or fill-in-the-blanks.',
@@ -892,8 +912,8 @@ const en = {
   ai_gen_loading_state_5: 'Receiving the lesson',
   ai_gen_loading_state_6: 'Finishing up',
 
-  ai_gen_lng_select_title: 'Select from list or type the name of any language',
-  ai_gen_lng_placeholder: 'Other Language',
+  ai_gen_lng_select_title: 'Select lesson language',
+  ai_gen_lng_placeholder: 'Other languages or dialects',
 
   // School type
   primary_school: 'Primary School',
@@ -933,17 +953,27 @@ const en = {
   step_copy_slide: '{{title}} (Copy)',
   step_removed: 'Step removed',
   step_cant_removed: "Sorry we can't remove at this moment",
-  lesson_settup_settings: 'LESSON SETUP & SETTINGS',
+  lesson_setup_settings: 'LESSON SETUP & SETTINGS',
   slide_add: 'ADD SLIDE',
   slide_add_blank: 'New Blank Slide',
   slide_add_normal: 'Use Normal Template',
   slide_add_html: 'Use HTML Template',
-  slide_add_promt_ai: 'Prompt with AI',
+  slide_add_prompt_ai: 'Prompt with AI',
   slide_add_ai_templates: 'AI Templates',
   slide_content_updated: 'Content updated',
   slide_standard: 'Standard',
   slide_select_format: 'Select slide format',
   slide_switch: 'Switch to other slide',
+  slide_loader_text: 'More slides are coming',
+  slide_content_changed_barge: 'Content Changed',
+  slide_switch_tabs_standard: 'Standard',
+  slide_switch_tabs_html: 'HTML',
+  slide_switch_tabs_remirror: 'Remirror',
+  slide_switch_tab_dialog_title:
+    ' Any unsaved edit in the current editor can be deleted if you switch',
+  slide_switch_tab_dialog_subtitle: 'Are you sure you want to switch?',
+  slide_switch_tab_dialog_confirm: 'Yes. I understand',
+  slide_confirm_discarding_changes: 'Confirm discarding changes',
 
   // Share lesson modal
   share_modal_title: 'Share',
@@ -973,14 +1003,13 @@ const en = {
   folder_name: 'Folder name',
   file_name: 'File name',
   validation_removed: 'Validation rule removed',
-  validation_rules: 'Validation Rules',
-  not_recommend_count_validations:
-    ' We are not recommend put more then {{count}} rules for 1 step.',
+  validation_rules: 'Tests',
+  not_recommend_count_validations: 'We recommend not more than {{count}} tests per slide.',
   it_can_make_your_step: 'It can make your step very complicated and can affect',
   comfort_content: 'learners on phones',
   updated_at: 'Updated At',
   no_rules: 'NO RULES',
-  add_rule: 'ADD RULE',
+  add_rule: 'Add Test',
   validation_rule_updated: 'Your validation rule is update successfully',
   validation_rule_created: 'Your validation rule is created successfully',
   start_type_here: 'Start typing here ...',
@@ -1000,11 +1029,9 @@ const en = {
   console_title: 'Console',
   console_tooltip_title: 'What is a console?',
   console_tooltip_subtitle_1:
-    ' It’s the place you see a result when you run javascript (JS).Because most times JS runs in the background and does it’s calculations and response there.',
+    ' It’s the place you see a result when you run javascript (JS). Because most times JS runs in the background and does it’s calculations and response there.',
   console_tooltip_subtitle_2:
     'Only when you specifically link a particular function to a specific part of the page do you actually see JS modifying the “Front” page.',
-  console_tooltip_subtitle_3:
-    'The fancy term for this is “Manipulating the DOM”. - And “DOM” stands for Document Object Model.',
   no_preview_available_title: 'Browser',
   no_preview_available_results: 'Here you will see the results of your work in realtime',
   no_preview_available: 'No preview available?',
@@ -1017,7 +1044,7 @@ const en = {
   i_need_help: 'I need help with',
   i_um_stuck: 'I`m stuck',
   full_code_solutions: 'Full code solutions.',
-  or_keep_goin_slide:
+  or_keep_going_slide:
     'Or, ... Keep going till you see a “Checkpoint” slide. There may be one ahead.',
   see_this_training: 'See this training',
   ask_for_help_in_tribe: 'Ask for help in Tribe chat',
@@ -1029,9 +1056,13 @@ const en = {
   are_you_sure_see_solution: 'Are you sure you want to see the full solution code for this lesson?',
   not_available_for_this_step: 'Not available for this step.',
   no_solution: 'A solution is not available for this slide.',
+  solution_code_title: 'Solution code',
+  my_code_title: 'My code',
   coding_editor: 'CODING EDITOR:',
   customize: 'CUSTOMIZE:',
   reset_lesson: 'Reset Lesson',
+  reset_lesson_confirm: 'Are you sure you want to reset progress and code typed for this lesson?',
+  reset_lesson_submit_btn: 'Yes, Reset Progress',
   reset_code: 'Reset code',
   intro_tour: 'Intro Tour',
   launch_intro_tour: 'Launch Intro Tour',
@@ -1048,10 +1079,11 @@ const en = {
   btn_group_back: 'BACK',
   btn_group_skip: 'SKIP',
   btn_group_tooltip: 'Please complete all tasks to continue (or skip, if available.)',
+  code_tests_title: 'Code Tests',
 
   //Add file modal
   file_manager_title: 'Files',
-  add_file_madal_title: 'Add file',
+  add_file_modal_title: 'Add file',
   add_file_btn: 'Add file',
   file_extension_label: 'File extension:',
   file_name_label: 'File name:',
@@ -1077,7 +1109,7 @@ const en = {
   step_4: 'Here you will see the results of your work in realtime 🤯',
   lesson_list: 'Lessons list',
   step_5: 'Feel free to choose lesson which you want 😉 or ...',
-  check_progres: 'Check your learning progress',
+  check_progress: 'Check your learning progress',
   save_publish_project: 'Save or publish your project',
   lets_look_st_this_part: 'Now let`s look at this useful part',
   step_8:
@@ -1101,13 +1133,36 @@ const en = {
   sandbox: 'Sandbox',
 
   // Code-editor save
-  publist_to_gallery: 'Publish to Gallery',
+  publish_to_gallery: 'Publish to Gallery',
   go_to_gallery: 'Go to Gallery',
   save_to_folder: "Save to 'My Folder'",
   open_folder: "Open 'My Folder'",
 
   // Code editor MuMu menu
   code_editor_mumu_menu_tooltip: "Hi, I'm Mumu. I'm here to help when you get stuck.",
+
+  // Code panel header
+  code_panel_header_group: 'Group',
+  code_panel_header_off: 'Off',
+  code_panel_header_collab: 'Collab',
+
+  //Super Admin
+  admin_title_nav: 'Admin',
+  administration_title: 'Administration',
+  create_new_org: 'Create new',
+  create_new_org_dialog_title: 'Create Organisation',
+  update_org_dialog_title: 'Update Organisation',
+  create_new_name_label: 'Organisation name',
+  create_new_slug_label: 'Slug',
+  create_new_domain_label: 'Domain',
+  name_validation_msg: 'Name is reqired',
+  slug_validation_msg_1:
+    'Slug must be lowercase, contain no spaces or numbers, and only use letters and hyphens',
+  slug_validation_msg_2: 'Slug is required',
+  home_page_type_validation_msg: 'Select type',
+  home_page_type_required_msg: 'Home page type is required',
+  home_page_type: 'Home page type',
+  add_custom_html_code: 'Add custom HTML code',
 
   // CreateLesson
   default_values: {
@@ -1204,11 +1259,164 @@ const en = {
       },
     },
   },
+
+  login_layout_title: 'Yaaaay!',
+  login_layout_subtitle: "You're back!",
+  student_registration_password_number: '1 Number',
+  student_registration_password_character: '8+ Characters',
+  student_birth_data_month: 'Month',
+  student_birth_data_day: 'Day',
+  student_birth_data_year: 'Year',
+  no_tribe_join_code_tip_1: `Hey, if you have no Tribe or Class, you can just start coding in the Catalog.`,
+  no_tribe_join_code_tip_2: '“Open Catalog”',
+  no_tribe_join_code_tip_3: 'to see the courses available',
+
+  rate_site_title: 'Rate this site',
+  rate_training_title: 'Rate this training',
+  rate_slide_title: 'Rate this slide',
+  rate_modal_subtitle_1: 'Give us a rating',
+  rate_modal_subtitle_2: ` in general`,
+  rate_modal_subtitle_3: ` for the training`,
+  rate_modal_subtitle_4: ` for the slide`,
+  rate_modal_subtitle_5: '. Tell us if you like it or not.',
+
+  gallery_folder_public_title: 'Public',
+  gallery_folder_public_subtitle: 'Anyone can see your projects.',
+  gallery_folder_private_title: 'Private',
+  gallery_folder_private_subtitle: 'This folder is only for you',
+  gallery_projects_inside: 'projects inside',
+  gallery_projects_empty: 'You have no projects yet',
+  gallery_delete_project: 'Delete project',
+  gallery_delete_confirm: 'Are you sure want to delete this project?',
+  gallery_edit_dialog_title: 'Edit project',
+  gallery_edit_dialog_name: 'Project title',
+  gallery_edit_dialog_description: 'Project description',
+  gallery_edit_dialog_visibility: 'Public visibility',
+
+  sidebar_menu_my_creations_item_1: 'Mumu AI Creator',
+  sidebar_menu_my_creations_item_2: 'Add Blank Lesson',
+  sidebar_menu_my_creations_item_3: 'My Lessons',
+  sidebar_menu_my_creations_item_4: 'My Modules',
+  sidebar_menu_my_creations_item_5: 'My Courses',
+  sidebar_menu_my_creations_item_6: 'Integrations',
+  sidebar_menu_my_creations_item_7: 'Templates',
+  sidebar_menu_my_creations_item_8: 'Add From Templates',
+
+  diamond_feature_title: 'Diamond Feature',
+  diamond_feature_subtitle: 'This feature is limited to DIAMOND accounts.',
+
+  hours: 'Hours',
+  module_sidebar_skills: 'SKILLS',
+  send_welcome_emails: 'Send welcome emails',
+
+  class_page_popup_share_link_text_1: 'Add students to your group by sharing the',
+  class_page_popup_share_link_text_2: 'invite link',
+
+  // Remirror Toolbar
+  remirror_toolbar_challenge_btn: 'Challenge',
+  remirror_toolbar_tools_btn: 'Tools',
+  insert_media_btn: 'Insert media',
+  remirror_toolbar_escape_html_btn: 'Escape HTML',
+  remirror_toolbar_escape_html_btn_title: 'Escapes HTML in the selection',
+  remirror_toolbar_cape_html_btn: 'Cape HTML',
+  remirror_toolbar_cape_html_btn_title: 'Tangle this code',
+  remirror_toolbar_format_btn: ' Format',
+  remirror_toolbar_format_btn_title: 'Format code',
+
+  intro_tour_main_step_1_title: 'Tribes ( Classes )',
+  intro_tour_main_step_1_subtitle:
+    'Here you will see the Tribes you have created or are a part of.',
+  intro_tour_main_step_2_title: 'Tribe (Class) Information',
+  intro_tour_main_step_2_subtitle: 'Here you can see general information about the current class.',
+  intro_tour_main_step_3_title: 'Quests list',
+  intro_tour_main_step_3_subtitle: `The quests (Assignments) for the Tribe are listed here. You can also manage members and
+        Tribe details in the other tabs.`,
+
+  intro_tour_student_join_step_1_title: '💥 Tribe Details 💥',
+  intro_tour_student_join_step_1_subtitle:
+    ' Here you’ll see all the details for your Tribe or Class.',
+  intro_tour_student_join_step_2_title: 'Quests ( Assignments )',
+  intro_tour_student_join_step_2_subtitle: `Here you’ll see all the assignments you have. A quest can assign a short lesson or a full
+        course. Click on it to see the details.`,
+  intro_tour_student_join_step_3_title: 'Switch or Join New Tribes',
+  intro_tour_student_join_step_3_subtitle: `Click on a Tribe icon to switch to another Tribe (or Class.) To join a new Tribe, just click
+        on the “+” and enter the join-code.`,
+  intro_tour_student_join_step_4_title: 'Exciting Catalog',
+  intro_tour_student_join_step_4_subtitle: 'Choose a project you love and start coding.',
+
+  intro_tour_default_student_step_1_title: '💥 Join a tribe 💥',
+  intro_tour_default_student_step_1_subtitle: ' Enter a join-code from your teacher.',
+  intro_tour_default_student_step_2_title: 'Catalog',
+  intro_tour_default_student_step_2_subtitle:
+    'This is where you choose your adventure and start coding.',
+  intro_tour_default_student_step_3_title: 'Register',
+  intro_tour_default_student_step_3_subtitle: 'Register here or login to save your progress.',
+
+  intro_tour_lesson_creation_step_1_title: 'Hi there 👋🏼',
+  intro_tour_lesson_creation_step_1_subtitle: 'This is the “Lesson Editor.” ✏️',
+  intro_tour_lesson_creation_step_1_subtitle_2: 'You can edit or create new lessons here.',
+  intro_tour_lesson_creation_step_2_title: 'Slides 🛝',
+  intro_tour_lesson_creation_step_2_subtitle:
+    'These are the slides - The pages. Add, edit or re-order them here.',
+  intro_tour_lesson_creation_step_3_title: 'Choose your Format 🎨',
+  intro_tour_lesson_creation_step_3_subtitle:
+    'You can create slides in a simple editor 📄 or in HTML.',
+  intro_tour_lesson_creation_step_4_title: 'Preview Student View 👩‍🎓🔍',
+  intro_tour_lesson_creation_step_4_subtitle:
+    'See how the slides look in the Coding Panel (Workspace).',
+
+  intro_tour_step_1_desktop_title: '💥 The Coding Panel 👩‍💻 💥',
+  intro_tour_step_1_desktop_subtitle: 'Here is where all the learning and building happens. 🤩',
+  intro_tour_step_2_desktop_title: 'The Slides',
+  intro_tour_step_2_desktop_subtitle_1: `Here you'll see exciting things 💎💫`,
+  intro_tour_step_2_desktop_subtitle_2: `Just follow step by step.`,
+  intro_tour_step_3_desktop_title: 'Challenge Slides',
+  intro_tour_step_3_desktop_subtitle: `See a Challenge ⚔️ slide? That means it’s time to code in the editor.`,
+  intro_tour_step_4_desktop_title: 'Controls',
+  intro_tour_step_4_desktop_subtitle:
+    '  On “Challenge” slides you can also “Skip” ⏭️ and come back later 🔙 if you get stuck.',
+  intro_tour_step_5_desktop_title: 'Code Editor',
+  intro_tour_step_5_desktop_subtitle:
+    'Here’s your Code Editor 👩🏽‍💻 where you’ll build cool stuff. 😎',
+  intro_tour_step_6_desktop_title: 'Tests 🧪',
+  intro_tour_step_6_desktop_subtitle:
+    '  When available, click this to see what code is missing ⚔👀 for the challenge.',
+  intro_tour_step_7_desktop_title: 'Toolbox 🧰',
+  intro_tour_step_7_desktop_subtitle: 'Here’s undo, redo, copy & paste.',
+  intro_tour_step_7_desktop_subtitle_2: 'Tap on',
+  intro_tour_step_7_desktop_subtitle_3: ' see the characters.',
+  intro_tour_step_8_desktop_title: 'Lessons List',
+  intro_tour_step_8_desktop_subtitle:
+    'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
+  intro_tour_step_9_desktop_title: 'Most important: Have fun! 🤪',
+  intro_tour_step_9_desktop_subtitle:
+    'And on Feedback 💬 let us know what you think: awesome 🏆 or not-so-awesome 💩?',
+  intro_tour_step_9_desktop_btn: 'Leave feedback',
+
+  intro_tour_step_1_mobile_title: '💥 The Coding Panel 👩‍💻 💥',
+  intro_tour_step_1_mobile_subtitle: 'Here is where all the learning and building happens. 🤩',
+  intro_tour_step_2_mobile_title: 'The Slides',
+  intro_tour_step_2_mobile_subtitle: `Here you'll see exciting things 💎💫 and they will tell you what to code. ✍🏽 🤖 Just follow
+        step by step.`,
+  intro_tour_step_3_mobile_title: 'Challenge Slides',
+  intro_tour_step_3_mobile_subtitle: `See a Challenge ⚔️ slide? That means it’s time to code in the editor.`,
+  intro_tour_step_4_mobile_title: 'Controls',
+  intro_tour_step_4_mobile_subtitle:
+    '  On “Challenge” slides you can also “Skip” ⏭️ and come back later 🔙 if you get stuck.',
+  intro_tour_step_5_mobile_title: 'Navigation',
+  intro_tour_step_5_mobile_subtitle: 'Here you can change this tabs',
+  intro_tour_step_6_mobile_title: 'Lessons List',
+  intro_tour_step_6_mobile_subtitle:
+    'See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉',
+  intro_tour_step_7_mobile_title: 'Most important: Have fun! 🤪',
+  intro_tour_step_7_mobile_subtitle:
+    'And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?',
+  intro_tour_step_7_mobile_btn: 'Leave feedback',
 }
 
-
+export default en
   
-  let lang = en
+let lang = en
   
 console.log (JSON.stringify(lang , null, 2))
   

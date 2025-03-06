@@ -6,6 +6,8 @@ import { initReactI18next } from 'react-i18next'
 import { localStorageAvailable } from '@/utils'
 
 import { defaultLang } from './config-lang'
+import { i18nBackend } from './i18n-backend'
+
 //
 // import arLocales from "./langs/ar";
 // import cnLocales from "./langs/cn";
@@ -27,7 +29,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    backend: { loadPath: '/assets/lang/{{lng}}.json' },
+    backend: { ...i18nBackend },
     lng,
     fallbackLng: defaultLang.value,
     keySeparator: '.',
