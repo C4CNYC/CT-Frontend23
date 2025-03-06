@@ -13,6 +13,8 @@ import {
   useTheme,
 } from '@mui/material'
 import { Stack } from '@mui/system'
+import { FaRegStar } from '@react-icons/all-files/fa/FaRegStar'
+import { FaStar } from '@react-icons/all-files/fa/FaStar'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 
@@ -47,10 +49,11 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
     const general_message =
       'Feedback message: ' +
       (data.feedbackMsg ?? '-') +
-      'What I like: ' +
+      ' What I like: ' +
       (data.feedbackSelectPositive ?? '-') +
-      'Problem: ' +
+      ' Problem: ' +
       (data.feedbackSelectNegative ?? '-')
+
     try {
       if (rating) {
         sendGeneralFeedback({
@@ -89,7 +92,7 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
         onSubmitLesson()
         onClose()
         enqueueSnackbar(translate('next_lesson_snackbar_text'))
-      }, 6000)
+      }, 8000)
     }
 
     return () => {
@@ -109,11 +112,11 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth={'xs'}
+      maxWidth={'sm'}
       fullWidth
     >
       <DialogTitle
-        variant='h4'
+        variant='h3'
         textAlign={'center'}
         sx={{
           pb: 1,
@@ -127,8 +130,8 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
           gap={1}
           pb={2}
         >
-          <Typography variant='subtitle1'>{translate('next_lesson_modal_subtitle_1')}</Typography>
-          <Typography variant='subtitle1'>{translate('next_lesson_modal_subtitle_2')}</Typography>
+          <Typography variant='h5'>{translate('next_lesson_modal_subtitle_1')}</Typography>
+          <Typography variant='h5'>{translate('next_lesson_modal_subtitle_2')}</Typography>
           <MotionContainer
             action
             animate={Boolean(rating)}
@@ -141,6 +144,8 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
               }}
               defaultValue={0}
               value={rating}
+              emptyIcon={<FaRegStar size={45} />}
+              icon={<FaStar size={45} />}
             />
           </MotionContainer>
 
@@ -162,7 +167,14 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
         </Stack>
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'space-around' }}>
-        <Button onClick={onClose}>{translate('next_lesson_modal_btn_1')}</Button>
+        <Button
+          size='large'
+          variant='soft'
+          color='warning'
+          onClick={onClose}
+        >
+          {translate('next_lesson_modal_btn_1')}
+        </Button>
         <MotionContainer
           action
           animate={open}
@@ -170,6 +182,7 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
           sx={{ borderRadius: '8px' }}
         >
           <Button
+            size='large'
             sx={{ color: theme.palette.common.white }}
             onClick={methods.handleSubmit(onSubmit)}
           >

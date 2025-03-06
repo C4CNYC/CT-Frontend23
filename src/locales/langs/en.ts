@@ -1140,7 +1140,7 @@ const en = {
 
   // code-panel next-lesson-modal
   next_lesson_snackbar_text: 'Opening Next Lesson',
-  next_lesson_modal_title: 'Congrats!',
+  next_lesson_modal_title: '🎉 Congrats! 🎉',
   next_lesson_modal_subtitle_1: 'If you like you can',
   next_lesson_modal_subtitle_2: 'Rate this Lesson',
   next_lesson_modal_select_label_1: 'Select Problem',

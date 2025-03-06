@@ -26,16 +26,11 @@ function FeedbackFields({}: Props) {
   return (
     <>
       <RHFSelect
-        size='small'
         native
         name='feedbackSelectNegative'
         sx={{ pb: 2 }}
         label={translate('next_lesson_modal_select_label_1')}
       >
-        <option
-          key='empty'
-          value='empty'
-        ></option>
         {Object.entries(feedbackNegativeTranslations).map(([key, value]) => (
           <option
             key={key}
@@ -46,16 +41,11 @@ function FeedbackFields({}: Props) {
         ))}
       </RHFSelect>
       <RHFSelect
-        size='small'
         native
         name='feedbackSelectPositive'
         label={translate('next_lesson_modal_select_label_2')}
         sx={{ pb: 2 }}
       >
-        <option
-          key='empty'
-          value='empty'
-        ></option>
         {Object.entries(feedbackPositiveTranslations).map(([key, value]) => (
           <option
             key={key}
@@ -67,7 +57,6 @@ function FeedbackFields({}: Props) {
       </RHFSelect>
 
       <RHFTextField
-        size='small'
         name='feedbackMsg'
         placeholder={translate('next_lesson_modal_textfield')}
         multiline

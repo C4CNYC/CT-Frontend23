@@ -10,8 +10,8 @@ export type Props = {
 export interface FormValuesProps {
   rating: number
   feedbackMsg: string
-  feedbackSelectPositive: FeedbackPositiveEnum | 'empty'
-  feedbackSelectNegative: FeedbackNegativeEnum | 'empty'
+  feedbackSelectPositive: FeedbackPositiveEnum
+  feedbackSelectNegative: FeedbackNegativeEnum
 }
 
 export enum FeedbackPositiveEnum {
@@ -49,7 +49,7 @@ export const animateCustomBg = () => {
       backgroundPosition: ['99% center', '1% center'],
       backgroundImage: [gradient(270), gradient(270)],
       backgroundSize: ['300% 100%', '300% 100%'],
-      transition: { duration: 5, ease: 'linear', delay: 1 },
+      transition: { duration: 7, ease: 'linear', delay: 1 },
     },
   }
 }
