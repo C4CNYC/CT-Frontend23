@@ -9,10 +9,10 @@ import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { ConfirmDialog, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { useDeleteModuleMutation } from '@/redux/services/manager/modules-manager'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog, Label, MenuPopover, TextMaxLine, useSnackbar } from '@root/src/components'
 export default function ModuleCard({ module, refetch }: any): React.ReactElement | null {
   const router = useRouter()
   const translate = useTranslate()

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FC } from 'react'
 
 import { Stack, Tabs, Tab, IconButton } from '@mui/material'
 
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
 import DevIcon from '../dev-icon'

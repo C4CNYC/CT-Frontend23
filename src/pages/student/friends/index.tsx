@@ -1,12 +1,6 @@
 import { Box, Container, Skeleton } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import {
-  CustomBreadcrumbs,
-  EmptyContent,
-  SimpleInfiniteList,
-  useSettingsContext,
-} from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { IFriend, IFriendsSearchParams } from '@/redux/interfaces/friends.interface'
@@ -18,6 +12,12 @@ import SkeletonBreadcrumbs from '@/sections/skeleton/SkeletonBreadcrumbs'
 import SkeletonFilter from '@/sections/skeleton/skeletonFilter'
 import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import {
+  CustomBreadcrumbs,
+  EmptyContent,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from '@root/src/components'
 
 import FilterFriends from './filter'
 

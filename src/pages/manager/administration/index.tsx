@@ -18,6 +18,13 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
+import { useFilters } from '@/hooks'
+import DashboardLayout from '@/layouts/dashboard'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { UserTableToolbar } from '@/sections/dashboard/user/list'
+import SkeletonMembers from '@/sections/schools/SkeletonMembers'
+import { useTranslate } from '@/utils/translateHelper'
 import {
   ConfirmDialog,
   CustomBreadcrumbs,
@@ -30,14 +37,7 @@ import {
   emptyRows,
   useSettingsContext,
   useTable,
-} from '@/components'
-import { useFilters } from '@/hooks'
-import DashboardLayout from '@/layouts/dashboard'
-import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import { UserTableToolbar } from '@/sections/dashboard/user/list'
-import SkeletonMembers from '@/sections/schools/SkeletonMembers'
-import { useTranslate } from '@/utils/translateHelper'
+} from '@root/src/components'
 import {
   useDeleteOrgMutation,
   useGetOrgListQuery,

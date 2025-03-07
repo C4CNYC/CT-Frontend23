@@ -7,9 +7,9 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField } from '@/components'
 import { useInviteStudentMutation } from '@/redux/services/manager/students-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider, RHFTextField } from '@root/src/components'
 
 interface FormValueProps {
   email: string

@@ -9,12 +9,12 @@ import { useSnackbar } from 'notistack'
 import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { IGoals } from '@/redux/interfaces/goals.interface'
 import { usePostGoalMutation, useUpdateGoalMutation } from '@/redux/services/manager/goals-student'
 import { getRandomColor } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider, RHFTextField } from '@root/src/components'
 
 interface FormValuesProps {
   title: string

@@ -8,7 +8,6 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFTextField } from '@/components'
 import {
   useCreatePropertyMutation,
   useUpdatePropertyMutation,
@@ -20,6 +19,10 @@ import {
   PropertyEntityType,
   PropertyEntityTypes,
 } from '@root/src/redux/services/interfaces/properties.interface'
+
+import { FormProvider } from '../hook-form/FormProvider'
+import { RHFSelect } from '../hook-form/RHFSelect'
+import { RHFTextField } from '../hook-form/RHFTextField'
 
 export const propertiesSchema = Yup.object().shape({
   entityType: Yup.mixed<PropertyEntityType>()

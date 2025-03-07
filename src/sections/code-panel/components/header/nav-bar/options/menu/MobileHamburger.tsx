@@ -2,7 +2,7 @@ import { type MouseEventHandler, type FC } from 'react'
 
 import { Box, IconButton } from '@mui/material'
 
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useSelector } from '@root/src/redux/store'
 
 export interface MobileHamburgerProps {

@@ -8,9 +8,9 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { MenuPopover } from '@/components'
 import { PATH_AUTH } from '@/routes/paths'
 import { useTranslate } from '@/utils/translateHelper'
+import { MenuPopover } from '@root/src/components'
 
 import { menuConfig } from './menu-config'
 

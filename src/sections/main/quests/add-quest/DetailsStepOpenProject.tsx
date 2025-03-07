@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { Avatar, FormGroup, Stack, Typography, useTheme } from '@mui/material'
 import { UseFormReturn } from 'react-hook-form'
 
-import { RHFSelect, RHFTextField } from '@/components'
 import {
   AssignmentProjectCategories,
   AssignmentProjectLanguages,
@@ -11,6 +10,7 @@ import {
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFSelect, RHFTextField } from '@root/src/components'
 
 import { AVATAR_SX, INPUT_TEXT_SX, inputNameStyles, selectStyle } from './constants'
 

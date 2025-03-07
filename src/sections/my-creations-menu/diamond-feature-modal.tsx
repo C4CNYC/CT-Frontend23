@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material'
 
-import { Iconify } from '@/components'
+import { Iconify } from '@root/src/components'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface Props {

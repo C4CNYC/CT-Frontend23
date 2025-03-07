@@ -6,7 +6,6 @@ import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 
-import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
@@ -24,6 +23,7 @@ import BrowserView, {
 } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { LoadingScreen } from '@root/src/components/loading-screen/LoadingScreen'
 import { useDebounceCallback } from '@root/src/hooks'
 import {
   useGetStudentLastVisitedSlideQuery,

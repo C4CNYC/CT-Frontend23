@@ -1,8 +1,8 @@
 import { Box, Stack, Typography, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/system'
 
-import { RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFTextField } from '@root/src/components'
 
 interface ICreateHeaderProps {
   choosenColor: string

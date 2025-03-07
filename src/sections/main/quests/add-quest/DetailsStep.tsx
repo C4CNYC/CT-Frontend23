@@ -3,13 +3,13 @@ import { useEffect, useMemo, useState } from 'react'
 import { Avatar, FormGroup, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 import { UseFormReturn } from 'react-hook-form'
 
-import { RHFSelect, RHFTextField } from '@/components'
 import { FilterMode, useFilters } from '@/hooks'
 import { AssignmentTypes, AssignmentTypesForQuest } from '@/redux/enums/assignment-types.enum'
 import { ICourse, ILessonSearchParams } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFSelect, RHFTextField } from '@root/src/components'
 
 import { AVATAR_SX, INPUT_TEXT_SX, inputNameStyles, selectStyle } from './constants'
 

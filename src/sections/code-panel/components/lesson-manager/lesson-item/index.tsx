@@ -13,10 +13,10 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { Accordion, AccordionDetails, AccordionSummary } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { type Unit } from '@/redux/interfaces/challenges.interface'
 import { useSelector } from '@/redux/store'
+import { Accordion, AccordionDetails, AccordionSummary } from '@root/src/components/accordeon'
 
 import { ACC_SUMMARY_SX, DIVIDER_SX, LIST_SX, getButtonSx, getTypSx } from './constants'
 

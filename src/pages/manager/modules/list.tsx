@@ -2,7 +2,6 @@ import { Box, Button, Container } from '@mui/material'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import { useIsAdmin } from '@/lib/use-is-admin'
@@ -16,6 +15,7 @@ import ModuleCard from '@/sections/dashboard/modules/ModuleCard'
 import ModuleOrganizing from '@/sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs, SimpleInfiniteList, useSettingsContext } from '@root/src/components'
 
 import FilterModules from './filter'
 

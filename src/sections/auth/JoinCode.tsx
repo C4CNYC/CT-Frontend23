@@ -15,7 +15,7 @@ import {
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFCodes } from '@/components'
+import { FormProvider, RHFCodes } from '@root/src/components'
 
 import { useSnackbar } from '../../components/snackbar'
 

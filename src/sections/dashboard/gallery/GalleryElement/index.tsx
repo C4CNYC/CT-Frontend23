@@ -7,7 +7,6 @@ import { FiExternalLink } from '@react-icons/all-files/fi/FiExternalLink'
 import NextLink from 'next/link'
 import { useSnackbar } from 'notistack'
 
-import { ConfirmDialog, Image, Label } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { IGallery } from '@/redux/interfaces/gallary.interface'
 import {
@@ -16,6 +15,7 @@ import {
 } from '@/redux/services/manager/gallery-student'
 import { RootState, useSelector } from '@/redux/store'
 import { PATH_MAIN } from '@/routes/paths'
+import { ConfirmDialog, Image, Label } from '@root/src/components'
 
 import ElementInfo from '../ElementInfo'
 import ElementMenu from '../ElementMenu'

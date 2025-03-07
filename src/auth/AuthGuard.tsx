@@ -2,9 +2,7 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
-// import Login from "@pages/auth/signIn";
-
-import { LoadingScreen } from '@/components'
+import { LoadingScreen } from '../components/loading-screen/LoadingScreen'
 
 import { useAuthContext } from './useAuthContext'
 

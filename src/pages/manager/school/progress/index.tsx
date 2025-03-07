@@ -4,7 +4,6 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
-import { CustomBreadcrumbs } from '@/components'
 import { useFilters } from '@/hooks'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
 import {
@@ -24,6 +23,7 @@ import {
 } from '@/sections/dashboard/progress/progressTable/SkeletonProgressTable'
 import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components'
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

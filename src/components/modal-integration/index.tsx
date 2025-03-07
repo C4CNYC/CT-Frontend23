@@ -9,13 +9,16 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFCode, RHFTextField } from '@/components'
 import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
 import {
   useCreateIntegrationMutation,
   useEditIntegrationMutation,
 } from '@/redux/services/manager/integration-manager'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { FormProvider } from '../hook-form/FormProvider'
+import { RHFCode } from '../hook-form/RHFCode'
+import { RHFTextField } from '../hook-form/RHFTextField'
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required('Tenant name is required'),

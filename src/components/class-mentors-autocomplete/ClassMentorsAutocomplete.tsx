@@ -16,7 +16,6 @@ import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
-import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { useGetOrgMembersQuery } from '@/redux/services/admin/members-admin'
 import { Role } from '@/redux/services/enums/role.enum'
@@ -28,6 +27,9 @@ import {
 } from '@/redux/services/manager/class-mentor-manager'
 import { RootState } from '@/redux/store'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+
+import { CustomAvatar } from '../custom-avatar/CustomAvatar'
+import { SearchNotFound } from '../search-not-found/SearchNotFound'
 type UserType = IUser & BaseResponseInterface
 
 interface IClassMentorsAutocompleteProps {

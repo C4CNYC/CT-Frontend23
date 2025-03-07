@@ -5,10 +5,12 @@ import NextLink from 'next/link'
 
 // assets
 import SeverErrorIllustration from '@/assets/illustrations/SeverErrorIllustration'
-import { MotionContainer, varBounce } from '@/components'
 // layouts
 import CompactLayout from '@/layouts/compact'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { MotionContainer } from '../components/animate/MotionContainer'
+import { varBounce } from '../components/animate/variants/bounce'
 
 Page500.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>
 

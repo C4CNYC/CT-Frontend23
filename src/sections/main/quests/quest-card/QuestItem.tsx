@@ -12,7 +12,6 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { ConfirmDialog, MenuPopover } from '@/components'
 import { Iconify } from '@/components/iconify'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { IAssignmentReduced } from '@/redux/interfaces/assignment.interface'
@@ -21,6 +20,7 @@ import { useDeleteAssignmentMutation } from '@/redux/services/manager/assignment
 import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog, MenuPopover } from '@root/src/components'
 interface IQuestItemProps {
   assignment: IAssignmentReduced
   schoolId: string

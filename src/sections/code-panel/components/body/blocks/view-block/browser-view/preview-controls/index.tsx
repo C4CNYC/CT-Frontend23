@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { Button, Divider, Stack } from '@mui/material'
 import { GrRefresh } from '@react-icons/all-files/gr/GrRefresh'
 
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import useIsDesktop from '@root/src/hooks/useIsDesktop'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

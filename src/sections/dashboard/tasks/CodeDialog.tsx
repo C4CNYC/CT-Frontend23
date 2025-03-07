@@ -15,11 +15,11 @@ import { dracula } from '@uiw/codemirror-theme-dracula'
 import { xcodeLight } from '@uiw/codemirror-theme-xcode'
 import CodeMirror from '@uiw/react-codemirror'
 
-import { CustomSmallSelect, useSnackbar } from '@/components'
 import {
   useCreateTaskMutation,
   useUpdateTaskMutation,
 } from '@/redux/services/manager/tasks-manager'
+import { CustomSmallSelect, useSnackbar } from '@root/src/components'
 
 import TasksInput from './TasksInput'
 

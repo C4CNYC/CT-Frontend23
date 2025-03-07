@@ -2,12 +2,6 @@ import { useEffect, useState } from 'react'
 
 import { Box, Container } from '@mui/material'
 
-import {
-  CustomBreadcrumbs,
-  EmptyContent,
-  SimpleInfiniteList,
-  useSettingsContext,
-} from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { StudentDashboardLayout } from '@/layouts/dashboard/StudentDashboardLayout'
 import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
@@ -21,6 +15,12 @@ import {
   SkeletonGalleryItem,
 } from '@/sections/dashboard/gallery/SkeletonGallery'
 import { getCountTakingElment } from '@/utils'
+import {
+  CustomBreadcrumbs,
+  EmptyContent,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from '@root/src/components'
 
 PrivateProjects.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

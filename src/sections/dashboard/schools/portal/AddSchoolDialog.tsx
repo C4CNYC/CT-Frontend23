@@ -13,9 +13,12 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
-import { FormProvider, RHFSelect, RHFTextField } from '@/components'
 import { useCreateOrganizationSchoolMutation } from '@/redux/services/admin/school-amdin'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { FormProvider } from '../hook-form/FormProvider'
+import { RHFSelect } from '../hook-form/RHFSelect'
+import { RHFTextField } from '../hook-form/RHFTextField'
 
 interface FormValuesProps {
   name: string

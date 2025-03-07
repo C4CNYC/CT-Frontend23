@@ -16,10 +16,10 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import Image from 'next/image'
 
-import { TextMaxLine, MenuPopover, ConfirmDialog } from '@/components'
+import { IUserProfileSchool } from '@/types'
+import { TextMaxLine, MenuPopover, ConfirmDialog } from '@root/src/components'
 //
 // import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
-import { IUserProfileSchool } from '@/types'
 interface Props extends CardProps {
   school: IUserProfileSchool
   selected?: boolean

@@ -6,7 +6,6 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
-import { Iconify, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetTeacherListQuery } from '@/redux/services/admin/school-amdin'
 import {
@@ -22,6 +21,7 @@ import QuestHeader from '@/sections/quest/QuestHeader'
 import QuestMain from '@/sections/quest/QuestMain'
 import QuestRating from '@/sections/quest/QuestRating'
 import { useTranslate } from '@/utils/translateHelper'
+import { Iconify, useSettingsContext } from '@root/src/components'
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

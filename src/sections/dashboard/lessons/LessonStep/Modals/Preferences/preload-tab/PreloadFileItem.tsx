@@ -7,6 +7,7 @@ import { Box, Button, InputLabel, Stack, useTheme } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
+import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
 import {
   ConfirmDialog,
   FormProvider,
@@ -14,8 +15,7 @@ import {
   RHFSelect,
   RHFTextField,
   useSnackbar,
-} from '@/components'
-import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
+} from '@root/src/components'
 import {
   useRemoveLessonStepPreloadFileMutation,
   useUpdateLessonStepPreloadFileMutation,

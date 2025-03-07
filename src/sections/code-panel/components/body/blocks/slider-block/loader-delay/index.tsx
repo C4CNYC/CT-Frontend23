@@ -1,6 +1,6 @@
 import { type FC, useEffect, useState, useRef } from 'react'
 
-import { LoadingScreen } from '@/components'
+import { LoadingScreen } from '@root/src/components/loading-screen/LoadingScreen'
 
 interface LoaderDelayProps {
   delay: number

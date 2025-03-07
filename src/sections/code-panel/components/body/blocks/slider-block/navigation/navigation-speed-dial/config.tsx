@@ -3,7 +3,7 @@ import { type ReactNode } from 'react'
 import { IconButton } from '@mui/material'
 import { FullScreenHandle } from 'react-full-screen'
 
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import LessonFeedback from '@root/src/sections/code-panel/components/footer/lesson-feedback/LessonFeedback'
 import SettingDrawer from '@root/src/sections/code-panel/components/header/nav-bar/options/setting-drawer'
 import ResetLessonConfirm from '@root/src/sections/code-panel/components/header/nav-bar/options/setting-drawer/preferences/ResetLessonConfirm'

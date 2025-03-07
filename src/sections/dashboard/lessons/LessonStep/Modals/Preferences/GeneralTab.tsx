@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material'
 import { Box, Stack } from '@mui/system'
 
-import { RHFSelect, RHFSwitch, RHFTextField } from '@/components'
 import { LessonContentComplexity } from '@/redux/services/enums/lesson-content-complexity.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFSelect, RHFSwitch, RHFTextField } from '@root/src/components'
 import { RHFColorPicker } from '@root/src/components/hook-form/RHFColorPicker'
 
 export const GeneralTab = (): React.ReactElement => {

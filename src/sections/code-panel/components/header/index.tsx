@@ -5,7 +5,7 @@ import { Box, type SxProps } from '@mui/material'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
-import { LogoMin } from '@root/src/components'
+import { LogoMin } from '@root/src/components/logo/LogoMin'
 
 import LessonManager from '../lesson-manager'
 

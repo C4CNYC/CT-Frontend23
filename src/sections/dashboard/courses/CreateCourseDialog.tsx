@@ -22,6 +22,12 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import {
+  useCreateCourseMutation,
+  useUpdateCourseCoverMutation,
+  useUpdateCourseMutation,
+} from '@/redux/services/manager/courses-manager'
+import { useTranslate } from '@/utils/translateHelper'
+import {
   CourseModuleAutocomplete,
   FormProvider,
   RHFSelect,
@@ -30,13 +36,7 @@ import {
   RHFUpload,
   SingleFilePreview,
   useSnackbar,
-} from '@/components'
-import {
-  useCreateCourseMutation,
-  useUpdateCourseCoverMutation,
-  useUpdateCourseMutation,
-} from '@/redux/services/manager/courses-manager'
-import { useTranslate } from '@/utils/translateHelper'
+} from '@root/src/components'
 
 import AuthorsTab from './authors-tab/AuthorsTab'
 

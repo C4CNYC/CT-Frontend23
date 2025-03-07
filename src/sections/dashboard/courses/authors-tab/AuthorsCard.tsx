@@ -4,10 +4,10 @@ import { RxLinkedinLogo } from '@react-icons/all-files/rx/RxLinkedinLogo'
 import NextLink from 'next/link'
 import { useSnackbar } from 'notistack'
 
-import { SvgColor } from '@/components'
 import { IAuthor } from '@/redux/services/interfaces/author.interface'
 import { useDeleteAuthorMutation } from '@/redux/services/manager/author-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { SvgColor } from '@root/src/components'
 
 import AddAuthorDialog from './AddAuthorDialog'
 

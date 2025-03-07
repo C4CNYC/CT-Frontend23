@@ -12,10 +12,12 @@ import TextField from '@mui/material/TextField'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 import { useForm } from 'react-hook-form'
 
-import { RHFUpload, SingleFilePreview } from '@/components'
-import { FormProvider } from '@/components'
 import { HELPER_IMG_TEXT, UPLOAD_IMG_BTN } from '@/sections/dashboard/modules/constants'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { FormProvider } from '../hook-form/FormProvider'
+import { RHFUpload } from '../hook-form/RHFUpload'
+import { SingleFilePreview } from '../upload/preview/SingleFilePreview'
 
 interface Props extends DialogProps {
   title?: string

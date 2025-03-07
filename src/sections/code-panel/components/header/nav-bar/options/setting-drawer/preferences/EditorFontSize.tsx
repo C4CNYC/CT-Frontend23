@@ -6,7 +6,7 @@ import { FaMinus } from '@react-icons/all-files/fa/FaMinus'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 
 import BasePreference from './BasePreference'
 

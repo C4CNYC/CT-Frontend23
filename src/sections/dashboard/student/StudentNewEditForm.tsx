@@ -10,15 +10,6 @@ import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
-import {
-  FormProvider,
-  Label,
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  useSnackbar,
-} from '@/components'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import {
   useCreateStudentMutation,
@@ -30,6 +21,15 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, createRandomAvatar, getRandomColor } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { createWeakPassword } from '@root/src/auth/utils'
+import {
+  FormProvider,
+  Label,
+  RHFSelect,
+  RHFSwitch,
+  RHFTextField,
+  RHFUploadAvatar,
+  useSnackbar,
+} from '@root/src/components'
 
 import { StudentChangePassword } from './StudentChangePassword'
 

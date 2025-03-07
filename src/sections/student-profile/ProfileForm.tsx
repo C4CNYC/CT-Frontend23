@@ -7,11 +7,11 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
 import { IUser } from '@/redux/interfaces/auth.interface'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { useUdpateProfileAvatarMutation, useUpdateProfileMutation } from '@/redux/services/auth'
 import { BaseResponseInterface, fData } from '@/utils'
+import { FormProvider, RHFTextField, RHFUploadAvatar } from '@root/src/components'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }

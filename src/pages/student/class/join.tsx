@@ -7,12 +7,18 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, Image, RHFTextField, useSettingsContext, useSnackbar } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
+import {
+  FormProvider,
+  Image,
+  RHFTextField,
+  useSettingsContext,
+  useSnackbar,
+} from '@root/src/components'
 import StudentDefaultIntro from '@root/src/sections/intro-tours/student-default-intro'
 
 JoinClass.getLayout = (page: React.ReactElement) => (

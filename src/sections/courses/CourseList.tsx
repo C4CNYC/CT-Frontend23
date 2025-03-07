@@ -1,12 +1,12 @@
 import { Stack } from '@mui/material'
 
-import { EmptyContent, SimpleInfiniteList } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { ICourseSearchParams } from '@/redux/interfaces/content.interface'
 import { useGetCourseQuery } from '@/redux/services/manager/courses-student'
 import { useGetPublicCourseQuery } from '@/redux/services/public-student'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
+import { EmptyContent, SimpleInfiniteList } from '@root/src/components'
 
 import CoursesItem from './course-list-item/CourseItem'
 import SkeletonCourse from './course-list-item/SkeletonCourse'

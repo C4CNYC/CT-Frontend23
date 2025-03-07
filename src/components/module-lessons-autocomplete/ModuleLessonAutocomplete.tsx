@@ -17,7 +17,6 @@ import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
-import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
@@ -29,6 +28,9 @@ import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
 import { useGetAllAdminLessonsQuery } from '@root/src/redux/services/admin/lessons-admin'
+
+import { CustomAvatar } from '../custom-avatar/CustomAvatar'
+import { SearchNotFound } from '../search-not-found/SearchNotFound'
 
 type LessonType = ILesson & BaseResponseInterface
 

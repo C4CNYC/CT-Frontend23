@@ -13,8 +13,8 @@ import {
 import { SlArrowDown } from '@react-icons/all-files/sl/SlArrowDown'
 import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
 
-import { Image } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { Image } from '@root/src/components/image/Image'
 
 interface MenuHugDialogProps {
   children: ReactNode | ReactNode[]

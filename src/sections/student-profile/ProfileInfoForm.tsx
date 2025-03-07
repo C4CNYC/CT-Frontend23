@@ -10,7 +10,6 @@ import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
-import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '@/components'
 import { IUser } from '@/redux/interfaces/auth.interface'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import {
@@ -18,6 +17,7 @@ import {
   useUpdateStudentProfileMutation,
 } from '@/redux/services/auth'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '@root/src/components'
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),

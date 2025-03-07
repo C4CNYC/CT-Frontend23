@@ -9,10 +9,10 @@ import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import NextLink from 'next/link'
 import { StepWizardChildProps } from 'react-step-wizard'
 
-import { RHFTextField } from '@/components'
 import { PATH_AUTH } from '@/routes/paths'
 import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFTextField } from '@root/src/components'
 
 import { RESER_PASS_SX, TYPO_CONT_SX, SINGIN_BTN_SX } from './constants'
 interface Props {

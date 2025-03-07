@@ -1,13 +1,13 @@
 import { Container } from '@mui/material'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 // sections
 import StudentNewEditForm from '@/sections/dashboard/student/StudentNewEditForm'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
 
 UserCreatePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

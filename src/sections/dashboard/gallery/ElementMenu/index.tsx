@@ -2,8 +2,8 @@ import { Button, Divider } from '@mui/material'
 import { AiTwotoneEdit } from '@react-icons/all-files/ai/AiTwotoneEdit'
 import { RiDeleteBin6Line } from '@react-icons/all-files/ri/RiDeleteBin6Line'
 
-import { MenuPopover } from '@/components'
 import { IGallery } from '@/redux/interfaces/gallary.interface'
+import { MenuPopover } from '@root/src/components'
 
 import EditProjectDialog from '../EditProjectDialog'
 

@@ -2,11 +2,11 @@ import { useMemo } from 'react'
 
 import { Box, Chip, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
 
-import { Image } from '@/components'
 import { ILesson, ISkill } from '@/redux/interfaces/content.interface'
 import ImageLightBox from '@/sections/course/modules-list/module-item/ImageLightBox'
 import { BaseResponseInterface } from '@/utils'
 import { getUniqueSkills } from '@/utils/getUniqueSkills'
+import { Image } from '@root/src/components'
 
 import { CHIP_SX, HEADER_IMG_SX, getHeaderContainerSx } from './constants'
 

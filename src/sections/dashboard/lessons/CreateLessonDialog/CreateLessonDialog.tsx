@@ -22,13 +22,13 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSwitch, RHFTextField, useSnackbar } from '@/components'
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider, RHFSwitch, RHFTextField, useSnackbar } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useProperties } from '@root/src/hooks/useProperties'
 import {

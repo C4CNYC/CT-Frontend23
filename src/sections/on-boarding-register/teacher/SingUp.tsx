@@ -8,9 +8,9 @@ import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import { useGoogleLogin } from '@react-oauth/google'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { RHFTextField, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFTextField, useSnackbar } from '@root/src/components'
 
 import { styledRegisterInput } from '../styles'
 

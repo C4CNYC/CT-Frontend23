@@ -19,6 +19,20 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { SchoolDashboardLayout } from '@/layouts/dashboard'
+import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
+import { Publish, Status } from '@/redux/enums/assignments.enum'
+import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
+import {
+  useDeleteAssignmentMutation,
+  useGetAssignmentListQuery,
+} from '@/redux/services/manager/assignments-manager'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import AssignmentsTableRow from '@/sections/dashboard/assigments/AssignmentsTableRow'
+import AssignmentsTableToolbar from '@/sections/dashboard/assigments/AssignmentsTableToolbar'
+import { fTimestamp } from '@/utils'
+import { useTranslate } from '@/utils/translateHelper'
 import {
   ConfirmDialog,
   CustomBreadcrumbs,
@@ -34,21 +48,7 @@ import {
   useSettingsContext,
   useSnackbar,
   useTable,
-} from '@/components'
-import { SchoolDashboardLayout } from '@/layouts/dashboard'
-import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
-import { Publish, Status } from '@/redux/enums/assignments.enum'
-import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
-import {
-  useDeleteAssignmentMutation,
-  useGetAssignmentListQuery,
-} from '@/redux/services/manager/assignments-manager'
-import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import AssignmentsTableRow from '@/sections/dashboard/assigments/AssignmentsTableRow'
-import AssignmentsTableToolbar from '@/sections/dashboard/assigments/AssignmentsTableToolbar'
-import { fTimestamp } from '@/utils'
-import { useTranslate } from '@/utils/translateHelper'
+} from '@root/src/components'
 
 import FilterAssignments from './filter'
 

@@ -1,5 +1,8 @@
 import { Table, TableBody, TableContainer } from '@mui/material'
 
+import { useFilters } from '@/hooks'
+import { ClassSearchParams } from '@/redux/interfaces/class.interface'
+import { useGetSchoolListQuery } from '@/redux/services/admin/school-amdin'
 import {
   Scrollbar,
   TableEmptyRows,
@@ -8,10 +11,7 @@ import {
   TablePaginationCustom,
   emptyRows,
   useTable,
-} from '@/components'
-import { useFilters } from '@/hooks'
-import { ClassSearchParams } from '@/redux/interfaces/class.interface'
-import { useGetSchoolListQuery } from '@/redux/services/admin/school-amdin'
+} from '@root/src/components'
 
 import SchoolTableRow from './SchoolTableRow'
 import SchoolTableToolbar from './SchoolTableToolbar'

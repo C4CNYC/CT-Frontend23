@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import GuestGuard from '@/auth/GuestGuard'
-import { LoadingScreen } from '@/components'
 import { useGetPublicTribeQuery } from '@/redux/services/public/tribe-public'
 import { useSelector } from '@/redux/store'
 import JoinTribeModal from '@/sections/join-tribe/JoinTribeModal'
+import { LoadingScreen } from '@root/src/components'
 
 export default function JoinTribe(): React.ReactElement {
   const user = useSelector((state) => state.global.user)

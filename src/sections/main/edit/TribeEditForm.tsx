@@ -8,15 +8,15 @@ import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
+import { IStudent } from '@/redux/services/interfaces/user.interface'
+import { BaseResponseInterface, getRandomColor } from '@/utils'
 import {
   FormProvider,
   RHFSelect,
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar, // useSnackbar,
-} from '@/components'
-import { IStudent } from '@/redux/services/interfaces/user.interface'
-import { BaseResponseInterface, getRandomColor } from '@/utils'
+} from '@root/src/components'
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string }

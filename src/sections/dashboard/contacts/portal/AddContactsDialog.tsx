@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField, useSnackbar } from '@/components'
+import { FormProvider, RHFTextField, useSnackbar } from '@root/src/components'
 
 interface FormValuesProps {
   name: string

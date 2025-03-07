@@ -4,10 +4,12 @@ import Head from 'next/head'
 import NextLink from 'next/link'
 
 import PageNotFoundIllustration from '@/assets/illustrations/PageNotFoundIllustration'
-import { MotionContainer, varBounce } from '@/components'
 import CompactLayout from '@/layouts/compact'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { MotionContainer } from '../components/animate/MotionContainer'
+import { varBounce } from '../components/animate/variants/bounce'
 
 Page404.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>
 

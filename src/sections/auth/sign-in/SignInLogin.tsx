@@ -9,10 +9,10 @@ import { useRouter } from 'next/router'
 import { StepWizardChildProps } from 'react-step-wizard'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { RHFTextField, useSnackbar } from '@/components'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFTextField, useSnackbar } from '@root/src/components'
 
 interface IProps {
   isValid?: boolean

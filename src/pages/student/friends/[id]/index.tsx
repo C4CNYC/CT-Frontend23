@@ -5,13 +5,13 @@ import { RiAccountBoxFill } from '@react-icons/all-files/ri/RiAccountBoxFill'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { IUser } from '@/redux/interfaces/auth.interface'
 import { useGetFriendQuery } from '@/redux/services/manager/friends-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import ProfileCover from '@/sections/student-profile/ProfileCover'
 import ProfileMain from '@/sections/student-profile/ProfileMain'
+import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

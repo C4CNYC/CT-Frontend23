@@ -7,13 +7,13 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
 import {
   useCreateAuthorMutation,
   useUpdateAuthorCoverMutation,
   useUpdateAuthorMutation,
 } from '@/redux/services/manager/author-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider, RHFTextField, RHFUploadAvatar } from '@root/src/components'
 
 const LINK_URL =
   // eslint-disable-next-line no-useless-escape

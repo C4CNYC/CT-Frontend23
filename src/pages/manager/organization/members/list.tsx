@@ -20,19 +20,6 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
-import {
-  ConfirmDialog,
-  CustomBreadcrumbs,
-  Scrollbar,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  emptyRows,
-  useSettingsContext,
-  useTable,
-} from '@/components'
 import { useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import {
@@ -45,6 +32,19 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { UserTableRow, UserTableToolbar } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { useTranslate } from '@/utils/translateHelper'
+import {
+  ConfirmDialog,
+  CustomBreadcrumbs,
+  Scrollbar,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  emptyRows,
+  useSettingsContext,
+  useTable,
+} from '@root/src/components'
 const STATUS_OPTIONS = ['all']
 
 const TABLE_HEAD = [

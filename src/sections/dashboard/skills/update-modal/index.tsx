@@ -12,12 +12,12 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField } from '@/components'
 import {
   useCreateSkillMutation,
   useUpdateSkillMutation,
 } from '@/redux/services/manager/skills-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider, RHFTextField } from '@root/src/components'
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required('Skill name is required'),

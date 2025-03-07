@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 import { setTab } from '@/redux/slices/mobile-tab-manager'
 import { useSelector } from '@/redux/store'
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 
 import { SWIPE_LEFT_STYLE, SWIPE_RIGHT_STYLE, getBoxStyles } from './constants'
 

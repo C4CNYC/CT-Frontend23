@@ -17,7 +17,6 @@ import { TbShare2 } from '@react-icons/all-files/tb/TbShare2'
 import nextLink from 'next/link'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { MenuPopover, useSettingsContext, useSnackbar } from '@/components'
 import ShareGroupModal from '@/components/share-group-modal'
 import { useCopyToClipboard } from '@/hooks'
 import { IClass } from '@/redux/interfaces/class.interface'
@@ -31,6 +30,7 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import ClassPreferences from '@/sections/dashboard/classes/modal'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { MenuPopover, useSettingsContext, useSnackbar } from '@root/src/components'
 
 import StudentJoinIntro from '../../intro-tours/student-join-intro'
 

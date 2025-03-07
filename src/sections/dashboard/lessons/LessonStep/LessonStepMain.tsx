@@ -5,7 +5,7 @@ import { useAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 
-import { ResizerUi } from '@/components'
+import { ResizerUi } from '@root/src/components'
 import LessonCreationIntro from '@root/src/sections/intro-tours/lesson-creation-intro'
 
 import { lessonViewAtom } from './lesson-atoms/lesson-view-atom'

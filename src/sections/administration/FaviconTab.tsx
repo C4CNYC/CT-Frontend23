@@ -5,7 +5,7 @@ import { Box, Button, IconButton, Stack, Typography } from '@mui/material'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 import { useForm } from 'react-hook-form'
 
-import { FormProvider, RHFUpload, SingleFilePreview, useSnackbar } from '@/components'
+import { FormProvider, RHFUpload, SingleFilePreview, useSnackbar } from '@root/src/components'
 import { useUpdateOrgFaviconMutation } from '@root/src/redux/services/manager/super-admin'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

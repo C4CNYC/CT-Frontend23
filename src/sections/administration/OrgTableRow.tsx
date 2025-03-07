@@ -6,9 +6,9 @@ import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 
-import { ConfirmDialog, MenuPopover } from '@/components'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog, MenuPopover } from '@root/src/components'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 
 import AddEditOrgModal from './AddEditOrgModal'

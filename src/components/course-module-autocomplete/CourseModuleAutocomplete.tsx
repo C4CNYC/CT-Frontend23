@@ -17,7 +17,6 @@ import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
-import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { IModule } from '@/redux/services/interfaces/courseUnits.interface'
 import {
@@ -27,6 +26,9 @@ import {
 import { useGetModulesQuery } from '@/redux/services/manager/modules-manager'
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { CustomAvatar } from '../custom-avatar/CustomAvatar'
+import { SearchNotFound } from '../search-not-found/SearchNotFound'
 
 import { BOX_SX, getItemWrapperSx } from './constants'
 

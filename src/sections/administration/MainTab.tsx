@@ -4,7 +4,7 @@ import { Button, Stack } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
+import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@root/src/components'
 import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 import {

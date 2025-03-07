@@ -2,7 +2,8 @@ import { forwardRef } from 'react'
 
 import { Box, Chip, SpeedDialAction, Typography } from '@mui/material'
 
-import { Iconify, useSnackbar } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useCopyToClipboard } from '@root/src/hooks'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

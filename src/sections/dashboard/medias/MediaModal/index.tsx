@@ -8,7 +8,6 @@ import Modal from '@mui/material/Modal'
 import { Stack } from '@mui/system'
 import { useSnackbar } from 'notistack'
 
-import { CustomBreadcrumbs } from '@/components'
 import FileManagerFileItem from '@/components/file-manager/file-manager-file-item'
 import FileManagerFolderItem from '@/components/file-manager/file-manager-folder-item'
 import FileManagerNewFolderDialog from '@/components/file-manager/file-manager-new-folder-dialog'
@@ -23,6 +22,7 @@ import {
 } from '@/redux/services/manager/media-manager'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components'
 import { imageResize } from '@root/src/utils/imageResize'
 
 interface ImageAttributes {

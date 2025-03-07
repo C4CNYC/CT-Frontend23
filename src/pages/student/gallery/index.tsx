@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react'
 import { Container, Grid, Link } from '@mui/material'
 import NextLink from 'next/link'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard/StudentDashboardLayout'
 import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
 import { useGetProjectsQuery } from '@/redux/services/manager/gallery-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import FolderElement from '@/sections/dashboard/gallery/FolderElement'
+import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
 import { FilterMode, useFilters } from '@root/src/hooks'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

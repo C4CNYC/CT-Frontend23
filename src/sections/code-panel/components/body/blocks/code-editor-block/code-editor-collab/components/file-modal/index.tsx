@@ -6,7 +6,7 @@ import FolderIcon from '@mui/icons-material/Folder'
 import { Button, ClickAwayListener, Stack, Typography, IconButton } from '@mui/material'
 import { useTheme } from '@mui/system'
 
-import { ConfirmDialog } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

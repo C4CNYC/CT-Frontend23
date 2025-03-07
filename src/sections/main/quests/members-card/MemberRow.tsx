@@ -8,11 +8,11 @@ import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { useRouter } from 'next/router'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { ConfirmDialog, MenuPopover, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import { useUpdateClassPendingMutation } from '@/redux/services/manager/students-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog, MenuPopover, useSnackbar } from '@root/src/components'
 interface IMemberRowProps {
   row: IStudent
   selected: boolean

@@ -5,7 +5,7 @@ import { alpha } from '@mui/material/styles'
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
 
-import { FileThumbnail, Label, MenuPopover } from '@/components'
+import { FileThumbnail, Label, MenuPopover } from '@root/src/components'
 
 import FileFilterButton from './FileFilterButton'
 

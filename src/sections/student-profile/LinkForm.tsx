@@ -7,10 +7,10 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField } from '@/components'
 import { ISocials } from '@/redux/interfaces/socials.interface'
 import { usePostSocialMutation } from '@/redux/services/manager/socials-student'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider, RHFTextField } from '@root/src/components'
 
 import LinkSelect from './LinkSelect'
 

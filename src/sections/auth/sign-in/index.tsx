@@ -8,10 +8,10 @@ import StepWizard from 'react-step-wizard'
 import * as Yup from 'yup'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { FormProvider } from '@/components'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 import { SingLink } from '@/sections/on-boarding-register/links'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
 import { StyledContent } from '@root/src/layouts/login/styles'
 
 import EmailNotFound from './EmailNotFound'

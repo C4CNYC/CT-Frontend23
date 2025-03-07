@@ -6,8 +6,10 @@ import { Divider, IconButton, MenuItem } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Box } from '@mui/system'
 
-import { Accordion, AccordionDetails, AccordionSummary, Iconify, MenuPopover } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { Accordion, AccordionDetails, AccordionSummary } from '@root/src/components/accordeon'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 import HelpQuestionModal from './modals/HelpQuestion'
 import Solution from './options/solution'

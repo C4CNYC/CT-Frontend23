@@ -3,9 +3,9 @@ import { useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, Card, Dialog, DialogContent, Grid, Typography } from '@mui/material'
 
-import { useSnackbar } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { useSnackbar } from '@root/src/components'
 
 interface IExitTribeDialogProps {
   children: React.ReactElement

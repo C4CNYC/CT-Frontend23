@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, useSnackbar } from '@/components'
+import { FormProvider, useSnackbar } from '@root/src/components'
 import { useCreateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'

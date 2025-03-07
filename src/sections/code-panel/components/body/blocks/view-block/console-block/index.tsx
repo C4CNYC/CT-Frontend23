@@ -5,7 +5,7 @@ import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
 import { TbPrompt } from '@react-icons/all-files/tb/TbPrompt'
 
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { COLLAPSE_BOX_SX, CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'

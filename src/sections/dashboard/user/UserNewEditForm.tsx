@@ -8,15 +8,6 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import {
-  FormProvider,
-  Label,
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  useSnackbar,
-} from '@/components'
-import {
   useCreateOrgMemberMutation,
   useUdpateMemberAvatarMutation,
   useUpdateOrgMemberMutation,
@@ -26,6 +17,15 @@ import { IUser } from '@/redux/services/interfaces/user.interface'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, fData } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import {
+  FormProvider,
+  Label,
+  RHFSelect,
+  RHFSwitch,
+  RHFTextField,
+  RHFUploadAvatar,
+  useSnackbar,
+} from '@root/src/components'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }

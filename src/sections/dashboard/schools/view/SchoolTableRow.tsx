@@ -6,10 +6,10 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { enqueueSnackbar } from 'notistack'
 
-import { ConfirmDialog, Label, MenuPopover } from '@/components'
 import { useArchiveSchoolMutation } from '@/redux/services/admin/school-amdin'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog, Label, MenuPopover } from '@root/src/components'
 
 import SchoolDetailsDrawer from '../portal/SchoolDetailsDrawer'
 

@@ -5,11 +5,11 @@ import { Box, Card, IconButton, MenuItem, Stack } from '@mui/material'
 import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
-import { ConfirmDialog, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { ITask } from '@/redux/services/interfaces/task.interface'
 import { useDeleteTaskMutation } from '@/redux/services/manager/tasks-manager'
 import CreateCodeDialog from '@/sections/dashboard/tasks/CodeDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog, MenuPopover, TextMaxLine, useSnackbar } from '@root/src/components'
 
 interface Props {
   task: ITask

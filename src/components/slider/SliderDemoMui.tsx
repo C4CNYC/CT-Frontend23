@@ -6,7 +6,9 @@ import Typography from '@mui/material/Typography'
 import { m } from 'framer-motion'
 import Carousel from 'react-slick'
 
-import { Image, MotionContainer, varFade } from '@/components'
+import { MotionContainer } from '../animate/MotionContainer'
+import { varFade } from '../animate/variants/fade'
+import { Image } from '../image'
 
 import CarouselArrows from './CarouselArrows'
 import CarouselDots from './CarouselDots'

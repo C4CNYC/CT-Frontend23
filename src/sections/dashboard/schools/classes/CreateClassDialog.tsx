@@ -11,8 +11,8 @@ import { MuiColorInput } from 'mui-color-input'
 import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider, RHFTextField, RHFUploadAvatar } from '@root/src/components'
 
 interface FormValuesProps {
   name: string

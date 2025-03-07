@@ -4,17 +4,20 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import { Box, Stack } from '@mui/system'
-import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
-import * as Yup from 'yup'
+import { object, string, boolean } from 'yup'
 
-import { FormProvider, RHFTextField } from '@/components'
+// eslint-disable-next-line import/order
 import {
   usePostProjectMutation,
   useUpdateProjectCoverMutation,
 } from '@/redux/services/manager/gallery-student'
 
 // import { getImageFromCode } from "src/lib/utils/getImageFromCode";
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { useSnackbar } from '@root/src/components/snackbar'
+
 import { DIALOG_SX, BASE_BOX_SX } from './constants'
 
 interface IPublishModal {
@@ -146,10 +149,10 @@ const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic })
   )
 }
 
-const CreateProjectSchema = Yup.object().shape({
-  title: Yup.string().required('Title is required'),
-  description: Yup.string().required('Description is required'),
-  public: Yup.boolean(),
+const CreateProjectSchema = object().shape({
+  title: string().required('Title is required'),
+  description: string().required('Description is required'),
+  public: boolean(),
 })
 
 const getDefaultValues = (isPublic: boolean): FormValuesProps => ({

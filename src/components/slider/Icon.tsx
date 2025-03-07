@@ -1,4 +1,4 @@
-import { Iconify, IconifyProps } from '@/components'
+import { Iconify, IconifyProps } from '../iconify'
 
 interface Props {
   icon?: IconifyProps // Right icon

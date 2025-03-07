@@ -8,9 +8,9 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { FormProvider } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import EmailStep from './email-step'

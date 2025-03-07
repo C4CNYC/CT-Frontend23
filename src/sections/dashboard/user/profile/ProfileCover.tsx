@@ -2,9 +2,9 @@ import { Box, Typography } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { CustomAvatar, Image } from '@/components'
 import { OrganizationResponce } from '@/redux/services/interfaces/organization.interface'
 import { bgBlur } from '@/utils'
+import { CustomAvatar, Image } from '@root/src/components'
 
 const StyledRoot = styled('div')(({ theme }) => ({
   '&:before': {

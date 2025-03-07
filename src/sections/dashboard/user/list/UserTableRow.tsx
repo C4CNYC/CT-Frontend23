@@ -20,11 +20,11 @@ import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import NextLink from 'next/link'
 
 import { SOCIAL_ICONS } from '@/assets/data'
-import { ConfirmDialog, Iconify, Label, MenuPopover, RoleSelector } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent, IUser } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog, Iconify, Label, MenuPopover, RoleSelector } from '@root/src/components'
 
 interface Props {
   row: (IUser | IStudent) & BaseResponseInterface

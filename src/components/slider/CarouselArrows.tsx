@@ -1,7 +1,7 @@
 import { IconButton, IconButtonProps, Stack, StackProps } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 
-import { IconifyProps } from '@/components'
+import { IconifyProps } from '../iconify/types'
 
 import { LeftIcon, RightIcon } from './Icon'
 
