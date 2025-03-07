@@ -15,10 +15,9 @@ import * as Yup from 'yup'
 import { countries } from '@/assets/data'
 import { useCreateOrganizationSchoolMutation } from '@/redux/services/admin/school-amdin'
 import { useTranslate } from '@/utils/translateHelper'
-
-import { FormProvider } from '../hook-form/FormProvider'
-import { RHFSelect } from '../hook-form/RHFSelect'
-import { RHFTextField } from '../hook-form/RHFTextField'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 interface FormValuesProps {
   name: string
