@@ -76,6 +76,10 @@ export default function MyApp({ Component, pageProps, ...props }: MyAppProps): R
           rel='preconnect'
           href='https://devnest.s3.amazonaws.com'
         />
+        <link
+          rel='icon'
+          href='data:,'
+        />
         {favicon}
       </Head>
       <GoogleAnalytics></GoogleAnalytics>
