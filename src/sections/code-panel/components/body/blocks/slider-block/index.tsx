@@ -3,6 +3,7 @@ import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react
 import { Box, TextField, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
+import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 
@@ -35,8 +36,9 @@ import {
   getProgressWrapperSx,
 } from './constants'
 import Navigation from './navigation'
-import NextLessonDialog from './next-lesson-dialog'
 import View from './View'
+
+const NextLessonDialog = dynamic(async () => await import('./next-lesson-dialog'))
 
 export const icon = (
   <SlDirections

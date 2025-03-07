@@ -45,6 +45,16 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
     mode: 'all',
   })
 
+  const clearAndCloseForm = () => {
+    onClose()
+    setRating(null)
+    methods.reset({
+      feedbackMsg: '',
+      feedbackSelectNegative: undefined,
+      feedbackSelectPositive: undefined,
+    })
+  }
+
   const onSubmit = async (data: FormValuesProps) => {
     const general_message =
       'Feedback message: ' +
@@ -70,13 +80,7 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
       }
       onSubmitLesson()
       enqueueSnackbar(translate('next_lesson_snackbar_text'))
-      onClose()
-      setRating(null)
-      methods.reset({
-        feedbackMsg: '',
-        feedbackSelectNegative: undefined,
-        feedbackSelectPositive: undefined,
-      })
+      clearAndCloseForm()
     } catch (error: any) {
       enqueueSnackbar(error ?? 'Error', { variant: 'error' })
     }
@@ -130,7 +134,6 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
           gap={1}
           pb={2}
         >
-          <Typography variant='h5'>{translate('next_lesson_modal_subtitle_1')}</Typography>
           <Typography variant='h5'>{translate('next_lesson_modal_subtitle_2')}</Typography>
           <MotionContainer
             action
@@ -158,6 +161,25 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
               action
               animate={Boolean(rating)}
               variants={varZoom().in}
+              sx={{
+                height: !Boolean(rating) ? 0 : 'auto',
+                display: 'flex',
+                justifyContent: 'center',
+                mt: -2,
+                mb: 2,
+              }}
+            >
+              <Rating
+                value={rating}
+                readOnly
+                emptyIcon={<FaRegStar size={15} />}
+                icon={<FaStar size={15} />}
+              />
+            </MotionContainer>
+            <MotionContainer
+              action
+              animate={Boolean(rating)}
+              variants={varZoom().in}
             >
               <FormProvider methods={methods}>
                 <FeedbackFields />
@@ -171,7 +193,7 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
           size='large'
           variant='soft'
           color='warning'
-          onClick={onClose}
+          onClick={clearAndCloseForm}
         >
           {translate('next_lesson_modal_btn_1')}
         </Button>
