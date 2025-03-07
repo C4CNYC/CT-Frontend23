@@ -1207,5 +1207,12 @@
     "intro_tour_step_6_mobile_subtitle": "Voyez où vous en êtes dans le Module 🤷🏾‍♂️ et revenez facilement pour revoir les leçons précédentes. 👀 😉",
     "intro_tour_step_7_mobile_title": "Le plus important : Amusez-vous ! 🤪",
     "intro_tour_step_7_mobile_subtitle": "Et dans la section Feedback 💬, dites-nous ce que vous en pensez : Génial 🏆 ou Nul 💩 ?",
-    "intro_tour_step_7_mobile_btn": "Laisser un avis"
+    "intro_tour_step_7_mobile_btn": "Laisser un avis",
+    "to_payment_dialog_text_1": "Essayez la",
+    "to_payment_dialog_text_2_1": "version",
+    "to_payment_dialog_text_2_2": "pro",
+    "to_payment_dialog_text_3_1": "gratuite",
+    "to_payment_dialog_text_3_2": "pendant 14 jours",
+    "to_payment_dialog_btn_1": "Commencer l’essai maintenant",
+    "to_payment_dialog_btn_2": "Utiliser la version basique"
   }
