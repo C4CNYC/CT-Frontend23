@@ -1,6 +1,5 @@
 import { InputAdornment, TextField } from '@mui/material'
-
-import { Iconify } from '@/components/iconify'
+import { FiSearch } from '@react-icons/all-files/fi/FiSearch'
 
 import { useLocales } from '../../../../locales'
 
@@ -23,10 +22,7 @@ export default function FileFilterName({
       InputProps={{
         startAdornment: (
           <InputAdornment position='start'>
-            <Iconify
-              icon='eva:search-fill'
-              sx={{ color: 'text.disabled' }}
-            />
+            <FiSearch style={{ color: 'text.disabled' }} />
           </InputAdornment>
         ),
       }}

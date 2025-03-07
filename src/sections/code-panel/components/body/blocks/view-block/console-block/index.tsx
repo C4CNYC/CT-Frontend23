@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from 'react'
 import { Box, Collapse, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import { TbPrompt } from '@react-icons/all-files/tb/TbPrompt'
 
-import { Iconify } from '@root/src/components'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { COLLAPSE_BOX_SX, CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'
@@ -67,10 +67,7 @@ const ConsoleBlock = () => {
             onMouseEnter={() => setOpenTooltip(true)}
             onMouseLeave={() => setOpenTooltip(false)}
           >
-            <Iconify
-              icon='lucide:info'
-              color='#0198ED'
-            />
+            <LuInfo color='#0198ED' />
           </IconButton>
         </Tooltip>
         <IconButton sx={{ ml: 'auto' }}>
