@@ -9,8 +9,8 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material'
+import { IoDiamondOutline } from '@react-icons/all-files/io5/IoDiamondOutline'
 
-import { Iconify } from '@/components'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface Props {
@@ -45,10 +45,7 @@ export default function DiamondFeatureModal({ children }: Props): React.ReactEle
           variant='h5'
           sx={{ display: 'flex', gap: 2, alignItems: 'center' }}
         >
-          <Iconify
-            icon='ion:diamond-outline'
-            color='#43D4DD'
-          />
+          <IoDiamondOutline color='#43D4DD' />
           {translate('diamond_feature_title')}
         </DialogTitle>
 

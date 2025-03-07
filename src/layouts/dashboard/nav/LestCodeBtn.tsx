@@ -2,9 +2,10 @@ import { useMemo } from 'react'
 
 import { Button } from '@mui/material'
 import { useTheme } from '@mui/system'
+import { FaCode } from '@react-icons/all-files/fa6/FaCode'
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
 import { useRouter } from 'next/router'
 
-import { Iconify } from '@/components/iconify'
 import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -89,19 +90,7 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
     >
       {!isMini ? `👩‍💻 ${translate('sidebar_menu_code_btn')}` : ''}
 
-      {isMini ? (
-        <Iconify
-          icon='mingcute:code-fill'
-          width={25}
-          height={25}
-        />
-      ) : (
-        <Iconify
-          icon='octicon:chevron-right-12'
-          width={25}
-          height={25}
-        />
-      )}
+      {isMini ? <FaCode size={24} /> : <IoIosArrowForward size={24} />}
     </Button>
   )
 }

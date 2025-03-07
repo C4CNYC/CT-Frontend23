@@ -3,8 +3,12 @@ import { useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, Link, MenuItem, Stack, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
+import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
+import { FaAward } from '@react-icons/all-files/fa/FaAward'
+import { FaArrowRightLong } from '@react-icons/all-files/fa6/FaArrowRightLong'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
+import { IoCheckmarkCircle } from '@react-icons/all-files/io5/IoCheckmarkCircle'
 import { RiExternalLinkLine } from '@react-icons/all-files/ri/RiExternalLinkLine'
 import { format, formatDistanceToNow } from 'date-fns'
 import NextLink from 'next/link'
@@ -13,7 +17,6 @@ import { useSnackbar } from 'notistack'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { ConfirmDialog, MenuPopover } from '@/components'
-import { Iconify } from '@/components/iconify'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { IAssignmentReduced } from '@/redux/interfaces/assignment.interface'
 import { Role } from '@/redux/services/enums/role.enum'
@@ -141,13 +144,13 @@ export default function QuestItem({
                 alignItems='center'
               >
                 <Typography variant='subtitle1'>{assignment.course_progress ?? '0'} % </Typography>
-                <Iconify
-                  icon='bx:award'
-                  sx={{ color: '#EE467A' }}
+                <FaAward
+                  color='#EE467A'
+                  size={17}
                 />
-                <Iconify
-                  icon='flat-color-icons:ok'
-                  sx={{ color: '#75CF6D' }}
+                <IoCheckmarkCircle
+                  color='#75CF6D'
+                  size={20}
                 />
               </Box>
             </Stack>
@@ -192,10 +195,9 @@ export default function QuestItem({
                 }}
               >
                 {translate('keep_coding')}
-                <Iconify
-                  icon='maki:arrow'
-                  width={18}
+                <FaArrowRightLong
                   style={{ marginLeft: '3px', marginRight: '3px' }}
+                  size={18}
                 />
               </Link>
               <Link
@@ -239,10 +241,7 @@ export default function QuestItem({
                 roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner, Role.Editor]}
               >
                 <IconButton onClick={handleOpenPopover}>
-                  <Iconify
-                    icon='pepicons-pop:dots-y'
-                    width={22}
-                  />
+                  <BsThreeDotsVertical size={22} />
                 </IconButton>
               </RoleBasedGuard>
             </Stack>

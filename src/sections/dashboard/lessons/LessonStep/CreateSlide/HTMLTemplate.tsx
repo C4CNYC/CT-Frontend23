@@ -15,11 +15,12 @@ import {
 import Box from '@mui/system/Box'
 import Stack from '@mui/system/Stack'
 import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { HiUsers } from '@react-icons/all-files/hi/HiUsers'
+import { IoLocationSharp } from '@react-icons/all-files/io5/IoLocationSharp'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { Image } from '@/components/image/Image'
-import { Iconify } from '@root/src/components'
 import { useSnackbar } from '@root/src/components/snackbar'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
@@ -159,21 +160,11 @@ export function HTMLTemplate({ open, onClose, lessonId, lessonName }: Props) {
 
                       {[
                         {
-                          icon: (
-                            <Iconify
-                              icon='mingcute:location-fill'
-                              sx={{ color: 'error.main' }}
-                            />
-                          ),
+                          icon: <IoLocationSharp color={'error.main'} />,
                           label: content.complexity,
                         },
                         {
-                          icon: (
-                            <Iconify
-                              icon='solar:users-group-rounded-bold'
-                              sx={{ color: 'primary.main' }}
-                            />
-                          ),
+                          icon: <HiUsers color={'primary.main'} />,
                           label: `${content.type} Booked`,
                         },
                       ].map((item) => (
