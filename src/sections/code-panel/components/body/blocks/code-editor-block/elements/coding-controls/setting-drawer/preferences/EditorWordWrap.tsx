@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
 import { Stack, Switch, Typography } from '@mui/material'
-
-import { Iconify } from '@/components/iconify'
+import { BsTextWrap } from '@react-icons/all-files/bs/BsTextWrap'
 
 import BasePreference from './BasePreference'
 
@@ -15,12 +14,7 @@ const EditorWordWrap = ({ onUpdateWordWrap }: IEditorWordWrap): React.ReactEleme
   return (
     <BasePreference
       title='word-wrap'
-      abandonmentIcon={
-        <Iconify
-          width='27px'
-          icon='material-symbols:wrap-text-rounded'
-        />
-      }
+      abandonmentIcon={<BsTextWrap size={27} />}
     >
       <Stack
         direction='row'

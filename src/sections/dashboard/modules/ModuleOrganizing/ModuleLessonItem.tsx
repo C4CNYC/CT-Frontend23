@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 import { Draggable } from '@hello-pangea/dnd'
-import SettingsIcon from '@mui/icons-material/Settings'
 import { Box, IconButton, MenuItem, Paper, Stack, Typography } from '@mui/material'
 import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import toUpper from 'lodash-es/toUpper'
 import { useRouter } from 'next/router'
@@ -139,7 +139,7 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                 }}
               >
                 <IconButton>
-                  <SettingsIcon />
+                  <IoSettingsOutline />
                 </IconButton>
               </CreateLessonDialog>
             </Stack>

@@ -17,10 +17,12 @@ import {
 import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
+import { IoMdCheckmarkCircleOutline } from '@react-icons/all-files/io/IoMdCheckmarkCircleOutline'
+import { LuClock3 } from '@react-icons/all-files/lu/LuClock3'
 import NextLink from 'next/link'
 
 import { SOCIAL_ICONS } from '@/assets/data'
-import { ConfirmDialog, Iconify, Label, MenuPopover, RoleSelector } from '@/components'
+import { ConfirmDialog, Label, MenuPopover, RoleSelector } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent, IUser } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
@@ -167,14 +169,17 @@ export default function UserTableRow({
         ) : null}
 
         <TableCell align='center'>
-          <Iconify
-            icon={verified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
-            sx={{
-              width: 20,
-              height: 20,
-              color: !verified ? 'warning.main' : 'success.main',
-            }}
-          />
+          {verified ? (
+            <IoMdCheckmarkCircleOutline
+              color={!verified ? 'warning.main' : 'success.main'}
+              size={20}
+            />
+          ) : (
+            <LuClock3
+              color={!verified ? 'warning.main' : 'success.main'}
+              size={20}
+            />
+          )}
         </TableCell>
 
         <TableCell align='left'>

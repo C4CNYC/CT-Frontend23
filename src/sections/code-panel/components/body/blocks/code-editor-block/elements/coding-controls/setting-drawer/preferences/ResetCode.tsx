@@ -1,6 +1,5 @@
 import { Button } from '@mui/material'
-
-import { Iconify } from '@/components/iconify'
+import { IoRefreshOutline } from '@react-icons/all-files/io5/IoRefreshOutline'
 
 import BasePreference from './BasePreference'
 
@@ -16,10 +15,7 @@ const ResetCode = ({ onReset }: IResetCode): React.ReactElement => {
         fullWidth
         variant='contained'
       >
-        <Iconify
-          mr='7px'
-          icon='carbon:reset'
-        />
+        <IoRefreshOutline style={{ marginRight: '7px' }} />
         Reset Lesson
       </Button>
     </BasePreference>

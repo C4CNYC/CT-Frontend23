@@ -2,8 +2,8 @@ import { forwardRef } from 'react'
 
 import { IconButton, Stack, StackProps } from '@mui/material'
 import { alpha } from '@mui/material/styles'
-
-import { Iconify } from '../iconify'
+import { FaMinus } from '@react-icons/all-files/fa/FaMinus'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 
 export interface IncrementerButtonProps extends StackProps {
   name?: string
@@ -41,10 +41,7 @@ const IncrementerButton = forwardRef<HTMLDivElement, IncrementerButtonProps>(
         disabled={disabledDecrease}
         sx={{ color: 'text.secondary' }}
       >
-        <Iconify
-          icon='eva:minus-fill'
-          width={16}
-        />
+        <FaMinus size={16} />
       </IconButton>
 
       {quantity}
@@ -56,10 +53,7 @@ const IncrementerButton = forwardRef<HTMLDivElement, IncrementerButtonProps>(
         disabled={disabledIncrease}
         sx={{ color: 'text.secondary' }}
       >
-        <Iconify
-          icon='eva:plus-fill'
-          width={16}
-        />
+        <FaPlus size={16} />
       </IconButton>
     </Stack>
   )

@@ -1,8 +1,9 @@
 import { Box, Card, IconButton, ListItemText, Link, Stack } from '@mui/material'
 import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { HiUsers } from '@react-icons/all-files/hi/HiUsers'
+import { IoLocationSharp } from '@react-icons/all-files/io5/IoLocationSharp'
 
 import { Image } from '@/components/image/Image'
-import { Iconify } from '@root/src/components'
 import { fDateTime } from '@root/src/utils/formatTime'
 
 import { SlideSelectListProps } from './CreateSlideTypes'
@@ -72,21 +73,11 @@ export const SlideSelectList = (props: SlideSelectListProps) => {
 
                 {[
                   {
-                    icon: (
-                      <Iconify
-                        icon='mingcute:location-fill'
-                        sx={{ color: 'error.main' }}
-                      />
-                    ),
+                    icon: <IoLocationSharp color={'error.main'} />,
                     label: content.complexity,
                   },
                   {
-                    icon: (
-                      <Iconify
-                        icon='solar:users-group-rounded-bold'
-                        sx={{ color: 'primary.main' }}
-                      />
-                    ),
+                    icon: <HiUsers color={'primary.main'} />,
                     label: `${content.type}  ${content.tags}`,
                   },
                 ].map((item) => (
