@@ -1,17 +1,15 @@
 import { useState } from 'react'
 
-import SettingsIcon from '@mui/icons-material/Settings'
 import { IconButton, Stack, SwipeableDrawer, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
 import { useDispatch } from 'react-redux'
 
-import { setSlideIndex } from '@/redux/slices/code-panel-global'
 import { setStartTour } from '@/redux/slices/tour'
 import { useTranslate } from '@/utils/translateHelper'
 import ThemeSwitcher from '@root/src/components/theme-switcher'
+import useIsDesktop from '@root/src/hooks/useIsDesktop'
 import {
-  resetLessonEvent,
   updateColorsEvent,
   updateFontSize,
   updateLineWrap,
@@ -22,20 +20,21 @@ import EditorFontSize from './preferences/EditorFontSize'
 import EditorWordWrap from './preferences/EditorWordWrap'
 import IntroTour from './preferences/IntroTour'
 import ResetCode from './preferences/ResetCode'
-const SettingDrawer = (): React.ReactElement => {
+
+interface ISettingDrawerProps {
+  iconColor?: string
+}
+
+const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.ReactElement => {
   const dispatch = useDispatch()
   const translate = useTranslate()
+  const isDesktop = useIsDesktop()
 
   const [openDrawer, setDrawer] = useState(false)
 
   const onStartIntro = (): void => {
     setDrawer(false)
     dispatch(setStartTour(true))
-  }
-
-  const onResetLesson = () => {
-    dispatch(setSlideIndex(0))
-    window.dispatchEvent(resetLessonEvent)
   }
 
   return (
@@ -45,7 +44,7 @@ const SettingDrawer = (): React.ReactElement => {
           setDrawer(true)
         }}
       >
-        <SettingsIcon />
+        <IoSettingsOutline style={{ color: iconColor }} />
       </IconButton>
       <SwipeableDrawer
         swipeAreaWidth={0}
@@ -59,14 +58,14 @@ const SettingDrawer = (): React.ReactElement => {
         }}
       >
         <Box
-          width='350px'
+          width={isDesktop ? '350px' : '260px'}
           p='16px 20px 40px 20px'
         >
           <Stack
             justifyContent='space-between'
             direction='row'
             alignItems='center'
-            mb='16px'
+            mb='8px'
           >
             <Box
               display='flex'
@@ -82,13 +81,13 @@ const SettingDrawer = (): React.ReactElement => {
 
           <Box
             display='grid'
-            gap='16px'
+            gap='12px'
           >
-            <ResetCode onReset={onResetLesson} />
+            <ResetCode />
 
             <IntroTour onStartIntro={onStartIntro} />
 
-            <Typography variant='body1'>{translate('coding_editor')}</Typography>
+            <Typography variant='subtitle2'>{translate('coding_editor')}</Typography>
 
             <EditorFontSize
               onUpdateFontSize={(size: number) => {
@@ -102,7 +101,7 @@ const SettingDrawer = (): React.ReactElement => {
               }}
             />
 
-            <Typography variant='body1'>{translate('customize')}</Typography>
+            <Typography variant='subtitle2'>{translate('customize')}</Typography>
 
             <EditColors
               onUpdateColors={(data) => {

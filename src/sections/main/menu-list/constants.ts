@@ -68,8 +68,8 @@ export const inputNameStyles = (theme: Theme, isValid: boolean) => ({
   pt: 4,
   pb: 3,
   px: { xs: 0, sm: 3 },
+  m: '0 auto',
   maxWidth: { xs: '300px', sm: '400px', md: '550px' },
-
   borderRadius: 2,
   '& fieldset': { border: 'none' },
   '.MuiInputBase-input': {

@@ -1,7 +1,8 @@
+import { ReactNode } from 'react'
+
 import { Box, IconButton, SxProps, Typography } from '@mui/material'
 import { Theme, styled } from '@mui/material/styles'
 
-import { IconifyProps } from '@/components'
 import { bgBlur } from '@/utils'
 
 import { LeftIcon, RightIcon } from './Icon'
@@ -33,7 +34,7 @@ const StyledIconButton = styled(IconButton)({
 interface Props {
   index: number
   total: number
-  icon?: IconifyProps // Right icon
+  icon?: ReactNode // Right icon
   onNext?: VoidFunction
   onPrevious?: VoidFunction
   sx?: SxProps<Theme>

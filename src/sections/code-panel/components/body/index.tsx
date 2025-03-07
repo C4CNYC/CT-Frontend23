@@ -30,6 +30,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   onSubmitLesson,
   lessonContents,
   user,
+  isLoadingLessonContent,
 }) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
 
@@ -52,14 +53,11 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       if (autoRun && doc?.htmlBody) {
         setBrowserView(doc)
       }
-    } catch (error: any) {
-      // eslint-disable-next-line no-console
-      console.log('Error: ', error)
-    }
+    } catch (error: any) {}
   }
 
   const reloadBrowserView = () => {
-    setBrowserView(document)
+    setBrowserView({ ...document })
   }
 
   const openInstruction = () => {
@@ -77,9 +75,11 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         px={1}
         gap={1}
         direction='row'
+        id='view_user_code_block'
       >
         {!isInstructionsHidden ? (
           <SliderBlock
+            isLoadingLessonContent={isLoadingLessonContent}
             data={lessonContents}
             onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
@@ -157,12 +157,14 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
 
   return (
     <SwipeableViews
+      disabled
       index={activeTab}
       onChangeIndex={(index) => {
         dispatch(setTab(index))
       }}
     >
       <SliderBlock
+        isLoadingLessonContent={isLoadingLessonContent}
         onSubmitLesson={onSubmitLesson}
         onSubmitChallenge={onSubmitChallenge}
         data={lessonContents}

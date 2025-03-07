@@ -1,10 +1,12 @@
 import { forwardRef } from 'react'
 
 import { Box, Link, ListItemText, Tooltip } from '@mui/material'
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import NextLink from 'next/link'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { Iconify } from '@/components/iconify'
 
 import { useLocales } from '../../../locales'
 import { NavItemProps } from '../types'
@@ -58,21 +60,23 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
               component='span'
               sx={{ ml: 0.5, lineHeight: 0 }}
             >
-              <Iconify
-                icon='eva:info-outline'
-                width={16}
-              />
+              <LuInfo size={16} />
             </Box>
           </Tooltip>
         )}
 
-        {!!children && (
-          <Iconify
-            icon={subItem ? 'eva:chevron-right-fill' : 'eva:chevron-down-fill'}
-            width={16}
-            sx={{ ml: 0.5, flexShrink: 0 }}
-          />
-        )}
+        {!!children &&
+          (subItem ? (
+            <IoIosArrowForward
+              size={16}
+              style={{ marginLeft: 0.5, flexShrink: 0 }}
+            />
+          ) : (
+            <IoIosArrowDown
+              size={16}
+              style={{ marginLeft: 0.5, flexShrink: 0 }}
+            />
+          ))}
       </StyledItem>
     )
 

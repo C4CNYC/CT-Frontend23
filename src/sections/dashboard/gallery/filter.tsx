@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField'
 import Stack from '@mui/system/Stack'
 
 import { SetFilterType } from '@/hooks'
-import { IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
+import { IGallerySearchParams } from '@root/src/redux/interfaces/gallery.interface'
 
 interface Props {
   filters: IGallerySearchParams

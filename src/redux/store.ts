@@ -17,6 +17,7 @@ import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
 import { studentAuthApi } from './services/student-auth'
 import { tenantConfigApi } from './services/tenant-configs'
+import { tabListenerMiddleware } from './slices/mobile-tab-manager'
 
 export type RootState = ReturnType<typeof rootReducer>
 
@@ -29,6 +30,7 @@ const store = configureStore({
       serializableCheck: false,
       immutableCheck: false,
     })
+      .prepend(tabListenerMiddleware.middleware)
       .concat(superAdmin.middleware)
       .concat(authApi.middleware)
       .concat(studentAuthApi.middleware)

@@ -1,18 +1,12 @@
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
+import HttpApi from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
 import { localStorageAvailable } from '@/utils'
 
 import { defaultLang } from './config-lang'
-import arLocales from './langs/ar'
-// import cnLocales from './langs/cn'
-import enLocales from './langs/en'
-import esLocales from './langs/es'
-import frLocales from './langs/fr'
-import ptLocales from './langs/pt'
-import trLocales from './langs/tr'
-// import vnLocales from './langs/vn'
+import { i18nBackend } from './i18n-backend'
 
 let lng = defaultLang.value
 
@@ -23,25 +17,15 @@ if (storageAvailable) {
 }
 
 i18n
+  .use(HttpApi)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    resources: {
-      en: { translations: enLocales },
-      fr: { translations: frLocales },
-      // vn: { translations: vnLocales },
-      // cn: { translations: cnLocales },
-      ar: { translations: arLocales },
-      es: { translations: esLocales },
-      pt: { translations: ptLocales },
-      tr: { translations: trLocales },
-    },
+    backend: { ...i18nBackend },
     lng,
     fallbackLng: defaultLang.value,
     keySeparator: '.',
     debug: false,
-    ns: ['translations'],
-    defaultNS: 'translations',
     interpolation: {
       escapeValue: false,
     },

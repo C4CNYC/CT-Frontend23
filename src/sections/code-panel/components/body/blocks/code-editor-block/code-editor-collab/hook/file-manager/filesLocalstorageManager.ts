@@ -78,7 +78,7 @@ export function unauthFileLocalStorageManger(rootKey: string) {
     setLocalStorageFiles(files)
   }
 
-  const _carryOverFiles = (key: string, files: StudentFile[]) => {
+  const _carryOverFiles = (key: string, files: StudentFile[], skipIfFileExists = false) => {
     const filesToCarryOver = getLocalStorageFiles(key)
     const localStorageFiles = getLocalStorageFiles()
 
@@ -88,11 +88,11 @@ export function unauthFileLocalStorageManger(rootKey: string) {
     }
 
     for (const file of Object.values(mergedFiles)) {
-      if (!localStorageFiles[file.id]) {
+      if (!localStorageFiles[file.id] && file.body.length > 10) {
         _addFile(file)
       }
     }
-
+    if (skipIfFileExists) return Object.values(getLocalStorageFiles())
     for (const file of files) {
       if (!mergedFiles[file.id]) {
         _addFile(file)
@@ -121,5 +121,6 @@ export function unauthFileLocalStorageManger(rootKey: string) {
     updateFile: _updateFile,
     removeFile: _removeFile,
     carryOverFiles: _carryOverFiles,
+    getLocalStorageFiles,
   }
 }

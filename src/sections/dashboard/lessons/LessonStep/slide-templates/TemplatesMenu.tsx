@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import { Box, Drawer, IconButton, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
-
-import { Iconify } from '@root/src/components'
+import { RiMenuFoldFill } from '@react-icons/all-files/ri/RiMenuFoldFill'
+import { RiMenuUnfoldFill } from '@react-icons/all-files/ri/RiMenuUnfoldFill'
 
 import {
   DRAWER_WIDTH_PADDING,
@@ -11,8 +11,7 @@ import {
   TABS_SX,
 } from './constants'
 import TemplatesList from './TemplatesList'
-
-const TeamplatesMenu = () => {
+const TemplatesMenu = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
@@ -69,20 +68,14 @@ const TeamplatesMenu = () => {
             sx={MENU_BTN_POSITION}
             onClick={handleDrawerOpen}
           >
-            <Iconify
-              icon='ri:menu-fold-4-fill'
-              color={theme.palette.primary.main}
-            />
+            <RiMenuUnfoldFill color={theme.palette.primary.main} />
           </IconButton>
         ) : (
           <IconButton
             sx={MENU_BTN_POSITION}
             onClick={handleDrawerClose}
           >
-            <Iconify
-              icon='ri:menu-fold-3-fill'
-              color={theme.palette.primary.main}
-            />
+            <RiMenuFoldFill color={theme.palette.primary.main} />
           </IconButton>
         )
       ) : null}
@@ -143,7 +136,7 @@ const TeamplatesMenu = () => {
   )
 }
 
-export default TeamplatesMenu
+export default TemplatesMenu
 
 interface TabPanelProps {
   children?: React.ReactNode

@@ -12,12 +12,14 @@ import {
   Typography,
   alpha,
 } from '@mui/material'
+import { MdOutlineCheckBox } from '@react-icons/all-files/md/MdOutlineCheckBox'
+import { MdOutlineCheckBoxOutlineBlank } from '@react-icons/all-files/md/MdOutlineCheckBoxOutlineBlank'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 // import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 
-import { Iconify, RHFCode, SearchNotFound } from '@/components'
+import { RHFCode, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { useGetIntegrationsListQuery } from '@/redux/services/manager/integration-manager'
@@ -29,7 +31,6 @@ import {
 // import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-
 export function IntegrationsTab({ contentId }: { contentId: string }): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
 
@@ -192,13 +193,7 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
                     }),
                   }}
                 >
-                  <Iconify
-                    icon={
-                      selected
-                        ? 'material-symbols:check-box-outline-rounded'
-                        : 'material-symbols:check-box-outline-blank'
-                    }
-                  />
+                  {selected ? <MdOutlineCheckBox /> : <MdOutlineCheckBoxOutlineBlank />}
                 </Box>
               </Box>
 

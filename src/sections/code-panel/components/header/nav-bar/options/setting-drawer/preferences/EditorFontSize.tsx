@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { IconButton, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { BiFontSize } from '@react-icons/all-files/bi/BiFontSize'
 import { FaMinus } from '@react-icons/all-files/fa/FaMinus'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 
@@ -25,7 +26,14 @@ const EditorFontSize = ({ onUpdateFontSize }: IEditorFontSize): React.ReactEleme
   }, [fontSize])
 
   return (
-    <BasePreference title={translate('font_size')}>
+    <BasePreference
+      title={translate('font_size')}
+      abandonmentIcon={
+        <IconButton sx={{ pointerEvents: 'none' }}>
+          <BiFontSize size={22} />
+        </IconButton>
+      }
+    >
       <Box
         display='flex'
         alignItems='center'
