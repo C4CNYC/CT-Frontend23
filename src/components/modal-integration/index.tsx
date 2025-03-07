@@ -15,10 +15,10 @@ import {
   useEditIntegrationMutation,
 } from '@/redux/services/manager/integration-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
-import { FormProvider } from '../hook-form/FormProvider'
 import { RHFCode } from '../hook-form/RHFCode'
-import { RHFTextField } from '../hook-form/RHFTextField'
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required('Tenant name is required'),

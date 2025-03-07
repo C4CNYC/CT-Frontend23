@@ -13,16 +13,15 @@ import {
   useUpdatePropertyMutation,
 } from '@/redux/services/manager/properties-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import {
   IProperty,
   PropertyEntityType,
   PropertyEntityTypes,
 } from '@root/src/redux/services/interfaces/properties.interface'
-
-import { FormProvider } from '../hook-form/FormProvider'
-import { RHFSelect } from '../hook-form/RHFSelect'
-import { RHFTextField } from '../hook-form/RHFTextField'
 
 export const propertiesSchema = Yup.object().shape({
   entityType: Yup.mixed<PropertyEntityType>()
