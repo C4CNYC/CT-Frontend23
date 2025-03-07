@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import { Container, Stack } from '@mui/system'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
 import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
 import { format } from 'date-fns'
 import omit from 'lodash-es/omit'
@@ -20,7 +21,6 @@ import { useSnackbar } from 'notistack'
 
 import {
   CustomBreadcrumbs,
-  Iconify,
   Scrollbar,
   TableNoData,
   TablePaginationCustom,
@@ -157,10 +157,7 @@ export default function AppsPage(): React.ReactElement {
                                 await onDelete(row.id)
                               }}
                             >
-                              <Iconify
-                                color='red'
-                                icon='material-symbols:delete'
-                              />
+                              <IoTrashOutline />
                             </IconButton>
                           </Stack>
                         </TableCell>

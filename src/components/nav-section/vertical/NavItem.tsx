@@ -1,8 +1,9 @@
 import { Box, Link, ListItemText, Tooltip } from '@mui/material'
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
 import NextLink from 'next/link'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { Label } from '../../label'
@@ -73,13 +74,18 @@ export default function NavItem({
         </Box>
       )}
 
-      {!!children && (
-        <Iconify
-          width={16}
-          icon={open ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
-          sx={{ ml: 1, flexShrink: 0 }}
-        />
-      )}
+      {!!children &&
+        (open ? (
+          <IoIosArrowDown
+            size={16}
+            style={{ marginLeft: 1, flexShrink: 0 }}
+          />
+        ) : (
+          <IoIosArrowForward
+            size={16}
+            style={{ marginLeft: 1, flexShrink: 0 }}
+          />
+        ))}
     </StyledItem>
   )
   const renderItem = (): React.ReactElement => {

@@ -1,7 +1,7 @@
+import { ReactNode } from 'react'
+
 import { IconButton, IconButtonProps, Stack, StackProps } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
-
-import { IconifyProps } from '../iconify'
 
 import { LeftIcon, RightIcon } from './Icon'
 
@@ -47,7 +47,7 @@ interface Props extends StackProps {
   shape?: 'circular' | 'rounded'
   filled?: boolean
   children?: React.ReactNode
-  icon?: IconifyProps // Right icon
+  icon?: ReactNode // Right icon
   onNext?: VoidFunction
   onPrevious?: VoidFunction
   leftButtonProps?: IconButtonProps

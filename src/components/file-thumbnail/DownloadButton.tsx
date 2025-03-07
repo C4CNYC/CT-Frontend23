@@ -1,9 +1,8 @@
 import { IconButton } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { IoArrowDownCircle } from '@react-icons/all-files/io5/IoArrowDownCircle'
 
 import { bgBlur } from '@/utils'
-
-import { Iconify } from '../iconify'
 
 interface Props {
   onDownload?: VoidFunction
@@ -41,10 +40,7 @@ export function DownloadButton({ onDownload }: Props): React.ReactElement | null
         },
       }}
     >
-      <Iconify
-        icon='eva:arrow-circle-down-fill'
-        width={24}
-      />
+      <IoArrowDownCircle size={24} />
     </IconButton>
   )
 }

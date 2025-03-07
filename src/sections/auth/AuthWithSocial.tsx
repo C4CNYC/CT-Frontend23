@@ -1,7 +1,5 @@
 import { Button, Divider, Stack } from '@mui/material'
-
-import { Iconify } from '@/components/iconify'
-
+import { FaGoogle } from '@react-icons/all-files/fa/FaGoogle'
 export default function AuthWithSocial(): React.ReactElement {
   return (
     <div>
@@ -26,10 +24,9 @@ export default function AuthWithSocial(): React.ReactElement {
         <Button
           variant='outlined'
           startIcon={
-            <Iconify
-              icon='eva:google-fill'
+            <FaGoogle
               color='#DF3E30'
-              sx={{ mr: 2 }}
+              style={{ marginRight: 2 }}
             />
           }
           sx={{

@@ -15,7 +15,9 @@ import {
   useTheme,
 } from '@mui/material'
 import { Stack } from '@mui/system'
+import { AiFillCloseSquare } from '@react-icons/all-files/ai/AiFillCloseSquare'
 import { AiOutlineArrowRight } from '@react-icons/all-files/ai/AiOutlineArrowRight'
+import { FaRegCopy } from '@react-icons/all-files/fa6/FaRegCopy'
 import { MdOutlineMail } from '@react-icons/all-files/md/MdOutlineMail'
 import { SiGoogleclassroom } from '@react-icons/all-files/si/SiGoogleclassroom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
@@ -36,7 +38,6 @@ import { useDispatch } from '@root/src/redux/store'
 
 import ClassroomModal from '../classroom-modal'
 import EmailAddressModal from '../email-address-domain'
-import { Iconify } from '../iconify'
 
 import {
   CLASS_ROOM_BTN_SX,
@@ -143,11 +144,7 @@ export default function ShareGroupModal({
               onClick={handleClose}
               sx={{ color: 'white' }}
             >
-              <Iconify
-                icon='jam:close-rectangle-f'
-                width={24}
-                height={24}
-              />
+              <AiFillCloseSquare size={24} />
             </IconButton>
           </Box>
           <Typography
@@ -181,11 +178,7 @@ export default function ShareGroupModal({
               width='100%'
             >
               <Button sx={COPY_BTN_SX}>
-                <Iconify
-                  icon='basil:copy-outline'
-                  width={18}
-                  height={18}
-                />
+                <FaRegCopy size={18} />
               </Button>
               <Box ml='10px'>
                 <Typography>{translate('share_invite_link')}</Typography>

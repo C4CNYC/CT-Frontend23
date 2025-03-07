@@ -1,7 +1,6 @@
 import { Box } from '@mui/material'
 import { alpha } from '@mui/material/styles'
-
-import { Iconify } from '../iconify'
+import { IoCheckmark } from '@react-icons/all-files/io5/IoCheckmark'
 
 import { ColorIconProps } from './types'
 
@@ -25,9 +24,8 @@ export function Icon({
   )
 
   const icon = (
-    <Iconify
-      icon='eva:checkmark-fill'
-      sx={{
+    <IoCheckmark
+      style={{
         opacity: 0,
         ...(checked && {
           opacity: 1,
