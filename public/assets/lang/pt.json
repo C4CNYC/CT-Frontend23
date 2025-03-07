@@ -1203,5 +1203,13 @@
     "intro_tour_step_6_mobile_subtitle": "Veja onde você está no Módulo 🤷🏾‍♂️ e volte facilmente para revisar aulas anteriores. 👀 😉",
     "intro_tour_step_7_mobile_title": "Mais importante: Divirta-se! 🤪",
     "intro_tour_step_7_mobile_subtitle": "E no Feedback 💬 nos diga o que achou: Maravilhoso 🏆 ou Ruim 💩?",
-    "intro_tour_step_7_mobile_btn": "Deixe um feedback"
+    "intro_tour_step_7_mobile_btn": "Deixe um feedback",
+    "rule_testing_method_title": "Método de teste",
+    "rule_testing_method_required": "Selecione um*",
+    "regex_must_be_empty_for_manual": "A expressão regular deve estar vazia para manual",
+    "rule_manual_tooltip": "Teste manual: validação de regras sem o uso de ferramentas automatizadas.",
+    "rule_regex_tooltip": "Teste com expressões regulares: validação de regras utilizando expressões regulares.",
+    "rule_mocha_tooltip": "Teste Mocha: validação de regras utilizando o framework Mocha.",
+    "rule_chai_tooltip": "Teste Chai: validação de regras utilizando a biblioteca de afirmações Chai."
+  
   }

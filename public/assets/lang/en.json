@@ -1207,5 +1207,13 @@
     "intro_tour_step_6_mobile_subtitle": "See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉",
     "intro_tour_step_7_mobile_title": "Most important: Have fun! 🤪",
     "intro_tour_step_7_mobile_subtitle": "And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?",
-    "intro_tour_step_7_mobile_btn": "Leave feedback"
+    "intro_tour_step_7_mobile_btn": "Leave feedback",
+    "rule_testing_method_title": "Testing Method",
+    "rule_testing_method_required": "Select one*",
+    "regex_must_be_empty_for_manual": "Regex must be empty for manual",
+    "rule_manual_tooltip": "Manual testing: validation of rules without using automated tools.",
+    "rule_regex_tooltip": "Regex testing: validation of rules using regular expressions.",
+    "rule_mocha_tooltip": "Mocha testing: validation of rules using the Mocha framework.",
+    "rule_chai_tooltip": "Chai testing: validation of rules using the Chai assertion library."
+  
   }

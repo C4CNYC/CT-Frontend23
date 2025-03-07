@@ -1206,5 +1206,12 @@
     "intro_tour_step_6_mobile_subtitle": "شاهد أين أنت في الوحدة 🤷🏾‍♂️ وقم بمراجعة الدروس السابقة بسهولة. 👀 😉",
     "intro_tour_step_7_mobile_title": "الأهم: استمتع! 🤪",
     "intro_tour_step_7_mobile_subtitle": "وفي التعليقات 💬 أخبرنا برأيك: رائع 🏆 أم سيئ 💩؟",
-    "intro_tour_step_7_mobile_btn": "اترك تعليقًا"
+    "intro_tour_step_7_mobile_btn": "اترك تعليقًا",
+    "rule_testing_method_title": "طريقة الاختبار",
+    "rule_testing_method_required": "اختر واحدًا*",
+    "regex_must_be_empty_for_manual": "يجب أن تكون التعبير النمطي فارغة للاختبار اليدوي",
+    "rule_manual_tooltip": "الاختبار اليدوي: التحقق من القواعد دون استخدام الأدوات الآلية.",
+    "rule_regex_tooltip": "الاختبار بالنمط: استخدام تعابير نمطية للتحقق من القواعد.",
+    "rule_mocha_tooltip": "الاختبار عبر Mocha: تشغيل اختبارات Mocha للتحقق من القواعد.",
+    "rule_chai_tooltip": "الاختبار عبر Chai: استخدام مكتبة Chai للتحقق من صحة القواعد."
   }

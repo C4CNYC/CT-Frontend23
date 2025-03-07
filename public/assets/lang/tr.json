@@ -1187,5 +1187,13 @@
     "intro_tour_step_6_mobile_subtitle": "Modülde nerede olduğunuzu görün 🤷🏾‍♂️ ve önceki dersleri kolayca geri alıp gözden geçirebilirsiniz. 👀 😉",
     "intro_tour_step_7_mobile_title": "En önemli: Eğlenin! 🤪",
     "intro_tour_step_7_mobile_subtitle": "Ve Geri Bildirim 💬 ile ne düşündüğünüzü bize bildirin: Harika 🏆 mi yoksa Kötü mü 💩?",
-    "intro_tour_step_7_mobile_btn": "Geri bildirim bırak"
+    "intro_tour_step_7_mobile_btn": "Geri bildirim bırak",
+    "rule_testing_method_title": "Test yöntemi",
+    "rule_testing_method_required": "Birini seçin*",
+    "regex_must_be_empty_for_manual": "Düzenli ifade manuel için boş olmalıdır",
+    "rule_manual_tooltip": "Manuel test: kuralların otomatik araçlar kullanılmadan doğrulanması.",
+    "rule_regex_tooltip": "Düzenli ifade testi: kuralların doğruluğunu test etmek için düzenli ifadeler kullanılır.",
+    "rule_mocha_tooltip": "Mocha testi: kuralların doğruluğunu test etmek için Mocha framework'ü kullanılır.",
+    "rule_chai_tooltip": "Chai testi: kuralların doğruluğunu test etmek için Chai assertion kütüphanesi kullanılır."
+  
   }
