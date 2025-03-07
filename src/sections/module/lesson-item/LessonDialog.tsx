@@ -56,8 +56,6 @@ export default function LessonDialog({
     <>
       <Box
         onClick={(e: React.MouseEvent<HTMLElement>) => {
-          // e.preventDefault()
-          // e.stopPropagation()
           setOpenDialog(true)
         }}
       >
@@ -66,8 +64,6 @@ export default function LessonDialog({
       <Dialog
         open={open}
         onClose={(e: React.MouseEvent<HTMLElement>) => {
-          // e.preventDefault()
-          // e.stopPropagation()
           setOpenDialog(false)
         }}
         PaperProps={{
@@ -90,8 +86,6 @@ export default function LessonDialog({
           </Typography>
           <IconButton
             onClick={(e: React.MouseEvent<HTMLElement>) => {
-              // e.preventDefault()
-              // e.stopPropagation()
               setOpenDialog(false)
             }}
             sx={CLOSE_DIALOG_ICON_SX}
@@ -109,8 +103,6 @@ export default function LessonDialog({
           <Typography>{translate('lesson_dialog_subtitle_2')}</Typography>
           <Button
             onClick={(e: React.MouseEvent<HTMLElement>) => {
-              // e.preventDefault()
-              // e.stopPropagation()
               handleOpenPopover(e)
             }}
             sx={{ ...SEE_MORE_SX, my: 0 }}
@@ -121,8 +113,6 @@ export default function LessonDialog({
             color='inherit'
             variant='soft'
             onClick={(e: React.MouseEvent<HTMLElement>) => {
-              // e.preventDefault()
-              // e.stopPropagation()
               onOpenLesson()
             }}
           >
@@ -132,8 +122,6 @@ export default function LessonDialog({
             color='info'
             variant='soft'
             onClick={(e: React.MouseEvent<HTMLElement>) => {
-              // e.preventDefault()
-              // e.stopPropagation()
               setOpenDialog(false)
             }}
           >

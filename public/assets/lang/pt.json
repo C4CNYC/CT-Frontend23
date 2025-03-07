@@ -1203,5 +1203,16 @@
     "intro_tour_step_6_mobile_subtitle": "Veja onde você está no Módulo 🤷🏾‍♂️ e volte facilmente para revisar aulas anteriores. 👀 😉",
     "intro_tour_step_7_mobile_title": "Mais importante: Divirta-se! 🤪",
     "intro_tour_step_7_mobile_subtitle": "E no Feedback 💬 nos diga o que achou: Maravilhoso 🏆 ou Ruim 💩?",
-    "intro_tour_step_7_mobile_btn": "Deixe um feedback"
+    "intro_tour_step_7_mobile_btn": "Deixe um feedback",
+    "next_lesson_modal_title_1": "A próxima lição é ",
+    "next_lesson_modal_title_2": "Parte do Projeto",
+    "next_lesson_modal_text_1": "A próxima lição se baseia no código desta lição.",
+    "next_lesson_modal_text_2": "Se você acha que seu código pode conter erros, selecione “Usar Código Inicial Padrão”.",
+    "next_lesson_modal_btn_1": "Usar Código Inicial Padrão",
+    "next_lesson_modal_btn_2": "Usar Meu Código",
+    "next_lesson_modal_popover_title": "O que é “Parte do Projeto”?",
+    "next_lesson_modal_popover_text_1": "Os projetos são construídos ao completar várias lições.",
+    "next_lesson_modal_popover_text_2": "O legal disso é que, se você completar cada etapa, poderá criar projetos divertidos e únicos com seu próprio código personalizado.",
+    "next_lesson_modal_popover_text_3": "Mas às vezes pode haver um erro no seu código, e quando você passa esse código para a próxima lição, pode complicar as coisas.",
+    "next_lesson_modal_popover_text_4": "É por isso que temos o “Código Inicial Padrão”, que você pode usar para garantir que não haja bugs ao iniciar uma nova lição."
   }

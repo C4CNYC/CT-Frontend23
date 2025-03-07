@@ -1187,5 +1187,16 @@
     "intro_tour_step_6_mobile_subtitle": "Modülde nerede olduğunuzu görün 🤷🏾‍♂️ ve önceki dersleri kolayca geri alıp gözden geçirebilirsiniz. 👀 😉",
     "intro_tour_step_7_mobile_title": "En önemli: Eğlenin! 🤪",
     "intro_tour_step_7_mobile_subtitle": "Ve Geri Bildirim 💬 ile ne düşündüğünüzü bize bildirin: Harika 🏆 mi yoksa Kötü mü 💩?",
-    "intro_tour_step_7_mobile_btn": "Geri bildirim bırak"
+    "intro_tour_step_7_mobile_btn": "Geri bildirim bırak",
+    "next_lesson_modal_title_1": "Sonraki ders ",
+    "next_lesson_modal_title_2": "Projenin Bir Parçası",
+    "next_lesson_modal_text_1": "Sonraki ders, bu dersteki kod üzerine inşa edilir.",
+    "next_lesson_modal_text_2": "Kodunuzda hata olabileceğini düşünüyorsanız, “Varsayılan Başlangıç Kodunu Kullan” seçeneğini seçin.",
+    "next_lesson_modal_btn_1": "Varsayılan Başlangıç Kodunu Kullan",
+    "next_lesson_modal_btn_2": "Kendi Kodumu Kullan",
+    "next_lesson_modal_popover_title": "“Projenin Bir Parçası” ne anlama geliyor?",
+    "next_lesson_modal_popover_text_1": "Projeler, birden fazla dersin tamamlanmasıyla oluşturulur.",
+    "next_lesson_modal_popover_text_2": "Güzel olan şey şu ki, her adımı tamamlarsanız, kendi özel kodunuzla eğlenceli ve benzersiz projeler oluşturabilirsiniz.",
+    "next_lesson_modal_popover_text_3": "Ancak bazen kodunuzda bir hata olabilir ve bu kodu bir sonraki derse aktardığınızda işler karmaşıklaşabilir.",
+    "next_lesson_modal_popover_text_4": "Bu yüzden yeni bir derse başlarken hata olmamasını sağlamak için “Varsayılan Başlangıç Kodunu” kullanabilirsiniz."  
   }
