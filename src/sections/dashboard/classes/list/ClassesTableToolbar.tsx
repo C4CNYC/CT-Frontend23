@@ -1,7 +1,7 @@
 import { Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
+import { FiSearch } from '@react-icons/all-files/fi/FiSearch'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
 
 interface Props {
@@ -79,10 +79,7 @@ export default function ClassesTableToolbar({
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
-              <Iconify
-                icon='eva:search-fill'
-                sx={{ color: 'text.disabled' }}
-              />
+              <FiSearch style={{ color: 'text.disabled' }} />
             </InputAdornment>
           ),
         }}

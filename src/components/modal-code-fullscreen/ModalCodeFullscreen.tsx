@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 import { javascript } from '@codemirror/lang-javascript'
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, Stack } from '@mui/material'
+import { HiMiniArrowsPointingIn } from '@react-icons/all-files/hi2/HiMiniArrowsPointingIn'
+import { HiMiniArrowsPointingOut } from '@react-icons/all-files/hi2/HiMiniArrowsPointingOut'
 
 import { RHFCode } from '../hook-form'
-import { Iconify } from '../iconify'
-
 interface Props {
   title: string
   name: string
@@ -33,10 +33,7 @@ export function ModalCodeFullscreen({ title, name }: Props): React.ReactElement 
           },
         })}
       >
-        <Iconify
-          icon='icons8:resize-four-directions'
-          width='18px'
-        />
+        <HiMiniArrowsPointingOut size={18} />
       </IconButton>
       <Dialog
         open={open}
@@ -61,10 +58,7 @@ export function ModalCodeFullscreen({ title, name }: Props): React.ReactElement 
               },
             })}
           >
-            <Iconify
-              icon='ps:resize'
-              width='18px'
-            />
+            <HiMiniArrowsPointingIn size={18} />
           </IconButton>
         </Stack>
         <DialogContent>

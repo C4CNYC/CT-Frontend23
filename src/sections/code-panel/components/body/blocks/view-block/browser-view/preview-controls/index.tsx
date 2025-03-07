@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 
 import { Button, Divider, Stack } from '@mui/material'
+import { FaPlay } from '@react-icons/all-files/fa/FaPlay'
 import { GrRefresh } from '@react-icons/all-files/gr/GrRefresh'
 
-import { Iconify } from '@root/src/components'
 import useIsDesktop from '@root/src/hooks/useIsDesktop'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -39,11 +39,7 @@ const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsP
         onClick={reloadIframe}
       >
         {isRunning ? translate('preview_controls_stop') : translate('preview_controls_run')}
-        <Iconify
-          icon='solar:play-bold'
-          width={18}
-          height={18}
-        />
+        <FaPlay size={12} />
       </Button>
       {!isDesktop ? (
         <Divider

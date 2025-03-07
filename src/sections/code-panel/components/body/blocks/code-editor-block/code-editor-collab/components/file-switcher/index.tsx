@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type FC } from 'react'
 
 import { Stack, Tabs, Tab, IconButton } from '@mui/material'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
-import { Iconify } from '@root/src/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
 import DevIcon from '../dev-icon'
@@ -75,10 +75,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, f
                     closeTab(id ?? '')
                   }}
                 >
-                  <Iconify
-                    icon='jam:close'
-                    color='#fff'
-                  />
+                  <IoClose color='#fff' />
                 </IconButton>
               ) : (
                 <></>

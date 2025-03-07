@@ -1,9 +1,11 @@
 import React from 'react'
 
 import { Button } from '@mui/material'
+import { FaMinus } from '@react-icons/all-files/fa/FaMinus'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { useFieldArray } from 'react-hook-form'
 
-import { Iconify, RHFTextField } from '@root/src/components'
+import { RHFTextField } from '@root/src/components'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 export const DomainFields = () => {
@@ -25,20 +27,14 @@ export const DomainFields = () => {
             required={index === 0}
           />
           <Button onClick={() => remove(index)}>
-            <Iconify
-              icon='eva:minus-fill'
-              width={16}
-            />
+            <FaMinus size={16} />
           </Button>
         </div>
       ))}
       <div style={{ display: 'flex', gap: '.5rem' }}>
         <div style={{ width: '100%' }}> </div>
         <Button onClick={() => append('')}>
-          <Iconify
-            icon='eva:plus-fill'
-            width={16}
-          />
+          <FaPlus size={16} />
         </Button>
       </div>
     </div>

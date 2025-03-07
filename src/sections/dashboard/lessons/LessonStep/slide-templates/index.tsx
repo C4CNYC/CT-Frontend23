@@ -4,7 +4,7 @@ import { Box, Dialog, DialogContent, IconButton } from '@mui/material'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
 import { CLOSE_BTN_POSITION } from './constants'
-import TeamplatesMenu from './TemplatesMenu'
+import TemplatesMenu from './TemplatesMenu'
 
 interface ISlideTemplateDialog {
   children: React.ReactElement
@@ -37,7 +37,7 @@ const SlideTemplateDialog = ({ children }: ISlideTemplateDialog) => {
           <IoClose />
         </IconButton>
         <DialogContent id='drawer-container'>
-          <TeamplatesMenu />
+          <TemplatesMenu />
         </DialogContent>
       </Dialog>
     </>

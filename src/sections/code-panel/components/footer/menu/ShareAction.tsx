@@ -1,8 +1,9 @@
 import { forwardRef } from 'react'
 
 import { Box, Chip, SpeedDialAction, Typography } from '@mui/material'
+import { FaRegCopy } from '@react-icons/all-files/fa6/FaRegCopy'
 
-import { Iconify, useSnackbar } from '@root/src/components'
+import { useSnackbar } from '@root/src/components'
 import { useCopyToClipboard } from '@root/src/hooks'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -19,9 +20,9 @@ const ShareAction = forwardRef((props, ref) => {
       {...props}
       key={'copy_link_to_clipboard'}
       icon={
-        <Iconify
-          icon='ri:file-copy-line'
+        <FaRegCopy
           color={'#74ca67'}
+          size={20}
         />
       }
       onClick={() => {

@@ -1,6 +1,5 @@
 import { Stack, StackProps, Tooltip, Typography } from '@mui/material'
-
-import { Iconify } from '../../iconify'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 
 const SPACING = 2.5
 
@@ -38,10 +37,9 @@ export default function Block({
 
         {tooltip && (
           <Tooltip title={tooltip}>
-            <Iconify
-              icon='eva:info-outline'
-              width={16}
-              sx={{ mx: 0.5 }}
+            <LuInfo
+              style={{ marginRight: 0.5, marginLeft: 0.5 }}
+              size={16}
             />
           </Tooltip>
         )}
