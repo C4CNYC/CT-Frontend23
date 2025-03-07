@@ -50,14 +50,18 @@ enum JoinStatus {
 }
 
 export default function JoinClassModal({ children }: IJoinClassModal): React.ReactElement {
+  const theme = useTheme()
+  const translate = useTranslate()
+
   const [open, setOpenDialog] = useState<boolean>(false)
   const [tribeInfo, setTribeInfo] = useState<null | IClass>(null)
-  const translate = useTranslate()
+
   const profile = useSelector((state: RootState) => state.global.user)
-  const theme = useTheme()
 
   const [joinClass, { isError, isSuccess }] = useJoinClassMutation()
+
   const buttonSx = useMemo(() => getButtonSx(theme), [theme])
+
   const methods = useForm<FormJoinClassProps>({
     resolver: yupResolver(CreateClassSchema),
     mode: 'onChange',
@@ -85,15 +89,11 @@ export default function JoinClassModal({ children }: IJoinClassModal): React.Rea
         {children}
       </Box>
       <Dialog
-        maxWidth='md'
+        maxWidth='sm'
+        fullWidth
         open={open}
         onClose={() => {
           setOpenDialog(false)
-        }}
-        PaperProps={{
-          sx: {
-            minWidth: { xs: '300px', sm: '300px', md: '500px', lg: '550px' },
-          },
         }}
       >
         {!isSuccess ? (
@@ -102,15 +102,16 @@ export default function JoinClassModal({ children }: IJoinClassModal): React.Rea
               variant='h3'
               textAlign='center'
             >
-              {!isError ? 'I got a join-code' : 'We can’t find this tribe or quest'}
+              {translate(!isError ? 'join_class_dialog_title' : 'join_class_dialog_title_1')}
+
               <Typography
                 textAlign='center'
                 variant='body1'
                 maxWidth={500}
               >
-                {!isError
-                  ? 'Enter your join-code below'
-                  : 'Either you typed it wrong or this tribe is no longer available. Ask your lead or teacher.'}
+                {translate(
+                  !isError ? 'join_class_dialog_enter_code' : 'join_class_dialog_enter_code_1'
+                )}
               </Typography>
             </DialogTitle>
             <FormProvider
@@ -143,14 +144,16 @@ export default function JoinClassModal({ children }: IJoinClassModal): React.Rea
                   />
                 </FormGroup>
               </DialogContent>
-              <Divider sx={{ m: '34px auto 0', maxWidth: '300px' }}>OR</Divider>
+              <Divider sx={{ m: '34px auto 0', maxWidth: '300px' }}>
+                {translate('share_modal_or')}
+              </Divider>
               <DialogActions>
                 <LoadingButton
                   sx={buttonSx}
                   LinkComponent={Link}
                   href={PATH_AUTH.signIn}
                 >
-                  LOGIN
+                  {translate('login')}
                 </LoadingButton>
               </DialogActions>
             </FormProvider>
@@ -159,7 +162,6 @@ export default function JoinClassModal({ children }: IJoinClassModal): React.Rea
           <SuccessJoin
             name={tribeInfo?.mentors && tribeInfo?.mentors[0].first_name}
             icon={tribeInfo?.avatar}
-            location={'Bali, Indonesia'}
             title={tribeInfo?.name}
             handleCloseModal={() => setOpenDialog(false)}
           />

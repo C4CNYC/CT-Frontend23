@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
-import { Box, Button, Collapse, Stack, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { AiOutlineClockCircle } from '@react-icons/all-files/ai/AiOutlineClockCircle'
 import { GoTriangleDown } from '@react-icons/all-files/go/GoTriangleDown'
@@ -13,6 +13,7 @@ import { ILesson } from '@/redux/interfaces/content.interface'
 import { setPrevLessonId } from '@/redux/slices/code-panel-global'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+import useControlEllipsis from '@root/src/hooks/useControlEllipsis'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 
@@ -37,6 +38,7 @@ export default function LessonItem({
   prevLesson,
   index,
 }: ILessonItemProps): React.ReactElement {
+  const { textRef, longDesc } = useControlEllipsis()
   const { user } = useAuthContext()
   const { push } = useRouter()
   const translate = useTranslate()
@@ -44,15 +46,11 @@ export default function LessonItem({
   const theme = useTheme()
 
   const [openDetails, setOpenDetails] = useState(false)
-  const [maxDesc, setMaxDesc] = useState(50)
-  const descRef = useRef<HTMLElement | null>(null)
   const btnRef = useRef<HTMLDivElement | null>(null)
 
   const courseId = useRouter().query.id
   const lastLessonProgress = prevLesson?.progress ?? 100
   const isLastLessonInProgress = lastLessonProgress <= 90
-  const isTablet = useMediaQuery(theme.breakpoints.up('xl'))
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
 
   const fetchCodeFromPrevLesson = () => {
     dispatch(setPrevLessonId(`${user?.student_profile?.id}_${prevLesson?.id}`))
@@ -90,22 +88,6 @@ export default function LessonItem({
     }
   }
 
-  const ellipsisHandler = () => {
-    if (descRef.current) {
-      return descRef.current.offsetWidth < descRef.current.scrollWidth
-    }
-    return false
-  }
-
-  useEffect(() => {
-    if (isTablet) {
-      setMaxDesc(200)
-    }
-    if (isDesktop) {
-      setMaxDesc(400)
-    }
-  }, [])
-
   return (
     <Stack
       sx={getLessonSx(theme)}
@@ -131,29 +113,25 @@ export default function LessonItem({
         </Typography>
         <Typography
           variant='body1'
-          mb={lesson?.description?.length < maxDesc ? 1 : 0}
-          ref={descRef}
+          ref={textRef}
           sx={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
+            whiteSpace: !openDetails ? 'nowrap' : 'wrap',
           }}
         >
           {lesson.description}
         </Typography>
-        {ellipsisHandler() ? (
-          <>
-            <Collapse in={openDetails}>{lesson.description}</Collapse>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation()
-                setOpenDetails(!openDetails)
-              }}
-              sx={SEE_MORE_SX}
-            >
-              {translate('actions_see_more')} {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
-            </Button>
-          </>
+        {longDesc ? (
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              setOpenDetails(!openDetails)
+            }}
+            sx={SEE_MORE_SX}
+          >
+            {translate('actions_see_more')} {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
+          </Button>
         ) : null}
 
         <Stack

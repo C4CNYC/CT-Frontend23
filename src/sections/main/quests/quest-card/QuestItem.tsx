@@ -24,9 +24,14 @@ import { ConfirmDialog, MenuPopover } from '@root/src/components'
 interface IQuestItemProps {
   assignment: IAssignmentReduced
   schoolId: string
+  index: number
 }
 
-export default function QuestItem({ assignment, schoolId }: IQuestItemProps): React.ReactElement {
+export default function QuestItem({
+  assignment,
+  schoolId,
+  index,
+}: IQuestItemProps): React.ReactElement {
   const { query } = useRouter()
   const theme = useTheme()
   const { enqueueSnackbar } = useSnackbar()
@@ -90,6 +95,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
         href={assignmentPath}
         underline='none'
         color={isLight ? 'initial' : '#E6F5FD'}
+        className={index === 0 ? 'studentJoinStep4 tourMainStep4' : ''}
       >
         <Stack
           sx={{

@@ -17,6 +17,7 @@ import {
 import { FormProvider } from '@root/src/components/hook-form/FormProvider'
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { useSnackbar } from '@root/src/components/snackbar'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { DIALOG_SX, BASE_BOX_SX } from './constants'
 
@@ -36,6 +37,7 @@ interface FormValuesProps {
 const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic }) => {
   const defaultValues = useMemo(() => getDefaultValues(isPublic), [isPublic])
   const { enqueueSnackbar } = useSnackbar()
+  const translate = useTranslate()
 
   const [open, setOpen] = useState(false)
   const [postProject, { isLoading }] = usePostProjectMutation()
@@ -56,7 +58,8 @@ const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic })
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     const file = new FormData()
     const { getImageFromCode } = await import('@/utils/getImageFromCode')
-    const cover = await getImageFromCode(code)
+
+    const cover = await getImageFromCode()
     try {
       const postedProject = await postProject({
         ...data,
@@ -130,16 +133,18 @@ const PublishModal: FC<IPublishModal> = ({ children, code, language, isPublic })
               <Button
                 color='error'
                 onClick={handleClose}
+                sx={{ textTransform: 'uppercase' }}
               >
-                CANCEL
+                {translate('actions_cancel')}
               </Button>
 
               <LoadingButton
                 type='submit'
                 variant='contained'
                 loading={isLoading || isUpdatingCover}
+                sx={{ textTransform: 'uppercase' }}
               >
-                SAVE
+                {translate('actions_save')}
               </LoadingButton>
             </DialogActions>
           </FormProvider>

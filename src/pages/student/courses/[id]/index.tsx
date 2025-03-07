@@ -48,10 +48,6 @@ export default function CoursePage(): React.ReactElement {
         <CustomBreadcrumbs
           links={[
             {
-              name: translate('home'),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
               name: translate('sidebar_menu_catalog'),
               href: STUDENT_PATH_DASHBOARD.courses.root,
             },

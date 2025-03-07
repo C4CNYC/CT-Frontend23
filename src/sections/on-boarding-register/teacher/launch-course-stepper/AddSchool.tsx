@@ -64,7 +64,7 @@ export default function AddSchool(): React.ReactElement {
         .then((payload) => {
           aiLessonReadySet(payload.id)
           lessonDataToCreate.newLessonId = payload.id
-          createAILesson(lessonDataToCreate) // no need to wait, we have lessonid
+          createAILesson(lessonDataToCreate)
         })
         .catch((err) => {
           enqueueSnackbar(err.data.message, { variant: 'error' })
@@ -76,13 +76,15 @@ export default function AddSchool(): React.ReactElement {
     if (!isLoading && data) {
       methods.reset({
         schoolName: data.data[0].name ?? '',
-        city: data.data[0].city ?? '',
+        city: data.data[0].city ?? 'New York City',
         zip: data.data[0].zip ?? '',
         country: data.data[0].country ?? defaultCountry.code.toLowerCase(),
       })
     }
   }, [isLoading])
+
   let aiLessonWaiting = !(!AiGenerateLessonData || !!aiLessonReady)
+
   const methods = useForm<SchoolFormProps>({
     resolver: yupResolver(CreateSchoolSchema),
     mode: 'all',
@@ -178,6 +180,7 @@ export default function AddSchool(): React.ReactElement {
           >
             <RHFTextField
               name='city'
+              focused
               label={translate('city')}
               sx={(theme) => ({ ...styledRegisterInput(theme) })}
             />

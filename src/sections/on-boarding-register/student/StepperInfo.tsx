@@ -22,7 +22,7 @@ import { SUBMIT_BTN_SX } from '../teacher/constants'
 
 interface FormValueProps {
   day: string
-  mounth: string
+  month: string
   year: string
 }
 
@@ -33,14 +33,18 @@ export default function StepperInfo(): React.ReactElement {
   const translate = useTranslate()
   const CreateInfoSchema = Yup.object().shape({
     day: Yup.string().required('Please select day'),
-    mounth: Yup.string().required('Please select mounth'),
+    month: Yup.string().required('Please select month'),
     year: Yup.string().required('Please select year'),
   })
 
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateInfoSchema),
     mode: 'onChange',
-    defaultValues: {},
+    defaultValues: {
+      day: '1',
+      month: 'Jan',
+      year: '2010',
+    },
   })
 
   const onSubmit = async (data: FormValueProps) => {
@@ -55,8 +59,8 @@ export default function StepperInfo(): React.ReactElement {
     }
   }
 
-  const currentMonth = methods.watch('mounth')
-  const currentYear = methods.watch('year')
+  const currentMonth = methods.watch('month')
+  const currentYear = methods.watch('month')
 
   const getDaysCount = () => {
     if (schort_month.includes(currentMonth)) {
@@ -103,7 +107,7 @@ export default function StepperInfo(): React.ReactElement {
         >
           <RHFSelect
             native={false}
-            name='mounth'
+            name='month'
             label={translate('student_birth_data_month')}
             sx={(theme) => ({
               ...styledRegisterInput(theme, {

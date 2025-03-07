@@ -75,6 +75,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         px={1}
         gap={1}
         direction='row'
+        id='view_user_code_block'
       >
         {!isInstructionsHidden ? (
           <SliderBlock

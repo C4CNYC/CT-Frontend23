@@ -104,10 +104,6 @@ export default function ModulePage(): React.ReactElement {
           sx={getBreadcrumbsSx(theme, isMobile)}
           links={[
             {
-              name: translate('home'),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
               name: translate('courses'),
               href: STUDENT_PATH_DASHBOARD.courses.root,
             },

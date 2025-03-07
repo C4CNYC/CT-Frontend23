@@ -3,7 +3,6 @@ import Head from 'next/head'
 
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CourseList from '@/sections/courses/CourseList'
 import { useTranslate } from '@/utils/translateHelper'
 import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
@@ -27,11 +26,7 @@ export default function Courses(): React.ReactElement {
           heading=''
           links={[
             {
-              name: translate('home'),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
-              name: translate('courses'),
+              name: translate('sidebar_menu_catalog'),
               href: MANAGER_PATH_DASHBOARD.courses.root,
             },
           ]}

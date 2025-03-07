@@ -4,16 +4,9 @@ import { Box, Container } from '@mui/material'
 
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { StudentDashboardLayout } from '@/layouts/dashboard/StudentDashboardLayout'
-import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
 import { useGetProjectsQuery } from '@/redux/services/manager/gallery-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import FilterGallery from '@/sections/dashboard/gallery/filter'
-import GalleryItem from '@/sections/dashboard/gallery/GalleryElement'
-import {
-  SkeletonGalleryBreadcrumbs,
-  SkeletonGalleryFilter,
-  SkeletonGalleryItem,
-} from '@/sections/dashboard/gallery/SkeletonGallery'
 import { getCountTakingElment } from '@/utils'
 import {
   CustomBreadcrumbs,
@@ -21,19 +14,31 @@ import {
   SimpleInfiniteList,
   useSettingsContext,
 } from '@root/src/components'
+import { IGallery, IGallerySearchParams } from '@root/src/redux/interfaces/gallery.interface'
+import ProjectsList from '@root/src/sections/dashboard/gallery'
+import {
+  SkeletonGalleryBreadcrumbs,
+  SkeletonGalleryFilter,
+  SkeletonGalleryItem,
+} from '@root/src/sections/dashboard/gallery/skeletons'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 PrivateProjects.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 )
 export default function PrivateProjects(): React.ReactElement {
-  const [projects, setProjects] = useState<IGallery[] | []>([])
+  const translate = useTranslate()
   const { themeStretch } = useSettingsContext()
+
+  const [projects, setProjects] = useState<IGallery[] | []>([])
+
   const { filters, setFilter } = useFilters<IGallerySearchParams>(
     {
       title: '',
     },
     FilterMode.global
   )
+
   const { data, isLoading, isFetching } = useGetProjectsQuery(filters)
 
   useEffect(() => {
@@ -86,12 +91,7 @@ export default function PrivateProjects(): React.ReactElement {
               md: 'repeat(3, 1fr)',
             }}
           >
-            {projects.map((item) => (
-              <GalleryItem
-                key={item.id}
-                item={item}
-              />
-            ))}
+            <ProjectsList projects={projects} />
             {isFetching
               ? Array(getCountTakingElment(Number(data?.meta.itemCount), Number(filters.take)))
                   .fill(null)
@@ -101,7 +101,7 @@ export default function PrivateProjects(): React.ReactElement {
         </SimpleInfiniteList>
 
         {!isLoading && !isFetching && !data?.data.length ? (
-          <EmptyContent title='You have no projects yet' />
+          <EmptyContent title={translate('gallery_projects_empty')} />
         ) : null}
       </Container>
     </>

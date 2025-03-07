@@ -17,8 +17,8 @@ export default function QuickKeys() {
   const isDesktop = useIsDesktop()
   const { isKeyboardOpen, keyboardHeight } = useMobileKeyboard()
 
-  const [open, setOpen] = useState<boolean>(false)
-  const [isOpenButtons, setIsOpenButtons] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(!isDesktop)
+  const [isOpenButtons, setIsOpenButtons] = useState<boolean>(!isDesktop)
 
   const handleOpen = () => {
     setOpen(!open)
