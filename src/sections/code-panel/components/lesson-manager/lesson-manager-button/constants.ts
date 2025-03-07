@@ -16,7 +16,6 @@ export const getButtonSx = (theme: Theme): SxProps => ({
   flexDirection: 'column',
 })
 
-export const ICON_BTN_SX = { mr: '5px' }
 export const GetTypSx = (theme: Theme): SxProps => ({
   textOverflow: 'ellipsis',
   overflow: ' hidden',

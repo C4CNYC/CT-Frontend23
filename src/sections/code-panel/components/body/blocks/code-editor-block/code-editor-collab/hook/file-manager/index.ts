@@ -136,9 +136,10 @@ export const useFileManager = (): UseFileManagerReturn => {
         lessonRef.current?.type !== LessonType.EXERCISE &&
         !lesson?.independent
       ) {
-        const files = unauthFileLocalStorageManger(localStorageKey).carryOverFiles(
+        let files = unauthFileLocalStorageManger(localStorageKey).carryOverFiles(
           getLocalStorageRoomKey(`${lessonRef.current?.id}`),
-          unauthFiles
+          unauthFiles,
+          true
         )
         lessonRef.current = lesson!
         return files
@@ -146,6 +147,11 @@ export const useFileManager = (): UseFileManagerReturn => {
     }
 
     lessonRef.current = lesson!
+    let existingFiles = unauthFileLocalStorageManger(localStorageKey).getLocalStorageFiles()
+    let accountableExistingFiles = Object.values(existingFiles).filter(
+      (file) => file.body.length > 10
+    )
+    if (accountableExistingFiles.length) return Object.values(accountableExistingFiles)
 
     const files = unauthFileLocalStorageManger(localStorageKey).getFiles(unauthFiles)
 

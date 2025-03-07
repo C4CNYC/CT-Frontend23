@@ -58,7 +58,7 @@ export function RegisterStudentTeacher({ isTeacher }: Props): React.ReactElement
       sx={{
         position: 'absolute',
         right: '0px',
-        top: '-80px',
+        top: { xs: '-50px', md: '-80px' },
         color: '#EE467A',
         display: 'flex',
         gap: 1,

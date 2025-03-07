@@ -1,10 +1,9 @@
 import { useState } from 'react'
 
-import SettingsIcon from '@mui/icons-material/Settings'
 import { IconButton, SwipeableDrawer, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
 
-import { Iconify } from '@/components/iconify'
 import { resetLessonEvent, updateLineWrap } from 'src/sections/code-panel/lib/events'
 
 import EditColors from './preferences/EditColors'
@@ -37,7 +36,7 @@ const SettingDrawer = (): React.ReactElement => {
           setDrawer(true)
         }}
       >
-        <SettingsIcon />
+        <IoSettingsOutline />
       </IconButton>
       <SwipeableDrawer
         anchor='right'
@@ -58,11 +57,9 @@ const SettingDrawer = (): React.ReactElement => {
             display='flex'
             alignItems='center'
           >
-            <Iconify
-              mr='10px'
-              width='35px'
-              height='30px'
-              icon='ep:setting'
+            <IoSettingsOutline
+              size={30}
+              style={{ marginRight: '10px' }}
             />
             <Typography variant='h5'>Settings</Typography>
           </Box>

@@ -1,8 +1,8 @@
 import { type FC, useMemo } from 'react'
 
 import { Box, IconButton } from '@mui/material'
-import { MdOutlineSwipeLeft } from '@react-icons/all-files/md/MdOutlineSwipeLeft'
-import { MdOutlineSwipeRight } from '@react-icons/all-files/md/MdOutlineSwipeRight'
+import { LuRedo } from '@react-icons/all-files/lu/LuRedo'
+import { LuUndo } from '@react-icons/all-files/lu/LuUndo'
 import { useDispatch } from 'react-redux'
 
 import { setTab } from '@/redux/slices/mobile-tab-manager'
@@ -30,14 +30,14 @@ const TabButton: FC<TabButtonProps> = ({ orientation }) => {
     <Box sx={boxStyles}>
       <IconButton onClick={changeTab}>
         {isLeftOrientation ? (
-          <MdOutlineSwipeRight
-            size='20px'
+          <LuUndo
+            size={25}
             color='#EE467A'
             style={SWIPE_RIGHT_STYLE}
           />
         ) : (
-          <MdOutlineSwipeLeft
-            size='20px'
+          <LuRedo
+            size={25}
             color='#EE467A'
             style={SWIPE_LEFT_STYLE}
           />

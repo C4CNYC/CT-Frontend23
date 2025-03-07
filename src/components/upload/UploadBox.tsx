@@ -1,7 +1,6 @@
 import { alpha, styled } from '@mui/material/styles'
+import { MdCloudUpload } from '@react-icons/all-files/md/MdCloudUpload'
 import { useDropzone } from 'react-dropzone'
-
-import { Iconify } from '../iconify'
 
 import { UploadProps } from './types'
 
@@ -59,12 +58,7 @@ export default function UploadBox({
     >
       <input {...getInputProps()} />
 
-      {placeholder ?? (
-        <Iconify
-          icon='eva:cloud-upload-fill'
-          width={28}
-        />
-      )}
+      {placeholder ?? <MdCloudUpload size={28} />}
     </StyledDropZone>
   )
 }

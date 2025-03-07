@@ -1,9 +1,10 @@
 import { useMemo } from 'react'
 
-import { Button, Stack } from '@mui/material'
+import { Button, Divider, Stack } from '@mui/material'
+import { FaPlay } from '@react-icons/all-files/fa/FaPlay'
 import { GrRefresh } from '@react-icons/all-files/gr/GrRefresh'
 
-import { Iconify } from '@root/src/components'
+import useIsDesktop from '@root/src/hooks/useIsDesktop'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
@@ -23,6 +24,7 @@ interface PreviewControlsProps {
 
 const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsProps) => {
   const translate = useTranslate()
+  const isDesktop = useIsDesktop()
   const btnStartStop = useMemo(
     () => btnStyles(!!disabled, isRunning ? RUN_COLOR : STOP_COLOR),
     [disabled, isRunning]
@@ -37,12 +39,14 @@ const PreviewControls = ({ disabled, isRunning, reloadIframe }: PreviewControlsP
         onClick={reloadIframe}
       >
         {isRunning ? translate('preview_controls_stop') : translate('preview_controls_run')}
-        <Iconify
-          icon='solar:play-bold'
-          width={18}
-          height={18}
-        />
+        <FaPlay size={12} />
       </Button>
+      {!isDesktop ? (
+        <Divider
+          flexItem
+          orientation='vertical'
+        />
+      ) : null}
       <Button
         disabled={disabled}
         sx={btnRefresh}

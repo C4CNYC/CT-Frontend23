@@ -5,10 +5,10 @@ import Divider from '@mui/material/Divider'
 import Link from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import { MdDone } from '@react-icons/all-files/md/MdDone'
 
 import { addAlpha } from '@root/src/utils'
 import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from 'src/assets/icons'
-import { Iconify } from 'src/components/iconify'
 import { Label } from 'src/components/label'
 
 type Props = CardProps & {
@@ -109,11 +109,11 @@ export function PricingCard({ card, sx, ...other }: Props) {
           alignItems='center'
           sx={{ typography: 'body2' }}
         >
-          <Iconify
-            icon='eva:checkmark-fill'
-            width={16}
-            sx={{ mr: 1 }}
+          <MdDone
+            style={{ marginRight: 1 }}
+            size={16}
           />
+
           {item}
         </Stack>
       ))}

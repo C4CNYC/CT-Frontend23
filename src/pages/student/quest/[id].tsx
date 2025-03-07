@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import { Container, Link, Skeleton, SxProps, Theme, useTheme } from '@mui/material'
+import { FaArrowRightLong } from '@react-icons/all-files/fa6/FaArrowRightLong'
 import Head from 'next/head'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
-import { Iconify, useSettingsContext } from '@/components'
+import { useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetTeacherListQuery } from '@/redux/services/admin/school-amdin'
 import {
@@ -15,7 +16,6 @@ import {
 } from '@/redux/services/manager/assignments-student'
 import { useGetCoursQuery } from '@/redux/services/manager/courses-student'
 import { useGetLessonStudentWithoutContentsQuery } from '@/redux/services/manager/lesson-student'
-import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import LessonItem from '@/sections/module/lesson-item'
 import QuestDescription from '@/sections/quest/QuestDescription'
@@ -32,7 +32,6 @@ export default function Quest(): React.ReactElement | null {
   const { query } = useRouter()
   const theme = useTheme()
   const { themeStretch } = useSettingsContext()
-  const [hasContent, setHasContent] = useState(false)
   const containerSx = useMemo(() => getContainerSx(theme), [theme])
   const skeletonSx = useMemo(() => getSkeletonSx(theme), [theme])
   const profile = useSelector((state: any) => state.global.user)
@@ -55,24 +54,12 @@ export default function Quest(): React.ReactElement | null {
     { skip: !data?.lessonId }
   )
 
-  const { data: module, isLoading: isLoadingModule } = useGetModuleWithLessonsQuery(
-    { id: data?.courseUnitId as string },
-    { skip: !data?.courseUnitId }
-  )
-
   const { data: teachers } = useGetTeacherListQuery(
     {
       schoolId: query.schoolId as string,
     },
     { skip: !query.schoolId }
   )
-
-  useEffect(() => {
-    if (data) {
-      const content = JSON.parse(data?.description as string).doc.content
-      setHasContent(content.some((el: any) => el.content))
-    }
-  }, [data])
 
   if (isLoading || !data) {
     return (
@@ -97,7 +84,7 @@ export default function Quest(): React.ReactElement | null {
           teachers={teachers}
           questName={data.name}
         />
-        {hasContent ? <QuestDescription description={data?.description} /> : null}
+        <QuestDescription description={data?.description} />
 
         {lesson ? (
           <>
@@ -136,10 +123,9 @@ export default function Quest(): React.ReactElement | null {
           sx={KEEP_CODING_LINK_SX}
         >
           {translate('keep_coding')}
-          <Iconify
-            icon='maki:arrow'
-            width={18}
-            style={{ marginLeft: '3px' }}
+          <FaArrowRightLong
+            style={{ marginLeft: '5px' }}
+            size={18}
           />
         </Link>
       </Container>

@@ -1,5 +1,5 @@
-import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
+import { IGallery, IGallerySearchParams } from '@root/src/redux/interfaces/gallery.interface'
 
 import { managerApi } from '.'
 
@@ -23,7 +23,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ['Projects'],
     }),
-    postProject: builder.mutation<IGallery, IGallery>({
+    postProject: builder.mutation<IGallery, Omit<IGallery, 'id'>>({
       query: ({ ...body }) => ({
         url: '/student/project',
         method: 'POST',
