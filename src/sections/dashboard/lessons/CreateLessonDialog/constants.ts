@@ -8,7 +8,8 @@ export interface FormValuesProps {
   head?: string
   duration: number
   type: LessonTypeEnum
-  language: LessonLanguage
+  codeLanguage: LessonLanguage
+  lessonLanguage: string
   slug: string
   grading_method: string
   lock: boolean
@@ -116,7 +117,7 @@ export const TYPO_TOGGLE_BTN_SX = {
 
 export const GRADING_METHODS_BTN_SX = {
   gap: 1,
-  m: '0 !important',
+  m: { xs: 'auto', md: '0 !important' },
   padding: '0.3rem 0.8rem',
 
   '&.Mui-selected, &.Mui-selected:hover': {

@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 
 import { Box, InputAdornment, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 
+import { languages } from '@root/src/assets/data/languages'
 import { RHFSelect, RHFSwitch, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { LessonLanguage } from '@root/src/redux/services/enums/lesson-language.enum'
@@ -29,7 +30,7 @@ export const MainTab = () => {
   )
 
   return (
-    <Stack gap={2}>
+    <Stack gap={3}>
       <RHFTextField
         name='name'
         label={translate('lessons_name')}
@@ -45,8 +46,7 @@ export const MainTab = () => {
       />
       <RHFSelect
         native
-        size='small'
-        name='language'
+        name='codeLanguage'
         label={translate('lessons_language_select')}
       >
         {(Object.keys(LessonLanguage) as Array<keyof typeof LessonLanguage>).map((l) => {
@@ -59,6 +59,20 @@ export const MainTab = () => {
             </option>
           )
         })}
+      </RHFSelect>
+      <RHFSelect
+        name='lessonLanguage'
+        label={translate('ai_gen_lng_select_title')}
+        native
+      >
+        {languages.map((el) => (
+          <option
+            key={el.code}
+            value={el.language}
+          >
+            {el.language}
+          </option>
+        ))}
       </RHFSelect>
       <Stack sx={TYPO_TOGGLE_BTN_SX}>
         <Typography variant='body1'>{translate('lessons_type')}</Typography>
@@ -87,7 +101,10 @@ export const MainTab = () => {
       <RHFToggleButtonGroup
         name='grading_method'
         options={_mochGradingMethods}
-        sxGroup={{ width: 'fit-content' }}
+        sxGroup={{
+          width: { xs: 'auto', md: 'max-content' },
+          border: { xs: 'none', md: '1px solid rgba(145, 158, 171, 0.24)' },
+        }}
         sxButton={GRADING_METHODS_BTN_SX}
         tooltip
         size='small'
@@ -96,13 +113,11 @@ export const MainTab = () => {
       <RHFTextField
         name='slug'
         label={translate('lessons_slug')}
-        size='small'
       />
 
       <RHFTextField
         name='duration'
         label={translate('lessons_duration')}
-        size='small'
         type='number'
         InputProps={{
           startAdornment: <InputAdornment position='start'>min</InputAdornment>,

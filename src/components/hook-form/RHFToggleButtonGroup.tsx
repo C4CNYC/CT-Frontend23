@@ -59,9 +59,9 @@ export function RHFToggleButtonGroup({
   const carouselRef = useRef<Carousel>(null)
   const carouselSettings = {
     arrows: false,
-    centerMode: true,
     slidesToShow: 1,
     slidesToScroll: 2,
+    infinite: false,
     variableWidth: true,
     rtl: Boolean(theme.direction === 'rtl'),
   }
@@ -77,7 +77,7 @@ export function RHFToggleButtonGroup({
     <>
       <style>
         {`
-              .slick-track
+            .slick-track
         {
             display: flex !important;
         }

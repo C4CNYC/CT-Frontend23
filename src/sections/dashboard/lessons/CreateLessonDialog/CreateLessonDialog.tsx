@@ -137,6 +137,8 @@ export default function CreateLessonDialog({
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
+        maxWidth={'sm'}
         sx={{ zIndex: 9999 }}
         PaperProps={{
           sx: {
@@ -265,9 +267,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
           sx={{
             px: { xs: 2, sm: 3 },
             pt: { xs: 2, sm: 3 },
-            width: { xs: '360px', sm: '440px', md: '500px', lg: '580px' },
-            height: 'auto',
-            minHeight: '400px',
+            minHeight: { xs: 'auto', md: '845px' },
           }}
         >
           {children}
