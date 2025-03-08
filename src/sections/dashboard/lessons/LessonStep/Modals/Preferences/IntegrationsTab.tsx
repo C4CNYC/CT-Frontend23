@@ -12,6 +12,8 @@ import {
   Typography,
   alpha,
 } from '@mui/material'
+import { MdOutlineCheckBox } from '@react-icons/all-files/md/MdOutlineCheckBox'
+import { MdOutlineCheckBoxOutlineBlank } from '@react-icons/all-files/md/MdOutlineCheckBoxOutlineBlank'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 // import Link from 'next/link'
@@ -29,7 +31,6 @@ import {
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { RHFCode } from '@root/src/components/hook-form/RHFCode'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { SearchNotFound } from '@root/src/components/search-not-found/SearchNotFound'
 
 export function IntegrationsTab({ contentId }: { contentId: string }): React.ReactElement {
@@ -194,13 +195,7 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
                     }),
                   }}
                 >
-                  <Iconify
-                    icon={
-                      selected
-                        ? 'material-symbols:check-box-outline-rounded'
-                        : 'material-symbols:check-box-outline-blank'
-                    }
-                  />
+                  {selected ? <MdOutlineCheckBox /> : <MdOutlineCheckBoxOutlineBlank />}
                 </Box>
               </Box>
 

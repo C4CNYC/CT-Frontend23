@@ -9,6 +9,8 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { Iconify } from '@root/src/components/iconify/Iconify'
@@ -83,10 +85,7 @@ const SimpleAiGenerate = ({
           >
             {!isModal ? (
               <IconButton onClick={resetRoad}>
-                <Iconify
-                  icon='ion:chevron-back'
-                  width='30px'
-                />
+                <IoIosArrowBack size={28} />
               </IconButton>
             ) : null}
             <Typography
@@ -101,10 +100,7 @@ const SimpleAiGenerate = ({
                 onClick={closeModal}
                 sx={{ position: 'absolute', top: '-12px', right: '-12px' }}
               >
-                <Iconify
-                  icon='ion:close'
-                  width='20px'
-                />
+                <IoClose size={20} />
               </IconButton>
             ) : null}
           </Stack>
@@ -123,12 +119,8 @@ const SimpleAiGenerate = ({
                     key={el.key}
                     sx={SIMPLE_GENERATE_TOGLE}
                   >
-                    <Iconify
-                      icon={el.icon}
-                      color={el.color}
-                      width={22}
-                      height={22}
-                    />
+                    {el.icon}
+
                     {translate(el.text)}
                   </ToggleButton>
                 ))}

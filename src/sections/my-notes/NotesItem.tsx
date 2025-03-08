@@ -2,17 +2,17 @@ import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { IconButton, Stack, Typography, alpha } from '@mui/material'
+import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
+import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
 import { useSnackbar } from 'notistack'
 
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { IGoals } from '@/redux/interfaces/goals.interface'
 import { useRemoveGoalMutation } from '@/redux/services/manager/goals-student'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
-import { Iconify } from '@root/src/components/iconify/Iconify'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog' 
 
 import AddEditNoteDialog from './AddEditGoalDialog'
-
 interface INotesItemProps {
   note: IGoals
 }
@@ -81,10 +81,7 @@ export default function NotesItem({ note }: INotesItemProps) {
                 },
               }}
             >
-              <Iconify
-                icon='eva:edit-fill'
-                width='22px'
-              />
+              <MdOutlineModeEdit size={22} />
             </IconButton>
           </AddEditNoteDialog>
           <IconButton
@@ -97,10 +94,7 @@ export default function NotesItem({ note }: INotesItemProps) {
             }}
             onClick={handleOpenConfirm}
           >
-            <Iconify
-              icon='eva:trash-2-outline'
-              width='22px'
-            />
+            <IoTrashOutline size={22} />
           </IconButton>
         </Stack>
       </Stack>

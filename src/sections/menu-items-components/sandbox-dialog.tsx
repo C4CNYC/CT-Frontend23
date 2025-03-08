@@ -11,9 +11,10 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import { IoChevronForwardOutline } from '@react-icons/all-files/io5/IoChevronForwardOutline'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useRouter } from 'next/router'
 
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { ILesson, ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lessons-manager'
@@ -76,11 +77,7 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
               onClick={dialogopenClose}
               sx={{ position: 'absolute', right: '5px', top: '5px' }}
             >
-              <Iconify
-                icon='flowbite:close-outline'
-                width={20}
-                height={20}
-              />
+              <IoClose size={25} />
             </IconButton>
             <Typography variant='body1'>It may load with a template</Typography>
           </DialogTitle>
@@ -111,10 +108,7 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
               onClick={openSandboxWithTemplate(selectedLang || '')}
             >
               GO
-              <Iconify
-                icon='fa6-solid:chevron-right'
-                width={25}
-              />
+              <IoChevronForwardOutline size={25} />
             </Button>
           </DialogActions>
         </Dialog>

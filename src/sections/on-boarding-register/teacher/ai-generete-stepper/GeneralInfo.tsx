@@ -2,6 +2,8 @@ import { useEffect, useMemo } from 'react'
 
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
+import { IoChevronBack } from '@react-icons/all-files/io5/IoChevronBack'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useController } from 'react-hook-form'
 
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
@@ -99,10 +101,7 @@ export function GeneralInfo({
         sx={{ gap: 2, pl: isModal ? 1 : 0, alignItems: 'center' }}
       >
         <IconButton onClick={prevStep}>
-          <Iconify
-            icon='ion:chevron-back'
-            width='30px'
-          />
+          <IoChevronBack size={30} />
         </IconButton>
         <Typography
           variant='h3'
@@ -115,10 +114,7 @@ export function GeneralInfo({
             onClick={closeModal}
             sx={{ margin: '0px 0px 0px auto' }}
           >
-            <Iconify
-              icon='ion:close'
-              width='30px'
-            />
+            <IoClose size={30} />
           </IconButton>
         ) : null}
       </Stack>

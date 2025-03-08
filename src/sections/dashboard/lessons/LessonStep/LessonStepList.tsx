@@ -6,6 +6,7 @@ import { Box, Button, ListItemIcon, MenuItem, Stack, Typography } from '@mui/mat
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { FiSettings } from '@react-icons/all-files/fi/FiSettings'
 import { ImPlus } from '@react-icons/all-files/im/ImPlus'
+import { IoDiamondOutline } from '@react-icons/all-files/io5/IoDiamondOutline'
 import * as _ from 'lodash-es'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -26,6 +27,7 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { getOrder } from '@/utils/getTaskOrder'
 import { useTranslate } from '@/utils/translateHelper'
 import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import AIIcon from '@root/src/assets/icons/AIIcon'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useBoolean } from '@root/src/hooks/useBoolean'
@@ -439,10 +441,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
         >
           {translate('slide_add_prompt_ai')}
           <ListItemIcon sx={{ pl: 2 }}>
-            <Iconify
-              icon='mingcute:ai-line'
-              color='#FBDD3F'
-            />
+            <AIIcon color='#FBDD3F' />
           </ListItemIcon>
         </MenuItem>
         <MenuItem
@@ -452,10 +451,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
         >
           {translate('slide_add_ai_templates')}
           <ListItemIcon sx={{ pl: 3 }}>
-            <Iconify
-              icon='ion:diamond-outline'
-              color='#43D4DD'
-            />
+            <IoDiamondOutline color='#43D4DD' />
           </ListItemIcon>
         </MenuItem>
       </CustomPopover>

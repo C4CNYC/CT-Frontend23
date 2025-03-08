@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import SettingsIcon from '@mui/icons-material/Settings'
 import { IconButton, Stack, SwipeableDrawer, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
@@ -45,7 +44,7 @@ const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.Re
           setDrawer(true)
         }}
       >
-        <SettingsIcon style={{ color: iconColor }} />
+        <IoSettingsOutline style={{ color: iconColor }} />
       </IconButton>
       <SwipeableDrawer
         swipeAreaWidth={0}

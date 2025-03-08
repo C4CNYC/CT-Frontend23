@@ -1,9 +1,9 @@
 import { Link, Typography } from '@mui/material'
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
 import Head from 'next/head'
 import NextLink from 'next/link'
 
 import { PasswordIcon } from '@/assets/icons'
-import { Iconify } from '@/components/iconify'
 import CompactLayout from '@/layouts/compact'
 import { PATH_AUTH } from '@/routes/paths'
 import AuthResetPasswordForm from '@/sections/auth/AuthResetPasswordForm'
@@ -47,10 +47,7 @@ export default function ResetPasswordPage(): React.ReactElement {
           display: 'inline-flex',
         }}
       >
-        <Iconify
-          icon='eva:chevron-left-fill'
-          width={16}
-        />
+        <IoIosArrowBack size={16} />
         {translate('reset_pass_return_cta')}
       </Link>
     </>

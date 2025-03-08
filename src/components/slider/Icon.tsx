@@ -1,14 +1,17 @@
-import { Iconify, IconifyProps } from '../iconify'
+import { ReactNode } from 'react'
+
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
 
 interface Props {
-  icon?: IconifyProps // Right icon
+  icon?: ReactNode // Right icon
 }
 
-export function LeftIcon({ icon = 'eva:arrow-ios-forward-fill' }: Props): React.ReactElement {
-  return (
-    <Iconify
-      icon={icon}
-      sx={{
+export function LeftIcon({ icon }: Props): React.ReactElement {
+  return icon ? (
+    <>{icon}</>
+  ) : (
+    <IoIosArrowForward
+      style={{
         width: 20,
         height: 20,
         transform: ' scaleX(-1)',
@@ -17,13 +20,15 @@ export function LeftIcon({ icon = 'eva:arrow-ios-forward-fill' }: Props): React.
   )
 }
 
-export function RightIcon({ icon = 'eva:arrow-ios-forward-fill' }: Props): React.ReactElement {
-  return (
-    <Iconify
-      icon={icon}
-      sx={{
+export function RightIcon({ icon }: Props): React.ReactElement {
+  return icon ? (
+    <>{icon}</>
+  ) : (
+    <IoIosArrowForward
+      style={{
         width: 20,
         height: 20,
+        transform: ' scaleX(-1)',
       }}
     />
   )

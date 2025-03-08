@@ -11,9 +11,10 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import { IoChevronForwardOutline } from '@react-icons/all-files/io5/IoChevronForwardOutline'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useRouter } from 'next/router'
 
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useSnackbar } from '@root/src/components/snackbar'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { ILesson, ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
@@ -28,7 +29,6 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import { SelectLanguageItem } from '../menu-items-components/select-language-item'
 
 import { LANG_ITEMS_CONT_SX } from './constants'
-
 interface ILessonWC extends ILesson {
   contents?: ILessonContent[]
   updatedAt: string
@@ -102,11 +102,7 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
               onClick={dialogopenClose}
               sx={{ position: 'absolute', right: '5px', top: '5px' }}
             >
-              <Iconify
-                icon='flowbite:close-outline'
-                width={20}
-                height={20}
-              />
+              <IoClose size={22} />
             </IconButton>
             <Typography variant='body1'>{translate('lessons_create_lesson_desc')}</Typography>
           </DialogTitle>
@@ -137,10 +133,7 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
               onClick={createFromTemplate(selectedTemplate || '')}
             >
               {translate('lesson_create_favorite_btn')}
-              <Iconify
-                icon='fa6-solid:chevron-right'
-                width={25}
-              />
+              <IoChevronForwardOutline size={25} />
             </Button>
           </DialogActions>
         </Dialog>

@@ -14,6 +14,7 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { BiMailSend } from '@react-icons/all-files/bi/BiMailSend'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
@@ -177,12 +178,7 @@ export default function UserListPage(): React.ReactElement {
               <InviteStudentDialog schoolId={schoolId}>
                 <Button
                   variant='soft'
-                  startIcon={
-                    <Iconify
-                      icon='mdi:email-fast-outline'
-                      width='23px'
-                    />
-                  }
+                  startIcon={<BiMailSend size={20} />}
                 >
                   {translate('members_invite_student')}
                 </Button>
@@ -191,7 +187,7 @@ export default function UserListPage(): React.ReactElement {
                 component={NextLink}
                 href={MANAGER_PATH_DASHBOARD.school.new}
                 variant='contained'
-                startIcon={<FaPlus />}
+                startIcon={<FaPlus size={16} />}
               >
                 {translate('members_add_student')}
               </Button>

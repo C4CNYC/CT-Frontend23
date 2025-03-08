@@ -122,49 +122,52 @@ export default function LessonItem({
         >
           {lesson.description}
         </Typography>
-        {longDesc ? (
-          <Button
-            onClick={(e) => {
-              e.stopPropagation()
-              setOpenDetails(!openDetails)
-            }}
-            sx={SEE_MORE_SX}
-          >
-            {translate('actions_see_more')} {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
-          </Button>
-        ) : null}
 
         <Stack
           direction='row'
           justifyContent='space-between'
           alignItems='end'
         >
-          <Stack
-            direction='row'
-            gap={2}
-            flexWrap='wrap'
-          >
-            <Typography
-              variant='body2'
-              sx={MODE_TITLE_SX}
+          <Stack>
+            {longDesc ? (
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setOpenDetails(!openDetails)
+                }}
+                sx={SEE_MORE_SX}
+              >
+                {translate('actions_see_more')}{' '}
+                {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
+              </Button>
+            ) : null}
+            <Stack
+              direction='row'
+              gap={2}
+              flexWrap='wrap'
             >
-              <RocketIcon
-                width={20}
-                height={20}
-              />
-              {lesson.type === 'practical' ? 'Part of Project' : 'Exercise'}
-            </Typography>
-            <Typography
-              variant='body2'
-              sx={DURATION_SX}
-            >
-              <AiOutlineClockCircle size={20} />
-              {convertMinsToString(
-                convertDurationToMins(lesson.duration),
-                translate('hours'),
-                translate('minutes')
-              )}
-            </Typography>
+              <Typography
+                variant='body2'
+                sx={MODE_TITLE_SX}
+              >
+                <RocketIcon
+                  width={20}
+                  height={20}
+                />
+                {lesson.type === 'practical' ? 'Part of Project' : 'Exercise'}
+              </Typography>
+              <Typography
+                variant='body2'
+                sx={DURATION_SX}
+              >
+                <AiOutlineClockCircle size={20} />
+                {convertMinsToString(
+                  convertDurationToMins(lesson.duration),
+                  translate('hours'),
+                  translate('minutes')
+                )}
+              </Typography>
+            </Stack>
           </Stack>
           <Box ref={btnRef}>
             <LessonItemButton

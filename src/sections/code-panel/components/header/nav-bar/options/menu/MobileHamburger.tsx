@@ -1,8 +1,9 @@
 import { type MouseEventHandler, type FC } from 'react'
 
 import { Box, IconButton } from '@mui/material'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { IoMenu } from '@react-icons/all-files/io5/IoMenu'
 
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useSelector } from '@root/src/redux/store'
 
 export interface MobileHamburgerProps {
@@ -21,11 +22,17 @@ const MobileHamburger: FC<MobileHamburgerProps> = ({
   return (
     <Box sx={BOX_SX}>
       <IconButton onClick={open ? handleClosePopover : handleOpenPopover}>
-        <Iconify
-          icon={open ? 'iconamoon:close-bold' : 'majesticons:menu'}
-          width={'22px'}
-          color={'#43D4DD'}
-        />
+        {open ? (
+          <IoClose
+            size={22}
+            color={'#43D4DD'}
+          />
+        ) : (
+          <IoMenu
+            size={22}
+            color={'#43D4DD'}
+          />
+        )}
       </IconButton>
     </Box>
   )

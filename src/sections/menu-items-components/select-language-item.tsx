@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import { Typography } from '@mui/material'
 import { Stack } from '@mui/system'
+import { IoChevronForwardOutline } from '@react-icons/all-files/io5/IoChevronForwardOutline'
 
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { Image } from '@root/src/components/image/Image'
 
 interface LanguageItemProps {
@@ -65,10 +65,9 @@ export const SelectLanguageItem = ({
         <Typography variant='h5'>{langName}</Typography>
         <Typography variant='subtitle2'>{description}</Typography>
       </Stack>
-      <Iconify
+      <IoChevronForwardOutline
         color={isHovered || isSelected ? '' : '#EAEAEB'}
-        icon='fa6-solid:chevron-right'
-        width='30px'
+        size={30}
       />
     </Stack>
   )

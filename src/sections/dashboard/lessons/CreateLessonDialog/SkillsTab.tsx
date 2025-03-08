@@ -11,6 +11,8 @@ import {
   Typography,
   alpha,
 } from '@mui/material'
+import { MdOutlineCheckBox } from '@react-icons/all-files/md/MdOutlineCheckBox'
+import { MdOutlineCheckBoxOutlineBlank } from '@react-icons/all-files/md/MdOutlineCheckBoxOutlineBlank'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
@@ -166,13 +168,7 @@ export default function SkillsTab({ lessonId }: { lessonId: string }): React.Rea
                   },
                 }}
               >
-                <Iconify
-                  icon={
-                    selected
-                      ? 'material-symbols:check-box-outline-rounded'
-                      : 'material-symbols:check-box-outline-blank'
-                  }
-                />
+                {selected ? <MdOutlineCheckBox /> : <MdOutlineCheckBoxOutlineBlank />}
               </Box>
             </Box>
 

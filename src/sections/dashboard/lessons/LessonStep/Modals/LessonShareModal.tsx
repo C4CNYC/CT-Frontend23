@@ -14,6 +14,8 @@ import {
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { FaXTwitter } from '@react-icons/all-files/fa6/FaXTwitter'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { TbMountain } from '@react-icons/all-files/tb/TbMountain'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -21,7 +23,6 @@ import * as Yup from 'yup'
 
 import { FormProvider } from '@root/src/components/hook-form/FormProvider'
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useSnackbar } from '@root/src/components/snackbar'
 import { useCopyToClipboard } from '@root/src/hooks'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -97,10 +98,7 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             onClick={() => setOpenDialog(false)}
             sx={{ position: 'absolute', top: '5px', right: '5px' }}
           >
-            <Iconify
-              icon='ion:close'
-              width='20px'
-            />
+            <IoClose size={20} />
           </IconButton>
         </DialogTitle>
         <DialogContent>
@@ -132,10 +130,8 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             fullWidth
             sx={CREATE_QUEST_BTN_SX}
           >
-            <Iconify
-              icon='tabler:mountain'
-              color='#5D6C75'
-            />
+            <TbMountain color='#5D6C75' />
+
             {translate('share_modal_create_quest')}
           </Button>
           <Divider sx={{ my: 2 }}>{translate('share_modal_or')}</Divider>

@@ -10,8 +10,9 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { IoDiamondOutline } from '@react-icons/all-files/io5/IoDiamondOutline'
 
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
@@ -72,10 +73,7 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
             onClick={closeModal}
             sx={{ margin: '0px 0px 0px auto' }}
           >
-            <Iconify
-              icon='ion:close'
-              width='30px'
-            />
+            <IoClose size={30} />
           </IconButton>
         ) : null}
       </Stack>
@@ -185,10 +183,9 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
         />
       </Stack>
       <Stack sx={NOTE_DIAMOND_SX}>
-        <Iconify
-          icon='system-uicons:diamond'
-          width={26}
-          color={'#43D4DD'}
+        <IoDiamondOutline
+          size={26}
+          color='#43D4DD'
         />
         <Typography
           ml={2}
