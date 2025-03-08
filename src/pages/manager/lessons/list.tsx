@@ -2,10 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd'
 import { Box, Button, Container } from '@mui/material'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from '@/components'
+import { CustomBreadcrumbs, SimpleInfiniteList, useSettingsContext } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import { useGetAllAdminLessonsQuery } from '@/redux/services/admin/lessons-admin'
@@ -223,7 +224,7 @@ export default function LessonsListPage(): React.ReactElement {
             >
               <Button
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus />}
                 sx={{ mr: 2 }}
                 onClick={createByCloningLessonHandler}
               >

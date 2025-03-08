@@ -70,7 +70,7 @@ export default function MyApp({ Component, pageProps, ...props }: MyAppProps): R
       <Head>
         <meta
           name='viewport'
-          content='initial-scale=1, width=device-width'
+          content='initial-scale=1, width=device-width, interactive-widget=resizes-content'
         />
         {favicon}
       </Head>

@@ -14,6 +14,9 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { BiMailSend } from '@react-icons/all-files/bi/BiMailSend'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -25,7 +28,6 @@ import {
   ConfirmDialog,
   CustomAutocomplete,
   CustomBreadcrumbs,
-  Iconify,
   Scrollbar,
   TableEmptyRows,
   TableHeadCustom,
@@ -51,7 +53,6 @@ import PendingInvitesTab from '@/sections/dashboard/student/PendingInvitesTab'
 import { UserTableRow } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { useTranslate } from '@/utils/translateHelper'
-
 const STATUS_OPTIONS = ['all', 'invites']
 
 const TABLE_HEAD = [
@@ -176,12 +177,7 @@ export default function UserListPage(): React.ReactElement {
               <InviteStudentDialog schoolId={schoolId}>
                 <Button
                   variant='soft'
-                  startIcon={
-                    <Iconify
-                      icon='mdi:email-fast-outline'
-                      width='23px'
-                    />
-                  }
+                  startIcon={<BiMailSend size={20} />}
                 >
                   {translate('members_invite_student')}
                 </Button>
@@ -190,7 +186,7 @@ export default function UserListPage(): React.ReactElement {
                 component={NextLink}
                 href={MANAGER_PATH_DASHBOARD.school.new}
                 variant='contained'
-                startIcon={<Iconify icon='eva:plus-fill' />}
+                startIcon={<FaPlus size={16} />}
               >
                 {translate('members_add_student')}
               </Button>
@@ -246,7 +242,7 @@ export default function UserListPage(): React.ReactElement {
                         setOpenConfirm(true)
                       }}
                     >
-                      <Iconify icon='eva:trash-2-outline' />
+                      <FiTrash2 />
                     </IconButton>
                   </Tooltip>
                 }

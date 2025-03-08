@@ -1,6 +1,7 @@
 import { IconButton, IconButtonProps } from '@mui/material'
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
 
-import { Iconify } from '@/components/iconify'
 import { useSettingsContext } from '@/components/settings'
 import { useResponsive } from '@/hooks/useResponsive'
 
@@ -37,18 +38,17 @@ export default function NavToggleButton({
       }}
       {...other}
     >
-      <Iconify
-        width={16}
-        icon={
-          themeDirection === 'ltr'
-            ? themeLayout === 'vertical'
-              ? 'eva:arrow-ios-back-fill'
-              : 'eva:arrow-ios-forward-fill'
-            : themeLayout === 'vertical'
-              ? 'eva:arrow-ios-forward-fill'
-              : 'eva:arrow-ios-back-fill'
-        }
-      />
+      {themeDirection === 'ltr' ? (
+        themeLayout === 'vertical' ? (
+          <IoIosArrowBack size={16} />
+        ) : (
+          <IoIosArrowForward size={16} />
+        )
+      ) : themeLayout === 'vertical' ? (
+        <IoIosArrowForward size={16} />
+      ) : (
+        <IoIosArrowBack size={16} />
+      )}
     </IconButton>
   )
 }

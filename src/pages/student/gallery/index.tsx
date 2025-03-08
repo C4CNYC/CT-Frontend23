@@ -5,11 +5,11 @@ import NextLink from 'next/link'
 
 import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard/StudentDashboardLayout'
-import { IGallery, IGallerySearchParams } from '@/redux/interfaces/gallary.interface'
 import { useGetProjectsQuery } from '@/redux/services/manager/gallery-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import FolderElement from '@/sections/dashboard/gallery/FolderElement'
 import { FilterMode, useFilters } from '@root/src/hooks'
+import { IGallery, IGallerySearchParams } from '@root/src/redux/interfaces/gallery.interface'
+import FolderElement from '@root/src/sections/dashboard/gallery/FolderElement'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 Gallery.getLayout = (page: React.ReactElement) => (
@@ -79,7 +79,7 @@ export default function Gallery(): React.ReactElement {
             <FolderElement
               title={translate('gallery_folder_public_title')}
               subtitle={translate('gallery_folder_public_subtitle')}
-              projectCout={projectsCount.publicPr}
+              projectCount={projectsCount.publicPr}
             />
           </Link>
         </Grid>
@@ -96,7 +96,7 @@ export default function Gallery(): React.ReactElement {
             <FolderElement
               title={translate('gallery_folder_private_title')}
               subtitle={translate('gallery_folder_private_subtitle')}
-              projectCout={projectsCount.privatePr}
+              projectCount={projectsCount.privatePr}
             />
           </Link>
         </Grid>

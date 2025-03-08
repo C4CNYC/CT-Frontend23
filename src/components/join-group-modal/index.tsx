@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 import { Box, Button, Dialog, DialogActions, IconButton, Typography } from '@mui/material'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
 import { ClassMembersAutocomplete } from '../class-members-autocomplete'
-import { Iconify } from '../iconify'
 
 interface Props {
   children: React.ReactElement
@@ -38,15 +38,12 @@ export default function JoinGroupModal({ children, rowId }: Props) {
                 p: 1,
               }}
             >
-              <IconButton>
-                <Iconify
-                  icon='ep:close'
-                  width={24}
-                  height={24}
-                  onClick={() => {
-                    setOpenDialog(false)
-                  }}
-                />
+              <IconButton
+                onClick={() => {
+                  setOpenDialog(false)
+                }}
+              >
+                <IoClose size={24} />
               </IconButton>
             </Box>
             <Box ml='32px'>

@@ -3,17 +3,17 @@ import { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { IconButton, InputAdornment, Stack } from '@mui/material'
+import { HiEye } from '@react-icons/all-files/hi/HiEye'
+import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { Iconify } from '@/components/iconify'
 import { useSubmitPasswordMutation } from '@/redux/services/auth'
 
 import { FormProvider, RHFTextField } from '../../components/hook-form'
 import { useSnackbar } from '../../components/snackbar'
 import { PATH_AUTH } from '../../routes/paths'
-
 interface FormValuesProps {
   password: string
   confirmPassword: string
@@ -79,7 +79,7 @@ export default function SubmitPasswordForm() {
                   }}
                   edge='end'
                 >
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </IconButton>
               </InputAdornment>
             ),
@@ -99,7 +99,7 @@ export default function SubmitPasswordForm() {
                   }}
                   edge='end'
                 >
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </IconButton>
               </InputAdornment>
             ),

@@ -37,7 +37,7 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
   }
 
   const reloadIframe = () => {
-    setIframeKey(iframeKey + 1)
+    setIframeKey((prevIframeKey) => prevIframeKey + 1)
     if (reloadBrowserView) {
       reloadBrowserView()
     }

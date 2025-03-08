@@ -1,7 +1,8 @@
 import { Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
+import { FiSearch } from '@react-icons/all-files/fi/FiSearch'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
 
 const INPUT_WIDTH = 160
@@ -117,10 +118,7 @@ export default function AssignmentsTableToolbar({
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
-              <Iconify
-                icon='eva:search-fill'
-                sx={{ color: 'text.disabled' }}
-              />
+              <FiSearch style={{ color: 'text.disabled' }} />
             </InputAdornment>
           ),
         }}
@@ -131,7 +129,7 @@ export default function AssignmentsTableToolbar({
           color='error'
           sx={{ flexShrink: 0 }}
           onClick={onResetFilter}
-          startIcon={<Iconify icon='eva:trash-2-outline' />}
+          startIcon={<FiTrash2 />}
         >
           {translate('actions_clear')}
         </Button>

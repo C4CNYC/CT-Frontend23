@@ -1,11 +1,15 @@
-// node modules
 import { type FC, type SetStateAction, useState } from 'react'
 
+import ChatIcon from '@mui/icons-material/Chat'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Divider, IconButton, MenuItem } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Box } from '@mui/system'
+import { FaRegSquare } from '@react-icons/all-files/fa6/FaRegSquare'
+import { HiOutlineLightBulb } from '@react-icons/all-files/hi2/HiOutlineLightBulb'
+import { IoHelpBuoyOutline } from '@react-icons/all-files/io5/IoHelpBuoyOutline'
 
-import { Accordion, AccordionDetails, AccordionSummary, Iconify, MenuPopover } from '@/components'
+import { Accordion, AccordionDetails, AccordionSummary, MenuPopover } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
 
 import HelpQuestionModal from './modals/HelpQuestion'
@@ -22,11 +26,6 @@ const MENU_POPOVER_STYLES = {
 const MENU_ITEM_STYLES = {
   pl: '22px!important',
   height: 52,
-}
-
-const ICONIFY_STYLES = {
-  width: '30px!important',
-  height: '30px!important',
 }
 
 const HelpPopup: FC = () => {
@@ -50,7 +49,7 @@ const HelpPopup: FC = () => {
   return (
     <Box>
       <IconButton onClick={handleOpenPopover}>
-        <Iconify icon='clarity:help-line' />
+        <HelpOutlineIcon />
       </IconButton>
       <MenuPopover
         open={openPopover}
@@ -65,10 +64,9 @@ const HelpPopup: FC = () => {
             aria-controls='panel1d-content'
             id='panel1d-header'
           >
-            <Iconify
-              width='27px'
-              mr='15px'
-              icon='icons8:idea'
+            <HiOutlineLightBulb
+              size={27}
+              style={{ marginRight: '15px' }}
             />
             <Typography variant='h6'>{translate('tips')}</Typography>
           </AccordionSummary>
@@ -85,10 +83,9 @@ const HelpPopup: FC = () => {
             aria-controls='panel2d-content'
             id='panel2d-header'
           >
-            <Iconify
-              width='27px'
-              mr='15px'
-              icon='fluent:square-hint-sparkles-16-regular'
+            <FaRegSquare
+              size={27}
+              style={{ marginRight: '15px' }}
             />
             <Typography variant='h6'>{translate('solutions')}</Typography>
           </AccordionSummary>
@@ -105,10 +102,9 @@ const HelpPopup: FC = () => {
             aria-controls='panel3d-content'
             id='panel3d-header'
           >
-            <Iconify
-              width='27px'
-              mr='15px'
-              icon='ion:help-buoy-outline'
+            <IoHelpBuoyOutline
+              size={27}
+              style={{ marginRight: '15px' }}
             />
             <Typography variant='h6'>{translate('get_unstuck')}</Typography>
           </AccordionSummary>
@@ -119,10 +115,7 @@ const HelpPopup: FC = () => {
         <Divider />
         <HelpQuestionModal>
           <MenuItem sx={MENU_ITEM_STYLES}>
-            <Iconify
-              sx={ICONIFY_STYLES}
-              icon='mdi:chat-outline'
-            />
+            <ChatIcon />
             <Typography variant='h6'>{translate('i_need_help')}</Typography>
           </MenuItem>
         </HelpQuestionModal>

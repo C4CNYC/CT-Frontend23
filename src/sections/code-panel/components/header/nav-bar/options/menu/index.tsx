@@ -9,7 +9,7 @@ import { useSnackbar } from 'notistack'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { Iconify, MenuPopover } from '@/components'
+import { MenuPopover } from '@/components'
 import { useSettingsContext } from '@/components/settings'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { setStartTour } from '@/redux/slices/tour'
@@ -22,8 +22,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import config, { ILinks } from './config'
 import {
   DESKTOP_ANCHOR_ORIGIN,
-  HUMBURGER_SIZE,
-  MENU_ICONIFY,
+  HAMBURGER_SIZE,
   MENU_ITEM_STYLES,
   MENU_ITEM_TYPOGRAFY,
   MENU_POPOVER_STYLES,
@@ -38,7 +37,7 @@ interface CustomMultiEvent {
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch()
-  const { replace } = useRouter()
+  const { replace, pathname } = useRouter()
   const { enqueueSnackbar } = useSnackbar()
   const { themeMode } = useSettingsContext()
   const { isAuthenticated, logout } = useAuthContext()
@@ -69,17 +68,22 @@ const Menu = (): React.ReactElement => {
     setOpenPopover(null)
   }
 
-  const getHumburger = (isDesktop: boolean): ReactNode => {
+  const getHamburger = (isDesktop: boolean): ReactNode => {
     return isDesktop ? (
       <Hamburger
-        size={HUMBURGER_SIZE}
+        size={HAMBURGER_SIZE}
         toggled={Boolean(openPopover)}
       />
-    ) : (
+    ) : pathname.includes('code-panel') ? (
       <MobileHamburger
         open={Boolean(openPopover)}
         handleOpenPopover={handleOpenPopover}
         handleClosePopover={handleClosePopover}
+      />
+    ) : (
+      <Hamburger
+        size={HAMBURGER_SIZE}
+        toggled={Boolean(openPopover)}
       />
     )
   }
@@ -90,7 +94,7 @@ const Menu = (): React.ReactElement => {
         onClick={handleOpenPopover}
         sx={{ color: palette(themeMode).text.secondary }}
       >
-        {getHumburger(isDesktop)}
+        {getHamburger(isDesktop)}
       </Box>
 
       <MenuPopover
@@ -124,11 +128,7 @@ const Menu = (): React.ReactElement => {
                   }
                 }}
               >
-                <Iconify
-                  sx={MENU_ICONIFY}
-                  icon={menuItem.icon}
-                />
-
+                {menuItem.icon}
                 <Box pr={1}>
                   <Typography
                     sx={MENU_ITEM_TYPOGRAFY}
@@ -158,10 +158,7 @@ const Menu = (): React.ReactElement => {
                   sx={MENU_ITEM_STYLES}
                   onClick={handleClosePopover}
                 >
-                  <Iconify
-                    sx={MENU_ICONIFY}
-                    icon={menuItem.icon}
-                  />
+                  {menuItem.icon}
 
                   <Box pr={1}>
                     <Typography

@@ -13,16 +13,18 @@ import {
   Link,
 } from '@mui/material'
 import { Box } from '@mui/system'
+import { FaXTwitter } from '@react-icons/all-files/fa6/FaXTwitter'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { TbMountain } from '@react-icons/all-files/tb/TbMountain'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, Iconify, RHFTextField, useSnackbar } from '@root/src/components'
+import { FormProvider, RHFTextField, useSnackbar } from '@root/src/components'
 import { useCopyToClipboard } from '@root/src/hooks'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { useTranslate } from '@root/src/utils/translateHelper'
-
 interface LessonSchareModalProps {
   children?: React.ReactElement
 }
@@ -94,10 +96,7 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             onClick={() => setOpenDialog(false)}
             sx={{ position: 'absolute', top: '5px', right: '5px' }}
           >
-            <Iconify
-              icon='ion:close'
-              width='20px'
-            />
+            <IoClose size={20} />
           </IconButton>
         </DialogTitle>
         <DialogContent>
@@ -129,10 +128,8 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
             fullWidth
             sx={CREATE_QUEST_BTN_SX}
           >
-            <Iconify
-              icon='tabler:mountain'
-              color='#5D6C75'
-            />
+            <TbMountain color='#5D6C75' />
+
             {translate('share_modal_create_quest')}
           </Button>
           <Divider sx={{ my: 2 }}>{translate('share_modal_or')}</Divider>
@@ -165,17 +162,15 @@ const LessonSchareModal = ({ children }: LessonSchareModalProps) => {
               href={`https://twitter.com/intent/tweet?text=${socialText}%20@codetriber%20%23AIForEducation`}
             >
               <Button sx={SHARE_BTN_SX}>
-                <Iconify icon='ri:twitter-x-line' />
+                <FaXTwitter />
               </Button>
             </Link>
             {/* <Link href=''>
               <Button sx={SHARE_BTN_SX}>
-                <Iconify icon='basil:facebook-outline' />
               </Button>
             </Link>
             <Link href=''>
               <Button sx={SHARE_BTN_SX}>
-                <Iconify icon='basil:linkedin-outline' />
               </Button>
             </Link> */}
           </Stack>

@@ -3,6 +3,12 @@ import { useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, Link, MenuItem, Stack, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
+import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertical'
+import { FaAward } from '@react-icons/all-files/fa/FaAward'
+import { FaArrowRightLong } from '@react-icons/all-files/fa6/FaArrowRightLong'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
+import { GoPencil } from '@react-icons/all-files/go/GoPencil'
+import { IoCheckmarkCircle } from '@react-icons/all-files/io5/IoCheckmarkCircle'
 import { RiExternalLinkLine } from '@react-icons/all-files/ri/RiExternalLinkLine'
 import { format, formatDistanceToNow } from 'date-fns'
 import NextLink from 'next/link'
@@ -11,7 +17,6 @@ import { useSnackbar } from 'notistack'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { ConfirmDialog, MenuPopover } from '@/components'
-import { Iconify } from '@/components/iconify'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { IAssignmentReduced } from '@/redux/interfaces/assignment.interface'
 import { Role } from '@/redux/services/enums/role.enum'
@@ -19,13 +24,17 @@ import { useDeleteAssignmentMutation } from '@/redux/services/manager/assignment
 import { useGetModuleWithLessonsQuery } from '@/redux/services/manager/modules-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
-
 interface IQuestItemProps {
   assignment: IAssignmentReduced
   schoolId: string
+  index: number
 }
 
-export default function QuestItem({ assignment, schoolId }: IQuestItemProps): React.ReactElement {
+export default function QuestItem({
+  assignment,
+  schoolId,
+  index,
+}: IQuestItemProps): React.ReactElement {
   const { query } = useRouter()
   const theme = useTheme()
   const { enqueueSnackbar } = useSnackbar()
@@ -89,6 +98,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
         href={assignmentPath}
         underline='none'
         color={isLight ? 'initial' : '#E6F5FD'}
+        className={index === 0 ? 'studentJoinStep4 tourMainStep4' : ''}
       >
         <Stack
           sx={{
@@ -134,13 +144,13 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                 alignItems='center'
               >
                 <Typography variant='subtitle1'>{assignment.course_progress ?? '0'} % </Typography>
-                <Iconify
-                  icon='bx:award'
-                  sx={{ color: '#EE467A' }}
+                <FaAward
+                  color='#EE467A'
+                  size={17}
                 />
-                <Iconify
-                  icon='flat-color-icons:ok'
-                  sx={{ color: '#75CF6D' }}
+                <IoCheckmarkCircle
+                  color='#75CF6D'
+                  size={20}
                 />
               </Box>
             </Stack>
@@ -185,10 +195,9 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                 }}
               >
                 {translate('keep_coding')}
-                <Iconify
-                  icon='maki:arrow'
-                  width={18}
+                <FaArrowRightLong
                   style={{ marginLeft: '3px', marginRight: '3px' }}
+                  size={18}
                 />
               </Link>
               <Link
@@ -232,10 +241,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
                 roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner, Role.Editor]}
               >
                 <IconButton onClick={handleOpenPopover}>
-                  <Iconify
-                    icon='pepicons-pop:dots-y'
-                    width={22}
-                  />
+                  <BsThreeDotsVertical size={22} />
                 </IconButton>
               </RoleBasedGuard>
             </Stack>
@@ -256,7 +262,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
           color={isLight ? 'initial' : '#E6F5FD'}
         >
           <MenuItem>
-            <Iconify icon='eva:edit-fill' />
+            <GoPencil />
             {translate('actions_edit')}
           </MenuItem>
         </Link>
@@ -267,7 +273,7 @@ export default function QuestItem({ assignment, schoolId }: IQuestItemProps): Re
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon='eva:trash-2-outline' />
+          <FiTrash2 />
           {translate('actions_delete')}
         </MenuItem>
       </MenuPopover>

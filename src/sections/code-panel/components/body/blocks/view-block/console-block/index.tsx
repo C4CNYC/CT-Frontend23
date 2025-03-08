@@ -1,15 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { Box, Collapse, IconButton, Stack, Tooltip, Typography } from '@mui/material'
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
+import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
+import { TbPrompt } from '@react-icons/all-files/tb/TbPrompt'
 
-import { Iconify } from '@root/src/components'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { COLLAPSE_BOX_SX, CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'
-
 const ConsoleBlock = () => {
   const translate = useTranslate()
+
   const [isOpen, setIsOpen] = useState(false)
+  const [openTooltip, setOpenTooltip] = useState(false)
+
   const ConsoleBoxRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -31,13 +36,13 @@ const ConsoleBlock = () => {
         sx={CONSOLE_HEADER_SX}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Iconify
-          icon='mdi:console-line'
+        <TbPrompt
           color='#C4C4C4'
-          width={24}
+          size={26}
         />
-        <Typography sx={{ color: '#C4C4C4' }}>{translate('console_title')}</Typography>
+        <Typography sx={{ color: '#C4C4C4', mr: 1 }}>{translate('console_title')}</Typography>
         <Tooltip
+          open={openTooltip}
           componentsProps={{
             tooltip: {
               sx: {
@@ -54,13 +59,19 @@ const ConsoleBlock = () => {
             </>
           }
         >
-          <Iconify
-            icon='lucide:info'
-            color='#0198ED'
-          />
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation()
+              setOpenTooltip(!openTooltip)
+            }}
+            onMouseEnter={() => setOpenTooltip(true)}
+            onMouseLeave={() => setOpenTooltip(false)}
+          >
+            <LuInfo color='#0198ED' />
+          </IconButton>
         </Tooltip>
         <IconButton sx={{ ml: 'auto' }}>
-          <Iconify icon={!isOpen ? 'tabler:chevron-up' : 'tabler:chevron-down'} />
+          {!isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </IconButton>
       </Stack>
       <Collapse in={isOpen}>

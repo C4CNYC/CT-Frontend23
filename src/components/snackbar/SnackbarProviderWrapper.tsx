@@ -1,10 +1,13 @@
-import { useRef } from 'react'
+import { ReactNode, useRef } from 'react'
 
 import { Box, IconButton } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { IoIosCheckmarkCircle } from '@react-icons/all-files/io/IoIosCheckmarkCircle'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
+import { TbAlertCircleFilled } from '@react-icons/all-files/tb/TbAlertCircleFilled'
+import { TbAlertTriangleFilled } from '@react-icons/all-files/tb/TbAlertTriangleFilled'
 import { SnackbarProvider, SnackbarKey } from 'notistack'
-
-import { Iconify, IconifyProps } from '../iconify'
 
 import { StyledNotistack } from './styles'
 
@@ -41,25 +44,25 @@ export function SnackbarProviderWrapper({
         iconVariant={{
           info: (
             <SnackbarIcon
-              icon='eva:info-fill'
+              icon={<LuInfo size={24} />}
               color='info'
             />
           ),
           success: (
             <SnackbarIcon
-              icon='eva:checkmark-circle-2-fill'
+              icon={<IoIosCheckmarkCircle size={24} />}
               color='success'
             />
           ),
           warning: (
             <SnackbarIcon
-              icon='eva:alert-triangle-fill'
+              icon={<TbAlertTriangleFilled size={24} />}
               color='warning'
             />
           ),
           error: (
             <SnackbarIcon
-              icon='eva:alert-circle-fill'
+              icon={<TbAlertCircleFilled size={24} />}
               color='error'
             />
           ),
@@ -71,7 +74,7 @@ export function SnackbarProviderWrapper({
             onClick={onClose(key)}
             sx={{ p: 0.5 }}
           >
-            <Iconify icon='eva:close-fill' />
+            <IoClose />
           </IconButton>
         )}
       >
@@ -82,7 +85,7 @@ export function SnackbarProviderWrapper({
 }
 
 interface SnackbarIconProps {
-  icon: IconifyProps
+  icon: ReactNode
   color: 'info' | 'success' | 'warning' | 'error'
 }
 
@@ -102,10 +105,7 @@ function SnackbarIcon({ icon, color }: SnackbarIconProps): React.ReactElement | 
         bgcolor: (theme) => alpha(theme.palette[color].main, 0.16),
       }}
     >
-      <Iconify
-        icon={icon}
-        width={24}
-      />
+      {icon}
     </Box>
   )
 }

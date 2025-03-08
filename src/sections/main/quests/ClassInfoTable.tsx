@@ -6,7 +6,7 @@ import Tabs from '@mui/material/Tabs'
 import { useTheme } from '@mui/system'
 import { AiOutlineFundProjectionScreen } from '@react-icons/all-files/ai/AiOutlineFundProjectionScreen'
 import { CiMountain1 } from '@react-icons/all-files/ci/CiMountain1'
-import { FaPlus } from '@react-icons/all-files/fa/FaPlus'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { GiProgression } from '@react-icons/all-files/gi/GiProgression'
 import { IoPeopleOutline } from '@react-icons/all-files/io5/IoPeopleOutline'
 import { IoSettingsOutline } from '@react-icons/all-files/io5/IoSettingsOutline'
@@ -68,10 +68,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
   })
 
   return (
-    <Stack
-      className='tourMainStep4'
-      sx={{ px: 2, pt: 1, flexGrow: 1 }}
-    >
+    <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
       <Stack
         direction='row'
         alignItems='center'

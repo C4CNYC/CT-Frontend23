@@ -12,11 +12,12 @@ import {
   Typography,
   alpha,
 } from '@mui/material'
+import { MdDone } from '@react-icons/all-files/md/MdDone'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 
-import { CustomAvatar, Iconify, SearchNotFound } from '@/components'
+import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
@@ -190,7 +191,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
                   }),
                 }}
               >
-                <Iconify icon='eva:checkmark-fill' />
+                <MdDone />
               </Box>
             </Box>
 

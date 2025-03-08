@@ -2,9 +2,13 @@ import { SetStateAction, useEffect, useState } from 'react'
 
 import { IconButton, Typography } from '@mui/material'
 import { Box, Stack, useTheme } from '@mui/system'
+import { FaPlay } from '@react-icons/all-files/fa/FaPlay'
+import { FaRegCirclePause } from '@react-icons/all-files/fa6/FaRegCirclePause'
+import { MdOutlineTimer } from '@react-icons/all-files/md/MdOutlineTimer'
+import { VscDebugRestart } from '@react-icons/all-files/vsc/VscDebugRestart'
 import { useTimer } from 'react-timer-hook'
 
-import { Iconify, MenuPopover } from '@/components'
+import { MenuPopover } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
 
 import { TimerInput } from '../input'
@@ -113,10 +117,7 @@ const TimerPopup = (): React.ReactElement => {
               <Typography variant='h6'>{seconds}s</Typography>
             </Stack>
           ) : (
-            <Iconify
-              icon='material-symbols:av-timer-rounded'
-              width={23}
-            />
+            <MdOutlineTimer />
           )}
         </Box>
       </IconButton>
@@ -164,20 +165,14 @@ const TimerPopup = (): React.ReactElement => {
               setOnTimerLoad(false)
             }}
           >
-            <Iconify
-              width='30px'
-              icon='ic:baseline-restart-alt'
-            />
+            <VscDebugRestart />
           </IconButton>
 
           <IconButton
             disabled={!isRunning}
             onClick={onPausePlaying}
           >
-            <Iconify
-              width='30px'
-              icon='ic:round-pause'
-            />
+            <FaRegCirclePause />
           </IconButton>
           <IconButton
             disabled={isRunning}
@@ -186,10 +181,7 @@ const TimerPopup = (): React.ReactElement => {
               setOnTimerLoad(false)
             }}
           >
-            <Iconify
-              width='30px'
-              icon='material-symbols:play-arrow-rounded'
-            />
+            <FaPlay />
           </IconButton>
         </Stack>
       </MenuPopover>

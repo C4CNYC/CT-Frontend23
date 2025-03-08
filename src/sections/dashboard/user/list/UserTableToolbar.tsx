@@ -1,8 +1,8 @@
 import { Box, Button, InputAdornment, MenuItem, Stack, TextField } from '@mui/material'
+import { FiSearch } from '@react-icons/all-files/fi/FiSearch'
+import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 
-import { Iconify } from '@/components/iconify'
 import { useTranslate } from '@/utils/translateHelper'
-
 interface Props {
   filterName: string
   filterRole?: string
@@ -83,10 +83,7 @@ export default function UserTableToolbar({
           InputProps={{
             startAdornment: (
               <InputAdornment position='start'>
-                <Iconify
-                  icon='eva:search-fill'
-                  sx={{ color: 'text.disabled' }}
-                />
+                <FiSearch style={{ color: 'text.disabled' }} />
               </InputAdornment>
             ),
           }}
@@ -95,7 +92,7 @@ export default function UserTableToolbar({
           color='error'
           sx={{ flexShrink: 0 }}
           onClick={onResetFilter}
-          startIcon={<Iconify icon='eva:trash-2-outline' />}
+          startIcon={<FiTrash2 />}
         >
           {translate('actions_clear')}
         </Button>

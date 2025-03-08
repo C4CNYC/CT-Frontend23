@@ -72,7 +72,7 @@ export default function ContactsGridView({
                   size="small"
                   color="error"
                   variant="contained"
-                  startIcon={<Iconify icon="eva:trash-2-outline" />}
+                 
                   onClick={onOpenConfirm}
                   sx={{ mr: 1 }}
                 >

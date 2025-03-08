@@ -6,11 +6,11 @@ export const DESKTOP_ANCHOR_ORIGIN = {
 }
 
 export const MOBILE_ANCHOR_ORIGIN = {
-  vertical: 40,
+  vertical: 50,
   horizontal: 50,
 }
 
-export const HUMBURGER_SIZE = 18
+export const HAMBURGER_SIZE = 18
 
 export const SNACKBAR_OPTIONS: OptionsObject = {
   variant: 'error',

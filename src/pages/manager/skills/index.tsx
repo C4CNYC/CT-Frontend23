@@ -14,6 +14,9 @@ import {
 } from '@mui/material'
 import { Stack } from '@mui/system'
 import Container from '@mui/system/Container'
+import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
+import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
+import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
 import { format } from 'date-fns'
 import omit from 'lodash-es/omit'
 import Head from 'next/head'
@@ -21,7 +24,6 @@ import { useSnackbar } from 'notistack'
 
 import {
   CustomBreadcrumbs,
-  Iconify,
   Scrollbar,
   TableNoData,
   TablePaginationCustom,
@@ -83,7 +85,7 @@ export default function Skills(): React.ReactElement {
               <UpdateModalSkills>
                 <Button
                   variant='contained'
-                  startIcon={<Iconify icon='eva:plus-fill' />}
+                  startIcon={<FaPlus />}
                 >
                   {translate('skills')}
                 </Button>
@@ -146,7 +148,7 @@ export default function Skills(): React.ReactElement {
                               defaultValues={omit(row, ['updatedAt', 'createdAt', 'id'])}
                             >
                               <IconButton>
-                                <Iconify icon='material-symbols:edit' />
+                                <MdOutlineModeEdit />
                               </IconButton>
                             </UpdateModalSkills>
                             <IconButton
@@ -154,10 +156,7 @@ export default function Skills(): React.ReactElement {
                                 await onDelete(row.id)
                               }}
                             >
-                              <Iconify
-                                color='red'
-                                icon='material-symbols:delete'
-                              />
+                              <IoTrashOutline />
                             </IconButton>
                           </Stack>
                         </TableCell>

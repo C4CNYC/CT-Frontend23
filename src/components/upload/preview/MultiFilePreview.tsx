@@ -1,12 +1,12 @@
 import { IconButton, Stack, Typography } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { AnimatePresence, m } from 'framer-motion'
 
 import { fData } from '@/utils'
 
 import { varFade } from '../../animate'
 import { FileThumbnail, fileData } from '../../file-thumbnail'
-import { Iconify } from '../../iconify'
 import { UploadProps } from '../types'
 
 export default function MultiFilePreview({
@@ -72,10 +72,7 @@ export default function MultiFilePreview({
                     },
                   }}
                 >
-                  <Iconify
-                    icon='eva:close-fill'
-                    width={16}
-                  />
+                  <IoClose size={16} />
                 </IconButton>
               )}
             </Stack>
@@ -128,7 +125,7 @@ export default function MultiFilePreview({
                   onRemove(file)
                 }}
               >
-                <Iconify icon='eva:close-fill' />
+                <IoClose />
               </IconButton>
             )}
           </Stack>
