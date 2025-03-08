@@ -139,6 +139,12 @@ export const courses = {
       icon: <FaUserFriends size={20} />,
       component: () => <CatalogMenuItem />,
     },
+    {
+      path: '',
+      title: 'sidebar_menu_my_sandbox',
+      icon: <FaUserFriends size={20} />,
+      component: () => <SandboxMenuItem />,
+    },
   ],
 }
 export const market_sandbox = {
@@ -149,12 +155,6 @@ export const market_sandbox = {
       title: 'sidebar_menu_market',
       icon: <FaUserFriends size={20} />,
       component: () => <MarketMenuItem />,
-    },
-    {
-      path: '',
-      title: 'sidebar_menu_my_sandbox',
-      icon: <FaUserFriends size={20} />,
-      component: () => <SandboxMenuItem />,
     },
   ],
 }

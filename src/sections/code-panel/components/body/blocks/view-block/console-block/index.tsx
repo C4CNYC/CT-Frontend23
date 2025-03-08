@@ -3,9 +3,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Box, Collapse, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
+import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
 import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import { TbPrompt } from '@react-icons/all-files/tb/TbPrompt'
 
+import { useBoolean } from '@root/src/hooks/useBoolean'
+import { isJson } from '@root/src/utils'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { COLLAPSE_BOX_SX, CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'
@@ -14,6 +17,7 @@ const ConsoleBlock = () => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [openTooltip, setOpenTooltip] = useState(false)
+  const [clearTooltip, clearTooltipOpen, clearTooltipClose] = useBoolean(false)
 
   const ConsoleBoxRef = useRef<HTMLElement>(null)
 
@@ -22,7 +26,10 @@ const ConsoleBlock = () => {
       if (event.data && event.data.type === 'ConsoleLog') {
         if (ConsoleBoxRef.current === null) return
         if (!isOpen) setIsOpen(true)
-        ConsoleBoxRef.current.innerHTML += event?.data?.message + '<br/>'
+        let message = isJson(event?.data?.message)
+          ? Object.values(JSON.parse(event?.data?.message))
+          : event?.data?.message
+        ConsoleBoxRef.current.innerHTML += message + '<br/>'
         ConsoleBoxRef.current.scrollTop = ConsoleBoxRef.current.scrollHeight
       }
     }
@@ -70,6 +77,37 @@ const ConsoleBlock = () => {
             <LuInfo color='#0198ED' />
           </IconButton>
         </Tooltip>
+        {isOpen ? (
+          <Tooltip
+            open={clearTooltip}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  p: 3,
+                  minWidth: '320px',
+                },
+              },
+            }}
+            title={
+              <>
+                <Typography variant='h6'>{translate('console_clear_button_title')}</Typography>
+                <Typography pb={1}>{translate('console_clear_button_subtitle')}</Typography>
+              </>
+            }
+          >
+            <IconButton
+              onMouseEnter={clearTooltipOpen}
+              onMouseLeave={clearTooltipClose}
+              onClick={(e) => {
+                e.stopPropagation()
+                if (ConsoleBoxRef.current === null) return
+                ConsoleBoxRef.current.innerHTML = ''
+              }}
+            >
+              <IoTrashOutline color='#EE467A' />
+            </IconButton>
+          </Tooltip>
+        ) : null}
         <IconButton sx={{ ml: 'auto' }}>
           {!isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </IconButton>
@@ -79,6 +117,9 @@ const ConsoleBlock = () => {
           sx={COLLAPSE_BOX_SX}
           ref={ConsoleBoxRef}
         >
+          👋 Hi! the <b>console</b> 😊.
+          <br />
+          I display messages from your code or errors. <br />
           {/* place for console info */}
         </Box>
       </Collapse>

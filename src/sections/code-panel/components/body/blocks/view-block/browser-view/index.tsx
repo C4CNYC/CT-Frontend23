@@ -92,6 +92,12 @@ const BrowserView: FC<BrowserViewProps> = ({
           ${fontCssLink}
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
+          <script>
+          console.logOld = console.log;
+          console.log = function() {
+            window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
+          };
+          </script>
         </head>
         ${htmlPart}
       </html>

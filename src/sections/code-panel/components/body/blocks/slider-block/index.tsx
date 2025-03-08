@@ -1,6 +1,6 @@
 import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Box, TextField, useTheme } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import { useSearchParams } from 'next/navigation'
@@ -258,12 +258,17 @@ const SliderBlock: FC<ISliderBlock> = ({
         ))}
       </Box>
       {sandbox ? (
-        <TextField
-          fullWidth
-          multiline
-          minRows='12'
+        <textarea
+          style={{
+            width: '100%',
+            height: '100%',
+            resize: 'none',
+            padding: '10px 10px',
+            border: 0,
+            outline: 0,
+          }}
           value={noteText}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
             setNoteText(event.target.value)
             localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
           }}
