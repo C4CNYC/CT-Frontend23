@@ -46,6 +46,7 @@ import {
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import DetailsStepOpenProject from '@/sections/main/quests/add-quest/DetailsStepOpenProject'
 import { useTranslate } from '@/utils/translateHelper'
+import { isJson } from '@root/src/utils/isJson'
 
 import {
   CONTAINER_INNER_SX,
@@ -118,7 +119,9 @@ export default function AddQuest(): React.ReactElement {
       const type = query?.type ?? AssignmentTypes.COURSE
       methods.reset({
         name: assignment?.name,
-        description: assignment?.description ?? '',
+        description: isJson(assignment?.description)
+          ? JSON.parse(assignment?.description)
+          : assignment?.description ?? '',
         type: assignment?.type ?? type,
         module: assignment?.courseUnit?.id,
         lesson: assignment?.lessonId,
@@ -142,7 +145,9 @@ export default function AddQuest(): React.ReactElement {
     mode: 'all',
     defaultValues: {
       name: assignment?.name ?? RANDOM_NAME,
-      description: assignment?.description ?? '',
+      description: isJson(assignment?.description)
+        ? JSON.parse(assignment?.description || '')
+        : assignment?.description ?? '',
       type: assignment?.type ?? (query?.type as AssignmentTypes) ?? AssignmentTypes.COURSE,
       category: assignment?.category ?? AssignmentProjectCategories.CREATIVE_PROJECT,
       language: assignment?.language ?? AssignmentProjectLanguages.HTML_CSS_JSS,
