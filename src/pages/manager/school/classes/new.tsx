@@ -4,7 +4,8 @@ import Head from 'next/head'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import StudentNewEditForm from '@/sections/dashboard/student/StudentNewEditForm'
-import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 UserCreatePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

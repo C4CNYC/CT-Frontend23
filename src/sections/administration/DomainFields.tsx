@@ -3,7 +3,8 @@ import React from 'react'
 import { Button } from '@mui/material'
 import { useFieldArray } from 'react-hook-form'
 
-import { Iconify, RHFTextField } from '@root/src/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 export const DomainFields = () => {

@@ -12,7 +12,8 @@ import {
   useCourseRemoveLikeMutation,
 } from '@/redux/services/manager/courses-student'
 import { useSelector } from '@/redux/store'
-import { Image, useSnackbar } from '@root/src/components'
+import { Image } from '@root/src/components/image/Image'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import { COURSE_IMG_XS, COURSE_RATING_WRAPPER_SX, LIKE_BTN_WRAPPER_SX } from './constants'
 

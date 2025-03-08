@@ -13,7 +13,8 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/router'
 
-import { Iconify, useSnackbar } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { ILesson, ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import {

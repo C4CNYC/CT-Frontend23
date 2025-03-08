@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDialog'
 import { GREEN_DOT_SX, getLessonItemPaperSx } from '../../lessons/LessonStep/constants'

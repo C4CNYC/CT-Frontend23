@@ -5,7 +5,8 @@ import { IAssignmetsSearchParams } from '@/redux/interfaces/assignment.interface
 import { useGetAssignmentListStudentQuery } from '@/redux/services/manager/assignments-student'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
-import { EmptyContent, SimpleInfiniteList } from '@root/src/components'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination/SimpleInfiniteList'
 
 import QuestItem from './QuestItem'
 

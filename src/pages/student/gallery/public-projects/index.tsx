@@ -8,12 +8,10 @@ import { useGetProjectsQuery } from '@/redux/services/manager/gallery-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import FilterGallery from '@/sections/dashboard/gallery/filter'
 import { getCountTakingElment } from '@/utils'
-import {
-  CustomBreadcrumbs,
-  EmptyContent,
-  SimpleInfiniteList,
-  useSettingsContext,
-} from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination/SimpleInfiniteList'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { IGallery, IGallerySearchParams } from '@root/src/redux/interfaces/gallery.interface'
 import ProjectsList from '@root/src/sections/dashboard/gallery'
 import {

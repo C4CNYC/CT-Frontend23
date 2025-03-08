@@ -10,13 +10,11 @@ import * as Yup from 'yup'
 import { countries } from '@/assets/data'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface, getRandomColor } from '@/utils'
-import {
-  FormProvider,
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar, // useSnackbar,
-} from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string }

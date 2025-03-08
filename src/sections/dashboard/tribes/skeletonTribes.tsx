@@ -1,6 +1,6 @@
 import { Box, Container, Skeleton } from '@mui/material'
 
-import { useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 export default function SkeletonTribes(): React.ReactElement {
   const { themeStretch } = useSettingsContext()

@@ -21,7 +21,8 @@ import LessonsList from '@/sections/module/LessonsList'
 import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { useGetPublicCourseContentQuery } from '@root/src/redux/services/public-student'
 
 ModulePage.getLayout = (page: React.ReactElement) => (

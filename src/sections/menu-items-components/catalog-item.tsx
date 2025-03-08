@@ -1,7 +1,7 @@
 import { Link } from '@mui/material'
 import NextLink from 'next/link'
 
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import DefaultMenuItem from './default-item'

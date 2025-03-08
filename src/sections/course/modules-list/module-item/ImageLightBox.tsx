@@ -4,7 +4,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, SxProps } from '@mui
 import { BiShowAlt } from '@react-icons/all-files/bi/BiShowAlt'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { Image } from '@root/src/components'
+import { Image } from '@root/src/components/image/Image'
 
 import { LIGHT_BOX_ICON_BTN } from './constants'
 

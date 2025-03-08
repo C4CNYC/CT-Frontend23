@@ -1,6 +1,6 @@
 import { Step } from 'react-joyride'
 
-import { Image } from '@root/src/components'
+import { Image } from '@root/src/components/image/Image'
 
 export const getIntroStudentJoinSteps = (translate: (key: string) => string): Step[] => [
   {

@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack'
 import { IAuthor } from '@/redux/services/interfaces/author.interface'
 import { useDeleteAuthorMutation } from '@/redux/services/manager/author-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { SvgColor } from '@root/src/components'
+import { SvgColor } from '@root/src/components/svg-color/SvgColor'
 
 import AddAuthorDialog from './AddAuthorDialog'
 

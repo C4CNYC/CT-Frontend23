@@ -5,7 +5,7 @@ import { Card, Grid, Stack, Typography } from '@mui/material'
 import { useGetSchoolProfileQuery } from '@/redux/services/manager/schools-manager'
 import { fData } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { UploadAvatar } from '@root/src/components'
+import { UploadAvatar } from '@root/src/components/upload'
 
 import ProfileAbout from './components/ProfileAbout'
 import ProfileSocialInfo from './components/ProfileSocialInfo'

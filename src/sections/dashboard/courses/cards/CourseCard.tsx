@@ -13,7 +13,11 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, Image, Label, MenuPopover, useSnackbar } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Image } from '@root/src/components/image/Image'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface

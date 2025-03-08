@@ -6,7 +6,7 @@ import { HiEye } from '@react-icons/all-files/hi/HiEye'
 import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
 import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 
-import { RHFTextField } from '@root/src/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 interface IPasswordStepProps {
   prevStep: () => void

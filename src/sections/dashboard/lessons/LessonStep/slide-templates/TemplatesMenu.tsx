@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Box, Drawer, IconButton, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
 
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 
 import {
   DRAWER_WIDTH_PADDING,

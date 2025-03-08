@@ -13,7 +13,7 @@ import {
 import { CiCircleQuestion } from '@react-icons/all-files/ci/CiCircleQuestion'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import RocketIcon from '../icons/RocketIcon'
 

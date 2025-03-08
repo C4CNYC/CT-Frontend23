@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { countries } from '@/assets/data'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { Scrollbar } from '@root/src/components'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
 
 import TeacherSection from '../../organization/schools/TeachersSection'
 import ClassSection from '../classes/ClassSection'

@@ -14,7 +14,8 @@ import { IGoals } from '@/redux/interfaces/goals.interface'
 import { usePostGoalMutation, useUpdateGoalMutation } from '@/redux/services/manager/goals-student'
 import { getRandomColor } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, RHFTextField } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 interface FormValuesProps {
   title: string

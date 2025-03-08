@@ -6,7 +6,7 @@ import { HiEye } from '@react-icons/all-files/hi/HiEye'
 import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { RHFTextField } from '@root/src/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 import { styledRegisterInput } from '../../styles'
 import { SUBMIT_BTN_SX } from '../constants'

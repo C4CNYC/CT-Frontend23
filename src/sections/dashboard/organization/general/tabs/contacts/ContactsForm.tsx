@@ -8,7 +8,8 @@ import * as Yup from 'yup'
 
 import { useUpdateOrgContactsMutation } from '@/redux/services/admin/organization-contacts'
 import { ContactsResponce } from '@/redux/services/interfaces/organization.interface'
-import { FormProvider, RHFTextField } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email('Email must be a valid email address'),

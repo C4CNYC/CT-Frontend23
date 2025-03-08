@@ -23,7 +23,7 @@ import {
 } from '@/sections/dashboard/progress/progressTable/SkeletonProgressTable'
 import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

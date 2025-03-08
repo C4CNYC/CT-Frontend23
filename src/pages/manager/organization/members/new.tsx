@@ -6,7 +6,8 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import UserNewEditForm from '@/sections/dashboard/user/UserNewEditForm'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 UserCreatePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 

@@ -11,7 +11,8 @@ import { useGetFriendQuery } from '@/redux/services/manager/friends-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import ProfileCover from '@/sections/student-profile/ProfileCover'
 import ProfileMain from '@/sections/student-profile/ProfileMain'
-import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

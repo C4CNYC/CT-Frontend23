@@ -6,7 +6,7 @@ import GuestGuard from '@/auth/GuestGuard'
 import { useGetPublicTribeQuery } from '@/redux/services/public/tribe-public'
 import { useSelector } from '@/redux/store'
 import JoinTribeModal from '@/sections/join-tribe/JoinTribeModal'
-import { LoadingScreen } from '@root/src/components'
+import { LoadingScreen } from '@root/src/components/loading-screen/LoadingScreen'
 
 export default function JoinTribe(): React.ReactElement {
   const user = useSelector((state) => state.global.user)

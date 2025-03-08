@@ -25,19 +25,17 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { useTranslate } from '@/utils/translateHelper'
-import {
-  ConfirmDialog,
-  CustomBreadcrumbs,
-  Scrollbar,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  emptyRows,
-  useSettingsContext,
-  useTable,
-} from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import { TableEmptyRows } from '@root/src/components/table/TableEmptyRows'
+import { TableHeadCustom } from '@root/src/components/table/TableHeadCustom'
+import { TableNoData } from '@root/src/components/table/TableNoData'
+import { TablePaginationCustom } from '@root/src/components/table/TablePaginationCustom'
+import { TableSelectedAction } from '@root/src/components/table/TableSelectedAction'
+import { useTable } from '@root/src/components/table/useTable'
+import { emptyRows } from '@root/src/components/table/utils'
 import {
   useDeleteOrgMutation,
   useGetOrgListQuery,

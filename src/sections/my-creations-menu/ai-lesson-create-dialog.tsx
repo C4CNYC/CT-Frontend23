@@ -12,7 +12,7 @@ import {
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { DialogAnimate } from '@root/src/components'
+import { DialogAnimate } from '@root/src/components/animate/DialogAnimate'
 import {
   useCreateByAIMutation,
   useGenerateLessonMutation,

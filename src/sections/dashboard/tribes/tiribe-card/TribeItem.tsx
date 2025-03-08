@@ -16,7 +16,8 @@ import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-stude
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface, getLinearGradient } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { Scrollbar, SvgColor } from '@root/src/components'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { SvgColor } from '@root/src/components/svg-color/SvgColor'
 
 import TribeButtons from './TribeButtons'
 import TribeHeaderBtn from './TribeHeaderBtn'

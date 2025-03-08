@@ -27,7 +27,7 @@ import {
 import { RootState, useSelector } from '@/redux/store'
 import { BaseSearchInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { TablePaginationCustom } from '@root/src/components'
+import { TablePaginationCustom } from '@root/src/components/table/TablePaginationCustom'
 
 import HeadItemTooltip from './HeadItemTooltip'
 import TableItemProgress from './ProgressTableItem'

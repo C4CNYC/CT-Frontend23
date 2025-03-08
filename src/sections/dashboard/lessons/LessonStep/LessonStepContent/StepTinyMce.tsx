@@ -4,7 +4,7 @@ import { Box } from '@mui/system'
 import { Editor } from '@tinymce/tinymce-react'
 import { useAtom } from 'jotai/react'
 
-import { ResizerUi } from '@root/src/components'
+import { ResizerUi } from '@root/src/components/resizer/Resizer'
 
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
 

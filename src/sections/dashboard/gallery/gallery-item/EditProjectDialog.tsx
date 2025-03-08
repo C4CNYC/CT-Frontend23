@@ -18,9 +18,11 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSwitch, RHFTextField } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { useUpdateProjectMutation } from '@/redux/services/manager/gallery-student'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { useGalleryContext } from '../context/gallery-context'

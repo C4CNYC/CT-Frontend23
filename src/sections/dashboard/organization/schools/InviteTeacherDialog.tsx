@@ -21,7 +21,7 @@ import {
 import { useAddTeacherMutation } from '@/redux/services/admin/school-amdin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
-import { Scrollbar } from '@root/src/components'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
 
 import UserItem from './UserItem'
 

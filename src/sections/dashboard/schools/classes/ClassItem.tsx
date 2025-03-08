@@ -11,7 +11,7 @@ import { useUpdateClassMutation } from '@/redux/services/admin/school-amdin'
 import { useUpdateClassesAvatarMutation } from '@/redux/services/manager/classes-manager'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import AddClassDialog from './CreateClassDialog'
 

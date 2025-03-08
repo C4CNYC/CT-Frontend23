@@ -22,7 +22,8 @@ import {
   useUpdateLessonContentValidationManagerMutation,
 } from '@/redux/services/manager/lesson-content-validation-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, RHFTextField } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { isValidRegex } from '@root/src/utils/isValidRegex'
 
 interface FormValuesProps {

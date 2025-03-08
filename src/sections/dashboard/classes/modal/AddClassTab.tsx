@@ -5,7 +5,8 @@ import { MuiColorInput } from 'mui-color-input'
 import { Control, Controller } from 'react-hook-form'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { RHFTextField, RHFUploadAvatar } from '@root/src/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
 
 import { FormAddClassProps } from '.'
 

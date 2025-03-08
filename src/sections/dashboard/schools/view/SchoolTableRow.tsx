@@ -9,7 +9,9 @@ import { enqueueSnackbar } from 'notistack'
 import { useArchiveSchoolMutation } from '@/redux/services/admin/school-amdin'
 import { ISchoolSummary } from '@/redux/services/interfaces/school.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, Label, MenuPopover } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 import SchoolDetailsDrawer from '../portal/SchoolDetailsDrawer'
 

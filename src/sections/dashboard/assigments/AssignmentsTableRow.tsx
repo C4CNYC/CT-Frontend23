@@ -21,7 +21,9 @@ import { Status } from '@/redux/enums/assignments.enum'
 import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
 import { fDate } from '@/utils/formatTime'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, Label, MenuPopover } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 import AssignmentDrawer from './AssignmentDrawer'
 

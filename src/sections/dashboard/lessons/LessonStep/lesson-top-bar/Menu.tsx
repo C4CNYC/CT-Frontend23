@@ -10,7 +10,7 @@ import { useSnackbar } from 'notistack'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { PATH_AUTH } from '@/routes/paths'
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import { menuConfig } from './menu-config'
 

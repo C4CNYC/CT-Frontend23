@@ -17,7 +17,8 @@ import {
   useUpdateSkillMutation,
 } from '@/redux/services/manager/skills-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, RHFTextField } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required('Skill name is required'),

@@ -39,17 +39,18 @@ import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { createRandomAvatar, getRandomColor } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import {
-  ConfirmDialog,
-  CustomBreadcrumbs,
-  Scrollbar,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
-  useSettingsContext,
   useTable,
-} from '@root/src/components'
+} from '@root/src/components/table'
+
 const STATUS_OPTIONS = ['all']
 
 const TABLE_HEAD = [

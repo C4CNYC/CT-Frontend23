@@ -12,7 +12,9 @@ import { IUser } from '@/redux/interfaces/auth.interface'
 import { useUdpateProfileAvatarMutation, useUpdateProfileMutation } from '@/redux/services/auth'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { fData } from '@/utils/formatNumber'
-import { FormProvider, RHFTextField, RHFUploadAvatar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }
@@ -61,7 +63,7 @@ export default function ProfileEditForm({ isEdit, currentUser }: Props): React.R
   }, [isEdit, currentUser])
 
   const updateAvatar = async (id: string, photoURL?: File): Promise<unknown> => {
-    if (!id ?? !photoURL) return
+    if (!id || !photoURL) return
 
     const file = new FormData()
     file.append('file', photoURL)

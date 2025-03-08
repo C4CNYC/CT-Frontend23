@@ -11,7 +11,9 @@ import CourseSidebar from '@/sections/course/course-sidebar'
 import CourseInfo from '@/sections/course/CourseInfo'
 import ModulesListBlock from '@/sections/course/modules-list'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs, EmptyContent, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 
 CoursePage.getLayout = (page: React.ReactElement) => (

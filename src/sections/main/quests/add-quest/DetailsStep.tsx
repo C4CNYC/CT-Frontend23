@@ -9,7 +9,8 @@ import { ICourse, ILessonSearchParams } from '@/redux/services/interfaces/course
 import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { RHFSelect, RHFTextField } from '@root/src/components'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 import { AVATAR_SX, INPUT_TEXT_SX, inputNameStyles, selectStyle } from './constants'
 

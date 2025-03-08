@@ -1,7 +1,7 @@
 import { Badge, Box, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { Image } from '@root/src/components'
+import { Image } from '@root/src/components/image/Image'
 
 import { getImageWrapperSx } from './constants'
 

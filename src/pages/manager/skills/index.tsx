@@ -30,15 +30,11 @@ import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBread
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
 import UpdateModalSkills from '@/sections/dashboard/skills/update-modal'
 import { useTranslate } from '@/utils/translateHelper'
-import {
-  CustomBreadcrumbs,
-  Iconify,
-  Scrollbar,
-  TableNoData,
-  TablePaginationCustom,
-  useSettingsContext,
-  useTable,
-} from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import { TableNoData, TablePaginationCustom, useTable } from '@root/src/components/table'
 
 Skills.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 

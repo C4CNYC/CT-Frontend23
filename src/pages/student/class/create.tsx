@@ -24,7 +24,8 @@ import CreateHeader from '@/sections/main/create-class/createHeader'
 import CreatePalette, { CLASS_PALETTE } from '@/sections/main/create-class/createPalette'
 import { createRandomAvatar } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, useSnackbar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)]

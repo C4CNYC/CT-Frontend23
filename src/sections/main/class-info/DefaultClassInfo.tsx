@@ -30,7 +30,9 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import ClassPreferences from '@/sections/dashboard/classes/modal'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover, useSettingsContext, useSnackbar } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import StudentJoinIntro from '../../intro-tours/student-join-intro'
 

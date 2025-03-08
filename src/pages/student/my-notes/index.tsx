@@ -7,7 +7,8 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
 import NotesList from '@/sections/my-notes/NotesList'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 Goals.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

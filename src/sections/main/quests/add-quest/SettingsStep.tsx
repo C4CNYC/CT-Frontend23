@@ -3,7 +3,7 @@ import { Control } from 'react-hook-form'
 
 import { ISkill } from '@/redux/interfaces/content.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { RHFSelect } from '@root/src/components'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
 
 import SkillsAutocomplete from './components/SkillsAutocomplete'
 import TimeController from './components/TimeController'

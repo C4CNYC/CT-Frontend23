@@ -19,7 +19,9 @@ import {
   useUpdateBackgroundImageMutation,
 } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, ModuleLessonsAutocomplete, useSnackbar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import ModuleLessonsAutocomplete from '@root/src/components/module-lessons-autocomplete/ModuleLessonAutocomplete'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import { DIALOG_ACTIONS_SX, TAB_PANEL_SX, TAB_SX } from './constants'
 import MainTab from './MainTab'

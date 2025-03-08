@@ -25,7 +25,8 @@ import {
 } from '@/sections/schools/tabs'
 import SkeletonProfileTab from '@/sections/schools/tabs/profile/SkeletomProfileTab'
 import { useTranslate } from '@/utils/translateHelper'
-import { UploadImageModal, useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings'
+import { UploadImageModal } from '@root/src/components/upload-image-modal'
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

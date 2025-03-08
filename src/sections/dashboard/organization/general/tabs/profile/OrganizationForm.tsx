@@ -13,7 +13,9 @@ import {
 } from '@/redux/services/admin/organization-admin'
 import { OrganizationResponce } from '@/redux/services/interfaces/organization.interface'
 import { fData } from '@/utils'
-import { FormProvider, RHFTextField, RHFUploadAvatar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
 
 import { useLocales } from '../../../../../../locales'
 

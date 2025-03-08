@@ -15,7 +15,8 @@ import {
   useUpdateSocialsMutation,
 } from '@/redux/services/manager/socials-student'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, RHFTextField } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 import LinkSelect from './LinkSelect'
 

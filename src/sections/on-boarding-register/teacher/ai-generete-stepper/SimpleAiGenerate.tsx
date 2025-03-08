@@ -10,8 +10,8 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { Iconify } from '@root/src/components'
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useGenerateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

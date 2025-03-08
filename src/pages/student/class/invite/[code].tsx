@@ -4,7 +4,7 @@ import Head from 'next/head'
 
 import JoinLinkModal from '@/components/join-link-modal'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 InviteModal.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

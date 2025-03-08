@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Box, Button, InputAdornment, TextField, Typography } from '@mui/material'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 export default function TribesFillter(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)

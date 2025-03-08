@@ -10,7 +10,7 @@ import * as Yup from 'yup'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import EmailStep from './email-step'

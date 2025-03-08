@@ -3,7 +3,7 @@ import { ReactElement, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Dialog, DialogContent, IconButton, Typography } from '@mui/material'
 
-import { ModuleLessonsAutocomplete } from '@root/src/components'
+import { ModuleLessonsAutocomplete } from '@root/src/components/module-lessons-autocomplete'
 
 interface Props {
   children: ReactElement

@@ -6,7 +6,7 @@ import { SOCIAL_ICONS } from '@/assets/data'
 import { IFriend } from '@/redux/interfaces/friends.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
-import { SvgColor } from '@root/src/components'
+import { SvgColor } from '@root/src/components/svg-color/SvgColor'
 
 const StyledOverlay = styled('div')(({ theme }) => ({
   top: 0,

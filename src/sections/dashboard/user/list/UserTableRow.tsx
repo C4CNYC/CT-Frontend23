@@ -24,7 +24,11 @@ import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent, IUser } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, Iconify, Label, MenuPopover, RoleSelector } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { RoleSelector } from '@root/src/components/drop-down-menu'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 interface Props {
   row: (IUser | IStudent) & BaseResponseInterface

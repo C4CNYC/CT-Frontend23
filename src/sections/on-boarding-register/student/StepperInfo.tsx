@@ -14,7 +14,9 @@ import {
   schort_month,
   years_list,
 } from '@root/src/assets/data/time-data'
-import { FormProvider, RHFSelect, useSnackbar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { STUDENT_PATH_PAGE } from '@root/src/routes/student.paths'
 
 import { styledRegisterInput } from '../styles'

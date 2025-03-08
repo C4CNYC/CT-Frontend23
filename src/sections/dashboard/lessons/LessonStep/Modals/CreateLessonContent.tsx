@@ -20,7 +20,10 @@ import * as Yup from 'yup'
 
 import { LessonContentComplexity } from '@/redux/services/enums/lesson-content-complexity.enum'
 import { useCreateLessonContentMutation } from '@/redux/services/manager/lesson-content-manager'
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 interface FormValuesProps {
   slug: string

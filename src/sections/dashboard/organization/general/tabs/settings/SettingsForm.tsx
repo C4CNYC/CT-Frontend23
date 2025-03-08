@@ -5,7 +5,9 @@ import { useForm } from 'react-hook-form'
 
 import { useUpdateOrgSettingsMutation } from '@/redux/services/admin/organization-settings'
 import { SettingsResponce } from '@/redux/services/interfaces/organization.interface'
-import { FormProvider, RHFSelect, RHFSwitch } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
 
 import { useLocales } from '../../../../../../locales'
 

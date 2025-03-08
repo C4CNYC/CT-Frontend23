@@ -22,7 +22,7 @@ import { Role } from '@/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import DetailsTab from './details-card'
 import MemberCard from './members-card'

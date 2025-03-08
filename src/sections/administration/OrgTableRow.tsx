@@ -8,7 +8,8 @@ import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, MenuPopover } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { MenuPopover } from '@root/src/components/menu-popover'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 
 import AddEditOrgModal from './AddEditOrgModal'

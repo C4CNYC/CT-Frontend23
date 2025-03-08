@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { Role } from '@/redux/services/enums/role.enum'
-import { RHFTextField } from '@root/src/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 interface IEmailStepProps {
   nextStep: () => void

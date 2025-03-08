@@ -6,7 +6,7 @@ import { CiExport } from '@react-icons/all-files/ci/CiExport'
 import { ImExit } from '@react-icons/all-files/im/ImExit'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import ExitTribeDialog from '../exitTribeDialog'
 

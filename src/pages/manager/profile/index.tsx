@@ -5,7 +5,8 @@ import DashboardLayout from '@/layouts/dashboard'
 import { useProfileQuery } from '@/redux/services/auth'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import ProfileEditForm from '@/sections/profile/ProfileEditForm'
-import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 Profile.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 export default function Profile() {

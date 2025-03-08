@@ -27,16 +27,14 @@ import {
   useUpdateCourseMutation,
 } from '@/redux/services/manager/courses-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import {
-  CourseModuleAutocomplete,
-  FormProvider,
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFUpload,
-  SingleFilePreview,
-  useSnackbar,
-} from '@root/src/components'
+import CourseModuleAutocomplete from '@root/src/components/course-module-autocomplete/CourseModuleAutocomplete'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUpload } from '@root/src/components/hook-form/RHFUpload'
+import { useSnackbar } from '@root/src/components/snackbar'
+import { SingleFilePreview } from '@root/src/components/upload/preview/SingleFilePreview'
 
 import AuthorsTab from './authors-tab/AuthorsTab'
 

@@ -28,8 +28,11 @@ import {
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, RHFSwitch, RHFTextField, useSnackbar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useProperties } from '@root/src/hooks/useProperties'
 import {
   getToggleBtnGroupSx,

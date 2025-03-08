@@ -28,7 +28,9 @@ import {
 // import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { Iconify, RHFCode, SearchNotFound } from '@root/src/components'
+import { RHFCode } from '@root/src/components/hook-form/RHFCode'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { SearchNotFound } from '@root/src/components/search-not-found/SearchNotFound'
 
 export function IntegrationsTab({ contentId }: { contentId: string }): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()

@@ -5,7 +5,7 @@ import { Box, Button, Card, Dialog, DialogContent, Grid, Typography } from '@mui
 
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { useSnackbar } from '@root/src/components'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 interface IExitTribeDialogProps {
   children: React.ReactElement

@@ -15,12 +15,10 @@ import FilterCourses from '@/sections/dashboard/courses/filter'
 import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
-import {
-  CustomBreadcrumbs,
-  EmptyContent,
-  SimpleInfiniteList,
-  useSettingsContext,
-} from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { EmptyContent } from '@root/src/components/empty-content'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>

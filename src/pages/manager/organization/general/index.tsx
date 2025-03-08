@@ -21,7 +21,8 @@ import SettingsTab from '@/sections/dashboard/organization/general/tabs/settings
 import { ProfileCover } from '@/sections/dashboard/user/profile'
 import SkeletonSchool from '@/sections/schools/skeleton-school'
 import { useTranslate } from '@/utils/translateHelper'
-import { UploadImageModal, useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings'
+import { UploadImageModal } from '@root/src/components/upload-image-modal'
 UserProfilePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function UserProfilePage(): React.ReactElement {

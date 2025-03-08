@@ -2,7 +2,7 @@ import { Box, Card, IconButton, ListItemText, Link, Stack } from '@mui/material'
 import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 
 import { Image } from '@/components/image/Image'
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { fDateTime } from '@root/src/utils/formatTime'
 
 import { SlideSelectListProps } from './CreateSlideTypes'

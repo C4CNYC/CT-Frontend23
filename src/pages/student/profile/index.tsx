@@ -13,7 +13,8 @@ import ProfileCover from '@/sections/student-profile/ProfileCover'
 import ProfileLinks from '@/sections/student-profile/ProfileLinks'
 import ProfileMain from '@/sections/student-profile/ProfileMain'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 UserProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 )

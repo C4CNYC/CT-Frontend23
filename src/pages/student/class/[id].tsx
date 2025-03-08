@@ -16,7 +16,7 @@ import DefaultClassInfo from '@/sections/main/class-info/DefaultClassInfo'
 import ClassInfoTable from '@/sections/main/quests/ClassInfoTable'
 import { useTranslate } from '@/utils/translateHelper'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
-import { useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import MainPageTour from '@root/src/sections/intro-tours/teacher-intro-main'
 

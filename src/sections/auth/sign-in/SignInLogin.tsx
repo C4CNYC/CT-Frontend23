@@ -12,7 +12,8 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
 import { useTranslate } from '@/utils/translateHelper'
-import { RHFTextField, useSnackbar } from '@root/src/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 interface IProps {
   isValid?: boolean

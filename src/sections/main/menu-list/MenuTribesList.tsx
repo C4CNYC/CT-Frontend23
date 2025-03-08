@@ -15,7 +15,9 @@ import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-stud
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover, Scrollbar, useSettingsContext } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 import { getAddTribeButtonSx } from './constants'
 import JoinClassModal from './JoinTribeModal'

@@ -12,7 +12,9 @@ import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, RHFTextField, RHFUploadAvatar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
 
 interface FormValuesProps {
   name: string

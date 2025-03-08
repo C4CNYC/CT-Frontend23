@@ -38,21 +38,21 @@ import PendingInvitesTab from '@/sections/dashboard/student/PendingInvitesTab'
 import { UserTableRow } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { CustomAutocomplete } from '@root/src/components/custom-autocomplete'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import {
-  ConfirmDialog,
-  CustomAutocomplete,
-  CustomBreadcrumbs,
-  Iconify,
-  Scrollbar,
+  emptyRows,
   TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
-  emptyRows,
-  useSettingsContext,
   useTable,
-} from '@root/src/components'
+} from '@root/src/components/table'
 const STATUS_OPTIONS = ['all', 'invites']
 
 const TABLE_HEAD = [

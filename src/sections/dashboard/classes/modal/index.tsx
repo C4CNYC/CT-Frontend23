@@ -19,11 +19,9 @@ import * as Yup from 'yup'
 import { Role } from '@/redux/services/enums/role.enum'
 import { RootState } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
-import {
-  ClassMembersAutocomplete,
-  ClassMentorsAutocomplete,
-  FormProvider,
-} from '@root/src/components'
+import ClassMembersAutocomplete from '@root/src/components/class-members-autocomplete/ClassMembersAutocomplete'
+import ClassMentorsAutocomplete from '@root/src/components/class-mentors-autocomplete/ClassMentorsAutocomplete'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
 
 import AddClassTab from './AddClassTab'
 

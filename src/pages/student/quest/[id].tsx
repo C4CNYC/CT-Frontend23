@@ -21,7 +21,8 @@ import QuestHeader from '@/sections/quest/QuestHeader'
 import QuestMain from '@/sections/quest/QuestMain'
 import QuestRating from '@/sections/quest/QuestRating'
 import { useTranslate } from '@/utils/translateHelper'
-import { Iconify, useSettingsContext } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

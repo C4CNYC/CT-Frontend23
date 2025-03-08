@@ -8,7 +8,9 @@ import { useUpdateSchoolSettingsMutation } from '@/redux/services/manager/school
 import { setSchoolSettings } from '@/redux/slices/schoolSettings'
 import { dispatch } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, RHFSelect, RHFSwitch } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
 
 interface FormValuesProps {
   language: string

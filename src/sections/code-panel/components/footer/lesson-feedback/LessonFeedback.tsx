@@ -28,7 +28,9 @@ import {
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { FormProvider, RHFTextField, useSnackbar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 interface Props {
   lessonName?: string

@@ -17,7 +17,10 @@ import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import Image from 'next/image'
 
 import { IUserProfileSchool } from '@/types'
-import { TextMaxLine, MenuPopover, ConfirmDialog } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { TextMaxLine } from '@root/src/components/text-max-line/TextMaxLine'
+
 //
 // import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 interface Props extends CardProps {

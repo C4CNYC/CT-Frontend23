@@ -1,6 +1,6 @@
 import { Box, Container, Skeleton, Stack } from '@mui/material'
 
-import { useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 import { SkeletonBreadcrumbs } from './skeletonBreadcrumbs'
 import SkeletonFilter from './skeletonFilter'

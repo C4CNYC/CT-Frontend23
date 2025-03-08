@@ -3,9 +3,10 @@ import { useMemo } from 'react'
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 
 import { languages } from '@root/src/assets/data/languages'
-import { Iconify } from '@root/src/components'
-import { RHFSelect, RHFTextField } from '@root/src/components'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {

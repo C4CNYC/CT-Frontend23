@@ -5,7 +5,7 @@ import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import { StepWizardChildProps } from 'react-step-wizard'
 
 import { useTranslate } from '@/utils/translateHelper'
-import { Image } from '@root/src/components'
+import { Image } from '@root/src/components/image/Image'
 
 import { SINGIN_BTN_SX } from './constants'
 

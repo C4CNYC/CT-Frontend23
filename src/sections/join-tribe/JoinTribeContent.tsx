@@ -9,7 +9,7 @@ import { useSnackbar } from 'notistack'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
-import { Image } from '@root/src/components'
+import { Image } from '@root/src/components/image/Image'
 
 interface IJoinTribeContentProps {
   classId: string

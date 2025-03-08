@@ -15,7 +15,9 @@ import ModuleCard from '@/sections/dashboard/modules/ModuleCard'
 import ModuleOrganizing from '@/sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs, SimpleInfiniteList, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination/SimpleInfiniteList'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 import FilterModules from './filter'
 

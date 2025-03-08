@@ -2,7 +2,7 @@ import { Container } from '@mui/material'
 
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import AddQuest from '@/sections/main/quests/add-quest'
-import { useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 AddQuestPage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

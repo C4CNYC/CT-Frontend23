@@ -19,7 +19,8 @@ import {
   useCreateTaskMutation,
   useUpdateTaskMutation,
 } from '@/redux/services/manager/tasks-manager'
-import { CustomSmallSelect, useSnackbar } from '@root/src/components'
+import { CustomSmallSelect } from '@root/src/components/custom-input'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import TasksInput from './TasksInput'
 

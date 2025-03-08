@@ -11,7 +11,8 @@ import SkeletonTribes from '@/sections/dashboard/tribes/skeletonTribes'
 import TribeItem from '@/sections/dashboard/tribes/tiribe-card/TribeItem'
 import TribesCounter from '@/sections/dashboard/tribes/tribesCounter'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs, useSettingsContext } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 enum TabType {
   Active = 'active',

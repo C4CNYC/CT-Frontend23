@@ -12,7 +12,12 @@ import { useRouter } from 'next/router'
 import { useDeleteModuleMutation } from '@/redux/services/manager/modules-manager'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, Label, MenuPopover, TextMaxLine, useSnackbar } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { useSnackbar } from '@root/src/components/snackbar'
+import { TextMaxLine } from '@root/src/components/text-max-line/TextMaxLine'
+
 export default function ModuleCard({ module, refetch }: any): React.ReactElement | null {
   const router = useRouter()
   const translate = useTranslate()

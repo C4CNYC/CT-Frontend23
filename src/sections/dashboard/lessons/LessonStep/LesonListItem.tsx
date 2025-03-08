@@ -15,7 +15,7 @@ import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { MenuPopover } from '@root/src/components'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import { BRIEFING, CHALANGES, CUSTOM, GREEN_DOT_SX, getLessonItemPaperSx } from './constants'
 import Preferences from './Modals/Preferences'

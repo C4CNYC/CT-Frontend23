@@ -17,7 +17,12 @@ import {
 } from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, Label, MenuPopover, TextMaxLine, useSnackbar } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { useSnackbar } from '@root/src/components/snackbar'
+import { TextMaxLine } from '@root/src/components/text-max-line/TextMaxLine'
+
 interface Props {
   lesson: ILesson
   index?: number

@@ -12,12 +12,10 @@ import SkeletonBreadcrumbs from '@/sections/skeleton/SkeletonBreadcrumbs'
 import SkeletonFilter from '@/sections/skeleton/skeletonFilter'
 import { getCountTakingElment } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import {
-  CustomBreadcrumbs,
-  EmptyContent,
-  SimpleInfiniteList,
-  useSettingsContext,
-} from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination/SimpleInfiniteList'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 import FilterFriends from './filter'
 

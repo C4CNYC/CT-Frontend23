@@ -45,7 +45,8 @@ import {
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import DetailsStepOpenProject from '@/sections/main/quests/add-quest/DetailsStepOpenProject'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, useSnackbar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import {
   CONTAINER_INNER_SX,

@@ -12,7 +12,10 @@ import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import { useUpdateClassPendingMutation } from '@/redux/services/manager/students-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, MenuPopover, useSnackbar } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { useSnackbar } from '@root/src/components/snackbar'
+
 interface IMemberRowProps {
   row: IStudent
   selected: boolean

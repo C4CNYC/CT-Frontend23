@@ -22,7 +22,7 @@ import {
 } from '@/redux/services/manager/media-manager'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { CustomBreadcrumbs } from '@root/src/components'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
 import { imageResize } from '@root/src/utils/imageResize'
 
 interface ImageAttributes {

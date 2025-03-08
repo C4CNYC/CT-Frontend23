@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
-import { useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { useSetLastActiveTribeMutation } from '@root/src/redux/services/manager/activity-student'
 
 import { TRIBE_LINK_SX, getSignOfActiveLink, getTribeTitleSx } from './constants'

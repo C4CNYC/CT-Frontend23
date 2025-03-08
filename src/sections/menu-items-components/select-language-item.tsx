@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 
-import { Iconify, Image } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { Image } from '@root/src/components/image/Image'
 
 interface LanguageItemProps {
   imageSrc: string

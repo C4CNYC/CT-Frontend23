@@ -8,7 +8,8 @@ import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { IGoals } from '@/redux/interfaces/goals.interface'
 import { useRemoveGoalMutation } from '@/redux/services/manager/goals-student'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog, Iconify } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 
 import AddEditNoteDialog from './AddEditGoalDialog'
 

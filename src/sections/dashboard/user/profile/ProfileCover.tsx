@@ -4,7 +4,8 @@ import { styled, useTheme } from '@mui/material/styles'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { OrganizationResponce } from '@/redux/services/interfaces/organization.interface'
 import { bgBlur } from '@/utils'
-import { CustomAvatar, Image } from '@root/src/components'
+import { CustomAvatar } from '@root/src/components/custom-avatar/CustomAvatar'
+import { Image } from '@root/src/components/image/Image'
 
 const StyledRoot = styled('div')(({ theme }) => ({
   '&:before': {

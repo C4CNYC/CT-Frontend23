@@ -7,7 +7,7 @@ import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout
 import { useGetClassQuery } from '@/redux/services/manager/classes-student'
 import DefaultClassInfo from '@/sections/main/class-info/DefaultClassInfo'
 import QuestsTable from '@/sections/main/quests/ClassInfoTable'
-import { useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

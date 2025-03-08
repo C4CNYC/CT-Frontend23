@@ -19,7 +19,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { Image } from '@/components/image/Image'
-import { Iconify } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useSnackbar } from '@root/src/components/snackbar'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'

@@ -24,7 +24,7 @@ import {
 } from '@/redux/services/manager/assignments-manager'
 import { useGetSkillQuery } from '@/redux/services/manager/skills-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { useSnackbar } from '@root/src/components'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 interface ISkillsAutocompleteProps {
   setAssignmentsSkillsId: (s: ISkill[]) => void

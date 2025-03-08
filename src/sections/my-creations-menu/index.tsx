@@ -9,12 +9,15 @@ import {
 } from '@/redux/services/manager/lessons-manager'
 import OnlyAdmin from '@root/src/auth/OnlyAdmin'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
-import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
+import { Iconify } from '@root/src/components/iconify/Iconify'
+import { Image } from '@root/src/components/image/Image'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
 import {
   StyledIcon as StyledIconVertical,
   StyledItem as StyledItemVertical,
 } from '@root/src/components/nav-section/vertical/styles'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { useResponsive } from '@root/src/hooks'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'

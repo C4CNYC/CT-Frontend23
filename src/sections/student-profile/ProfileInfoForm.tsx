@@ -17,7 +17,10 @@ import {
   useUpdateStudentProfileMutation,
 } from '@/redux/services/auth'
 import { useTranslate } from '@/utils/translateHelper'
-import { FormProvider, RHFSelect, RHFTextField, RHFUploadAvatar } from '@root/src/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),

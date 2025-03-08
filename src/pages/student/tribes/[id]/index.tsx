@@ -11,7 +11,7 @@ import SkeletonTribe from '@/sections/skeleton/SekeltonTribe'
 import ProfileCover from '@/sections/student-profile/ProfileCover'
 import { fNumber } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { useSettingsContext } from '@root/src/components'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 )
