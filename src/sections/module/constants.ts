@@ -1,5 +1,7 @@
 import { alpha, Theme } from '@mui/material'
 
+import { ISkill } from '@root/src/redux/interfaces/content.interface'
+
 export const getPageContainerSx = (
   isMobile: boolean,
   light: boolean,
@@ -76,9 +78,9 @@ export const getHeaderContainerSx = (isMobile: boolean, theme: Theme) => ({
   py: 1,
 })
 export const CHIP_SX = {
-  background: 'transparent',
   border: '1px solid #919EAB52',
-  borderRadius: 1,
+  borderRadius: 2,
+  textTransform: 'uppercase',
 }
 export const HEADER_IMG_SX = {
   flexShrink: 0,
@@ -101,3 +103,26 @@ export const SWITCH_BTN_SX = {
   minWidth: 'auto',
   background: '#fff',
 }
+
+export const _mochSkills: ISkill[] = [
+  {
+    id: 'HTML',
+    name: 'HTML',
+    description: 'HTML',
+  },
+  {
+    id: 'CSS',
+    name: 'CSS',
+    description: 'CSS',
+  },
+  {
+    id: 'Basics',
+    name: 'Basics',
+    description: 'Basics',
+  },
+  {
+    id: 'auto-checked',
+    name: 'auto-checked',
+    description: 'auto-checked',
+  },
+]
