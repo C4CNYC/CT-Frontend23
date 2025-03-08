@@ -35,7 +35,6 @@ import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/Custo
 import { FormProvider } from '@root/src/components/hook-form/FormProvider'
 import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import {
   PropertiesCreateEdit,
   propertiesSchema,

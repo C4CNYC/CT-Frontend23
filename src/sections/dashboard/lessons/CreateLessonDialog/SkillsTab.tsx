@@ -27,7 +27,6 @@ import {
 import { useGetSkillQuery } from '@/redux/services/manager/skills-manager'
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { SearchNotFound } from '@root/src/components/search-not-found/SearchNotFound'
 
 export default function SkillsTab({ lessonId }: { lessonId: string }): React.ReactElement {

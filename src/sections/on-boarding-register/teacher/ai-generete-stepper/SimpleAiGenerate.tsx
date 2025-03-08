@@ -13,7 +13,6 @@ import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useGenerateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

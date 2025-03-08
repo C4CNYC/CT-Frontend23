@@ -6,7 +6,6 @@ import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {

@@ -6,11 +6,11 @@ import { HiArrowsPointingOut } from '@react-icons/all-files/hi2/HiArrowsPointing
 import { IoRefreshOutline } from '@react-icons/all-files/io5/IoRefreshOutline'
 import { FullScreenHandle } from 'react-full-screen'
 
+import FeedbackIcon from '@root/src/assets/icons/FeedbackIcon'
 import LessonFeedback from '@root/src/sections/code-panel/components/footer/lesson-feedback/LessonFeedback'
 import SettingDrawer from '@root/src/sections/code-panel/components/header/nav-bar/options/setting-drawer'
 import ResetLessonConfirm from '@root/src/sections/code-panel/components/header/nav-bar/options/setting-drawer/preferences/ResetLessonConfirm'
 import LessonManager from '@root/src/sections/code-panel/components/lesson-manager'
-import FeedbackIcon from '@root/src/assets/icons/FeedbackIcon'
 
 interface Action {
   icon: ReactNode

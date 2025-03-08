@@ -32,7 +32,6 @@ import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBread
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
 import { useTranslate } from '@/utils/translateHelper'
 import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
 import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { TableNoData } from '@root/src/components/table/TableNoData'

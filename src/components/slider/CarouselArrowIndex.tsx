@@ -5,8 +5,6 @@ import { Theme, styled } from '@mui/material/styles'
 
 import { bgBlur } from '@/utils'
 
-import { IconifyProps } from '../iconify/types'
-
 import { LeftIcon, RightIcon } from './Icon'
 
 const StyledRoot = styled(Box)(({ theme }) => ({

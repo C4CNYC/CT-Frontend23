@@ -15,7 +15,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
-import RoleBasedGuard from '@/auth/RoleBasedGuard' 
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { IAssignmentReduced } from '@/redux/interfaces/assignment.interface'
 import { Role } from '@/redux/services/enums/role.enum'

@@ -11,7 +11,6 @@ import { IoHelpBuoyOutline } from '@react-icons/all-files/io5/IoHelpBuoyOutline'
 
 import { useTranslate } from '@/utils/translateHelper'
 import { Accordion, AccordionDetails, AccordionSummary } from '@root/src/components/accordeon'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 import HelpQuestionModal from './modals/HelpQuestion'

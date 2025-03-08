@@ -6,7 +6,6 @@ import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { useFieldArray } from 'react-hook-form'
 
 import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
-
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 export const DomainFields = () => {

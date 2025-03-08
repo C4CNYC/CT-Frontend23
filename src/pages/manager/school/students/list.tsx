@@ -42,7 +42,6 @@ import { useTranslate } from '@/utils/translateHelper'
 import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
 import { CustomAutocomplete } from '@root/src/components/custom-autocomplete'
 import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
-import { Iconify } from '@root/src/components/iconify/Iconify'
 import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
 import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import {

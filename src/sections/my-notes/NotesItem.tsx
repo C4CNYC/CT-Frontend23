@@ -10,7 +10,7 @@ import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { IGoals } from '@/redux/interfaces/goals.interface'
 import { useRemoveGoalMutation } from '@/redux/services/manager/goals-student'
 import { useTranslate } from '@/utils/translateHelper'
-import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog' 
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
 
 import AddEditNoteDialog from './AddEditGoalDialog'
 interface INotesItemProps {
