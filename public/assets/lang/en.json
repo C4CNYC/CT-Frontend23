@@ -893,6 +893,7 @@
     "console_tooltip_subtitle_2": "Only when you specifically link a particular function to a specific part of the page do you actually see JS modifying the “Front” page.",
     "console_clear_button_title": "Clear console",
     "console_clear_button_subtitle": "This will clear all logged messages",
+    "console_welcome": " 👋 Hi! I'm the <b>console</b> 😊.<br /> I display messages from your code or errors. <br>",
     "no_preview_available_title": "Browser",
     "no_preview_available_results": "Here you will see the results of your work in realtime",
     "no_preview_available": "No preview available?",

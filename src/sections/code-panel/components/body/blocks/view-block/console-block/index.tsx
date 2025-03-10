@@ -117,9 +117,8 @@ const ConsoleBlock = () => {
           sx={COLLAPSE_BOX_SX}
           ref={ConsoleBoxRef}
         >
-          👋 Hi! the <b>console</b> 😊.
+          {translate('console_welcome')}
           <br />
-          I display messages from your code or errors. <br />
           {/* place for console info */}
         </Box>
       </Collapse>
