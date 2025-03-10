@@ -1,4 +1,4 @@
-import { type FC, useMemo, useState, useEffect } from 'react'
+import { type FC, useMemo, useState } from 'react'
 
 import { type DraggableAttributes } from '@dnd-kit/core'
 import { type SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
@@ -6,18 +6,15 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import { Box, Stack, Avatar, Typography, IconButton, CircularProgress } from '@mui/material'
 import { CgClose } from '@react-icons/all-files/cg/CgClose'
 import { useDispatch } from 'react-redux'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import OpenCodeIcon from '@/assets/icons/OpenCodeIcon'
 import { type IFriend } from '@/redux/interfaces/friends.interface'
 import { setRoom } from '@/redux/slices/code-editor-controller'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
 import { RoomStatus } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/components/status-label'
-import { waitConnectSocket } from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/utils/socket'
 import { type BaseResponseInterface } from '@/utils'
-import { useSelector } from '@root/src/redux/store'
 import { EditorMode } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
-import { SocketEventsStudentMode } from '@root/src/sections/code-panel/lib/events/mode'
 
 import { getRandomIndex } from '../../hook/utils'
 
@@ -28,7 +25,7 @@ interface CodeBlockProps {
   lessonId?: string
   cursorName?: string
   onClose: () => void
-  portalSocket: Socket
+  portalSocket: any
   onMoveToPortal: () => void
   attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
@@ -50,7 +47,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
   const [isConnected, setIsConnected] = useState(false)
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive)
 
-  const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
+  // const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
 
   const { boxSx, headerSx } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0]
@@ -83,39 +80,39 @@ const CodeBlock: FC<CodeBlockProps> = ({
     onMoveToPortal()
   }
 
-  useEffect(() => {
-    const runAsyncEffect = async (socket: Socket) => {
-      const isConnected = await waitConnectSocket(socket)
+  // useEffect(() => {
+  //   const runAsyncEffect = async (socket: Socket) => {
+  //     const isConnected = await waitConnectSocket(socket)
 
-      if (isConnected) {
-        socket.emit('joinRoom', `student_${owner.id}`)
-        if (!socket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
-          socket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
-            setIsStudentReady(true)
-          })
-        }
-        setIsConnected(isConnected)
-      } else {
-        void runAsyncEffect(socket)
-      }
-    }
+  //     if (isConnected) {
+  //       socket.emit('joinRoom', `student_${owner.id}`)
+  //       if (!socket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
+  //         socket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
+  //           setIsStudentReady(true)
+  //         })
+  //       }
+  //       setIsConnected(isConnected)
+  //     } else {
+  //       void runAsyncEffect(socket)
+  //     }
+  //   }
 
-    if (portalSocket) {
-      if (portalSocket.connected) {
-        portalSocket.emit('joinRoom', `student_${owner.id}`)
-        if (!portalSocket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
-          portalSocket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
-            setIsStudentReady(true)
-          })
-        }
-        setIsConnected(true)
-      } else {
-        void runAsyncEffect(portalSocket)
-      }
-    } else {
-      setIsConnected(false)
-    }
-  }, [portalSocket])
+  //   if (portalSocket) {
+  //     if (portalSocket.connected) {
+  //       portalSocket.emit('joinRoom', `student_${owner.id}`)
+  //       if (!portalSocket.hasListeners(SocketEventsStudentMode.OnlineStudentReady)) {
+  //         portalSocket.on(SocketEventsStudentMode.OnlineStudentReady, () => {
+  //           setIsStudentReady(true)
+  //         })
+  //       }
+  //       setIsConnected(true)
+  //     } else {
+  //       void runAsyncEffect(portalSocket)
+  //     }
+  //   } else {
+  //     setIsConnected(false)
+  //   }
+  // }, [portalSocket])
 
   return (
     <Box sx={boxSx}>

@@ -1,7 +1,7 @@
 import { type MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import pDebounce from 'p-debounce'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { RoomStatus } from '../components/status-label'
 
@@ -10,7 +10,7 @@ import { SubscribedEvents } from './utils/socket'
 
 interface UseModeSubscriptionsProps {
   roomId: string
-  socket?: Socket
+  socket?: any
   initializeBlockedRef: MutableRefObject<boolean>
   runInitWatcher: () => Promise<void>
   runInitSubOwner: (isFirstInit: boolean) => void
@@ -105,10 +105,14 @@ export const useModeSubscriptions = ({
   }, [roomId, socket, runInitSubOwnerRef, runInitWatcherRef, delayedOnChange])
 
   useEffect(() => {
-    modeSockets.subscribe[mode][roomStatus]?.()
+    if (socket) {
+      modeSockets.subscribe[mode][roomStatus]?.()
+    }
 
     return () => {
-      modeSockets.unsuscribe[roomStatus]()
+      if (socket) {
+        modeSockets.unsuscribe[roomStatus]()
+      }
     }
   }, [mode, roomStatus, modeSockets])
 }

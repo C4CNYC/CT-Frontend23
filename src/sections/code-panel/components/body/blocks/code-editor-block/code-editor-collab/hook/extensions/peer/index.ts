@@ -1,7 +1,7 @@
 import { receiveUpdates, sendableUpdates, collab, getSyncedVersion } from '@codemirror/collab'
 import { StateEffectType } from '@codemirror/state'
 import { EditorView, ViewPlugin, ViewUpdate } from '@codemirror/view'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
@@ -12,7 +12,7 @@ import { pullUpdates } from './pull-updates'
 import { pushUpdates } from './push-updates'
 
 interface PeerExtensionProps {
-  socket: Socket
+  socket: any
   roomId: string
   startVersion: number
   fileName: StudentFile

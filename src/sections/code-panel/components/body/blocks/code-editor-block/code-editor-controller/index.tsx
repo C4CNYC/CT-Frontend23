@@ -1,13 +1,13 @@
-import { type FC, memo, useEffect, useState } from 'react'
+import { type FC, memo, useState } from 'react'
 
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
 import { useSelector } from '@/redux/store'
 import CodeEditorCollab from '@/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab'
 import { voidFunction } from '@/utils'
 
-import { waitConnectSocket } from '../code-editor-collab/hook/utils/socket'
+// import { waitConnectSocket } from '../code-editor-collab/hook/utils/socket'
 
 interface CodeEditorControllerProps {
   onChangeStreamingDocInfo?: (value: Record<string, string>) => void
@@ -22,22 +22,22 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
 }) => {
   const [randomRoom] = useState(`${Math.random()}${Date.now()}`)
 
-  const socket = useSelector((state) => state.codePanelGlobal.socket)
+  // const socket = useSelector((state) => state.codePanelGlobal.socket)
   const room = useSelector((state) => state.codeEditorController.room)
 
-  useEffect(() => {
-    const runAsyncEffect = async (socket: Socket) => {
-      const isConnected = await waitConnectSocket(socket)
+  // useEffect(() => {
+  //   const runAsyncEffect = async (socket: Socket) => {
+  //     const isConnected = await waitConnectSocket(socket)
 
-      if (!isConnected) {
-        void runAsyncEffect(socket)
-      }
-    }
+  //     if (!isConnected) {
+  //       void runAsyncEffect(socket)
+  //     }
+  //   }
 
-    if (socket && !socket.connected) {
-      void runAsyncEffect(socket)
-    }
-  }, [socket])
+  //   if (socket && !socket.connected) {
+  //     void runAsyncEffect(socket)
+  //   }
+  // }, [socket])
 
   return (
     <CodeEditorCollab

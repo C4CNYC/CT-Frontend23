@@ -2,7 +2,7 @@ import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
 import CodeMirror from '@uiw/react-codemirror'
 import { useRouter } from 'next/router'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { useDispatch, useSelector } from '@/redux/store'
 import { voidFunction } from '@/utils'
@@ -29,7 +29,7 @@ type ReducedFields =
   | 'defaultFileName'
 
 interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFields> {
-  portalSocket?: Socket
+  portalSocket?: any
   className?: string
   isReadOnly?: boolean
   withFileManager?: boolean
@@ -214,7 +214,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   )
 }
 
-const useSocketController = (socket?: Socket) => {
+const useSocketController = (socket?: any) => {
   const router = useRouter()
   const { user } = useAuthContext()
 

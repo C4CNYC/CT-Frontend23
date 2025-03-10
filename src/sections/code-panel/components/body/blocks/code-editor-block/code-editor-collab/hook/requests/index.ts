@@ -1,6 +1,6 @@
 import { type Update } from '@codemirror/collab'
 import { Text } from '@codemirror/state'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
@@ -19,7 +19,7 @@ export const createFile = async ({ socket, fileName, roomId }: CreateFile): Prom
     })
   })
 }
-export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileInfo> => {
+export const getFileInfo = async (roomId: string, socket: any): Promise<FileInfo> => {
   return await new Promise((resolve) => {
     socket.emit(EmitSocketEvents.GetFileInfo, roomId, socket.id)
 
@@ -29,7 +29,7 @@ export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileI
   })
 }
 
-export const isRoomExist = async (roomId: string, socket: Socket): Promise<boolean> => {
+export const isRoomExist = async (roomId: string, socket: any): Promise<boolean> => {
   return await new Promise((resolve) => {
     socket.emit('isRoomExist', roomId, socket.id)
 
@@ -52,7 +52,8 @@ export const getDocument = async ({
       } as any)
     } else {
       socket.emit(EmitSocketEvents.GetDoc, other)
-      socket.once(SubscribedEvents.GetDocResponse, ({ doc, ...other }) => {
+      socket.once(SubscribedEvents.GetDocResponse, ({ doc, ...other }: { doc: any }) => {
+        // @ts-ignore
         resolve({
           doc: doc?.length > 0 ? Text.of(doc.split('\n')) : Text.of(['']),
           ...other,
@@ -63,7 +64,7 @@ export const getDocument = async ({
 }
 
 interface GetCodeInfo {
-  socket: Socket
+  socket: any
   roomId: string
 }
 
@@ -71,14 +72,14 @@ export const getCodeInfo = async ({ socket, roomId }: GetCodeInfo): Promise<any>
   return await new Promise(function (resolve) {
     socket.emit('getCode', roomId)
 
-    socket.once('getCodeResponse' + roomId, (data) => {
+    socket.once('getCodeResponse' + roomId, (data: any) => {
       resolve(data)
     })
   })
 }
 
 interface GetDocumentProps {
-  socket?: Socket
+  socket?: any
   roomId: string
   cursorName: string
   fileName: StudentFile
@@ -106,7 +107,7 @@ export interface FileInfo {
 }
 
 interface CreateFile {
-  socket: Socket
+  socket: any
   fileName: string
   roomId: string
 }

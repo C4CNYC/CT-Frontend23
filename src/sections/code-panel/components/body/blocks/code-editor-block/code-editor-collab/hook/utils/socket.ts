@@ -1,5 +1,5 @@
 import values from 'lodash-es/values'
-import { Socket, io } from 'socket.io-client'
+// import { Socket, io } from 'socket.io-client'
 
 export enum SubscribedEvents {
   Connect = 'connect',
@@ -51,7 +51,7 @@ export enum EmitCommentsEvents {
   RemoveCommentFromGroup = 'removeCommentFromGroup',
 }
 
-export const unsubscribeSocket = (socket?: Socket): void => {
+export const unsubscribeSocket = (socket?: any): void => {
   if (!socket) return
 
   values(SubscribedEvents).forEach((event) => {
@@ -59,15 +59,18 @@ export const unsubscribeSocket = (socket?: Socket): void => {
   })
 }
 
-export const createSocket = (userId?: null | string): Socket => {
-  return io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
-    path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-    auth: userId ? { userId } : {},
-    transports: ['websocket'],
-  })
+export const createSocket = (userId?: null | string): any => {
+  return
+  // return io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
+  //   path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
+  //   auth: userId ? { userId } : {},
+  //   transports: ['websocket'],
+  // })
 }
 
-export const waitConnectSocket = async (socket: Socket): Promise<boolean> => {
+export const waitConnectSocket = async (socket: any): Promise<boolean> => {
+  if (!socket) return false
+
   return await new Promise((resolve) => {
     socket.on(SubscribedEvents.Connect, () => {
       resolve(true)

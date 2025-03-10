@@ -1,5 +1,5 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
-import type { Socket } from 'socket.io-client'
+// import type { Socket } from 'socket.io-client'
 
 import { ILessonUserStatus } from '@/types'
 import { IValidationMap } from '@/utils'
@@ -20,7 +20,7 @@ export interface IGlobalCodePanel {
   isBrowserHidden: boolean
   isRealtimeCodeHidden: boolean
   usersStatus: ILessonUserStatus[]
-  socket?: Socket | undefined
+  socket?: any | undefined
   contentValidations?: ContentValidation[]
   prevLessonId?: string | null
   prevLessonCode?: string | null | undefined
@@ -114,7 +114,7 @@ export const codePanelSlice = createSlice({
     setUsersStatus: (state, action: PayloadAction<ILessonUserStatus[]>) => {
       state.usersStatus = action.payload
     },
-    setSocket: (state, action: PayloadAction<Socket | undefined>) => {
+    setSocket: (state, action: PayloadAction<any | undefined>) => {
       state.socket = action.payload as any
     },
     increaceAnimationNumber: (state, action: PayloadAction<number>) => {

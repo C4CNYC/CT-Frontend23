@@ -10,7 +10,7 @@ import {
 
 import { type ReactCodeMirrorProps, StateEffectType, EditorView } from '@uiw/react-codemirror'
 import pDebounce from 'p-debounce'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { EffectType } from './constants'
 import type { CommentEffect } from './extensions/comments/types'
@@ -29,7 +29,7 @@ import { SubscribedCommentsEvents } from './utils/socket'
 
 interface UseCommentsProps {
   editorView: RefObject<EditorView>
-  socket?: Socket
+  socket?: any
   roomId: string
   cursorText: string
   activeFile: string

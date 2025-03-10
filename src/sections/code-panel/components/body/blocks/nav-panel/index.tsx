@@ -59,7 +59,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef, lessonId 
   } = useNavPanel(wrapperListenerRef)
 
   const { users, activeUsersAmount, isUsersLoading, onLoadMore, hasNextPage } =
-    useUserWithStatuses()
+    useUserWithStatuses(isOpen)
 
   const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
 

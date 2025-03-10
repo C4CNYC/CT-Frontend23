@@ -14,15 +14,17 @@ interface LessonUserResponseType {
   lessonId: string
 }
 
-export const useUserWithStatuses = () => {
+export const useUserWithStatuses = (isOpenNavPanel: boolean) => {
   const [users, setUsers] = useState<Array<ILessonUserStatus>>([])
   const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
 
   const socket = useSelector((state) => state.codePanelGlobal.socket)
   const classId = useSelector((state) => state?.codePanel?.class?.id)
 
-  const { data: availableUsers, isLoading: isUsersLoading } =
-    useGetFriendsStudentContentQuery(filters)
+  const { data: availableUsers, isLoading: isUsersLoading } = useGetFriendsStudentContentQuery(
+    filters,
+    { skip: !isOpenNavPanel }
+  )
 
   useEffect(() => {
     if (!socket) return

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 
 import { AppCacheProvider as EmotionAppCacheProvider } from '@mui/material-nextjs/v14-pagesRouter'
 import { LocalizationProvider } from '@mui/x-date-pickers'
@@ -7,7 +7,7 @@ import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Provider as ReduxProvider } from 'react-redux'
-import { io } from 'socket.io-client'
+// import { io } from 'socket.io-client'
 
 import { AuthProvider } from '@/auth/JwtContext'
 import { MotionLazyContainer } from '@/components/animate/MotionLazyContainer'
@@ -16,7 +16,7 @@ import { ProgressBar } from '@/components/progress-bar'
 import { SettingsProvider, ThemeSettings } from '@/components/settings'
 import { SnackbarProviderWrapper } from '@/components/snackbar'
 import ThemeLocalization from '@/locales'
-import { store, useDispatch } from '@/redux/store'
+import { store } from '@/redux/store'
 import { ThemeProvider } from '@/theme'
 
 import '@/locales/i18n'
@@ -24,10 +24,10 @@ import 'react-lazy-load-image-component/src/effects/blur.css'
 import 'simplebar/dist/simplebar.css'
 import '@/lib/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
-import { useAuthContext } from '../auth/useAuthContext'
+// import { useAuthContext } from '../auth/useAuthContext'
 import { useTenants } from '../hooks/useTenants'
-import { setSocket } from '../redux/slices/code-panel-global'
-import generateId from '../utils/generate-id'
+// import { setSocket } from '../redux/slices/code-panel-global'
+// import generateId from '../utils/generate-id'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode
@@ -85,7 +85,8 @@ export default function MyApp({ Component, pageProps, ...props }: MyAppProps): R
                     <ThemeLocalization>
                       <SnackbarProviderWrapper>
                         <ProgressBar />
-                        <SocketProvider>{getLayout(<Component {...pageProps} />)}</SocketProvider>
+                        {getLayout(<Component {...pageProps} />)}
+                        {/* <SocketProvider>{getLayout(<Component {...pageProps} />)}</SocketProvider> */}
                       </SnackbarProviderWrapper>
                     </ThemeLocalization>
                   </ThemeSettings>
@@ -99,35 +100,35 @@ export default function MyApp({ Component, pageProps, ...props }: MyAppProps): R
   )
 }
 
-const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const dispatch = useDispatch()
-  const socketConnectedRef = useRef(false)
-  const { user, isInitialized: authIsInitialized } = useAuthContext()
+// const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+//   const dispatch = useDispatch()
+//   const socketConnectedRef = useRef(false)
+//   const { user, isInitialized: authIsInitialized } = useAuthContext()
 
-  useEffect(() => {
-    if (socketConnectedRef.current || !authIsInitialized) return
+//   useEffect(() => {
+//     if (socketConnectedRef.current || !authIsInitialized) return
 
-    socketConnectedRef.current = true
+//     socketConnectedRef.current = true
 
-    const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
-      path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
-      auth: { userId: user?.id ?? generateId(20) },
-      reconnectionDelay: 1000 * 60,
-      reconnectionDelayMax: 1000 * 60 * 60,
-      transports: ['websocket'],
-    })
+//     const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? '', {
+//       path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
+//       auth: { userId: user?.id ?? generateId(20) },
+//       reconnectionDelay: 1000 * 60,
+//       reconnectionDelayMax: 1000 * 60 * 60,
+//       transports: ['websocket'],
+//     })
 
-    dispatch(setSocket(socket))
+//     dispatch(setSocket(socket))
 
-    socket.on('connect_error', (error) => {
-      // eslint-disable-next-line no-console
-      console.error('Connection error', error)
-    })
+//     socket.on('connect_error', (error) => {
+//       // eslint-disable-next-line no-console
+//       console.error('Connection error', error)
+//     })
 
-    return () => {
-      socket?.disconnect()
-      dispatch(setSocket(undefined))
-    }
-  }, [authIsInitialized, user])
-  return <>{children}</>
-}
+//     return () => {
+//       socket?.disconnect()
+//       dispatch(setSocket(undefined))
+//     }
+//   }, [authIsInitialized, user])
+//   return <>{children}</>
+// }

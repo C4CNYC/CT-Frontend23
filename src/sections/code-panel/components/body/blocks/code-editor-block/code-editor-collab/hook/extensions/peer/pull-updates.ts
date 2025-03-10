@@ -1,6 +1,6 @@
 import { type Update } from '@codemirror/collab'
 import { ChangeSet, StateEffect, StateEffectType } from '@codemirror/state'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
@@ -12,7 +12,7 @@ interface PullUpdateProps {
   roomId: string
   version: number
   fileName: StudentFile
-  socket: Socket
+  socket: any
   addCursor: StateEffectType<Cursor>
   commentEffect: StateEffectType<any>
 }

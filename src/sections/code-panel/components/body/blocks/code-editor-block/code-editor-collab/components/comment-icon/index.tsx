@@ -2,7 +2,7 @@ import { type FC, type MouseEventHandler, useState, useRef, useEffect } from 're
 
 import ChatIcon from '@mui/icons-material/Chat'
 import { Box } from '@mui/material'
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { type CommentGroup, getCommentGroup } from '../../hook/requests/comments'
 import type { Comment } from '../../hook/requests/comments'
@@ -12,7 +12,7 @@ import { SubscribedCommentsEvents } from '../../hook/utils/socket'
 import { useStyles } from './styles'
 
 export interface CommentWidgetProps extends CommentGroup {
-  socket?: Socket
+  socket?: any
   fileId: string
   roomId: string
   onCommentIconClick: (props: CommentPopupProps | null) => void

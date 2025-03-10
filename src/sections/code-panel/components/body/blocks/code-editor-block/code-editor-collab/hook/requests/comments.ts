@@ -1,9 +1,9 @@
-import { Socket } from 'socket.io-client'
+// import { Socket } from 'socket.io-client'
 
 import { SubscribedCommentsEvents, EmitCommentsEvents } from '../utils/socket'
 
 export const getCommentGroup = async (
-  socket: Socket,
+  socket: any,
   props: CommentGroupProps
 ): Promise<CommentGroup | null> => {
   return new Promise((resolve, reject) => {
@@ -23,7 +23,7 @@ export const getCommentGroup = async (
 }
 
 export const createCommentGroup = async (
-  socket: Socket,
+  socket: any,
   props: CreateCommentGroupProps
 ): Promise<CommentGroup | null> => {
   return new Promise((resolve, reject) => {
@@ -43,7 +43,7 @@ export const createCommentGroup = async (
 }
 
 export const addCommentToGroup = async (
-  socket: Socket,
+  socket: any,
   props: AddCommentToGroup
 ): Promise<CommentGroup | null> => {
   return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ export const addCommentToGroup = async (
 }
 
 export const removeCommentGroup = async (
-  socket: Socket,
+  socket: any,
   props: CommentGroupProps
 ): Promise<boolean> => {
   return new Promise((resolve) => {
@@ -71,7 +71,7 @@ export const removeCommentGroup = async (
 
     socket.once(
       `${SubscribedCommentsEvents.RemoveCommentGroupResponse}${props.roomId}${props.fileId}${props.groupId}`,
-      (isDeleted) => {
+      (isDeleted: boolean) => {
         resolve(isDeleted)
       }
     )
@@ -79,15 +79,15 @@ export const removeCommentGroup = async (
 }
 
 export const removeCommentFromGroup = async (
-  socket: Socket,
+  socket: any,
   props: RemoveCommentFromGroupProps
-): Promise<CommentGroup> => {
+): Promise<boolean> => {
   return new Promise((resolve) => {
     socket.emit(EmitCommentsEvents.RemoveCommentFromGroup, props)
 
     socket.once(
       `${SubscribedCommentsEvents.RemoveCommentFromGroupResponse}${props.roomId}${props.fileId}${props.groupId}`,
-      (isDeleted) => {
+      (isDeleted: boolean) => {
         resolve(isDeleted)
       }
     )
@@ -95,15 +95,15 @@ export const removeCommentFromGroup = async (
 }
 
 export const updateCommentPosition = async (
-  socket: Socket,
+  socket: any,
   props: UpdateCommentGroupPosition
-): Promise<CommentGroup> => {
+): Promise<boolean> => {
   return new Promise((resolve) => {
     socket.emit(EmitCommentsEvents.UpdateCommentGroupPosition, props)
 
     socket.once(
       `${SubscribedCommentsEvents.UpdateCommentGroupPositionResponse}${props.roomId}${props.groupId}`,
-      (isDeleted) => {
+      (isDeleted: boolean) => {
         resolve(isDeleted)
       }
     )

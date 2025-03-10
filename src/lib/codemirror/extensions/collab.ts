@@ -7,14 +7,14 @@ import {
 } from '@codemirror/collab'
 import { ChangeSet, Extension, StateEffect, Text } from '@codemirror/state'
 import { EditorView, ViewPlugin, ViewUpdate } from '@codemirror/view'
-import type { Socket } from 'socket.io-client'
+// import type { Socket } from 'socket.io-client'
 
 import { EffectType } from '@root/src/sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/constants'
 
 import { addCursor, removeCursor } from './cursors'
 
 async function pushUpdates(
-  socket: Socket,
+  socket: any,
   roomId: string,
   version: number,
   fullUpdates: readonly Update[],
@@ -51,7 +51,7 @@ async function pushUpdates(
 }
 
 async function pullUpdates(
-  socket: Socket,
+  socket: any,
   roomId: string,
   version: number,
   timeout = 3000
@@ -108,7 +108,7 @@ async function pullUpdates(
 }
 
 export async function getDocument(
-  socket: Socket,
+  socket: any,
   roomId: string,
   timeout = 3000
 ): Promise<{ version: number; doc: Text }> {
@@ -133,7 +133,7 @@ export async function getDocument(
 }
 
 export const peerExtension = (
-  socket: Socket,
+  socket: any,
   startVersion: number,
   id: string,
   roomId: string

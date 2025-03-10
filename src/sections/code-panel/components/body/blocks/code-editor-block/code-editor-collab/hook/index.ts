@@ -3,7 +3,7 @@ import { type RefObject, useEffect, useState, useRef, useCallback, useMemo } fro
 import type { Extension } from '@codemirror/state'
 import type { Text } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
-import type { Socket } from 'socket.io-client'
+// import type { Socket } from 'socket.io-client'
 
 import { AuthUserType } from '@/auth/types'
 import { useSelector } from '@/redux/store'
@@ -25,7 +25,7 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   mode?: EditorMode
   user?: AuthUserType
   activeFile: StudentFile
-  socket?: Socket
+  socket?: any
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
 

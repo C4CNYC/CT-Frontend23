@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useRef } from 'react'
 
-import type { Socket } from 'socket.io-client'
+// import type { Socket } from 'socket.io-client'
 
 import { EditorMode } from '../constants'
 import type { File } from '../requests'
@@ -10,7 +10,7 @@ interface UseModeSubscriotionsProps {
   roomId: string
   onDeleteFile: (fileName: File) => void
   setActiveFile: (fileName: File) => void
-  socket?: Socket
+  socket?: any
   onUpdateFileList: (fileName: File, socketId: string) => void
   mode: EditorMode
 }
@@ -70,10 +70,14 @@ export const useModeSubscriptions = ({
   }, [roomId, socket, onUpdateFileList])
 
   useEffect(() => {
-    modeSockets.subscribe[mode]()
+    if (socket) {
+      modeSockets.subscribe[mode]()
+    }
 
     return () => {
-      modeSockets.unsubscribe[mode]()
+      if (socket) {
+        modeSockets.unsubscribe[mode]()
+      }
     }
   }, [mode, modeSockets])
 }
