@@ -10,7 +10,6 @@ import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import { useRouter } from 'next/router'
 
-import { ConfirmDialog, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/components'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useDeleteLessonMutation,
@@ -18,6 +17,12 @@ import {
 } from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { useSnackbar } from '@root/src/components/snackbar'
+import { TextMaxLine } from '@root/src/components/text-max-line/TextMaxLine'
+
 interface Props {
   lesson: ILesson
   index?: number

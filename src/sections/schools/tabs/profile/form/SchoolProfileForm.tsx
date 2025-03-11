@@ -7,13 +7,15 @@ import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
-import { FormProvider, RHFSelect, RHFTextField } from '@/components'
 import { SchoolProfile } from '@/redux/services/interfaces/school.interface'
 import {
   useUpdateSchoolAvatarImgMutation,
   useUpdateSchoolProfileMutation,
 } from '@/redux/services/manager/schools-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 const UpdateSchoolSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),

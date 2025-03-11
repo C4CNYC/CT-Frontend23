@@ -23,7 +23,6 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { animals, colors, uniqueNamesGenerator } from 'unique-names-generator'
 
-import { FormProvider, useSnackbar } from '@/components'
 import CustomTabPanel, { customTabProps } from '@/components/custom-tab-panel'
 import {
   AssignmentProjectCategories,
@@ -46,6 +45,8 @@ import {
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import DetailsStepOpenProject from '@/sections/main/quests/add-quest/DetailsStepOpenProject'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import {
   CONTAINER_INNER_SX,

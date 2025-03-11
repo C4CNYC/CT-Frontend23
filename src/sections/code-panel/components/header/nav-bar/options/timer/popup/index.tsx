@@ -8,8 +8,8 @@ import { MdOutlineTimer } from '@react-icons/all-files/md/MdOutlineTimer'
 import { VscDebugRestart } from '@react-icons/all-files/vsc/VscDebugRestart'
 import { useTimer } from 'react-timer-hook'
 
-import { MenuPopover } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
+import { MenuPopover } from '@root/src/sections/code-panel/components/editors/MenuPopover'
 
 import { TimerInput } from '../input'
 

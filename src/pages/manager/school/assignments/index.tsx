@@ -19,22 +19,6 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import {
-  ConfirmDialog,
-  CustomBreadcrumbs,
-  Label,
-  Scrollbar,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  emptyRows,
-  getComparator,
-  useSettingsContext,
-  useSnackbar,
-  useTable,
-} from '@/components'
 import { SchoolDashboardLayout } from '@/layouts/dashboard'
 import { AssignmentTypes } from '@/redux/enums/assignment-types.enum'
 import { Publish, Status } from '@/redux/enums/assignments.enum'
@@ -49,6 +33,22 @@ import AssignmentsTableRow from '@/sections/dashboard/assigments/AssignmentsTabl
 import AssignmentsTableToolbar from '@/sections/dashboard/assigments/AssignmentsTableToolbar'
 import { fTimestamp } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Label } from '@root/src/components/label/Label'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import { useSnackbar } from '@root/src/components/snackbar'
+import {
+  emptyRows,
+  getComparator,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  useTable,
+} from '@root/src/components/table'
 
 import FilterAssignments from './filter'
 

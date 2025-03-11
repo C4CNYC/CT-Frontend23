@@ -1,10 +1,10 @@
 import { Container, Typography } from '@mui/material'
 import { m } from 'framer-motion'
 
-import { MotionContainer, varBounce } from '@/components'
-
 // assets
 import ForbiddenIllustration from '../assets/illustrations/ForbiddenIllustration'
+import { MotionContainer } from '../components/animate/MotionContainer'
+import { varBounce } from '../components/animate/variants/bounce'
 
 import { useAuthContext } from './useAuthContext'
 

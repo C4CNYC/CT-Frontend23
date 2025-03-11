@@ -4,7 +4,7 @@ import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { IoChevronBack } from '@react-icons/all-files/io5/IoChevronBack'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
-import { RHFTextField } from '@root/src/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

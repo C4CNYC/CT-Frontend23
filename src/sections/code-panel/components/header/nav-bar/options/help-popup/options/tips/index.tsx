@@ -3,10 +3,10 @@ import { type FC } from 'react'
 import { Alert, Box, Skeleton } from '@mui/material'
 import { Stack } from '@mui/system'
 
-import { EmptyContent } from '@/components'
 import { useGetLessonStudentWithoutContentsQuery } from '@/redux/services/manager/lesson-student'
 import { useGetPublicLessonQuery } from '@/redux/services/public-student'
 import { useSelector } from '@/redux/store'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
 
 const Tips: FC = () => {
   const profile = useSelector((state) => state.global.user)

@@ -3,12 +3,14 @@ import { Card, Link, Stack, Typography } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 
-import { FormProvider, RHFSelect, RHFSwitch } from '@/components'
 import { SchoolSettings } from '@/redux/services/interfaces/school.interface'
 import { useUpdateSchoolSettingsMutation } from '@/redux/services/manager/schools-manager'
 import { setSchoolSettings } from '@/redux/slices/schoolSettings'
 import { dispatch } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
 
 interface FormValuesProps {
   language: string

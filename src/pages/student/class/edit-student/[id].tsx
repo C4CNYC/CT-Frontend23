@@ -2,12 +2,13 @@ import { Container } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetStudentQuery } from '@/redux/services/manager/students-manager'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import StudentNewEditForm from '@/sections/dashboard/student/StudentNewEditForm'
 import SkeletonEditUserForm from '@/sections/dashboard/user/skeleton/SkeletonEditUserForm'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

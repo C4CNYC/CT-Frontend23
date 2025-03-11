@@ -4,9 +4,9 @@ import { Button, Collapse, Stack, Typography, useTheme } from '@mui/material'
 import { SlArrowDown } from '@react-icons/all-files/sl/SlArrowDown'
 import { SlArrowUp } from '@react-icons/all-files/sl/SlArrowUp'
 
-import { Image } from '@/components'
 import { ICourse } from '@/types'
 import { useTranslate } from '@/utils/translateHelper'
+import { Image } from '@root/src/components/image/Image'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 
 import { COURSE_INFO_IMAGE_SX, getCourseInfoWrapperSx, getSeeMoreBtnSx } from './constants'

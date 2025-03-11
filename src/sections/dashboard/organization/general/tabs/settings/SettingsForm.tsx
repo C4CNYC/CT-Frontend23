@@ -3,9 +3,11 @@ import { Card, Link, Stack, Typography } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 
-import { FormProvider, RHFSelect, RHFSwitch } from '@/components'
 import { useUpdateOrgSettingsMutation } from '@/redux/services/admin/organization-settings'
 import { SettingsResponce } from '@/redux/services/interfaces/organization.interface'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
 
 import { useLocales } from '../../../../../../locales'
 

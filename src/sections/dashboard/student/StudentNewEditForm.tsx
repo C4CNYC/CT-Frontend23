@@ -10,15 +10,6 @@ import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
-import {
-  FormProvider,
-  Label,
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  useSnackbar,
-} from '@/components'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import {
   useCreateStudentMutation,
@@ -30,6 +21,13 @@ import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, createRandomAvatar, getRandomColor } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 import { createWeakPassword } from '@root/src/auth/utils'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
+import { Label } from '@root/src/components/label/Label'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import { StudentChangePassword } from './StudentChangePassword'
 
@@ -114,7 +112,7 @@ export default function StudentNewEditForm({
   }, [isEdit, currentUser])
 
   const updateAvatar = async (id: string, photoURL?: File): Promise<unknown> => {
-    if (!id ?? !photoURL) return
+    if (!id || !photoURL) return
 
     const file = new FormData()
     file.append('file', photoURL)

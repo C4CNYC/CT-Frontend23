@@ -2,7 +2,6 @@ import { Box, Button, CircularProgress, Container } from '@mui/material'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard'
 import { ITaskSearchParams } from '@/redux/services/interfaces/task.interface'
@@ -12,6 +11,8 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
 import CreateCodeDialog from '@/sections/dashboard/tasks/CodeDialog'
 import TaskCard from '@/sections/dashboard/tasks/TaskCard'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 import FilterTasks from './filter'
 

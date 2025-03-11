@@ -12,9 +12,9 @@ import {
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 
-import { MenuPopover } from '@/components'
 import { IUser } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { MenuPopover } from '@root/src/components/menu-popover'
 interface Props {
   person: IUser & BaseResponseInterface
   handleDeleteTeacher: () => void

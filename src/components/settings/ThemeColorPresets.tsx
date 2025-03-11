@@ -9,7 +9,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export default function ThemeColorPresets({ children }: Props): React.ReactElement | null {
+export function ThemeColorPresets({ children }: Props): React.ReactElement | null {
   const outerTheme = useTheme()
 
   const { presetsColor } = useSettingsContext()

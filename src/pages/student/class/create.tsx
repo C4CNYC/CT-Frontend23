@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, useSnackbar } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import {
   useCreateClassesMutation,
@@ -25,6 +24,8 @@ import CreateHeader from '@/sections/main/create-class/createHeader'
 import CreatePalette, { CLASS_PALETTE } from '@/sections/main/create-class/createPalette'
 import { createRandomAvatar } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)]

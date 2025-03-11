@@ -7,10 +7,11 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { FormProvider, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { generateRandomEmoji } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { StyledContent } from '@root/src/layouts/login/styles'
 
 import { RegisterStudentTeacher, SingLink } from '../links'

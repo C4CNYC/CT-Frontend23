@@ -1,9 +1,9 @@
 import { Checkbox, Table, TableBody, TableCell, TableRow } from '@mui/material'
 
-import { Label, TableEmptyRows, TableHeadCustom, emptyRows } from '@/components'
 import { voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-
+import { Label } from '@root/src/components/label/Label'
+import { TableEmptyRows, TableHeadCustom, emptyRows } from '@root/src/components/table'
 interface IPendingInvitesTabProps {
   order: 'asc' | 'desc' | undefined
   selected: string[]

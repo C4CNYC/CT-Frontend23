@@ -22,11 +22,14 @@ import { LuClock3 } from '@react-icons/all-files/lu/LuClock3'
 import NextLink from 'next/link'
 
 import { SOCIAL_ICONS } from '@/assets/data'
-import { ConfirmDialog, Label, MenuPopover, RoleSelector } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent, IUser } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { RoleSelector } from '@root/src/components/drop-down-menu'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 interface Props {
   row: (IUser | IStudent) & BaseResponseInterface

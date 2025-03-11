@@ -5,7 +5,8 @@ import { IoChevronBack } from '@react-icons/all-files/io5/IoChevronBack'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
 
 import { languages } from '@root/src/assets/data/languages'
-import { RHFSelect, RHFTextField } from '@root/src/components'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

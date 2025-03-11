@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { countries } from '@/assets/data'
-import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
 import { SchoolType } from '@/redux/services/enums/school-type.enum'
 import {
   useGetMySchoolsQuery,
@@ -16,6 +15,10 @@ import {
 } from '@/redux/services/manager/schools-manager'
 import { capitalize } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useCreateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { localStorageAvailable } from '@root/src/utils'

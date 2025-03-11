@@ -1,9 +1,9 @@
 import { FormGroup, Stack, Typography, useTheme } from '@mui/material'
 import { Control } from 'react-hook-form'
 
-import { RHFSelect } from '@/components'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
 
 import SkillsAutocomplete from './components/SkillsAutocomplete'
 import TimeController from './components/TimeController'

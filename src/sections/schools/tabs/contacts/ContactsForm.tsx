@@ -6,10 +6,11 @@ import { useSnackbar } from 'notistack'
 import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField } from '@/components'
 import { SchoolContacts } from '@/redux/services/interfaces/school.interface'
 import { useUpdateSchoolContactsMutation } from '@/redux/services/manager/schools-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email('Email must be a valid email address'),

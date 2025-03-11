@@ -2,9 +2,9 @@ import { Button } from '@mui/material'
 import { Container } from '@mui/system'
 import Head from 'next/head'
 
-import { useSettingsContext } from '@/components'
 import JoinLinkModal from '@/components/join-link-modal'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 InviteModal.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

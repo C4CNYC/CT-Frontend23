@@ -5,8 +5,8 @@ import { BsThreeDotsVertical } from '@react-icons/all-files/bs/BsThreeDotsVertic
 import { CiExport } from '@react-icons/all-files/ci/CiExport'
 import { ImExit } from '@react-icons/all-files/im/ImExit'
 
-import { MenuPopover } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import ExitTribeDialog from '../exitTribeDialog'
 

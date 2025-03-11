@@ -1,11 +1,12 @@
 import { Container } from '@mui/system'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import DashboardLayout from '@/layouts/dashboard'
 import { useProfileQuery } from '@/redux/services/auth'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import ProfileEditForm from '@/sections/profile/ProfileEditForm'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 Profile.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 export default function Profile() {

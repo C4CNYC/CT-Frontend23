@@ -1,2 +1,3 @@
-export { default } from './ThemeLocalization'
-export * from './useLocales'
+export { ThemeLocalization } from './ThemeLocalization'
+export { useLocales } from './useLocales'
+export type { Lang } from './useLocales'

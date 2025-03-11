@@ -17,12 +17,13 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField } from '@/components'
 import {
   useCreateLessonContentValidationManagerMutation,
   useUpdateLessonContentValidationManagerMutation,
 } from '@/redux/services/manager/lesson-content-validation-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { isValidRegex } from '@root/src/utils/isValidRegex'
 
 interface FormValuesProps {

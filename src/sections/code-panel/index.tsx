@@ -29,7 +29,9 @@ import {
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 // import CodePanelBody from '@/sections/code-panel/components/body'
-import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
+import { CodePanelBodyMemorized as CodePanelBody } from '@/sections/code-panel/components/body'
+import { TopPanel as CodePanelHeader } from '@/sections/code-panel/components/header'
+import { SkeletonCodePanel } from '@/sections/code-panel/components/skeleton'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
@@ -37,20 +39,13 @@ import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-man
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
 
-import AIGeneratorTour from '../intro-tours/ai-generator-intro'
+import { CodePanelChat } from '../../components/chat/chat'
+import { AIGeneratorTour } from '../intro-tours/ai-generator-intro'
 
-import SignUpDialog from './components/sign-up-dialog'
+import { SignUpDialog } from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
 import { LessonManagerProvider } from './lib/LessonManagerContext'
-
-const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
-  ssr: false,
-})
-
-const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
-  ssr: false,
-})
 
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
@@ -59,18 +54,11 @@ const CodePanelTour = dynamic(
   }
 )
 
-const CodePanelHeader = dynamic(
-  async () => await import('@/sections/code-panel/components/header'),
-  {
-    loading: () => <CPTopBarSkeleton />,
-  }
-)
-
 const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
 
 const DEFAULT_LANGUAGE = 'html'
 
-export default function CodePanelLayout(): ReactElement | null {
+export function CodePanelLayout(): ReactElement | null {
   const router = useRouter()
   const dispatch = useDispatch()
   const translate = useTranslate()

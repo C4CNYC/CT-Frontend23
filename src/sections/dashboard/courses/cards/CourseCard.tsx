@@ -7,13 +7,17 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import Link from 'next/link'
 
-import { ConfirmDialog, Image, Label, MenuPopover, useSnackbar } from '@/components'
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
 import { useDeleteCourseMutation } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Image } from '@root/src/components/image/Image'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface

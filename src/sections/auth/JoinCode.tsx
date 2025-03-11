@@ -15,9 +15,9 @@ import {
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFCodes } from '@/components'
-
-import { useSnackbar } from '../../components/snackbar'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFCodes } from '@root/src/components/hook-form/RHFCodes'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 interface FormValuesProps {
   code1: string

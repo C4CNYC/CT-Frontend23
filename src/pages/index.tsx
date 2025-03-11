@@ -3,14 +3,12 @@ import { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { useAuthContext } from '@/auth/useAuthContext'
 import { useSelector } from '@/redux/store'
 import { PATH_PAGE } from '@/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 export default function HomePage(): React.ReactElement {
   const profile = useSelector((state) => state.global.user)
-  const { isAuthenticated } = useAuthContext()
   const { push } = useRouter()
   useEffect(() => {
     if (profile?.role) {

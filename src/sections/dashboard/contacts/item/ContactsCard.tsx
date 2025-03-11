@@ -16,10 +16,13 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import Image from 'next/image'
 
-import { TextMaxLine, MenuPopover, ConfirmDialog } from '@/components'
+import { IUserProfileSchool } from '@/types'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
+import { TextMaxLine } from '@root/src/components/text-max-line/TextMaxLine'
+
 //
 // import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
-import { IUserProfileSchool } from '@/types'
 interface Props extends CardProps {
   school: IUserProfileSchool
   selected?: boolean

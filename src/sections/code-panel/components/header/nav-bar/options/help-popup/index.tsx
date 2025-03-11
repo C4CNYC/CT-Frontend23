@@ -9,8 +9,9 @@ import { FaRegSquare } from '@react-icons/all-files/fa6/FaRegSquare'
 import { HiOutlineLightBulb } from '@react-icons/all-files/hi2/HiOutlineLightBulb'
 import { IoHelpBuoyOutline } from '@react-icons/all-files/io5/IoHelpBuoyOutline'
 
-import { Accordion, AccordionDetails, AccordionSummary, MenuPopover } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { Accordion, AccordionDetails, AccordionSummary } from '@root/src/components/accordeon'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 import HelpQuestionModal from './modals/HelpQuestion'
 import Solution from './options/solution'

@@ -1,7 +1,7 @@
 import { Grid, Paper, Stack, Typography } from '@mui/material'
 
-import { Image } from '@/components'
 import TribesCounter from '@/sections/dashboard/tribes/tribesCounter'
+import { Image } from '@root/src/components/image/Image'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface Props {

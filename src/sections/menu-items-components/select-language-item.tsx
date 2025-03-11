@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import { IoChevronForwardOutline } from '@react-icons/all-files/io5/IoChevronForwardOutline'
 
-import { Image } from '@root/src/components'
+import { Image } from '@root/src/components/image/Image'
 
 interface LanguageItemProps {
   imageSrc: string

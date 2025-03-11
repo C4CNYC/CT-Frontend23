@@ -8,12 +8,14 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFTextField } from '@/components'
 import {
   useCreatePropertyMutation,
   useUpdatePropertyMutation,
 } from '@/redux/services/manager/properties-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import {
   IProperty,

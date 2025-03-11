@@ -2,7 +2,7 @@ import { Button, Divider } from '@mui/material'
 import { AiTwotoneEdit } from '@react-icons/all-files/ai/AiTwotoneEdit'
 import { RiDeleteBin6Line } from '@react-icons/all-files/ri/RiDeleteBin6Line'
 
-import { MenuPopover } from '@/components'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import EditProjectDialog from './EditProjectDialog'

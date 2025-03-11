@@ -15,7 +15,7 @@ import {
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { MdOutlineTipsAndUpdates } from '@react-icons/all-files/md/MdOutlineTipsAndUpdates'
 
-import { EmptyContent } from '@/components'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
 
 import {
   DIALOG_PAPER_PROPS,

@@ -17,11 +17,13 @@ import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 
-import { ConfirmDialog, Label, MenuPopover } from '@/components'
 import { Status } from '@/redux/enums/assignments.enum'
 import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
 import { fDate } from '@/utils/formatTime'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Label } from '@root/src/components/label/Label'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 import AssignmentDrawer from './AssignmentDrawer'
 

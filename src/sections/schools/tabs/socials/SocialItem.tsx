@@ -8,12 +8,13 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { SOCIAL_ICONS } from '@/assets/data'
-import { FormProvider, RHFTextField } from '@/components'
 import {
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 } from '@/redux/services/manager/schools-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 interface FormValuesProps {
   socialID: string

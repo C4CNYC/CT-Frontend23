@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { Box, Button, Typography } from '@mui/material'
 
-import { ConfirmDialog } from '@root/src/components'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
 import { setSlideIndex } from '@root/src/redux/slices/code-panel-global'
 import { useDispatch } from '@root/src/redux/store'
 import { resetLessonEvent } from '@root/src/sections/code-panel/lib/events'

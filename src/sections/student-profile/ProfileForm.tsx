@@ -7,11 +7,13 @@ import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
 import { IUser } from '@/redux/interfaces/auth.interface'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { useUdpateProfileAvatarMutation, useUpdateProfileMutation } from '@/redux/services/auth'
 import { BaseResponseInterface, fData } from '@/utils'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }
@@ -60,7 +62,7 @@ export default function ProfileForm({ isEdit, currentUser }: Props): React.React
   }, [isEdit, currentUser])
 
   const updateAvatar = async (id: string, photoURL?: File): Promise<unknown> => {
-    if (!id ?? !photoURL) return
+    if (!id || !photoURL) return
 
     const file = new FormData()
     file.append('file', photoURL)

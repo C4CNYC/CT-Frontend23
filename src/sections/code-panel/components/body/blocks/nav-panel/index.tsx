@@ -6,8 +6,8 @@ import EventNoteIcon from '@mui/icons-material/EventNote'
 import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined'
 import { CircularProgress, Divider, Drawer, List, Stack } from '@mui/material'
 
-import { SimpleInfiniteList } from '@/components'
 import { useSelector } from '@/redux/store'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination/SimpleInfiniteList'
 import { ILessonUserStatus } from '@root/src/types'
 
 import { createSocket } from '../code-editor-block/code-editor-collab/hook/utils/socket'

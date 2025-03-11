@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { Box, Button, Dialog, DialogActions, DialogContent, SxProps } from '@mui/material'
 import { BiShowAlt } from '@react-icons/all-files/bi/BiShowAlt'
 
-import { Image } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { Image } from '@root/src/components/image/Image'
 
 import { LIGHT_BOX_ICON_BTN } from './constants'
 

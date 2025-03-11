@@ -4,8 +4,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, Button, InputAdornment, TextField, Typography } from '@mui/material'
 
-import { MenuPopover } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 export default function TribesFillter(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)

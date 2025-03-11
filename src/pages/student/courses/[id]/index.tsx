@@ -2,7 +2,6 @@ import { Box, Container, Skeleton } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, EmptyContent, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetCoursContentQuery } from '@/redux/services/manager/courses-student'
 import { useGetPublicCourseContentQuery } from '@/redux/services/public-student'
@@ -12,6 +11,9 @@ import CourseSidebar from '@/sections/course/course-sidebar'
 import CourseInfo from '@/sections/course/CourseInfo'
 import ModulesListBlock from '@/sections/course/modules-list'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 
 CoursePage.getLayout = (page: React.ReactElement) => (

@@ -40,13 +40,20 @@ module.exports = {
       },
     ],
     'import/order': ['error', IMPORT_ORDER_CONFIG],
+    'import/no-unresolved': 'error',
     'unused-imports/no-unused-imports': 'error',
     'react/no-unescaped-entities': ['off'],
     'react/display-name': ['off'],
     'no-console': 2,
     'no-restricted-imports': [
       'error',
-      { paths: ['react-code-blocks', '@uiw/codemirror-extensions-langs'] },
+      {
+        paths: [
+          // "@mui/material",
+          // "@mui/icons-material",
+          'react-code-blocks',
+          '@uiw/codemirror-extensions-langs']
+      },
     ],
     'react-hooks/exhaustive-deps': 0,
 

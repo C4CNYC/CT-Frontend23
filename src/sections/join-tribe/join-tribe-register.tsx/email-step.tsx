@@ -6,8 +6,8 @@ import { useGoogleLogin } from '@react-oauth/google'
 import { useSnackbar } from 'notistack'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { RHFTextField } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 interface IEmailStepProps {
   nextStep: () => void

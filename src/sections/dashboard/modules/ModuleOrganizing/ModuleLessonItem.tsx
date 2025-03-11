@@ -9,9 +9,9 @@ import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import toUpper from 'lodash-es/toUpper'
 import { useRouter } from 'next/router'
 
-import { MenuPopover } from '@/components'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import CreateLessonDialog from '../../lessons/CreateLessonDialog/CreateLessonDialog'
 import { GREEN_DOT_SX, getLessonItemPaperSx } from '../../lessons/LessonStep/constants'

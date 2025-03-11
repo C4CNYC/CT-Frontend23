@@ -19,7 +19,6 @@ import parse from 'autosuggest-highlight/parse'
 // import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 
-import { RHFCode, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { useGetIntegrationsListQuery } from '@/redux/services/manager/integration-manager'
@@ -31,6 +30,9 @@ import {
 // import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, voidFunction } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFCode } from '@root/src/components/hook-form/RHFCode'
+import { SearchNotFound } from '@root/src/components/search-not-found/SearchNotFound'
+
 export function IntegrationsTab({ contentId }: { contentId: string }): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
 

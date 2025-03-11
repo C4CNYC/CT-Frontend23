@@ -22,14 +22,6 @@ import omit from 'lodash-es/omit'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
-import {
-  CustomBreadcrumbs,
-  Scrollbar,
-  TableNoData,
-  TablePaginationCustom,
-  useSettingsContext,
-  useTable,
-} from '@/components'
 import { useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
 import { useGetSkillQuery, useRemoveSkillMutation } from '@/redux/services/manager/skills-manager'
@@ -39,6 +31,10 @@ import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBread
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
 import UpdateModalSkills from '@/sections/dashboard/skills/update-modal'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import { TableNoData, TablePaginationCustom, useTable } from '@root/src/components/table'
 
 Skills.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 

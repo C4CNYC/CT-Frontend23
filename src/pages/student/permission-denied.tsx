@@ -12,9 +12,10 @@ import {
 import Head from 'next/head'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 PermissionDeniedPage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

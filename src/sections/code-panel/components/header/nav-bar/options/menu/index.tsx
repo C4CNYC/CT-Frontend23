@@ -9,7 +9,6 @@ import { useSnackbar } from 'notistack'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { MenuPopover } from '@/components'
 import { useSettingsContext } from '@/components/settings'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { setStartTour } from '@/redux/slices/tour'
@@ -18,6 +17,7 @@ import { PATH_AUTH } from '@/routes/paths'
 import { palette } from '@/theme/palette'
 import { UserType } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 import config, { ILinks } from './config'
 import {

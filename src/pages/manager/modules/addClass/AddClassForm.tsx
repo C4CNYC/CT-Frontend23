@@ -3,7 +3,7 @@ import React from 'react'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 
-import { FormProvider } from '@/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
 
 import AddClassInput from './AddClassInput'
 

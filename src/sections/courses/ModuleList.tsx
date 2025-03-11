@@ -2,11 +2,12 @@ import { useEffect } from 'react'
 
 import { Box, Stack } from '@mui/material'
 
-import { EmptyContent, SimpleInfiniteList } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { IModulesSearchParams } from '@/redux/interfaces/content.interface'
 import { useGetModulesListQuery } from '@/redux/services/manager/modules-student'
 import { getCountTakingElment } from '@/utils'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination/SimpleInfiniteList'
 
 import ModuleItem from './module-list-item/ModuleItem'
 import SkeletonModule from './module-list-item/SkeletonModule'

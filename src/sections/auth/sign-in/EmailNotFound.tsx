@@ -4,8 +4,8 @@ import { Button, IconButton, Stack, Typography } from '@mui/material'
 import { MdArrowBackIosNew } from '@react-icons/all-files/md/MdArrowBackIosNew'
 import { StepWizardChildProps } from 'react-step-wizard'
 
-import { Image } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { Image } from '@root/src/components/image/Image'
 
 import { SINGIN_BTN_SX } from './constants'
 

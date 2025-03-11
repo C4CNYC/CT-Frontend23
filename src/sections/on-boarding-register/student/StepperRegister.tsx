@@ -6,8 +6,8 @@ import { HiEye } from '@react-icons/all-files/hi/HiEye'
 import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
 import { MdDone } from '@react-icons/all-files/md/MdDone'
 
-import { RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 import { styledRegisterInput } from '../styles'
 import { SUBMIT_BTN_SX } from '../teacher/constants'

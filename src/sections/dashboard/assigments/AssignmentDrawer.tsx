@@ -14,19 +14,22 @@ import {
   Typography,
 } from '@mui/material'
 import { useTheme } from '@mui/system'
-import { DatePicker } from '@mui/x-date-pickers'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 import { Controller, useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
 import { IAssignmentFull } from '@/redux/interfaces/assignment.interface'
 import { ISkill } from '@/redux/interfaces/content.interface'
 import { useUpdateAssignmentMutation } from '@/redux/services/manager/assignments-manager'
 import SkillsAutocomplete from '@/sections/main/quests/add-quest/components/SkillsAutocomplete'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 interface IAssignmentDarawerProps {
   openDetails: boolean

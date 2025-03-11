@@ -20,17 +20,6 @@ import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
-import {
-  ConfirmDialog,
-  CustomBreadcrumbs,
-  Scrollbar,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  useSettingsContext,
-  useTable,
-} from '@/components'
 import { useFilters } from '@/hooks'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
 import { ClassSearchParams } from '@/redux/interfaces/class.interface'
@@ -50,6 +39,18 @@ import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { createRandomAvatar, getRandomColor } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import {
+  TableHeadCustom,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  useTable,
+} from '@root/src/components/table'
+
 const STATUS_OPTIONS = ['all']
 
 const TABLE_HEAD = [

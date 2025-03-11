@@ -1,17 +1,17 @@
 import { Table, TableBody, TableContainer } from '@mui/material'
 
+import { useFilters } from '@/hooks'
+import { ClassSearchParams } from '@/redux/interfaces/class.interface'
+import { useGetSchoolListQuery } from '@/redux/services/admin/school-amdin'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
 import {
-  Scrollbar,
+  emptyRows,
   TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
-  emptyRows,
   useTable,
-} from '@/components'
-import { useFilters } from '@/hooks'
-import { ClassSearchParams } from '@/redux/interfaces/class.interface'
-import { useGetSchoolListQuery } from '@/redux/services/admin/school-amdin'
+} from '@root/src/components/table'
 
 import SchoolTableRow from './SchoolTableRow'
 import SchoolTableToolbar from './SchoolTableToolbar'

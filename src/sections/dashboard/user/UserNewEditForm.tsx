@@ -8,15 +8,6 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import {
-  FormProvider,
-  Label,
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  useSnackbar,
-} from '@/components'
-import {
   useCreateOrgMemberMutation,
   useUdpateMemberAvatarMutation,
   useUpdateOrgMemberMutation,
@@ -26,7 +17,13 @@ import { IUser } from '@/redux/services/interfaces/user.interface'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface, fData } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
-
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFSwitch } from '@root/src/components/hook-form/RHFSwitch'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { RHFUploadAvatar } from '@root/src/components/hook-form/RHFUpload'
+import { Label } from '@root/src/components/label/Label'
+import { useSnackbar } from '@root/src/components/snackbar'
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }
 }
@@ -93,7 +90,7 @@ export default function UserNewEditForm({
   }, [isEdit, currentUser])
 
   const updateAvatar = async (id: string, photoURL?: File): Promise<unknown> => {
-    if (!id ?? !photoURL) return
+    if (!id || !photoURL) return
 
     const file = new FormData()
     file.append('file', photoURL)

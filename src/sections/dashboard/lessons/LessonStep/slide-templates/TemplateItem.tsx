@@ -3,7 +3,9 @@ import { useState } from 'react'
 import { Box, Button, Card, Stack, Typography, useTheme } from '@mui/material'
 import { m } from 'framer-motion'
 
-import { Image, MotionContainer, varFade } from '@root/src/components'
+import { MotionContainer } from '@root/src/components/animate/MotionContainer'
+import { varFade } from '@root/src/components/animate/variants/fade'
+import { Image } from '@root/src/components/image/Image'
 
 import { ANIMATION_CONT_SX, BACKDROP_CONT_SX, TYPO_BACKDROP_SX } from './constants'
 

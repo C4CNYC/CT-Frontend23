@@ -9,7 +9,6 @@ import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
-import { UploadImageModal, useSettingsContext } from '@/components'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
 import {
   useGetSchoolProfileQuery,
@@ -26,6 +25,8 @@ import {
 } from '@/sections/schools/tabs'
 import SkeletonProfileTab from '@/sections/schools/tabs/profile/SkeletomProfileTab'
 import { useTranslate } from '@/utils/translateHelper'
+import { useSettingsContext } from '@root/src/components/settings'
+import { UploadImageModal } from '@root/src/components/upload-image-modal'
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

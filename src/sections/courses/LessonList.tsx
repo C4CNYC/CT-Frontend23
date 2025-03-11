@@ -2,11 +2,12 @@ import { useEffect } from 'react'
 
 import { Box, Stack } from '@mui/material'
 
-import { EmptyContent, SimpleInfiniteList } from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import { ILessonSearchParams } from '@/redux/interfaces/content.interface'
 import { useGetLessonsListStudentQuery } from '@/redux/services/manager/lesson-student'
 import { getCountTakingElment } from '@/utils'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination/SimpleInfiniteList'
 
 import LessonItem from './lesson-list-item/lessonItem'
 import SkeletonLesson from './lesson-list-item/SkeletonLesson'

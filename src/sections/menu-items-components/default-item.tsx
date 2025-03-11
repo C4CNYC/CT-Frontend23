@@ -2,12 +2,12 @@ import { ReactElement } from 'react'
 
 import { ListItemText, Tooltip } from '@mui/material'
 
-import { useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
 import {
   StyledIcon as StyledIconVertical,
   StyledItem as StyledItemVertical,
 } from '@root/src/components/nav-section/vertical/styles'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { useResponsive } from '@root/src/hooks'
 import { useLocales } from '@root/src/locales'
 

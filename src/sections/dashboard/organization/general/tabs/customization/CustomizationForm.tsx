@@ -4,10 +4,11 @@ import { MuiColorInput } from 'mui-color-input'
 import { useSnackbar } from 'notistack'
 import { Controller, useForm } from 'react-hook-form'
 
-import { FormProvider, RHFTextField } from '@/components'
 import { useUpdateOrgCustomizationMutation } from '@/redux/services/admin/organization-customization'
 import { CustomizationResponce } from '@/redux/services/interfaces/organization.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 import { useLocales } from '../../../../../../locales'
 

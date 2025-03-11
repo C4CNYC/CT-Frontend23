@@ -24,20 +24,6 @@ import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
 import { createWeakPassword } from '@/auth/utils'
-import {
-  ConfirmDialog,
-  CustomAutocomplete,
-  CustomBreadcrumbs,
-  Scrollbar,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  emptyRows,
-  useSettingsContext,
-  useTable,
-} from '@/components'
 import { useFilters } from '@/hooks'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
 import {
@@ -53,6 +39,20 @@ import PendingInvitesTab from '@/sections/dashboard/student/PendingInvitesTab'
 import { UserTableRow } from '@/sections/dashboard/user/list'
 import SkeletonMembers from '@/sections/schools/SkeletonMembers'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { CustomAutocomplete } from '@root/src/components/custom-autocomplete'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import {
+  emptyRows,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  useTable,
+} from '@root/src/components/table'
 const STATUS_OPTIONS = ['all', 'invites']
 
 const TABLE_HEAD = [

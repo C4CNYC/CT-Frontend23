@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { Step } from 'react-joyride'
 
-import { Image } from '@/components'
+import { Image } from '@root/src/components/image/Image'
 
 export const getTourStepsDesktop = (translate: (key: string) => string): Step[] => [
   {

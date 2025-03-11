@@ -4,7 +4,6 @@ import { Box, IconButton, Rating } from '@mui/material'
 import { AiFillHeart } from '@react-icons/all-files/ai/AiFillHeart'
 import { AiOutlineHeart } from '@react-icons/all-files/ai/AiOutlineHeart'
 
-import { Image, useSnackbar } from '@/components'
 import { ICourseElement } from '@/redux/interfaces/content.interface'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import {
@@ -13,6 +12,8 @@ import {
   useCourseRemoveLikeMutation,
 } from '@/redux/services/manager/courses-student'
 import { useSelector } from '@/redux/store'
+import { Image } from '@root/src/components/image/Image'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import { COURSE_IMG_XS, COURSE_RATING_WRAPPER_SX, LIKE_BTN_WRAPPER_SX } from './constants'
 

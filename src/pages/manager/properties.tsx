@@ -24,17 +24,6 @@ import Link from 'next/link'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 
-import {
-  CustomBreadcrumbs,
-  FormProvider,
-  RHFSelect,
-  RHFTextField,
-  Scrollbar,
-  TableNoData,
-  TablePaginationCustom,
-  useSettingsContext,
-  useTable,
-} from '@/components'
 import { useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
@@ -42,10 +31,19 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import {
   PropertiesCreateEdit,
   propertiesSchema,
 } from '@root/src/components/properties/create-edit-properties'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import { TableNoData } from '@root/src/components/table/TableNoData'
+import { TablePaginationCustom } from '@root/src/components/table/TablePaginationCustom'
+import { useTable } from '@root/src/components/table/useTable'
 import {
   IProperty,
   IPropertySearchParams,

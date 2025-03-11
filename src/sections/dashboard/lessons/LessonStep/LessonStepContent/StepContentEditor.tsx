@@ -25,7 +25,7 @@ import {
 } from '@/redux/services/manager/lesson-content-manager'
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { Label } from '@root/src/components'
+import { Label } from '@root/src/components/label/Label'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 

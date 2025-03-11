@@ -13,7 +13,6 @@ import {
 } from '@mui/material'
 import { useSnackbar } from 'notistack'
 
-import { Scrollbar } from '@/components'
 import { useFilters } from '@/hooks'
 import {
   useCreateOrgMemberMutation,
@@ -22,6 +21,7 @@ import {
 import { useAddTeacherMutation } from '@/redux/services/admin/school-amdin'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
 
 import UserItem from './UserItem'
 

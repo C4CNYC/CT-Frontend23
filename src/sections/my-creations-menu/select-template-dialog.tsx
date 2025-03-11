@@ -15,7 +15,7 @@ import { IoChevronForwardOutline } from '@react-icons/all-files/io5/IoChevronFor
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useRouter } from 'next/router'
 
-import { useSnackbar } from '@root/src/components'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useBoolean } from '@root/src/hooks/useBoolean'
 import { ILesson, ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import {

@@ -8,10 +8,12 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { Socials } from '@/assets/data'
-import { FormProvider, RHFSelect, RHFTextField } from '@/components'
 import { SchoolSocials } from '@/redux/services/interfaces/school.interface'
 import { useCreateSchoolSocialMutation } from '@/redux/services/manager/schools-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 const URL =
   // eslint-disable-next-line no-useless-escape

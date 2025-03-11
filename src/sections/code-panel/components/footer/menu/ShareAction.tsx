@@ -3,7 +3,7 @@ import { forwardRef } from 'react'
 import { Box, Chip, SpeedDialAction, Typography } from '@mui/material'
 import { FaRegCopy } from '@react-icons/all-files/fa6/FaRegCopy'
 
-import { useSnackbar } from '@root/src/components'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useCopyToClipboard } from '@root/src/hooks'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

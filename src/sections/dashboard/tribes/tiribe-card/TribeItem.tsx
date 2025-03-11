@@ -11,12 +11,13 @@ import {
 } from '@mui/material'
 import NextLink from 'next/link'
 
-import { Scrollbar, SvgColor } from '@/components'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { useGetClassStudentsQuery } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { BaseResponseInterface, getLinearGradient } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { SvgColor } from '@root/src/components/svg-color/SvgColor'
 
 import TribeButtons from './TribeButtons'
 import TribeHeaderBtn from './TribeHeaderBtn'

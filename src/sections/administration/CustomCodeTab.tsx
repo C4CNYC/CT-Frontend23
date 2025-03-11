@@ -4,8 +4,10 @@ import { Box, Button, Stack } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFCode, useSnackbar } from '@/components'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFCode } from '@root/src/components/hook-form/RHFCode'
 import { ModalCodeFullscreen } from '@root/src/components/modal-code-fullscreen'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { useUpdateOrgMutation } from '@root/src/redux/services/manager/super-admin'
 import { useTranslate } from '@root/src/utils/translateHelper'
 

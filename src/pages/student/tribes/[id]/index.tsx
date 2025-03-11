@@ -5,13 +5,13 @@ import { format } from 'date-fns'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetClassQuery } from '@/redux/services/manager/classes-student'
 import SkeletonTribe from '@/sections/skeleton/SekeltonTribe'
 import ProfileCover from '@/sections/student-profile/ProfileCover'
 import { fNumber } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 )

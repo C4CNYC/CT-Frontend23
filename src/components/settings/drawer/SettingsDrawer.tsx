@@ -26,7 +26,7 @@ import StretchOptions from './StretchOptions'
 import ToggleButton from './ToggleButton'
 const SPACING = 2.5
 
-export default function SettingsDrawer(): React.ReactElement {
+export function SettingsDrawer(): React.ReactElement {
   const { pathname } = useRouter()
   const {
     themeMode,

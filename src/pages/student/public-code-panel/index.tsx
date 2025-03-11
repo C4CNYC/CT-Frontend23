@@ -18,8 +18,10 @@ import {
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import CodePanelBody from '@/sections/code-panel/components/body'
-import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
+import { CodePanelBodyMemorized as CodePanelBody } from '@/sections/code-panel/components/body'
+import { CodePanelFooter } from '@/sections/code-panel/components/footer'
+import { TopPanel as CodePanelHeader } from '@/sections/code-panel/components/header'
+import { SkeletonCodePanel } from '@/sections/code-panel/components/skeleton'
 import { resetLessonEvent } from '@/sections/code-panel/lib/events'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import type { BaseResponseInterface } from '@/utils'
@@ -45,16 +47,7 @@ const CodePanelTour = dynamic(
   }
 )
 
-const CodePanelHeader = dynamic(
-  async () => await import('@/sections/code-panel/components/header'),
-  {
-    loading: () => <CPTopBarSkeleton />,
-  }
-)
-
 const Confetti = dynamic(async () => await import('react-confetti'), { ssr: false })
-
-const CodePanelFooter = dynamic(async () => await import('@/sections/code-panel/components/footer'))
 
 interface ILocalUser {
   id: string

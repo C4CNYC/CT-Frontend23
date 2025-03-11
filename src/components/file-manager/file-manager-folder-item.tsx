@@ -17,7 +17,6 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import pick from 'lodash-es/pick'
 
-import { ConfirmDialog } from '@/components'
 import CustomPopover, { usePopover } from '@/components/custom-popover'
 import {
   useUpdateMediaMutation,
@@ -27,6 +26,7 @@ import {
 import { useProfileQuery } from '../../redux/services/auth'
 import { IMediaUpdate } from '../../redux/services/interfaces/media.interface'
 import { IFolderManager } from '../../types/file'
+import { ConfirmDialog } from '../confirm-dialog/ConfirmDialog'
 
 import FileManagerMoveFolderDialog from './file-manager-move-folder'
 import FileManagerNewFolderDialog from './file-manager-new-folder-dialog'

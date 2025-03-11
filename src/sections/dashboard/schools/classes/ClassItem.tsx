@@ -6,12 +6,12 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import { useSnackbar } from 'notistack'
 
-import { MenuPopover } from '@/components'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { useUpdateClassMutation } from '@/redux/services/admin/school-amdin'
 import { useUpdateClassesAvatarMutation } from '@/redux/services/manager/classes-manager'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+import { MenuPopover } from '@root/src/components/menu-popover'
 
 import AddClassDialog from './CreateClassDialog'
 

@@ -1,4 +1,4 @@
-import { RHFTextField } from '@/components'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { INPUT_SX } from './constants'

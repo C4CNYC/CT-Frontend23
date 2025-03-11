@@ -19,14 +19,6 @@ import omit from 'lodash-es/omit'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
-import {
-  CustomBreadcrumbs,
-  Scrollbar,
-  TableNoData,
-  TablePaginationCustom,
-  useSettingsContext,
-  useTable,
-} from '@/components'
 import { ModalIntegration } from '@/components/modal-integration'
 import { useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
@@ -39,6 +31,12 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
+import { TableNoData } from '@root/src/components/table/TableNoData'
+import { TablePaginationCustom } from '@root/src/components/table/TablePaginationCustom'
+import { useTable } from '@root/src/components/table/useTable'
 AppsPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function AppsPage(): React.ReactElement {

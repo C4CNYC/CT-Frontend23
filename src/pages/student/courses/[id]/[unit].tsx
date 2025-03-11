@@ -4,7 +4,6 @@ import { Box, Container, Skeleton, Stack, useMediaQuery, useTheme } from '@mui/m
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { IModuleContent } from '@/redux/interfaces/content.interface'
 import {
@@ -22,6 +21,8 @@ import LessonsList from '@/sections/module/LessonsList'
 import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { useGetPublicCourseContentQuery } from '@root/src/redux/services/public-student'
 
 ModulePage.getLayout = (page: React.ReactElement) => (

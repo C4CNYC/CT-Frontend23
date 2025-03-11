@@ -10,8 +10,10 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField, useSnackbar } from '@/components'
 import { useInviteSubmitMutation } from '@/redux/services/admin/invite-admin'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { useSnackbar } from '@root/src/components/snackbar'
 
 import { PATH_AUTH } from '../../routes/paths'
 interface FormValuesProps {

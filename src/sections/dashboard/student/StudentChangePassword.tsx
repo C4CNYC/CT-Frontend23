@@ -3,10 +3,11 @@ import { useState } from 'react'
 import { LoadingButton } from '@mui/lab'
 import { Card, Stack } from '@mui/material'
 
-import { RHFTextField, useSnackbar } from '@/components'
 import { useStudentResetPasswordMutation } from '@/redux/services/manager/students-manager'
 import { useTranslate } from '@/utils/translateHelper'
 import { createWeakPassword } from '@root/src/auth/utils'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { IStudent } from '@root/src/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@root/src/utils/baseResponse.interface'
 

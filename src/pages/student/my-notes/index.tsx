@@ -1,13 +1,14 @@
 import { Box, Container, Grid, Skeleton } from '@mui/material'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard/StudentDashboardLayout'
 import { useGetGoalsQuery } from '@/redux/services/manager/goals-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
 import NotesList from '@/sections/my-notes/NotesList'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 Goals.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

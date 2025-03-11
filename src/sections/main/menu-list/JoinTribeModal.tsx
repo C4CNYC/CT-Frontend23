@@ -22,10 +22,11 @@ import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFTextField } from '@/components'
 import { useJoinClassMutation } from '@/redux/services/manager/classes-student'
 import { RootState } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { IClass } from '@root/src/redux/interfaces/class.interface'
 import { PATH_AUTH } from '@root/src/routes/paths'
 

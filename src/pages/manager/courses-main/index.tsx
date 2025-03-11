@@ -3,12 +3,6 @@ import { Container } from '@mui/system'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import Head from 'next/head'
 
-import {
-  CustomBreadcrumbs,
-  EmptyContent,
-  SimpleInfiniteList,
-  useSettingsContext,
-} from '@/components'
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
 import { useGetAdminCoursesQuery } from '@/redux/services/admin/courses-admin'
@@ -21,6 +15,10 @@ import FilterCourses from '@/sections/dashboard/courses/filter'
 import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { EmptyContent } from '@root/src/components/empty-content'
+import { SimpleInfiniteList } from '@root/src/components/infinity-pagination'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>

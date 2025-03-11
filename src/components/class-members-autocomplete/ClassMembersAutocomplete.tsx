@@ -18,7 +18,6 @@ import parse from 'autosuggest-highlight/parse'
 import { useSnackbar } from 'notistack'
 import { useSelector } from 'react-redux'
 
-import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
 import {
@@ -29,6 +28,9 @@ import {
 import { RootState } from '@/redux/store'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { CustomAvatar } from '../custom-avatar/CustomAvatar'
+import { SearchNotFound } from '../search-not-found/SearchNotFound'
 type StudentType = IStudent & BaseResponseInterface
 
 interface IClassMembersAutocompleteProps {

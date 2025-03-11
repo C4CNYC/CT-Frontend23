@@ -14,7 +14,7 @@ const Menu = dynamic(async () => await import('./menu'))
 
 export interface CodePanelFooterProps extends ProgressBottomBarProps, MenuProps {}
 
-const CodePanelFooter: FC<CodePanelFooterProps> = ({ publicPage = false, language }) => {
+export const CodePanelFooter: FC<CodePanelFooterProps> = ({ publicPage = false, language }) => {
   return (
     <Stack
       pl='20px'

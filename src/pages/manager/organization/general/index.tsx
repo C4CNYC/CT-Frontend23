@@ -8,7 +8,6 @@ import { RiAccountBoxFill } from '@react-icons/all-files/ri/RiAccountBoxFill'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
-import { UploadImageModal, useSettingsContext } from '@/components'
 import DashboardLayout from '@/layouts/dashboard'
 import {
   useGetOrganizationQuery,
@@ -22,6 +21,8 @@ import SettingsTab from '@/sections/dashboard/organization/general/tabs/settings
 import { ProfileCover } from '@/sections/dashboard/user/profile'
 import SkeletonSchool from '@/sections/schools/skeleton-school'
 import { useTranslate } from '@/utils/translateHelper'
+import { useSettingsContext } from '@root/src/components/settings'
+import { UploadImageModal } from '@root/src/components/upload-image-modal'
 UserProfilePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function UserProfilePage(): React.ReactElement {

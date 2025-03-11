@@ -17,20 +17,6 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import {
-  ConfirmDialog,
-  Label,
-  Scrollbar,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  emptyRows,
-  getComparator,
-  useSnackbar,
-  useTable,
-} from '@/components'
 import { useFilters } from '@/hooks'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
@@ -43,6 +29,20 @@ import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { UserTableToolbar } from '@/sections/dashboard/user/list'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
+import { Label } from '@root/src/components/label/Label'
+import { Scrollbar } from '@root/src/components/scrollbar/Scrollbar'
+import { useSnackbar } from '@root/src/components/snackbar'
+import {
+  emptyRows,
+  getComparator,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  useTable,
+} from '@root/src/components/table'
 
 import MemberRow from './MemberRow'
 const TABLE_HEAD = [

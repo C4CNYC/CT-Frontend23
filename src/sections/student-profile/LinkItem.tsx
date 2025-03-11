@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { SOCIAL_ICONS } from '@/assets/data'
-import { FormProvider, RHFTextField } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { ISocials } from '@/redux/interfaces/socials.interface'
 import {
@@ -16,6 +15,8 @@ import {
   useUpdateSocialsMutation,
 } from '@/redux/services/manager/socials-student'
 import { useTranslate } from '@/utils/translateHelper'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 
 import LinkSelect from './LinkSelect'
 

@@ -6,11 +6,11 @@ import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
 import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
 import { useSnackbar } from 'notistack'
 
-import { ConfirmDialog } from '@/components'
 import { APIError } from '@/redux/interfaces/custom-error.interface'
 import { IGoals } from '@/redux/interfaces/goals.interface'
 import { useRemoveGoalMutation } from '@/redux/services/manager/goals-student'
 import { useTranslate } from '@/utils/translateHelper'
+import { ConfirmDialog } from '@root/src/components/confirm-dialog/ConfirmDialog'
 
 import AddEditNoteDialog from './AddEditGoalDialog'
 interface INotesItemProps {

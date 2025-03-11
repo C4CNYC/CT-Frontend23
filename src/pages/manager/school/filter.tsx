@@ -21,7 +21,8 @@ import Container from '@mui/system/Container'
 import Stack from '@mui/system/Stack'
 
 // commponents
-import { IconButtonAnimate, MenuPopover } from '@/components'
+import { IconButtonAnimate } from '@root/src/components/animate/IconButtonAnimate'
+import { MenuPopover } from '@root/src/components/menu-popover/MenuPopover'
 
 export default function FilterAssignments(): React.ReactElement {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)

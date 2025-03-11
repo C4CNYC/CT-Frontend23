@@ -5,7 +5,7 @@ import { Skeleton, Stack, useTheme } from '@mui/material'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { useSnackbar } from 'notistack'
 
-import { EmptyContent } from '@root/src/components'
+import { EmptyContent } from '@root/src/components/empty-content/EmptyContent'
 import {
   useAddLessonStepPreloadFileMutation,
   useGetLessonSlidePreloadFilesQuery,

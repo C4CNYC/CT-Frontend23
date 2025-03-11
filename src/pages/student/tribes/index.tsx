@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { Box, Container, Tab, Tabs } from '@mui/material'
 import Head from 'next/head'
 
-import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard/'
 import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-student'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -12,6 +11,8 @@ import SkeletonTribes from '@/sections/dashboard/tribes/skeletonTribes'
 import TribeItem from '@/sections/dashboard/tribes/tiribe-card/TribeItem'
 import TribesCounter from '@/sections/dashboard/tribes/tribesCounter'
 import { useTranslate } from '@/utils/translateHelper'
+import { CustomBreadcrumbs } from '@root/src/components/custom-breadcrumbs/CustomBreadcrumbs'
+import { useSettingsContext } from '@root/src/components/settings/SettingsContext'
 
 enum TabType {
   Active = 'active',

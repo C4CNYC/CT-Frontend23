@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, useSnackbar } from '@/components'
 import { useUpdateStudentProfileMutation } from '@/redux/services/auth'
 import { useTranslate } from '@/utils/translateHelper'
 import {
@@ -15,6 +14,9 @@ import {
   schort_month,
   years_list,
 } from '@root/src/assets/data/time-data'
+import { FormProvider } from '@root/src/components/hook-form/FormProvider'
+import { RHFSelect } from '@root/src/components/hook-form/RHFSelect'
+import { useSnackbar } from '@root/src/components/snackbar'
 import { STUDENT_PATH_PAGE } from '@root/src/routes/student.paths'
 
 import { styledRegisterInput } from '../styles'

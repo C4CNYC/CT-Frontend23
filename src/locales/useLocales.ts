@@ -1,7 +1,7 @@
 import { Localization } from '@mui/material/locale'
 import { useTranslation } from 'react-i18next'
 
-import { useSettingsContext } from '../components'
+import { useSettingsContext } from '../components/settings'
 import { localStorageAvailable } from '../utils'
 
 import { allLangs, defaultLang } from './config-lang'
