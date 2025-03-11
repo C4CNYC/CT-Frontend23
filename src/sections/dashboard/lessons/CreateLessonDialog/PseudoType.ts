@@ -17,10 +17,7 @@ practical       Practical       x           x                 1
 start_project   Practical       v           v                 1
 part_project    Practical       v           x                 1
 exercise        Exercise        v           v                 1
-concept_exercis Exercise        v           x                 1
-
-
-quiz             
+concept_exercis Exercise        v           x                 1 
 */
 
 export const usePseudoType = ({ lessonId, defaultValues }: PseudoTypeProps) => {

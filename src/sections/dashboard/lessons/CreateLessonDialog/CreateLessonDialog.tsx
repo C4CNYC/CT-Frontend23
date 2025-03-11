@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react'
 import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import Info from '@mui/icons-material/Info'
 import { LoadingButton } from '@mui/lab'
 import {
   Box,
@@ -175,10 +176,13 @@ export default function CreateLessonDialog({
     let lesson
     let pseudoType = toDbFields(data.pseudoType)
     let lessonData = {
-      ...data,
+      name: data.name,
+      description: data.description,
+      active: data.active,
+      head: data.head,
+      slug: data.slug,
+      //lock: data.lock,
       duration: `${data.duration * 60}`,
-      autoRun: undefined,
-      lock: undefined,
       independent: pseudoType.independent,
       type: pseudoType.type,
     }
@@ -457,34 +461,39 @@ const _mochLessonTypes = [
     key: LessonTypeEnum.simple,
     value: 'Simple',
     tooltip: 'An engaging, single-page lesson with coding exercises.',
-    icon: 'material-symbols:info-outline',
+    icon: (
+      <Info
+        width={20}
+        height={20}
+      />
+    ),
   },
   {
     key: LessonTypeEnum.practical,
     value: 'Practical',
     tooltip: 'Building a project line-by-line with explanations and step-by-step guidance.',
-    icon: 'material-symbols:info-outline',
+    // icon: <Info  width={20} height={20} />,
   },
-  // {
-  //   key: LessonTypeEnum.start_project,
-  //   value: 'Start of Project',
-  //   tooltip:
-  //     'The beginning lesson of a project. Subsequent lessons will build on the code typed here.',
-  //   icon: 'material-symbols:info-outline',
-  // },
-  // {
-  //   key: LessonTypeEnum.part_project,
-  //   value: 'Part of Project',
-  //   tooltip:
-  //     'Build things with this lesson type: The code you type in one lesson, flows to the next, if the lesson is completed.',
-  //   icon: 'material-symbols:info-outline',
-  // },
+  {
+    key: LessonTypeEnum.start_project,
+    value: 'Start of Project',
+    tooltip:
+      'The beginning lesson of a project. Subsequent lessons will build on the code typed here.',
+    // icon: <Info  width={20} height={20} />,
+  },
+  {
+    key: LessonTypeEnum.part_project,
+    value: 'Part of Project',
+    tooltip:
+      'Build things with this lesson type: The code you type in one lesson, flows to the next, if the lesson is completed.',
+    // icon: <Info  width={20} height={20} />,
+  },
   {
     key: LessonTypeEnum.exercise,
     value: 'Exercises',
     tooltip:
       'Exercises with instructions and examples. Great for reinforcing learning or evaluating competency.',
-    icon: 'material-symbols:info-outline',
+    // icon: <Info  width={20} height={20} />,
   },
   // {
   //   key: LessonTypeEnum.concept_exercises,
