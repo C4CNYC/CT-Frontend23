@@ -893,7 +893,7 @@
     "console_tooltip_subtitle_2": "فقط عندما ترتبط دالة معينة بجزء معين من الصفحة ترى فعلاً جافا سكريبت تعدل \"الصفحة الأمامية\".",
     "console_clear_button_title": "مسح وحدة التحكم",
     "console_clear_button_subtitle": "سيؤدي ذلك إلى مسح جميع الرسائل المسجلة",    
-    "console_welcome": " 👋 مرحبًا! أنا <b>وحدة التحكم</b> 😊.<br /> أعرض الرسائل من كودك أو الأخطاء. <br>",
+    "console_welcome": "",
     "no_preview_available_title": "المتصفح",
     "no_preview_available_results": "هنا سترى نتائج عملك في الوقت الفعلي",
     "no_preview_available": "لا توجد معاينة متوفرة؟",

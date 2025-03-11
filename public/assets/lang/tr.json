@@ -879,7 +879,7 @@
     "console_tooltip_subtitle_2": "Yalnızca belirli bir işlevi sayfanın belirli bir kısmına bağladığınızda, JS'nin 'Ön' sayfayı değiştirdiğini görürsünüz.",
     "console_clear_button_title": "Temizle",
     "console_clear_button_subtitle": "Tüm mesajları temizler",
-    "console_welcome": " 👋 Merhaba! Ben <b>konsol</b> 😊.<br /> Kodunuzdan gelen mesajları veya hataları gösteririm. <br>",
+    "console_welcome": "",
     "no_preview_available_title": "Tarayıcı",
     "no_preview_available_results": "Burada çalışmanızın sonuçlarını gerçek zamanlı olarak göreceksiniz",
     "no_preview_available": "Önizleme mevcut değil mi?",
