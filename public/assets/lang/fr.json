@@ -893,7 +893,7 @@
     "console_tooltip_subtitle_2": "Ce n'est que lorsque vous liez spécifiquement une fonction particulière à une partie spécifique de la page que vous voyez réellement JS modifier la page \"avant\".",
     "console_clear_button_title": "Effacer la console",
     "console_clear_button_subtitle": "Cela effacera tous les messages enregistrés",    
-    "console_welcome": " 👋 Salut ! Je suis la <b>console</b> 😊.<br /> J'affiche les messages de votre code ou les erreurs. <br>",
+    "console_welcome": "",
     "no_preview_available_title": "Navigateur",
     "no_preview_available_results": "Ici, vous verrez les résultats de votre travail en temps réel",
     "no_preview_available": "Aucun aperçu disponible ?",
