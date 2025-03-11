@@ -94,9 +94,13 @@ const BrowserView: FC<BrowserViewProps> = ({
           ${integrationsScripts}
           <script>
           console.logOld = console.log;
-          console.log = function() {
+          consolelog = function() {
             window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
           };
+          console.log = consolelog;
+          console.warn = consolelog;
+          console.error = consolelog;
+          console.debug = consolelog;
           </script>
         </head>
         ${htmlPart}
