@@ -1210,16 +1210,5 @@
     "intro_tour_step_6_mobile_subtitle": "See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉",
     "intro_tour_step_7_mobile_title": "Most important: Have fun! 🤪",
     "intro_tour_step_7_mobile_subtitle": "And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?",
-    "intro_tour_step_7_mobile_btn": "Leave feedback",
-    "next_lesson_modal_title_1": "Next Lesson is ",
-    "next_lesson_modal_title_2": "Part of Project",
-    "next_lesson_modal_text_1": "The next lesson builds on the code from this lesson.",
-    "next_lesson_modal_text_2": "If you think your code may have errors, then select “Use Default Starter Code”.",
-    "next_lesson_modal_btn_1": "Use Default Starter Code",
-    "next_lesson_modal_btn_2": "Use My Code",
-    "next_lesson_modal_popover_title": "What is “Part of Project”?",
-    "next_lesson_modal_popover_text_1": "Projects are built through completing multiple lessons.",
-    "next_lesson_modal_popover_text_2": "What’s nice about them is that, if you complete each step, you can build fun and unique projects with your own custom code.",
-    "next_lesson_modal_popover_text_3": "But sometimes there can be an error in your code, and when you pass that code to the next lesson it can complicate things.",
-    "next_lesson_modal_popover_text_4": "That’s why we have the “Default Starter Code” that you can use to make sure there are no bugs when you start a new lesson."
+    "intro_tour_step_7_mobile_btn": "Leave feedback"
   }
