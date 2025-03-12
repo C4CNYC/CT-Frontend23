@@ -1210,5 +1210,16 @@
     "intro_tour_step_6_mobile_subtitle": "Mira dónde estás en el Módulo 🤷🏾‍♂️ y regresa fácilmente para repasar lecciones anteriores. 👀 😉",
     "intro_tour_step_7_mobile_title": "Lo más importante: ¡Diviértete! 🤪",
     "intro_tour_step_7_mobile_subtitle": "Y en los comentarios 💬 cuéntanos qué opinas: ¿Maravilloso 🏆 o Poopie 💩?",
-    "intro_tour_step_7_mobile_btn": "Dejar comentario"
+    "intro_tour_step_7_mobile_btn": "Dejar comentario",
+    "next_lesson_modal_title_1": "La siguiente lección es ",
+    "next_lesson_modal_title_2": "Parte del Proyecto",
+    "next_lesson_modal_text_1": "La siguiente lección se basa en el código de esta lección.",
+    "next_lesson_modal_text_2": "Si crees que tu código puede tener errores, selecciona “Usar código inicial predeterminado”.",
+    "next_lesson_modal_btn_1": "Usar código inicial predeterminado",
+    "next_lesson_modal_btn_2": "Usar mi código",
+    "next_lesson_modal_popover_title": "¿Qué significa “Parte del Proyecto”?",
+    "next_lesson_modal_popover_text_1": "Los proyectos se construyen completando múltiples lecciones.",
+    "next_lesson_modal_popover_text_2": "Lo bueno es que, si completas cada paso, puedes crear proyectos divertidos y únicos con tu propio código personalizado.",
+    "next_lesson_modal_popover_text_3": "Pero a veces puede haber un error en tu código, y si lo pasas a la siguiente lección, puede complicar las cosas.",
+    "next_lesson_modal_popover_text_4": "Por eso ofrecemos el “Código inicial predeterminado”, para asegurarnos de que no haya errores cuando comiences una nueva lección."
   }

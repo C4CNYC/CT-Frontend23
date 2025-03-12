@@ -1209,5 +1209,16 @@
     "intro_tour_step_6_mobile_subtitle": "شاهد أين أنت في الوحدة 🤷🏾‍♂️ وقم بمراجعة الدروس السابقة بسهولة. 👀 😉",
     "intro_tour_step_7_mobile_title": "الأهم: استمتع! 🤪",
     "intro_tour_step_7_mobile_subtitle": "وفي التعليقات 💬 أخبرنا برأيك: رائع 🏆 أم سيئ 💩؟",
-    "intro_tour_step_7_mobile_btn": "اترك تعليقًا"
+    "intro_tour_step_7_mobile_btn": "اترك تعليقًا",
+    "next_lesson_modal_title_1": "الدرس التالي هو ",
+    "next_lesson_modal_title_2": "جزء من المشروع",
+    "next_lesson_modal_text_1": "يعتمد الدرس التالي على الكود من هذا الدرس.",
+    "next_lesson_modal_text_2": "إذا كنت تعتقد أن كودك قد يحتوي على أخطاء، فحدد “استخدام الكود الافتراضي المبدئي”.",
+    "next_lesson_modal_btn_1": "استخدام الكود الافتراضي المبدئي",
+    "next_lesson_modal_btn_2": "استخدام كودي",
+    "next_lesson_modal_popover_title": "ما هو “جزء من المشروع”؟",
+    "next_lesson_modal_popover_text_1": "يتم بناء المشاريع من خلال إكمال عدة دروس.",
+    "next_lesson_modal_popover_text_2": "ما يميزها هو أنك، إذا أكملت كل خطوة، يمكنك إنشاء مشاريع ممتعة وفريدة باستخدام كودك المخصص.",
+    "next_lesson_modal_popover_text_3": "ولكن أحيانًا قد يكون هناك خطأ في كودك، وعند تمريره إلى الدرس التالي قد يؤدي إلى تعقيد الأمور.",
+    "next_lesson_modal_popover_text_4": "لهذا السبب لدينا “الكود الافتراضي المبدئي”، الذي يمكنك استخدامه للتأكد من عدم وجود أخطاء عند بدء درس جديد."
   }
