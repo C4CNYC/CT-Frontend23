@@ -142,7 +142,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
         checkSaveTimeout = setTimeout(
           (previousLength: number) => {
-            if (value.length !== previousLength) {
+            if (value?.length !== previousLength) {
               onUpdateFile(activeFile?.id as string, {
                 body: value,
               })
@@ -164,7 +164,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   useEffect(() => {
     const newCodeValue =
       preloadedCode ??
-      (streamingDoc && streamingDoc.toString().length ? streamingDoc?.toString() : preloadedCode)
+      (streamingDoc && streamingDoc.toString()?.length ? streamingDoc?.toString() : preloadedCode)
 
     setCodeValue(newCodeValue)
   }, [preloadedCode, streamingDoc])
