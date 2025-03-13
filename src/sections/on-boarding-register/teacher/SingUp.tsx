@@ -45,7 +45,7 @@ export default function SingUp({
 
         goToStep(2)
       } catch (error: any) {
-        enqueueSnackbar(error?.data?.message ?? 'error', { variant: 'error' })
+        enqueueSnackbar(error?.message, { variant: 'error' })
       }
       setIsLoading(false)
     },
