@@ -7,7 +7,7 @@ import { useSelector } from '@/redux/store'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 import { LogoMin } from '@root/src/components'
 
-import LessonManager from '../lesson-manager'
+import {LessonManager} from '../lesson-manager'
 
 import GroupHeader from './group-header'
 import DesktopBar from './nav-bar/desktop-bar'

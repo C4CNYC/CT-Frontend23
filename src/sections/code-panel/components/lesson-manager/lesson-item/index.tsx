@@ -28,7 +28,7 @@ interface ILessonItem {
 
 const MAX_TEXT_LENGTH = 39
 
-const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
+export const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
 
@@ -92,5 +92,4 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
     </Stack>
   )
 }
-
-export default LessonItem
+ 

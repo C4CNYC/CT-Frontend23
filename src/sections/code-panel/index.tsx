@@ -247,10 +247,11 @@ export default function CodePanelLayout(): ReactElement | null {
 
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
+        console.log('lesson types', nextLessonInfo.type, lesson?.type)
+        debugger;
         if (
           nextLessonInfo.type === LessonType.PRACTICAL &&
-          !nextLessonInfo.isIndependent &&
-          lesson?.type === LessonType.PRACTICAL
+          !nextLessonInfo.isIndependent  && lesson
         ) {
           await carryOverFiles({
             lessonId: nextLessonInfo.lessonId as string,

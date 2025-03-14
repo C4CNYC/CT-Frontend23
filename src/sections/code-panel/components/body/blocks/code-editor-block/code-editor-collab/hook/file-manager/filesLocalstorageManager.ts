@@ -3,6 +3,7 @@ import { StudentFile } from '@root/src/redux/services/interfaces/workspace.inter
 interface LocalStorageFiles {
   [id: string]: StudentFile
 }
+export type Intent = 'forceThisVersion' | 'ignoreThisVersion'
 
 export function unauthFileLocalStorageManger(rootKey: string) {
   const getLocalStorageFiles = (key: string = rootKey): LocalStorageFiles => {
@@ -23,20 +24,21 @@ export function unauthFileLocalStorageManger(rootKey: string) {
     localStorage.setItem(rootKey, JSON.stringify(files))
   }
 
-  const _getFiles = (files: StudentFile[]) => {
+  const _getFiles = (files: StudentFile[], intent:  Intent) => {
     const localStorageFiles = getLocalStorageFiles()
 
     for (const file of files) {
-      const fileWithSameName = Object.values(localStorageFiles).find(
-        (f) => f.name === file.name && f.extension === file.extension
-      )
+      if (intent === 'ignoreThisVersion') {
+        const fileWithSameName = Object.values(localStorageFiles).find(
+          (f) => f.name === file.name && f.extension === file.extension
+        )
 
-      if (fileWithSameName) {
-        continue
+        if (fileWithSameName) {
+          continue
+        }
       }
-
       if (!localStorageFiles[file.id]) {
-        _addFile(file)
+        _addFile(file, intent)
       }
     }
 
@@ -49,11 +51,16 @@ export function unauthFileLocalStorageManger(rootKey: string) {
     return files[id]
   }
 
-  const _addFile = (file: StudentFile) => {
+  const _addFile = (file: StudentFile, intent: Intent) => {
+    console.log('add file', file, intent)
     const files = getLocalStorageFiles()
-
+    
     if (files[file.id]) {
-      return
+      if (intent === 'ignoreThisVersion')
+        return
+      if (files[file.id].body.length > file.body.length) {
+        return         
+      }
     }
 
     files[file.id] = file
@@ -89,13 +96,13 @@ export function unauthFileLocalStorageManger(rootKey: string) {
 
     for (const file of Object.values(mergedFiles)) {
       if (!localStorageFiles[file.id] && file.body.length > 10) {
-        _addFile(file)
+        _addFile(file, 'forceThisVersion' )
       }
     }
     if (skipIfFileExists) return Object.values(getLocalStorageFiles())
     for (const file of files) {
       if (!mergedFiles[file.id]) {
-        _addFile(file)
+        _addFile(file, 'forceThisVersion' )
       }
     }
 

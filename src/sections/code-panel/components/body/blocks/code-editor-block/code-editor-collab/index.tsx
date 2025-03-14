@@ -137,6 +137,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     )
 
     if (value) {
+      console.log('isFileControllerAvailable', value.length, activeFile?.id )
       if (isFileControllerAvailable && activeFile?.body !== value) {
         if (checkSaveTimeout) clearTimeout(checkSaveTimeout)
 
