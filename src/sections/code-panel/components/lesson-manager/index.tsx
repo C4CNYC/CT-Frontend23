@@ -14,12 +14,8 @@ interface LessonManagerProps {
 }
 
 export const LessonManager: FC<LessonManagerProps> = ({ iconColor }) => {
-  const { lesson,
-    isLoading,
-    isOpenDrawer,
-    setIsOpenDrawer,
-    data,
-    onChooseLesson   } =    useLessonManager()
+  const { lesson, isLoading, isOpenDrawer, setIsOpenDrawer, data, onChooseLesson } =
+    useLessonManager()
 
   return (
     <>
@@ -56,4 +52,3 @@ export const LessonManager: FC<LessonManagerProps> = ({ iconColor }) => {
     </>
   )
 }
- 

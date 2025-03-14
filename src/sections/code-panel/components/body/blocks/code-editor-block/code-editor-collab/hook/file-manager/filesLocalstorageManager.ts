@@ -24,7 +24,7 @@ export function unauthFileLocalStorageManger(rootKey: string) {
     localStorage.setItem(rootKey, JSON.stringify(files))
   }
 
-  const _getFiles = (files: StudentFile[], intent:  Intent) => {
+  const _getFiles = (files: StudentFile[], intent: Intent) => {
     const localStorageFiles = getLocalStorageFiles()
 
     for (const file of files) {
@@ -52,14 +52,12 @@ export function unauthFileLocalStorageManger(rootKey: string) {
   }
 
   const _addFile = (file: StudentFile, intent: Intent) => {
-    console.log('add file', file, intent)
     const files = getLocalStorageFiles()
-    
+
     if (files[file.id]) {
-      if (intent === 'ignoreThisVersion')
-        return
+      if (intent === 'ignoreThisVersion') return
       if (files[file.id].body.length > file.body.length) {
-        return         
+        return
       }
     }
 
@@ -96,13 +94,13 @@ export function unauthFileLocalStorageManger(rootKey: string) {
 
     for (const file of Object.values(mergedFiles)) {
       if (!localStorageFiles[file.id] && file.body.length > 10) {
-        _addFile(file, 'forceThisVersion' )
+        _addFile(file, 'forceThisVersion')
       }
     }
     if (skipIfFileExists) return Object.values(getLocalStorageFiles())
     for (const file of files) {
       if (!mergedFiles[file.id]) {
-        _addFile(file, 'forceThisVersion' )
+        _addFile(file, 'forceThisVersion')
       }
     }
 

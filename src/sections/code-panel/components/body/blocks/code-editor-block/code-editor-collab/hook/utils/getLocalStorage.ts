@@ -1,25 +1,30 @@
-import { StudentFile } from "@root/src/redux/services/interfaces/workspace.interface"
+import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
 export const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
 
 export function getLocalStorageCode(key: string) {
   const localStorageCodeValue = localStorage.getItem(key)
   if (!localStorageCodeValue) return null
-  
+
   try {
     const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
-    return (docInfo?.htmlBody as unknown as string[])?.join('') ??
-           (docInfo?.default as unknown as { body?: string })?.body ??
-           localStorageCodeValue
+    return (
+      (docInfo?.htmlBody as unknown as string[])?.join('') ??
+      (docInfo?.default as unknown as { body?: string })?.body ??
+      localStorageCodeValue
+    )
   } catch (e) {
     return localStorageCodeValue
   }
 }
 
-export function getLocalStorageFile(key: string, fileName: string = 'default'): StudentFile | undefined {
+export function getLocalStorageFile(
+  key: string,
+  fileName: string = 'default'
+): StudentFile | undefined {
   const localStorageCodeValue = localStorage.getItem(key)
   if (!localStorageCodeValue) return undefined
-  
+
   try {
     const docInfo = JSON.parse(localStorageCodeValue) as Record<string, StudentFile>
     return docInfo?.[fileName] as StudentFile
@@ -31,7 +36,7 @@ export function getLocalStorageFile(key: string, fileName: string = 'default'): 
 export function killLocalStorageFile(key: string, fileName: string = 'default'): void {
   const localStorageCodeValue = localStorage.getItem(key)
   if (!localStorageCodeValue) return
-  
+
   try {
     const docInfo = JSON.parse(localStorageCodeValue) as Record<string, StudentFile>
     if (docInfo?.[fileName]) {

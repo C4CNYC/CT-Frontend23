@@ -92,4 +92,3 @@ export const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
     </Stack>
   )
 }
- 
