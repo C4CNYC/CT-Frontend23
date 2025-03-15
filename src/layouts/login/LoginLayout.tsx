@@ -61,7 +61,7 @@ export default function LoginLayout({
             disabledEffect
             visibleByDefault
             alt='auth'
-            src={illustration ?? '/assets/illustrations/auth-cat.png'}
+            src={illustration ?? '/assets/illustrations/auth-cat.webp'}
             sx={{ maxWidth: 720 }}
           />
           <StyledSectionBg />

@@ -107,9 +107,13 @@ const BrowserView: FC<BrowserViewProps> = ({
       </html>
     `)
 
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
       setIframeProcess(false)
     }, 100)
+
+    return () => {
+      clearTimeout(timerId)
+    }
   }, [document])
 
   const IFrame = useMemo(

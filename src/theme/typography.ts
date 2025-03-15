@@ -33,6 +33,7 @@ export function responsiveFontSizes({
 export const primaryFont = Public_Sans({
   weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
+  preload: false,
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
 })
@@ -40,6 +41,7 @@ export const primaryFont = Public_Sans({
 export const secondaryFont = Barlow({
   weight: ['900'],
   subsets: ['latin'],
+  preload: false,
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
 })
