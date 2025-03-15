@@ -205,7 +205,7 @@ export const useFileManager = () => {
   async function saveProgressOfGuestTimes() {
     let contentsWithValidations =
       lessonContent
-        // ?.filter((_content, index) => (index <= slideIndex))
+        ?.filter((_content, index) => index <= slideIndex)
         ?.filter((content) => content.validations.length > 0) ?? []
     for (let content of contentsWithValidations) {
       await completeLesson({
