@@ -251,7 +251,7 @@ export default function CodePanelLayout(): ReactElement | null {
         if (
           nextLessonInfo.type === LessonType.PRACTICAL &&
           !nextLessonInfo.isIndependent &&
-          lesson?.type === LessonType.PRACTICAL
+          lesson
         ) {
           await carryOverFiles({
             lessonId: nextLessonInfo.lessonId as string,

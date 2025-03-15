@@ -4,7 +4,7 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 import { useLessonManager } from '../../lib/LessonManagerContext'
 
-import LessonItem from './lesson-item'
+import { LessonItem } from './lesson-item'
 import LessonManagerButton from './lesson-manager-button'
 import LessonManagerSideBar from './lesson-manger-side-bar'
 import SkeletonDrawer from './skeleton-drawer'
@@ -13,7 +13,7 @@ interface LessonManagerProps {
   iconColor?: string
 }
 
-const LessonManager: FC<LessonManagerProps> = ({ iconColor }) => {
+export const LessonManager: FC<LessonManagerProps> = ({ iconColor }) => {
   const { lesson, isLoading, isOpenDrawer, setIsOpenDrawer, data, onChooseLesson } =
     useLessonManager()
 
@@ -52,5 +52,3 @@ const LessonManager: FC<LessonManagerProps> = ({ iconColor }) => {
     </>
   )
 }
-
-export default LessonManager
