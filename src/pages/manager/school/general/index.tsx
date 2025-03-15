@@ -48,25 +48,25 @@ export default function UserProfilePage(): React.ReactElement {
     {
       value: 'profile',
       label: 'general',
-      icon: <RiAccountBoxFill />,
+      icon: <RiAccountBoxFill size={22} />,
       component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
       value: 'settings',
       label: 'settings',
-      icon: <MdSettingsApplications />,
+      icon: <MdSettingsApplications size={22} />,
       component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {
       value: 'contacts',
       label: 'contacts',
-      icon: <MdContacts />,
+      icon: <MdContacts size={22} />,
       component: <SchoolContactsTab schoolId={schoolId} />,
     },
     {
       value: 'socials',
       label: 'social_networks',
-      icon: <BsPeopleFill />,
+      icon: <BsPeopleFill size={22} />,
       component: <SchoolSocialsTab schoolId={schoolId} />,
     },
   ]

@@ -269,7 +269,10 @@ const SliderBlock: FC<ISliderBlock> = ({
             padding: '10px 10px',
             border: 0,
             outline: 0,
+            fontSize: '1.1rem',
+            background: '#FAF9F6',
           }}
+          placeholder='Add your notes here...'
           value={noteText}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
             setNoteText(event.target.value)

@@ -890,7 +890,6 @@
     "console_title": "Consola",
     "console_tooltip_title": "¿Qué es una consola?",
     "console_tooltip_subtitle_1": "Es el lugar donde ves un resultado cuando ejecutas javascript (JS). Porque la mayoría de las veces JS se ejecuta en segundo plano y realiza sus cálculos y respuestas allí.",
-    "console_tooltip_subtitle_2": "Solo cuando vinculas específicamente una función a una parte particular de la página, realmente ves cómo JS modifica la página \"frontal\".",
     "console_clear_button_title": "Limpiar consola",
 "console_clear_button_subtitle": "Esto borrará todos los mensajes registrados",
 "console_welcome": "",
