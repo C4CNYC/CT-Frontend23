@@ -72,6 +72,14 @@ export default function MyApp({ Component, pageProps, ...props }: MyAppProps): R
           name='viewport'
           content='initial-scale=1, width=device-width, interactive-widget=resizes-content'
         />
+        <link
+          rel='preconnect'
+          href='https://devnest.s3.amazonaws.com'
+        />
+        <link
+          rel='icon'
+          href='data:,'
+        />
         {favicon}
       </Head>
       <GoogleAnalytics></GoogleAnalytics>

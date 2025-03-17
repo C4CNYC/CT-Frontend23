@@ -1,15 +1,17 @@
 import { useState } from 'react'
 
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
+import { IoDiamondOutline } from '@react-icons/all-files/io5/IoDiamondOutline'
 import { useRouter } from 'next/router'
 
 import {
   useCreateByCloningLessonMutation,
   useCreateLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
+import AIIcon from '@root/src/assets/icons/AIIcon'
 import OnlyAdmin from '@root/src/auth/OnlyAdmin'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
-import { Iconify, Image, MenuPopover, useSettingsContext } from '@root/src/components'
+import { Image, MenuPopover, useSettingsContext } from '@root/src/components'
 import { StyledIcon, StyledItem } from '@root/src/components/nav-section/mini/styles'
 import {
   StyledIcon as StyledIconVertical,
@@ -135,10 +137,7 @@ export default function MyCreationsMenu(): React.ReactElement {
               <MenuItem sx={{ justifyContent: 'space-between' }}>
                 {translate('sidebar_menu_my_creations_item_1')}
                 <ListItemIcon sx={{ pl: 2, mr: -2 }}>
-                  <Iconify
-                    icon='mingcute:ai-line'
-                    color='#FBDD3F'
-                  />
+                  <AIIcon color='#FBDD3F' />
                 </ListItemIcon>
               </MenuItem>
             </AiGenerateLessonDialog>
@@ -178,10 +177,7 @@ export default function MyCreationsMenu(): React.ReactElement {
               <MenuItem sx={{ justifyContent: 'space-between' }}>
                 {translate('sidebar_menu_my_creations_item_5')}
                 <ListItemIcon sx={{ pl: 2, mr: -2 }}>
-                  <Iconify
-                    icon='ion:diamond-outline'
-                    color='#43D4DD'
-                  />
+                  <IoDiamondOutline color='#43D4DD' />
                 </ListItemIcon>
               </MenuItem>
             </DiamondFeatureModal>
@@ -196,10 +192,7 @@ export default function MyCreationsMenu(): React.ReactElement {
                     mr: -2,
                   }}
                 >
-                  <Iconify
-                    icon='ion:diamond-outline'
-                    color='#43D4DD'
-                  />
+                  <IoDiamondOutline color='#43D4DD' />
                 </ListItemIcon>
               </MenuItem>
             </DiamondFeatureModal>
@@ -212,10 +205,7 @@ export default function MyCreationsMenu(): React.ReactElement {
                     mr: -2,
                   }}
                 >
-                  <Iconify
-                    icon='ion:diamond-outline'
-                    color='#43D4DD'
-                  />
+                  <IoDiamondOutline color='#43D4DD' />
                 </ListItemIcon>
               </MenuItem>
             </DiamondFeatureModal>

@@ -1,4 +1,4 @@
-import { type FC, type ReactNode, useMemo, useState } from 'react'
+import { type FC, type ReactNode, useEffect, useMemo, useState } from 'react'
 
 import { Box, Collapse, useTheme } from '@mui/material'
 
@@ -66,6 +66,11 @@ const BaseBlock: FC<IBaseBlock> = ({ children, className, title, icon, hideTabsH
       JSON.stringify({ ...getHeaderSettings(), [className]: false })
     )
   }
+
+  useEffect(() => {
+    const closeTimeout = setTimeout(closeHeaderHandler, 1000 * 60 * 5)
+    return () => clearTimeout(closeTimeout)
+  }, [])
 
   return (
     <Box

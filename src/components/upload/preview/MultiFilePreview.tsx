@@ -7,7 +7,6 @@ import { fData } from '@/utils'
 
 import { varFade } from '../../animate'
 import { FileThumbnail, fileData } from '../../file-thumbnail'
-import { Iconify } from '../../iconify'
 import { UploadProps } from '../types'
 
 export default function MultiFilePreview({
@@ -73,10 +72,7 @@ export default function MultiFilePreview({
                     },
                   }}
                 >
-                  <Iconify
-                    icon='eva:close-fill'
-                    width={16}
-                  />
+                  <IoClose size={16} />
                 </IconButton>
               )}
             </Stack>

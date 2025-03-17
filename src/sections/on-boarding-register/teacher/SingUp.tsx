@@ -89,6 +89,11 @@ export default function SingUp({
           label={translate('email')}
           defaultValue=''
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          onKeyDown={(e) => {
+            if (goToStep && isValid && e.code === 'Enter') {
+              goToStep(1)
+            }
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>

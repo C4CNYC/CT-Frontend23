@@ -1,12 +1,13 @@
 import { useMemo } from 'react'
 
 import { Container, Link, Skeleton, SxProps, Theme, useTheme } from '@mui/material'
+import { FaArrowRightLong } from '@react-icons/all-files/fa6/FaArrowRightLong'
 import Head from 'next/head'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
-import { Iconify, useSettingsContext } from '@/components'
+import { useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetTeacherListQuery } from '@/redux/services/admin/school-amdin'
 import {
@@ -122,10 +123,9 @@ export default function Quest(): React.ReactElement | null {
           sx={KEEP_CODING_LINK_SX}
         >
           {translate('keep_coding')}
-          <Iconify
-            icon='maki:arrow'
-            width={18}
-            style={{ marginLeft: '3px' }}
+          <FaArrowRightLong
+            style={{ marginLeft: '5px' }}
+            size={18}
           />
         </Link>
       </Container>

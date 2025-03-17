@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import { Stack } from '@mui/system'
 
-import { Iconify } from '@root/src/components'
+import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { getButtonSx } from './constants'
 
@@ -19,18 +19,12 @@ type ISuccessJoinProps = {
   title?: string
   name?: string
   icon?: string
-  location?: string
   handleCloseModal: () => void
 }
 
-export default function SuccessJoin({
-  title,
-  name,
-  icon,
-  location,
-  handleCloseModal,
-}: ISuccessJoinProps) {
+export default function SuccessJoin({ title, name, icon, handleCloseModal }: ISuccessJoinProps) {
   const theme = useTheme()
+  const translate = useTranslate()
 
   const buttonSx = useMemo(() => getButtonSx(theme), [theme])
   return (
@@ -39,47 +33,26 @@ export default function SuccessJoin({
         variant='h3'
         textAlign='center'
       >
-        Success
+        {translate('messages_success')}
         <Typography
           textAlign='center'
           variant='body1'
           maxWidth={500}
         >
-          You have been added to the tribe
+          {translate('added_to_tribe')}
         </Typography>
       </DialogTitle>
       <DialogContent>
         <Stack>
-          <Typography
-            sx={{
-              fontSize: { xs: '35px', sm: '40px', md: '60px', lg: '70px' },
-              textAlign: 'center',
-              mb: -4,
-              zIndex: 4,
-            }}
-          >
-            🎉
-          </Typography>
-          <Stack sx={{ background: '#F0EEEE80', px: 6, py: 2, gap: 1 }}>
+          <Typography sx={HEADER_EMOJI_SX}>🎉</Typography>
+          <Stack sx={MAIN_TEXT_SX}>
+            <Avatar
+              src={icon}
+              alt='name'
+              sx={{ width: '35px', height: '35px' }}
+            />
+            <Typography variant='body2'>{name}</Typography>
             <Typography variant='h3'>{title}</Typography>
-            <Stack direction='row'>
-              <Avatar
-                src={icon}
-                alt='name'
-                sx={{ width: '25px', height: '25px' }}
-              />
-              <Typography variant='body2'>{name}</Typography>
-            </Stack>
-            <Typography
-              variant='body2'
-              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-            >
-              <Iconify
-                icon='ion:location-outline'
-                width={20}
-              />{' '}
-              {location}
-            </Typography>
           </Stack>
         </Stack>
       </DialogContent>
@@ -88,9 +61,25 @@ export default function SuccessJoin({
           onClick={handleCloseModal}
           sx={buttonSx}
         >
-          Awesome. Thanks!
+          {translate('added_to_tribe_success')}
         </LoadingButton>
       </DialogActions>
     </>
   )
+}
+
+const HEADER_EMOJI_SX = {
+  fontSize: { xs: '35px', sm: '40px', md: '60px', lg: '70px' },
+  textAlign: 'center',
+  mb: -4,
+  zIndex: 4,
+}
+
+const MAIN_TEXT_SX = {
+  background: '#F0EEEE80',
+  px: 6,
+  py: 2,
+  gap: 1,
+  flexDirection: 'row',
+  alignItems: 'center',
 }

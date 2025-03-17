@@ -92,14 +92,28 @@ const BrowserView: FC<BrowserViewProps> = ({
           ${fontCssLink}
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
+          <script>
+          console.logOld = console.log;
+          consolelog = function() {
+            window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
+          };
+          console.log = consolelog;
+          console.warn = consolelog;
+          console.error = consolelog;
+          console.debug = consolelog;
+          </script>
         </head>
         ${htmlPart}
       </html>
     `)
 
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
       setIframeProcess(false)
     }, 100)
+
+    return () => {
+      clearTimeout(timerId)
+    }
   }, [document])
 
   const IFrame = useMemo(

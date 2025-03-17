@@ -1,9 +1,9 @@
 import { Link, Typography } from '@mui/material'
+import { IoIosArrowBack } from '@react-icons/all-files/io/IoIosArrowBack'
 import Head from 'next/head'
 import NextLink from 'next/link'
 
 import { SentIcon } from '@/assets/icons'
-import { Iconify } from '@/components/iconify'
 import CompactLayout from '@/layouts/compact'
 import { PATH_AUTH } from '@/routes/paths'
 import AuthNewPasswordForm from '@/sections/auth/AuthNewPasswordForm'
@@ -53,10 +53,7 @@ export default function NewPasswordPage(): React.ReactElement {
           display: 'inline-flex',
         }}
       >
-        <Iconify
-          icon='eva:chevron-left-fill'
-          width={16}
-        />
+        <IoIosArrowBack size={16} />
         Return to sign in
       </Link>
     </>

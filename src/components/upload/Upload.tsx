@@ -2,11 +2,10 @@ import { useEffect } from 'react'
 
 import { Box, Button, IconButton, Stack, StackProps, Typography } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
+import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useDropzone } from 'react-dropzone'
 
 import { useTranslate } from '@/utils/translateHelper'
-
-import { Iconify } from '../iconify'
 
 import RejectionFiles from './errors/RejectionFiles'
 import { UploadIllustration } from './illustrations'
@@ -138,10 +137,7 @@ export function Upload({
             },
           }}
         >
-          <Iconify
-            icon='eva:close-fill'
-            width={18}
-          />
+          <IoClose size={18} />
         </IconButton>
       )}
 

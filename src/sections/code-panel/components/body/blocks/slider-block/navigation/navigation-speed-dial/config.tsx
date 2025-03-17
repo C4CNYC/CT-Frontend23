@@ -1,13 +1,16 @@
 import { type ReactNode } from 'react'
 
 import { IconButton } from '@mui/material'
+import { HiArrowsPointingIn } from '@react-icons/all-files/hi2/HiArrowsPointingIn'
+import { HiArrowsPointingOut } from '@react-icons/all-files/hi2/HiArrowsPointingOut'
+import { IoRefreshOutline } from '@react-icons/all-files/io5/IoRefreshOutline'
 import { FullScreenHandle } from 'react-full-screen'
 
-import { Iconify } from '@root/src/components'
+import FeedbackIcon from '@root/src/assets/icons/FeedbackIcon'
 import LessonFeedback from '@root/src/sections/code-panel/components/footer/lesson-feedback/LessonFeedback'
 import SettingDrawer from '@root/src/sections/code-panel/components/header/nav-bar/options/setting-drawer'
 import ResetLessonConfirm from '@root/src/sections/code-panel/components/header/nav-bar/options/setting-drawer/preferences/ResetLessonConfirm'
-import LessonManager from '@root/src/sections/code-panel/components/lesson-manager'
+import { LessonManager } from '@root/src/sections/code-panel/components/lesson-manager'
 
 interface Action {
   icon: ReactNode
@@ -25,10 +28,9 @@ export const getActions = ({ lessonName, handle }: IGetActions): Action[] => {
       icon: (
         <ResetLessonConfirm>
           <IconButton>
-            <Iconify
-              icon='mage:refresh'
+            <IoRefreshOutline
               color='#FBDD3F'
-              width={20}
+              size={20}
             />
           </IconButton>
         </ResetLessonConfirm>
@@ -42,11 +44,8 @@ export const getActions = ({ lessonName, handle }: IGetActions): Action[] => {
     {
       icon: (
         <LessonFeedback lessonName={lessonName}>
-          <IconButton>
-            <Iconify
-              icon='uil:feedback'
-              color='#FBDD3F'
-            />
+          <IconButton sx={{ pt: 1.5 }}>
+            <FeedbackIcon color='#FBDD3F' />
           </IconButton>
         </LessonFeedback>
       ),
@@ -65,10 +64,11 @@ export const getActions = ({ lessonName, handle }: IGetActions): Action[] => {
             } catch (error) {}
           }}
         >
-          <Iconify
-            icon={handle.active ? 'la:compress-arrows-alt' : 'mdi:arrow-expand-all'}
-            color='#FBDD3F'
-          />
+          {handle.active ? (
+            <HiArrowsPointingIn color='#FBDD3F' />
+          ) : (
+            <HiArrowsPointingOut color='#FBDD3F' />
+          )}
         </IconButton>
       ),
       name: 'Full screen',

@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react'
 
 import { Link, ListItemText, Tooltip } from '@mui/material'
+import { IoIosArrowForward } from '@react-icons/all-files/io/IoIosArrowForward'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import NextLink from 'next/link'
 
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { Iconify } from '@/components/iconify'
 
 import { useLocales } from '../../../locales'
 import { NavItemProps } from '../types'
@@ -58,10 +59,8 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
             arrow
             placement='right'
           >
-            <Iconify
-              icon='eva:info-outline'
-              width={16}
-              sx={{
+            <LuInfo
+              style={{
                 top: 11,
                 left: 6,
                 position: 'absolute',
@@ -71,10 +70,9 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         )}
 
         {!!children && (
-          <Iconify
-            width={16}
-            icon='eva:chevron-right-fill'
-            sx={{
+          <IoIosArrowForward
+            size={16}
+            style={{
               top: 11,
               right: 6,
               position: 'absolute',

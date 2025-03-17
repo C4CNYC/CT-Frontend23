@@ -6,7 +6,7 @@ import { GetServerSideProps } from 'next'
 import ReactHtmlParser from 'react-html-parser'
 
 import GuestGuard from '@/auth/GuestGuard'
-import { IGallery } from '@/redux/interfaces/gallary.interface'
+import { IGallery } from '@root/src/redux/interfaces/gallery.interface'
 
 interface Props {
   data?: IGallery

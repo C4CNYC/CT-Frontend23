@@ -9,7 +9,7 @@ export const getIntroStudentJoinSteps = (translate: (key: string) => string): St
     content: (
       <div>
         <Image
-          src='/assets/illustrations/auth-cat.png'
+          src='/assets/illustrations/auth-cat.webp'
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '290px' }}
         />
