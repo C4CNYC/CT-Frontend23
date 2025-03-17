@@ -79,7 +79,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
             direction={'row'}
             pb={1}
           >
-            <Stack width={'50%'}>
+            {/* <Stack width={'50%'}>
               <Typography
                 variant='h6'
                 pl={1}
@@ -96,8 +96,8 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
                 extensions={[html(), EditorView.lineWrapping]}
                 editable={false}
               />
-            </Stack>
-            <Stack width={'50%'}>
+            </Stack> */}
+            <Stack width={'100%'}>
               <Typography
                 variant='h6'
                 pl={1}
