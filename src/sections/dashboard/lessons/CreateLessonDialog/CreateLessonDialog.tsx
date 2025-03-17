@@ -344,11 +344,11 @@ export default function CreateLessonDialog({
                       />
                     </Box>
                   </Tooltip>
-                  <RHFSwitch
+                  {/* <RHFSwitch
                     name='independent'
                     label={translate('lessons_independent_lesson')}
-                  />
-                  <Tooltip
+                  /> */}
+                  {/* <Tooltip
                     slotProps={{ popper: { disablePortal: true } }}
                     title={translate('lessons_autoRun_tooltip')}
                   >
@@ -358,7 +358,7 @@ export default function CreateLessonDialog({
                         label={translate('lessons_autoRun')}
                       />
                     </Box>
-                  </Tooltip>
+                  </Tooltip> */}
                   <Tooltip
                     slotProps={{ popper: { disablePortal: true } }}
                     title={translate('lesson_lock_tooltip')}
@@ -490,7 +490,7 @@ const _mochLessonTypes = [
   },
   {
     key: LessonTypeEnum.exercise,
-    value: 'Exercises',
+    value: 'Exercise',
     tooltip:
       'Exercises with instructions and examples. Great for reinforcing learning or evaluating competency.',
     // icon: <Info  width={20} height={20} />,

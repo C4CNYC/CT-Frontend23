@@ -36,6 +36,9 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
   const translate = useTranslate()
 
   const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
+  let solutionClean = document.createElement('div')
+  solutionClean.innerHTML = solutionCode ?? translate('no_solution')
+
   const userCode = useSelector((state) => state.codePanelGlobal.code)
 
   const dialogPaperProps = useMemo(
@@ -107,7 +110,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
               </Typography>
               <CodeMirror
                 ref={editorRef}
-                value={solutionCode ?? translate('no_solution')}
+                value={solutionClean.innerText}
                 theme={dracula}
                 height='100%'
                 maxHeight='85vh'
