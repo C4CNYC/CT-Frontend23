@@ -60,9 +60,8 @@ const ConsoleBlock = () => {
           }}
           title={
             <>
-              <Typography variant='h6'>{translate('console_tooltip_title')}</Typography>
-              <Typography pb={1}>{translate('console_tooltip_subtitle_1')}</Typography>
-              <Typography>{translate('console_tooltip_subtitle_2')}</Typography>
+              <Typography>{translate('console_tooltip_title')}</Typography>
+              <Typography>{translate('console_tooltip_subtitle_1')}</Typography>
             </>
           }
         >
