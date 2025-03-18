@@ -13,7 +13,6 @@ import {
 } from '@mui/material'
 import { AiOutlineCode } from '@react-icons/all-files/ai/AiOutlineCode'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
-import { dracula } from '@uiw/codemirror-theme-dracula'
 import { xcodeDark } from '@uiw/codemirror-theme-xcode'
 import CodeMirror, { EditorView } from '@uiw/react-codemirror'
 
@@ -83,7 +82,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
             direction={'row'}
             pb={isMobile ? 0 : 1}
           >
-            <Stack
+            {/* <Stack
               width={'50%'}
               display={isMobile ? 'none' : 'flex'}
             >
@@ -103,8 +102,8 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
                 extensions={[html(), EditorView.lineWrapping]}
                 editable={false}
               />
-            </Stack>
-            <Stack width={isMobile ? '100%' : '50%'}>
+            </Stack> */}
+            <Stack width={isMobile ? '100%' : '100%'}>
               <Typography
                 variant='h6'
                 pl={1}
