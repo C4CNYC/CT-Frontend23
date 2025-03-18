@@ -74,7 +74,7 @@ export default function CreateCourseDialog({
                   {...a11yProps(0)}
                 />
                 <Tab
-                  label={translate('Details')}
+                  label={translate('details')}
                   {...a11yProps(1)}
                 />
                 <Tab

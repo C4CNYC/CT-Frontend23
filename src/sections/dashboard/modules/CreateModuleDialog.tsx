@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, Button, DialogActions, Grid, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Button, DialogActions, Tab, Tabs, Typography } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -21,7 +21,8 @@ import {
 } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { DIALOG_ACTIONS_SX, TAB_PANEL_SX, TAB_SX } from './constants'
+import { DIALOG_ACTIONS_SX, TAB_SX } from './constants'
+import DetailsTab from './DetailsTab'
 import MainTab from './MainTab'
 import SettingsTab from './SettingsTab'
 
@@ -100,7 +101,7 @@ export default function CreateModuleDialog({
   const { enqueueSnackbar } = useSnackbar()
 
   const [open, setOpen] = useState(false)
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = useState(0)
   const [uploadedFile, setUploadedFile] = useState<null | File>(null)
   const [uploadedBackground, setUploadedBackground] = useState<null | File>(null)
 
@@ -208,6 +209,8 @@ export default function CreateModuleDialog({
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
+        maxWidth='xs'
       >
         <DialogTitle>
           {isEdit ? translate('modules_update_module') : translate('modules_create_module')}
@@ -229,12 +232,16 @@ export default function CreateModuleDialog({
                     {...a11yProps(0)}
                   />
                   <Tab
-                    label={translate('lessons')}
+                    label={translate('details')}
                     {...a11yProps(1)}
                   />
                   <Tab
-                    label={translate('settings')}
+                    label={translate('lessons')}
                     {...a11yProps(2)}
+                  />
+                  <Tab
+                    label={translate('settings')}
+                    {...a11yProps(3)}
                   />
                 </Tabs>
               ) : null}
@@ -243,73 +250,54 @@ export default function CreateModuleDialog({
               value={value}
               index={0}
             >
-              <Grid
-                container
-                spacing={3}
-              >
-                <Grid
-                  item
-                  xs={12}
-                  md={12}
-                >
-                  <Box
-                    rowGap={3}
-                    display='grid'
-                    mt={2}
-                  >
-                    <MainTab
-                      uploadedFile={uploadedFile}
-                      setUploadedFile={setUploadedFile}
-                      uploadedBackground={uploadedBackground}
-                      setUploadedBackground={setUploadedBackground}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
+              <MainTab
+                uploadedFile={uploadedFile}
+                setUploadedFile={setUploadedFile}
+                uploadedBackground={uploadedBackground}
+                setUploadedBackground={setUploadedBackground}
+              />
             </TabPanel>
             <TabPanel
               value={value}
               index={1}
             >
-              <Box sx={TAB_PANEL_SX}>
-                <ModuleLessonsAutocomplete id={id as string} />
-              </Box>
+              <DetailsTab
+                handleClose={handleClose}
+                refetch={refetch}
+              />
             </TabPanel>
             <TabPanel
               value={value}
               index={2}
             >
-              <Grid
-                container
-                spacing={3}
-              >
-                <Grid
-                  item
-                  xs={12}
-                  md={12}
-                >
-                  <Box
-                    rowGap={3}
-                    display='grid'
-                    mt={2}
-                  >
-                    <SettingsTab />
-                  </Box>
-                </Grid>
-              </Grid>
+              <ModuleLessonsAutocomplete id={id as string} />
             </TabPanel>
-            <DialogActions>
-              <Box sx={DIALOG_ACTIONS_SX}>
-                <Button onClick={handleClose}>{translate('actions_close')}</Button>
-                <LoadingButton
-                  type='submit'
-                  variant='contained'
-                  loading={isEditLoading || isCreateLoading || isAddToCourseLoading}
-                >
-                  {translate('actions_save')}
-                </LoadingButton>
-              </Box>
-            </DialogActions>
+            <TabPanel
+              value={value}
+              index={3}
+            >
+              <SettingsTab />
+            </TabPanel>
+            {value !== 1 ? (
+              <DialogActions>
+                <Box sx={DIALOG_ACTIONS_SX}>
+                  <Button
+                    color='error'
+                    variant='soft'
+                    onClick={handleClose}
+                  >
+                    {translate('actions_close')}
+                  </Button>
+                  <LoadingButton
+                    type='submit'
+                    variant='contained'
+                    loading={isEditLoading || isCreateLoading || isAddToCourseLoading}
+                  >
+                    {translate('actions_save')}
+                  </LoadingButton>
+                </Box>
+              </DialogActions>
+            ) : null}
           </FormProvider>
         </DialogContent>
       </Dialog>

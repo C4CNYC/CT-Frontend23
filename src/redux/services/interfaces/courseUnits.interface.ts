@@ -214,6 +214,12 @@ export enum LEVEL {
   NINJA = 'Ninja',
 }
 
+export enum GRADING {
+  AUTO = 'Auto-graded',
+  MANUAL = 'Manual-graded',
+  MIXED = 'Mixed-graded',
+}
+
 export interface IModuleDelete {
   id: string
 }

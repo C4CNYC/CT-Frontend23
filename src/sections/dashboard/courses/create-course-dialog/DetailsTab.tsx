@@ -115,6 +115,7 @@ function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
         <LoadingButton
           onClick={methods.handleSubmit(onSubmit)}
           variant='contained'
+          // @TODO: add loading state
           loading={false}
         >
           {translate('actions_save')}
