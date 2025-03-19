@@ -10,7 +10,7 @@ import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, RHFSelect } from '@/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
-import { FileExtension } from '@root/src/types/lessons'
+import { FileExtension, FileNames } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 interface AddStudentFileModalProps {
@@ -63,11 +63,12 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
     resolver: yupResolver(CreateStudentFileSchema),
     defaultValues: {
       fileName: '',
-      fileExtension: FileExtension.HTML,
+      fileExtension: '',
     },
   })
 
-  const { setValue } = methods
+  const { setValue, watch } = methods
+  const selectedFileExtension = watch('fileExtension')
 
   const onAdd = async (data: FormValuesProps) => {
     setIsLoading(true)
@@ -89,8 +90,15 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
   useEffect(() => {
     if (availableExtensions.length) {
       setValue('fileExtension', availableExtensions[0].toLowerCase())
+      setValue('fileName', FileNames[availableExtensions[0] as keyof typeof FileNames])
     }
   }, [availableExtensions])
+
+  useEffect(() => {
+    if (selectedFileExtension && selectedFileExtension !== '') {
+      setValue('fileName', FileNames[selectedFileExtension.toUpperCase() as keyof typeof FileNames])
+    }
+  }, [selectedFileExtension])
 
   return (
     <>
@@ -137,7 +145,7 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
                   name='fileName'
                   size='small'
                   autoFocus
-                  disabled={!availableExtensions?.length}
+                  disabled
                   sx={{
                     mt: 1,
                     color: '#333',
