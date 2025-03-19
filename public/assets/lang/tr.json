@@ -477,6 +477,9 @@
     "lessons_practical": "Pratik",
     "lessons_exercise": "Egzersiz",
     "lessons_independent_lesson": "Bağımsız ders",
+    
+    "allows_students_to_create_multiple_files": "Öğrencilerin birden fazla dosya oluşturmasına izin verir",
+    "lesson_create_multiple_files": "Birden fazla dosya oluşturulabilsin",
     "lessons_active_tooltip": "Ders, katalogda görünecek veya sınıfa veya Quest'e paylaşılabilir.",
     "lessons_autoRun_tooltip": "Tarayıcı her tuş vuruşunda güncellenecek. Yalnızca html dosyaları için geçerlidir.",
     "lesson_lock_tooltip": "Bu dersin düzenlenmesi, kilit kaldırılana kadar kilitlidir. Bu, önemli içeriklerin kazara değiştirilmesini engeller.",
@@ -876,7 +879,6 @@
     "console_title": "Konsol",
     "console_tooltip_title": "Konsol nedir?",
     "console_tooltip_subtitle_1": "JavaScript (JS) çalıştırdığınızda sonucu görebileceğiniz yerdir. Çoğu zaman JS, arka planda çalışır ve hesaplamalarını ve yanıtlarını orada yapar.",
-    "console_tooltip_subtitle_2": "Yalnızca belirli bir işlevi sayfanın belirli bir kısmına bağladığınızda, JS'nin 'Ön' sayfayı değiştirdiğini görürsünüz.",
     "console_clear_button_title": "Temizle",
     "console_clear_button_subtitle": "Tüm mesajları temizler",
     "console_welcome": "",
