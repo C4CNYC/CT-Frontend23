@@ -1,6 +1,7 @@
 import { css } from '@codemirror/lang-css'
 import { html } from '@codemirror/lang-html'
 import { javascript } from '@codemirror/lang-javascript'
+import { json } from '@codemirror/lang-json'
 import { LanguageSupport } from '@codemirror/language'
 import { EditorView } from '@uiw/react-codemirror'
 
@@ -23,6 +24,7 @@ const langMap = {
   [Extensions.Css]: () => css(),
   [Extensions.Html]: () => html({ autoCloseTags: false }),
   [Extensions.Js]: () => javascript(),
+  [Extensions.Json]: () => json(),
 }
 
 export const language = (file: StudentFile): LanguageSupport[] => {

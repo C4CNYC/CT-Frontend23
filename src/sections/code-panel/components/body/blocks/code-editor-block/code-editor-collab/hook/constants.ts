@@ -45,6 +45,7 @@ export enum Extensions {
   Css = 'css',
   Html = 'html',
   Js = 'js',
+  Json = 'json',
 }
 
 export const DEFAULT_FILE = {
