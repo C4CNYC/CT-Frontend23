@@ -6,6 +6,7 @@ export const STACK_STYLES = {
   ml: '50px',
   textDecoration: 'none',
   pointerEvents: 'all',
+  flexDirection: 'row',
 }
 
 export const OVERLAY_WRAPPER_SX = {
@@ -28,8 +29,8 @@ export const OVERLAY_AVATAR_SX = {
 export const AVATAR_STYLES = {
   border: '2px solid #FBDD3F',
   background: '#0198ED',
-  width: '35px',
-  height: '35px',
+  width: '30px',
+  height: '30px',
 }
 
 export const STACK_GROUP_STYLES = {
@@ -41,6 +42,8 @@ export const STACK_GROUP_STYLES = {
 export const GROUP_TITLE_STYLES = {
   color: '#A6A6A6',
   mb: -0.5,
+  textTransform: 'uppercase',
+  fontSize: 8,
 }
 
 export const OVERLAY_GROUP_TITLE_SX = {

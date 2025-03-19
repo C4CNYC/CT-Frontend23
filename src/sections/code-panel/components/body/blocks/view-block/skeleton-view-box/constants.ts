@@ -2,7 +2,7 @@ import { Theme } from '@mui/material'
 
 export const getParentStackSx = (isLight: boolean, isOpenHeader: boolean) => ({
   bgcolor: isLight ? '#F2F2F2' : '',
-  height: isOpenHeader ? 'calc(100% - 120px)' : 'calc(100% - 86px)',
+  height: isOpenHeader ? 'calc(100% - 100px)' : 'calc(100% - 66px)',
   width: 'calc(100% - 16px )',
   borderRadius: '16px',
   p: 1,

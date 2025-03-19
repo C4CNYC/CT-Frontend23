@@ -12,6 +12,7 @@ import { isJson } from '@root/src/utils'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { COLLAPSE_BOX_SX, CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'
+
 const ConsoleBlock = () => {
   const translate = useTranslate()
 
@@ -118,7 +119,6 @@ const ConsoleBlock = () => {
         >
           {translate('console_welcome')}
           <br />
-          {/* place for console info */}
         </Box>
       </Collapse>
     </Box>

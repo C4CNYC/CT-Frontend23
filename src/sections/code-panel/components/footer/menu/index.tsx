@@ -79,7 +79,7 @@ const Menu: FC<MenuProps> = ({ language, publicPage }) => {
           direction='down'
           icon={
             <IoShareOutline
-              size='20px'
+              size='24px'
               style={{
                 color: isDarkMode
                   ? theme.palette.text.secondary

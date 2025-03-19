@@ -3,7 +3,7 @@ import { SxProps, Theme } from '@mui/system'
 export const getBoxStyles = (isTabletAndMobile: boolean, theme: Theme): SxProps => ({
   flex: '1 1 0px',
   position: 'relative',
-  height: isTabletAndMobile ? '100dvh' : 'calc(100vh - 68px)',
+  height: isTabletAndMobile ? '100dvh' : 'calc(100vh - 46px)',
   borderWidth: isTabletAndMobile ? 'none' : '3px',
   borderStyle: isTabletAndMobile ? 'none' : 'solid',
   borderColor:
