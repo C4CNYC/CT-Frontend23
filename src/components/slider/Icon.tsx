@@ -14,7 +14,6 @@ export function LeftIcon({ icon }: Props): React.ReactElement {
       style={{
         width: 20,
         height: 20,
-        transform: ' scaleX(-1)',
       }}
     />
   )

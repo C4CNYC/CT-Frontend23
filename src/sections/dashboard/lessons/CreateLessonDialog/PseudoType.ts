@@ -1,7 +1,11 @@
 import { useProperties } from '@root/src/hooks/useProperties'
-import { LessonType } from '@root/src/redux/interfaces/content.interface'
+import {
+  LessonType,
+  LessonTypePseudo,
+  LessonTypePseudoEnum,
+} from '@root/src/redux/services/enums/lesson-type.enum'
 
-import { CreateLessonIDefaultProps, LessonTypeEnum } from './CreateLessonDialog'
+import { CreateLessonIDefaultProps } from './CreateLessonDialog'
 
 type PseudoTypeProps = {
   lessonId?: string
@@ -27,20 +31,20 @@ export const usePseudoType = ({ lessonId, defaultValues }: PseudoTypeProps) => {
     propertyName: 'autoRun',
   })
 
-  function toDbFields(pseudoType: LessonTypeEnum) {
+  function toDbFields(pseudoType: LessonTypePseudoEnum) {
     switch (pseudoType) {
       default:
-      case LessonTypeEnum.simple:
+      case LessonTypePseudo.simple:
         return { type: LessonType.EXERCISE, autoRun: false, independent: true }
-      case LessonTypeEnum.practical:
+      case LessonTypePseudo.practical:
         return { type: LessonType.PRACTICAL, autoRun: false, independent: false }
-      case LessonTypeEnum.start_project:
+      case LessonTypePseudo.start_project:
         return { type: LessonType.PRACTICAL, autoRun: true, independent: true }
-      case LessonTypeEnum.part_project:
+      case LessonTypePseudo.part_project:
         return { type: LessonType.PRACTICAL, autoRun: true, independent: false }
-      case LessonTypeEnum.exercise:
+      case LessonTypePseudo.exercise:
         return { type: LessonType.EXERCISE, autoRun: true, independent: true }
-      case LessonTypeEnum.concept_exercises:
+      case LessonTypePseudo.concept_exercises:
         return { type: LessonType.EXERCISE, autoRun: true, independent: false }
     }
   }
@@ -51,27 +55,27 @@ export const usePseudoType = ({ lessonId, defaultValues }: PseudoTypeProps) => {
       case LessonType.EXERCISE:
         if (autoRun) {
           if (defaultValues?.independent) {
-            return LessonTypeEnum.exercise
+            return LessonTypePseudo.exercise
           }
-          return LessonTypeEnum.concept_exercises
+          return LessonTypePseudo.concept_exercises
         } else {
           if (defaultValues?.independent) {
-            return LessonTypeEnum.simple
+            return LessonTypePseudo.simple
           }
           //undefined
-          return LessonTypeEnum.simple
+          return LessonTypePseudo.simple
         }
       case LessonType.PRACTICAL:
         if (autoRun) {
           if (defaultValues?.independent) {
-            return LessonTypeEnum.start_project
+            return LessonTypePseudo.start_project
           }
-          return LessonTypeEnum.part_project
+          return LessonTypePseudo.part_project
         } else {
           if (defaultValues?.independent) {
-            return LessonTypeEnum.practical
+            return LessonTypePseudo.practical
           }
-          return LessonTypeEnum.practical
+          return LessonTypePseudo.practical
         }
     }
   }
