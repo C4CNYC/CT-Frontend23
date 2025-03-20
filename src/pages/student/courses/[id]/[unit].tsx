@@ -15,7 +15,6 @@ import {
   useGetModuleWithLessonsQuery,
   useGetPublicModuleWithLessonsQuery,
 } from '@/redux/services/manager/modules-student'
-import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { getBreadcrumbsSx, getLessonListSx, getPageContainerSx } from '@/sections/module/constants'
 import LessonsList from '@/sections/module/LessonsList'
@@ -35,8 +34,8 @@ export default function ModulePage(): React.ReactElement {
   const { query } = useRouter()
   const [currentModule, setCurrentModule] = useState<IModuleContent>()
   const translate = useTranslate()
-  const profile = useSelector((state) => state.global.user)
-
+  // const profile = useSelector((state) => state.global.user)
+  const profile = null
   const { data: modules, isLoading: isLoadingModules } = useGetStudentCourseModulesQuery(
     { id: query?.id as string },
     { skip: !query?.id || !profile }
