@@ -39,7 +39,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
 }
 
 const DEBOUNCE_TIME = 30000
-const DEBOUNCE_SAVE_TIME = 400
+const DEBOUNCE_SAVE_TIME = 4000
 
 let checkValueTimeout: any | null = null
 let checkSaveTimeout: any | null = null
