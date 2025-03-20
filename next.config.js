@@ -9,7 +9,13 @@ const nextConfig = {
   },
   transpilePackages: ['mui-tel-input'],
   images: {
-    domains: ['devnest.s3.amazonaws.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'devnest.s3.amazonaws.com',
+        pathname: '/**',
+      },
+    ],
   },
   compress: true,
   async headers() {

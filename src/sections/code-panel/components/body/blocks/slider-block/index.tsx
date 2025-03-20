@@ -1,6 +1,6 @@
 import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Box, TextField, useTheme } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
 import { useSearchParams } from 'next/navigation'
@@ -99,7 +99,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const handleDebouncedCallback = useDebounceCallback(5000)
 
-  const hasNextStep = slideIndex < data.length - 1
+  const hasNextStep = slideIndex < data?.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length
   const title = sandbox ? translate('Notes') : translate('instructions')
   const progressWrapperSx = useMemo(() => getProgressWrapperSx(theme), [theme])
@@ -116,19 +116,24 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const handleNext = (skip = false): void => {
-    if (window.gtag) {
-      window.gtag('event', 'Slide_Swiped', {
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'Slide_Swiped',
         event_category: `Course ${course} > Unit ${unit} > Lesson ${lessonName}`,
         event_label: `SlideNumber ${slideIndex + 1}`,
+        slideIndex: slideIndex + 1,
       })
     }
     if (stepHasValidation && !skip) {
-      if (window.gtag) {
-        window.gtag('event', 'Challenge_Completed', {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'Challenge_Completed',
           event_category: `Course ${course} > Unit (Module) ${unit} > Training (Lesson) ${lessonName}`,
           event_label: `SlideNumber ${slideIndex + 1}`,
+          slideIndex: slideIndex + 1,
         })
       }
+
       onSubmitChallenge(data[slideIndex].id, '')
     }
     if (hasNextStep) {
@@ -160,7 +165,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   const onBeforeChange = (_: number, next: number) => {
-    if (!data || !data.length) return
+    if (!data || !data?.length) return
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
     if (data?.[next]?.id) dispatch(setSlideId(data[next].id))
@@ -178,7 +183,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   }
 
   useEffect(() => {
-    if (!sandbox || !data.length) return
+    if (!sandbox || !data?.length) return
     onBeforeChange(0, 0)
   }, [sandbox, data])
 
@@ -197,7 +202,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   useEffect(() => {
     const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
-    if (!data || !lessonId || data.length == 0) return
+    if (!data || !lessonId || data?.length == 0) return
     if (lessonId && progress) {
       const lastSlide: number = progress[lessonId as string] || 0
       onBeforeChange(slideIndex, lastSlide)
@@ -205,6 +210,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [lessonId, data])
 
   const slider = useMemo(() => {
+    const currentSlide = data[slideIndex]
+
     return (
       <Box
         className='sliderTour'
@@ -214,26 +221,22 @@ const SliderBlock: FC<ISliderBlock> = ({
         {isLoadingLessonContent ? (
           <LoadingScreen />
         ) : (
-          data
-            .filter((slide, stepSlideIndex) => slideIndex == stepSlideIndex)
-            .map((step) => {
-              return (
-                <View
-                  title={step.title}
-                  lessonType={lessonType}
-                  key={step.id}
-                  type={step.type}
-                  body={step.body}
-                  integrations={integrations}
-                  connectIntegrations={connectIntegrations}
-                  stepBgColor={step.bg_color}
-                />
-              )
-            })
+          currentSlide && (
+            <View
+              title={currentSlide?.title}
+              lessonType={lessonType}
+              key={currentSlide?.id}
+              type={currentSlide?.type}
+              body={currentSlide?.body}
+              integrations={integrations}
+              connectIntegrations={connectIntegrations}
+              stepBgColor={currentSlide?.bg_color}
+            />
+          )
         )}
       </Box>
     )
-  }, [data, slideIndex, integrations])
+  }, [data, slideIndex, integrations, isLoadingLessonContent])
 
   return (
     <BaseBlock
@@ -258,12 +261,20 @@ const SliderBlock: FC<ISliderBlock> = ({
         ))}
       </Box>
       {sandbox ? (
-        <TextField
-          fullWidth
-          multiline
-          minRows='12'
+        <textarea
+          style={{
+            width: '100%',
+            height: '100%',
+            resize: 'none',
+            padding: '10px 10px',
+            border: 0,
+            outline: 0,
+            fontSize: '1.1rem',
+            background: '#FAF9F6',
+          }}
+          placeholder='Add your notes here...'
           value={noteText}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
             setNoteText(event.target.value)
             localStorage.setItem(`sandboxNotes${profile?.id}`, event.target.value)
           }}

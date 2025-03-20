@@ -8,7 +8,7 @@ import ImageLightBox from '@/sections/course/modules-list/module-item/ImageLight
 import { BaseResponseInterface } from '@/utils'
 import { getUniqueSkills } from '@/utils/getUniqueSkills'
 
-import { CHIP_SX, HEADER_IMG_SX, getHeaderContainerSx } from './constants'
+import { CHIP_SX, HEADER_IMG_SX, _mochSkills, getHeaderContainerSx } from './constants'
 
 interface IModuleHeaderProps {
   name: string
@@ -26,8 +26,8 @@ export default function ModuleHeader({
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(500))
   const moduleCont = useMemo(() => getHeaderContainerSx(isMobile, theme), [isMobile, theme])
-  const skills = getUniqueSkills(lessons.map((item: ILesson) => item.skills).flat())
-
+  const uniqueSkills = getUniqueSkills(lessons.map((item: ILesson) => item.skills).flat())
+  const skills = uniqueSkills.length ? uniqueSkills : _mochSkills
   return (
     <Stack sx={moduleCont}>
       {isMobile ? (
@@ -44,22 +44,20 @@ export default function ModuleHeader({
       <Stack sx={{ overflow: 'hidden', pt: 2, pr: 2 }}>
         <Typography variant='h4'>{name}</Typography>
         <Typography variant='body1'>{description}</Typography>
-        {!!skills?.length && (
-          <Stack
-            direction='row'
-            gap={2}
-            my={2}
-            flexWrap='wrap'
-          >
-            {skills?.map((item: ISkill) => (
-              <Chip
-                key={item.id}
-                label={item.name}
-                sx={CHIP_SX}
-              />
-            ))}
-          </Stack>
-        )}
+        <Stack
+          direction='row'
+          gap={2}
+          my={2}
+          flexWrap='wrap'
+        >
+          {skills?.map((item: ISkill) => (
+            <Chip
+              key={item.id}
+              label={item.name}
+              sx={CHIP_SX}
+            />
+          ))}
+        </Stack>
       </Stack>
       {!isMobile ? (
         <ImageLightBox image={avatar ?? '/assets/courses/courseImg.png'}>

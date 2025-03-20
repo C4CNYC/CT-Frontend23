@@ -9,7 +9,7 @@ export const getDefaultStudentIntroSteps = (translate: (key: string) => string):
     content: (
       <div>
         <Image
-          src='/assets/illustrations/auth-cat.png'
+          src='/assets/illustrations/auth-cat.webp'
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '290px' }}
         />

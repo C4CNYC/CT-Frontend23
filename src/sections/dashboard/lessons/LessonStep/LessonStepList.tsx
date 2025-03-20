@@ -307,6 +307,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
               type: lesson?.type ?? 'practical',
               duration: lesson?.duration,
               slug: lesson?.slug,
+              meta: lesson?.meta,
             }}
             isEdit
           >
