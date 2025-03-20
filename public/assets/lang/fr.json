@@ -493,6 +493,8 @@
     "lessons_active_tooltip": "La leçon sera affichée dans le catalogue ou sera partageable avec la classe ou dans une quête.",
     "lessons_autoRun_tooltip": "Le navigateur sera mis à jour à chaque frappe. Disponible uniquement pour les fichiers HTML.",
     "lesson_lock_tooltip": "L'édition de cette leçon est verrouillée jusqu'à ce que le verrou soit supprimé. Cela protège contre les modifications accidentelles de contenu clé.",
+    "allows_students_to_create_multiple_files": "Permet aux étudiants de créer plusieurs fichiers",
+    "lesson_create_multiple_files": "Créer plusieurs fichiers",
     "lessons_autoRun": "Tests automatiques",
     "lessons_lock": "Leçon verrouillée",
     "lessons_settings": "Paramètres de la leçon",

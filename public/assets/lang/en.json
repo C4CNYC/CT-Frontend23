@@ -490,6 +490,8 @@
     "lessons_type": "Lesson Type",
     "lessons_type_select_one": "Select one",
     "lessons_type_select_one_star": "*",
+    "allows_students_to_create_multiple_files": "Allows students to create multiple files",
+    "lesson_create_multiple_files":"Create Multiple Files",
     "lessons_active_tooltip": "The lesson will show in the catalog or is shareable to the class or in a Quest.",
     "lessons_autoRun_tooltip": "The browser will update on every keystroke. Only available to html files.",
     "lesson_lock_tooltip": "Editing of this lesson is locked until lock is removed. This protects from accidental changes to key content.",

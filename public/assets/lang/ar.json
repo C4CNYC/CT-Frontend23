@@ -487,6 +487,9 @@
     "lessons_practical": "عملي",
     "lessons_exercise": "تمرين",
     "lessons_independent_lesson": "درس مستقل",
+    
+    "allows_students_to_create_multiple_files": "يسمح للطلاب بإنشاء ملفات متعددة",
+    "lesson_create_multiple_files": "إنشاء ملفات متعددة",
     "lessons_type": "نوع الدرس",
     "lessons_type_select_one": "اختر واحدًا",
     "lessons_type_select_one_star": "*",

@@ -1,10 +1,11 @@
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 import { FileExtension } from '@root/src/types/lessons'
 
-import { LessonType } from '../../interfaces/content.interface'
 import { LessonContentComplexity } from '../enums/lesson-content-complexity.enum'
 import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { LessonType } from '../enums/lesson-type.enum'
 
+import { LessonMeta } from './lesson.interface'
 import { ILessonContentValidation } from './lessonContentValidation.interface'
 
 export interface IModule {
@@ -26,7 +27,7 @@ export interface ILesson {
   description: string
   head?: string
   duration: Record<string, number> | null
-  meta: Record<string, Record<string, any>>
+  meta: LessonMeta
   independent: boolean
   type: LessonType
   sort?: number

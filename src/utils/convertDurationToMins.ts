@@ -1,5 +1,5 @@
 export function convertDurationToMins(
-  duration: { hours: number; minutes: number } | undefined | Record<string, number>,
+  duration: { hours: number; minutes: number } | undefined | null | Record<string, number>,
   defaultValue: number = 20
 ): number {
   let minutes = 0

@@ -477,6 +477,9 @@
     "lessons_practical": "Pratik",
     "lessons_exercise": "Egzersiz",
     "lessons_independent_lesson": "Bağımsız ders",
+    
+    "allows_students_to_create_multiple_files": "Öğrencilerin birden fazla dosya oluşturmasına izin verir",
+    "lesson_create_multiple_files": "Birden fazla dosya oluşturulabilsin",
     "lessons_active_tooltip": "Ders, katalogda görünecek veya sınıfa veya Quest'e paylaşılabilir.",
     "lessons_autoRun_tooltip": "Tarayıcı her tuş vuruşunda güncellenecek. Yalnızca html dosyaları için geçerlidir.",
     "lesson_lock_tooltip": "Bu dersin düzenlenmesi, kilit kaldırılana kadar kilitlidir. Bu, önemli içeriklerin kazara değiştirilmesini engeller.",
