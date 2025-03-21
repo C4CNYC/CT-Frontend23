@@ -47,18 +47,20 @@ export function CreateLessonAdvancedTab() {
           </option>
         ))}
       </RHFSelect>
-      <Stack gap={1}>
-        <Tooltip
-          slotProps={{ popper: { disablePortal: true } }}
-          title={translate('allows_students_to_create_multiple_files')}
-        >
-          <Box>
-            <RHFSwitch
-              name='meta.createMultipleFiles'
-              label={translate('lesson_create_multiple_files')}
-            />
-          </Box>
-        </Tooltip>
+      <Stack display='none'>
+        <Stack gap={1}>
+          <Tooltip
+            slotProps={{ popper: { disablePortal: true } }}
+            title={translate('allows_students_to_create_multiple_files')}
+          >
+            <Box>
+              <RHFSwitch
+                name='meta.createMultipleFiles'
+                label={translate('lesson_create_multiple_files')}
+              />
+            </Box>
+          </Tooltip>
+        </Stack>
       </Stack>
     </Stack>
   )
