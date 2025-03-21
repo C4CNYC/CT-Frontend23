@@ -158,8 +158,12 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   }
 
   useEffect(() => {
-    if (preloadedCode) onChangeCodemirrorValue(preloadedCode || '')
-  }, [preloadedCode])
+    if (preloadedCode) {
+      onChangeCodemirrorValue(preloadedCode || '')
+    } else {
+      onChangeCodemirrorValue(' ')
+    }
+  }, [preloadedCode, lessonId])
 
   useEffect(() => {
     const newCodeValue =

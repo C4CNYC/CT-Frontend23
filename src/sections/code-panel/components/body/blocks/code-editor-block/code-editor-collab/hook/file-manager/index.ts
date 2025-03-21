@@ -92,8 +92,15 @@ export const useFileManager = () => {
 
   const sandbox = searchParams.get('sandbox')
   const isPageReady = useMemo(
-    () => !(isLessonLoading && IsUnauthFilesLoading && isLoading),
-    [isLessonLoading, IsUnauthFilesLoading, isLoading]
+    () =>
+      !(
+        isLessonLoading &&
+        IsUnauthFilesLoading &&
+        isLoading &&
+        isFetching &&
+        isUnauthFilesFetching
+      ),
+    [isLessonLoading, IsUnauthFilesLoading, isLoading, isFetching, isUnauthFilesFetching]
   )
 
   const { localStorageKey, tabsMangerLocalStorageKey } = useMemo(() => {
@@ -219,7 +226,7 @@ export const useFileManager = () => {
   }
   // Handle side effects in useEffect
   useEffect(() => {
-    if (!isPageReady || !isAuthenticated) return
+    if (!isPageReady || !isAuthenticated || !authFiles.length) return
 
     let authFilesWithoutHello = authFiles.filter(
       (file) => !file.name.toLowerCase().startsWith('hello_')
@@ -229,7 +236,7 @@ export const useFileManager = () => {
     )
 
     let unauthFilesNotSaved = unauthFilesList.filter(
-      (file) => !authFilesWithoutHello.find((authFile) => authFile.body === file.body)
+      (file) => !authFilesWithoutHello?.find((authFile) => authFile.body === file.body)
     )
 
     if (unauthFilesNotSaved.length) {
@@ -245,6 +252,10 @@ export const useFileManager = () => {
     // Delete hello files if needed
     if (unauthFilesNotSaved.length + authFilesWithoutHello.length) {
       authFilesWithHello.forEach((file) => deleteStudentFile(file))
+    }
+
+    if (!authFilesWithoutHello.length) {
+      onAddFile('index.html')
     }
   }, [authFiles.length, unauthFilesList.length, isAuthenticated, slideId, lessonId, isPageReady])
 
