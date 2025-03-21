@@ -73,7 +73,7 @@
     "luxon": "^3.4.4",
     "mui-color-input": "^1.0.4",
     "mui-tel-input": "^5.0.0",
-    "next": "^14.1.0",
+    "next": "^14.2.25",
     "notistack": "^3.0.1",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
