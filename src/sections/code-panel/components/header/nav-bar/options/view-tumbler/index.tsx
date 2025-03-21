@@ -23,7 +23,7 @@ const ViewTumbler: FC<ViewToomblerProps> = ({ isColumnHidden, onChangeColumnVisa
       bgcolor='#FBDD3F'
       borderRadius='50px'
       padding='0 12px'
-      height='41px'
+      height='30px'
     >
       <Tooltip
         title={
@@ -39,6 +39,7 @@ const ViewTumbler: FC<ViewToomblerProps> = ({ isColumnHidden, onChangeColumnVisa
         }
       >
         <IconButton
+          disableRipple
           onClick={() => {
             onChangeColumnVisability(!isColumnHidden)
           }}
@@ -47,7 +48,10 @@ const ViewTumbler: FC<ViewToomblerProps> = ({ isColumnHidden, onChangeColumnVisa
         </IconButton>
       </Tooltip>
 
-      <IconButton onClick={handle.active ? handle.exit : handle.enter}>
+      <IconButton
+        disableRipple
+        onClick={handle.active ? handle.exit : handle.enter}
+      >
         {handle.active ? <LiaCompressArrowsAltSolid /> : <IoExpandOutline />}
       </IconButton>
     </Box>

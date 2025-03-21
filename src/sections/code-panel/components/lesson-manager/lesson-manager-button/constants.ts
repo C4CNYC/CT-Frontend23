@@ -21,7 +21,7 @@ export const GetTypSx = (theme: Theme): SxProps => ({
   overflow: ' hidden',
   textTransform: 'none',
   color: theme.palette.text.disabled,
-  maxWidth: '200px',
+  maxWidth: { md: '300px', lg: '350px', xl: '500px' },
 })
 
 export const getSubtitleSx = (theme: Theme): SxProps => ({

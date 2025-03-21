@@ -14,16 +14,16 @@ export const getDialogPaperProps = (isDark: boolean) => {
 
 export const DIALOG_TITLE_SX = {
   display: 'flex',
-  alignItems: 'center',
+  py: 1,
 }
 
 export const DIALOG_TITLE_TYP_SX = {
+  display: 'flex',
   flexGrow: 1,
-  ml: 1,
-  alignSelf: 'flex-end',
+  gap: 1,
+  alignSelf: 'center',
 }
 
 export const ICON_BUTTON_SX = {
-  selfAlign: 'flex-end',
   mr: '-10px',
 }

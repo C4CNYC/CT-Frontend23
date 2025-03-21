@@ -112,7 +112,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
         />
       }
       onInputChange={(event, value) => {
-        setFilter('email', value)
+        setFilter('name', value)
       }}
       getOptionLabel={(option) => option.name}
       renderTags={(tagValue, getTagProps): React.ReactElement[] =>

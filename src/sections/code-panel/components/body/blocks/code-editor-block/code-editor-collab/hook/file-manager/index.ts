@@ -4,9 +4,14 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { ILesson, LessonType } from '@root/src/redux/interfaces/content.interface'
+import { ILesson } from '@root/src/redux/interfaces/content.interface'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
-import { useGetLessonStudentWithoutContentsQuery } from '@root/src/redux/services/manager/lesson-student'
+import {
+  useGetLessonContentStudentQuery,
+  useGetLessonStudentWithoutContentsQuery,
+} from '@root/src/redux/services/manager/lesson-student'
+import { useCompleteLessonMutation } from '@root/src/redux/services/manager/progress-student'
 import {
   useCreateStudentFileMutation,
   useDeleteStudentFileMutation,
@@ -17,26 +22,15 @@ import {
 import { useSelector } from '@root/src/redux/store'
 import { BaseResponseInterface } from '@root/src/utils'
 
+import {
+  getLocalStorageCode,
+  getLocalStorageFile,
+  getLocalStorageRoomKey,
+  killLocalStorageFile,
+} from '../utils/getLocalStorage'
+
 import { unauthFileLocalStorageManger } from './filesLocalstorageManager'
 import { tabsLocalStorageManger } from './tabsLocalstorageManager'
-
-interface UseFileManagerReturn {
-  isOpen: boolean
-  files: StudentFile[]
-  preloadedCode: string
-  isFileLoading: boolean
-  localStorageKey: string
-  barFiles: StudentFile[]
-  activeFile: StudentFile
-  isFileControllerAvailable: boolean
-
-  onCloseFile: (id: string) => void
-  onDeleteFile: (id: string) => void
-  setActiveFile: (id: string) => void
-  setIsOpen: (isOpen: boolean) => void
-  onAddFile: (fileName: string) => Promise<void>
-  onUpdateFile: (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>) => Promise<void>
-}
 
 export const DEFAULT_FILE_ID = 'default'
 const DEFAULT_FILE = {
@@ -46,13 +40,13 @@ const DEFAULT_FILE = {
   body: '',
 }
 
-export const useFileManager = (): UseFileManagerReturn => {
+export const useFileManager = () => {
   const lessonRef = useRef<(ILesson & BaseResponseInterface) | null>(null)
 
   const { query } = useRouter()
   const searchParams = useSearchParams()
-  const { isAuthenticated } = useAuthContext()
-
+  const { isAuthenticated: isAuthenticatedSystem, user } = useAuthContext()
+  let isAuthenticated = !!user
   const [isOpen, setIsOpen] = useState(false)
   const [barFiles, _setBarFiles] = useState<StudentFile[]>([])
   const [activeFile, _setActiveFile] = useState<StudentFile>()
@@ -64,6 +58,7 @@ export const useFileManager = (): UseFileManagerReturn => {
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [updateStudentFile] = useUpdateStudentFileMutation()
+  const [completeLesson] = useCompleteLessonMutation()
 
   const {
     data: lesson,
@@ -71,11 +66,16 @@ export const useFileManager = (): UseFileManagerReturn => {
     isFetching: isLessonFetching,
   } = useGetLessonStudentWithoutContentsQuery({ id: lessonId! }, { skip: !lessonId })
 
+  const { data: lessonContent } = useGetLessonContentStudentQuery(
+    { id: query.lessonId as string },
+    { skip: !query.lessonId }
+  )
+
   const {
     refetch,
     isLoading,
     isFetching,
-    data: files = [],
+    data: authFiles = [],
   } = useGetStudentFilesQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
     { skip: !lessonId || !slideId || !isAuthenticated }
@@ -91,6 +91,10 @@ export const useFileManager = (): UseFileManagerReturn => {
   )
 
   const sandbox = searchParams.get('sandbox')
+  const isPageReady = useMemo(
+    () => !(isLessonLoading && IsUnauthFilesLoading && isLoading),
+    [isLessonLoading, IsUnauthFilesLoading, isLoading]
+  )
 
   const { localStorageKey, tabsMangerLocalStorageKey } = useMemo(() => {
     let localStorageKey
@@ -153,20 +157,24 @@ export const useFileManager = (): UseFileManagerReturn => {
     )
     if (accountableExistingFiles.length) return Object.values(accountableExistingFiles)
 
-    const files = unauthFileLocalStorageManger(localStorageKey).getFiles(unauthFiles)
+    const files = unauthFileLocalStorageManger(localStorageKey).getFiles(
+      unauthFiles,
+      'ignoreThisVersion'
+    )
+    if (!isAuthenticated)
+      if (!files.length) {
+        unauthFileLocalStorageManger(localStorageKey).addFile(
+          {
+            ...DEFAULT_FILE,
+            lessonContentId: slideId,
+          },
+          'ignoreThisVersion'
+        )
+      }
 
-    if (!files.length) {
-      unauthFileLocalStorageManger(localStorageKey).addFile({
-        id: DEFAULT_FILE_ID,
-        name: 'hello',
-        extension: 'html',
-        body: '',
-        lessonContentId: slideId,
-      })
-    }
-
-    return unauthFileLocalStorageManger(localStorageKey).getFiles(unauthFiles)
+    return unauthFileLocalStorageManger(localStorageKey).getFiles(unauthFiles, 'ignoreThisVersion')
   }, [
+    isAuthenticated,
     unauthFiles,
     localStorageKey,
     activeFile,
@@ -176,6 +184,70 @@ export const useFileManager = (): UseFileManagerReturn => {
     lesson,
     slideId,
   ])
+  // Move file operations to useEffect
+  const files = useMemo(() => {
+    if (!isAuthenticated) return unauthFilesList
+
+    let authFilesWithoutHello = authFiles.filter(
+      (file) => !file.name.toLowerCase().startsWith('hello_')
+    )
+
+    // Just compute the derived state here, no side effects
+    let unauthFilesNotSaved = unauthFilesList.filter(
+      (file) =>
+        !authFilesWithoutHello.find(
+          (authFile) => authFile.name === file.name && authFile.extension === file.extension
+        )
+    )
+
+    return [...authFilesWithoutHello, ...unauthFilesNotSaved]
+  }, [authFiles, unauthFilesList, isAuthenticated]) // Use full arrays as dependencies
+
+  async function saveProgressOfGuestTimes() {
+    let contentsWithValidations =
+      lessonContent
+        ?.filter((_content, index) => index <= slideIndex)
+        ?.filter((content) => content.validations.length > 0) ?? []
+    for (let content of contentsWithValidations) {
+      await completeLesson({
+        id: query.courseId as string,
+        module_id: query.unit_id as string,
+        lesson_content_id: content.id as string,
+        code: 'really',
+      })
+    }
+  }
+  // Handle side effects in useEffect
+  useEffect(() => {
+    if (!isPageReady || !isAuthenticated) return
+
+    let authFilesWithoutHello = authFiles.filter(
+      (file) => !file.name.toLowerCase().startsWith('hello_')
+    )
+    let authFilesWithHello = authFiles.filter((file) =>
+      file.name.toLowerCase().startsWith('hello_')
+    )
+
+    let unauthFilesNotSaved = unauthFilesList.filter(
+      (file) => !authFilesWithoutHello.find((authFile) => authFile.body === file.body)
+    )
+
+    if (unauthFilesNotSaved.length) {
+      saveProgressOfGuestTimes()
+    }
+
+    // Create files that need to be created
+    unauthFilesNotSaved.forEach(async (file) => {
+      createStudentFile({ ...file, lessonContentId: slideId, lessonId })
+      unauthFileLocalStorageManger(localStorageKey).removeFile(file.id)
+    })
+
+    // Delete hello files if needed
+    if (unauthFilesNotSaved.length + authFilesWithoutHello.length) {
+      authFilesWithHello.forEach((file) => deleteStudentFile(file))
+    }
+  }, [authFiles.length, unauthFilesList.length, isAuthenticated, slideId, lessonId, isPageReady])
+
   useEffect(() => {
     if (!isAuthenticated || !files || !lessonId || !slideId || !localstorageCode) return
     let file = getLocalStorageFile(localStorageKey, 'default')
@@ -199,13 +271,16 @@ export const useFileManager = (): UseFileManagerReturn => {
 
       try {
         if (!isAuthenticated) {
-          const file = unauthFileLocalStorageManger(localStorageKey).addFile({
-            id: `${name}-${extension}-${new Date().getTime()}`,
-            name,
-            extension,
-            body: '',
-            lessonContentId: slideId,
-          })
+          const file = unauthFileLocalStorageManger(localStorageKey).addFile(
+            {
+              id: `${name}-${extension}-${new Date().getTime()}`,
+              name,
+              extension,
+              body: '',
+              lessonContentId: slideId,
+            },
+            'ignoreThisVersion'
+          )
           _setActiveFile(file)
           _setBarFiles((prev) => [...prev, file!])
           tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(file!.id)
@@ -397,7 +472,7 @@ export const useFileManager = (): UseFileManagerReturn => {
   ])
 
   return {
-    files: isAuthenticated ? files : unauthFilesList,
+    files,
     isOpen,
     barFiles,
     localStorageKey,
@@ -412,54 +487,5 @@ export const useFileManager = (): UseFileManagerReturn => {
     onDeleteFile,
     onUpdateFile,
     setActiveFile,
-  }
-}
-
-const getLocalStorageRoomKey = (roomId: string | undefined): string => `room_doc_${roomId}`
-
-function getLocalStorageCode(key: string) {
-  const localStorageCodeValue = localStorage.getItem(key)
-  if (localStorageCodeValue) {
-    try {
-      const docInfo = JSON.parse(localStorageCodeValue) as Record<string, string>
-      const code =
-        (docInfo?.htmlBody as unknown as string[])?.join('') ??
-        (docInfo?.default as unknown as { body?: string })?.body ??
-        ''
-      if (code) {
-        return code
-      }
-    } catch (e) {
-      return localStorageCodeValue
-    }
-  }
-}
-function getLocalStorageFile(key: string, fileName: string = 'default'): StudentFile | undefined {
-  const localStorageCodeValue = localStorage.getItem(key)
-  if (localStorageCodeValue) {
-    try {
-      const docInfo = JSON.parse(localStorageCodeValue) as Record<string, StudentFile>
-      const file = docInfo?.[fileName] as StudentFile
-      if (file) {
-        return file
-      }
-    } catch (e) {
-      return
-    }
-  }
-}
-function killLocalStorageFile(key: string, fileName: string = 'default'): void {
-  const localStorageCodeValue = localStorage.getItem(key)
-  if (localStorageCodeValue) {
-    try {
-      const docInfo = JSON.parse(localStorageCodeValue) as Record<string, StudentFile>
-      const file = docInfo?.[fileName] as StudentFile
-      if (file) {
-        delete docInfo[fileName]
-        localStorage.setItem(key, JSON.stringify(docInfo))
-      }
-    } catch (e) {
-      return
-    }
   }
 }

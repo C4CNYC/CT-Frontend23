@@ -10,7 +10,7 @@ export const getTourStepsDesktop = (translate: (key: string) => string): Step[] 
     content: (
       <div>
         <Image
-          src='/assets/illustrations/auth-cat.png'
+          src='/assets/illustrations/auth-cat.webp'
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '290px' }}
         />
@@ -156,7 +156,7 @@ export const getTourStepsMobile = (translate: (key: string) => string): Step[] =
     content: (
       <div>
         <Image
-          src='/assets/illustrations/auth-cat.png'
+          src='/assets/illustrations/auth-cat.webp'
           alt='mumu tiger'
           sx={{ py: 1, minHeight: '180px' }}
         />

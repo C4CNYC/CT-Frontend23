@@ -6,7 +6,6 @@ import { CustomBreadcrumbs, EmptyContent, useSettingsContext } from '@/component
 import { StudentDashboardLayout } from '@/layouts/dashboard'
 import { useGetCoursContentQuery } from '@/redux/services/manager/courses-student'
 import { useGetPublicCourseContentQuery } from '@/redux/services/public-student'
-import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import CourseSidebar from '@/sections/course/course-sidebar'
 import CourseInfo from '@/sections/course/CourseInfo'
@@ -21,7 +20,8 @@ CoursePage.getLayout = (page: React.ReactElement) => (
 export default function CoursePage(): React.ReactElement {
   const router = useRouter()
   const { themeStretch } = useSettingsContext()
-  const profile = useSelector((state) => state.global.user)
+  // const profile = useSelector((state) => state.global.user)
+  const profile = null
   const { data: courseContent, isLoading: isContentLoading } = useGetCoursContentQuery(
     {
       id: router.query.id as string,
