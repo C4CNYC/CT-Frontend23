@@ -2,68 +2,37 @@ import { useState } from 'react'
 
 import { Box, IconButton, Stack, Typography } from '@mui/material'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
+import { MdCloudUpload } from '@react-icons/all-files/md/MdCloudUpload'
 import { useRouter } from 'next/router'
 
 import { RHFUploadBox, SingleFilePreview } from '@root/src/components'
-import { PATH_PAGE } from '@root/src/routes/paths'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import CustomLabel from './_components/CustomLabel'
 import NextBtn from './_components/NextBtn'
 import { HELPER_IMG_TEXT, UPLOAD_IMG_BTN } from './constants'
-
+import { useStepperContext } from './stepper-context'
 const LogosStep = () => {
   const translate = useTranslate()
+  const { handleNext } = useStepperContext()
   const { push } = useRouter()
+
   const [uploadedLogo, setUploadedLogo] = useState<null | File>(null)
   const [uploadedLogoMini, setUploadedLogoMini] = useState<null | File>(null)
 
   return (
-    <Stack sx={{ gap: 2 }}>
+    <Stack sx={{ gap: 1 }}>
+      <CustomLabel
+        whiteSpace='nowrap'
+        translationKey='Got a Logo?'
+      />
       <Stack
-        sx={{ flexDirection: 'row', gap: 2, alignItems: 'center', justifyContent: 'space-between' }}
-      >
-        <Box sx={{ position: 'relative' }}>
-          {uploadedLogo ? (
-            <IconButton
-              sx={UPLOAD_IMG_BTN}
-              onClick={() => {
-                setUploadedLogo(null)
-              }}
-            >
-              <IoMdClose size='20px' />
-            </IconButton>
-          ) : null}
-          <RHFUploadBox
-            sx={{ width: '100px', height: '100px' }}
-            name='logo'
-            accept={{
-              'image/*': [],
-            }}
-            onDrop={(files: File[]) => {
-              setUploadedLogo(files[0])
-            }}
-            helperText={
-              <Typography
-                variant='caption'
-                noWrap
-                width='90px'
-                sx={HELPER_IMG_TEXT}
-              >
-                {uploadedLogo?.name}
-              </Typography>
-            }
-          />
-          <SingleFilePreview file={uploadedLogo ? URL.createObjectURL(uploadedLogo) : null} />
-        </Box>
-        <CustomLabel
-          variant='h6'
-          whiteSpace='nowrap'
-          translationKey='Upload logo mini'
-        />
-      </Stack>
-      <Stack
-        sx={{ flexDirection: 'row', gap: 2, alignItems: 'center', justifyContent: 'space-between' }}
+        sx={{
+          flexDirection: 'row',
+          gap: 2,
+          alignItems: 'baseline',
+          justifyContent: 'space-between',
+        }}
       >
         <Box sx={{ position: 'relative' }}>
           {uploadedLogoMini ? (
@@ -77,7 +46,7 @@ const LogosStep = () => {
             </IconButton>
           ) : null}
           <RHFUploadBox
-            sx={{ width: '230px', height: '130px' }}
+            sx={{ width: '120px', height: '120px' }}
             name='logo'
             accept={{
               'image/*': [],
@@ -85,6 +54,12 @@ const LogosStep = () => {
             onDrop={(files: File[]) => {
               setUploadedLogoMini(files[0])
             }}
+            placeholder={
+              <Stack alignItems='center'>
+                <MdCloudUpload size={28} />
+                <Typography variant='button'>{translate('Square Logo')}</Typography>
+              </Stack>
+            }
             helperText={
               <Typography
                 variant='caption'
@@ -101,19 +76,50 @@ const LogosStep = () => {
           />
         </Box>
         <CustomLabel
-          variant='h6'
-          whiteSpace='nowrap'
-          translationKey='Upload logo'
+          variant='caption'
+          translationKey='No larger than 200×200 px and supports PNG, JPG formats.'
         />
       </Stack>
-      <Typography
-        mt={-1}
-        pl={1}
-        variant='subtitle2'
-      >
-        {translate('*All fields are optional')}
-      </Typography>
-      <NextBtn onClick={() => push(PATH_PAGE.pricing)} />
+      <Box sx={{ position: 'relative', maxWidth: 'fit-content', pb: 1 }}>
+        {uploadedLogo ? (
+          <IconButton
+            sx={UPLOAD_IMG_BTN}
+            onClick={() => {
+              setUploadedLogo(null)
+            }}
+          >
+            <IoMdClose size='20px' />
+          </IconButton>
+        ) : null}
+        <RHFUploadBox
+          sx={{ width: '230px', height: '120px' }}
+          name='logo'
+          accept={{
+            'image/*': [],
+          }}
+          onDrop={(files: File[]) => {
+            setUploadedLogo(files[0])
+          }}
+          placeholder={
+            <Stack alignItems='center'>
+              <MdCloudUpload size={28} />
+              <Typography variant='button'>{translate('Rectangle Logo')}</Typography>
+            </Stack>
+          }
+          helperText={
+            <Typography
+              variant='caption'
+              noWrap
+              width='90px'
+              sx={HELPER_IMG_TEXT}
+            >
+              {uploadedLogo?.name}
+            </Typography>
+          }
+        />
+        <SingleFilePreview file={uploadedLogo ? URL.createObjectURL(uploadedLogo) : null} />
+      </Box>
+      <NextBtn onClick={handleNext} />
     </Stack>
   )
 }

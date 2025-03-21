@@ -15,6 +15,7 @@ export interface TenantFormValuesProps {
   subdomain: string
   logo?: File
   logoMini?: File
+  note: string
 }
 
 export enum OrgType {
@@ -54,6 +55,7 @@ export const createLoginSchema = (translate: (key: string) => string) =>
     subdomain: Yup.string().required(translate('required_brand_subdomain')).trim(),
     logo: Yup.string(),
     logoMini: Yup.string(),
+    note: Yup.string(),
   })
 
 export const styledRegisterInput = (theme: Theme, sx?: SxProps): SxProps => ({

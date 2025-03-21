@@ -14,7 +14,7 @@ const OrgInfoStep = () => {
 
   return (
     <Stack sx={{ gap: 3 }}>
-      <CustomLabel translationKey='Add org info org' />
+      <CustomLabel translationKey='Add org info' />
       <RHFSelect
         native
         name='orgType'
@@ -60,7 +60,7 @@ const OrgInfoStep = () => {
           gap: 2,
         }}
       >
-        <Typography>Current student count:</Typography>
+        <Typography>Target number of students:</Typography>
         <RHFTextField
           type='number'
           placeholder='10000'

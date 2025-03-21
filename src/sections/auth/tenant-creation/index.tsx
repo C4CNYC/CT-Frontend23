@@ -13,6 +13,7 @@ import BrandInfoStep from './brand-info-step'
 import { createLoginSchema, TenantFormValuesProps } from './constants'
 import EmailPassStep from './email-pass-step'
 import LogosStep from './logos-step'
+import NoteStep from './note-step'
 import OrgInfoStep from './org-info-step'
 import OwnerStep from './owner-step'
 import { StepperProvider, useStepperContext } from './stepper-context'
@@ -76,6 +77,8 @@ function RenderStep() {
       return <BrandInfoStep />
     case 4:
       return <LogosStep />
+    case 5:
+      return <NoteStep />
     default:
       return <EmailPassStep />
   }
