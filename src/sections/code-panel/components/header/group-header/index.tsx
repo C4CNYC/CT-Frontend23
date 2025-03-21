@@ -68,10 +68,7 @@ const GroupHeader: FC = () => {
   }
 
   return (
-    <Stack
-      sx={STACK_STYLES}
-      direction='row'
-    >
+    <Stack sx={STACK_STYLES}>
       {isFocusMode ? (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar
@@ -84,7 +81,7 @@ const GroupHeader: FC = () => {
 
           <Stack sx={STACK_GROUP_STYLES}>
             <Typography
-              variant='caption'
+              variant='body2'
               sx={GROUP_TITLE_STYLES}
             >
               {translate('code_panel_header_group')}

@@ -486,6 +486,9 @@
     "lessons_practical": "Prática",
     "lessons_exercise": "Exercício",
     "lessons_independent_lesson": "Aula independente",
+    
+    "allows_students_to_create_multiple_files": "Permite que os alunos criem vários arquivos",
+    "lesson_create_multiple_files": "Criar vários arquivos",
     "lessons_type": "Tipo de aula",
     "lessons_type_select_one": "Selecione um",
     "lessons_type_select_one_star": "*",
@@ -889,7 +892,6 @@
     "console_title": "Console",
     "console_tooltip_title": "O que é um console?",
     "console_tooltip_subtitle_1": "É o lugar onde você vê o resultado quando executa Javascript (JS). Porque, na maioria das vezes, o JS roda em segundo plano e faz seus cálculos e respostas lá.",
-    "console_tooltip_subtitle_2": "Somente quando você vincula uma função específica a uma parte específica da página é que você realmente vê o JS modificando a \"página frontal\".",
     "console_clear_button_title": "Limpar console",
     "console_clear_button_subtitle": "Isso apagará todas as mensagens registradas"
     ,    "console_welcome": "",

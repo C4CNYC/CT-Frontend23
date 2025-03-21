@@ -5,6 +5,7 @@ import { FaSchool } from '@react-icons/all-files/fa/FaSchool'
 import { IClass } from '@/redux/interfaces/class.interface'
 import { IUser } from '@/redux/services/interfaces/user.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { isImageURL } from '@/utils/isImageUrl'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { CLASS_AVATAR_SX, CLASS_INFO_WRAPPER, TEACHER_EMOJI_SX } from './constants'
@@ -56,10 +57,10 @@ export default function ClassInfoMain({ classData, teacher }: Props): React.Reac
           </Typography>
           <Avatar
             sx={TEACHER_EMOJI_SX}
-            src={teacher?.avatar ?? ''}
+            src={isImageURL(teacher?.avatar) ? teacher?.avatar : undefined}
             alt={teacher?.first_name ?? 'Teacher avatar'}
           >
-            &#128540;
+            {!isImageURL(teacher?.avatar) ? teacher?.avatar : '&#128540;'}
           </Avatar>
           <Typography
             variant='subtitle2'

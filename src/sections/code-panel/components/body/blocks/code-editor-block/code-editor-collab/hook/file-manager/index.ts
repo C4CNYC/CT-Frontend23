@@ -4,7 +4,8 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { ILesson, LessonType } from '@root/src/redux/interfaces/content.interface'
+import { ILesson } from '@root/src/redux/interfaces/content.interface'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import {
   useGetLessonContentStudentQuery,

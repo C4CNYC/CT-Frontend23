@@ -9,7 +9,6 @@ import type ConfettiType from 'react-confetti/dist/types/Confetti'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { LessonType, type ILesson } from '@/redux/interfaces/content.interface'
 import {
   useGetCourseContentQuery,
   useGetCoursePublicContentQuery,
@@ -32,6 +31,8 @@ import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/compo
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
+import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'

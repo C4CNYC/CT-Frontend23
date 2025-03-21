@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
@@ -21,7 +21,7 @@ interface AddStudentFileModalProps {
 
 interface FormValuesProps {
   fileName: string
-  fileExtension: FileExtension
+  fileExtension: FileExtension | string
 }
 
 const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalProps) => {
@@ -33,6 +33,12 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
+
+  const availableExtensions = useMemo(() => {
+    const alreadyReservedExt = files.map((file) => file.extension.toUpperCase())
+
+    return Object.keys(FileExtension).filter((element) => !alreadyReservedExt.includes(element))
+  }, [files])
 
   const CreateStudentFileSchema = Yup.object().shape({
     fileName: Yup.string()
@@ -61,6 +67,8 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
     },
   })
 
+  const { setValue } = methods
+
   const onAdd = async (data: FormValuesProps) => {
     setIsLoading(true)
 
@@ -77,6 +85,12 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
     enqueueSnackbar(translate('messages_added'))
     setOpenDialog(false)
   }
+
+  useEffect(() => {
+    if (availableExtensions.length) {
+      setValue('fileExtension', availableExtensions[0].toLowerCase())
+    }
+  }, [availableExtensions])
 
   return (
     <>
@@ -123,6 +137,7 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
                   name='fileName'
                   size='small'
                   autoFocus
+                  disabled={!availableExtensions?.length}
                   sx={{
                     mt: 1,
                     color: '#333',
@@ -139,6 +154,7 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
               >
                 <RHFSelect
                   native
+                  disabled={!availableExtensions?.length}
                   label={translate('file_extension_label')}
                   name='fileExtension'
                   size='small'
@@ -149,7 +165,7 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
                     },
                   }}
                 >
-                  {Object.keys(FileExtension).map((t) => (
+                  {availableExtensions?.map((t) => (
                     <option
                       key={FileExtension[t as keyof typeof FileExtension]}
                       value={FileExtension[t as keyof typeof FileExtension]}
@@ -164,6 +180,7 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
               type='submit'
               fullWidth
               loading={isLoading}
+              disabled={!availableExtensions?.length}
               sx={{
                 mt: 3,
                 mb: 3,
