@@ -23,10 +23,3 @@ export const GetTypSx = (theme: Theme): SxProps => ({
   color: theme.palette.text.disabled,
   maxWidth: { md: '300px', lg: '350px', xl: '500px' },
 })
-
-export const getSubtitleSx = (theme: Theme): SxProps => ({
-  textTransform: 'uppercase',
-  fontSize: 8,
-  color: theme.palette.text.disabled,
-  lineHeight: 1,
-})

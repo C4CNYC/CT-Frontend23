@@ -14,8 +14,8 @@ export const useStyles = makeStyles((theme: Theme) => {
       paddingLeft: 4,
       position: 'relative',
       transition: 'border-color .3s',
-      marginLeft: '14px',
-      marginRight: '14px',
+      marginLeft: '8px',
+      marginRight: '2px',
       cursor: 'pointer',
       '&.is-active': {
         border: '2px solid #0198ED',
