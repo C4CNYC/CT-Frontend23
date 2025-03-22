@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  pull_request:
+    branches: "*"
+  push:
+    branches: [prod_v3, stage, dev]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Dependency
+        run: npm install
+      - name: Lint
+        run: npm run lint
