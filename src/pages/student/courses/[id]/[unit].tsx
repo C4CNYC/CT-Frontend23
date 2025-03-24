@@ -15,6 +15,7 @@ import {
   useGetModuleWithLessonsQuery,
   useGetPublicModuleWithLessonsQuery,
 } from '@/redux/services/manager/modules-student'
+import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { getBreadcrumbsSx, getLessonListSx, getPageContainerSx } from '@/sections/module/constants'
 import LessonsList from '@/sections/module/LessonsList'
@@ -22,7 +23,6 @@ import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetPublicCourseContentQuery } from '@root/src/redux/services/public-student'
-import { useSelector } from '@/redux/store'
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
