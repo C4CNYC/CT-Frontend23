@@ -26,6 +26,7 @@
     "@chatscope/chat-ui-kit-react": "^1.10.1",
     "@codemirror/collab": "^6.0.0",
     "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/lang-json": "^6.0.1",
     "@codemirror/language": "^6.8.0",
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",

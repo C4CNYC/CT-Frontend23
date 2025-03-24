@@ -4,7 +4,7 @@ import { UPDATE_COLORS } from '@root/src/sections/code-panel/lib/events/update-c
 import { UPDATE_FONT_SIZE } from '@root/src/sections/code-panel/lib/events/update-font-size.event'
 
 const MOBILE_HEIGHT = 80
-const DESKTOP_HEIGHT = 160
+const DESKTOP_HEIGHT = 120
 
 export const CodeEditorStyles = ({ isDesktop }: { isDesktop: boolean }) => {
   const [color, setColor] = useState()

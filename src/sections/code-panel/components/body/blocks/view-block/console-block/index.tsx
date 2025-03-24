@@ -1,23 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Box, Collapse, IconButton, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, Collapse, IconButton, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
 import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
 import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import { TbPrompt } from '@react-icons/all-files/tb/TbPrompt'
 
-import { useBoolean } from '@root/src/hooks/useBoolean'
 import { isJson } from '@root/src/utils'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { COLLAPSE_BOX_SX, CONSOLE_CONT_SX, CONSOLE_HEADER_SX } from './constants'
+
 const ConsoleBlock = () => {
   const translate = useTranslate()
-
+  const theme = useTheme()
   const [isOpen, setIsOpen] = useState(false)
-  const [openTooltip, setOpenTooltip] = useState(false)
-  const [clearTooltip, clearTooltipOpen, clearTooltipClose] = useBoolean(false)
 
   const ConsoleBoxRef = useRef<HTMLElement>(null)
 
@@ -38,7 +36,15 @@ const ConsoleBlock = () => {
   }, [])
 
   return (
-    <Box sx={CONSOLE_CONT_SX}>
+    <Box
+      sx={{
+        ...CONSOLE_CONT_SX,
+        backgroundColor:
+          theme.palette.mode === 'light'
+            ? theme.palette.common.white
+            : theme.palette.background.paper,
+      }}
+    >
       <Stack
         sx={CONSOLE_HEADER_SX}
         onClick={() => setIsOpen(!isOpen)}
@@ -49,55 +55,43 @@ const ConsoleBlock = () => {
         />
         <Typography sx={{ color: '#C4C4C4', mr: 1 }}>{translate('console_title')}</Typography>
         <Tooltip
-          open={openTooltip}
           componentsProps={{
             tooltip: {
               sx: {
-                p: 3,
-                minWidth: '320px',
+                p: 2,
               },
             },
           }}
+          placement='top'
           title={
             <>
-              <Typography variant='h6'>{translate('console_tooltip_title')}</Typography>
-              <Typography pb={1}>{translate('console_tooltip_subtitle_1')}</Typography>
-              <Typography>{translate('console_tooltip_subtitle_2')}</Typography>
+              <Typography>{translate('console_tooltip_title')}</Typography>
+              <Typography>{translate('console_tooltip_subtitle_1')}</Typography>
             </>
           }
         >
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation()
-              setOpenTooltip(!openTooltip)
-            }}
-            onMouseEnter={() => setOpenTooltip(true)}
-            onMouseLeave={() => setOpenTooltip(false)}
-          >
+          <IconButton disableRipple>
             <LuInfo color='#0198ED' />
           </IconButton>
         </Tooltip>
         {isOpen ? (
           <Tooltip
-            open={clearTooltip}
             componentsProps={{
               tooltip: {
                 sx: {
-                  p: 3,
-                  minWidth: '320px',
+                  p: 2,
                 },
               },
             }}
+            placement='top'
             title={
               <>
                 <Typography variant='h6'>{translate('console_clear_button_title')}</Typography>
-                <Typography pb={1}>{translate('console_clear_button_subtitle')}</Typography>
+                <Typography>{translate('console_clear_button_subtitle')}</Typography>
               </>
             }
           >
             <IconButton
-              onMouseEnter={clearTooltipOpen}
-              onMouseLeave={clearTooltipClose}
               onClick={(e) => {
                 e.stopPropagation()
                 if (ConsoleBoxRef.current === null) return
@@ -119,7 +113,6 @@ const ConsoleBlock = () => {
         >
           {translate('console_welcome')}
           <br />
-          {/* place for console info */}
         </Box>
       </Collapse>
     </Box>

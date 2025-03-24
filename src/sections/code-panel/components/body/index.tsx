@@ -46,6 +46,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
+  const isCenterMode = isBrowserHidden && isInstructionsHidden
 
   const onChangeStreamingDocInfo = (doc: CodeDocument) => {
     try {
@@ -68,6 +69,16 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
     dispatch(toggleBrowser(false))
   }
 
+  const getDisabled = () => {
+    if (isCenterMode) return true
+    return isInstructionsHidden ? [2] : isBrowserHidden ? [3] : false
+  }
+
+  const getVisible = () => {
+    if (isCenterMode) return false
+    return isInstructionsHidden ? [3] : isBrowserHidden ? [2] : true
+  }
+
   if (isDesktop) {
     return (
       <Stack
@@ -77,42 +88,51 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         direction='row'
         id='view_user_code_block'
       >
-        {!isInstructionsHidden ? (
-          <SliderBlock
-            isLoadingLessonContent={isLoadingLessonContent}
-            data={lessonContents}
-            onSubmitChallenge={onSubmitChallenge}
-            onSubmitLesson={onSubmitLesson}
-            integrations={lesson?.integrations ?? []}
-            lessonType={lesson?.type}
-            lessonName={lesson?.name}
-            lessonId={lesson?.id || lessonId}
-          />
-        ) : (
-          <HidedTabBtn
-            title={TAB_TITLES.instructions}
-            icon={<TiDocumentText size={20} />}
-            openPanelFnc={openInstruction}
-          />
-        )}
         <Split
           lineBar
-          disable={isBrowserHidden}
+          disable={getDisabled()}
           style={{
             borderRadius: 3,
-            flexBasis: isInstructionsHidden ? '100%' : '66.6%',
+            width: '100%',
           }}
+          visible={getVisible()}
           renderBar={({ ...props }) => (
             <ResizeDivider
               props={props}
-              isBrowserHidden={isBrowserHidden}
+              isBrowserHidden={isCenterMode}
             />
           )}
         >
           <div
             style={{
-              width: isInstructionsHidden || isBrowserHidden ? '100%' : '56%',
-              minWidth: '49%',
+              width:
+                isCenterMode || isInstructionsHidden ? '34px' : isBrowserHidden ? '44%' : '28%',
+              maxWidth: '40%',
+              minWidth: !isInstructionsHidden ? '26%' : '34px',
+            }}
+          >
+            {!isInstructionsHidden ? (
+              <SliderBlock
+                isLoadingLessonContent={isLoadingLessonContent}
+                data={lessonContents}
+                onSubmitChallenge={onSubmitChallenge}
+                onSubmitLesson={onSubmitLesson}
+                integrations={lesson?.integrations ?? []}
+                lessonType={lesson?.type}
+                lessonName={lesson?.name}
+                lessonId={lesson?.id || lessonId}
+              />
+            ) : (
+              <HidedTabBtn
+                title={TAB_TITLES.instructions}
+                icon={<TiDocumentText size={20} />}
+                openPanelFnc={openInstruction}
+              />
+            )}
+          </div>
+          <div
+            style={{
+              width: isCenterMode ? '100%' : '56%',
               flex: 1,
             }}
           >
@@ -127,8 +147,11 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
           </div>
           <div
             style={{
-              width: !isBrowserHidden ? '40%' : '0%',
-              minWidth: isBrowserHidden ? 30 : '40%',
+              width:
+                isCenterMode || isBrowserHidden ? '28px' : isInstructionsHidden ? '44%' : '26%',
+              maxWidth: '40%',
+              minWidth: !isBrowserHidden ? '20%' : '34px',
+              paddingLeft: isBrowserHidden ? '5px' : 0,
             }}
           >
             {!isBrowserHidden ? (
