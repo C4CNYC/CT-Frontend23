@@ -22,6 +22,7 @@ import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetPublicCourseContentQuery } from '@root/src/redux/services/public-student'
+import { useSelector } from '@/redux/store'
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -34,8 +35,8 @@ export default function ModulePage(): React.ReactElement {
   const { query } = useRouter()
   const [currentModule, setCurrentModule] = useState<IModuleContent>()
   const translate = useTranslate()
-  // const profile = useSelector((state) => state.global.user)
-  const profile = null
+  const profile = useSelector((state) => state.global.user)
+
   const { data: modules, isLoading: isLoadingModules } = useGetStudentCourseModulesQuery(
     { id: query?.id as string },
     { skip: !query?.id || !profile }
