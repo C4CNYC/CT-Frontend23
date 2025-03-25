@@ -11,10 +11,6 @@ import { StudentFile } from '@root/src/redux/services/interfaces/workspace.inter
 import { BASIC_SETUP } from './constants'
 import { language } from './utils'
 
-interface UseBaseInit {
-  defaultFileName: string
-}
-
 export interface UseBaseInitReturn {
   key: number
   streamingDoc?: Text
@@ -26,7 +22,7 @@ export interface UseBaseInitReturn {
   lineWrap: Compartment
 }
 
-export const useInitCodemirror = ({ defaultFileName }: UseBaseInit): UseBaseInitReturn => {
+export const useInitCodemirror = (): UseBaseInitReturn => {
   const [key, setKey] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [streamingDoc, setStreamingDoc] = useState<Text | undefined>()
@@ -34,22 +30,19 @@ export const useInitCodemirror = ({ defaultFileName }: UseBaseInit): UseBaseInit
 
   const lineWrap = useMemo(() => new Compartment(), [])
 
-  const baseInit = useCallback(
-    async (fileName: StudentFile) => {
-      setExtensions([
-        indentUnit.of('\t'),
-        basicSetup(BASIC_SETUP),
-        ...language(fileName),
-        dracula,
-        lineWrap.of(EditorView.lineWrapping),
-      ])
+  const baseInit = useCallback(async (file: StudentFile) => {
+    setExtensions([
+      indentUnit.of('\t'),
+      basicSetup(BASIC_SETUP),
+      ...language(file),
+      dracula,
+      lineWrap.of(EditorView.lineWrapping),
+    ])
 
-      setKey((prev) => ++prev)
-      setIsLoading(false)
-      return
-    },
-    [defaultFileName]
-  )
+    setKey((prev) => ++prev)
+    setIsLoading(false)
+    return
+  }, [])
 
   return {
     key,

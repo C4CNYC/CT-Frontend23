@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useState, useRef, useCallback } from 'react'
+import { type RefObject, useEffect, useState, useRef } from 'react'
 
 import type { Extension } from '@codemirror/state'
 import type { Text } from '@codemirror/state'
@@ -13,7 +13,6 @@ import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 
 export interface UseCodeEditorCollabProps {
   activeFile: StudentFile
-  defaultFileName: string
   preloadedCode?: string
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
@@ -31,19 +30,14 @@ interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' |
 export const useCodeEditorCollab = ({
   activeFile,
   onRoomStatusChanged,
-  defaultFileName,
   preloadedCode,
 }: UseCodeEditorCollabProps): UseCodeEditorCollabReturn => {
-  const firstInit = useRef(true)
-  const initializeBlockedRef = useRef(false)
   const editorView = useRef<EditorView | null>(null)
   const editorRef = useRef<HTMLDivElement | null>(null)
 
   const [roomStatus, setRoomStatus] = useState(RoomStatus.Active)
 
-  const { baseInit, setIsLoading, setStreamingDoc, ...codeMirrorProps } = useInitCodemirror({
-    defaultFileName,
-  })
+  const { baseInit, setIsLoading, setStreamingDoc, ...codeMirrorProps } = useInitCodemirror()
 
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
@@ -53,19 +47,6 @@ export const useCodeEditorCollab = ({
     }
   }
 
-  const runInitOwner = useCallback(
-    async (isFirstInit: boolean): Promise<void> => {
-      firstInit.current = false
-      setRoomStatus(RoomStatus.Active)
-
-      if (!isFirstInit) {
-        await baseInit(activeFile)
-        return
-      }
-    },
-    [activeFile, baseInit]
-  )
-
   useEffect(() => {
     onRoomStatusChanged?.(roomStatus)
   }, [roomStatus, onRoomStatusChanged])
@@ -73,10 +54,10 @@ export const useCodeEditorCollab = ({
   useEffect(() => {
     editorView.current?.destroy()
 
-    if (initializeBlockedRef.current) return
+    setRoomStatus(RoomStatus.Active)
 
-    runInitOwner(firstInit.current)
-  }, [])
+    void baseInit(activeFile)
+  }, [activeFile, baseInit])
 
   return {
     editorRef,

@@ -21,7 +21,6 @@ interface CodeEditorCollabProps {
   isReadOnly?: boolean
   withFileManager?: boolean
   isMultipleExtensionFiles?: boolean
-  defaultFileName?: string
   preloadedCode?: string
   onChangeStreamingDocInfo?: (value: Record<string, string>) => void
   onChangeCodemirrorValue?: (value: string) => void
@@ -34,7 +33,6 @@ let checkSaveTimeout: any | null = null
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
   withFileManager = true,
-  defaultFileName = 'index.html',
   isReadOnly: _isReadOnly = false,
   isMultipleExtensionFiles = false,
   onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
@@ -68,7 +66,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
       ...collabProps,
       activeFile,
       preloadedCode,
-      defaultFileName,
     })
 
   const isEditorReadOnly = useMemo(
