@@ -7,7 +7,13 @@ import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { AVATAR_STYLES, STACK_GROUP_STYLES, STACK_STYLES, TRIBE_NAME_STYLES } from './styles'
+import {
+  AVATAR_STYLES,
+  GROUP_TITLE_STYLES,
+  STACK_GROUP_STYLES,
+  STACK_STYLES,
+  TRIBE_NAME_STYLES,
+} from './styles'
 
 const MAX_TRIBE_NAME_LENGTH = 20
 
@@ -38,9 +44,16 @@ const GroupHeader: FC = () => {
         >
           🤖
         </Avatar>
+
         <Stack sx={STACK_GROUP_STYLES}>
-          <Typography variant='body2'>{translate('code_panel_header_group')}</Typography>
-          <Stack sx={STACK_GROUP_STYLES}>
+          <Typography
+            variant='body2'
+            sx={GROUP_TITLE_STYLES}
+          >
+            {translate('code_panel_header_group')}
+          </Typography>
+
+          <Stack>
             <Tooltip title={groupTitle}>
               <Typography
                 variant='subtitle2'
@@ -50,13 +63,12 @@ const GroupHeader: FC = () => {
               </Typography>
             </Tooltip>
           </Stack>
-
-          <PersonIcon
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-          />
         </Stack>
+        <PersonIcon
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+        />
       </Box>
     </Stack>
   )
