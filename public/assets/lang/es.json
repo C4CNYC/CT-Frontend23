@@ -500,6 +500,8 @@
     "lessons_practical": "Práctica",
     "lessons_exercise": "Ejercicio",
     "lessons_independent_lesson": "Lección independiente",
+    "allows_students_to_create_multiple_files": "Permite a los estudiantes crear varios archivos",
+    "lesson_create_multiple_files": "Crear múltiples archivos",
     "lessons_type": "Tipo de lección",
     "lessons_type_select_one": "Seleccionar uno",
     "lessons_type_select_one_star": "*",

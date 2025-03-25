@@ -243,6 +243,7 @@ export default function LessonCard({
             type: lesson.type,
             duration: lesson.duration,
             slug: lesson.slug,
+            meta: lesson.meta,
           }}
           refetch={refetch}
         >

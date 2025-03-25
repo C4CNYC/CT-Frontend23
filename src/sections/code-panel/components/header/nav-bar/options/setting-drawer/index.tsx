@@ -44,7 +44,10 @@ const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.Re
           setDrawer(true)
         }}
       >
-        <IoSettingsOutline style={{ color: iconColor }} />
+        <IoSettingsOutline
+          style={{ color: iconColor }}
+          size={21}
+        />
       </IconButton>
       <SwipeableDrawer
         swipeAreaWidth={0}

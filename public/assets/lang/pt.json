@@ -499,6 +499,9 @@
     "lessons_practical": "Prática",
     "lessons_exercise": "Exercício",
     "lessons_independent_lesson": "Aula independente",
+    
+    "allows_students_to_create_multiple_files": "Permite que os alunos criem vários arquivos",
+    "lesson_create_multiple_files": "Criar vários arquivos",
     "lessons_type": "Tipo de aula",
     "lessons_type_select_one": "Selecione um",
     "lessons_type_select_one_star": "*",

@@ -1,5 +1,5 @@
 import { Unit } from '@/redux/interfaces/challenges.interface'
-import { LessonType } from '@/redux/interfaces/content.interface'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 
 export function getNextLessonId(
   courseContent: Unit[],

@@ -137,6 +137,7 @@ export default function ModuleLessonItem({ onRemove, index, lesson }: Props): Re
                   type: lesson.type,
                   duration: lesson.duration,
                   slug: lesson.slug,
+                  meta: lesson?.meta,
                 }}
               >
                 <IconButton>
