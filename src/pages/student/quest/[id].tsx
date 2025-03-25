@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { Container, Link, Skeleton, SxProps, Theme, useTheme } from '@mui/material'
 import { FaArrowRightLong } from '@react-icons/all-files/fa6/FaArrowRightLong'
@@ -23,6 +23,7 @@ import QuestHeader from '@/sections/quest/QuestHeader'
 import QuestMain from '@/sections/quest/QuestMain'
 import QuestRating from '@/sections/quest/QuestRating'
 import { useTranslate } from '@/utils/translateHelper'
+import { isJson } from '@root/src/utils'
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -32,6 +33,7 @@ export default function Quest(): React.ReactElement | null {
   const { query } = useRouter()
   const theme = useTheme()
   const { themeStretch } = useSettingsContext()
+  const [hasContent, setHasContent] = useState(false)
   const containerSx = useMemo(() => getContainerSx(theme), [theme])
   const skeletonSx = useMemo(() => getSkeletonSx(theme), [theme])
   const profile = useSelector((state: any) => state.global.user)
@@ -60,6 +62,17 @@ export default function Quest(): React.ReactElement | null {
     },
     { skip: !query.schoolId }
   )
+
+  useEffect(() => {
+    if (data) {
+      if (isJson(data.description)) {
+        let content = JSON.parse(data.description)?.doc?.content
+        setHasContent(content?.some((el: any) => el.content) || false)
+      } else {
+        setHasContent(data?.description ? true : false)
+      }
+    }
+  }, [data])
 
   if (isLoading || !data) {
     return (

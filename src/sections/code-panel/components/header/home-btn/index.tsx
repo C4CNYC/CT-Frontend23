@@ -1,5 +1,5 @@
 import { Link } from '@mui/material'
-import { IoHomeOutline } from '@react-icons/all-files/io5/IoHomeOutline'
+import { BiHomeAlt2 } from '@react-icons/all-files/bi/BiHomeAlt2'
 import NextLink from 'next/link'
 
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -11,7 +11,7 @@ function HomeBtn() {
       href={STUDENT_PATH_DASHBOARD.class.root}
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'GrayText' }}
     >
-      <IoHomeOutline size={26} />
+      <BiHomeAlt2 size={22} />
     </Link>
   )
 }
