@@ -38,6 +38,9 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({ open, onCl
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
+  let solutionClean = document.createElement('div')
+  solutionClean.innerHTML = solutionCode ?? translate('no_solution')
+
   const userCode = useSelector((state) => state.codePanelGlobal.code)
 
   const dialogPaperProps = useMemo(

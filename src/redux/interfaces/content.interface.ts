@@ -2,8 +2,10 @@ import { Unit } from '@/redux/interfaces/challenges.interface'
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { ILesson } from '../services/interfaces/lesson.interface'
 
 import { IIntegration } from './integration.interface'
+export type { ILesson }
 
 export interface ICourseElement {
   id: string
@@ -75,28 +77,6 @@ export interface IModuleContent {
   teacher_slides?: string
   lesson_plans?: string
   teacher_forum?: string
-}
-
-export enum LessonType {
-  PRACTICAL = 'practical',
-  EXERCISE = 'exercise',
-}
-
-export interface ILesson {
-  active: boolean
-  draft: boolean
-  name: string
-  description: string
-  integrations: Array<IIntegration & BaseResponseInterface>
-  id: string
-  tips: string[] | []
-  progress: number | null
-  skills: ISkill[]
-  independent?: boolean
-  contents?: ILessonContent[]
-  type: LessonType
-  slug: string
-  duration: Duration
 }
 
 export interface ILessonCurrent {

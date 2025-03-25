@@ -27,6 +27,7 @@ import { ISkill } from '@/redux/interfaces/content.interface'
 import { useUpdateAssignmentMutation } from '@/redux/services/manager/assignments-manager'
 import SkillsAutocomplete from '@/sections/main/quests/add-quest/components/SkillsAutocomplete'
 import { useTranslate } from '@/utils/translateHelper'
+import { isJson } from '@root/src/utils/isJson'
 
 interface IAssignmentDarawerProps {
   openDetails: boolean
@@ -53,7 +54,9 @@ export default function AssignmentDrawer({
     mode: 'all',
     defaultValues: {
       name: assignment.name,
-      description: JSON.parse(assignment.description),
+      description: isJson(assignment?.description)
+        ? JSON.parse(assignment?.description)
+        : assignment?.description ?? '',
       startDate: format(DATE_PARSER(assignment.start_date), DATE_FORMAT),
       dueDate: format(DATE_PARSER(assignment.end_date), DATE_FORMAT),
       closeDate: format(DATE_PARSER(assignment.close_date), DATE_FORMAT),
@@ -69,7 +72,7 @@ export default function AssignmentDrawer({
         start_date: format(DATE_PARSER(formData.startDate), DATE_FORMAT),
         end_date: format(DATE_PARSER(formData.dueDate), DATE_FORMAT),
         close_date: format(DATE_PARSER(formData.closeDate), DATE_FORMAT),
-        description: JSON.stringify(formData.description),
+        description: formData.description,
         name: formData.name,
         active: formData.active,
       }).unwrap()
