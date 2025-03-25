@@ -27,7 +27,7 @@ export const getBoxProps = (theme: Theme, isVisible: boolean) => ({
 
 export const getSpeedDealFabProps = (isSpeedDeal: boolean): Partial<FabProps> => ({
   sx: {
-    width: '40px!important',
+    width: '40px',
     height: '40px',
     opacity: isSpeedDeal ? 1 : 0.5,
     background: '#155275',
