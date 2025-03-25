@@ -66,6 +66,7 @@ const reducer = (state: AuthStateType, action: ActionsType): AuthStateType => {
     case Types.REGISTER:
       return {
         ...state,
+        isAuthenticated: true,
         user: action.payload.user,
       }
     case Types.REGISTER_TO_ORGANIZATION:

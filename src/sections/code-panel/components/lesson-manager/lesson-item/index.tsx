@@ -28,7 +28,7 @@ interface ILessonItem {
 
 const MAX_TEXT_LENGTH = 39
 
-const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
+export const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
 
@@ -72,6 +72,7 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
                   onClick(lesson.id, module.id)
                   onClose()
                 }}
+                style={{ pointerEvents: 'none' }}
                 sx={getButtonSx(lesson.id === currentLessonId, theme.palette.mode === 'light')}
               >
                 <Box display='flex'>
@@ -92,5 +93,3 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
     </Stack>
   )
 }
-
-export default LessonItem

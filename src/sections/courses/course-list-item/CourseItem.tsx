@@ -11,7 +11,6 @@ import { useTranslate } from '@/utils/translateHelper'
 
 import CourseAvatar from './CourseAvarar'
 import CourseButtons from './CourseButtons'
-import CourseChip from './CourseChip'
 import CourseHeader from './CourseHeader'
 import CourseInfo from './CourseInfo'
 import CourseStatistics from './CourseStatistics'
@@ -25,10 +24,12 @@ const MAX_DESCRIPTION_LENGTH = 80
 export default function CoursesItem({ course }: Props): React.ReactElement {
   const { push } = useRouter()
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const isLight = theme.palette.mode === 'light'
-  const [open, setOpen] = useState(false)
   const translate = useTranslate()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const [open, setOpen] = useState(false)
+
+  const isLight = theme.palette.mode === 'light'
 
   const redirect = (): void => {
     push(`${STUDENT_PATH_DASHBOARD.courses.course(course.id)}`)
@@ -86,27 +87,6 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
               : course.description}
           </Typography>
           <Collapse in={open}>
-            <Stack
-              direction='row'
-              sx={{
-                gap: '15px',
-                flexWrap: 'wrap',
-                mt: '25px',
-                mb: {
-                  xs: '10px',
-                  sm: '15px',
-                  md: '15px',
-                },
-              }}
-            >
-              {['HTML', 'CSS', 'BASICS', 'AUTO-CHECKED'].map((el) => (
-                <CourseChip
-                  text={el}
-                  key={el}
-                  isLight={isLight}
-                />
-              ))}
-            </Stack>
             <CourseStatistics
               likesCount={course.initial_likes + parseInt(course.likes_count ?? '0')}
               enrolledCount={course.initial_enrolled}

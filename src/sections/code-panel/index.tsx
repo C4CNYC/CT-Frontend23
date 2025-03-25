@@ -9,7 +9,6 @@ import type ConfettiType from 'react-confetti/dist/types/Confetti'
 import { useDispatch } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
-import { LessonType, type ILesson } from '@/redux/interfaces/content.interface'
 import {
   useGetCourseContentQuery,
   useGetCoursePublicContentQuery,
@@ -28,11 +27,12 @@ import {
 } from '@/redux/slices/code-panel-global'
 import { type RootState, useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-// import CodePanelBody from '@/sections/code-panel/components/body'
 import SkeletonCodePanel, { CPTopBarSkeleton } from '@/sections/code-panel/components/skeleton'
 import { getNextLessonId } from '@/sections/code-panel/lib/utils/navigation'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
+import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
@@ -226,8 +226,10 @@ export default function CodePanelLayout(): ReactElement | null {
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
-    if (window.gtag) {
-      window.gtag('event', 'Lesson_Completed', {
+
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'Lesson_Completed',
         event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unit_id} > Training (Lesson) ${router.query.lessonId}`,
         event_label: lessonContentId,
       })
@@ -250,7 +252,7 @@ export default function CodePanelLayout(): ReactElement | null {
         if (
           nextLessonInfo.type === LessonType.PRACTICAL &&
           !nextLessonInfo.isIndependent &&
-          lesson?.type === LessonType.PRACTICAL
+          lesson
         ) {
           await carryOverFiles({
             lessonId: nextLessonInfo.lessonId as string,

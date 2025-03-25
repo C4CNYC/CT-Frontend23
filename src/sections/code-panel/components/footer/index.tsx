@@ -4,7 +4,7 @@ import { Button } from '@mui/material'
 import { Stack } from '@mui/system'
 import dynamic from 'next/dynamic'
 
-import LessonManager from '../lesson-manager'
+import { LessonManager } from '../lesson-manager'
 
 import LessonFeedback from './lesson-feedback/LessonFeedback'
 import type { MenuProps } from './menu'
