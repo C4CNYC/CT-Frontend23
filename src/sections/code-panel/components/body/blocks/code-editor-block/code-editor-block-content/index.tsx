@@ -11,7 +11,6 @@ import { setRoom } from '@/redux/slices/code-editor-controller'
 import { useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
-import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { EditorMode } from '../code-editor-collab/hook/constants'
 import CodeEditorController from '../code-editor-controller'
@@ -50,7 +49,6 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
   const { query } = useRouter()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
-  const translate = useTranslate()
 
   const codeRef = useRef(code)
   const openPopoverTimer = useRef<NodeJS.Timeout | null>(null)
