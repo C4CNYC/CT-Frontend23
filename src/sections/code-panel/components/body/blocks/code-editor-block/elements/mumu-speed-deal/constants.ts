@@ -17,9 +17,8 @@ export const SPEED_DEAL_ACTION_FAB_PROPS = {
 
 export const getBoxProps = (theme: Theme, isVisible: boolean) => ({
   display: 'flex',
-  width: '60px',
-  height: '60px',
-  pr: '20px',
+  width: '36px',
+  height: '36px',
   background: isVisible
     ? `top 0 ${theme.direction !== 'rtl' ? 'left' : 'right'} -2px / cover no-repeat url(/assets/code-panel/mumu.webp)`
     : 'transparent',
@@ -28,6 +27,8 @@ export const getBoxProps = (theme: Theme, isVisible: boolean) => ({
 
 export const getSpeedDealFabProps = (isSpeedDeal: boolean): Partial<FabProps> => ({
   sx: {
+    width: '40px!important',
+    height: '40px',
     opacity: isSpeedDeal ? 1 : 0.5,
     background: '#155275',
     boxShadow: 'none',
@@ -40,9 +41,10 @@ export const getSpeedDealFabProps = (isSpeedDeal: boolean): Partial<FabProps> =>
 
 export const getSpeedDealStyles = (isDesktop: boolean): SxProps<Theme> => ({
   position: 'absolute',
-  bottom: isDesktop ? 20 : 50,
+  bottom: isDesktop ? 15 : 50,
   right: 8,
   '& .MuiSpeedDial-actions': {
     gap: 0,
+    mb: '-38px',
   },
 })
