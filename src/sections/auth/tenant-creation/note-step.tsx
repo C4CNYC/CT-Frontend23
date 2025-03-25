@@ -6,6 +6,7 @@ import { RHFTextField } from '@root/src/components'
 
 import CustomLabel from './_components/CustomLabel'
 import NextBtn from './_components/NextBtn'
+import SkipBtn from './_components/SkipBtn'
 import { styledRegisterInput } from './constants'
 
 const NoteStep = () => {
@@ -29,6 +30,7 @@ const NoteStep = () => {
       />
 
       <NextBtn onClick={() => {}} />
+      <SkipBtn onClick={() => {}} />
     </Stack>
   )
 }

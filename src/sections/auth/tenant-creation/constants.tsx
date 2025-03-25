@@ -28,6 +28,7 @@ export enum OrgType {
   UNIVERSITY = 'University',
   OTHER = 'Other',
 }
+export const STEPS = ['owner', 'ownerInfo', 'orgInfo', 'brandInfo', 'logos', 'note']
 
 export const createLoginSchema = (translate: (key: string) => string) =>
   Yup.object().shape({
@@ -89,6 +90,18 @@ export const SUBMIT_BTN_SX = {
     background: '#43D4DD80',
     color: '#2FAAB3',
     boxShadow: '0px 2px 14px rgba(67, 212, 221, 0.6)',
+  },
+}
+
+export const SKIP_BTN_SX = {
+  color: '#43D4DD',
+  width: '100%',
+  padding: '0 15px',
+  maxWidth: '100px',
+  m: '-8px auto 0',
+  '&:hover': {
+    background: 'none',
+    color: '#2FAAB3',
   },
 }
 

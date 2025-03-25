@@ -5,6 +5,7 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 
 import CustomLabel from './_components/CustomLabel'
 import NextBtn from './_components/NextBtn'
+import SkipBtn from './_components/SkipBtn'
 import { OrgType, styledRegisterInput } from './constants'
 import { useStepperContext } from './stepper-context'
 
@@ -69,6 +70,10 @@ const OrgInfoStep = () => {
         />
       </Stack>
       <NextBtn
+        onClick={handleValidation}
+        disabled={isError}
+      />
+      <SkipBtn
         onClick={handleValidation}
         disabled={isError}
       />

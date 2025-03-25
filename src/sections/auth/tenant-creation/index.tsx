@@ -9,6 +9,7 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import { SingLink } from '../../on-boarding-register/links'
 
 import BackBtn from './_components/BackBtn'
+import RegStepper from './_components/RegStepper'
 import BrandInfoStep from './brand-info-step'
 import { createLoginSchema, TenantFormValuesProps } from './constants'
 import EmailPassStep from './email-pass-step'
@@ -39,6 +40,7 @@ export default function TenantCreation() {
         errors={methods.formState.errors}
         trigger={methods.trigger}
       >
+        <RegStepper />
         <BackBtn />
         <Stack
           sx={{
