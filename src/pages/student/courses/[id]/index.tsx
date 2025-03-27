@@ -51,7 +51,9 @@ export default function CoursePage(): React.ReactElement {
       })
 
       // Sum up all lesson.progress values (default to 0 if not set)
-      const totalProgress = updatedLessons.reduce((sum, lesson) => sum + (lesson.progress || 0), 0)
+      const totalProgress =
+        updatedLessons.reduce((sum, lesson) => sum + (lesson.progress || 0), 0) /
+        (updatedLessons.length || 1)
 
       return {
         ...unit,
