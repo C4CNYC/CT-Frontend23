@@ -35,3 +35,8 @@ export interface ILesson {
   tips: string[] | []
   type: LessonType
 }
+
+export interface IStudentProgress {
+  lessonId: string
+  numberOfCompletedChallenges: number
+}
