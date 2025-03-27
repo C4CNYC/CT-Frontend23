@@ -128,7 +128,7 @@ export default function ModulePage(): React.ReactElement {
                 sx={{ width: '100%', height: '280px', minWidth: '410px' }}
               />
             )}
-            {true ? (
+            {unitModule ? (
               <LessonsList
                 lessons={unitModule?.lessons ?? []}
                 unitId={query?.unit as string}
