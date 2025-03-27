@@ -19,6 +19,13 @@ export const OVERLAY_WRAPPER_SX = {
   gap: 1,
 }
 
+export const GROUP_TITLE_STYLES = {
+  color: '#A6A6A6',
+  mb: -0.5,
+  textTransform: 'uppercase',
+  fontSize: 8,
+}
+
 export const OVERLAY_AVATAR_SX = {
   border: '2px solid #FBDD3F',
   background: '#0198ED',
@@ -35,7 +42,6 @@ export const AVATAR_STYLES = {
 
 export const STACK_GROUP_STYLES = {
   pl: 2,
-  pr: 4,
   width: { md: '150px', lg: '200px' },
 }
 

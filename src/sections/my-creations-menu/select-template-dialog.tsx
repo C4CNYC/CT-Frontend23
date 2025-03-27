@@ -16,7 +16,7 @@ import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useRouter } from 'next/router'
 
 import { useSnackbar } from '@root/src/components'
-import { useBoolean } from '@root/src/hooks/useBoolean'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import { ILesson, ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import {
   useCloneLessonMutation,
@@ -45,7 +45,7 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
   const { enqueueSnackbar } = useSnackbar()
 
   const [selectedTemplate, selectedTemplateSet] = useState<string | null>(null)
-  const [dialogopen, dialogopenOpen, dialogopenClose] = useBoolean(isForceOpen ? true : false)
+  const { value: dialogOpen, onTrue: dialogOpenOpen, onFalse: dialogOpenClose } = useBoolean(false)
 
   const [cloneLesson] = useCloneLessonMutation()
 
@@ -54,7 +54,7 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
       entityType: 'lesson',
       propertyName: 'LessonTemplate',
     },
-    { skip: !dialogopen }
+    { skip: !dialogOpen }
   )
 
   const { data: aiTemplates } = useGetLessonsByIdsQuery(
@@ -75,31 +75,31 @@ export function SelectTemplateDialog({ children, isForceOpen }: Props): React.Re
           shallow: true,
         }
       )
-      dialogopenClose()
+      dialogOpenClose()
     })
 
     return
   }
 
   useEffect(() => {
-    if (isForceOpen) dialogopenOpen()
+    if (isForceOpen) dialogOpenOpen()
   }, [isForceOpen])
 
   return (
     <>
-      {children ? <Box onClick={dialogopenOpen}>{children}</Box> : null}
-      {dialogopen ? (
+      {children ? <Box onClick={dialogOpenOpen}>{children}</Box> : null}
+      {dialogOpen ? (
         <Dialog
-          open={dialogopen}
+          open={dialogOpen}
           fullWidth
           maxWidth='sm'
-          onClose={dialogopenClose}
+          onClose={dialogOpenClose}
         >
           <DialogTitle sx={{ color: '#616161' }}>
             <Typography variant='h4'>{translate('lessons_create_lesson')}</Typography>
 
             <IconButton
-              onClick={dialogopenClose}
+              onClick={dialogOpenClose}
               sx={{ position: 'absolute', right: '5px', top: '5px' }}
             >
               <IoClose size={22} />

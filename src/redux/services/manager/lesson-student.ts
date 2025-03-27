@@ -10,6 +10,8 @@ import {
 import { ContentValidation, setContentValidations } from '@/redux/slices/code-panel-global'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { IStudentProgress } from '../interfaces/lesson.interface'
+
 import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
@@ -34,6 +36,13 @@ const extendedApi = managerApi.injectEndpoints({
           dispatch(setContentValidations(mutatedData))
         } catch (err) {}
       },
+    }),
+    getStudentProgress: builder.query<IStudentProgress[], undefined>({
+      query: () => ({
+        url: `/student/progress/lessons`,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 360,
     }),
     getContentCheckers: builder.query<
       BaseResponseInterface & { completed_chalanges: ILessonContent[] },
@@ -146,6 +155,7 @@ export const {
   useGetLessonStudentQuery,
   useGetLessonsListStudentQuery,
   useGetStudentLastVisitedUnitAndLessonQuery,
+  useGetStudentProgressQuery,
   useGetContentCheckersQuery,
   useGetStudentLastVisitedSlideQuery,
   // -------------mutation-----------

@@ -1,5 +1,4 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
-import type { Socket } from 'socket.io-client'
 
 import { ILessonUserStatus } from '@/types'
 import { IValidationMap } from '@/utils'
@@ -18,9 +17,7 @@ export interface IGlobalCodePanel {
   code: string
   isInstructionsHidden: boolean
   isBrowserHidden: boolean
-  isRealtimeCodeHidden: boolean
   usersStatus: ILessonUserStatus[]
-  socket?: Socket | undefined
   contentValidations?: ContentValidation[]
   prevLessonId?: string | null
   prevLessonCode?: string | null | undefined
@@ -38,9 +35,7 @@ const initialState: IGlobalCodePanel = {
   code: '',
   isInstructionsHidden: false,
   isBrowserHidden: false,
-  isRealtimeCodeHidden: true,
   usersStatus: [],
-  socket: undefined,
   contentValidations: [],
   prevLessonId: null,
   prevLessonCode: null,
@@ -102,20 +97,11 @@ export const codePanelSlice = createSlice({
     ): void => {
       state.isBrowserHidden = payload
     },
-    toggleRealtimeCodeHidden: (
-      state,
-      { payload }: PayloadAction<PickedStoreItem<'isRealtimeCodeHidden'>>
-    ) => {
-      state.isRealtimeCodeHidden = payload
-    },
     setCode: (state, action: PayloadAction<string>) => {
       state.code = action.payload
     },
     setUsersStatus: (state, action: PayloadAction<ILessonUserStatus[]>) => {
       state.usersStatus = action.payload
-    },
-    setSocket: (state, action: PayloadAction<Socket | undefined>) => {
-      state.socket = action.payload as any
     },
     increaceAnimationNumber: (state, action: PayloadAction<number>) => {
       state.animationNumber = action.payload
@@ -136,10 +122,8 @@ export const {
   setLessonId,
   toggleInstrations,
   toggleBrowser,
-  toggleRealtimeCodeHidden,
   setCode,
   setUsersStatus,
-  setSocket,
   setContentValidations,
   setPrevLessonId,
   setPrevLessonCode,
