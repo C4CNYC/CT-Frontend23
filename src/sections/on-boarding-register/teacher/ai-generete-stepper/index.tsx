@@ -128,7 +128,7 @@ export default function AIGenerateStepper({
           localStorage.removeItem('AiGenerateLessonData')
           if (closeModal) closeModal()
           push(
-            `${STUDENT_PATH_DASHBOARD.myLessons}?${new URLSearchParams({ lessonId: payload.id ?? '' })}`,
+            `${STUDENT_PATH_DASHBOARD.codePanel.root}?${new URLSearchParams({ lessonId: payload.id ?? '' })}`,
             undefined,
             {
               shallow: true,
