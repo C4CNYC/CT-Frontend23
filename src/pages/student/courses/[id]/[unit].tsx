@@ -40,7 +40,8 @@ export default function ModulePage(): React.ReactElement {
 
   const unitModule = useMemo(() => {
     let data = publicCourse
-    if (!studentProgress || !data || !data?.units) return
+    if (!data || !data?.units) return null
+    if (!studentProgress) return data.units.find((m) => m.id === query.unit)
     const updatedUnits = data.units.map((unit) => {
       const updatedLessons = unit.lessons.map((lesson) => {
         const progress = studentProgress.find((p) => p.lessonId === lesson.id)

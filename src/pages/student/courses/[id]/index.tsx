@@ -35,7 +35,7 @@ export default function CoursePage(): React.ReactElement {
   // Merge student progress with course content
   const data = useMemo(() => {
     let data = publicContent
-    if (!studentProgress || !data || !data?.units) return
+    if (!studentProgress || !data || !data?.units) return publicContent
     const updatedUnits = data.units.map((unit) => {
       const updatedLessons = unit.lessons.map((lesson) => {
         const progress = studentProgress.find((p) => p.lessonId === lesson.id)
