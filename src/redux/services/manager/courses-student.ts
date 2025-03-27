@@ -20,7 +20,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'GET',
         params,
       }),
-      keepUnusedDataFor: 0,
+      keepUnusedDataFor: 600,
       providesTags: ['Courses'],
     }),
     getCours: builder.query<ICourseElement & BaseResponseInterface, { id: string }>({
@@ -28,7 +28,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/student/course/${id}`,
         method: 'GET',
       }),
-      keepUnusedDataFor: 0,
+      keepUnusedDataFor: 600,
       providesTags: ['Courses'],
     }),
     getCoursContent: builder.query<ICourseContent & BaseResponseInterface, { id: string }>({
@@ -36,7 +36,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/student/course/${id}/content`,
         method: 'GET',
       }),
-      keepUnusedDataFor: 0,
+      keepUnusedDataFor: 600,
       providesTags: ['Courses'],
     }),
     getCourseContentList: builder.query<
