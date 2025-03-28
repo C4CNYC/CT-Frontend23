@@ -826,8 +826,8 @@
     "lesson_setup_settings": "LESSON SETUP & SETTINGS",
     "slide_add": "ADD SLIDE",
     "slide_add_blank": "New Blank Slide",
-    "slide_add_normal": "Use Normal Template",
-    "slide_add_html": "Use HTML Template",
+    "slide_add_normal": "Standard Templates",
+    "slide_add_html": "HTML Templates",
     "slide_add_prompt_ai": "Prompt with AI",
     "slide_add_ai_templates": "AI Templates",
     "slide_content_updated": "Content updated",
@@ -1211,5 +1211,6 @@
     "intro_tour_step_6_mobile_subtitle": "See where you are in the Module 🤷🏾‍♂️ and easily go back and review previous lessons. 👀 😉",
     "intro_tour_step_7_mobile_title": "Most important: Have fun! 🤪",
     "intro_tour_step_7_mobile_subtitle": "And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?",
-    "intro_tour_step_7_mobile_btn": "Leave feedback"
+    "intro_tour_step_7_mobile_btn": "Leave feedback",
+    "lessons_language_select": "Select Programming language"
   }
