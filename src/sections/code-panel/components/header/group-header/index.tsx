@@ -1,20 +1,12 @@
-import { useCallback, type FC } from 'react'
+import { type FC } from 'react'
 
 import { Avatar, Box, Stack, Tooltip, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
 
 import PersonIcon from '@/assets/icons/PersonIcon'
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { setRoom } from '@/redux/slices/code-editor-controller'
-import { toggleRealtimeCodeHidden } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { EditorMode } from '../../body/blocks/code-editor-block/code-editor-collab/hook/constants'
-
-import CustomSwitch from './custom-switch'
-import FocusOverlay from './FocusOverlay'
 import {
   AVATAR_STYLES,
   GROUP_TITLE_STYLES,
@@ -27,34 +19,9 @@ const MAX_TRIBE_NAME_LENGTH = 20
 
 const GroupHeader: FC = () => {
   const translate = useTranslate()
-
-  const { query } = useRouter()
-  const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
 
-  const user = useSelector((state) => state.global.user)
   const tribe = useSelector((state) => state.codePanel.class)
-  const room = useSelector((state) => state.codeEditorController.room)
-  const rootSocket = useSelector((state) => state.codePanelGlobal.socket)
-  const isRealtimeCodeHidden = useSelector((state) => state.codePanelGlobal.isRealtimeCodeHidden)
-
-  const resetRoom = useCallback(() => {
-    if (rootSocket) {
-      rootSocket?.emit('leaveRoom', room?.roomId?.split('_')[1])
-    }
-    return dispatch(
-      setRoom({
-        roomId: `${user?.student_profile?.id ?? ''}_${query?.lessonId as string}`,
-        mode: EditorMode.Owner,
-      })
-    )
-  }, [dispatch, user, query?.lessonId, rootSocket, room])
-
-  const onChange = () => {
-    dispatch(toggleRealtimeCodeHidden(!isRealtimeCodeHidden))
-  }
-
-  const isFocusMode = room == null || room.mode === EditorMode.Owner || room.mode == null
 
   const groupTitle =
     tribe && tribe.name.length > MAX_TRIBE_NAME_LENGTH ? (
@@ -69,24 +36,24 @@ const GroupHeader: FC = () => {
 
   return (
     <Stack sx={STACK_STYLES}>
-      {isFocusMode ? (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar
-            alt='avatar'
-            src={tribe?.avatar ?? ''}
-            sx={AVATAR_STYLES}
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Avatar
+          alt='avatar'
+          src={tribe?.avatar ?? ''}
+          sx={AVATAR_STYLES}
+        >
+          🤖
+        </Avatar>
+
+        <Stack sx={STACK_GROUP_STYLES}>
+          <Typography
+            variant='body2'
+            sx={GROUP_TITLE_STYLES}
           >
-            🤖
-          </Avatar>
+            {translate('code_panel_header_group')}
+          </Typography>
 
-          <Stack sx={STACK_GROUP_STYLES}>
-            <Typography
-              variant='body2'
-              sx={GROUP_TITLE_STYLES}
-            >
-              {translate('code_panel_header_group')}
-            </Typography>
-
+          <Stack>
             <Tooltip title={groupTitle}>
               <Typography
                 variant='subtitle2'
@@ -96,27 +63,13 @@ const GroupHeader: FC = () => {
               </Typography>
             </Tooltip>
           </Stack>
-
-          <PersonIcon
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-          />
-        </Box>
-      ) : (
-        <FocusOverlay
-          title={room?.cursorText ?? ''}
-          resetRoom={resetRoom}
-          avatar={room?.avatar}
+        </Stack>
+        <PersonIcon
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
         />
-      )}
-
-      {user?.role !== 'student' && (
-        <CustomSwitch
-          isActive={!isRealtimeCodeHidden}
-          onChange={onChange}
-        />
-      )}
+      </Box>
     </Stack>
   )
 }

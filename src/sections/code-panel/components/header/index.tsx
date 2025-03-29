@@ -54,7 +54,8 @@ const getBoxStyles = (isDesktop: boolean): SxProps => ({
   justifyContent: 'space-between',
   alignItems: 'center',
   height: isDesktop ? '38px' : '',
-  px: '24px',
+  pr: '24px',
+  pl: '16px',
 })
 
 export default TopPanel
