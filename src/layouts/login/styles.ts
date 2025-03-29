@@ -1,3 +1,4 @@
+import { Link } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 import { bgBlur } from '@/utils'
@@ -70,4 +71,14 @@ export const StyledSwitcher = styled('div')(() => ({
   right: '0',
   padding: '10px 10px 0 0',
   alignSelf: 'flex-start',
+}))
+
+export const StyledLink = styled(Link)(({ theme }) => ({
+  position: 'absolute',
+  bottom: '10px',
+  color: theme.palette.text.secondary,
+  right: 'calc(50% - 280px)',
+  [theme.breakpoints.down('md')]: {
+    right: 'calc(50% - 35px)',
+  },
 }))
