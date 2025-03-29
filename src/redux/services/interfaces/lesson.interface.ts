@@ -34,6 +34,7 @@ export interface ILesson {
   skills: ISkill[]
   tips: string[] | []
   type: LessonType
+  userId?: string
 }
 
 export interface IStudentProgress {
