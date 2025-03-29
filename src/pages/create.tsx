@@ -4,19 +4,19 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import { useRouter } from 'next/router'
 
-import { useBoolean } from '../hooks/useBoolean'
-import { useTenants } from '../hooks/useTenants'
-import { HomePageType } from '../redux/services/enums/administration.enum'
-import { useGetOrgHomePageQuery } from '../redux/services/public/tribe-public'
-import { PATH_AUTH } from '../routes/paths'
-import { STUDENT_PATH_DASHBOARD } from '../routes/student.paths'
-import AIGenerateStepper from '../sections/on-boarding-register/teacher/ai-generete-stepper'
+import { useBoolean } from '@root/src/hooks/use-boolean'
+import { useTenants } from '@root/src/hooks/useTenants'
+import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
+import { useGetOrgHomePageQuery } from '@root/src/redux/services/public/tribe-public'
+import { PATH_AUTH } from '@root/src/routes/paths'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
+import AIGenerateStepper from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper'
 
 export default function AiGeneratePage(): React.ReactElement {
   const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
   const [prompt, promptSet] = useState('')
-  const [open, setOpen, setClose] = useBoolean(false)
+  const { value: open, onTrue: setOpen, onFalse: setClose } = useBoolean(false)
   const [page, setPage] = useState<string>('')
   const tenant = useTenants()
 

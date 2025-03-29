@@ -1218,5 +1218,6 @@
     "to_payment_dialog_text_3_1": "free",
     "to_payment_dialog_text_3_2": "for 14 days",
     "to_payment_dialog_btn_1": "Start trial now",
-    "to_payment_dialog_btn_2": "Use basic version"
+    "to_payment_dialog_btn_2": "Use basic version",
+    "privacy_policy": "Privacy Policy"
   }
