@@ -9,7 +9,7 @@ function HomeBtn() {
     <Link
       component={NextLink}
       href={STUDENT_PATH_DASHBOARD.class.root}
-      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'GrayText' }}
+      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#637381' }}
     >
       <BiHomeAlt2 size={22} />
     </Link>

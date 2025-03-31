@@ -76,7 +76,10 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
             setFinish={setFinishTimer}
           />
         ) : (
-          <MdOutlineTimer size={OUTLINE_TIMER_SIZE} />
+          <MdOutlineTimer
+            size={OUTLINE_TIMER_SIZE}
+            color='#637381'
+          />
         )}
       </IconButton>
       <Popover
