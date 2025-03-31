@@ -46,6 +46,7 @@ export default function ToggleButton({
           0.36
         )}`,
         ...bgBlur({ color: theme.palette.background.default }),
+        display: 'none', // Hided Settings Button fix
       }}
     >
       {notDefault && !open && (

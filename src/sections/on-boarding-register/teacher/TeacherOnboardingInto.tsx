@@ -22,10 +22,7 @@ export default function TeacherOnboardingIntro(): React.ReactElement {
         }}
       >
         {asPath === PATH_AUTH.onBoardingTeacher.root && <RegisterStudentTeacher isTeacher />}
-        <WelcomeStep
-          selectLaunchCourse={() => push(PATH_AUTH.onBoardingTeacher.launchCourse)}
-          // selectAIGenerate={() => push(PATH_PAGE.create)}
-        />
+        <WelcomeStep selectLaunchCourse={() => push(PATH_AUTH.onBoardingTeacher.launchCourse)} />
         <SingLink />
       </Stack>
     </StyledContentTeacher>

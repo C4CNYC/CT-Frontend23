@@ -2,12 +2,14 @@ import { Typography } from '@mui/material'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import { Image } from '@/components/image'
-import { Logo } from '@/components/logo'
+import { Logo, LogoMin } from '@/components/logo'
 import ThemeSwitcher from '@/components/theme-switcher'
+import { useSelector } from '@root/src/redux/store'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
   StyledLogoCont,
+  StyledLogoContMobile,
   StyledRoot,
   StyledSection,
   StyledSectionBg,
@@ -28,6 +30,7 @@ export default function LoginLayout({
   subtitle,
 }: Props): React.ReactElement | null {
   const translate = useTranslate()
+  const tenant = useSelector((state) => state.tenant)
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
       <StyledRoot>
@@ -67,6 +70,10 @@ export default function LoginLayout({
           <StyledSectionBg />
         </StyledSection>
         {children}
+        <StyledLogoContMobile>
+          <LogoMin />
+          <Typography variant='button'>{tenant.slug}</Typography>
+        </StyledLogoContMobile>
         <StyledSwitcher>
           <ThemeSwitcher />
         </StyledSwitcher>

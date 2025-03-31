@@ -12,13 +12,9 @@ import { SessionType } from './SessionType'
 
 type IWelcomeStepProps = {
   selectLaunchCourse: () => void
-  // selectAIGenerate: () => void
 }
 
-export default function WelcomeStep({
-  selectLaunchCourse,
-  // selectAIGenerate,
-}: IWelcomeStepProps): React.ReactElement {
+export default function WelcomeStep({ selectLaunchCourse }: IWelcomeStepProps): React.ReactElement {
   const translate = useTranslate()
 
   return (
@@ -49,17 +45,6 @@ export default function WelcomeStep({
       >
         <SessionType {...LAUNCH_SESSION} />
       </Button>
-      {/* <Button
-        onClick={() => {
-          selectAIGenerate()
-        }}
-        sx={LAUNCH_SESSION_BTN_SX}
-      >
-        <SessionType
-          {...AI_GENERATE_SESSION}
-          isNew
-        />
-      </Button> */}
       <Button
         disabled={true}
         onClick={() => {}}
