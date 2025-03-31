@@ -3,7 +3,6 @@ import { type FC } from 'react'
 import { BiCodeAlt } from '@react-icons/all-files/bi/BiCodeAlt'
 import dynamic from 'next/dynamic'
 
-import { type AuthUserType } from '@/auth/types'
 import { SkeletonCodeEditorBlock } from '@/components/skeleton'
 import { type IValidation } from '@/redux/interfaces/content.interface'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
@@ -17,8 +16,6 @@ const CodeEditorBlockContent = dynamic(() => import('./code-editor-block-content
 })
 
 interface ICodeEditorBlock {
-  user: AuthUserType | null
-  code: string
   onChangeStreamingDocInfo: (doc: Record<string, string>) => void
   validations: Array<IValidation & BaseResponseInterface>
   preloadedCode: string
@@ -32,9 +29,7 @@ const icon = (
   />
 )
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
-  user,
   validations,
-  code,
   onChangeStreamingDocInfo,
   preloadedCode,
   contentId,
@@ -48,9 +43,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       className='codeEditorTour'
     >
       <CodeEditorBlockContent
-        user={user}
         validations={validations}
-        code={code}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         preloadedCode={preloadedCode}
         contentId={contentId}

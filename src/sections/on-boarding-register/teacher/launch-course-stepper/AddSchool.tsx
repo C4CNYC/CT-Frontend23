@@ -114,7 +114,7 @@ export default function AddSchool(): React.ReactElement {
           }
         )
       } else {
-        reload()
+        push(STUDENT_PATH_DASHBOARD.class.root)
       }
     } catch (error: any) {
       enqueueSnackbar(error?.message ?? 'Something went wrong', { variant: 'error' })
