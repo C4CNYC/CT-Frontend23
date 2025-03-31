@@ -12,7 +12,7 @@ import { EditorView, ReactCodeMirrorRef } from '@uiw/react-codemirror'
 import Preferences from '@/sections/dashboard/lessons/LessonStep/Modals/Preferences'
 import Validation from '@/sections/dashboard/lessons/LessonStep/Modals/Validation'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
-import { useBoolean } from '@root/src/hooks/useBoolean'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import { ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import { MediaModal } from '@root/src/sections/dashboard/medias/MediaModal'
 import { useTranslate } from '@root/src/utils/translateHelper'
@@ -31,7 +31,11 @@ const MenuItems = ({ data, lessonId, sx = {}, editorInstance }: IMenuItems) => {
   const translate = useTranslate()
 
   const [open, setOpen] = useState<HTMLElement | null>(null)
-  const [formatMenuState, formatMenuOpen, formatMenuClose] = useBoolean()
+  const {
+    value: formatMenuState,
+    onTrue: formatMenuOpen,
+    onFalse: formatMenuClose,
+  } = useBoolean(false)
   const formatMenuButton = useRef<HTMLButtonElement | null>(null)
 
   const handleOpenChallengeMenu = (event: React.MouseEvent<HTMLElement>): void => {

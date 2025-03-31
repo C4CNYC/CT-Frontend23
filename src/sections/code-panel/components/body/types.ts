@@ -1,4 +1,3 @@
-import type { AuthUserType } from '@/auth/types'
 import type { ILesson, ILessonContent } from '@/redux/interfaces/content.interface'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
@@ -6,7 +5,6 @@ import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 export interface CodePanelBodyProps {
   lesson?: ILesson & BaseResponseInterface
   lessonContents: Array<ILessonContent & BaseResponseInterface>
-  user: AuthUserType
   language: SupportedLang
   onSubmitChallenge: (lessonContentId: string) => Promise<void>
   onSubmitLesson: () => Promise<void>

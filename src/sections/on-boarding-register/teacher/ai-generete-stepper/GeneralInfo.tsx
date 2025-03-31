@@ -4,6 +4,7 @@ import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { IoChevronBack } from '@react-icons/all-files/io5/IoChevronBack'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import { useController } from 'react-hook-form'
 
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
@@ -87,7 +88,7 @@ export function GeneralInfo({
             key: ait.id,
             value: ait.name,
             tooltip: ait.description,
-            icon: 'material-symbols:info-outline',
+            icon: <LuInfo size={16} />,
           })),
         ]
       : TYPE_LESSON

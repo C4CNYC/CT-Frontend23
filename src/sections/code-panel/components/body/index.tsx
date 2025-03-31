@@ -1,4 +1,4 @@
-import { type FC, memo, useContext, useRef, useState } from 'react'
+import { type FC, memo, useContext, useState } from 'react'
 
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
@@ -18,7 +18,6 @@ import { CodePanelContext } from '../../lib/CodePanelContext'
 
 import CodeEditorBlock from './blocks/code-editor-block'
 import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
-import NavPanel from './blocks/nav-panel'
 import ResizeDivider from './blocks/resize-divider'
 import SliderBlock from './blocks/slider-block'
 import ViewBlock from './blocks/view-block'
@@ -29,11 +28,8 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   onSubmitChallenge,
   onSubmitLesson,
   lessonContents,
-  user,
   isLoadingLessonContent,
 }) => {
-  const wrapperRef = useRef<HTMLDivElement | null>(null)
-
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const { autoRun } = useContext(CodePanelContext)
@@ -82,7 +78,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   if (isDesktop) {
     return (
       <Stack
-        ref={wrapperRef}
         px={1}
         gap={1}
         direction='row'
@@ -139,8 +134,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             <CodeEditorBlock
               preloadedCode={lessonContents[slideIndex]?.preload_body ?? ''}
               validations={lessonContents[slideIndex]?.validations || ''}
-              code={document?.htmlBody ?? ''}
-              user={user}
               onChangeStreamingDocInfo={onChangeStreamingDocInfo}
               contentId={lessonContents[slideIndex]?.id}
             />
@@ -169,11 +162,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             )}
           </div>
         </Split>
-        <NavPanel
-          wrapperListenerRef={wrapperRef}
-          cursorName={user?.first_name}
-          lessonId={lessonId}
-        />
       </Stack>
     )
   }
@@ -197,9 +185,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       />
 
       <CodeEditorBlock
-        code={document?.htmlBody ?? ''}
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
-        user={user}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations || ''}
         contentId={lessonContents[slideIndex]?.id}
