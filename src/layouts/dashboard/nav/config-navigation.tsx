@@ -33,10 +33,10 @@ export const admin = {
   subheader: 'sidebar_menu_administration',
   items: [
     {
-    title: 'sidebar_menu_admin',
-    path: MANAGER_PATH_DASHBOARD.administration.root,
-    icon: <MdAdminPanelSettings />,
-  },
+      title: 'sidebar_menu_admin',
+      path: MANAGER_PATH_DASHBOARD.administration.root,
+      icon: <MdAdminPanelSettings />,
+    },
     {
       title: 'sidebar_menu_members',
       path: MANAGER_PATH_DASHBOARD.organization.members,
@@ -52,7 +52,7 @@ export const admin = {
 
 export const superAdmin = {
   subheader: 'sidebar_menu_administration',
-  items: [ ],
+  items: [],
 }
 
 export const managment = {
