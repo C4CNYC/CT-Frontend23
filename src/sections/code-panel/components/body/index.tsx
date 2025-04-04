@@ -1,4 +1,4 @@
-import { type FC, useContext, useState } from 'react'
+import { type FC, memo, useContext, useState } from 'react'
 
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
