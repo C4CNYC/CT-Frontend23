@@ -1,4 +1,4 @@
-import { type FC, type ReactNode } from 'react'
+import { type FC } from 'react'
 
 import { Stack } from '@mui/system'
 import { useDispatch } from 'react-redux'
@@ -15,12 +15,11 @@ import Timer from '../options/timer'
 import ViewTumbler from '../options/view-tumbler'
 
 interface IDesktopBar {
-  chatComponent: ReactNode
   language: SupportedLang
   publicPage?: boolean
 }
 
-const DesktopBar: FC<IDesktopBar> = ({ chatComponent, language, publicPage }) => {
+const DesktopBar: FC<IDesktopBar> = ({ language, publicPage }) => {
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
@@ -38,7 +37,7 @@ const DesktopBar: FC<IDesktopBar> = ({ chatComponent, language, publicPage }) =>
     >
       <Timer />
 
-      <ChatPopup chatComponent={chatComponent} />
+      <ChatPopup />
       {/* <NotificationsDrawer
         data={[
           {

@@ -7,6 +7,6 @@ export interface AiLessonGenerate {
   lessonPrompt: string
 }
 export interface N8NRequest {
-  prompt: string,
-  endPointPath: string,
+  prompt: string
+  endPointPath: string
 }

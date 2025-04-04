@@ -10,7 +10,9 @@ import { IIntegration } from './integration.interface'
 export type LessonMeta = {
   humanLang: string
   machineLang: keyof typeof LessonMachineLang
+  /**  allow students to create multiple files    */
   createMultipleFiles: 0 | 1
+  /**  Teacher/Owner cant delete the lesson    */
   lock: 0 | 1
   [key: string]: string | number
 }

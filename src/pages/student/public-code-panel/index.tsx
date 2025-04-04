@@ -34,7 +34,7 @@ import {
 import { FullScreenProvider } from '@root/src/sections/code-panel/lib/FullScreenContext'
 import { LessonManagerProvider } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
-const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'), {
+const CodePanelChat = dynamic(async () => await import('../../../components/chat/CodePanelChat'), {
   ssr: false,
 })
 

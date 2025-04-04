@@ -1,9 +1,9 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
 import { type IChallenges } from '@/redux/interfaces/challenges.interface'
-import { type ILesson } from '@/redux/interfaces/content.interface'
+import { ILessonContent, type ILesson } from '@/redux/interfaces/content.interface'
 import { type BaseResponseInterface } from '@/utils'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
@@ -11,11 +11,13 @@ import { resetLessonEvent } from './events'
 
 interface LessonManagerContextProps {
   lesson?: ILesson & BaseResponseInterface
+  lessonContent?: ILessonContent[]
   data?: IChallenges & BaseResponseInterface
   isLoading: boolean
   isOpenDrawer: boolean
   setIsOpenDrawer: (isOpen: boolean) => void
   onChooseLesson: (lessonId: string, unitId: string) => void
+  updateSlideBody: (slideId: string, newBody: string) => void
 }
 
 const LessonManagerContext = createContext<LessonManagerContextProps | undefined>(undefined)
@@ -23,12 +25,24 @@ const LessonManagerContext = createContext<LessonManagerContextProps | undefined
 export const LessonManagerProvider: React.FC<{
   children: React.ReactNode
   lesson?: ILesson & BaseResponseInterface
+  lessonContent?: (ILessonContent & BaseResponseInterface)[]
   data?: IChallenges & BaseResponseInterface
   isLoading: boolean
-}> = ({ children, lesson, data, isLoading }) => {
+}> = ({ children, lesson, lessonContent: initialLessonContent, data, isLoading }) => {
+  const [lessonContent, setLessonContent] = useState(initialLessonContent || [])
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const router = useRouter()
 
+  useEffect(() => {
+    if (initialLessonContent) {
+      setLessonContent(initialLessonContent)
+    }
+  }, [initialLessonContent])
+  const updateSlideBody = (slideId: string, newBody: string) => {
+    setLessonContent((prev) =>
+      prev.map((slide) => (slide.id === slideId ? { ...slide, body: newBody } : slide))
+    )
+  }
   const onOpenLesson = (lessonId: string, unitId: string): void => {
     if (!router.query.courseId && !unitId) return
 
@@ -52,11 +66,13 @@ export const LessonManagerProvider: React.FC<{
     <LessonManagerContext.Provider
       value={{
         lesson,
+        lessonContent,
         data,
         isLoading,
         isOpenDrawer,
         setIsOpenDrawer,
         onChooseLesson,
+        updateSlideBody,
       }}
     >
       {children}

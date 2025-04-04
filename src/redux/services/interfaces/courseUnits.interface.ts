@@ -145,6 +145,7 @@ export interface ILessonCreate {
   name: string
   description: string
   duration: string
+  meta?: LessonMeta
 }
 export interface IOpenAiRequest {
   prompt: string

@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type FC, type ReactNode } from 'react'
+import { useState, type CSSProperties, type FC } from 'react'
 
 // import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
@@ -13,14 +13,13 @@ import useIsDesktop from '@/hooks/useIsDesktop'
 import { setChatVisible } from '@/redux/slices/chat-handler'
 import { useSelector } from '@/redux/store'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { CodePanelChat } from '@root/src/components/chat/CodePanelChat'
 
 import AuthModal from '../../../../auth-modal/AuthModal'
 
-interface IChatPopup {
-  chatComponent: ReactNode
-}
+interface IChatPopup {}
 
-const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
+const ChatPopup: FC<IChatPopup> = ({}) => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
@@ -54,13 +53,17 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
             >
               <CloseIcon />
             </IconButton>
-            {chatComponent}
+            <CodePanelChat />
           </div>
         </Draggable>
       )
     }
 
-    return <Box sx={() => ({ ...getBoxStyles(theme) })}>{chatComponent}</Box>
+    return (
+      <Box sx={() => ({ ...getBoxStyles(theme) })}>
+        <CodePanelChat />
+      </Box>
+    )
   }
 
   return (
@@ -78,7 +81,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
         }}
       >
         <IoChatboxEllipsesOutline size={20} />
-      </IconButton>  
+      </IconButton>
 
       {getContent()}
     </>
