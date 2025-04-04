@@ -70,9 +70,8 @@ export default function CodePanelLayout(): ReactElement | null {
   const router = useRouter()
   const dispatch = useDispatch()
   const translate = useTranslate()
-  const { user } = useAuthContext()
-  const { isAuthenticated } = useAuthContext()
   const { enqueueSnackbar } = useSnackbar()
+  const { isAuthenticated } = useAuthContext()
 
   const [render, setRender] = useState(true)
   const [showTour, setShowTour] = useState(false)
@@ -128,13 +127,12 @@ export default function CodePanelLayout(): ReactElement | null {
     { skip: !router.query.lessonId }
   )
 
-  let { data: lessonsRelatedWithSlug, isLoading: lessonsRelatedWithSlugIsLoading } =
-    useGetLessonsQuery(
-      {
-        slug: lessonIdFromRoute,
-      },
-      { skip: !lessonIdFromRoute && !isErrorLessonContent }
-    )
+  let { data: lessonsRelatedWithSlug } = useGetLessonsQuery(
+    {
+      slug: lessonIdFromRoute,
+    },
+    { skip: !lessonIdFromRoute && !isErrorLessonContent }
+  )
   useEffect(() => {
     if (
       !lessonsRelatedWithSlug ||
@@ -335,7 +333,6 @@ export default function CodePanelLayout(): ReactElement | null {
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
               isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}
               lessonContents={lessonContent ?? []}
-              user={user?.student_profile}
               language={DEFAULT_LANGUAGE}
               onSubmitChallenge={onSubmitChallenge}
               onSubmitLesson={onSubmitLesson}

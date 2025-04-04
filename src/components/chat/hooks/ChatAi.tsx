@@ -52,15 +52,24 @@ export const ChatAi = () => {
     ) as unknown as Promise<{data: [{ output: string }]}>
   const translateHuman4Us = (slideId: string, message: any) =>
     ask(JSON.stringify({ lessonId: lesson?.id, chat: message }), 'translateHuman4Us')
-  const getChatHistory = () =>
+  const chatHistoryGet = () =>
     ask(JSON.stringify({ lessonId: lesson?.id }), 'chatHistoryGet').then((res) => {
       return 'data' in res ? (res.data as unknown as IChatMessages[]) : []
     })
-
+  const chatHistoryAdd=(message: string, isMe=0) =>
+    ask(
+      JSON.stringify({
+        lessonId: lesson?.id,
+        chat: ` I'm preparing your lesson `,
+        isMe,
+      }),
+      'chatHistoryAdd'
+    )
   const sendMessage =
     (setMessages: Dispatch<SetStateAction<IChatMessages[]>>) => (message: string) => {
       let ctime = new Date().getTime()
       setMessages((s) => [{ chat: message, isMe: true, id: ctime, ctime }, ...s])
+      chatHistoryAdd(message, 1)
       modifySlide(slideId, message).then((res) => {
         ctime = new Date().getTime()
         let responseMessage = 'Making changes...'
@@ -75,6 +84,7 @@ export const ChatAi = () => {
             responseMessage = 'I didnt understand ai response'
           }
         }
+        chatHistoryAdd(responseMessage, 0)
         setMessages((s) => [{ chat: responseMessage, isMe: false, id: ctime, ctime }, ...s])
       })
     }
@@ -87,7 +97,9 @@ export const ChatAi = () => {
 
   return {
     /* functions */
-    getChatHistory,
+    chatHistoryGet,
+    chatHistoryAdd,
+    translateHuman4Us,
     askSuggestions,
     sendMessage,
     modifySlide,

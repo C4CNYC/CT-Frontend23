@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react'
 
 import { DEFAULT_TENANT, Tenant } from '../redux/slices/tenant'
 
-let fetched = false
-
 async function fetchTenant(domain: string, setTenant: (tenant: Tenant) => void) {
   let updated = false
   try {

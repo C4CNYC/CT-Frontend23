@@ -25,17 +25,24 @@ export const CodePanelChat = (): React.ReactElement => {
   const [messages, setMessages] = useState<IChatMessages[]>([])
   const chatAi = ChatAi()
 
+  let friends = useMemo(() => {
+    let friends = chatAi.userIsOwner ? [AiAgent] : []
+    friendsDB?.data.forEach((friend) => {
+      friends.push(friend)
+    })
+    return friends;
+  }, [chatAi.userIsOwner, friendsDB])
+
   useEffect(() => {
+    if (!selectedChat && friends.length > 0) {
+      setSelectedChat(friends[0].id)
+    }
     if (selectedChat === AiAgent.id) {
-      chatAi.getChatHistory().then(setMessages)
+      chatAi.chatHistoryGet().then(setMessages)
     } else {
       // @todo implement human-human chat functionality
     }
-  }, [selectedChat])
-  let friends = chatAi.userIsOwner ? [AiAgent] : []
-  friendsDB?.data.forEach((friend) => {
-    friends.push(friend)
-  })
+  }, [selectedChat, friends])
 
   const handleSelectChat = (id: string): void => {
     setSelectedChat(id)

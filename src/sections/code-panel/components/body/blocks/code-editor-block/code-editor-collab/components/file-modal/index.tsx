@@ -10,7 +10,6 @@ import { ConfirmDialog } from '@root/src/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { EditorMode } from '../../hook/constants'
 import DevIcon from '../dev-icon'
 
 import AddStudentFileModal from './AddStudentFileModal'
@@ -18,7 +17,6 @@ import { useStyles } from './styles'
 
 interface FileModalProps {
   isOpen: boolean
-  mode: EditorMode
   files: StudentFile[]
   isFileControllerAvailable: boolean
 
@@ -29,7 +27,6 @@ interface FileModalProps {
 }
 
 const FileModal: FC<FileModalProps> = ({
-  mode,
   files,
   isOpen,
   isFileControllerAvailable,
@@ -58,7 +55,7 @@ const FileModal: FC<FileModalProps> = ({
   }
 
   useEffect(() => {
-    if (files.length > 1 && mode === EditorMode.Owner) {
+    if (files.length > 1) {
       setIsDeleteExist(true)
     }
   }, [files])

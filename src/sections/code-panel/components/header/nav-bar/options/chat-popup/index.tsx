@@ -65,7 +65,8 @@ const ChatPopup: FC<IChatPopup> = ({}) => {
       </Box>
     )
   }
-
+  if (!isAuthenticated)
+    return null;
   return (
     <>
       <IconButton

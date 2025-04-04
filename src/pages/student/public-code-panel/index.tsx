@@ -265,7 +265,6 @@ export default function CodePanelPage(): ReactElement | null {
               isLoadingLessonContent={isLoading}
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
               lessonContents={data ?? []}
-              user={user?.student_profile as ILocalUser}
               language={DEFAULT_LANGUAGE}
               onSubmitChallenge={onSubmitChallenge}
               onSubmitLesson={onSubmitLesson}
