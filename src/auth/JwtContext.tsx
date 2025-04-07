@@ -259,7 +259,6 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
         })
         localStorage.setItem('tenantName', tenantName)
       }
-
       const { data } = await axios.post('/auth/signup', {
         email,
         password,
