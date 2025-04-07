@@ -168,7 +168,8 @@ const SliderBlock: FC<ISliderBlock> = ({
     if (!data || !data?.length) return
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    if (data?.[next]?.id) dispatch(setSlideId(data[next].id))
+    let slideId = data[next]?.id
+    if (slideId) dispatch(setSlideId(slideId))
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {
