@@ -19,6 +19,7 @@ import {
   useGetLessonStudentWithoutContentsQuery,
 } from '@/redux/services/manager/lesson-student'
 import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
+import { setIsActivateCompeated } from '@/redux/slices/checkers-animation'
 import {
   setCourseId,
   setLessonId,
@@ -211,6 +212,8 @@ export default function CodePanelLayout(): ReactElement | null {
   }, [courseContent, router.query.courseId, router.query.unitId, router.query.lessonId])
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
+    dispatch(setIsActivateCompeated(false))
+
     if (!profile) {
       return
     }
