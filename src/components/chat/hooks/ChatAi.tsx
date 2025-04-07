@@ -6,6 +6,7 @@ import {
   useGetLessonContentQuery,
   useUpdateLessonContentMutation,
 } from '@root/src/redux/services/manager/lesson-content-manager'
+import { useGetLessonContentStudentQuery } from '@root/src/redux/services/manager/lesson-student'
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { dispatch, useSelector } from '@root/src/redux/store'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
@@ -16,20 +17,40 @@ import { ChatAiOptionsType } from './ChatConstants'
 
 export const ChatAi = () => {
   const { user } = useAuthContext()
-  const { lesson, lessonContent, updateSlideBody } = useLessonManager()
+  const { lesson, lessonContent, updateSlideBody, setLessonContent } = useLessonManager()
   const [updateLessonContent] = useUpdateLessonContentMutation()
+  // this useGetLessonContentQuery different from useGetLessonContentStudentQuery
   const lessonContenter = useGetLessonContentQuery(
     { lessonId: lesson?.id || '' },
     { skip: !lesson?.id }
   )
+  const lessonContentGetter = useGetLessonContentStudentQuery(
+    { id: lesson?.id || '' },
+    {
+      skip: !!lesson?.id,
+    }
+  )
   const isChatVisible = useSelector((state) => state.chatHandler.isChatVisible)
   let userIsOwner = lesson?.userId == user?.id
-
+  let minsSinceLesson = Math.floor((Date.now() - Date.parse(lesson?.createdAt || '')) / 60000)
   const [chatAiOptions, setChatAiOptions] = useState<ChatAiOptionsType[]>([])
   const { slideId } = useSelector((state) => ({
     slideId: state.codePanelGlobal.slideId,
     // lessonId: state.codePanelGlobal.lessonId, not working
   }))
+  useEffect(() => {
+    if (!userIsOwner || !lesson || minsSinceLesson > 60) return
+    let lessonContentRefreshInterval = setInterval(() => {
+      lessonContenter.refetch()
+    }, 1000 * 10)
+    return () => {
+      clearInterval(lessonContentRefreshInterval)
+    }
+  }, [lessonContenter, lesson, userIsOwner])
+  useEffect(() => {
+    if ((lessonContent?.length || 0) < (lessonContenter.data?.length || 0))
+      lessonContentGetter.refetch()
+  }, [lessonContenter.data])
   const actions: Record<string, (K?: any) => ChatAiOptionsType> = useMemo(
     () => ({
       slideSave: (body: string) => ({

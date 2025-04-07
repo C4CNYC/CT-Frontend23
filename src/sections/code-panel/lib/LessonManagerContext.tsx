@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -18,6 +18,7 @@ interface LessonManagerContextProps {
   setIsOpenDrawer: (isOpen: boolean) => void
   onChooseLesson: (lessonId: string, unitId: string) => void
   updateSlideBody: (slideId: string, newBody: string) => void
+  setLessonContent: Dispatch<SetStateAction<(ILessonContent & BaseResponseInterface)[]>>
 }
 
 const LessonManagerContext = createContext<LessonManagerContextProps | undefined>(undefined)
@@ -73,6 +74,7 @@ export const LessonManagerProvider: React.FC<{
         setIsOpenDrawer,
         onChooseLesson,
         updateSlideBody,
+        setLessonContent,
       }}
     >
       {children}

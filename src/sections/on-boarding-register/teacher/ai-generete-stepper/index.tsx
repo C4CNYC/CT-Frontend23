@@ -154,7 +154,8 @@ export default function AIGenerateStepper({
           ask(
             JSON.stringify({
               lessonId: payload.id,
-              chat: ` I'm preparing your lesson `,
+              chat: ` I'm preparing your lesson 
+               Page will update when slides arrive  `,
               isMe: 0,
             }),
             'chatHistoryAdd'
