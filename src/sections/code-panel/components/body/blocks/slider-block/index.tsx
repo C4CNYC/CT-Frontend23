@@ -133,7 +133,8 @@ const SliderBlock: FC<ISliderBlock> = ({
           slideIndex: slideIndex + 1,
         })
       }
-      if (data[slideIndex]?.id) onSubmitChallenge(data[slideIndex].id, '')
+      const slideId = data[slideIndex]?.id
+      if (slideId) onSubmitChallenge(slideId, '')
     }
     if (hasNextStep) {
       onBeforeChange(slideIndex, slideIndex + 1)
