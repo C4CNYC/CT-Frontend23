@@ -7,6 +7,8 @@ import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-glob
 import { useSelector } from '@/redux/store'
 import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { ChatAi } from '@root/src/components/chat/hooks/ChatAi'
 
 import ChatPopup from '../options/chat-popup'
 import Menu from '../options/menu'
@@ -20,6 +22,8 @@ interface IDesktopBar {
 }
 
 const DesktopBar: FC<IDesktopBar> = ({ language, publicPage }) => {
+  const { user } = useAuthContext()
+  let isAdmin = user?.role?.includes('admin')
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
@@ -29,6 +33,8 @@ const DesktopBar: FC<IDesktopBar> = ({ language, publicPage }) => {
     dispatch(toggleInstrations(value))
   }
 
+  const chatAi = ChatAi() // to trigger the chat popup
+
   return (
     <Stack
       spacing={1}
@@ -36,8 +42,7 @@ const DesktopBar: FC<IDesktopBar> = ({ language, publicPage }) => {
       alignItems='center'
     >
       <Timer />
-
-      <ChatPopup />
+      {isAdmin && <ChatPopup />}
       {/* <NotificationsDrawer
         data={[
           {

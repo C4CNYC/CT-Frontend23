@@ -13,6 +13,7 @@ export type ChatAiOptionsType = {
   action: string
   shortTitle: string
   description: string
+  onAction?: (K?: any) => void
 }
 export const AiAgent: IFriend = {
   id: '1',

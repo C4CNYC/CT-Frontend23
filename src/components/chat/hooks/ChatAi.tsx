@@ -1,17 +1,28 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
-import { useSelector } from '@root/src/redux/store'
+import {
+  useGetLessonContentQuery,
+  useUpdateLessonContentMutation,
+} from '@root/src/redux/services/manager/lesson-content-manager'
+import { setChatVisible } from '@root/src/redux/slices/chat-handler'
+import { dispatch, useSelector } from '@root/src/redux/store'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
 import { IChatMessages } from '../chatInterface'
 
-import { actions, ChatAiOptionsType } from './ChatConstants'
+import { ChatAiOptionsType } from './ChatConstants'
 
 export const ChatAi = () => {
   const { user } = useAuthContext()
   const { lesson, lessonContent, updateSlideBody } = useLessonManager()
+  const [updateLessonContent] = useUpdateLessonContentMutation()
+  const lessonContenter = useGetLessonContentQuery(
+    { lessonId: lesson?.id || '' },
+    { skip: !lesson?.id }
+  )
+  const isChatVisible = useSelector((state) => state.chatHandler.isChatVisible)
   let userIsOwner = lesson?.userId == user?.id
 
   const [chatAiOptions, setChatAiOptions] = useState<ChatAiOptionsType[]>([])
@@ -19,7 +30,34 @@ export const ChatAi = () => {
     slideId: state.codePanelGlobal.slideId,
     // lessonId: state.codePanelGlobal.lessonId, not working
   }))
-
+  const actions: Record<string, (K?: any) => ChatAiOptionsType> = useMemo(
+    () => ({
+      slideSave: (body: string) => ({
+        type: 'slide',
+        action: 'Save',
+        shortTitle: 'Save',
+        description: 'Save Changes by Ai',
+        onAction: () => {
+          updateLessonContent({ lessonId: lesson?.id || '', body, id: slideId })
+        },
+      }),
+      slideDiscard: () => ({
+        type: 'slide',
+        action: 'Discard',
+        shortTitle: 'Discard',
+        description: '',
+        onAction: () => {
+          lessonContenter.refetch()
+        },
+      }),
+    }),
+    [lessonContent, slideId]
+  )
+  useEffect(() => {
+    if (userIsOwner && !isChatVisible) {
+      dispatch(setChatVisible(true))
+    }
+  }, [userIsOwner, isChatVisible])
   const ask = useN8nRequest()
   const askSuggestions = (slideId: string) =>
     ask(
@@ -49,18 +87,18 @@ export const ChatAi = () => {
         action,
       }),
       'modifySlide'
-    ) as unknown as Promise<{data: [{ output: string }]}>
+    ) as unknown as Promise<{ data: [{ output: string }] }>
   const translateHuman4Us = (slideId: string, message: any) =>
     ask(JSON.stringify({ lessonId: lesson?.id, chat: message }), 'translateHuman4Us')
   const chatHistoryGet = () =>
     ask(JSON.stringify({ lessonId: lesson?.id }), 'chatHistoryGet').then((res) => {
       return 'data' in res ? (res.data as unknown as IChatMessages[]) : []
     })
-  const chatHistoryAdd=(message: string, isMe=0) =>
+  const chatHistoryAdd = (message: string, isMe = 0) =>
     ask(
       JSON.stringify({
         lessonId: lesson?.id,
-        chat: ` I'm preparing your lesson `,
+        chat: message,
         isMe,
       }),
       'chatHistoryAdd'
@@ -73,10 +111,14 @@ export const ChatAi = () => {
       modifySlide(slideId, message).then((res) => {
         ctime = new Date().getTime()
         let responseMessage = 'Making changes...'
+        let aiResponse = ''
+        let errorOccured = false
         try {
           JSON.parse(res.data[0].output)
+          aiResponse = res.data[0].output
           updateSlideBody(slideId, res.data[0].output)
         } catch (e) {
+          errorOccured = true
           // console.error('Error parsing response', e)
           if (e instanceof Error) {
             responseMessage = e.message
@@ -85,7 +127,17 @@ export const ChatAi = () => {
           }
         }
         chatHistoryAdd(responseMessage, 0)
-        setMessages((s) => [{ chat: responseMessage, isMe: false, id: ctime, ctime }, ...s])
+        if (!errorOccured)
+          setMessages((s) => [
+            {
+              chat: responseMessage,
+              isMe: false,
+              id: ctime,
+              ctime,
+              options: [actions.slideSave(aiResponse), actions.slideDiscard()],
+            },
+            ...s,
+          ])
       })
     }
 

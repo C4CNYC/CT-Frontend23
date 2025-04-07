@@ -61,7 +61,6 @@ export function ChatMessageItem({ message }: { message: IChatMessages }) {
       {chat}
     </Stack>
   )
-
   const renderActions = (
     <Stack
       direction='row'
@@ -91,6 +90,22 @@ export function ChatMessageItem({ message }: { message: IChatMessages }) {
       <IconButton size='small'>
         <HiTrash size={14} />
       </IconButton>
+      {message.options?.map((option, index) => (
+        <a
+          key={index}
+          style={{
+            fontSize: 'small',
+            border: '1px solid #AAA',
+            padding: '2px',
+            borderRadius: '5px',
+            margin: '2px 4px',
+          }}
+          onClick={option.onAction}
+          title={option.description}
+        >
+          {option.shortTitle}
+        </a>
+      ))}
     </Stack>
   )
 

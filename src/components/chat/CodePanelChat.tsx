@@ -5,8 +5,6 @@ import Box from '@mui/material/Box'
 
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
 
-import { Scrollbar } from '../scrollbar/Scrollbar'
-
 import ChatHeaderDetail from './chatHeaderDetail'
 import { IChatMessages } from './chatInterface'
 import { ChatMessageInput } from './chatMessageInput'
@@ -30,7 +28,7 @@ export const CodePanelChat = (): React.ReactElement => {
     friendsDB?.data.forEach((friend) => {
       friends.push(friend)
     })
-    return friends;
+    return friends
   }, [chatAi.userIsOwner, friendsDB])
 
   useEffect(() => {
@@ -91,17 +89,24 @@ export const CodePanelChat = (): React.ReactElement => {
         height: 1,
       }}
     >
-      <Scrollbar sx={{ px: 3, py: 5, height: 1 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column-reverse', gap: 2 }}>
-          {messages.map((message, i) => (
-            <ChatMessageItem
-              key={i}
-              message={message}
-              //   participants={participants}
-            />
-          ))}
-        </Box>
-      </Scrollbar>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column-reverse',
+          gap: 2,
+          overflowAnchor: 'auto',
+          overflowY: 'scroll',
+          height: '100%',
+        }}
+      >
+        {messages.map((message, i) => (
+          <ChatMessageItem
+            key={i}
+            message={message}
+            //   participants={participants}
+          />
+        ))}
+      </Box>
 
       <ChatMessageInput SendMessage={sendMessage} />
     </Stack>
