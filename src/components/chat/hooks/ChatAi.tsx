@@ -6,7 +6,7 @@ import {
   useGetLessonContentQuery,
   useUpdateLessonContentMutation,
 } from '@root/src/redux/services/manager/lesson-content-manager'
-import { useGetLessonContentStudentQuery } from '@root/src/redux/services/manager/lesson-student'
+import { useLazyGetLessonContentStudentQuery } from '@root/src/redux/services/manager/lesson-student'
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { dispatch, useSelector } from '@root/src/redux/store'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
@@ -24,12 +24,7 @@ export const ChatAi = () => {
     { lessonId: lesson?.id || '' },
     { skip: !lesson?.id }
   )
-  const lessonContentGetter = useGetLessonContentStudentQuery(
-    { id: lesson?.id || '' },
-    {
-      skip: !!lesson?.id,
-    }
-  )
+  const lessonContentGetter = useLazyGetLessonContentStudentQuery()
   const isChatVisible = useSelector((state) => state.chatHandler.isChatVisible)
   let userIsOwner = lesson?.userId == user?.id
   let minsSinceLesson = Math.floor((Date.now() - Date.parse(lesson?.createdAt || '')) / 60000)
@@ -48,8 +43,9 @@ export const ChatAi = () => {
     }
   }, [lessonContenter, lesson, userIsOwner])
   useEffect(() => {
-    if ((lessonContent?.length || 0) < (lessonContenter.data?.length || 0))
-      lessonContentGetter.refetch()
+    if ((lessonContent?.length || 0) < (lessonContenter.data?.length || 0)) {
+      lessonContentGetter[0]({ id: lesson?.id || '' })
+    }
   }, [lessonContenter.data])
   const actions: Record<string, (K?: any) => ChatAiOptionsType> = useMemo(
     () => ({
