@@ -45,6 +45,12 @@ export interface JWTContextType {
     role: Role
     tenantName?: string
   }) => Promise<void>
+  registerToOrganization: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) => Promise<void>
   logout: () => void
   loginWithGoogle: (token: string) => Promise<void>
   registerWithGoogle: (token: string, role: Role) => Promise<void>
