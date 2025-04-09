@@ -1,4 +1,4 @@
-import { type FC, type ReactNode } from 'react'
+import { type FC } from 'react'
 
 import { Stack } from '@mui/system'
 import { useDispatch } from 'react-redux'
@@ -7,6 +7,8 @@ import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-glob
 import { useSelector } from '@/redux/store'
 import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { ChatAi } from '@root/src/components/chat/hooks/ChatAi'
 
 import ChatPopup from '../options/chat-popup'
 import Menu from '../options/menu'
@@ -15,12 +17,13 @@ import Timer from '../options/timer'
 import ViewTumbler from '../options/view-tumbler'
 
 interface IDesktopBar {
-  chatComponent: ReactNode
   language: SupportedLang
   publicPage?: boolean
 }
 
-const DesktopBar: FC<IDesktopBar> = ({ chatComponent, language, publicPage }) => {
+const DesktopBar: FC<IDesktopBar> = ({ language, publicPage }) => {
+  const { user } = useAuthContext()
+  let isAdmin = user?.role?.includes('admin')
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
@@ -30,6 +33,8 @@ const DesktopBar: FC<IDesktopBar> = ({ chatComponent, language, publicPage }) =>
     dispatch(toggleInstrations(value))
   }
 
+  const chatAi = ChatAi() // to trigger the chat popup
+
   return (
     <Stack
       spacing={1}
@@ -37,8 +42,7 @@ const DesktopBar: FC<IDesktopBar> = ({ chatComponent, language, publicPage }) =>
       alignItems='center'
     >
       <Timer />
-
-      <ChatPopup chatComponent={chatComponent} />
+      {isAdmin && <ChatPopup />}
       {/* <NotificationsDrawer
         data={[
           {

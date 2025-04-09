@@ -34,10 +34,6 @@ import {
 import { FullScreenProvider } from '@root/src/sections/code-panel/lib/FullScreenContext'
 import { LessonManagerProvider } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
-const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'), {
-  ssr: false,
-})
-
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
   {
@@ -257,10 +253,7 @@ export default function CodePanelPage(): ReactElement | null {
               overflow: 'hidden',
             }}
           >
-            <CodePanelHeader
-              chatComponent={<CodePanelChat />}
-              language={DEFAULT_LANGUAGE}
-            />
+            <CodePanelHeader language={DEFAULT_LANGUAGE} />
             <CodePanelBody
               isLoadingLessonContent={isLoading}
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}

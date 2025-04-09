@@ -49,10 +49,6 @@ const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/co
   ssr: false,
 })
 
-const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
-  ssr: false,
-})
-
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
   {
@@ -320,6 +316,7 @@ export default function CodePanelLayout(): ReactElement | null {
           data={courseContent}
           isLoading={isLoadingCourseContent}
           lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+          lessonContent={lessonContent}
         >
           {router.query.ai ? (
             <AIGeneratorTour withModals />
@@ -334,10 +331,7 @@ export default function CodePanelLayout(): ReactElement | null {
               overflow: 'hidden',
             }}
           >
-            <CodePanelHeader
-              chatComponent={<CodePanelChat />}
-              language={DEFAULT_LANGUAGE}
-            />
+            <CodePanelHeader language={DEFAULT_LANGUAGE} />
             <CodePanelBody
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
               isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}

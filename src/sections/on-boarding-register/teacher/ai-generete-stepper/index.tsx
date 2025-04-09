@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, useSnackbar } from '@/components'
+import { LessonMachineLang } from '@root/src/redux/services/enums/lesson-language.enum'
+import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
 import { useCreateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
@@ -58,6 +60,7 @@ export default function AIGenerateStepper({
 }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
 
+  const ask = useN8nRequest()
   const [activeStep, setActiveStep] = useState(props?.activeStep || 0)
   const [lessonId, _] = useState<null | string>(null)
   const { enqueueSnackbar } = useSnackbar()
@@ -120,20 +123,57 @@ export default function AIGenerateStepper({
       localStorage.setItem('AiGenerateLessonData', JSON.stringify(lessonData))
       push(PATH_AUTH.onBoardingTeacher.launchCourse)
     } else {
-      createLesson({ name: 'Ai Lesson', description: '', duration: '20', active: true })
+      let tempLessonName =
+        'Ai Lesson' +
+        new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+
+      createLesson({
+        name: tempLessonName,
+        description: '',
+        duration: '20',
+        active: true,
+        meta: {
+          type: 'ai',
+          humanLang: lessonData.language,
+          machineLang: lessonData.programmingLanguage as keyof typeof LessonMachineLang,
+          createMultipleFiles: 0,
+          lock: 0,
+        },
+      })
         .unwrap()
         .then((payload) => {
+          ask(
+            JSON.stringify({
+              lessonId: payload.id,
+              chat: `${lessonData.lessonPrompt} 
+            ${lessonData.context ? `Context: ${lessonData.context}` : ''}`,
+              isMe: 1,
+            }),
+            'chatHistoryAdd'
+          )
+          ask(
+            JSON.stringify({
+              lessonId: payload.id,
+              chat: ` I'm preparing your lesson 
+               Page will update when slides arrive  `,
+              isMe: 0,
+            }),
+            'chatHistoryAdd'
+          )
           lessonData.newLessonId = payload.id
+          let redirectAfter = STUDENT_PATH_DASHBOARD.myLessons
+          if (lessonData.lessonType.includes('code-panel')) {
+            lessonData.lessonType = lessonData.lessonType.replace('code-panel', '')
+            redirectAfter = STUDENT_PATH_DASHBOARD.codePanel.root
+          }
           createAILesson(lessonData) // no need to wait, we have lessonid
           localStorage.removeItem('AiGenerateLessonData')
-          if (closeModal) closeModal()
-          push(
-            `${STUDENT_PATH_DASHBOARD.codePanel.root}?${new URLSearchParams({ lessonId: payload.id ?? '' })}`,
-            undefined,
-            {
-              shallow: true,
-            }
-          )
+          enqueueSnackbar('Lesson created successfully', { variant: 'success' })
+          let lessonId = payload.id ?? ''
+          setTimeout(() => {
+            if (closeModal) closeModal()
+          }, 400)
+          setTimeout(() => push(`${redirectAfter}?${new URLSearchParams({ lessonId })}`), 700)
         })
         .catch((err) => {
           enqueueSnackbar(err.data.message, { variant: 'error' })
