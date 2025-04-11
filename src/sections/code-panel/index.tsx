@@ -289,9 +289,21 @@ export default function CodePanelLayout(): ReactElement | null {
   }, [lesson, isLoadingLesson, router, render, profile])
 
   useEffect(() => {
+    let timerIdForTour: string | number | NodeJS.Timeout | undefined
+    let timerIdForRender: string | number | NodeJS.Timeout | undefined
+
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
-    if (!hasSeenTour) setShowTour(true)
-    setTimeout(() => setRender(false))
+    if (!hasSeenTour) {
+      timerIdForTour = setTimeout(() => {
+        setShowTour(true)
+      }, 3000)
+    }
+    timerIdForRender = setTimeout(() => setRender(false))
+
+    return () => {
+      clearTimeout(timerIdForRender)
+      clearTimeout(timerIdForTour)
+    }
   }, [isShowTour, showTour])
 
   if (!isLoadingComplete && render) {

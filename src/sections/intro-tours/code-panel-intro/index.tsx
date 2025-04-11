@@ -55,7 +55,7 @@ export const CodePanelTour = () => {
     const timeout = setTimeout(() => {
       dispatch(setStartTour(true))
       localStorage.setItem('HAS_SEEN_TOUR', 'true')
-    }, 1000)
+    }, 3000)
 
     return () => {
       clearTimeout(timeout)
