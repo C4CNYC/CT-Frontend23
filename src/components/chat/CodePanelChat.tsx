@@ -49,6 +49,8 @@ export const CodePanelChat = (): React.ReactElement => {
     }
   }
 
+  if (!messages || messages.length === 0) return <></>
+
   return (
     <Stack
       component={Card}
@@ -93,7 +95,7 @@ export const CodePanelChat = (): React.ReactElement => {
                 options={chatAi.chatAiOptions}
                 sendMessage={sendMessage}
               />
-              {messages.map((message, i) => (
+              {messages?.map((message, i) => (
                 <ChatMessageItem
                   key={i}
                   message={message}
