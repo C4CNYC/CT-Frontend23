@@ -44,7 +44,12 @@ export const ChatAi = () => {
   }, [lessonContenter, lesson, userIsOwner])
   useEffect(() => {
     if ((lessonContent?.length || 0) < (lessonContenter.data?.length || 0)) {
-      lessonContentGetter[0]({ id: lesson?.id || '' })
+      setLessonContent((prevContent) => [
+        ...prevContent,
+        ...(lessonContenter.data?.filter(
+          (newItem) => !prevContent.some((item) => item.id === newItem.id)
+        ) || []),
+      ])
     }
   }, [lessonContenter.data])
   const actions: Record<string, (K?: any) => ChatAiOptionsType> = useMemo(
@@ -71,10 +76,8 @@ export const ChatAi = () => {
     [lessonContent, slideId]
   )
   useEffect(() => {
-    if (userIsOwner && !isChatVisible) {
-      dispatch(setChatVisible(true))
-    }
-  }, [userIsOwner, isChatVisible])
+    if (userIsOwner) dispatch(setChatVisible(true))
+  }, [userIsOwner])
   const ask = useN8nRequest()
   const askSuggestions = (slideId: string) =>
     ask(
@@ -159,9 +162,14 @@ export const ChatAi = () => {
     }
 
   useEffect(() => {
-    askSuggestions(slideId).then((res) =>
-      'data' in res ? setChatAiOptions(res?.data as unknown as ChatAiOptionsType[]) : null
-    )
+    if (!slideId) return
+    askSuggestions(slideId).then((res: any) => {
+      if (res && 'data' in res && res.data && res.data.length > 0 && res.data[0].output) {
+        setChatAiOptions(res.data[0].output as unknown as ChatAiOptionsType[])
+      } else {
+        setChatAiOptions([])
+      }
+    })
   }, [slideId])
 
   return {

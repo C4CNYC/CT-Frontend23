@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type FC } from 'react'
+import { type CSSProperties, type FC } from 'react'
 
 // import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
@@ -15,56 +15,13 @@ import { useSelector } from '@/redux/store'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { CodePanelChat } from '@root/src/components/chat/CodePanelChat'
 
-import AuthModal from '../../../../auth-modal/AuthModal'
-
-interface IChatPopup {}
-
-const ChatPopup: FC<IChatPopup> = ({}) => {
+const ChatPopup: FC = () => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
   const isChatVisible = useSelector((state) => state.chatHandler.isChatVisible)
   const { isAuthenticated } = useAuthContext()
-  const [open, setOpen] = useState(false)
 
-  const closeDialog = () => {
-    setOpen(false)
-  }
-
-  const getContent = () => {
-    if (!isChatVisible || !isAuthenticated) {
-      return (
-        <AuthModal
-          open={open}
-          onClose={closeDialog}
-        ></AuthModal>
-      )
-    }
-
-    if (isDesktop) {
-      return (
-        <Draggable>
-          <div style={DRAGGABLE_STYLES}>
-            <IconButton
-              onClick={() => {
-                dispatch(setChatVisible(false))
-              }}
-              sx={ICON_BUTTON_STYLES}
-            >
-              <CloseIcon />
-            </IconButton>
-            <CodePanelChat />
-          </div>
-        </Draggable>
-      )
-    }
-
-    return (
-      <Box sx={() => ({ ...getBoxStyles(theme) })}>
-        <CodePanelChat />
-      </Box>
-    )
-  }
   if (!isAuthenticated) return null
   return (
     <>
@@ -73,17 +30,29 @@ const ChatPopup: FC<IChatPopup> = ({}) => {
           display: isDesktop ? 'inline-flex' : 'none',
           background: isChatVisible ? '#c5d6e3' : theme.palette.background.default,
         }}
-        onClick={() => {
-          dispatch(setChatVisible(!isChatVisible))
-          if (!isAuthenticated) {
-            setOpen(true)
-          }
-        }}
+        onClick={() => dispatch(setChatVisible(!isChatVisible))}
       >
         <IoChatboxEllipsesOutline size={20} />
       </IconButton>
-
-      {getContent()}
+      {isChatVisible ? (
+        isDesktop ? (
+          <Draggable>
+            <div style={DRAGGABLE_STYLES}>
+              <IconButton
+                onClick={() => dispatch(setChatVisible(false))}
+                sx={ICON_BUTTON_STYLES}
+              >
+                <CloseIcon />
+              </IconButton>
+              <CodePanelChat />
+            </div>
+          </Draggable>
+        ) : (
+          <Box sx={() => ({ ...getBoxStyles(theme) })}>
+            <CodePanelChat />
+          </Box>
+        )
+      ) : null}
     </>
   )
 }

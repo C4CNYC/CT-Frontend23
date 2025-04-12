@@ -20,14 +20,8 @@ import {
   TONE,
   getNextBtnSx,
   RHFTextFieldInRHFToggleButtonGroup,
+  IAIPersonaInfoProps,
 } from './constants'
-
-type IAIPersonaInfoProps = {
-  prevStep: () => void
-  closeModal?: () => void
-  customPersona: boolean
-  customTone: boolean
-}
 
 export function AIPersonaInfo({
   prevStep,

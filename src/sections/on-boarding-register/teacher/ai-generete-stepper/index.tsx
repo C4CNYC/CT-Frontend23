@@ -150,16 +150,17 @@ export default function AIGenerateStepper({
               isMe: 1,
             }),
             'chatHistoryAdd'
-          )
-          ask(
-            JSON.stringify({
-              lessonId: payload.id,
-              chat: ` I'm preparing your lesson 
-               Page will update when slides arrive  `,
-              isMe: 0,
-            }),
-            'chatHistoryAdd'
-          )
+          ).then(() => {
+            ask(
+              JSON.stringify({
+                lessonId: payload.id,
+                chat: ` I'm preparing your lesson 
+                Page will update when slides arrive  `,
+                isMe: 0,
+              }),
+              'chatHistoryAdd'
+            )
+          })
           lessonData.newLessonId = payload.id
           let redirectAfter = STUDENT_PATH_DASHBOARD.myLessons
           if (lessonData.lessonType.includes('code-panel')) {
@@ -172,8 +173,8 @@ export default function AIGenerateStepper({
           let lessonId = payload.id ?? ''
           setTimeout(() => {
             if (closeModal) closeModal()
-          }, 400)
-          setTimeout(() => push(`${redirectAfter}?${new URLSearchParams({ lessonId })}`), 700)
+          }, 300)
+          setTimeout(() => push(`${redirectAfter}?lessonId=${lessonId}`), 700)
         })
         .catch((err) => {
           enqueueSnackbar(err.data.message, { variant: 'error' })
