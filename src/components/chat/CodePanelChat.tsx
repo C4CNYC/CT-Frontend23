@@ -55,7 +55,7 @@ export const CodePanelChat = (): React.ReactElement => {
     <Stack
       component={Card}
       direction='row'
-      maxWidth={'md'}
+      maxWidth={'sm'}
       sx={{ height: '72vh', backgroundColor: '#f0f0f0' }}
       className='ChatPlace'
     >

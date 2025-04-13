@@ -78,7 +78,7 @@ const ICON_BUTTON_STYLES = {
 const DRAGGABLE_STYLES: CSSProperties = {
   position: 'absolute',
   height: '500px',
-  width: '800px',
+  width: '600px',
   right: 20,
   bottom: 20,
   zIndex: 5000,
