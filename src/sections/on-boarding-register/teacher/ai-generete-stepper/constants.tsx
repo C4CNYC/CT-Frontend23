@@ -363,3 +363,10 @@ export const TYPE_PROJECT = [
   { key: 'Practical Project', value: 'Practical Project' },
   { key: 'Quiz', value: 'Quiz' },
 ]
+
+export type IAIPersonaInfoProps = {
+  prevStep: () => void
+  closeModal?: () => void
+  customPersona: boolean
+  customTone: boolean
+}

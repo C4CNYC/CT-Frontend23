@@ -25,6 +25,7 @@ interface Props {
   index?: number
   refetch?: () => void
   lock?: boolean | undefined
+  isMine?: boolean
 }
 
 export default function LessonCard({
@@ -32,6 +33,7 @@ export default function LessonCard({
   index,
   refetch,
   lock,
+  isMine = false,
 }: Props): React.ReactElement | null {
   const router = useRouter()
   const translate = useTranslate()
@@ -153,10 +155,11 @@ export default function LessonCard({
                 <CgMoreVerticalAlt />
               </IconButton>
               <IconButton
-                color={openPopover ? 'inherit' : 'default'}
+                color={isMine ? 'primary' : openPopover ? 'inherit' : 'default'}
                 onClick={openPreview}
                 href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({ lessonId: lesson.id })}
                 target={lesson.id}
+                title={translate(isMine ? 'preview_my_lesson' : 'preview')}
               >
                 <IoDesktopOutline size={20} />
               </IconButton>

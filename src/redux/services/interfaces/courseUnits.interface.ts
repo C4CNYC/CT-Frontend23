@@ -32,6 +32,7 @@ export interface ILesson {
   type: LessonType
   sort?: number
   slug?: string
+  userId?: string
 }
 
 export interface ICourse {
