@@ -85,8 +85,9 @@ export function GeneralInfo({
       ? [
           ...TYPE_LESSON,
           ...aiTemplates.map((ait) => ({
-            key: ait.id,
-            value: ait.name,
+            key: ait.id + (ait.meta?.redirectAfterAiCreate ? 'code-panel' : ''),
+            // wether redirect to code-panel, after lesson created
+            value: ait.name + (ait.meta?.redirectAfterAiCreate ? ' * ' : ''),
             tooltip: ait.description,
             icon: <LuInfo size={16} />,
           })),

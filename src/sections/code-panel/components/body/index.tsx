@@ -1,4 +1,4 @@
-import { type FC, memo, useContext, useState } from 'react'
+import { type FC, useContext, useState } from 'react'
 
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
@@ -109,7 +109,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
             {!isInstructionsHidden ? (
               <SliderBlock
                 isLoadingLessonContent={isLoadingLessonContent}
-                data={lessonContents}
                 onSubmitChallenge={onSubmitChallenge}
                 onSubmitLesson={onSubmitLesson}
                 integrations={lesson?.integrations ?? []}
@@ -178,7 +177,6 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         isLoadingLessonContent={isLoadingLessonContent}
         onSubmitLesson={onSubmitLesson}
         onSubmitChallenge={onSubmitChallenge}
-        data={lessonContents}
         integrations={lesson?.integrations ?? []}
         lessonType={lesson?.type}
         lessonId={lesson?.id || lessonId}
@@ -199,4 +197,4 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   )
 }
 
-export default memo(CodePanelBody)
+export default CodePanelBody

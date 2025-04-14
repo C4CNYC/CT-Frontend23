@@ -57,5 +57,9 @@ export const managerApi = createApi({
     'LessonSlidePreload',
     'WorkspaceStudent',
   ],
+
+  //keepUnusedDataFor: 3600,
+  refetchOnMountOrArgChange: false,
+
   endpoints: () => ({}),
 })

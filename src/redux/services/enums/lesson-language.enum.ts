@@ -2,8 +2,8 @@ export const LessonMachineLang = {
   'HTML/CSS': 'html_css',
   'HTML/CSS/JS': 'html_css_js',
   Javascript: 'javascript',
-  P5JS: 'p5.js',
-  KABOOM: 'kaboom.js',
-  ThreeJS: 'three.js',
-  'PYTHON(Brython)': 'python(Brython)',
+  'p5.js': 'p5.js',
+  'Kaboom.js': 'kaboom.js',
+  'Three.js': 'three.js',
+  'Python (Brython)': 'python(Brython)',
 }

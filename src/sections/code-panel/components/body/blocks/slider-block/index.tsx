@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux'
 import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
-import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
 import {
   setNextStepAble,
@@ -29,6 +28,7 @@ import {
   useGetStudentLastVisitedSlideQuery,
   useUpdateStudentLastVisitedSlideMutation,
 } from '@root/src/redux/services/manager/lesson-student'
+import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
 import BaseBlock from '../base-block'
 
@@ -36,7 +36,6 @@ import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
 import Navigation from './navigation'
 
 interface ISliderBlock {
-  data: Array<ILessonContent & BaseResponseInterface>
   onSubmitLesson: () => void
   onSubmitChallenge: (slideId: string, code?: string) => void
   integrations: Array<IIntegration & BaseResponseInterface>
@@ -64,7 +63,6 @@ const icon = (
 )
 
 const SliderBlock: FC<ISliderBlock> = ({
-  data,
   onSubmitLesson,
   onSubmitChallenge,
   integrations,
@@ -78,6 +76,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
   const searchParams = useSearchParams()
+  const { lessonContent } = useLessonManager()
+  let data = lessonContent ?? []
 
   const sandbox = searchParams.get('sandbox')
 
@@ -133,8 +133,8 @@ const SliderBlock: FC<ISliderBlock> = ({
           slideIndex: slideIndex + 1,
         })
       }
-
-      onSubmitChallenge(data[slideIndex].id, '')
+      const slideId = data[slideIndex]?.id
+      if (slideId) onSubmitChallenge(slideId, '')
     }
     if (hasNextStep) {
       onBeforeChange(slideIndex, slideIndex + 1)
@@ -168,7 +168,8 @@ const SliderBlock: FC<ISliderBlock> = ({
     if (!data || !data?.length) return
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    if (data?.[next]?.id) dispatch(setSlideId(data[next].id))
+    let slideId = data[next]?.id
+    if (slideId) dispatch(setSlideId(slideId))
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {
@@ -347,5 +348,4 @@ const View: FC<IView> = ({
       )
   }
 }
-
-export default React.memo(SliderBlock)
+export default SliderBlock
