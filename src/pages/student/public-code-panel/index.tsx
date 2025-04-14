@@ -204,9 +204,21 @@ export default function CodePanelPage(): ReactElement | null {
   }, [courseContent, query.courseId, query.unitId, query.lessonId])
 
   useEffect(() => {
+    let timerIdForTour: string | number | NodeJS.Timeout | undefined
+    let timerIdForRender: string | number | NodeJS.Timeout | undefined
+
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
-    if (!hasSeenTour) setShowTour(true)
-    setTimeout(() => setRender(false))
+    if (!hasSeenTour) {
+      timerIdForTour = setTimeout(() => {
+        setShowTour(true)
+      }, 3000)
+    }
+    timerIdForRender = setTimeout(() => setRender(false))
+
+    return () => {
+      clearTimeout(timerIdForRender)
+      clearTimeout(timerIdForTour)
+    }
   }, [isShowTour, showTour])
 
   useEffect(() => {
