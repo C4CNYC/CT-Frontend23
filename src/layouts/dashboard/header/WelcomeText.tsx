@@ -25,8 +25,7 @@ const WelcomeText = () => {
             alignItems: 'center',
           }}
         >
-          Hey {user?.first_name ? user.first_name : 'Friend'}
-          <Typography variant='h4'>👋</Typography>
+          Hey {user?.first_name ? user.first_name : 'Friend'} 👋
         </Typography>
       </RoleBasedGuard>
     )
@@ -41,8 +40,7 @@ const WelcomeText = () => {
         alignItems: 'center',
       }}
     >
-      Hey {user?.first_name ? user.first_name : 'Friend'}
-      <Typography variant='h4'>👋</Typography>
+      Hey {user?.first_name ? user.first_name : 'Friend'} 👋
     </Typography>
   )
 }

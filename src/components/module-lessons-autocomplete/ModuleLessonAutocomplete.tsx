@@ -20,7 +20,7 @@ import { useSnackbar } from 'notistack'
 import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetLessonsQuery, useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import {
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
@@ -45,10 +45,10 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
 
   const [addLesson] = useAddLessonToModuleMutation()
   const [removeLesson] = useRemoveLessonFromModuleMutation()
-  const { data: addedLessons } = useGetOwnLessonsQuery({ module_id: id, take: 50 }, { skip: !id })
+  const { data: addedLessons } = useGetLessonsQuery({ module_id: id })
   const { data: lessons } = useGetOwnLessonsQuery({ ...filters }, { skip: !id })
   const { data: adminLessons } = useGetAllAdminLessonsQuery({ ...filters }, { skip: !isAdmin })
-  if (!lessons?.data || !addedLessons?.data) {
+  if (!lessons?.data || !addedLessons) {
     return (
       <Skeleton
         animation='wave'
@@ -73,7 +73,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
         case 'selectOption': {
           await addLesson({
             ...payload,
-            sort: Math.max(...addedLessons.data.map((o) => o.sort ?? 0)),
+            sort: Math.max(...addedLessons?.data.map((o) => o.sort ?? 0)),
           }).unwrap()
           enqueueSnackbar(
             translate('courses_added_to_module', {
@@ -100,7 +100,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
     <Autocomplete<LessonType, true>
       multiple
       id='add-user-input'
-      value={addedLessons.data}
+      value={addedLessons?.data}
       onChange={onChange}
       options={isAdmin && adminLessons ? adminLessons.data : lessons.data}
       popupIcon={null}
@@ -143,7 +143,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
         const matches = match(name, inputValue)
         const parts = parse(name, matches)
 
-        const selected = addedLessons.data.find((c) => c.id === id)
+        const selected = addedLessons?.data.find((c) => c.id === id)
 
         return (
           <Box
