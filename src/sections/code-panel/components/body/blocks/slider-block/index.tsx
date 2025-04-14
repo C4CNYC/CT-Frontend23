@@ -34,6 +34,7 @@ import BaseBlock from '../base-block'
 
 import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
 import Navigation from './navigation'
+import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
 
 interface ISliderBlock {
   onSubmitLesson: () => void
@@ -221,19 +222,19 @@ const SliderBlock: FC<ISliderBlock> = ({
       >
         {isLoadingLessonContent ? (
           <LoadingScreen />
+        ) : currentSlide ? (
+          <View
+            title={currentSlide?.title}
+            lessonType={lessonType}
+            key={currentSlide?.id}
+            type={currentSlide?.type}
+            body={currentSlide?.body}
+            integrations={integrations}
+            connectIntegrations={connectIntegrations}
+            stepBgColor={currentSlide?.bg_color}
+          />
         ) : (
-          currentSlide && (
-            <View
-              title={currentSlide?.title}
-              lessonType={lessonType}
-              key={currentSlide?.id}
-              type={currentSlide?.type}
-              body={currentSlide?.body}
-              integrations={integrations}
-              connectIntegrations={connectIntegrations}
-              stepBgColor={currentSlide?.bg_color}
-            />
-          )
+          <SliderBlockAiLessonComing />
         )}
       </Box>
     )
