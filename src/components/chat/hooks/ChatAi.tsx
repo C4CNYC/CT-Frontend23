@@ -16,6 +16,8 @@ import { IChatMessages } from '../chatInterface'
 import { ChatAiOptionsType } from './ChatConstants'
 
 export const ChatAi = () => {
+  const [lastExtraSlideTime, setLastExtraSlideTime] = useState<number | null>(null)
+  const MaxRefetchSeconds = 10
   const { user } = useAuthContext()
   const { lesson, lessonContent, updateSlideBody, setLessonContent } = useLessonManager()
   const [updateLessonContent] = useUpdateLessonContentMutation()
@@ -36,14 +38,19 @@ export const ChatAi = () => {
   useEffect(() => {
     if (!userIsOwner || !lesson || minsSinceLesson > 60) return
     let lessonContentRefreshInterval = setInterval(() => {
-      lessonContenter.refetch()
-    }, 1000 * 10)
+      const secondsSinceLastExtra = lastExtraSlideTime
+        ? (Date.now() - lastExtraSlideTime) / 1000
+        : Infinity
+
+      if (secondsSinceLastExtra >= MaxRefetchSeconds) lessonContenter.refetch()
+    }, 1000 * 1)
     return () => {
       clearInterval(lessonContentRefreshInterval)
     }
   }, [lessonContenter, lesson, userIsOwner])
   useEffect(() => {
     if ((lessonContent?.length || 0) < (lessonContenter.data?.length || 0)) {
+      setLastExtraSlideTime(Date.now())
       setLessonContent((prevContent) => [
         ...prevContent,
         ...(lessonContenter.data?.filter(
