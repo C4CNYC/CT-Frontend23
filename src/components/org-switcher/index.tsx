@@ -15,6 +15,7 @@ import CustomPopover, { usePopover } from '@/components/custom-popover'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
+import { useGetMySchoolsQuery } from '@root/src/redux/services/manager/schools-manager'
 import { useGetOrgListQuery } from '@root/src/redux/services/manager/super-admin'
 
 import { Iconify } from '../iconify'
@@ -23,6 +24,7 @@ function OrgSwitcher() {
   const theme = useTheme()
   const popover = usePopover()
   const { reload } = useRouter()
+  const { refetch } = useGetMySchoolsQuery({})
 
   const { data, isLoading } = useGetOrgListQuery({})
 
@@ -31,12 +33,19 @@ function OrgSwitcher() {
   const mediaQuery = 'sm'
 
   const handleSchoolSwitcher = useCallback(
-    (newValue: IAdministration) => {
+    async (newValue: IAdministration) => {
       if (!org || org.slug === newValue.slug) return
       setOrg(newValue)
       localStorage.setItem('tenantName', newValue.slug)
       popover.onClose()
-      reload()
+
+      try {
+        await refetch()
+        reload()
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Error during refetch:', error)
+      }
     },
     [popover, org]
   )
