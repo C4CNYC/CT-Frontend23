@@ -9,7 +9,10 @@ import * as Yup from 'yup'
 import { FormProvider, useSnackbar } from '@/components'
 import { LessonMachineLang } from '@root/src/redux/services/enums/lesson-language.enum'
 import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
-import { useCreateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
+import {
+  useCreateLessonMutation,
+  useCreateLessonUsingN8nMutation,
+} from '@root/src/redux/services/manager/lessons-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -68,6 +71,7 @@ export default function AIGenerateStepper({
   const profile = useSelector((state) => state.global.user)
   const [createLesson] = useCreateLessonMutation()
   const [createAILesson] = AiGenerate()
+  const [createLessonUsingN8n] = useCreateLessonUsingN8nMutation()
 
   const generateAICourseSchema = Yup.object().shape({
     RlevelR: Yup.string(),
@@ -124,7 +128,7 @@ export default function AIGenerateStepper({
       push(PATH_AUTH.onBoardingTeacher.launchCourse)
     } else {
       let tempLessonName =
-        'Ai Lesson' +
+        'Ai Lesson ' +
         new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
       createLesson({
@@ -167,7 +171,14 @@ export default function AIGenerateStepper({
             lessonData.lessonType = lessonData.lessonType.replace('code-panel', '')
             redirectAfter = STUDENT_PATH_DASHBOARD.codePanel.root
           }
-          createAILesson(lessonData) // no need to wait, we have lessonid
+
+          if (lessonData.lessonType.includes('n8n')) {
+            lessonData.lessonType = lessonData.lessonType.replace('n8n', '')
+            redirectAfter = STUDENT_PATH_DASHBOARD.codePanel.root
+            createLessonUsingN8n(lessonData)
+          } else {
+            createAILesson(lessonData) // no need to wait, we have lessonid
+          }
           localStorage.removeItem('AiGenerateLessonData')
           enqueueSnackbar('Lesson created successfully', { variant: 'success' })
           let lessonId = payload.id ?? ''

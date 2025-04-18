@@ -9,7 +9,6 @@ import {
   Chip,
   Skeleton,
   TextField,
-  Typography,
   alpha,
 } from '@mui/material'
 import { MdDone } from '@react-icons/all-files/md/MdDone'
@@ -20,7 +19,7 @@ import { useSnackbar } from 'notistack'
 import { CustomAvatar, SearchNotFound } from '@/components'
 import { useFilters } from '@/hooks'
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
-import { useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
+import { useGetLessonsQuery, useGetOwnLessonsQuery } from '@/redux/services/manager/lessons-manager'
 import {
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
@@ -45,10 +44,10 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
 
   const [addLesson] = useAddLessonToModuleMutation()
   const [removeLesson] = useRemoveLessonFromModuleMutation()
-  const { data: addedLessons } = useGetOwnLessonsQuery({ module_id: id, take: 50 }, { skip: !id })
+  const { data: addedLessons } = useGetLessonsQuery({ module_id: id })
   const { data: lessons } = useGetOwnLessonsQuery({ ...filters }, { skip: !id })
   const { data: adminLessons } = useGetAllAdminLessonsQuery({ ...filters }, { skip: !isAdmin })
-  if (!lessons?.data || !addedLessons?.data) {
+  if (!lessons?.data || !addedLessons) {
     return (
       <Skeleton
         animation='wave'
@@ -73,7 +72,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
         case 'selectOption': {
           await addLesson({
             ...payload,
-            sort: Math.max(...addedLessons.data.map((o) => o.sort ?? 0)),
+            sort: Math.max(...addedLessons?.data.map((o) => o.sort ?? 0)),
           }).unwrap()
           enqueueSnackbar(
             translate('courses_added_to_module', {
@@ -97,14 +96,16 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
   }
 
   return (
-    <Autocomplete<LessonType, true>
+    <Autocomplete<LessonType, true, true>
       multiple
       id='add-user-input'
-      value={addedLessons.data}
+      value={addedLessons?.data}
       onChange={onChange}
       options={isAdmin && adminLessons ? adminLessons.data : lessons.data}
       popupIcon={null}
+      clearIcon={null}
       onLoadStart={voidFunction}
+      disableClearable={true}
       noOptionsText={
         <SearchNotFound
           sx={{ p: '20px 0' }}
@@ -115,27 +116,50 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
         setFilter('name', value)
       }}
       getOptionLabel={(option) => option.name}
-      renderTags={(tagValue, getTagProps): React.ReactElement[] =>
-        tagValue.map((option, index) => (
-          <Chip
-            sx={{ direction: 'ltr !important' }}
-            avatar={
-              <CustomAvatar
-                alt={option.name}
-                src='/assets/icons/files/ic_file.svg'
-              />
-            }
-            label={option.name}
-            {...getTagProps({ index })}
-            key={option.name}
-          />
-        ))
-      }
+      renderTags={(tagValue, getTagProps) => (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            overflowY: 'auto',
+            maxWidth: '100%',
+            maxHeight: '16rem',
+            gap: 1,
+            p: 1,
+          }}
+        >
+          {tagValue.map((option, index) => (
+            <Chip
+              sx={{ direction: 'ltr !important' }}
+              avatar={
+                <CustomAvatar
+                  alt={option.name}
+                  src='/assets/icons/files/ic_file.svg'
+                />
+              }
+              label={option.name}
+              {...getTagProps({ index })}
+              key={option.name}
+            />
+          ))}
+        </Box>
+      )}
       style={{ width: '100%' }}
       renderInput={(params) => (
         <TextField
+          style={{ width: '100%' }}
           {...params}
           placeholder={translate('lessons')}
+          InputProps={{
+            ...params.InputProps,
+            sx: {
+              paddingRight: '0px !important',
+              '& .MuiAutocomplete-endAdornment': {
+                display: 'none',
+              },
+            },
+          }}
         />
       )}
       renderOption={(props, recipient, { inputValue }) => {
@@ -143,7 +167,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
         const matches = match(name, inputValue)
         const parts = parse(name, matches)
 
-        const selected = addedLessons.data.find((c) => c.id === id)
+        const selected = addedLessons?.data.find((c) => c.id === id)
 
         return (
           <Box
@@ -151,6 +175,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
             sx={{
               p: '12px !important',
               pointerEvents: selected ? 'none' : 'auto',
+              width: '100%',
             }}
             {...props}
           >
@@ -196,13 +221,12 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
             </Box>
 
             {parts.map((part, index) => (
-              <Typography
-                key={index}
-                variant='subtitle2'
-                color={part.highlight ? 'primary' : 'textPrimary'}
+              <span
+                key={part.text}
+                style={{ color: part.highlight ? 'green' : '' }}
               >
                 {part.text}
-              </Typography>
+              </span>
             ))}
           </Box>
         )
