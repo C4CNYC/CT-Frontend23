@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { Box, Button, Typography } from '@mui/material'
 import { useSearchParams } from 'next/navigation'
 
-import { setCompletedSlides } from '@/redux/slices/checkers-animation'
 import { useSelector } from '@/redux/store'
 import { ConfirmDialog } from '@root/src/components'
 import { useUpdateStudentLastVisitedSlideMutation } from '@root/src/redux/services/manager/lesson-student'
+import { useResetContentChalangesMutation } from '@root/src/redux/services/manager/progress-student'
 import { setSlideIndex } from '@root/src/redux/slices/code-panel-global'
 import { useDispatch } from '@root/src/redux/store'
 import { resetLessonEvent } from '@root/src/sections/code-panel/lib/events'
@@ -22,13 +22,14 @@ function ResetLessonConfirm({ children }: ResetLessonConfirmProps) {
   const translate = useTranslate()
   const [openConfirm, setOpenConfirm] = useState(false)
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
+  const [resetContentChalanges] = useResetContentChalangesMutation()
   const searchParams = useSearchParams()
 
   const lessonId = searchParams.get('lessonId')
 
-  const onResetLesson = () => {
+  const onResetLesson = async () => {
     dispatch(setSlideIndex(0))
-    dispatch(setCompletedSlides([]))
+    // dispatch(setCompletedSlides([]))
 
     if (profile) {
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: 0 })
@@ -42,6 +43,7 @@ function ResetLessonConfirm({ children }: ResetLessonConfirmProps) {
       localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
 
+    await resetContentChalanges({ lesson_id: lessonId as string })
     window.dispatchEvent(resetLessonEvent)
   }
 
