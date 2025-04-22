@@ -209,7 +209,7 @@ export const ChatAi = () => {
           errorOccured = true
           // console.error('Error parsing response', e)
           if (e instanceof Error) {
-            responseMessage = `Error occured: ` + e.message
+            responseMessage = `Error occurred: ` + e.message
           } else {
             responseMessage = 'I didnt understand ai response'
           }
