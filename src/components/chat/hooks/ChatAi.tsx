@@ -11,6 +11,10 @@ import {
   useAddLessonStepPreloadFileMutation,
   useCreateLessonContentMutation,
 } from '@root/src/redux/services/manager/lesson-content-manager'
+import {
+  useDeleteStudentFileMutation,
+  useGetStudentFilesQuery,
+} from '@root/src/redux/services/manager/workspace-student'
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { dispatch, useSelector } from '@root/src/redux/store'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
@@ -38,6 +42,11 @@ export const ChatAi = () => {
   let minsSinceLesson = Math.floor((Date.now() - Date.parse(lesson?.createdAt || '')) / 60000)
   const [chatAiOptions, setChatAiOptions] = useState<ChatAiOptionsType[]>([])
   const slideId = useSelector((state) => state.codePanelGlobal.slideId)
+  const { refetch: refetchFiles, data: lessonContentFiles } = useGetStudentFilesQuery(
+    { lessonId: lesson?.id || '', lessonContentId: slideId || '' },
+    { skip: !lesson?.id || !slideId }
+  )
+  const [deleteStudentFile] = useDeleteStudentFileMutation()
 
   useEffect(() => {
     if (!userIsOwner || !lesson || minsSinceLesson > 60) return
@@ -116,6 +125,7 @@ export const ChatAi = () => {
           description: lesson?.description,
         },
         action,
+        code: lessonContentFiles?.find((f, i) => i == 0)?.body,
       }),
       'modifySlide'
     ) as unknown as Promise<{
@@ -178,6 +188,9 @@ export const ChatAi = () => {
               }
               break
             case 'precode':
+              await lessonContentFiles?.forEach(async (file) => {
+                await deleteStudentFile({ id: file.id })
+              })
               addLessonStepPreloadFile({
                 lessonId: lesson?.id || '',
                 contentId: slideId,
@@ -185,7 +198,7 @@ export const ChatAi = () => {
                 name: 'index',
                 extension: FileExtension.HTML,
               })
-
+              refetchFiles()
               break
             default:
               updateSlide(slideId, 'body', aiResponse)
