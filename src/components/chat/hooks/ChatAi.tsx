@@ -188,9 +188,11 @@ export const ChatAi = () => {
               }
               break
             case 'precode':
-              await lessonContentFiles?.forEach(async (file) => {
-                await deleteStudentFile({ id: file.id })
-              })
+              if (lessonContentFiles) {
+                for (const file of lessonContentFiles) {
+                  await deleteStudentFile({ id: file.id });
+                }
+              }
               addLessonStepPreloadFile({
                 lessonId: lesson?.id || '',
                 contentId: slideId,
