@@ -190,7 +190,7 @@ export const ChatAi = () => {
             case 'precode':
               if (lessonContentFiles) {
                 for (const file of lessonContentFiles) {
-                  await deleteStudentFile({ id: file.id });
+                  await deleteStudentFile({ id: file.id })
                 }
               }
               addLessonStepPreloadFile({
