@@ -57,9 +57,9 @@ export const LessonManagerProvider: React.FC<{
   const addNewSlide = (newSlide: ILessonContent & BaseResponseInterface) => {
     setLessonContent((prev) => {
       const updatedContent = [...prev]
-      const SlideIndex =
-        updatedContent.findIndex((slide) => slide.meta.order > newSlide.meta.order) || prev.length
-      updatedContent.splice(SlideIndex, 0, newSlide)
+      const SlideIndex = updatedContent.findIndex((slide) => slide.meta.order > newSlide.meta.order)
+      const insertIndex = SlideIndex === -1 ? prev.length : SlideIndex
+      updatedContent.splice(insertIndex, 0, newSlide)
       return updatedContent
     })
   }
