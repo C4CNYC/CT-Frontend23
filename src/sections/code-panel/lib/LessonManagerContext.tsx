@@ -17,7 +17,11 @@ interface LessonManagerContextProps {
   isOpenDrawer: boolean
   setIsOpenDrawer: (isOpen: boolean) => void
   onChooseLesson: (lessonId: string, unitId: string) => void
-  updateSlideBody: (slideId: string, newBody: string) => void
+  updateSlide: (
+    slideId: string,
+    part: keyof ILessonContent,
+    value: ILessonContent[keyof ILessonContent]
+  ) => void
   addNewSlide: (newSlide: ILessonContent & BaseResponseInterface) => void
   setLessonContent: Dispatch<SetStateAction<(ILessonContent & BaseResponseInterface)[]>>
 }
@@ -40,11 +44,16 @@ export const LessonManagerProvider: React.FC<{
       setLessonContent(initialLessonContent)
     }
   }, [initialLessonContent])
-  const updateSlideBody = (slideId: string, newBody: string) => {
+  const updateSlide = (
+    slideId: string,
+    part: keyof ILessonContent,
+    value: ILessonContent[keyof ILessonContent]
+  ) => {
     setLessonContent((prev) =>
-      prev.map((slide) => (slide.id === slideId ? { ...slide, body: newBody } : slide))
+      prev.map((slide) => (slide.id === slideId ? { ...slide, [part]: value } : slide))
     )
   }
+
   const addNewSlide = (newSlide: ILessonContent & BaseResponseInterface) => {
     setLessonContent((prev) => {
       const updatedContent = [...prev]
@@ -83,7 +92,7 @@ export const LessonManagerProvider: React.FC<{
         isOpenDrawer,
         setIsOpenDrawer,
         onChooseLesson,
-        updateSlideBody,
+        updateSlide,
         addNewSlide,
         setLessonContent,
       }}

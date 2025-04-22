@@ -1,6 +1,6 @@
 /**
  * Generates a UUID (Universally Unique Identifier) based on the current timestamp.
- * 
+ *
  */
 export function generateUUID() {
   const timestamp = new Date().getTime()

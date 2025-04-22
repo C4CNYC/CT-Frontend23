@@ -7,10 +7,15 @@ import {
   useGetLessonContentQuery,
   useUpdateLessonContentMutation,
 } from '@root/src/redux/services/manager/lesson-content-manager'
+import {
+  useAddLessonStepPreloadFileMutation,
+  useCreateLessonContentMutation,
+} from '@root/src/redux/services/manager/lesson-content-manager'
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { dispatch, useSelector } from '@root/src/redux/store'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
-import { generateUUID } from '@root/src/utils/generateUUID'
+import { FileExtension } from '@root/src/types/lessons'
+import { JsonParseFromAiResponse } from '@root/src/utils/stripQuotesFromAiResponse'
 
 import { IChatMessages } from '../chatInterface'
 
@@ -20,9 +25,10 @@ export const ChatAi = () => {
   const [lastExtraSlideTime, setLastExtraSlideTime] = useState<number | null>(null)
   const MaxRefetchSeconds = 10
   const { user } = useAuthContext()
-  const { lesson, lessonContent, updateSlideBody, addNewSlide, setLessonContent } =
-    useLessonManager()
+  const { lesson, lessonContent, updateSlide, addNewSlide, setLessonContent } = useLessonManager()
   const [updateLessonContent] = useUpdateLessonContentMutation()
+  const [addLessonContent] = useCreateLessonContentMutation()
+  const [addLessonStepPreloadFile] = useAddLessonStepPreloadFileMutation()
   // this useGetLessonContentQuery different from useGetLessonContentStudentQuery
   const lessonContenter = useGetLessonContentQuery(
     { lessonId: lesson?.id || '' },
@@ -140,7 +146,7 @@ export const ChatAi = () => {
       let ctime = new Date().getTime()
       setMessages((s) => [{ chat: message, isMe: true, id: ctime, ctime }, ...(s || [])])
       chatHistoryAdd(message, 1)
-      modifySlide(slideId, message).then((res) => {
+      modifySlide(slideId, message).then(async (res) => {
         ctime = new Date().getTime()
         let responseMessage = 'Making changes...'
         let aiResponse = ''
@@ -149,23 +155,40 @@ export const ChatAi = () => {
           JSON.parse(res.data[0].output)
           aiResponse = res.data[0].output
           let action = res.data[0].action
-          if (action == 'add') {
-            let order = lessonContent?.findIndex((lc) => lc.id === slideId) || 0
+          switch (action) {
+            case 'add':
+              let order = lessonContent?.findIndex((lc) => lc.id === slideId) || 0
+              try {
+                let newLessonContent = await addLessonContent({
+                  lessonId: lesson?.id || '',
+                  title: message,
+                  body: aiResponse,
+                  tips: '',
+                  type: LessonContentType.Editable,
+                  meta: { order: order + 0.1 },
+                }).unwrap()
 
-            addNewSlide({
-              body: res.data[0].output,
-              preload_body: '',
-              tips: '',
-              solution_body: '',
-              validations: [],
-              type: LessonContentType.Editable,
-              meta: { order: order + 0.1 },
-              id: generateUUID(),
-              createdAt: '',
-              updatedAt: '',
-            })
-          } else {
-            updateSlideBody(slideId, res.data[0].output)
+                addNewSlide({
+                  ...newLessonContent,
+                  createdAt: new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
+                })
+              } catch (e) {
+                errorOccured = true
+              }
+              break
+            case 'precode':
+              addLessonStepPreloadFile({
+                lessonId: lesson?.id || '',
+                contentId: slideId,
+                preloaded_code: JsonParseFromAiResponse(aiResponse).content,
+                name: 'index',
+                extension: FileExtension.HTML,
+              })
+
+              break
+            default:
+              updateSlide(slideId, 'body', aiResponse)
           }
         } catch (e) {
           errorOccured = true
