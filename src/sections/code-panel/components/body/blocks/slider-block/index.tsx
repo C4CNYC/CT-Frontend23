@@ -35,6 +35,7 @@ import BaseBlock from '../base-block'
 import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
 import Navigation from './navigation'
 import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
+import { IProgressGuest } from '@root/src/redux/services/interfaces/lesson.interface'
 
 interface ISliderBlock {
   onSubmitLesson: () => void
@@ -150,17 +151,20 @@ const SliderBlock: FC<ISliderBlock> = ({
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
     }
     if (localStorage) {
-      let currentProgress = 0
-      const progress = localStorage.getItem(`${lessonId}_progress`)
-      let newProgress: any = {}
+      let currentProgress : IProgressGuest | unknown
+      const progress = localStorage.getItem(`progress_${lessonId}`) 
+      let newProgress: IProgressGuest = {
+        lastSlide: 0,
+        numberOfCompletedChallenges: 0
+      }
       if (progress) {
-        newProgress = JSON.parse(progress)
-        currentProgress = newProgress[lessonId as string] ?? 0
+        currentProgress = JSON.parse(progress) as IProgressGuest | unknown
+        newProgress = {...newProgress,lastSlide:next}        
       }
       if (lessonId) {
-        newProgress[lessonId as string] = next
+        newProgress[lessonId as string] = {lastSlide:next, numberOfCompletedChallenges:0}
       }
-      if (currentProgress && !next) return // if the next slide is empty, it's end of lesson, we dont need to reset the progress
+      if (!next) return // if the next slide is empty, it's end of lesson, we dont need to reset the progress
       localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
   }

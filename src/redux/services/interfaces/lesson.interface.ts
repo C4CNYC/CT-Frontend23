@@ -43,3 +43,7 @@ export interface IStudentProgress {
   lessonId: string
   numberOfCompletedChallenges: number
 }
+export interface IProgressGuest {
+  lastSlide:number
+  numberOfCompletedChallenges:number
+}

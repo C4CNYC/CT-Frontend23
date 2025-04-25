@@ -38,21 +38,36 @@ export default function ModulePage(): React.ReactElement {
 
   const course = publicCourse
 
+  function getLessonProgress(lessonId: string, challangeCount:number, slideCount:number) {
+    console.log(lessonId)
+    if (studentProgress) {
+      let p = studentProgress.find((p) => p.lessonId === lessonId);
+      return p ? p.numberOfCompletedChallenges : 0
+
+    } else {
+      let l = localStorage.getItem(lessonId + '_progress')
+      return l ? Object.values(JSON.parse(l))[0] : 0
+    }
+  }
+
   const unitModule = useMemo(() => {
     let data = publicCourse
     if (!data || !data?.units) return null
-    if (!studentProgress) return data.units.find((m) => m.id === query.unit)
+    // if (!studentProgress) return data.units.find((m) => m.id === query.unit)
     const updatedUnits = data.units.map((unit) => {
       const updatedLessons = unit.lessons.map((lesson) => {
-        const progress = studentProgress.find((p) => p.lessonId === lesson.id)
+        const progress = getLessonProgress(
+          lesson.id,  
+          (lesson.meta.challenges as number) || 10, 
+          lesson.content. )
         return progress
           ? {
-              ...lesson,
-              progress:
-                (+progress?.numberOfCompletedChallenges /
-                  ((lesson.meta.challenges as number) || 10)) *
-                100,
-            }
+            ...lesson,
+            progress:
+              (+progress /
+                ((lesson.meta.challenges as number) || 10)) *
+              100,
+          }
           : lesson
       })
 
