@@ -16,6 +16,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import { IModuleContent } from '@root/src/redux/interfaces/content.interface'
 import { useGetStudentProgressQuery } from '@root/src/redux/services/manager/lesson-student'
 import { useGetPublicCourseContentQuery } from '@root/src/redux/services/public-student'
+import { progressGuestGet } from '@root/src/utils/progressLocalStorage'
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -38,15 +39,12 @@ export default function ModulePage(): React.ReactElement {
 
   const course = publicCourse
 
-  function getLessonProgress(lessonId: string, challangeCount:number, slideCount:number) {
-    console.log(lessonId)
+  function getLessonProgress(lessonId: string, challangeCount: number, slideCount: number) {
     if (studentProgress) {
-      let p = studentProgress.find((p) => p.lessonId === lessonId);
-      return p ? p.numberOfCompletedChallenges : 0
-
+      let p = studentProgress.find((p) => p.lessonId === lessonId)
+      return p ? Math.round((p.numberOfCompletedChallenges / challangeCount) * 100) : 0
     } else {
-      let l = localStorage.getItem(lessonId + '_progress')
-      return l ? Object.values(JSON.parse(l))[0] : 0
+      return Math.round((progressGuestGet(lessonId) / slideCount) * 100)
     }
   }
 
@@ -56,19 +54,12 @@ export default function ModulePage(): React.ReactElement {
     // if (!studentProgress) return data.units.find((m) => m.id === query.unit)
     const updatedUnits = data.units.map((unit) => {
       const updatedLessons = unit.lessons.map((lesson) => {
-        const progress = getLessonProgress(
-          lesson.id,  
-          (lesson.meta.challenges as number) || 10, 
-          lesson.content. )
-        return progress
-          ? {
-            ...lesson,
-            progress:
-              (+progress /
-                ((lesson.meta.challenges as number) || 10)) *
-              100,
-          }
-          : lesson
+        let progress = getLessonProgress(
+          lesson.id,
+          (lesson.meta.challenges as number) || 10,
+          lesson?.contents?.length || 10
+        )
+        return { ...lesson, progress }
       })
 
       // Sum up all lesson.progress values (default to 0 if not set)

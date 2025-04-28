@@ -169,7 +169,7 @@ export const ChatAi = () => {
     }
 
   useEffect(() => {
-    if (!slideId) return
+    if (!userIsOwner || !slideId) return
     askSuggestions(slideId).then((res: any) => {
       if (res && 'data' in res && res.data && res.data.length > 0 && res.data[0].output) {
         setChatAiOptions(res.data[0].output as unknown as ChatAiOptionsType[])

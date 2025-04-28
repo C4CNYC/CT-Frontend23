@@ -44,6 +44,6 @@ export interface IStudentProgress {
   numberOfCompletedChallenges: number
 }
 export interface IProgressGuest {
-  lastSlide:number
-  numberOfCompletedChallenges:number
+  lastSlide: number
+  numberOfCompletedChallenges: number
 }

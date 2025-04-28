@@ -29,13 +29,13 @@ import {
   useUpdateStudentLastVisitedSlideMutation,
 } from '@root/src/redux/services/manager/lesson-student'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
+import { progressGuestGetAll, progressGuestSet } from '@root/src/utils/progressLocalStorage'
 
 import BaseBlock from '../base-block'
 
 import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
 import Navigation from './navigation'
 import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
-import { IProgressGuest } from '@root/src/redux/services/interfaces/lesson.interface'
 
 interface ISliderBlock {
   onSubmitLesson: () => void
@@ -151,21 +151,11 @@ const SliderBlock: FC<ISliderBlock> = ({
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
     }
     if (localStorage) {
-      let currentProgress : IProgressGuest | unknown
-      const progress = localStorage.getItem(`progress_${lessonId}`) 
-      let newProgress: IProgressGuest = {
-        lastSlide: 0,
-        numberOfCompletedChallenges: 0
-      }
-      if (progress) {
-        currentProgress = JSON.parse(progress) as IProgressGuest | unknown
-        newProgress = {...newProgress,lastSlide:next}        
-      }
       if (lessonId) {
-        newProgress[lessonId as string] = {lastSlide:next, numberOfCompletedChallenges:0}
+        const progress = progressGuestGetAll(lessonId)
+        progress.lastSlide = next
+        progressGuestSet(lessonId, progress)
       }
-      if (!next) return // if the next slide is empty, it's end of lesson, we dont need to reset the progress
-      localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
   }
 
@@ -196,6 +186,11 @@ const SliderBlock: FC<ISliderBlock> = ({
   useEffect(() => {
     if (lastSlide?.slideNumber) {
       onBeforeChange(slideIndex, lastSlide.slideNumber)
+    } else {
+      let progress = progressGuestGetAll(lessonId as string)
+      if (progress) {
+        onBeforeChange(slideIndex, progress.lastSlide)
+      }
     }
   }, [data, lastSlide])
 
@@ -205,15 +200,6 @@ const SliderBlock: FC<ISliderBlock> = ({
       if (slideIndex >= 0) onUpdateLastSlide(slideIndex)
     })
   }, [slideIndex])
-
-  useEffect(() => {
-    const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
-    if (!data || !lessonId || data?.length == 0) return
-    if (lessonId && progress) {
-      const lastSlide: number = progress[lessonId as string] || 0
-      onBeforeChange(slideIndex, lastSlide)
-    }
-  }, [lessonId, data])
 
   const slider = useMemo(() => {
     const currentSlide = data[slideIndex]
