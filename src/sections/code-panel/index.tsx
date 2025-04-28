@@ -49,10 +49,6 @@ const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/co
   ssr: false,
 })
 
-const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
-  ssr: false,
-})
-
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
   {
@@ -293,9 +289,21 @@ export default function CodePanelLayout(): ReactElement | null {
   }, [lesson, isLoadingLesson, router, render, profile])
 
   useEffect(() => {
+    let timerIdForTour: string | number | NodeJS.Timeout | undefined
+    let timerIdForRender: string | number | NodeJS.Timeout | undefined
+
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
-    if (!hasSeenTour) setShowTour(true)
-    setTimeout(() => setRender(false))
+    if (!hasSeenTour) {
+      timerIdForTour = setTimeout(() => {
+        setShowTour(true)
+      }, 3000)
+    }
+    timerIdForRender = setTimeout(() => setRender(false))
+
+    return () => {
+      clearTimeout(timerIdForRender)
+      clearTimeout(timerIdForTour)
+    }
   }, [isShowTour, showTour])
 
   if (!isLoadingComplete && render) {
@@ -320,6 +328,7 @@ export default function CodePanelLayout(): ReactElement | null {
           data={courseContent}
           isLoading={isLoadingCourseContent}
           lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+          lessonContent={lessonContent}
         >
           {router.query.ai ? (
             <AIGeneratorTour withModals />
@@ -334,10 +343,7 @@ export default function CodePanelLayout(): ReactElement | null {
               overflow: 'hidden',
             }}
           >
-            <CodePanelHeader
-              chatComponent={<CodePanelChat />}
-              language={DEFAULT_LANGUAGE}
-            />
+            <CodePanelHeader language={DEFAULT_LANGUAGE} />
             <CodePanelBody
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
               isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}
