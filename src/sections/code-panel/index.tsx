@@ -37,6 +37,7 @@ import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
+import { progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
@@ -44,7 +45,6 @@ import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
 import { LessonManagerProvider } from './lib/LessonManagerContext'
-import { progressGuestSet, progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
 const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
   ssr: false,
@@ -213,11 +213,11 @@ export default function CodePanelLayout(): ReactElement | null {
 
     if (!profile) {
       progressGuestSetValidation({
-        lessonId:lesson?.id||'',
-        courseId:router.query.courseId as string,
-        moduleId:router.query.unitId as string,
-        slideId: lessonContentId,}
-      )
+        lessonId: lesson?.id || '',
+        courseId: router.query.courseId as string,
+        moduleId: router.query.unitId as string,
+        slideId: lessonContentId,
+      })
       return
     }
     try {

@@ -104,8 +104,8 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
         observer.unobserve(element)
       }
     }
-  }, []) 
-  
+  }, [])
+
   useEffect(() => {
     setAnchorEl(popperRef.current)
   }, [])
