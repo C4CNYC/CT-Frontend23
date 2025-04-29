@@ -1,3 +1,4 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3137348962.
 import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Box, SpeedDial, SpeedDialAction, Tooltip, Typography, useTheme } from '@mui/material'
@@ -103,19 +104,8 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
         observer.unobserve(element)
       }
     }
-  }, [])
-
-  const openSpeedDial = () => {
-    setSpeedDial(true)
-  }
-  const closeSpeedDial = () => {
-    setSpeedDial(false)
-  }
-
-  const handleCloseDialog = () => {
-    setDialogType(null)
-  }
-
+  }, []) 
+  
   useEffect(() => {
     setAnchorEl(popperRef.current)
   }, [])
@@ -155,8 +145,8 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
           aria-describedby={'popper'}
           ariaLabel='SpeedDial basic example'
           open={speedDeal}
-          onClose={closeSpeedDial}
-          onOpen={openSpeedDial}
+          onClose={() => setSpeedDial(false)}
+          onOpen={() => setSpeedDial(true)}
           FabProps={speedDealProps}
           sx={speedDealStyles}
           direction='up'
@@ -197,11 +187,11 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ openPopover, contentId }) => {
       </Tooltip>
       <SolutionMobileDialog
         open={dialogType === IActionDialogType.solution}
-        onClose={handleCloseDialog}
+        onClose={() => setDialogType(null)}
       />
       <UnstuckMobileDialog
         open={dialogType === IActionDialogType.stuck}
-        onClose={handleCloseDialog}
+        onClose={() => setDialogType(null)}
       />
     </>
   )

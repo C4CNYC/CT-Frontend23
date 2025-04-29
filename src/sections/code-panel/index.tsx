@@ -44,6 +44,7 @@ import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
 import { LessonManagerProvider } from './lib/LessonManagerContext'
+import { progressGuestSet, progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
 const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
   ssr: false,
@@ -211,12 +212,18 @@ export default function CodePanelLayout(): ReactElement | null {
     dispatch(setIsActivateCompeated(false))
 
     if (!profile) {
+      progressGuestSetValidation({
+        lessonId:lesson?.id||'',
+        courseId:router.query.courseId as string,
+        moduleId:router.query.unitId as string,
+        slideId: lessonContentId,}
+      )
       return
     }
     try {
       await completeLesson({
         id: router.query.courseId as string,
-        module_id: router.query.unit_id as string,
+        module_id: router.query.unitId as string,
         lesson_content_id: lessonContentId,
         code,
       }).unwrap()
@@ -227,7 +234,7 @@ export default function CodePanelLayout(): ReactElement | null {
     if (window.dataLayer) {
       window.dataLayer.push({
         event: 'Lesson_Completed',
-        event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unit_id} > Training (Lesson) ${router.query.lessonId}`,
+        event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unitId} > Training (Lesson) ${router.query.lessonId}`,
         event_label: lessonContentId,
       })
     }

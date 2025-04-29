@@ -19,8 +19,7 @@ import codePanelGlobalReducer from './slices/code-panel-global'
 import globalRducer from './slices/global'
 import lessonStepsReducer from './slices/lesson-steps'
 import managerReducer from './slices/manager'
-import mobileTabManagerReducer from './slices/mobile-tab-manager'
-import rabitsReduce from './slices/rabits'
+import mobileTabManagerReducer from './slices/mobile-tab-manager' 
 import schoolSettingsReducer from './slices/schoolSettings'
 import tenantReducer from './slices/tenant'
 import tourReducer from './slices/tour'
@@ -68,8 +67,7 @@ const rootReducer = combineReducers({
   manager: managerReducer,
   lessonSteps: lessonStepsReducer,
   schoolSettings: schoolSettingsReducer,
-  codePanel: codePanelReducer,
-  rabits: rabitsReduce,
+  codePanel: codePanelReducer, 
   codePanelGlobal: codePanelGlobalReducer,
   tour: tourReducer,
   checkersAnimation: checkersAnimationReducer,

@@ -13,6 +13,7 @@ import { resetTenant, setTenant, Tenant } from '../redux/slices/tenant'
 
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
 import { isValidToken, setSession } from './utils'
+import { useLogin } from '../hooks/useLogin'
 
 enum Types {
   INITIAL = 'INITIAL',
@@ -96,12 +97,16 @@ interface AuthProviderProps {
   children: React.ReactNode
   tenant?: Tenant
 }
+const localStorageDontClearThose = [
+  'HAS_SEEN', 'i18', 'iconify', 'tenant'
+] 
 
 // TODO: Handle scenario when user is not logged in and user data is an empty string with isAuthenticated set to true
 export function AuthProvider({ children, tenant }: AuthProviderProps): React.ReactElement | null {
   const [state, dispatch] = useReducer(reducer, initialState)
   const reduxDispatch = useDispatch()
   const storageAvailable = localStorageAvailable()
+  useLogin()
 
   const initialize = useCallback(async () => {
     try {
@@ -312,10 +317,13 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
   const logout = useCallback(() => {
     setSession(null, null)
     reduxDispatch(cleanUser())
-    reduxDispatch(cleanUserRole())
-    const lang = localStorage.getItem('i18nextLng')
-    localStorage.clear()
-    localStorage.setItem('i18nextLng', lang ?? defaultLang.value)
+    reduxDispatch(cleanUserRole()) 
+    
+  for (let i = localStorage.length-1; i >-1 ; i--)
+    if (!localStorageDontClearThose.some(x => localStorage.key(i)?.includes(x) ))
+      localStorage.removeItem(localStorage.key(i)!)
+
+    // localStorage.clear() // please write here why we needed to clear localStorage? 
     dispatch({
       type: Types.LOGOUT,
     })
