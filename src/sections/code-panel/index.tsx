@@ -37,6 +37,7 @@ import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
+import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
@@ -153,6 +154,11 @@ export default function CodePanelLayout(): ReactElement | null {
     setShowConfetti(false)
     confetti?.reset()
   }
+
+  useEffect(() => {
+    if (!profile || !lesson) return
+    if (profile?.id == lesson?.userId) dispatch(setChatVisible(true))
+  }, [profile, lesson])
 
   useEffect(() => {
     if (!courseContent) return
