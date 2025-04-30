@@ -32,7 +32,7 @@ const extendedApi = managerApi.injectEndpoints({
           ...body,
         },
       }),
-      invalidatesTags: ['Progress'],
+      invalidatesTags: ['GetCompleteChalange'],
     }),
   }),
   overrideExisting: true,

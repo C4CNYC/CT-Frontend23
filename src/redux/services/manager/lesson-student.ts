@@ -52,6 +52,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/student/progress/get-complete-chalange`,
         method: 'GET',
       }),
+      providesTags: ['GetCompleteChalange'],
       keepUnusedDataFor: 0,
       async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
         try {

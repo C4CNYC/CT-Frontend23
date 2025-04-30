@@ -43,8 +43,9 @@ function ResetLessonConfirm({ children }: ResetLessonConfirmProps) {
       localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
 
-    await resetContentChalanges({ lesson_id: lessonId as string })
     window.dispatchEvent(resetLessonEvent)
+
+    await resetContentChalanges({ lesson_id: lessonId as string })
   }
 
   const handleOpenConfirm = () => {
