@@ -12,6 +12,10 @@ import {
   useCreateLessonContentMutation,
 } from '@root/src/redux/services/manager/lesson-content-manager'
 import {
+  useCreateLessonContentValidationManagerMutation,
+  useGetLessonContentValidationsManagerQuery,
+} from '@root/src/redux/services/manager/lesson-content-validation-manager'
+import {
   useDeleteStudentFileMutation,
   useGetStudentFilesQuery,
 } from '@root/src/redux/services/manager/workspace-student'
@@ -33,6 +37,11 @@ export const ChatAi = () => {
   const [updateLessonContent] = useUpdateLessonContentMutation()
   const [addLessonContent] = useCreateLessonContentMutation()
   const [addLessonStepPreloadFile] = useAddLessonStepPreloadFileMutation()
+  const lessonValidations = useGetLessonContentValidationsManagerQuery(
+    { id: lesson?.id || '' },
+    { skip: !lesson?.id }
+  )
+  const [validationUpdate] = useCreateLessonContentValidationManagerMutation()
   // this useGetLessonContentQuery different from useGetLessonContentStudentQuery
   const lessonContenter = useGetLessonContentQuery(
     { lessonId: lesson?.id || '' },
@@ -186,6 +195,15 @@ export const ChatAi = () => {
               } catch (e) {
                 errorOccured = true
               }
+              break
+            case 'regex':
+              await validationUpdate({
+                regex: JsonParseFromAiResponse(aiResponse).content,
+                name: message,
+                id: slideId,
+              }).unwrap()
+              lessonValidations.refetch()
+
               break
             case 'precode':
               if (lessonContentFiles) {
