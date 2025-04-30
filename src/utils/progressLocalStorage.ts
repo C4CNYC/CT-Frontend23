@@ -54,6 +54,6 @@ export function progressGuestSetValidation({
   }
 }
 export function progressGuestClearAll() {
-  for (let i = localStorage.length - 1; i > 0; i--)
+  for (let i = localStorage.length - 1; i >= 0; i--)
     if (localStorage.key(i)?.startsWith('progress_')) localStorage.removeItem(localStorage.key(i)!)
 }
