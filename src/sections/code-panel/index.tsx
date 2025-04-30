@@ -37,6 +37,7 @@ import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
+import { isUuid } from '@root/src/utils/isUuid'
 import { progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
@@ -133,7 +134,7 @@ export default function CodePanelLayout(): ReactElement | null {
     {
       slug: lessonIdFromRoute,
     },
-    { skip: !lessonIdFromRoute && !isErrorLessonContent }
+    { skip: (!lessonIdFromRoute && !isErrorLessonContent) || isUuid(lessonIdFromRoute) }
   )
   useEffect(() => {
     if (
