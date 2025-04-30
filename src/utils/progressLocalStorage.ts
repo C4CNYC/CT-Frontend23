@@ -10,7 +10,7 @@ export function progressGuestGet(lessonId: string) {
 
 export function progressGuestGetAll(lessonId: string) {
   let l = localStorage.getItem('progress_' + lessonId)
-  if (!l) return { lastSlide: 0, numberOfCompletedChallenges: 0, challanges: [] }
+  if (!l) return { lastSlide: 0, numberOfCompletedChallenges: 0, challanges: [] } as IProgressGuest
 
   let progress = JSON.parse(l) as IProgressGuest
   return progress
