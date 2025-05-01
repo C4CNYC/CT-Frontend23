@@ -28,8 +28,7 @@ function ResetLessonConfirm({ children }: ResetLessonConfirmProps) {
   const lessonId = searchParams.get('lessonId')
 
   const onResetLesson = async () => {
-    dispatch(setSlideIndex(0))
-    // dispatch(setCompletedSlides([]))
+    await resetContentChalanges({ lesson_id: lessonId as string })
 
     if (profile) {
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: 0 })
@@ -45,7 +44,7 @@ function ResetLessonConfirm({ children }: ResetLessonConfirmProps) {
 
     window.dispatchEvent(resetLessonEvent)
 
-    await resetContentChalanges({ lesson_id: lessonId as string })
+    dispatch(setSlideIndex(0))
   }
 
   const handleOpenConfirm = () => {
