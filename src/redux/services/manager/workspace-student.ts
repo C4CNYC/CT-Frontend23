@@ -18,7 +18,7 @@ const extendedApi = managerApi.injectEndpoints({
           lessonContentId: lessonContentId,
         },
       }),
-      keepUnusedDataFor: 0,
+      keepUnusedDataFor: 360,
       providesTags: ['WorkspaceStudent'],
     }),
     getFilesByUnauthUser: builder.query<
@@ -78,5 +78,30 @@ export const {
   useCreateStudentFileMutation,
   useUpdateStudentFileMutation,
   useDeleteStudentFileMutation,
+  useLazyGetStudentFilesQuery,
+  useLazyGetFilesByUnauthUserQuery,
   useLessonFilesCarryOverMutation,
 } = extendedApi
+
+export const useResetStudentFiles = ({
+  lessonId,
+  lessonContentId,
+}: {
+  lessonId: string
+  lessonContentId?: string
+}) => {
+  let { data: files } = useGetStudentFilesQuery({ lessonId, lessonContentId })
+  const [deleteStudentFile] = useDeleteStudentFileMutation()
+  const [trigger] = useLazyGetStudentFilesQuery()
+
+  const deleteAllFiles = async () => {
+    if (files)
+      for (const file of files) {
+        await deleteStudentFile({ id: file.id }).unwrap()
+      }
+    const { refetch } = trigger({ lessonId, lessonContentId })
+    refetch()
+  }
+
+  return deleteAllFiles
+}
