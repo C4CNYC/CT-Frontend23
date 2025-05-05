@@ -49,8 +49,6 @@ export const CodePanelChat = (): React.ReactElement => {
     }
   }
 
-  if (!messages || messages.length === 0) return <></>
-
   return (
     <Stack
       component={Card}
@@ -101,8 +99,19 @@ export const CodePanelChat = (): React.ReactElement => {
                   message={message}
                 />
               ))}
+              {!messages && (
+                <Box>
+                  <ChatMessageItem
+                    message={{
+                      id: 1,
+                      chat: 'Hello, how can I help you?',
+                      isMe: false,
+                      ctime: new Date().getTime(),
+                    }}
+                  />
+                </Box>
+              )}
             </Box>
-
             <ChatMessageInput SendMessage={sendMessage} />
           </Stack>
         </Stack>
