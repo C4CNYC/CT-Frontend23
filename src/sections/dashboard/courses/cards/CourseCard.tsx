@@ -1,7 +1,17 @@
 import { useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
-import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+  Typography,
+  Switch,
+  FormControlLabel,
+} from '@mui/material'
 import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
@@ -34,7 +44,7 @@ export default function CourseCard({
 
   const [deleteCourse] = useDeleteCourseMutation()
 
-  const { name, level, price, description, active, cover } = course
+  const { name, level, price, description, active, cover, isGlobal } = course
 
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
@@ -86,7 +96,7 @@ export default function CourseCard({
         component={Link}
         href={`${MANAGER_PATH_DASHBOARD.modules.root}?course_id=${course.id}`}
       >
-        {isAdmin ? (
+        {isAdmin && !isGlobal ? (
           <Stack
             direction='row'
             alignItems='center'
@@ -117,6 +127,23 @@ export default function CourseCard({
         </Box>
 
         <Box sx={{ position: 'relative' }}>
+          {isGlobal ? (
+            <Label
+              variant='soft'
+              color={'info'}
+              sx={{
+                textTransform: 'uppercase',
+                mr: 'auto',
+                position: 'absolute',
+                top: 10,
+                left: 10,
+              }}
+            >
+              Global Course
+            </Label>
+          ) : (
+            ''
+          )}
           <Label
             variant='soft'
             color={active ? 'success' : 'error'}
@@ -130,6 +157,23 @@ export default function CourseCard({
           >
             {active ? translate('active') : translate('not_active')}
           </Label>
+          {isGlobal ? (
+            <Stack
+              direction='row'
+              sx={{
+                mr: 1,
+                ml: 1,
+                pt: 5,
+              }}
+            >
+              <FormControlLabel
+                control={<Switch defaultChecked />}
+                label={'Show course for this tenant'}
+              />
+            </Stack>
+          ) : (
+            ''
+          )}
           <Typography
             variant='subtitle1'
             sx={{ pt: 6, mb: 0.5 }}

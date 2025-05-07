@@ -260,7 +260,7 @@ export const menuConfig = (currentRole: Role) =>
     ? {
         [Role.SuperAdmin]: [superAdmin, managment, content],
         [Role.Owner]: [admin, managment, content],
-        [Role.Admin]: [adminForAdminRole],
+        [Role.Admin]: [adminForAdminRole, content],
         // [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],
         [Role.Anonymous]: [courses, general, apps],

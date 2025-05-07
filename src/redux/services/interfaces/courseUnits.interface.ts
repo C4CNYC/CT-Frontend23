@@ -50,6 +50,7 @@ export interface ICourse {
   draft: boolean
   skills: []
   units: IModule[]
+  isGlobal: boolean
 }
 
 export interface ILessonContent {
