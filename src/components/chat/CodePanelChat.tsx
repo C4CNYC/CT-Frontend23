@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
 
+import { ChatHeader } from './ChatHeader'
 import { IChatMessages } from './chatInterface'
 import { ChatMessageInput } from './chatMessageInput'
 import { ChatMessageItem } from './chatMessageItem'
@@ -67,7 +68,7 @@ export const CodePanelChat = (): React.ReactElement => {
         }}
       >
         {/* {renderHead} */}
-
+        <ChatHeader />
         <Stack
           direction='row'
           sx={{

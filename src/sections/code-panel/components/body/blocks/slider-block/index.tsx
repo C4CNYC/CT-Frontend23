@@ -18,9 +18,7 @@ import {
   toggleInstrations,
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
-import BrowserView, {
-  CodeDocument,
-} from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
+import BrowserView from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { useDebounceCallback } from '@root/src/hooks'
@@ -32,9 +30,11 @@ import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManage
 import { progressGuestGetAll, progressGuestSet } from '@root/src/utils/progressLocalStorage'
 
 import BaseBlock from '../base-block'
+import { CodeDocument } from '../view-block/browser-view/types'
 
 import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
 import Navigation from './navigation'
+import { SaveEditContent } from './SaveEditContent'
 import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
 
 interface ISliderBlock {
@@ -273,6 +273,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         />
       ) : (
         <>
+          <SaveEditContent />
           {slider}
           <NextStep
             handleNext={handleNext}

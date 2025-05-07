@@ -52,6 +52,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
+      invalidatesTags: [{ type: 'WorkspaceStudent' }],
     }),
     lessonFilesCarryOver: builder.mutation<void, { lessonId: string; prevLessonId: string }>({
       query: (body) => ({

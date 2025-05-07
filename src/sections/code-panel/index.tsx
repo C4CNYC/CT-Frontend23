@@ -60,7 +60,7 @@ const CodePanelTour = dynamic(
 )
 
 const CodePanelHeader = dynamic(
-  async () => await import('@/sections/code-panel/components/header'),
+  async () => ({ default: (await import('@/sections/code-panel/components/header')).TopPanel }),
   {
     loading: () => <CPTopBarSkeleton />,
   }
@@ -70,7 +70,7 @@ const Confetti = dynamic(async () => await import('react-confetti'), { ssr: fals
 
 const DEFAULT_LANGUAGE = 'html'
 
-export default function CodePanelLayout(): ReactElement | null {
+export function CodePanelLayout(): ReactElement | null {
   const router = useRouter()
   const dispatch = useDispatch()
   const translate = useTranslate()

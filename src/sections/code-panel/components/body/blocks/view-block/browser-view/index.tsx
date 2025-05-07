@@ -1,35 +1,13 @@
-import { type FC, useEffect, useMemo, useState } from 'react'
+import { type FC, useEffect, useMemo, useRef, useState } from 'react'
 
-import { IIntegration } from '@/redux/services/interfaces/integration.interface'
+import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
 import SkeletonViewBlock from '../skeleton-view-box'
 
-export interface CodeDocument {
-  htmlBody?: string
-  cssBody?: string
-  jsBody?: string
-}
+import { iframeSuppliments } from './iframeSuppliments'
+import { BrowserViewProps, CodeDocument, TagNames } from './types'
 
-interface BrowserViewProps {
-  document: CodeDocument | null
-  integrations: IIntegration[]
-  isOpenHeader?: boolean
-  iframeKey?: number
-  stepBgColor?: string
-  reloadIframe?: () => void
-}
-
-enum TagNames {
-  Style = 'style',
-  Script = 'script',
-}
-
-const getBody = (body: string, tagName: TagNames): string =>
-  `
-    <${tagName}>
-      ${body}
-    </${tagName}>
-  `
+const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
 
 const BrowserView: FC<BrowserViewProps> = ({
   document,
@@ -41,6 +19,9 @@ const BrowserView: FC<BrowserViewProps> = ({
 }) => {
   const [docSrc, setDocSrc] = useState('')
   const [iframeProcess, setIframeProcess] = useState(false)
+  const [isEditing, setIsEditing] = useState(false) // Track if user is editing
+  const lessonManager = useLessonManager()
+  const iFrameRef = useRef<HTMLIFrameElement>(null)
 
   const IFRAME_STYLE = {
     border: 0,
@@ -49,63 +30,71 @@ const BrowserView: FC<BrowserViewProps> = ({
     background: '#fff',
   }
 
-  useEffect(() => {
-    if (document == null) {
-      return
-    }
+  // Generate the initial HTML content
+  const generateHtml = (doc: CodeDocument) => {
+    if (!doc) return ''
 
-    setIframeProcess(true)
-
-    const fontPath = '/fonts/index.css'
-    const fontCssLink = `<link rel="stylesheet" href="${fontPath}">
-    <style>* {   box-sizing: border-box; } body { margin: 0; padding: 0; 
-  height: 100%; 
-  max-height: ${iframeKey ? '97%' : '100%'}; }</style>`
-    const { htmlBody = [], cssBody = [], jsBody = [] } = document
+    const { htmlBody = [], cssBody = [], jsBody = [] } = doc
     let integrationsScripts = integrations
       .map((integration) => integration.scripts)
       .filter(Boolean)
       .join('\n')
-    let htmls = Array.isArray(htmlBody) ? htmlBody : [htmlBody]
-    htmls = htmls //.map((b) => b.replace(/<body\s/g, '<div ').replace(/<\/body>/g, '</div>'))
-    let htmlPart = false ? (
-      <body
-        style={{ height: '100vh', margin: 0, padding: 0 }}
-        id='pageLesson'
-      >
-        <div
-          className='lesson-page '
-          style={{ backgroundColor: stepBgColor ? stepBgColor : '' }}
-        >
-          {(document as any).length ? (document as any) : htmls}
-        </div>
-      </body>
-    ) : (document as any).length ? (
-      document
-    ) : (
-      htmls
-    )
 
-    setDocSrc(`
-      <html style="height: 100%; box-sizing: border-box;">
+    let htmls = Array.isArray(htmlBody) ? htmlBody : [htmlBody]
+    let htmlPart = (doc as any).length ? doc : htmls
+
+    return `
+      <html style="height: 100%; box-sizing: border-box;" ${
+        lessonManager.userIsOwner ? 'contentEditable id="VeryEditableDivId"' : ''
+      }>
         <head>
-          ${fontCssLink}
+        <link rel="stylesheet" href="/fonts/index.css" />
+        <style>
+          * { box-sizing: border-box; } 
+        body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'}; }
+        </style>
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
           <script>
-          console.logOld = console.log;
-          consolelog = function() {
-            window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
-          };
-          console.log = consolelog;
-          console.warn = consolelog;
-          console.error = consolelog;
-          console.debug = consolelog;
+            console.logOld = console.log;
+            consolelog = function() {
+              window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
+            };
+            console.log = consolelog;
+            console.warn = consolelog;
+            console.error = consolelog;
+            console.debug = consolelog;
+
+            // Only add event listener if contentEditable
+            if (document.getElementById('VeryEditableDivId')) {
+              let debounceTimer;
+              let dbT= new Date().getTime();
+              document.getElementById('VeryEditableDivId').addEventListener('input', function() {
+                console.logOld('input event triggered', new Date().getTime() - dbT);
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                  window.parent.postMessage({ 
+                    type: 'contentChange', 
+                    content: this.innerHTML 
+                  }, '*');
+                }, 300); // Debounce to avoid excessive updates
+              });
+            }
+              ${iframeSuppliments()}
           </script>
         </head>
         ${htmlPart}
       </html>
-    `)
+    `
+  }
+
+  useEffect(() => {
+    if (document == null) return
+    if (isEditing) return
+
+    setIframeProcess(true)
+    const newHtml = generateHtml(document)
+    setDocSrc(newHtml)
 
     const timerId = setTimeout(() => {
       setIframeProcess(false)
@@ -114,20 +103,38 @@ const BrowserView: FC<BrowserViewProps> = ({
     return () => {
       clearTimeout(timerId)
     }
-  }, [document])
+  }, [document, isEditing])
+
+  // Handle messages from iframe (including content changes)
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'contentChange') {
+        setIsEditing(true)
+        // Here you would typically update your state/store with the new content
+        // For now, we just prevent the iframe from re-rendering
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [setIsEditing, document])
 
   const IFrame = useMemo(
     () =>
       !iframeProcess ? (
         <iframe
+          ref={iFrameRef}
           srcDoc={docSrc}
           style={IFRAME_STYLE}
+          key={docSrc} // Key helps React decide when to recreate iframe
         />
       ) : null,
     [docSrc, iframeProcess]
   )
 
-  return document ? IFrame : <SkeletonViewBlock isOpenHeader={isOpenHeader} />
+  if (!document) return <SkeletonViewBlock isOpenHeader={isOpenHeader} />
+
+  return IFrame
 }
 
 export default BrowserView
