@@ -24,6 +24,7 @@ import LessonCard from '@/sections/dashboard/lessons/LessonCard'
 import LessonStepMain from '@/sections/dashboard/lessons/LessonStep/LessonStepMain'
 import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 
 import FilterLessons from './filter'
@@ -76,7 +77,7 @@ export default function LessonsListPage(): React.ReactElement {
   const router = useRouter()
   const { themeStretch } = useSettingsContext()
   const translate = useTranslate()
-
+  const { user } = useAuthContext()
   const [lessons, setLessons] = useState<ILesson[]>([])
 
   const userRole = useSelector((state) => state.global?.user?.role)
@@ -269,6 +270,7 @@ export default function LessonsListPage(): React.ReactElement {
                       index={index}
                       refetch={refetch}
                       lock={!!propertyLocks?.data?.find((lock) => lock.entityId === lesson.id)}
+                      isMine={lesson.userId == user?.id}
                     />
                   ))}
                   {isFetching

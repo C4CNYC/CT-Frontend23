@@ -151,6 +151,7 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetLessonContentStudentQuery,
+  useLazyGetLessonContentStudentQuery,
   useGetLessonStudentWithoutContentsQuery,
   useGetLessonStudentQuery,
   useGetLessonsListStudentQuery,
