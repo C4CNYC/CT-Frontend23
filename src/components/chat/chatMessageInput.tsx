@@ -6,14 +6,7 @@ import Stack from '@mui/material/Stack'
 import { IoIosSend } from '@react-icons/all-files/io/IoIosSend'
 import { sub } from 'date-fns'
 
-// ----------------------------------------------------------------------
-
-export default function ChatMessageInput(
-  {
-    //   recipients,
-    //   selectedConversationId,
-  }
-) {
+export function ChatMessageInput({ SendMessage }: { SendMessage: (messageData: any) => void }) {
   const [message, setMessage] = useState('')
 
   const messageData = useMemo(
@@ -45,6 +38,7 @@ export default function ChatMessageInput(
       try {
         if (event.key === 'Enter') {
           if (message) {
+            SendMessage(message)
           }
           setMessage('')
         }

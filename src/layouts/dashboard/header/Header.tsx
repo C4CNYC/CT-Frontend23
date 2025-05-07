@@ -20,6 +20,7 @@ import AccountPopover from './AccountPopover'
 import LanguagePopover from './LanguagePopover'
 import NavAccount from './SchoolAccount'
 import WelcomeText from './WelcomeText'
+
 interface Props {
   onOpenNav?: VoidFunction
 }
@@ -55,6 +56,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
       )}
 
       {isSchoolSection ? <NavAccount /> : null}
+      <WelcomeText />
       <WelcomeText />
       <Stack
         flexGrow={1}

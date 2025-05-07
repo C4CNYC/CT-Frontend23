@@ -40,7 +40,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'GET',
         params,
       }),
-      keepUnusedDataFor: 0,
+      keepUnusedDataFor: 60,
       providesTags: ['ClassesStudent', 'Classes'],
     }),
     getClass: builder.query<IClass & BaseResponseInterface, { id: string }>({

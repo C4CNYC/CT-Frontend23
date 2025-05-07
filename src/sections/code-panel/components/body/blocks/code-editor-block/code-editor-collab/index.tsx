@@ -105,7 +105,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   }
 
   useEffect(() => {
-    if (preloadedCode) onChangeCodemirrorValue(preloadedCode || '')
+    onChangeCodemirrorValue(preloadedCode || '')
   }, [preloadedCode])
 
   useEffect(() => {

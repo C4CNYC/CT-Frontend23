@@ -10,6 +10,7 @@ import { useSnackbar } from 'notistack'
 
 import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import {
+  useGetModuleWithLessonsQuery,
   useRemoveLessonFromModuleMutation,
   useUpdateModuleLessonMutation,
 } from '@/redux/services/manager/modules-manager'
@@ -17,7 +18,6 @@ import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/
 import { useTranslate } from '@/utils/translateHelper'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
-import { useGetModuleWithLessonsQuery } from 'src/redux/services/manager/modules-student'
 
 import SkeletonList from '../../lessons/LessonStep/Modals/SkeletonList'
 import CreateModuleDialog from '../CreateModuleDialog'
