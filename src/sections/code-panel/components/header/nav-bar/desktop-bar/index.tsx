@@ -8,7 +8,6 @@ import { useSelector } from '@/redux/store'
 import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { ChatAi } from '@root/src/components/chat/hooks/ChatAi'
 
 import ChatPopup from '../options/chat-popup'
 import Menu from '../options/menu'
@@ -32,8 +31,6 @@ const DesktopBar: FC<IDesktopBar> = ({ language, publicPage }) => {
     dispatch(toggleBrowser(value))
     dispatch(toggleInstrations(value))
   }
-
-  const chatAi = ChatAi() // to trigger the chat popup
 
   return (
     <Stack
