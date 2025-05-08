@@ -18,7 +18,7 @@ interface ITopPanel {
   publicPage?: boolean
 }
 
-const TopPanel: FC<ITopPanel> = ({ language }) => {
+export const TopPanel: FC<ITopPanel> = ({ language }) => {
   const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
   const profile = useSelector((state) => state.global.user)
@@ -49,5 +49,3 @@ const getBoxStyles = (isDesktop: boolean): SxProps => ({
   pr: '24px',
   pl: '16px',
 })
-
-export default TopPanel

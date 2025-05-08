@@ -1,12 +1,13 @@
 import IconButton from '@mui/material/IconButton'
+import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/system/Box'
 import { FaRegSmile } from '@react-icons/all-files/fa/FaRegSmile'
 import { HiTrash } from '@react-icons/all-files/hi2/HiTrash'
 import { PiArrowBendUpLeftLight } from '@react-icons/all-files/pi/PiArrowBendUpLeftLight'
 import { formatDistanceToNowStrict } from 'date-fns'
 
-import CustomAvatartWithoutMUI from '@/components/custom-avatar/CustomAvatartWithoutMUI'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 
 import { CustomAvatar } from '../custom-avatar/CustomAvatar'
@@ -38,7 +39,7 @@ export function ChatMessageItem({ message }: { message: IChatMessages }) {
         }),
       }}
     >
-      {!isMe && `firstName`} &nbsp;
+      {!isMe && `Baloo`} &nbsp;
       {distanceFromNow}
     </Typography>
   )
@@ -121,20 +122,7 @@ export function ChatMessageItem({ message }: { message: IChatMessages }) {
           name={user?.firstName}
         />
       ) : (
-        <CustomAvatartWithoutMUI
-          alt='firstName'
-          src='https://devnest.s3.amazonaws.com/tenant_f072bcf3-5957-4f04-97da-f8e4c4c53439/students/1d549244-d686-40f9-8e23-15f6efcb1a08/avatar_1704981148061_.png'
-          width={32}
-          height={32}
-          priority={false}
-          styles={{
-            width: 32,
-            height: 32,
-            borderRadius: '50%',
-            overflow: 'hidden',
-            mr: 2,
-          }}
-        />
+        <span style={{ fontSize: '2rem' }}>🐻</span>
       )}
 
       <Stack alignItems='flex-end'>
@@ -157,5 +145,38 @@ export function ChatMessageItem({ message }: { message: IChatMessages }) {
         </Stack>
       </Stack>
     </Stack>
+  )
+}
+
+export function ChatMessageItemNew({ message }: { message: IChatMessages }) {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: message.isMe ? 'flex-end' : 'flex-start',
+        mb: 2,
+      }}
+    >
+      <Paper
+        elevation={0}
+        sx={{
+          p: 2,
+          maxWidth: '85%',
+          borderRadius: 2,
+          backgroundColor: (theme) =>
+            message.isMe ? theme.palette.primary.main : theme.palette.grey[100],
+          color: message.isMe ? 'white' : 'inherit',
+        }}
+      >
+        <Typography variant='body1'>{message.chat}</Typography>
+        <Typography
+          variant='caption'
+          color={message.isMe ? 'rgba(255,255,255,0.7)' : 'text.secondary'}
+          sx={{ display: 'block', mt: 0.5, textAlign: message.isMe ? 'right' : 'left' }}
+        >
+          {new Date(message.ctime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </Typography>
+      </Paper>
+    </Box>
   )
 }
