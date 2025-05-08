@@ -55,7 +55,7 @@ export const CodePanelChat = (): React.ReactElement => {
       component={Card}
       direction='row'
       maxWidth={'sm'}
-      sx={{ height: '72vh', backgroundColor: '#f0f0f0' }}
+      sx={{ height: '72vh', background: 'linear-gradient(to right, #fff7e6, #ffffcc);' }}
       className='ChatPlace'
     >
       {/* {renderNav} */}

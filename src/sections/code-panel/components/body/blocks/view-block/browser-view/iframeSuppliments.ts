@@ -1,7 +1,6 @@
 export function iframeSuppliments() {
   return (
-    `
-  console.log('iframeSuppliments')
+    ` 
   document.querySelector('[contenteditable]').addEventListener('paste', function(e) {
     // Get pasted text
     const pastedText = (e.clipboardData || window.clipboardData).getData('text');

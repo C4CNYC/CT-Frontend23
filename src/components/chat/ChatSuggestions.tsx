@@ -74,11 +74,11 @@ export function ChatSuggestions({
             key={index}
             onClick={() => sendMessage(option.description)}
             sx={{
-              py: 0.1,
-              px: 0.5,
+              py: 0.3,
+              px: 0.6,
               borderRadius: 2,
               cursor: 'pointer',
-              color: 'rgba(112, 203, 255, 0.93)',
+              color: 'rgba(80, 180, 200, 1)',
               backgroundColor: 'rgba(1, 152, 237, 0.1)',
               border: (theme) => `1px solid ${theme.palette.grey[300]}`,
               '&:hover': {
@@ -88,7 +88,14 @@ export function ChatSuggestions({
               transition: 'background-color 0.2s',
             }}
           >
-            <Typography variant='body2'>{option.shortTitle}</Typography>
+            <Typography
+              variant='body2'
+              sx={{
+                fontSize: '0.7rem',
+              }}
+            >
+              {option.shortTitle}
+            </Typography>
           </Box>
         ))}
       </Stack>
