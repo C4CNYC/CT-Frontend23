@@ -56,7 +56,7 @@ export const LessonManagerProvider: React.FC<{
     onFalse: contentEditingOff,
   } = useBoolean(false)
   const user = useSelector((state) => state.global.user)
-  let userIsOwner = lesson?.userId == user?.id
+  let userIsOwner = !!user?.id && lesson?.userId == user?.id
   const router = useRouter()
 
   useEffect(() => {

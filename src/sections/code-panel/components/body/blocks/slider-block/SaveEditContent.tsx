@@ -7,13 +7,11 @@ import { MdVideocam } from '@react-icons/all-files/md/MdVideocam'
 
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
-import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { SaveEditContentStyles } from './SaveEditContentStyles'
 
 export function SaveEditContent({}: any) {
   const lessonManager = useLessonManager()
-  const translate = useTranslate()
   if (!lessonManager.userIsOwner) return null
 
   return (
