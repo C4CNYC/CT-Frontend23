@@ -5,6 +5,8 @@ import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enu
 import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
 import {
   useGetLessonContentQuery,
+  useGetLessonSlidePreloadFilesQuery,
+  useRemoveLessonStepPreloadFileMutation,
   useUpdateLessonContentMutation,
 } from '@root/src/redux/services/manager/lesson-content-manager'
 import {
@@ -16,8 +18,8 @@ import {
   useGetLessonContentValidationsManagerQuery,
 } from '@root/src/redux/services/manager/lesson-content-validation-manager'
 import {
-  useDeleteStudentFileMutation,
   useGetStudentFilesQuery,
+  useResetStudentFiles,
 } from '@root/src/redux/services/manager/workspace-student'
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { dispatch, useSelector } from '@root/src/redux/store'
@@ -33,10 +35,19 @@ export const ChatAi = () => {
   const [lastExtraSlideTime, setLastExtraSlideTime] = useState<number | null>(null)
   const MaxRefetchSeconds = 10
   const { user } = useAuthContext()
+  const [slideSugCache, slideSugCacheSet] = useState<Record<string, ChatAiOptionsType[]>>({})
   const { lesson, lessonContent, updateSlide, addNewSlide, setLessonContent } = useLessonManager()
   const [updateLessonContent] = useUpdateLessonContentMutation()
   const [addLessonContent] = useCreateLessonContentMutation()
   const [addLessonStepPreloadFile] = useAddLessonStepPreloadFileMutation()
+  const [deleteLessonStepPreloadFile] = useRemoveLessonStepPreloadFileMutation()
+  const lessonFiles = useGetLessonSlidePreloadFilesQuery(
+    {
+      lessonId: lesson?.id || '',
+      contentId: lessonContent?.[0]?.id || '',
+    },
+    { skip: !lesson?.id || !lessonContent?.[0]?.id }
+  )
   const lessonValidations = useGetLessonContentValidationsManagerQuery(
     { id: lesson?.id || '' },
     { skip: !lesson?.id }
@@ -55,7 +66,10 @@ export const ChatAi = () => {
     { lessonId: lesson?.id || '', lessonContentId: slideId || '' },
     { skip: !lesson?.id || !slideId }
   )
-  const [deleteStudentFile] = useDeleteStudentFileMutation()
+  const deleteAllFiles = useResetStudentFiles({
+    lessonId: lesson?.id || '',
+    lessonContentId: lessonContent?.find((_c, i) => 0 === i)?.id || slideId || '',
+  })
 
   useEffect(() => {
     if (!userIsOwner || !lesson || minsSinceLesson > 60) return
@@ -206,14 +220,18 @@ export const ChatAi = () => {
 
               break
             case 'precode':
-              if (lessonContentFiles) {
-                for (const file of lessonContentFiles) {
-                  await deleteStudentFile({ id: file.id })
-                }
-              }
+              let firstSlide = lessonContent?.find((_c, i) => 0 === i)
+              lessonFiles.data?.forEach((f) => {
+                deleteLessonStepPreloadFile({
+                  lessonId: lesson?.id || '',
+                  contentId: firstSlide?.id || slideId,
+                  fileId: f.id,
+                })
+              })
+              deleteAllFiles()
               addLessonStepPreloadFile({
                 lessonId: lesson?.id || '',
-                contentId: slideId,
+                contentId: firstSlide?.id || slideId,
                 preloaded_code: JsonParseFromAiResponse(aiResponse).content,
                 name: 'index',
                 extension: FileExtension.HTML,
@@ -248,10 +266,20 @@ export const ChatAi = () => {
     }
 
   useEffect(() => {
-    if (!slideId) return
+    if (!userIsOwner || !slideId) return
+    if (slideId in slideSugCache) return setChatAiOptions(slideSugCache[slideId])
     askSuggestions(slideId).then((res: any) => {
-      if (res && 'data' in res && res.data && res.data.length > 0 && res.data[0].output) {
+      if (
+        res &&
+        'data' in res &&
+        res.data &&
+        res.data.length > 0 &&
+        res.data[0].output &&
+        res.data[0].output?.length &&
+        res.data[0].output.length > 0
+      ) {
         setChatAiOptions(res.data[0].output as unknown as ChatAiOptionsType[])
+        slideSugCacheSet((prev) => ({ ...prev, [slideId]: res.data[0].output }))
       } else {
         setChatAiOptions([])
       }

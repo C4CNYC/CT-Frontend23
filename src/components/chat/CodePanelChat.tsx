@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
 
+import { ChatHeader } from './ChatHeader'
 import { IChatMessages } from './chatInterface'
 import { ChatMessageInput } from './chatMessageInput'
 import { ChatMessageItem } from './chatMessageItem'
@@ -54,7 +55,7 @@ export const CodePanelChat = (): React.ReactElement => {
       component={Card}
       direction='row'
       maxWidth={'sm'}
-      sx={{ height: '72vh', backgroundColor: '#f0f0f0' }}
+      sx={{ height: '72vh', background: 'linear-gradient(to right, #fff7e6, #ffffcc);' }}
       className='ChatPlace'
     >
       {/* {renderNav} */}
@@ -67,7 +68,7 @@ export const CodePanelChat = (): React.ReactElement => {
         }}
       >
         {/* {renderHead} */}
-
+        <ChatHeader />
         <Stack
           direction='row'
           sx={{

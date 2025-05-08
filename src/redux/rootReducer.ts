@@ -20,7 +20,6 @@ import globalRducer from './slices/global'
 import lessonStepsReducer from './slices/lesson-steps'
 import managerReducer from './slices/manager'
 import mobileTabManagerReducer from './slices/mobile-tab-manager'
-import rabitsReduce from './slices/rabits'
 import schoolSettingsReducer from './slices/schoolSettings'
 import tenantReducer from './slices/tenant'
 import tourReducer from './slices/tour'
@@ -69,7 +68,6 @@ const rootReducer = combineReducers({
   lessonSteps: lessonStepsReducer,
   schoolSettings: schoolSettingsReducer,
   codePanel: codePanelReducer,
-  rabits: rabitsReduce,
   codePanelGlobal: codePanelGlobalReducer,
   tour: tourReducer,
   checkersAnimation: checkersAnimationReducer,

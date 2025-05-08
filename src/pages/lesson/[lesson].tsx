@@ -8,6 +8,7 @@ import { ILesson } from '@root/src/redux/services/interfaces/courseUnits.interfa
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useGetPublicLessonBySlugQuery } from '@root/src/redux/services/public-student'
 import { BaseResponseInterface } from '@root/src/utils'
+import { isUuid } from '@root/src/utils/isUuid'
 
 import Page404 from '../404'
 
@@ -24,7 +25,7 @@ export default function Lesson() {
   )
   let { data: lessonsPublic, isLoading: isLoadingPublic } = useGetPublicLessonBySlugQuery(
     { slug },
-    { skip: !isReady || !isInitialized || isAuthenticated }
+    { skip: !isReady || !isInitialized || isAuthenticated || isUuid(slug) }
   )
   useEffect(() => {
     if (!isReady || isLoading || isLoadingPublic) return
