@@ -10,8 +10,6 @@ import { useOffSetTop } from '@/hooks/useOffSetTop'
 import { useResponsive } from '@/hooks/useResponsive'
 import { useSelector } from '@/redux/store'
 import { bgBlur } from '@/utils/cssStyles'
-import OrgSwitcher from '@root/src/components/org-switcher'
-import SchoolSwitcher from '@root/src/components/school-switcher'
 
 import Menu from '../../../sections/code-panel/components/header/nav-bar/options/menu'
 import { HEADER_SIZES, NAV_SIZES } from '../../../theme/consts'
@@ -30,7 +28,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
   const router = useRouter()
   const user = useSelector((state) => state.global.user)
 
-  const { themeLayout } = useSettingsContext()
+  const { themeLayout, themeMode } = useSettingsContext()
 
   const isNavHorizontal = themeLayout === 'horizontal'
 
@@ -57,7 +55,6 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
 
       {isSchoolSection ? <NavAccount /> : null}
       <WelcomeText />
-      <WelcomeText />
       <Stack
         flexGrow={1}
         direction='row'
@@ -65,8 +62,6 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
         justifyContent='flex-end'
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
-        <OrgSwitcher />
-        <SchoolSwitcher />
         <ThemeSwitcher />
         <LanguagePopover />
         {user ? <AccountPopover /> : <Menu />}
