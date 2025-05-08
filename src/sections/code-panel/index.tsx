@@ -37,6 +37,9 @@ import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
+import { setChatVisible } from '@root/src/redux/slices/chat-handler'
+import { isUuid } from '@root/src/utils/isUuid'
+import { progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
 import AIGeneratorTour from '../intro-tours/ai-generator-intro'
 
@@ -57,7 +60,7 @@ const CodePanelTour = dynamic(
 )
 
 const CodePanelHeader = dynamic(
-  async () => await import('@/sections/code-panel/components/header'),
+  async () => ({ default: (await import('@/sections/code-panel/components/header')).TopPanel }),
   {
     loading: () => <CPTopBarSkeleton />,
   }
@@ -67,7 +70,7 @@ const Confetti = dynamic(async () => await import('react-confetti'), { ssr: fals
 
 const DEFAULT_LANGUAGE = 'html'
 
-export default function CodePanelLayout(): ReactElement | null {
+export function CodePanelLayout(): ReactElement | null {
   const router = useRouter()
   const dispatch = useDispatch()
   const translate = useTranslate()
@@ -132,7 +135,7 @@ export default function CodePanelLayout(): ReactElement | null {
     {
       slug: lessonIdFromRoute,
     },
-    { skip: !lessonIdFromRoute && !isErrorLessonContent }
+    { skip: (!lessonIdFromRoute && !isErrorLessonContent) || isUuid(lessonIdFromRoute) }
   )
   useEffect(() => {
     if (
@@ -153,6 +156,11 @@ export default function CodePanelLayout(): ReactElement | null {
     setShowConfetti(false)
     confetti?.reset()
   }
+
+  useEffect(() => {
+    if (!profile || !lesson) return
+    if (profile?.id == lesson?.userId) dispatch(setChatVisible(true))
+  }, [profile, lesson])
 
   useEffect(() => {
     if (!courseContent) return
@@ -211,12 +219,18 @@ export default function CodePanelLayout(): ReactElement | null {
     dispatch(setIsActivateCompeated(false))
 
     if (!profile) {
+      progressGuestSetValidation({
+        lessonId: lesson?.id || '',
+        courseId: router.query.courseId as string,
+        moduleId: router.query.unitId as string,
+        slideId: lessonContentId,
+      })
       return
     }
     try {
       await completeLesson({
         id: router.query.courseId as string,
-        module_id: router.query.unit_id as string,
+        module_id: router.query.unitId as string,
         lesson_content_id: lessonContentId,
         code,
       }).unwrap()
@@ -227,7 +241,7 @@ export default function CodePanelLayout(): ReactElement | null {
     if (window.dataLayer) {
       window.dataLayer.push({
         event: 'Lesson_Completed',
-        event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unit_id} > Training (Lesson) ${router.query.lessonId}`,
+        event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unitId} > Training (Lesson) ${router.query.lessonId}`,
         event_label: lessonContentId,
       })
     }

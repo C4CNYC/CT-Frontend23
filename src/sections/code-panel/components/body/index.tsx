@@ -21,7 +21,7 @@ import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
 import ResizeDivider from './blocks/resize-divider'
 import SliderBlock from './blocks/slider-block'
 import ViewBlock from './blocks/view-block'
-import { CodeDocument } from './blocks/view-block/browser-view'
+import { CodeDocument } from './blocks/view-block/browser-view/types'
 
 const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
