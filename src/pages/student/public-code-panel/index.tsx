@@ -42,7 +42,7 @@ const CodePanelTour = dynamic(
 )
 
 const CodePanelHeader = dynamic(
-  async () => await import('@/sections/code-panel/components/header'),
+  async () => (await import('@/sections/code-panel/components/header')).TopPanel,
   {
     loading: () => <CPTopBarSkeleton />,
   }
