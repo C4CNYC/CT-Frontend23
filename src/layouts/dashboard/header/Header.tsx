@@ -56,7 +56,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
       )}
 
       {isSchoolSection ? <NavAccount /> : null}
-      <WelcomeText />
+
       <WelcomeText />
       <Stack
         flexGrow={1}
