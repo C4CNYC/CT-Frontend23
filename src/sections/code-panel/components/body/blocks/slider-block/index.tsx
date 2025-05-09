@@ -336,6 +336,7 @@ const View: FC<IView> = ({
           integrations={integrations}
           document={connectIntegrations(body)}
           stepBgColor={stepBgColor}
+          teacherView={true}
         />
       )
   }
