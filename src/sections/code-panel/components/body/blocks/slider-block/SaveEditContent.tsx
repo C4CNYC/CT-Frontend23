@@ -15,7 +15,7 @@ import { ImageAttributes, MediaModal } from '@root/src/sections/dashboard/medias
 
 import { SaveEditContentStyles } from './SaveEditContentStyles'
 
-export function SaveEditContent({}: any) {
+export function SaveEditContent({ }: any) {
   const {
     value: advancedEditor,
     onTrue: advancedEditorOpen,
@@ -29,7 +29,7 @@ export function SaveEditContent({}: any) {
   const emojiSelectorAnchor = useRef(null)
 
   function pasteToIframe(content: any) {
-    ;(
+    ; (
       document.querySelector('iframe.BrowserViewTeacherView') as HTMLIFrameElement
     )?.contentWindow?.postMessage(
       {
@@ -62,9 +62,11 @@ export function SaveEditContent({}: any) {
               </Tooltip>
               <div className='SECDiv'></div>
               <Tooltip title={'Add Image from Gallery'}>
-                <MediaModal insertImage={insertImage}>
-                  <MdImage size={24} />
-                </MediaModal>
+                <a>
+                  <MediaModal insertImage={insertImage}>
+                    <MdImage size={24} />
+                  </MediaModal>
+                </a>
               </Tooltip>
 
               <Tooltip title={'You can paste video from youtube'}>
