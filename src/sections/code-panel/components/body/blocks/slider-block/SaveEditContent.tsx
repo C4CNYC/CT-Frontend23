@@ -15,7 +15,7 @@ import { ImageAttributes, MediaModal } from '@root/src/sections/dashboard/medias
 
 import { SaveEditContentStyles } from './SaveEditContentStyles'
 
-export function SaveEditContent({ }: any) {
+export function SaveEditContent({}: any) {
   const {
     value: advancedEditor,
     onTrue: advancedEditorOpen,
@@ -29,15 +29,10 @@ export function SaveEditContent({ }: any) {
   const emojiSelectorAnchor = useRef(null)
 
   function pasteToIframe(content: any) {
-    ; (
-      document.querySelector('iframe.BrowserViewTeacherView') as HTMLIFrameElement
-    )?.contentWindow?.postMessage(
-      {
-        type: 'simulatePaste',
-        content: content,
-      },
-      '*'
-    )
+    let iFrame = document.querySelector('iframe.BrowserViewTeacherView') as
+      | HTMLIFrameElement
+      | undefined
+    iFrame?.contentWindow?.postMessage({ type: 'simulatePaste', content: content }, '*')
   }
   const handleEmojiSelect = (emoji: string) => pasteToIframe(emoji)
 
