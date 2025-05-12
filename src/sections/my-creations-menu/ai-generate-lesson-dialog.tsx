@@ -27,19 +27,21 @@ export default function AiGenerateLessonDialog({ children }: Props): React.React
       >
         {children}
       </Box>
-      <Dialog
-        open={open}
-        fullWidth
-        maxWidth='md'
-        onClose={closeDialog}
-      >
-        <DialogContent sx={{ p: 2 }}>
-          <AIGenerateStepper
-            isModal
-            closeModal={closeDialog}
-          />
-        </DialogContent>
-      </Dialog>
+      {open && (
+        <Dialog
+          open={open}
+          fullWidth
+          maxWidth='md'
+          onClose={closeDialog}
+        >
+          <DialogContent sx={{ p: 2 }}>
+            <AIGenerateStepper
+              isModal
+              closeModal={closeDialog}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   )
 }

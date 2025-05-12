@@ -4,6 +4,9 @@ import { RootState, useSelector } from '@root/src/redux/store'
 
 const UserAvatar = () => {
   const user = useSelector((state: RootState) => state.global.user)
+
+  const avatarUrl = Boolean(new URL(user?.avatar || '')) ? user?.avatar : undefined
+  if (!avatarUrl) return <>{user?.username}</>
   return (
     <Avatar
       src={user?.avatar}
@@ -19,6 +22,7 @@ const UserAvatar = () => {
         border: '3px solid #FBDD3F',
       }}
     >
+      {user?.avatar}
       {user?.username}
     </Avatar>
   )
