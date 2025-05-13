@@ -155,7 +155,15 @@ const SimpleAiGenerate = ({
                 onClick={nextStep}
                 disabled={!textFieldValue}
               >
-                {translate('ai_gen_next_btn')}
+                {translate('ai_gen_advanced_btn')}
+              </Button>
+              <Button
+                type='submit'
+                variant='contained'
+                sx={nextBtnStyles}
+                disabled={!textFieldValue}
+              >
+                {translate('ai_gen_generate_btn')}
               </Button>
             </Stack>
           </Stack>
