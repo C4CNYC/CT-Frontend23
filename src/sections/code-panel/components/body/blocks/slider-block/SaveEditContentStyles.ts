@@ -16,7 +16,7 @@ export const SaveEditContentStyles = `
     & > div {
       border-radius: 35px;
       background: rgba(1, 152, 237, 0.1);
-      padding: 2px;
+      padding: 2px 10px;
       align-items: center;
       text-decoration: none;
       pointer-events: all;
@@ -28,6 +28,7 @@ export const SaveEditContentStyles = `
     }
   }
   & a{
+    cursor: pointer;
     color: #36495466;
       margin: auto 4px;
     line-height: 16px;
