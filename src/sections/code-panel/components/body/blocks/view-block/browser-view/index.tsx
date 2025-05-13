@@ -16,6 +16,7 @@ const BrowserView: FC<BrowserViewProps> = ({
   stepBgColor,
   integrations,
   reloadIframe,
+  teacherView = false,
 }) => {
   const [docSrc, setDocSrc] = useState('')
   const [iframeProcess, setIframeProcess] = useState(false)
@@ -29,6 +30,7 @@ const BrowserView: FC<BrowserViewProps> = ({
     height: iframeKey ? 'calc(100% - 72px)' : '100%',
     background: '#fff',
   }
+  let lessonEditable = lessonManager.userIsOwner && teacherView
 
   // Generate the initial HTML content
   const generateHtml = (doc: CodeDocument) => {
@@ -45,7 +47,7 @@ const BrowserView: FC<BrowserViewProps> = ({
 
     return `
       <html style="height: 100%; box-sizing: border-box;" ${
-        lessonManager.userIsOwner ? 'contentEditable id="VeryEditableDivId"' : ''
+        lessonEditable ? 'contentEditable id="VeryEditableDivId"' : ''
       }>
         <head>
         <link rel="stylesheet" href="/fonts/index.css" />
@@ -123,6 +125,7 @@ const BrowserView: FC<BrowserViewProps> = ({
     () =>
       !iframeProcess ? (
         <iframe
+          className={teacherView ? 'BrowserViewTeacherView' : 'BrowserView'}
           ref={iFrameRef}
           srcDoc={docSrc}
           style={IFRAME_STYLE}
