@@ -7,6 +7,7 @@ import { MdSettingsApplications } from '@react-icons/all-files/md/MdSettingsAppl
 import { RiAccountBoxFill } from '@react-icons/all-files/ri/RiAccountBoxFill'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
+import { useSelector } from 'react-redux'
 
 import { UploadImageModal, useSettingsContext } from '@/components'
 import { SchoolDashboardLayout } from '@/layouts/dashboard/SchoolDashboardLayout'
@@ -14,6 +15,7 @@ import {
   useGetSchoolProfileQuery,
   useUpdateSchoolCoverImgMutation,
 } from '@/redux/services/manager/schools-manager'
+import { RootState } from '@/redux/store'
 import { ProfileCover } from '@/sections/dashboard/user/profile'
 import SkeletonSchool from '@/sections/schools/skeleton-school'
 import {
@@ -24,16 +26,16 @@ import {
 } from '@/sections/schools/tabs'
 import SkeletonProfileTab from '@/sections/schools/tabs/profile/SkeletomProfileTab'
 import { useTranslate } from '@/utils/translateHelper'
-import { useSchoolId } from '@root/src/hooks/useSchoolId'
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 )
 
 export default function UserProfilePage(): React.ReactElement {
-  const schoolId = useSchoolId()
   const translate = useTranslate()
   const { themeStretch } = useSettingsContext()
+
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId)
 
   const [currentTab, setCurrentTab] = useState('profile')
 

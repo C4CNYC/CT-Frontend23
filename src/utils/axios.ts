@@ -17,7 +17,6 @@ axios.interceptors.request.use(
   function (config) {
     if (config.headers) {
       config.headers['x-tenant-id'] = localStorage.getItem('tenantName') ?? 'codetribe'
-      config.headers['x-school-id'] = localStorage.getItem('x-school-id') ?? ''
     }
     return config
   },
