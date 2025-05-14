@@ -22,17 +22,16 @@ async function fetchTenant(domain: string, setTenant: (tenant: Tenant) => void) 
     localStorage.setItem('tenant', JSON.stringify(DEFAULT_TENANT))
   }
 }
-export function getDomain() {
-  if (typeof window !== 'object') {
-    return 'codetribe'
-  }
-  const selectedSlug = localStorage.getItem('tenantName')
-  const domain = window.location.hostname
-  const subdomain = domain.split('.')[0]
-  if (!subdomain) return 'codetribe'
-  if (selectedSlug && subdomain !== selectedSlug) return selectedSlug
+function getDomain() {
+  if (typeof window === 'object') {
+    let domain = window.location.hostname
 
-  return subdomain
+    if (domain) {
+      return domain === 'localhost' ? 'codetribe' : domain
+    }
+  }
+
+  return 'codetribe'
 }
 
 export function useTenants() {
@@ -40,14 +39,16 @@ export function useTenants() {
   useEffect(() => {
     let savedTenantJson = localStorage.getItem('tenant')
     let savedTenant: Tenant | null = null
-
-    savedTenant = savedTenantJson ? JSON.parse(savedTenantJson) : null
-
-    if (savedTenant && savedTenant.name === localStorage.getItem('tenantName')) {
-      setTenant(savedTenant)
-    } else {
-      let domain = getDomain()
-      fetchTenant(domain, setTenant)
+    try {
+      savedTenant = savedTenantJson ? JSON.parse(savedTenantJson) : null
+    } catch (e) {
+    } finally {
+      if (savedTenant) {
+        setTenant(savedTenant)
+      } else {
+        let domain = getDomain()
+        fetchTenant(domain, setTenant)
+      }
     }
   }, [])
 

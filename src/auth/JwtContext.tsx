@@ -172,22 +172,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
   }
 
   const getTenantFromDomain = (): string => {
-    const domain = window.location.hostname
-    const subdomain = domain.split('.')[0]
-    let tenantName = ''
-
-    switch (subdomain) {
-      case 'localhost':
-        tenantName = 'codetribe'
-        break
-      default:
-        tenantName = subdomain ?? 'codetribe'
-    }
-    if (!localStorage.getItem('tenantName')) {
-      localStorage.setItem('tenantName', tenantName)
-    }
-
-    return tenantName
+    return localStorage.getItem('tenantName') ?? 'codetribe'
   }
 
   // LOGIN
