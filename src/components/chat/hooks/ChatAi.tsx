@@ -220,6 +220,7 @@ export const ChatAi = () => {
 
               break
             case 'precode':
+              console.log('lessonFiles', lessonContent, lessonFiles.data)
               let firstSlide = lessonContent?.find((_c, i) => 0 === i)
               lessonFiles.data?.forEach((f) => {
                 deleteLessonStepPreloadFile({

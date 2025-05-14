@@ -54,6 +54,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   }
 
   const reloadBrowserView = () => {
+    console.log ('reloadBrowserView', document)
     setBrowserView({ ...document })
   }
 

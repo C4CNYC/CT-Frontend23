@@ -72,7 +72,6 @@ const BrowserView: FC<BrowserViewProps> = ({
               let debounceTimer;
               let dbT= new Date().getTime();
               document.getElementById('VeryEditableDivId').addEventListener('input', function() {
-                console.logOld('input event triggered', new Date().getTime() - dbT);
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
                   window.parent.postMessage({ 
@@ -82,7 +81,7 @@ const BrowserView: FC<BrowserViewProps> = ({
                 }, 300); // Debounce to avoid excessive updates
               });
             }
-              ${iframeSuppliments()}
+              ${lessonEditable?iframeSuppliments():null}
           </script>
         </head>
         ${htmlPart}
@@ -109,6 +108,8 @@ const BrowserView: FC<BrowserViewProps> = ({
 
   // Handle messages from iframe (including content changes)
   useEffect(() => {
+    if (!lessonEditable)
+      return
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'contentChange') {
         setIsEditing(true)
@@ -119,7 +120,7 @@ const BrowserView: FC<BrowserViewProps> = ({
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [setIsEditing, document])
+  }, [setIsEditing, document, lessonEditable])
 
   const IFrame = useMemo(
     () =>
