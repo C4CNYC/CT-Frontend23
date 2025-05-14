@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
@@ -12,7 +12,9 @@ import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
 import {
   useCreateLessonMutation,
   useCreateLessonUsingN8nMutation,
+  useGetLessonsByIdsQuery,
 } from '@root/src/redux/services/manager/lessons-manager'
+import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -97,12 +99,8 @@ export default function AIGenerateStepper({
     defaultValues: { ...defaultValues, ...passedValues },
   })
 
-  const nextStep = () => {
-    setActiveStep(activeStep + 1)
-  }
-  const prevStep = () => {
-    setActiveStep(activeStep - 1)
-  }
+  const nextStep = () => setActiveStep(activeStep + 1)
+  const prevStep = () => setActiveStep(activeStep - 1)
 
   const resetRoad = () => {
     push(PATH_AUTH.onBoardingTeacher.root)
@@ -212,6 +210,25 @@ export default function AIGenerateStepper({
   const onSubmitAddons = (addons: IAddons) => {
     redirectAfterCompleate(lessonId ?? '')
   }
+
+  const { data: properties } = useGetPropertiesQuery({
+    entityType: 'lesson',
+    propertyName: 'aiTemplate',
+  })
+  const { data: aiTemplates } = useGetLessonsByIdsQuery(
+    properties?.data.map((item) => item.entityId) ?? []
+  )
+
+  useEffect(() => {
+    if (!aiTemplates || aiTemplates.length < 1) return
+    if (!methods.getValues('RtypeLessonR')) {
+      let exerciseAiTemplate = aiTemplates.find((t) => 'generator' in (t?.meta || {}))
+      methods.setValue(
+        'RtypeLessonR',
+        exerciseAiTemplate ? exerciseAiTemplate.id + 'n8n' : aiTemplates[0].id
+      )
+    }
+  }, [aiTemplates])
 
   return (
     <Stack

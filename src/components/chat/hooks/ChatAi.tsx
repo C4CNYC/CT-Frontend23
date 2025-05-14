@@ -89,9 +89,9 @@ export const ChatAi = () => {
       setLastExtraSlideTime(Date.now())
       setLessonContent((prevContent) => [
         ...prevContent,
-        ...(lessonContenter.data?.filter(
-          (newItem) => !prevContent.some((item) => item.id === newItem.id)
-        ) || []),
+        ...(lessonContenter.data
+          ?.filter((newItem) => !prevContent.some((item) => item.id === newItem.id))
+          .map((item) => ({ ...item })) || []),
       ])
     }
   }, [lessonContenter.data])

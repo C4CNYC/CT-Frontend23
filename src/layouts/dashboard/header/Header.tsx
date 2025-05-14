@@ -10,6 +10,8 @@ import { useOffSetTop } from '@/hooks/useOffSetTop'
 import { useResponsive } from '@/hooks/useResponsive'
 import { useSelector } from '@/redux/store'
 import { bgBlur } from '@/utils/cssStyles'
+import AIIcon from '@root/src/assets/icons/AIIcon'
+import AiGenerateLessonDialog from '@root/src/sections/my-creations-menu/ai-generate-lesson-dialog'
 
 import Menu from '../../../sections/code-panel/components/header/nav-bar/options/menu'
 import { HEADER_SIZES, NAV_SIZES } from '../../../theme/consts'
@@ -39,6 +41,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
   const isSchoolSection = router.pathname.includes('dashboard/school')
 
   const isOffset = useOffSetTop(HEADER_SIZES.H_DASHBOARD_DESKTOP) && !isNavHorizontal
+  const canSeeLessonGen = !!user?.id && user?.role !== 'anonymous' && user?.role !== 'student'
 
   const renderContent = (
     <>
@@ -55,8 +58,27 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
 
       {isSchoolSection ? <NavAccount /> : null}
       <WelcomeText />
+      {canSeeLessonGen && (
+        <AiGenerateLessonDialog>
+          <div
+            style={{
+              backgroundColor: 'rgba(1, 152, 237, 0.1)',
+              color: 'rgb(1, 152, 237)',
+              padding: '.2rem 1.2rem',
+              borderRadius: '2rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              lineHeight: '1rem',
+            }}
+          >
+            <AIIcon color='#FBDD3F' />
+            Generate a new lesson
+          </div>
+        </AiGenerateLessonDialog>
+      )}
       <Stack
-        flexGrow={1}
         direction='row'
         alignItems='center'
         justifyContent='flex-end'
@@ -103,6 +125,9 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
         sx={{
           height: 1,
           px: { md: 5 },
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
         }}
       >
         {renderContent}
