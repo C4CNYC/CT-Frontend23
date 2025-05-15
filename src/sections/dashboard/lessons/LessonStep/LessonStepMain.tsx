@@ -15,13 +15,21 @@ import StepContentEditor from './LessonStepContent/StepContentEditor'
 import LessonStepList from './LessonStepList'
 import { NoSelectedStep } from './NoSelectedStep'
 
-export default function LessonStepMain(): React.ReactElement {
+export default function LessonStepMain({
+  closeThis,
+}: {
+  closeThis?: () => void
+}): React.ReactElement {
   const router = useRouter()
   const { stepId, lessonId } = router.query
   const [, setLessonView] = useAtom(lessonViewAtom)
   const handle = useFullScreenHandle()
   const [locked, setLocked] = useState(false)
-
+  const onClose = () => {
+    closeThis
+      ? closeThis()
+      : router.push(`${router.pathname}?lessonId=`, undefined, { shallow: true })
+  }
   useEffect(() => {
     setLessonView((prev) => ({
       ...prev,
@@ -54,13 +62,11 @@ export default function LessonStepMain(): React.ReactElement {
 
       <Dialog
         open={Boolean(lessonId)}
-        onClose={() => {
-          router.push(`${router.pathname}?lessonId=`, undefined, { shallow: true })
-        }}
+        onClose={onClose}
         fullScreen
       >
         <FullScreen handle={handle}>
-          <LessonTopBar />
+          <LessonTopBar closeThis={onClose} />
 
           {stepId && <LessonCreationIntro delay={1000} />}
           <ResizerUi

@@ -16,6 +16,7 @@ const BrowserView: FC<BrowserViewProps> = ({
   stepBgColor,
   integrations,
   reloadIframe,
+  teacherView = false,
 }) => {
   const [docSrc, setDocSrc] = useState('')
   const [iframeProcess, setIframeProcess] = useState(false)
@@ -29,6 +30,7 @@ const BrowserView: FC<BrowserViewProps> = ({
     height: iframeKey ? 'calc(100% - 72px)' : '100%',
     background: '#fff',
   }
+  let lessonEditable = lessonManager.userIsOwner && teacherView
 
   // Generate the initial HTML content
   const generateHtml = (doc: CodeDocument) => {
@@ -45,7 +47,7 @@ const BrowserView: FC<BrowserViewProps> = ({
 
     return `
       <html style="height: 100%; box-sizing: border-box;" ${
-        lessonManager.userIsOwner ? 'contentEditable id="VeryEditableDivId"' : ''
+        lessonEditable ? 'contentEditable id="VeryEditableDivId"' : ''
       }>
         <head>
         <link rel="stylesheet" href="/fonts/index.css" />
@@ -70,7 +72,6 @@ const BrowserView: FC<BrowserViewProps> = ({
               let debounceTimer;
               let dbT= new Date().getTime();
               document.getElementById('VeryEditableDivId').addEventListener('input', function() {
-                console.logOld('input event triggered', new Date().getTime() - dbT);
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
                   window.parent.postMessage({ 
@@ -80,7 +81,7 @@ const BrowserView: FC<BrowserViewProps> = ({
                 }, 300); // Debounce to avoid excessive updates
               });
             }
-              ${iframeSuppliments()}
+              ${lessonEditable?iframeSuppliments():null}
           </script>
         </head>
         ${htmlPart}
@@ -107,6 +108,8 @@ const BrowserView: FC<BrowserViewProps> = ({
 
   // Handle messages from iframe (including content changes)
   useEffect(() => {
+    if (!lessonEditable)
+      return
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'contentChange') {
         setIsEditing(true)
@@ -117,12 +120,13 @@ const BrowserView: FC<BrowserViewProps> = ({
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [setIsEditing, document])
+  }, [setIsEditing, document, lessonEditable])
 
   const IFrame = useMemo(
     () =>
       !iframeProcess ? (
         <iframe
+          className={teacherView ? 'BrowserViewTeacherView' : 'BrowserView'}
           ref={iFrameRef}
           srcDoc={docSrc}
           style={IFRAME_STYLE}

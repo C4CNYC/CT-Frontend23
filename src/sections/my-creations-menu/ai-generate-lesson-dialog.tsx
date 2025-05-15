@@ -27,6 +27,7 @@ export default function AiGenerateLessonDialog({ children }: Props): React.React
       >
         {children}
       </Box>
+      {open && (
       <Dialog
         open={open}
         fullWidth
@@ -40,6 +41,7 @@ export default function AiGenerateLessonDialog({ children }: Props): React.React
           />
         </DialogContent>
       </Dialog>
+      )}
     </>
   )
 }
