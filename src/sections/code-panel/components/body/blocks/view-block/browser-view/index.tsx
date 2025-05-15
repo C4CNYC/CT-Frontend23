@@ -81,7 +81,10 @@ const BrowserView: FC<BrowserViewProps> = ({
                 }, 300); // Debounce to avoid excessive updates
               });
             }
+            if (!window.__iframeSupplimentsLoaded) {
+              window.__iframeSupplimentsLoaded = true;
               ${lessonEditable ? iframeSuppliments() : null}
+            }
           </script>
         </head>
         ${htmlPart}
