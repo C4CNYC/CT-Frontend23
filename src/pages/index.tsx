@@ -10,15 +10,16 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 
 export default function HomePage(): React.ReactElement {
   const profile = useSelector((state) => state.global.user)
-  const { isAuthenticated } = useAuthContext()
+  const { isAuthenticated, isInitialized } = useAuthContext()
   const { push } = useRouter()
   useEffect(() => {
-    if (profile?.role) {
+    if (!isInitialized) return
+    if (isAuthenticated) {
       void push(STUDENT_PATH_DASHBOARD.class.root)
     } else {
       void push(PATH_PAGE.create)
     }
-  }, [push, profile])
+  }, [push, isAuthenticated, isInitialized])
   return (
     <>
       <Head>

@@ -1,4 +1,4 @@
-import { type FC, type ReactNode, useMemo } from 'react'
+import { type FC, useMemo } from 'react'
 
 import { Box, type SxProps } from '@mui/material'
 
@@ -14,12 +14,11 @@ import DesktopBar from './nav-bar/desktop-bar'
 import MobileBar from './nav-bar/mobile-bar'
 
 interface ITopPanel {
-  chatComponent?: ReactNode | null
   language: SupportedLang
   publicPage?: boolean
 }
 
-const TopPanel: FC<ITopPanel> = ({ chatComponent, language }) => {
+export const TopPanel: FC<ITopPanel> = ({ language }) => {
   const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
   const profile = useSelector((state) => state.global.user)
@@ -37,14 +36,7 @@ const TopPanel: FC<ITopPanel> = ({ chatComponent, language }) => {
         {isDesktop && <LessonManager />}
       </Box>
       {profile ? <GroupHeader /> : ''}
-      {isDesktop ? (
-        <DesktopBar
-          language={language}
-          chatComponent={chatComponent}
-        />
-      ) : (
-        <MobileBar />
-      )}
+      {isDesktop ? <DesktopBar language={language} /> : <MobileBar />}
     </Box>
   )
 }
@@ -57,5 +49,3 @@ const getBoxStyles = (isDesktop: boolean): SxProps => ({
   pr: '24px',
   pl: '16px',
 })
-
-export default TopPanel
