@@ -81,7 +81,7 @@ const BrowserView: FC<BrowserViewProps> = ({
                 }, 300); // Debounce to avoid excessive updates
               });
             }
-              ${lessonEditable?iframeSuppliments():null}
+              ${lessonEditable ? iframeSuppliments() : null}
           </script>
         </head>
         ${htmlPart}
@@ -108,8 +108,7 @@ const BrowserView: FC<BrowserViewProps> = ({
 
   // Handle messages from iframe (including content changes)
   useEffect(() => {
-    if (!lessonEditable)
-      return
+    if (!lessonEditable) return
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'contentChange') {
         setIsEditing(true)

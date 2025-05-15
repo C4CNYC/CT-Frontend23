@@ -59,7 +59,7 @@ export function SaveEditContent({}: any) {
               <Tooltip title={'Add Image from Gallery'}>
                 <a>
                   <MediaModal insertImage={insertImage}>
-                  <MdImage size={24} />
+                    <MdImage size={24} />
                   </MediaModal>
                 </a>
               </Tooltip>

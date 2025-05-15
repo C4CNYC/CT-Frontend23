@@ -1,8 +1,6 @@
 import IconButton from '@mui/material/IconButton'
-import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/system/Box'
 import { FaRegSmile } from '@react-icons/all-files/fa/FaRegSmile'
 import { HiTrash } from '@react-icons/all-files/hi2/HiTrash'
 import { PiArrowBendUpLeftLight } from '@react-icons/all-files/pi/PiArrowBendUpLeftLight'
