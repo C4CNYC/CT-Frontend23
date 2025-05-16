@@ -25,7 +25,7 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { imageResize } from '@root/src/utils/imageResize'
 
-interface ImageAttributes {
+export interface ImageAttributes {
   align?: 'center' | 'end' | 'justify' | 'left' | 'match-parent' | 'right' | 'start'
   alt?: string
   height?: string | number

@@ -1,7 +1,7 @@
 export function iframeSuppliments() {
   return (
     ` 
-  document.querySelector('[contenteditable]').addEventListener('paste', function(e) {
+  document.querySelector('[contenteditable]')?.addEventListener('paste', function(e) {
     // Get pasted text
     const pastedText = (e.clipboardData || window.clipboardData).getData('text');
     // Give browser time to process the paste
@@ -70,6 +70,13 @@ export function iframeSuppliments() {
         document.execCommand('insertHTML', false, embedHtml);
     }
 });
+
+window.addEventListener('message', function(event) {
+  if (event.data && event.data.type === 'simulatePaste') { 
+       document.execCommand('insertHTML', false, event.data.content)
+  }
+});
+
 
   `
   )
