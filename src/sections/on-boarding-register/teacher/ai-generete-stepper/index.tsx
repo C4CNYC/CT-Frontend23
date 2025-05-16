@@ -183,7 +183,7 @@ export default function AIGenerateStepper({
           setTimeout(() => {
             if (closeModal) closeModal()
           }, 300)
-          setTimeout(() => push(`${redirectAfter}?lessonId=${lessonId}`), 700)
+          setTimeout(() => push(`${redirectAfter}?lessonId=${lessonId}&ai=true`), 700)
         })
         .catch((err) => {
           enqueueSnackbar(err.data.message, { variant: 'error' })

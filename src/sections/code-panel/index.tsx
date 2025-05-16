@@ -41,22 +41,22 @@ import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { isUuid } from '@root/src/utils/isUuid'
 import { progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
-import AIGeneratorTour from '../intro-tours/ai-generator-intro'
-
 import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
 import { LessonManagerProvider } from './lib/LessonManagerContext'
-
 const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
   ssr: false,
 })
-
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
-  {
-    ssr: false,
-  }
+  { ssr: false }
+)
+
+const CPTeacherTour = dynamic(
+  async () =>
+    (await import('@root/src/sections/intro-tours/code-panel-teacher/CPTeacherTour')).CPTeacherTour,
+  { ssr: false }
 )
 
 const CodePanelHeader = dynamic(
@@ -344,11 +344,7 @@ export function CodePanelLayout(): ReactElement | null {
           lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
           lessonContent={lessonContent}
         >
-          {router.query.ai ? (
-            <AIGeneratorTour withModals />
-          ) : showTour || isShowTour ? (
-            <CodePanelTour />
-          ) : null}
+          {router.query.ai ? <CPTeacherTour /> : showTour || isShowTour ? <CodePanelTour /> : null}
           <Box
             sx={{
               bgcolor: (theme) =>
