@@ -10,7 +10,11 @@ import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
 
 import ViewTumbler from './ViewTumbler'
 
-export default function LessonTopBar(): React.ReactElement {
+export default function LessonTopBar({
+  closeThis,
+}: {
+  closeThis?: () => void
+}): React.ReactElement {
   const [
     { isAllColumnsVisible, isFullScreenView, fullScreenClose, fullScreenOpen },
     setGlobalCodePanel,
@@ -18,8 +22,8 @@ export default function LessonTopBar(): React.ReactElement {
 
   const { push, pathname } = useRouter()
 
-  const onClose = (): void => {
-    push(`${pathname}?lessonId=`, undefined, { shallow: true })
+  const onClose = () => {
+    closeThis ? closeThis() : push(`${pathname}?lessonId=`, undefined, { shallow: true })
   }
 
   return (

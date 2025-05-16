@@ -1214,5 +1214,17 @@
     "intro_tour_step_7_mobile_subtitle": "And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?",
     "intro_tour_step_7_mobile_btn": "Leave feedback",
     "lessons_language_select": "Select Programming language",
-    "privacy_policy": "Privacy Policy"
+    "privacy_policy": "Privacy Policy",
+    "cp_teacher_tour":[
+      {"title":"Hi there 👋🏼", "body":"We are generating your new lesson","button":"GOT IT!"},
+      {"title":"Slides", "body":"Students will follow those slides", "button":"NEXT"},
+      {"title":"Starter Code:", "body":"Some exercises include starter code. You can edit and update that here.", "button":"NEXT"},
+      {"title":"Keep prompting 👉🏼", "body":"Chat with 🐻 Baloo to change or update the lesson or the specific slide you are on.", "button":"OH WOW!"},
+      {"title":"Go crazy. Mix it up.  🎨 🤪", "body":"To edit just 🖱️ click anywhere and start typing.","button":"YAAAY!"},
+      {
+        "title": "Most important: Have fun! 🤪",
+        "body": "And on Feedback 💬 let us know what you think: \n awesome 🏆 or not-so-awesome 💩?",
+        "button": "Leave feedback"
+      }
+    ]
   }
