@@ -8,8 +8,11 @@ import CustomLabel from './_components/CustomLabel'
 import NextBtn from './_components/NextBtn'
 import SkipBtn from './_components/SkipBtn'
 import { styledRegisterInput } from './constants'
+import { useStepperContext } from './stepper-context'
 
 const NoteStep = () => {
+  const { handleUpdateInfo, isLoading } = useStepperContext()
+
   return (
     <Stack sx={{ gap: 3 }}>
       <CustomLabel translationKey='Anything we should know?' />
@@ -29,8 +32,11 @@ const NoteStep = () => {
         })}
       />
 
-      <NextBtn onClick={() => {}} />
-      <SkipBtn onClick={() => {}} />
+      <NextBtn
+        onClick={handleUpdateInfo}
+        loading={isLoading}
+      />
+      <SkipBtn onClick={handleUpdateInfo} />
     </Stack>
   )
 }

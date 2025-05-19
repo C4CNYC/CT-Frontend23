@@ -1,3 +1,4 @@
+import { OrgType } from '@/sections/auth/tenant-creation/constants'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
 export interface OrganizationResponce extends BaseResponseInterface {
@@ -84,4 +85,23 @@ export interface OrganizationRequest {
   email: string | null
   url: string
   address: string
+}
+
+export interface ITenantLogo {
+  email: string
+}
+
+export interface ITenantUpdateInfo {
+  name: string
+  surname: string
+  city: string
+  country: string
+  orgType: OrgType
+  studentCountCurrent: number
+  studentCountExpected: number
+  brandName: string
+  subdomain: string
+  logo?: File
+  logoMini?: File
+  note: string
 }

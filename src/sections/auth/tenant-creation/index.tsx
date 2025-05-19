@@ -30,15 +30,13 @@ export default function TenantCreation() {
     },
   })
 
-  const onSubmit = async (data: TenantFormValuesProps) => {
-    try {
-    } catch (e: any) {}
-  }
   return (
     <StyledContent>
       <StepperProvider
         errors={methods.formState.errors}
         trigger={methods.trigger}
+        getValues={methods.getValues}
+        setValue={methods.setValue}
       >
         <RegStepper />
         <BackBtn />
@@ -51,10 +49,7 @@ export default function TenantCreation() {
             mb: 0.5,
           }}
         >
-          <FormProvider
-            methods={methods}
-            onSubmit={methods.handleSubmit(onSubmit)}
-          >
+          <FormProvider methods={methods}>
             <RenderStep />
           </FormProvider>
         </Stack>

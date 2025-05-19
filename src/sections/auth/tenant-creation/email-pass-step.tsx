@@ -13,7 +13,7 @@ import { styledRegisterInput } from './constants'
 import { useStepperContext } from './stepper-context'
 
 const EmailPassStep = () => {
-  const { handleValidation, isError } = useStepperContext()
+  const { handleValidationScreen0, isError, isLoading } = useStepperContext()
   const translate = useTranslate()
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -48,13 +48,14 @@ const EmailPassStep = () => {
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !isError) {
-            handleValidation()
+            handleValidationScreen0()
           }
         }}
       />
       <NextBtn
-        onClick={handleValidation}
+        onClick={handleValidationScreen0}
         disabled={isError}
+        loading={isLoading}
       />
     </Stack>
   )

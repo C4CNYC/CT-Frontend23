@@ -14,7 +14,7 @@ import { HELPER_IMG_TEXT, UPLOAD_IMG_BTN } from './constants'
 import { useStepperContext } from './stepper-context'
 const LogosStep = () => {
   const translate = useTranslate()
-  const { handleNext } = useStepperContext()
+  const { handleNext, handleValidationScreenLogo, isLoading } = useStepperContext()
 
   const [uploadedLogoMini, setUploadedLogoMini] = useState<null | File>(null)
 
@@ -78,7 +78,10 @@ const LogosStep = () => {
           translationKey='No larger than 200×200 px and supports PNG, JPG formats.'
         />
       </Stack>
-      <NextBtn onClick={handleNext} />
+      <NextBtn
+        onClick={handleValidationScreenLogo}
+        loading={isLoading}
+      />
       <SkipBtn onClick={handleNext} />
     </Stack>
   )
