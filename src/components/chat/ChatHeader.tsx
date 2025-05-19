@@ -3,14 +3,14 @@ import Typography from '@mui/material/Typography'
 
 export const ChatHeader = () => (
   <Stack
+    className='chat-header'
     direction='row'
     alignItems='center'
     justifyContent='space-between'
     sx={{
       px: 1,
       py: 0.3,
-      backGround:
-        'linear-gradient(90deg,rgba(180, 58, 58, 0.64) 0%, rgba(29, 66, 253, 0.55) 50%, rgba(252, 197, 69, 0.58) 100%)',
+      background: 'linear-gradient(90deg,#F9FAFB 0%, #FAFBF9 50%, #FAF9FB 100%)',
     }}
   >
     <Stack

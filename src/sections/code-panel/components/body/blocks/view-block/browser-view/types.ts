@@ -12,6 +12,7 @@ export interface BrowserViewProps {
   iframeKey?: number
   stepBgColor?: string
   reloadIframe?: () => void
+  teacherView?: boolean
 }
 
 export enum TagNames {
