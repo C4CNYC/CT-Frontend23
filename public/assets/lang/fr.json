@@ -468,6 +468,7 @@
     "modules_add_lesson_new_lesson": "Ajouter une nouvelle leçon",
     "modules_add_lesson_new_quiz": "Ajouter un nouveau quiz",
     "modules_add_lesson_new_exercises": "Ajouter de nouveaux exercices",
+    "modules_add_lesson_modal": "Sélectionner parmi les leçons existantes",
     "modules_view_lesson": "Voir la leçon",
     "modules_add_lesson_slide_link": "Ajouter/Modifier les diapositives de la leçon",
     "modules_pls_select_lesson": "VEUILLEZ SÉLECTIONNER UNE LEÇON",
