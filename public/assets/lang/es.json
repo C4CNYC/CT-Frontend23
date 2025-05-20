@@ -469,6 +469,7 @@
     "modules_add_lesson_new_quiz": "Agregar nueva prueba",
     "modules_add_lesson_new_exercises": "Agregar nuevos ejercicios",
     "modules_add_lesson_modal": "Seleccionar entre lecciones existentes",
+    "modules_add_lesson_modal_placepolder": "Haga clic aquí o comience a escribir el nombre",
     "modules_view_lesson": "Ver lección",
     "modules_add_lesson_slide_link": "Agregar/editar diapositivas de lección",
     "modules_pls_select_lesson": "POR FAVOR, SELECCIONA UNA LECCIÓN",

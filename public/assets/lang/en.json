@@ -470,6 +470,7 @@
     "modules_add_lesson_new_quiz": "Add New Quiz",
     "modules_add_lesson_new_exercises": "Add New Exercises",
     "modules_add_lesson_modal": "Select from existing lessons",
+    "modules_add_lesson_modal_placepolder": "Click here or start typing name",
     "modules_view_lesson": "View Lesson",
     "modules_add_lesson_slide_link": "Add/Edit Lesson Slides",
     "modules_pls_select_lesson": "PLS SELECT LESSON",

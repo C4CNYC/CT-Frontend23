@@ -469,6 +469,7 @@
     "modules_add_lesson_new_quiz": "إضافة اختبار جديد",
     "modules_add_lesson_new_exercises": "إضافة تمارين جديدة",
     "modules_add_lesson_modal": "اختر من الدروس الموجودة،",
+    "modules_add_lesson_modal_placepolder": "انقر هنا أو ابدأ بكتابة الاسم،",
     "modules_view_lesson": "عرض الدرس",
     "modules_add_lesson_slide_link": "إضافة/تعديل شرائح الدرس",
     "modules_pls_select_lesson": "يرجى اختيار الدرس",
