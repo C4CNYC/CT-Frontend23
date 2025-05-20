@@ -16,7 +16,7 @@ const LogosStep = () => {
   const translate = useTranslate()
   const { handleNext, handleValidationScreenLogo, isLoading } = useStepperContext()
 
-  const [uploadedLogoMini, setUploadedLogoMini] = useState<null | File>(null)
+  const [uploadedLogo, setUploadedLogo] = useState<null | File>(null)
 
   return (
     <Stack sx={{ gap: 3 }}>
@@ -33,11 +33,11 @@ const LogosStep = () => {
         }}
       >
         <Box sx={{ position: 'relative' }}>
-          {uploadedLogoMini ? (
+          {uploadedLogo ? (
             <IconButton
               sx={UPLOAD_IMG_BTN}
               onClick={() => {
-                setUploadedLogoMini(null)
+                setUploadedLogo(null)
               }}
             >
               <IoMdClose size='20px' />
@@ -50,7 +50,7 @@ const LogosStep = () => {
               'image/*': [],
             }}
             onDrop={(files: File[]) => {
-              setUploadedLogoMini(files[0])
+              setUploadedLogo(files[0])
             }}
             placeholder={
               <Stack alignItems='center'>
@@ -65,13 +65,11 @@ const LogosStep = () => {
                 width='90px'
                 sx={HELPER_IMG_TEXT}
               >
-                {uploadedLogoMini?.name}
+                {uploadedLogo?.name}
               </Typography>
             }
           />
-          <SingleFilePreview
-            file={uploadedLogoMini ? URL.createObjectURL(uploadedLogoMini) : null}
-          />
+          <SingleFilePreview file={uploadedLogo ? URL.createObjectURL(uploadedLogo) : null} />
         </Box>
         <CustomLabel
           variant='caption'
@@ -79,7 +77,7 @@ const LogosStep = () => {
         />
       </Stack>
       <NextBtn
-        onClick={handleValidationScreenLogo}
+        onClick={() => handleValidationScreenLogo(uploadedLogo || '')}
         loading={isLoading}
       />
       <SkipBtn onClick={handleNext} />

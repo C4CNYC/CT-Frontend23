@@ -1,17 +1,27 @@
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
-import { ITenantLogo, ITenantUpdateInfo } from '../interfaces/organization.interface'
+import {
+  ITenantLogo,
+  ITenantLogoResponse,
+  ITenantUpdateInfo,
+} from '../interfaces/organization.interface'
 
 import { tenantApi } from '.'
 
 const extendedApi = tenantApi.injectEndpoints({
   endpoints: (builder) => ({
-    setTenantLogo: builder.mutation<ITenantLogo & BaseResponseInterface, ITenantLogo>({
-      query: ({ ...body }) => ({
-        url: '/upload-logo/',
-        method: 'POST',
-        body,
-      }),
+    setTenantLogo: builder.mutation<ITenantLogoResponse & BaseResponseInterface, ITenantLogo>({
+      query: ({ userId, file }) => {
+        const formData = new FormData()
+        formData.append('userId', userId)
+        formData.append('file', file)
+
+        return {
+          url: '/upload-logo',
+          method: 'POST',
+          body: formData,
+        }
+      },
     }),
     updateTenantInfo: builder.mutation<
       ITenantUpdateInfo & BaseResponseInterface,
@@ -19,7 +29,7 @@ const extendedApi = tenantApi.injectEndpoints({
     >({
       query: ({ ...body }) => ({
         url: '/update-info/',
-        method: 'PUTCH',
+        method: 'POST',
         body,
       }),
     }),

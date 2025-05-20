@@ -88,7 +88,12 @@ export interface OrganizationRequest {
 }
 
 export interface ITenantLogo {
-  email: string
+  userId: string
+  file: File | string
+}
+
+export interface ITenantLogoResponse {
+  message: string
 }
 
 export interface ITenantUpdateInfo {

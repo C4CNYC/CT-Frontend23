@@ -1,15 +1,20 @@
 import { createContext, useContext, ReactNode, useEffect } from 'react'
 import { useState } from 'react'
 
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
-import { FieldErrors, UseFormGetValues, UseFormSetValue, UseFormTrigger } from 'react-hook-form'
+import { FieldErrors } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import {
   useSetTenantLogoMutation,
   useUpdateTenantInfoMutation,
 } from '@/redux/services/tenant/tenant-creation'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { RootState } from '../../../redux/store'
 
 import { TenantFormValuesProps } from './constants'
 
@@ -23,7 +28,7 @@ interface StepperContextType {
   resetStepper: () => void
   handleValidation: () => void
   handleValidationScreen0: () => void
-  handleValidationScreenLogo: () => void
+  handleValidationScreenLogo: (uploadedLogo: File | string) => void
   handleUpdateInfo: () => void
 }
 
@@ -32,15 +37,11 @@ const StepperContext = createContext<StepperContextType | undefined>(undefined)
 export const StepperProvider = ({
   children,
   errors,
-  trigger,
-  getValues,
-  setValue,
+  methods,
 }: {
   children: ReactNode
   errors: FieldErrors<TenantFormValuesProps>
-  trigger: UseFormTrigger<TenantFormValuesProps>
-  getValues: UseFormGetValues<TenantFormValuesProps>
-  setValue: UseFormSetValue<TenantFormValuesProps>
+  methods: any
 }) => {
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
@@ -48,9 +49,10 @@ export const StepperProvider = ({
   const [isLoading, setIsLoading] = useState(false)
   const [currentInputs, setCurrentInputs] = useState<Array<keyof TenantFormValuesProps>>([])
   const { registerTenant } = useAuthContext()
-  const formValues = getValues()
   const [setLogo, { isLoading: isLoadingLogo }] = useSetTenantLogoMutation()
   const [updateInfo, { isLoading: isLoadingUpdateInfo }] = useUpdateTenantInfoMutation()
+  const userId = useSelector((state: RootState) => state.global.user?.id)
+  const { push, route } = useRouter()
 
   const isError = Boolean(Object.keys(errors).length)
 
@@ -58,21 +60,23 @@ export const StepperProvider = ({
   const handleBack = () => setActiveStep((prev) => prev - 1)
   const resetStepper = () => setActiveStep(0)
   const handleValidation = async () => {
-    const isValid = await trigger(currentInputs)
+    const isValid = await methods.trigger(currentInputs)
 
     if (isValid) {
       handleNext()
     }
   }
   const handleValidationScreen0 = async () => {
-    const isValid = await trigger(['email', 'password'])
+    const isValid = await methods.trigger(['email', 'password'])
     if (isValid) {
+      const currentEmail = methods.getValues('email')
+      const currentPassword = methods.getValues('password')
       setIsLoading(true)
 
       try {
         await registerTenant({
-          email: formValues?.email,
-          password: formValues?.password,
+          email: currentEmail,
+          password: currentPassword,
         })
         enqueueSnackbar(translate('register_successfully'))
         setIsLoading(false)
@@ -84,19 +88,19 @@ export const StepperProvider = ({
     }
   }
 
-  const handleValidationScreenLogo = async () => {
-    const isValid = await trigger(['logo', 'email'])
+  const handleValidationScreenLogo = async (uploadedLogo: File | string) => {
+    const isValid = await methods.trigger(['logo', 'email'])
 
     if (isValid) {
-      setIsLoading(isLoadingLogo)
+      setIsLoading(false)
+      const currentLogo = methods.getValues()
 
       try {
         const result = await setLogo({
-          email: formValues?.email,
-          logo: formValues?.logo,
+          userId: userId || '',
+          file: uploadedLogo || '',
         }).unwrap()
-
-        setValue('logo', result?.data?.logo)
+        methods.setValue('logo', result?.message)
         enqueueSnackbar(translate('Logo uploaded successfully'))
         setIsLoading(isLoadingLogo)
 
@@ -109,18 +113,22 @@ export const StepperProvider = ({
   }
 
   const handleUpdateInfo = async () => {
-    const isValid = await trigger()
+    const isValid = await methods.trigger()
+    const data = methods.getValues()
 
     if (isValid) {
-      setIsLoading(isLoadingUpdateInfo)
+      setIsLoading(true)
 
       try {
-        await updateInfo(formValues).unwrap()
+        await updateInfo({
+          ...data,
+          slug: data.subdomain,
+        }).unwrap()
 
         enqueueSnackbar(translate('Info updated successfully'))
         setIsLoading(isLoadingUpdateInfo)
 
-        handleNext()
+        push(MANAGER_PATH_DASHBOARD.administration.root)
       } catch (error: any) {
         setIsLoading(false)
         enqueueSnackbar(error.message, { variant: 'error' })

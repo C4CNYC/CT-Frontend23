@@ -34,9 +34,7 @@ export default function TenantCreation() {
     <StyledContent>
       <StepperProvider
         errors={methods.formState.errors}
-        trigger={methods.trigger}
-        getValues={methods.getValues}
-        setValue={methods.setValue}
+        methods={methods}
       >
         <RegStepper />
         <BackBtn />
