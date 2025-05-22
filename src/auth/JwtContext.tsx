@@ -290,6 +290,31 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     []
   )
 
+  const registerTenant = useCallback(
+    async ({ email, password }: { email: string; password: string }) => {
+      const tenantName = getTenantFromDomain()
+
+      const { data } = await axios.post('/tenant/register', {
+        email,
+        password,
+      })
+
+      const { access_token: accessToken, user } = data
+
+      localStorage.setItem('accessToken', accessToken)
+
+      reduxDispatch(setUser(user))
+      setSession(accessToken, tenantName)
+
+      dispatch({
+        type: Types.REGISTER_TO_ORGANIZATION,
+        payload: {
+          user,
+        },
+      })
+    },
+    []
+  )
   // LOGOUT
   const logout = useCallback(() => {
     setSession(null, null)
@@ -319,6 +344,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       loginWithGithub: voidFunction,
       loginWithTwitter: voidFunction,
       register,
+      registerTenant,
       logout,
     }),
     [
@@ -331,6 +357,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       login,
       logout,
       register,
+      registerTenant,
     ]
   )
 

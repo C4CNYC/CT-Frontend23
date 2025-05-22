@@ -53,6 +53,10 @@ export default function DetailsStep({
 
   useEffect(() => {
     setCourse(methods.getValues('course'))
+
+    if (data) {
+      methods.setValue('course', data[0]?.id)
+    }
   }, [data])
 
   if (!course && data) {
@@ -140,10 +144,7 @@ export default function DetailsStep({
                     {translate('quest_you_dont_have_courses_msg')}
                   </option>
                 ) : (
-                  <option
-                    key='empty'
-                    value='empty'
-                  ></option>
+                  ''
                 )}
                 {data
                   ? data.map((course) => (
