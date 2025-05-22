@@ -150,7 +150,7 @@ export default function ModuleLessonsAutocomplete({ id }: Props): React.ReactEle
         <TextField
           style={{ width: '100%' }}
           {...params}
-          placeholder={translate('lessons')}
+          placeholder={translate('modules_add_lesson_modal_placepolder')}
           InputProps={{
             ...params.InputProps,
             sx: {
