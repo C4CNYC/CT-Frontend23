@@ -152,7 +152,7 @@ export const languages: LanguageType[] = [
   { code: 'so', language: 'Somali' },
   { code: 'st', language: 'Sotho, Southern' },
   { code: 'nr', language: 'South Ndebele' },
-  { code: 'es', language: 'Spanish, Castilian' },
+  { code: 'es', language: 'Spanish' },
   { code: 'su', language: 'Sundanese' },
   { code: 'sw', language: 'Swahili' },
   { code: 'ss', language: 'Swati' },
