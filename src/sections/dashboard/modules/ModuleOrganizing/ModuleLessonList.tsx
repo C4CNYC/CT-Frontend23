@@ -17,6 +17,8 @@ import {
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
+import { useBoolean } from '@root/src/hooks/use-boolean'
+import InsertExisistingLessonModal from '@root/src/sections/dashboard/lessons/InsertExisistingLessonModal'
 import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
 
 import SkeletonList from '../../lessons/LessonStep/Modals/SkeletonList'
@@ -44,6 +46,11 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
   const theme = useTheme()
 
   const popover = usePopover()
+  const {
+    value: isOpenInsertExisistingLessonModal,
+    onTrue: handleOpenInsertExisistingLessonModal,
+    onFalse: handleCloseInsertExisistingLessonModal,
+  } = useBoolean(false)
 
   const moduleBtnSx = useMemo(() => getModuleBtnSx(theme), [theme])
   const addLessonBtnSx = useMemo(() => getAddLessonBtnSx(theme), [theme])
@@ -208,10 +215,11 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
         }}
       >
         <MenuItem
+          sx={MENU_ITEM_SX}
           onClick={() => {
+            handleOpenInsertExisistingLessonModal()
             popover.onClose()
           }}
-          sx={MENU_ITEM_SX}
         >
           {translate('modules_add_lesson_existing')}
         </MenuItem>
@@ -235,6 +243,11 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
           {translate('modules_add_lesson_new_exercises')}
         </MenuItem>
       </CustomPopover>
+      <InsertExisistingLessonModal
+        moduleId={moduleId}
+        isOpen={isOpenInsertExisistingLessonModal}
+        handleClose={handleCloseInsertExisistingLessonModal}
+      ></InsertExisistingLessonModal>
     </>
   )
 }
