@@ -160,6 +160,7 @@
     "media": "Media",
     "challenge": "Challenge",
     "preview": "Preview",
+    "preview_my_lesson": "Preview my lesson",
     "overview": "Overview",
     "hello": "Hello",
     "solution": "Solution",
@@ -261,6 +262,11 @@
     "required_slug": "Slug is required",
     "required_title": "Title is required",
     "required_regex": "Regex is required",
+   "required_org_type": "Organization type is required",
+   "required_brand_name": "Brand name is required",
+   "required_brand_subdomain": "Brand subdomain is required",
+   "must_be_a_number": "Must be a number",
+   "must_be_not_an_empty_string": "Must be not an empty string",
     "sidebar_menu_code_btn": "Let's code",
     "sidebar_menu_catalog": "Catalog",
     "sidebar_menu_catalog_tooltip": "All the official courses are listed here.",
@@ -468,6 +474,8 @@
     "modules_add_lesson_new_lesson": "Add New Lesson",
     "modules_add_lesson_new_quiz": "Add New Quiz",
     "modules_add_lesson_new_exercises": "Add New Exercises",
+    "modules_add_lesson_modal": "Select from existing lessons",
+    "modules_add_lesson_modal_placepolder": "Click here or start typing name",
     "modules_view_lesson": "View Lesson",
     "modules_add_lesson_slide_link": "Add/Edit Lesson Slides",
     "modules_pls_select_lesson": "PLS SELECT LESSON",
@@ -826,8 +834,8 @@
     "lesson_setup_settings": "LESSON SETUP & SETTINGS",
     "slide_add": "ADD SLIDE",
     "slide_add_blank": "New Blank Slide",
-    "slide_add_normal": "Use Normal Template",
-    "slide_add_html": "Use HTML Template",
+    "slide_add_normal": "Standard Templates",
+    "slide_add_html": "HTML Templates",
     "slide_add_prompt_ai": "Prompt with AI",
     "slide_add_ai_templates": "AI Templates",
     "slide_content_updated": "Content updated",
@@ -1212,6 +1220,7 @@
     "intro_tour_step_7_mobile_title": "Most important: Have fun! 🤪",
     "intro_tour_step_7_mobile_subtitle": "And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?",
     "intro_tour_step_7_mobile_btn": "Leave feedback",
+    "lessons_language_select": "Select Programming language",
     "to_payment_dialog_text_1": "Try out the",
     "to_payment_dialog_text_2_1": "pro",
     "to_payment_dialog_text_2_2": "version",
@@ -1219,5 +1228,17 @@
     "to_payment_dialog_text_3_2": "for 14 days",
     "to_payment_dialog_btn_1": "Start trial now",
     "to_payment_dialog_btn_2": "Use basic version",
-    "privacy_policy": "Privacy Policy"
+    "privacy_policy": "Privacy Policy",
+    "cp_teacher_tour":[
+      {"title":"Hi there 👋🏼", "body":"We are generating your new lesson","button":"GOT IT!"},
+      {"title":"Slides", "body":"Students will follow those slides", "button":"NEXT"},
+      {"title":"Starter Code:", "body":"Some exercises include starter code. You can edit and update that here.", "button":"NEXT"},
+      {"title":"Keep prompting 👉🏼", "body":"Chat with 🐻 Baloo to change or update the lesson or the specific slide you are on.", "button":"OH WOW!"},
+      {"title":"Go crazy. Mix it up.  🎨 🤪", "body":"To edit just 🖱️ click anywhere and start typing.","button":"YAAAY!"},
+      {
+        "title": "Most important: Have fun! 🤪",
+        "body": "And on Feedback 💬 let us know what you think: \n awesome 🏆 or not-so-awesome 💩?",
+        "button": "Leave feedback"
+      }
+    ]
   }

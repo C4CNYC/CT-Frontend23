@@ -36,12 +36,7 @@ interface IChatNav {
   friends: IFriend[] | undefined
 }
 
-export default function ChatNav({
-  selectChat,
-  selectedConversation,
-  isLoading,
-  friends,
-}: IChatNav) {
+export function ChatNav({ selectChat, selectedConversation, isLoading, friends }: IChatNav) {
   const theme = useTheme()
 
   const mdUp = useResponsive('up', 'md')

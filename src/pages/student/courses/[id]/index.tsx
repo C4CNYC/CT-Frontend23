@@ -15,6 +15,7 @@ import ModulesListBlock from '@/sections/course/modules-list'
 import { useTranslate } from '@/utils/translateHelper'
 import { useGetStudentProgressQuery } from '@root/src/redux/services/manager/lesson-student'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
+import { progressGuestGet } from '@root/src/utils/progressLocalStorage'
 
 CoursePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -32,22 +33,26 @@ export default function CoursePage(): React.ReactElement {
   )
   const { data: studentProgress } = useGetStudentProgressQuery(undefined, { skip: !profile })
 
+  function getLessonProgress(lessonId: string, challangeCount: number, slideCount: number) {
+    if (studentProgress) {
+      let p = studentProgress.find((p) => p.lessonId === lessonId)
+      return p ? Math.round((p.numberOfCompletedChallenges / challangeCount) * 100) : 0
+    } else {
+      return Math.round((progressGuestGet(lessonId) / slideCount) * 100)
+    }
+  }
   // Merge student progress with course content
   const data = useMemo(() => {
     let data = publicContent
-    if (!studentProgress || !data || !data?.units) return publicContent
+    if (!data || !data?.units) return publicContent
     const updatedUnits = data.units.map((unit) => {
       const updatedLessons = unit.lessons.map((lesson) => {
-        const progress = studentProgress.find((p) => p.lessonId === lesson.id)
-        return progress
-          ? {
-              ...lesson,
-              progress:
-                (+progress?.numberOfCompletedChallenges /
-                  ((lesson.meta.challenges as number) || 10)) *
-                100,
-            }
-          : lesson
+        let progress = getLessonProgress(
+          lesson.id,
+          lesson.meta.challenges as number,
+          lesson.contents?.length || 10
+        )
+        return { ...lesson, progress }
       })
 
       // Sum up all lesson.progress values (default to 0 if not set)

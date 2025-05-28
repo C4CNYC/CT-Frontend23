@@ -56,6 +56,11 @@ export const managerApi = createApi({
     'Properties',
     'LessonSlidePreload',
     'WorkspaceStudent',
+    'GetCompleteChalange',
   ],
+
+  //keepUnusedDataFor: 3600,
+  refetchOnMountOrArgChange: false,
+
   endpoints: () => ({}),
 })

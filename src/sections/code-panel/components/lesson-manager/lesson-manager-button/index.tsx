@@ -15,7 +15,11 @@ interface LessonManagerButtonProps {
   iconColor?: string
 }
 
-const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson, iconColor }) => {
+const LessonManagerButton: FC<LessonManagerButtonProps> = ({
+  onOpen,
+  lesson,
+  iconColor = '#637381',
+}) => {
   const theme = useTheme()
   const buttonSx = useMemo(() => getButtonSx(theme), [theme])
   const typSx = useMemo(() => GetTypSx(theme), [theme])

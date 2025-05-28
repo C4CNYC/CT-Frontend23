@@ -37,6 +37,8 @@ yarn-error.log*
 
 # editors
 .vscode
+*.bak 
 
 # pnpm
 pnpm-lock.yaml
+
