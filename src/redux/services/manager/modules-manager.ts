@@ -1,5 +1,6 @@
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { IModule as ImoduleContentInterface } from '../../interfaces/content.interface'
 import {
   IAddLessonToModule,
   IModule,
@@ -22,6 +23,17 @@ const extendedApi = managerApi.injectEndpoints({
         url: '/manager/module',
         method: 'GET',
         params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['Modules'],
+    }),
+    getModuleWithLessons: builder.query<
+      ImoduleContentInterface & BaseResponseInterface,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/manager/module/${id}`,
+        method: 'GET',
       }),
       keepUnusedDataFor: 0,
       providesTags: ['Modules'],
@@ -128,6 +140,7 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetModulesQuery,
+  useGetModuleWithLessonsQuery,
   useGetCatalogModulesQuery,
   useGetOwnModulesQuery,
   // -------------mutation-----------

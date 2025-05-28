@@ -3,6 +3,7 @@ import { type FC, useEffect, useMemo } from 'react'
 import { Box, useTheme } from '@mui/material'
 import { Stack } from '@mui/system'
 import { AnimatePresence, m } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 import { useDispatch } from 'react-redux'
 
@@ -11,7 +12,6 @@ import { setContentValidations, setNextStepAble } from '@/redux/slices/code-pane
 import { useSelector } from '@/redux/store'
 import { type IValidationMap } from '@/utils/validationMaping'
 
-import CheckersCompleated from './checkers-compleated'
 import CheckersMenu from './checkers-menu'
 import { CheckerIcon } from './CheckersIcon'
 import {
@@ -25,6 +25,10 @@ import {
   getIndicatorSx,
   getStackSx,
 } from './constants'
+
+const CheckersCompleated = dynamic(() => import('./checkers-compleated'), {
+  ssr: false,
+})
 
 interface ICheckers {
   checkers: IValidationMap[]

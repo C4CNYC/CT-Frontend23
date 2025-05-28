@@ -7,6 +7,7 @@ import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
 import { FaRegCopy } from '@react-icons/all-files/fa6/FaRegCopy'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
+import { IoDesktopOutline } from '@react-icons/all-files/io5/IoDesktopOutline'
 import { RxDragHandleDots2 } from '@react-icons/all-files/rx/RxDragHandleDots2'
 import { useRouter } from 'next/router'
 
@@ -18,11 +19,13 @@ import {
 } from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 interface Props {
   lesson: ILesson
   index?: number
   refetch?: () => void
   lock?: boolean | undefined
+  isMine?: boolean
 }
 
 export default function LessonCard({
@@ -30,6 +33,7 @@ export default function LessonCard({
   index,
   refetch,
   lock,
+  isMine = false,
 }: Props): React.ReactElement | null {
   const router = useRouter()
   const translate = useTranslate()
@@ -72,6 +76,9 @@ export default function LessonCard({
     event.preventDefault()
   }
 
+  const openPreview = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation()
+  }
   const handleClosePopover = (): void => {
     setOpenPopover(null)
   }
@@ -146,6 +153,15 @@ export default function LessonCard({
                 onClick={handleOpenPopover}
               >
                 <CgMoreVerticalAlt />
+              </IconButton>
+              <IconButton
+                color={isMine ? 'primary' : openPopover ? 'inherit' : 'default'}
+                onClick={openPreview}
+                href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({ lessonId: lesson.id })}
+                target={lesson.id}
+                title={translate(isMine ? 'preview_my_lesson' : 'preview')}
+              >
+                <IoDesktopOutline size={20} />
               </IconButton>
             </Stack>
             <Label

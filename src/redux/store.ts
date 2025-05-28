@@ -16,6 +16,7 @@ import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
 import { studentAuthApi } from './services/student-auth'
+import { tenantApi } from './services/tenant'
 import { tenantConfigApi } from './services/tenant-configs'
 import { tabListenerMiddleware } from './slices/mobile-tab-manager'
 
@@ -40,7 +41,8 @@ const store = configureStore({
       .concat(studentPublicApi.middleware)
       .concat(publicApi.middleware)
       .concat(feedbackApi.middleware)
-      .concat(tenantConfigApi.middleware),
+      .concat(tenantConfigApi.middleware)
+      .concat(tenantApi.middleware),
 })
 
 const persistor = persistStore(store)

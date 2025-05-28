@@ -4,6 +4,7 @@ import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { IoChevronBack } from '@react-icons/all-files/io5/IoChevronBack'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import { useController } from 'react-hook-form'
 
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
@@ -84,10 +85,17 @@ export function GeneralInfo({
       ? [
           ...TYPE_LESSON,
           ...aiTemplates.map((ait) => ({
-            key: ait.id,
-            value: ait.name,
+            key:
+              ait.id +
+              (ait.meta?.redirectAfterAiCreate ? 'code-panel' : '') +
+              (ait.meta?.generator ? 'n8n' : ''),
+            // wether redirect to code-panel, after lesson created
+            value:
+              ait.name +
+              (ait.meta?.redirectAfterAiCreate ? ' * ' : '') +
+              (ait.meta?.generator ? ' ** ' : ''),
             tooltip: ait.description,
-            icon: 'material-symbols:info-outline',
+            icon: <LuInfo size={16} />,
           })),
         ]
       : TYPE_LESSON

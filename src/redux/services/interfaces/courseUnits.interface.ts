@@ -32,6 +32,7 @@ export interface ILesson {
   type: LessonType
   sort?: number
   slug?: string
+  userId?: string
 }
 
 export interface ICourse {
@@ -145,6 +146,7 @@ export interface ILessonCreate {
   name: string
   description: string
   duration: string
+  meta?: LessonMeta
 }
 export interface IOpenAiRequest {
   prompt: string

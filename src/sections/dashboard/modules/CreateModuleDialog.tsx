@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, ModuleLessonsAutocomplete, useSnackbar } from '@/components'
+import { FormProvider, useSnackbar } from '@/components'
 import { useAddModuleToCourseMutation } from '@/redux/services/manager/courses-manager'
 import {
   useCreateModuleMutation,
@@ -20,6 +20,7 @@ import {
   useUpdateBackgroundImageMutation,
 } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import ModuleLessonsAutocomplete from '@root/src/components/module-lessons-autocomplete/ModuleLessonAutocomplete'
 
 import { DIALOG_ACTIONS_SX, TAB_SX } from './constants'
 import DetailsTab from './DetailsTab'

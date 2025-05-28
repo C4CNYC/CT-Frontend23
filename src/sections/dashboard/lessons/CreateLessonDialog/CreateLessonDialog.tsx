@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -18,11 +18,10 @@ import {
 } from '@/redux/services/manager/lessons-manager'
 import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { useBoolean } from '@root/src/hooks/useBoolean'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useProperties } from '@root/src/hooks/useProperties'
 import { LessonType, LessonTypePseudoEnum } from '@root/src/redux/services/enums/lesson-type.enum'
 import { LessonMeta } from '@root/src/redux/services/interfaces/lesson.interface'
-import { getToggleBtnGroupSx } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/constants'
 
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
@@ -84,18 +83,13 @@ export default function CreateLessonDialog({
   const translate = useTranslate()
 
   const [value, setValue] = useState(0)
-  const [open, handleClickOpen, handleClose] = useBoolean(false)
+  const { value: open, onTrue: handleClickOpen, onFalse: handleClose } = useBoolean(false)
 
   const [editLesson, { isLoading: isLoadingUpdate }] = useUpdateLessonMutation()
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
 
   const { toPseudoType, toDbFields } = usePseudoType({ lessonId: id, defaultValues })
-
-  const toggleButtonStyles = useMemo(
-    () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
-    [theme.palette.mode]
-  )
 
   const [autoRun, autoRunSet, autoRunDelete] = useProperties({
     entityType: 'lesson',
@@ -110,8 +104,8 @@ export default function CreateLessonDialog({
 
   const timeConvertorToSeconds = (time: Record<string, number> | null | undefined) => {
     if (time) {
-      return Object.entries(time).reduce((acc, [timeTipe, time]) => {
-        if (timeTipe === 'minutes') {
+      return Object.entries(time).reduce((acc, [timeType, time]) => {
+        if (timeType === 'minutes') {
           return (acc += time)
         }
         return (acc += time * 60 + acc * 60)
@@ -157,7 +151,6 @@ export default function CreateLessonDialog({
       active: data.active,
       head: data.head,
       slug: data.slug,
-      //lock: data.lock,
       duration: `${data.duration * 60}`,
       independent: pseudoType.independent,
       type: pseudoType.type,
