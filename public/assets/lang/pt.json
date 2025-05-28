@@ -467,6 +467,8 @@
     "modules_add_lesson_new_lesson": "Adicionar Nova Aula",
     "modules_add_lesson_new_quiz": "Adicionar Novo Quiz",
     "modules_add_lesson_new_exercises": "Adicionar Novos Exercícios",
+    "modules_add_lesson_modal": "Selecionar de entre as lições existentes",
+    "modules_add_lesson_modal_placepolder": "Clique aqui ou comece a escrever o nome",
     "modules_view_lesson": "Ver Aula",
     "modules_add_lesson_slide_link": "Adicionar/Editar Slides da Aula",
     "modules_pls_select_lesson": "POR FAVOR, SELECIONE A AULA",
@@ -1209,5 +1211,6 @@
     "intro_tour_step_7_mobile_title": "Mais importante: Divirta-se! 🤪",
     "intro_tour_step_7_mobile_subtitle": "E no Feedback 💬 nos diga o que achou: Maravilhoso 🏆 ou Ruim 💩?",
     "intro_tour_step_7_mobile_btn": "Deixe um feedback",
+    "lessons_language_select": "Selecionar idioma da lição",
     "privacy_policy": "Política de Privacidade"
   }

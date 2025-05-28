@@ -12,8 +12,9 @@ import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelCon
 
 import BaseBlock from '../base-block'
 
-import BrowserView, { CodeDocument } from './browser-view'
+import BrowserView from './browser-view'
 import PreviewControls from './browser-view/preview-controls'
+import { CodeDocument } from './browser-view/types'
 import ConsoleBlock from './console-block'
 
 interface IViewBlock {

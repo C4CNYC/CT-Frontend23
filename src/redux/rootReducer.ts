@@ -11,6 +11,7 @@ import { publicApi } from './services/public/tribe-public'
 import { studentPublicApi } from './services/public-student'
 import { schoolSettingsApi } from './services/school-settings-manager'
 import { studentAuthApi } from './services/student-auth'
+import { tenantApi } from './services/tenant'
 import { tenantConfigApi } from './services/tenant-configs'
 import chatHandlerReducer from './slices/chat-handler'
 import checkersAnimationReducer from './slices/checkers-animation'
@@ -20,7 +21,6 @@ import globalRducer from './slices/global'
 import lessonStepsReducer from './slices/lesson-steps'
 import managerReducer from './slices/manager'
 import mobileTabManagerReducer from './slices/mobile-tab-manager'
-import rabitsReduce from './slices/rabits'
 import schoolSettingsReducer from './slices/schoolSettings'
 import tenantReducer from './slices/tenant'
 import tourReducer from './slices/tour'
@@ -63,13 +63,13 @@ const rootReducer = combineReducers({
   [publicApi.reducerPath]: publicApi.reducer,
   [feedbackApi.reducerPath]: feedbackApi.reducer,
   [tenantConfigApi.reducerPath]: tenantConfigApi.reducer,
+  [tenantApi.reducerPath]: tenantApi.reducer,
   tenant: tenantReducer,
   global: globalRducer,
   manager: managerReducer,
   lessonSteps: lessonStepsReducer,
   schoolSettings: schoolSettingsReducer,
   codePanel: codePanelReducer,
-  rabits: rabitsReduce,
   codePanelGlobal: codePanelGlobalReducer,
   tour: tourReducer,
   checkersAnimation: checkersAnimationReducer,

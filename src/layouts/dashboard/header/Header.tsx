@@ -1,4 +1,4 @@
-import { AppBar, IconButton, Stack, Toolbar, Typography } from '@mui/material'
+import { AppBar, IconButton, Stack, Toolbar } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { TfiMenuAlt } from '@react-icons/all-files/tfi/TfiMenuAlt'
 import { useRouter } from 'next/router'
@@ -10,6 +10,10 @@ import { useOffSetTop } from '@/hooks/useOffSetTop'
 import { useResponsive } from '@/hooks/useResponsive'
 import { useSelector } from '@/redux/store'
 import { bgBlur } from '@/utils/cssStyles'
+import AIIcon from '@root/src/assets/icons/AIIcon'
+import OrgSwitcher from '@root/src/components/org-switcher'
+import SchoolSwitcher from '@root/src/components/school-switcher'
+import AiGenerateLessonDialog from '@root/src/sections/my-creations-menu/ai-generate-lesson-dialog'
 
 import Menu from '../../../sections/code-panel/components/header/nav-bar/options/menu'
 import { HEADER_SIZES, NAV_SIZES } from '../../../theme/consts'
@@ -17,6 +21,8 @@ import { HEADER_SIZES, NAV_SIZES } from '../../../theme/consts'
 import AccountPopover from './AccountPopover'
 import LanguagePopover from './LanguagePopover'
 import NavAccount from './SchoolAccount'
+import WelcomeText from './WelcomeText'
+
 interface Props {
   onOpenNav?: VoidFunction
 }
@@ -26,7 +32,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
   const router = useRouter()
   const user = useSelector((state) => state.global.user)
 
-  const { themeLayout, themeMode } = useSettingsContext()
+  const { themeLayout } = useSettingsContext()
 
   const isNavHorizontal = themeLayout === 'horizontal'
 
@@ -37,6 +43,7 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
   const isSchoolSection = router.pathname.includes('dashboard/school')
 
   const isOffset = useOffSetTop(HEADER_SIZES.H_DASHBOARD_DESKTOP) && !isNavHorizontal
+  const canSeeLessonGen = !!user?.id && user?.role !== 'anonymous' && user?.role !== 'student'
 
   const renderContent = (
     <>
@@ -52,25 +59,35 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
       )}
 
       {isSchoolSection ? <NavAccount /> : null}
-      <Typography
-        variant='h4'
-        sx={{
-          color: themeMode === 'light' ? 'rgba(54, 73, 84, 1)' : 'auto',
-          display: 'flex',
-          gap: 2,
-          alignItems: 'center',
-        }}
-      >
-        Hey {user?.first_name ? user.first_name : 'Friend'}
-        <Typography variant='h4'>👋</Typography>
-      </Typography>
+      <WelcomeText />
+      {canSeeLessonGen && (
+        <AiGenerateLessonDialog>
+          <div
+            style={{
+              backgroundColor: 'rgba(1, 152, 237, 0.1)',
+              color: 'rgb(1, 152, 237)',
+              padding: '.2rem 1.2rem',
+              borderRadius: '2rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              lineHeight: '1rem',
+            }}
+          >
+            <AIIcon color='#FBDD3F' />
+            Generate a new lesson
+          </div>
+        </AiGenerateLessonDialog>
+      )}
       <Stack
-        flexGrow={1}
         direction='row'
         alignItems='center'
         justifyContent='flex-end'
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
+        <OrgSwitcher />
+        <SchoolSwitcher />
         <ThemeSwitcher />
         <LanguagePopover />
         {user ? <AccountPopover /> : <Menu />}
@@ -112,6 +129,9 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
         sx={{
           height: 1,
           px: { md: 5 },
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
         }}
       >
         {renderContent}

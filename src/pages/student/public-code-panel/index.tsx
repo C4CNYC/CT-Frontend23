@@ -34,10 +34,6 @@ import {
 import { FullScreenProvider } from '@root/src/sections/code-panel/lib/FullScreenContext'
 import { LessonManagerProvider } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
-const CodePanelChat = dynamic(async () => await import('../../../components/chat/chat'), {
-  ssr: false,
-})
-
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
   {
@@ -46,7 +42,7 @@ const CodePanelTour = dynamic(
 )
 
 const CodePanelHeader = dynamic(
-  async () => await import('@/sections/code-panel/components/header'),
+  async () => (await import('@/sections/code-panel/components/header')).TopPanel,
   {
     loading: () => <CPTopBarSkeleton />,
   }
@@ -208,9 +204,21 @@ export default function CodePanelPage(): ReactElement | null {
   }, [courseContent, query.courseId, query.unitId, query.lessonId])
 
   useEffect(() => {
+    let timerIdForTour: string | number | NodeJS.Timeout | undefined
+    let timerIdForRender: string | number | NodeJS.Timeout | undefined
+
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
-    if (!hasSeenTour) setShowTour(true)
-    setTimeout(() => setRender(false))
+    if (!hasSeenTour) {
+      timerIdForTour = setTimeout(() => {
+        setShowTour(true)
+      }, 3000)
+    }
+    timerIdForRender = setTimeout(() => setRender(false))
+
+    return () => {
+      clearTimeout(timerIdForRender)
+      clearTimeout(timerIdForTour)
+    }
   }, [isShowTour, showTour])
 
   useEffect(() => {
@@ -257,10 +265,7 @@ export default function CodePanelPage(): ReactElement | null {
               overflow: 'hidden',
             }}
           >
-            <CodePanelHeader
-              chatComponent={<CodePanelChat />}
-              language={DEFAULT_LANGUAGE}
-            />
+            <CodePanelHeader language={DEFAULT_LANGUAGE} />
             <CodePanelBody
               isLoadingLessonContent={isLoading}
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}

@@ -171,11 +171,12 @@ export default function QuestItem({
                         })
                       : assignment.courseunitid &&
                           courseUnit &&
-                          assignment.type === AssignmentTypes.COURSE
+                          assignment.type === AssignmentTypes.COURSE &&
+                          courseUnit?.lessons?.length > 0
                         ? STUDENT_PATH_DASHBOARD.codePanel.workSpace({
                             courseId: assignment.courseid,
                             unitId: assignment.courseunitid,
-                            lessonId: courseUnit?.lessons[0]?.id,
+                            lessonId: courseUnit.lessons[0]?.id,
                           })
                         : STUDENT_PATH_DASHBOARD.codePanel.workSpace({
                             courseId: assignment.courseid,

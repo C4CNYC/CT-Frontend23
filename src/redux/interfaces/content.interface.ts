@@ -4,7 +4,6 @@ import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 import { LessonContentType } from '../enums/lesson-content-type.enum'
 import { ILesson } from '../services/interfaces/lesson.interface'
 
-import { IIntegration } from './integration.interface'
 export type { ILesson }
 
 export interface ICourseElement {
@@ -104,7 +103,7 @@ export interface ILessonContent {
   validations: Array<IValidation & BaseResponseInterface>
   type: LessonContentType
   meta: Record<string, any>
-  integrations: IIntegration[]
+  //integrations: IIntegration[]
   progress?: ILessonContentProgress[]
   title?: string
   id?: string

@@ -19,6 +19,7 @@ import {
   useGetLessonStudentWithoutContentsQuery,
 } from '@/redux/services/manager/lesson-student'
 import { useCompleteLessonMutation } from '@/redux/services/manager/progress-student'
+import { setIsActivateCompeated } from '@/redux/slices/checkers-animation'
 import {
   setCourseId,
   setLessonId,
@@ -36,31 +37,30 @@ import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
-
-import AIGeneratorTour from '../intro-tours/ai-generator-intro'
+import { setChatVisible } from '@root/src/redux/slices/chat-handler'
+import { isUuid } from '@root/src/utils/isUuid'
+import { progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
 import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
 import { LessonManagerProvider } from './lib/LessonManagerContext'
-
 const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
   ssr: false,
 })
-
-const CodePanelChat = dynamic(async () => await import('../../components/chat/chat'), {
-  ssr: false,
-})
-
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
-  {
-    ssr: false,
-  }
+  { ssr: false }
+)
+
+const CPTeacherTour = dynamic(
+  async () =>
+    (await import('@root/src/sections/intro-tours/code-panel-teacher/CPTeacherTour')).CPTeacherTour,
+  { ssr: false }
 )
 
 const CodePanelHeader = dynamic(
-  async () => await import('@/sections/code-panel/components/header'),
+  async () => ({ default: (await import('@/sections/code-panel/components/header')).TopPanel }),
   {
     loading: () => <CPTopBarSkeleton />,
   }
@@ -70,7 +70,7 @@ const Confetti = dynamic(async () => await import('react-confetti'), { ssr: fals
 
 const DEFAULT_LANGUAGE = 'html'
 
-export default function CodePanelLayout(): ReactElement | null {
+export function CodePanelLayout(): ReactElement | null {
   const router = useRouter()
   const dispatch = useDispatch()
   const translate = useTranslate()
@@ -135,7 +135,7 @@ export default function CodePanelLayout(): ReactElement | null {
     {
       slug: lessonIdFromRoute,
     },
-    { skip: !lessonIdFromRoute && !isErrorLessonContent }
+    { skip: (!lessonIdFromRoute && !isErrorLessonContent) || isUuid(lessonIdFromRoute) }
   )
   useEffect(() => {
     if (
@@ -156,6 +156,11 @@ export default function CodePanelLayout(): ReactElement | null {
     setShowConfetti(false)
     confetti?.reset()
   }
+
+  useEffect(() => {
+    if (!profile || !lesson) return
+    if (profile?.id == lesson?.userId) dispatch(setChatVisible(true))
+  }, [profile, lesson])
 
   useEffect(() => {
     if (!courseContent) return
@@ -211,13 +216,21 @@ export default function CodePanelLayout(): ReactElement | null {
   }, [courseContent, router.query.courseId, router.query.unitId, router.query.lessonId])
 
   const onSubmitChallenge = async (lessonContentId: string, code?: string): Promise<void> => {
+    dispatch(setIsActivateCompeated(false))
+
     if (!profile) {
+      progressGuestSetValidation({
+        lessonId: lesson?.id || '',
+        courseId: router.query.courseId as string,
+        moduleId: router.query.unitId as string,
+        slideId: lessonContentId,
+      })
       return
     }
     try {
       await completeLesson({
         id: router.query.courseId as string,
-        module_id: router.query.unit_id as string,
+        module_id: router.query.unitId as string,
         lesson_content_id: lessonContentId,
         code,
       }).unwrap()
@@ -228,7 +241,7 @@ export default function CodePanelLayout(): ReactElement | null {
     if (window.dataLayer) {
       window.dataLayer.push({
         event: 'Lesson_Completed',
-        event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unit_id} > Training (Lesson) ${router.query.lessonId}`,
+        event_category: `Course ${router.query.courseId} > Unit (Module) ${router.query.unitId} > Training (Lesson) ${router.query.lessonId}`,
         event_label: lessonContentId,
       })
     }
@@ -290,9 +303,21 @@ export default function CodePanelLayout(): ReactElement | null {
   }, [lesson, isLoadingLesson, router, render, profile])
 
   useEffect(() => {
+    let timerIdForTour: string | number | NodeJS.Timeout | undefined
+    let timerIdForRender: string | number | NodeJS.Timeout | undefined
+
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
-    if (!hasSeenTour) setShowTour(true)
-    setTimeout(() => setRender(false))
+    if (!hasSeenTour) {
+      timerIdForTour = setTimeout(() => {
+        setShowTour(true)
+      }, 3000)
+    }
+    timerIdForRender = setTimeout(() => setRender(false))
+
+    return () => {
+      clearTimeout(timerIdForRender)
+      clearTimeout(timerIdForTour)
+    }
   }, [isShowTour, showTour])
 
   if (!isLoadingComplete && render) {
@@ -317,12 +342,9 @@ export default function CodePanelLayout(): ReactElement | null {
           data={courseContent}
           isLoading={isLoadingCourseContent}
           lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+          lessonContent={lessonContent}
         >
-          {router.query.ai ? (
-            <AIGeneratorTour withModals />
-          ) : showTour || isShowTour ? (
-            <CodePanelTour />
-          ) : null}
+          {router.query.ai ? <CPTeacherTour /> : showTour || isShowTour ? <CodePanelTour /> : null}
           <Box
             sx={{
               bgcolor: (theme) =>
@@ -331,10 +353,7 @@ export default function CodePanelLayout(): ReactElement | null {
               overflow: 'hidden',
             }}
           >
-            <CodePanelHeader
-              chatComponent={<CodePanelChat />}
-              language={DEFAULT_LANGUAGE}
-            />
+            <CodePanelHeader language={DEFAULT_LANGUAGE} />
             <CodePanelBody
               lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
               isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
@@ -7,7 +7,14 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, useSnackbar } from '@/components'
-import { useCreateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
+import { LessonMachineLang } from '@root/src/redux/services/enums/lesson-language.enum'
+import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
+import {
+  useCreateLessonMutation,
+  useCreateLessonUsingN8nMutation,
+  useGetLessonsByIdsQuery,
+} from '@root/src/redux/services/manager/lessons-manager'
+import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -58,6 +65,7 @@ export default function AIGenerateStepper({
 }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
 
+  const ask = useN8nRequest()
   const [activeStep, setActiveStep] = useState(props?.activeStep || 0)
   const [lessonId, _] = useState<null | string>(null)
   const { enqueueSnackbar } = useSnackbar()
@@ -65,6 +73,7 @@ export default function AIGenerateStepper({
   const profile = useSelector((state) => state.global.user)
   const [createLesson] = useCreateLessonMutation()
   const [createAILesson] = AiGenerate()
+  const [createLessonUsingN8n] = useCreateLessonUsingN8nMutation()
 
   const generateAICourseSchema = Yup.object().shape({
     RlevelR: Yup.string(),
@@ -90,12 +99,8 @@ export default function AIGenerateStepper({
     defaultValues: { ...defaultValues, ...passedValues },
   })
 
-  const nextStep = () => {
-    setActiveStep(activeStep + 1)
-  }
-  const prevStep = () => {
-    setActiveStep(activeStep - 1)
-  }
+  const nextStep = () => setActiveStep(activeStep + 1)
+  const prevStep = () => setActiveStep(activeStep - 1)
 
   const resetRoad = () => {
     push(PATH_AUTH.onBoardingTeacher.root)
@@ -120,20 +125,65 @@ export default function AIGenerateStepper({
       localStorage.setItem('AiGenerateLessonData', JSON.stringify(lessonData))
       push(PATH_AUTH.onBoardingTeacher.launchCourse)
     } else {
-      createLesson({ name: 'Ai Lesson', description: '', duration: '20', active: true })
+      let tempLessonName =
+        'Ai Lesson ' +
+        new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+
+      createLesson({
+        name: tempLessonName,
+        description: '',
+        duration: '20',
+        active: true,
+        meta: {
+          type: 'ai',
+          humanLang: lessonData.language,
+          machineLang: lessonData.programmingLanguage as keyof typeof LessonMachineLang,
+          createMultipleFiles: 0,
+          lock: 0,
+        },
+      })
         .unwrap()
         .then((payload) => {
+          ask(
+            JSON.stringify({
+              lessonId: payload.id,
+              chat: `${lessonData.lessonPrompt} 
+            ${lessonData.context ? `Context: ${lessonData.context}` : ''}`,
+              isMe: 1,
+            }),
+            'chatHistoryAdd'
+          ).then(() => {
+            ask(
+              JSON.stringify({
+                lessonId: payload.id,
+                chat: ` I'm preparing your lesson 
+                Page will update when slides arrive  `,
+                isMe: 0,
+              }),
+              'chatHistoryAdd'
+            )
+          })
           lessonData.newLessonId = payload.id
-          createAILesson(lessonData) // no need to wait, we have lessonid
+          let redirectAfter = STUDENT_PATH_DASHBOARD.myLessons
+          if (lessonData.lessonType.includes('code-panel')) {
+            lessonData.lessonType = lessonData.lessonType.replace('code-panel', '')
+            redirectAfter = STUDENT_PATH_DASHBOARD.codePanel.root
+          }
+
+          if (lessonData.lessonType.includes('n8n')) {
+            lessonData.lessonType = lessonData.lessonType.replace('n8n', '')
+            redirectAfter = STUDENT_PATH_DASHBOARD.codePanel.root
+            createLessonUsingN8n(lessonData)
+          } else {
+            createAILesson(lessonData) // no need to wait, we have lessonid
+          }
           localStorage.removeItem('AiGenerateLessonData')
-          if (closeModal) closeModal()
-          push(
-            `${STUDENT_PATH_DASHBOARD.codePanel.root}?${new URLSearchParams({ lessonId: payload.id ?? '' })}`,
-            undefined,
-            {
-              shallow: true,
-            }
-          )
+          enqueueSnackbar('Lesson created successfully', { variant: 'success' })
+          let lessonId = payload.id ?? ''
+          setTimeout(() => {
+            if (closeModal) closeModal()
+          }, 300)
+          setTimeout(() => push(`${redirectAfter}?lessonId=${lessonId}&ai=true`), 700)
         })
         .catch((err) => {
           enqueueSnackbar(err.data.message, { variant: 'error' })
@@ -160,6 +210,25 @@ export default function AIGenerateStepper({
   const onSubmitAddons = (addons: IAddons) => {
     redirectAfterCompleate(lessonId ?? '')
   }
+
+  const { data: properties } = useGetPropertiesQuery({
+    entityType: 'lesson',
+    propertyName: 'aiTemplate',
+  })
+  const { data: aiTemplates } = useGetLessonsByIdsQuery(
+    properties?.data.map((item) => item.entityId) ?? []
+  )
+
+  useEffect(() => {
+    if (!aiTemplates || aiTemplates.length < 1) return
+    if (!methods.getValues('RtypeLessonR')) {
+      let exerciseAiTemplate = aiTemplates.find((t) => 'generator' in (t?.meta || {}))
+      methods.setValue(
+        'RtypeLessonR',
+        exerciseAiTemplate ? exerciseAiTemplate.id + 'n8n' : aiTemplates[0].id
+      )
+    }
+  }, [aiTemplates])
 
   return (
     <Stack
