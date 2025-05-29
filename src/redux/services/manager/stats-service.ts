@@ -30,6 +30,20 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ['Stats'],
     }),
+    logActivityStats: builder.query<any, {}>({
+      query: ({}) => ({
+        url: `/stats/logActivityStats?nDays=30`,
+        method: 'GET',
+      }),
+      providesTags: ['Stats'],
+    }),
+    logActivityLast: builder.query<any, {}>({
+      query: ({}) => ({
+        url: `/stats/logActivityLast?nDays=30`,
+        method: 'GET',
+      }),
+      providesTags: ['Stats'],
+    }),
   }),
 })
 export const {
@@ -37,4 +51,6 @@ export const {
   useUserRegisteredStatsByOrgQuery,
   useLessonCreatedStatsQuery,
   useCourseProgressStatsQuery,
+  useLogActivityStatsQuery,
+  useLogActivityLastQuery,
 } = extendedApi

@@ -26,7 +26,7 @@ export function txRx2ChartData(URS: { [key: string]: any }[]): LineChartData {
       .map((key, index) => ({
         label: key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase()),
         data: URS?.map((item) => item[key]) || [],
-        color: ['steelblue', 'orange', 'green'][index % 3], // Cycle through colors
+        color: COLORS[index % COLORS.length], // Cycle through colors
       })),
     xaxis: URS?.map((item) => item.date.slice(0, 10)),
   }

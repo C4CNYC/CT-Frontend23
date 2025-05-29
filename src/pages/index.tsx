@@ -38,7 +38,7 @@ export default function HomePage(): React.ReactElement {
       case HomePageType.Default: {
         router.push(PATH_AUTH.onBoardingStudent)
         break
-    }
+      }
       case HomePageType.Custom: {
         router.push(PATH_PAGE.create)
         break
