@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 export const TableSimple = ({ data }: { data: any[] }) => {
   const [sortField, setSortField] = useState<string>('')
@@ -11,22 +11,20 @@ export const TableSimple = ({ data }: { data: any[] }) => {
       setSortDirection('asc')
     }
   }
-
-  const sortedData = [...data].sort((a, b) => {
-    if (!sortField) return 0
-
-    let aVal = a[sortField]
-    let bVal = b[sortField]
-
-    if (sortField === 'createdAt') {
-      aVal = new Date(aVal)
-      bVal = new Date(bVal)
-    }
-
-    if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1
-    if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1
-    return 0
-  })
+  const sortedData = useMemo(() => {
+    return [...data].sort((a, b) => {
+      if (!sortField) return 0
+      let aVal = a[sortField]
+      let bVal = b[sortField]
+      if (sortField === 'createdat') {
+        aVal = new Date(aVal)
+        bVal = new Date(bVal)
+      }
+      if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1
+      if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1
+      return 0
+    })
+  }, [data, sortField, sortDirection])
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -58,7 +56,7 @@ export const TableSimple = ({ data }: { data: any[] }) => {
           <table className='w-full'>
             <thead className='bg-gray-50'>
               <tr>
-                {['id', 'category', 'action', 'user', 'createdAt', 'status', 'latency', 'dump'].map(
+                {['id', 'category', 'action', 'user', 'createdat', 'status', 'latency', 'dump'].map(
                   (field) => (
                     <th
                       key={field}
@@ -113,16 +111,16 @@ export const TableSimple = ({ data }: { data: any[] }) => {
                     </div>
                   </td>
                   <td className='px-4 py-4 whitespace-nowrap'>
-                    <div className='text-sm text-gray-900'>{formatDate(row.createdAt)}</div>
+                    <div className='text-sm text-gray-900'>{formatDate(row.createdat)}</div>
                   </td>
                   <td className='px-4 py-4 whitespace-nowrap'>
                     <span
                       className={`px-2 py-1 text-xs font-medium rounded-full ${
-                        row.status.toLowerCase().includes('successful') ||
-                        row.status.toLowerCase().includes('exists')
+                        row.status?.toLowerCase()?.includes('successful') ||
+                        row.status?.toLowerCase()?.includes('exists')
                           ? 'bg-green-100 text-green-800'
-                          : row.status.toLowerCase().includes('error') ||
-                              row.status.toLowerCase().includes('failed')
+                          : row.status?.toLowerCase()?.includes('error') ||
+                              row.status?.toLowerCase()?.includes('failed')
                             ? 'bg-red-100 text-red-800'
                             : 'bg-yellow-100 text-yellow-800'
                       }`}
