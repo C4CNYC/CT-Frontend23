@@ -84,7 +84,7 @@ export default function LaunchCourseStepper() {
   return (
     <Stack
       sx={{
-        minHeight: '460px',
+        minHeight: { xs: 'auto', md: '460px' },
         justifyContent: 'center',
         position: 'relative',
         width: '100%',

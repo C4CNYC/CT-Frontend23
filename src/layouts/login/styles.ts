@@ -27,7 +27,7 @@ export const StyledSection = styled('div')(({ theme }) => ({
   },
 }))
 
-export const StyledLogoCont = styled('div')(({ theme }) => ({
+export const StyledLogoCont = styled('div')(() => ({
   position: 'absolute',
   top: '24px',
   left: 0,
@@ -35,6 +35,19 @@ export const StyledLogoCont = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+}))
+
+export const StyledLogoContMobile = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  top: '14px',
+  left: '8px',
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  [theme.breakpoints.up('md')]: {
+    display: 'none',
+  },
 }))
 
 export const StyledSectionBg = styled('div')(({ theme }) => ({
@@ -65,12 +78,19 @@ export const StyledContent = styled('div')(({ theme }) => ({
   },
 }))
 
-export const StyledSwitcher = styled('div')(() => ({
+export const StyledSwitcher = styled('div')(({ theme }) => ({
   position: 'absolute',
-  top: '0',
-  right: '0',
+  left: 10,
+  bottom: 10,
   padding: '10px 10px 0 0',
   alignSelf: 'flex-start',
+  maxWidth: 'max-content',
+  [theme.breakpoints.up('md')]: {
+    top: '0',
+    right: '0',
+    bottom: 'auto',
+    left: 'auto',
+  },
 }))
 
 export const StyledLink = styled(Link)(({ theme }) => ({

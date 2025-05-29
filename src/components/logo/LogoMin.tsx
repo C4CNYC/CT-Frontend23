@@ -22,7 +22,6 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
           ref={ref}
           component='div'
           sx={{
-            width: 196,
             height: 32,
             display: 'inline-flex',
             ...sx,

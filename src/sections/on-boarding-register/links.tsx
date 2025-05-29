@@ -29,6 +29,9 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
         '&:hover': {
           color: theme.palette.text.secondary,
         },
+        [theme.breakpoints.down('md')]: {
+          mt: 3,
+        },
       })}
     >
       {isRegister ? (
@@ -58,7 +61,7 @@ export function RegisterStudentTeacher({ isTeacher }: Props): React.ReactElement
       sx={{
         position: 'absolute',
         right: '0px',
-        top: { xs: '-50px', md: '-80px' },
+        top: { xs: '-60px', md: '-80px' },
         color: '#EE467A',
         display: 'flex',
         gap: 1,
