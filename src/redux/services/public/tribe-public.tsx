@@ -16,14 +16,12 @@ export const publicApi = createApi({
         url: `class/${joinCode}`,
         method: 'GET',
       }),
-      keepUnusedDataFor: 6000, // Default cache time is 60 seconds
     }),
     getOrgHomePage: builder.query<IAdministration & BaseResponseInterface, { tenantName: string }>({
       query: ({ tenantName }) => ({
         url: `tenant/${tenantName}/home-page`,
         method: 'GET',
       }),
-      keepUnusedDataFor: 6000, // Default cache time is 60 seconds
     }),
   }),
 })
