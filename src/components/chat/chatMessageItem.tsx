@@ -6,28 +6,38 @@ import { HiTrash } from '@react-icons/all-files/hi2/HiTrash'
 import { PiArrowBendUpLeftLight } from '@react-icons/all-files/pi/PiArrowBendUpLeftLight'
 import { formatDistanceToNowStrict } from 'date-fns'
 
-import CustomAvatartWithoutMUI from '@/components/custom-avatar/CustomAvatartWithoutMUI'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
 
-// ----------------------------------------------------------------------
-export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
-  //   const { body, createdAt } = message
+import { CustomAvatar } from '../custom-avatar/CustomAvatar'
+
+import { IChatMessages } from './chatInterface'
+
+export function ChatMessageItem({ message }: { message: IChatMessages }) {
+  const { isMe, chat, ctime } = message
+
+  const { user } = useAuthContext()
+  let distanceFromNow = '-'
+  try {
+    distanceFromNow = formatDistanceToNowStrict(new Date(+ctime), {
+      addSuffix: true,
+    })
+  } catch (error) {
+    // console.error('Error in ChatMessageItem', error, ctime)
+  }
 
   const renderInfo = (
     <Typography
       noWrap
       variant='caption'
       sx={{
-        mb: 1,
         color: 'text.disabled',
         ...(!isMe && {
           mr: 'auto',
         }),
       }}
     >
-      {!isMe && `firstName`} &nbsp;
-      {formatDistanceToNowStrict(new Date(2024, 1, 14), {
-        addSuffix: true,
-      })}
+      {!isMe && `Baloo`} &nbsp;
+      {distanceFromNow}
     </Typography>
   )
 
@@ -39,17 +49,16 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
         maxWidth: 320,
         borderRadius: 1,
         typography: 'body2',
-        bgcolor: 'background.neutral',
+        bgcolor: '#ffd',
         ...(isMe && {
           color: 'grey.800',
-          bgcolor: 'primary.lighter',
+          bgcolor: '#fff',
         }),
       }}
     >
-      {'message body'}
+      {chat}
     </Stack>
   )
-
   const renderActions = (
     <Stack
       direction='row'
@@ -79,6 +88,23 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
       <IconButton size='small'>
         <HiTrash size={14} />
       </IconButton>
+      {message.options?.map((option, index) => (
+        <a
+          key={index}
+          style={{
+            fontSize: 'small',
+            border: '1px solid #AAA',
+            padding: '2px',
+            borderRadius: '5px',
+            margin: '2px 4px',
+          }}
+          onClick={option.onAction}
+          title={option.description}
+        >
+          {option.shortTitle}
+        </a>
+      ))}
+      {renderInfo}
     </Stack>
   )
 
@@ -86,28 +112,18 @@ export default function ChatMessageItem({ isMe }: { isMe: boolean }) {
     <Stack
       direction='row'
       justifyContent={isMe ? 'flex-end' : 'unset'}
-      sx={{ mb: 5 }}
+      sx={{ mb: 0 }}
     >
-      {!isMe && (
-        <CustomAvatartWithoutMUI
-          alt='firstName'
-          src='https://devnest.s3.amazonaws.com/tenant_f072bcf3-5957-4f04-97da-f8e4c4c53439/students/1d549244-d686-40f9-8e23-15f6efcb1a08/avatar_1704981148061_.png'
-          width={32}
-          height={32}
-          priority={false}
-          styles={{
-            width: 32,
-            height: 32,
-            borderRadius: '50%',
-            overflow: 'hidden',
-            mr: 2,
-          }}
+      {isMe ? (
+        <CustomAvatar
+          src={user?.avatar}
+          name={user?.firstName}
         />
+      ) : (
+        <span style={{ fontSize: '2rem' }}>🐻</span>
       )}
 
       <Stack alignItems='flex-end'>
-        {renderInfo}
-
         <Stack
           direction='row'
           alignItems='center'

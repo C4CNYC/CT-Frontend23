@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Box, Collapse, IconButton, Stack, Tooltip, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Collapse,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+  useTheme,
+  Divider,
+} from '@mui/material'
 import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown'
 import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp'
 import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
@@ -16,6 +25,9 @@ const ConsoleBlock = () => {
   const translate = useTranslate()
   const theme = useTheme()
   const [isOpen, setIsOpen] = useState(false)
+  const [height, setHeight] = useState(200)
+  const startYRef = useRef<number | null>(null)
+  const startHeightRef = useRef<number>(height)
 
   const ConsoleBoxRef = useRef<HTMLElement>(null)
 
@@ -35,6 +47,28 @@ const ConsoleBlock = () => {
     return () => window.removeEventListener('message', eventListener)
   }, [])
 
+  const startDragging = (e: React.MouseEvent) => {
+    startYRef.current = e.clientY
+    startHeightRef.current = height
+    document.addEventListener('mousemove', onDrag)
+    document.addEventListener('mouseup', stopDragging)
+  }
+
+  const onDrag = (e: MouseEvent) => {
+    if (startYRef.current === null) return
+
+    const deltaY = e.clientY - startYRef.current
+    const newHeight = startHeightRef.current - deltaY
+
+    setHeight(newHeight)
+  }
+
+  const stopDragging = () => {
+    startYRef.current = null
+    window.removeEventListener('mousemove', onDrag)
+    window.removeEventListener('mouseup', stopDragging)
+  }
+
   return (
     <Box
       sx={{
@@ -45,6 +79,14 @@ const ConsoleBlock = () => {
             : theme.palette.background.paper,
       }}
     >
+      <Divider
+        onMouseDown={isOpen ? startDragging : undefined}
+        sx={{
+          cursor: isOpen ? 'row-resize' : 'default',
+          height: '2px',
+          backgroundColor: '#D9D9E2',
+        }}
+      />
       <Stack
         sx={CONSOLE_HEADER_SX}
         onClick={() => setIsOpen(!isOpen)}
@@ -108,7 +150,7 @@ const ConsoleBlock = () => {
       </Stack>
       <Collapse in={isOpen}>
         <Box
-          sx={COLLAPSE_BOX_SX}
+          sx={COLLAPSE_BOX_SX({ height })}
           ref={ConsoleBoxRef}
         >
           {translate('console_welcome')}

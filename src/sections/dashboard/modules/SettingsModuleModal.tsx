@@ -3,7 +3,7 @@ import { ReactElement, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Dialog, DialogContent, IconButton, Typography } from '@mui/material'
 
-import { ModuleLessonsAutocomplete } from '@/components'
+import ModuleLessonsAutocomplete from '@root/src/components/module-lessons-autocomplete/ModuleLessonAutocomplete'
 
 interface Props {
   children: ReactElement
@@ -55,9 +55,7 @@ export default function SettingsModuleModal({ children, id }: Props): React.Reac
         </Box>
 
         <DialogContent>
-          <Box sx={{ width: '100%' }}>
-            <ModuleLessonsAutocomplete id={id} />
-          </Box>
+          <ModuleLessonsAutocomplete id={id} />
         </DialogContent>
       </Dialog>
     </>

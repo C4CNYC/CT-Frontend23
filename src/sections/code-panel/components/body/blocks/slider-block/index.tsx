@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux'
 
 import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
+import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
+import { IIntegration } from '@/redux/interfaces/integration.interface'
 import {
   setNextStepAble,
   setSlideId,
@@ -18,6 +20,8 @@ import {
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { CodeDocument } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
+import BrowserView from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { useDebounceCallback } from '@root/src/hooks'
 import { useBoolean } from '@root/src/hooks/use-boolean'
@@ -25,6 +29,8 @@ import {
   useGetStudentLastVisitedSlideQuery,
   useUpdateStudentLastVisitedSlideMutation,
 } from '@root/src/redux/services/manager/lesson-student'
+import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
+import { progressGuestGetAll, progressGuestSet } from '@root/src/utils/progressLocalStorage'
 
 import BaseBlock from '../base-block'
 
@@ -36,6 +42,30 @@ import {
   getProgressWrapperSx,
 } from './constants'
 import Navigation from './navigation'
+import { SaveEditContent } from './SaveEditContent'
+import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
+
+interface ISliderBlock {
+  onSubmitLesson: () => void
+  onSubmitChallenge: (slideId: string, code?: string) => void
+  integrations: Array<IIntegration & BaseResponseInterface>
+  lessonType?: string
+  lessonName?: string
+  lessonId?: string
+  isLoadingLessonContent: boolean
+}
+
+interface IView {
+  type: LessonContentType
+  body: string
+  integrations: IIntegration[]
+  connectIntegrations: (body: string) => CodeDocument | null
+  title?: string
+  lessonType?: string
+  stepBgColor?: string | undefined
+}
+
+const icon = (
 import View from './View'
 
 const NextLessonDialog = dynamic(async () => await import('./next-lesson-dialog'))
@@ -48,7 +78,6 @@ export const icon = (
 )
 
 const SliderBlock: FC<ISliderBlock> = ({
-  data,
   onSubmitLesson,
   onSubmitChallenge,
   integrations,
@@ -62,6 +91,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
   const searchParams = useSearchParams()
+  const { lessonContent } = useLessonManager()
+  let data = lessonContent ?? []
   const { value, onFalse, onTrue } = useBoolean()
 
   const sandbox = searchParams.get('sandbox')
@@ -118,8 +149,8 @@ const SliderBlock: FC<ISliderBlock> = ({
           slideIndex: slideIndex + 1,
         })
       }
-
-      onSubmitChallenge(data[slideIndex].id, '')
+      const slideId = data[slideIndex]?.id
+      if (slideId) onSubmitChallenge(slideId, '')
     }
     if (hasNextStep) {
       onBeforeChange(slideIndex, slideIndex + 1)
@@ -134,18 +165,11 @@ const SliderBlock: FC<ISliderBlock> = ({
       updateLastVisitedSlide({ lessonId: lessonId as string, slideNumber: next })
     }
     if (localStorage) {
-      let currentProgress = 0
-      const progress = localStorage.getItem(`${lessonId}_progress`)
-      let newProgress: any = {}
-      if (progress) {
-        newProgress = JSON.parse(progress)
-        currentProgress = newProgress[lessonId as string] ?? 0
-      }
       if (lessonId) {
-        newProgress[lessonId as string] = next
+        const progress = progressGuestGetAll(lessonId)
+        progress.lastSlide = next
+        progressGuestSet(lessonId, progress)
       }
-      if (currentProgress && !next) return // if the next slide is empty, it's end of lesson, we dont need to reset the progress
-      localStorage.setItem(`${lessonId}_progress`, JSON.stringify(newProgress))
     }
   }
 
@@ -153,7 +177,8 @@ const SliderBlock: FC<ISliderBlock> = ({
     if (!data || !data?.length) return
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    if (data?.[next]?.id) dispatch(setSlideId(data[next].id))
+    let slideId = data[next]?.id
+    if (slideId) dispatch(setSlideId(slideId))
   }
 
   const connectIntegrations = (body: string): CodeDocument | null => {
@@ -175,6 +200,11 @@ const SliderBlock: FC<ISliderBlock> = ({
   useEffect(() => {
     if (lastSlide?.slideNumber) {
       onBeforeChange(slideIndex, lastSlide.slideNumber)
+    } else {
+      let progress = progressGuestGetAll(lessonId as string)
+      if (progress) {
+        onBeforeChange(slideIndex, progress.lastSlide)
+      }
     }
   }, [data, lastSlide])
 
@@ -184,15 +214,6 @@ const SliderBlock: FC<ISliderBlock> = ({
       if (slideIndex >= 0) onUpdateLastSlide(slideIndex)
     })
   }, [slideIndex])
-
-  useEffect(() => {
-    const progress = JSON.parse(localStorage?.getItem(`${lessonId}_progress`) || '{}')
-    if (!data || !lessonId || data?.length == 0) return
-    if (lessonId && progress) {
-      const lastSlide: number = progress[lessonId as string] || 0
-      onBeforeChange(slideIndex, lastSlide)
-    }
-  }, [lessonId, data])
 
   const slider = useMemo(() => {
     const currentSlide = data[slideIndex]
@@ -205,19 +226,19 @@ const SliderBlock: FC<ISliderBlock> = ({
       >
         {isLoadingLessonContent ? (
           <LoadingScreen />
+        ) : currentSlide ? (
+          <View
+            title={currentSlide?.title}
+            lessonType={lessonType}
+            key={currentSlide?.id}
+            type={currentSlide?.type}
+            body={currentSlide?.body}
+            integrations={integrations}
+            connectIntegrations={connectIntegrations}
+            stepBgColor={currentSlide?.bg_color}
+          />
         ) : (
-          currentSlide && (
-            <View
-              title={currentSlide?.title}
-              lessonType={lessonType}
-              key={currentSlide?.id}
-              type={currentSlide?.type}
-              body={currentSlide?.body}
-              integrations={integrations}
-              connectIntegrations={connectIntegrations}
-              stepBgColor={currentSlide?.bg_color}
-            />
-          )
+          <SliderBlockAiLessonComing />
         )}
       </Box>
     )
@@ -266,6 +287,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         />
       ) : (
         <>
+          <SaveEditContent />
           {slider}
           <NextStep
             handleNext={handleNext}
@@ -309,4 +331,26 @@ const NextStep = ({
   )
 }
 
-export default React.memo(SliderBlock)
+const View: FC<IView> = ({
+  type,
+  body,
+  connectIntegrations,
+  title,
+  lessonType,
+  stepBgColor,
+  integrations,
+}) => {
+  switch (type) {
+    default:
+    case 'code':
+      return (
+        <BrowserView
+          integrations={integrations}
+          document={connectIntegrations(body)}
+          stepBgColor={stepBgColor}
+          teacherView={true}
+        />
+      )
+  }
+}
+export default SliderBlock

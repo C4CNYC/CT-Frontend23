@@ -14,7 +14,7 @@ import {
   useUpdatePropertyMutation,
 } from '@/redux/services/manager/properties-manager'
 import { useTranslate } from '@/utils/translateHelper'
-import { useBoolean } from '@root/src/hooks/useBoolean'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import {
   IProperty,
   PropertyEntityType,
@@ -48,7 +48,7 @@ export function PropertiesCreateEdit({
 }: Prop): React.ReactElement {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
-  const [open, handleOpen, handleClose] = useBoolean(false)
+  const { value: open, onTrue: handleOpen, onFalse: handleClose } = useBoolean(false)
   const [createproperties, { isLoading: creatLoading }] = useCreatePropertyMutation()
   const [updateproperties, { isLoading: updateLoading }] = useUpdatePropertyMutation()
 

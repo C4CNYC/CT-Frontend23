@@ -7,7 +7,7 @@ import { type ILesson } from '@/redux/interfaces/content.interface'
 import { type BaseResponseInterface } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
 
-import { GetTypSx, getButtonSx, getSubtitleSx } from './constants'
+import { GetTypSx, getButtonSx } from './constants'
 
 interface LessonManagerButtonProps {
   onOpen: () => void
@@ -15,11 +15,14 @@ interface LessonManagerButtonProps {
   iconColor?: string
 }
 
-const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson, iconColor }) => {
+const LessonManagerButton: FC<LessonManagerButtonProps> = ({
+  onOpen,
+  lesson,
+  iconColor = '#637381',
+}) => {
   const theme = useTheme()
   const buttonSx = useMemo(() => getButtonSx(theme), [theme])
   const typSx = useMemo(() => GetTypSx(theme), [theme])
-  const subTitleSx = useMemo(() => getSubtitleSx(theme), [theme])
   const translate = useTranslate()
 
   return (
@@ -41,7 +44,7 @@ const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson, ico
         </IconButton>
       </Tooltip>
       <Tooltip
-        title={lesson?.name && lesson?.name.length > 24 ? lesson?.name : ''}
+        title={lesson?.name && lesson?.name.length > 24 ? `Lesson: ${lesson?.name}` : ''}
         placement='top'
       >
         <Button
@@ -49,12 +52,6 @@ const LessonManagerButton: FC<LessonManagerButtonProps> = ({ onOpen, lesson, ico
           disableFocusRipple
           sx={buttonSx}
         >
-          <Typography
-            variant='body2'
-            sx={subTitleSx}
-          >
-            lesson
-          </Typography>
           <Typography
             variant='body2'
             noWrap

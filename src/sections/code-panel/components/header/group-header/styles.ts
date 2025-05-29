@@ -19,31 +19,30 @@ export const OVERLAY_WRAPPER_SX = {
   gap: 1,
 }
 
-export const OVERLAY_AVATAR_SX = {
-  border: '2px solid #FBDD3F',
-  background: '#0198ED',
-  width: '30px',
-  height: '30px',
-}
-
-export const AVATAR_STYLES = {
-  border: '2px solid #FBDD3F',
-  background: '#0198ED',
-  width: '30px',
-  height: '30px',
-}
-
-export const STACK_GROUP_STYLES = {
-  pl: 2,
-  pr: 4,
-  width: { md: '150px', lg: '200px' },
-}
-
 export const GROUP_TITLE_STYLES = {
   color: '#A6A6A6',
   mb: -0.5,
   textTransform: 'uppercase',
   fontSize: 8,
+}
+
+export const OVERLAY_AVATAR_SX = {
+  border: '2px solid #FBDD3F',
+  background: '#0198ED',
+  width: '24px',
+  height: '24px',
+}
+
+export const AVATAR_STYLES = {
+  border: '2px solid #FBDD3F',
+  background: '#0198ED',
+  width: '24px',
+  height: '24px',
+}
+
+export const STACK_GROUP_STYLES = {
+  pl: 2,
+  width: { md: '150px', lg: '200px' },
 }
 
 export const OVERLAY_GROUP_TITLE_SX = {

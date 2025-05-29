@@ -15,7 +15,13 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
 
   const { isAuthenticated, user } = useAuthContext()
   useEffect(() => {
-    if (isAuthenticated && user && route.includes('auth')) {
+    if (
+      isAuthenticated &&
+      user &&
+      route.includes('auth') &&
+      !route.includes('on-boarding') &&
+      !route.includes('tenant-creation')
+    ) {
       push(STUDENT_PATH_PAGE.home)
     }
   }, [isAuthenticated])

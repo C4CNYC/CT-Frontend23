@@ -468,6 +468,8 @@
     "modules_add_lesson_new_lesson": "Agregar nueva lección",
     "modules_add_lesson_new_quiz": "Agregar nueva prueba",
     "modules_add_lesson_new_exercises": "Agregar nuevos ejercicios",
+    "modules_add_lesson_modal": "Seleccionar entre lecciones existentes",
+    "modules_add_lesson_modal_placepolder": "Haga clic aquí o comience a escribir el nombre",
     "modules_view_lesson": "Ver lección",
     "modules_add_lesson_slide_link": "Agregar/editar diapositivas de lección",
     "modules_pls_select_lesson": "POR FAVOR, SELECCIONA UNA LECCIÓN",
@@ -1228,5 +1230,7 @@
     "intro_tour_step_6_mobile_subtitle": "Mira dónde estás en el Módulo 🤷🏾‍♂️ y regresa fácilmente para repasar lecciones anteriores. 👀 😉",
     "intro_tour_step_7_mobile_title": "Lo más importante: ¡Diviértete! 🤪",
     "intro_tour_step_7_mobile_subtitle": "Y en los comentarios 💬 cuéntanos qué opinas: ¿Maravilloso 🏆 o Poopie 💩?",
-    "intro_tour_step_7_mobile_btn": "Dejar comentario"
+    "intro_tour_step_7_mobile_btn": "Dejar comentario",
+    "lessons_language_select": "Seleccionar idioma de la lección",
+    "privacy_policy": "Política de Privacidad"
   }

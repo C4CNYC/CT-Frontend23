@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import { UPDATE_COLORS } from '@root/src/sections/code-panel/lib/events/update-colors.event'
 import { UPDATE_FONT_SIZE } from '@root/src/sections/code-panel/lib/events/update-font-size.event'
 
-const MOBILE_HEIGHT = 80
-const DESKTOP_HEIGHT = 120
+const MOBILE_HEIGHT = 40
+const DESKTOP_HEIGHT = 90
 
 export const CodeEditorStyles = ({ isDesktop }: { isDesktop: boolean }) => {
   const [color, setColor] = useState()

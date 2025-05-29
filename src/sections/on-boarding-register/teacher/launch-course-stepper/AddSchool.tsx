@@ -75,10 +75,10 @@ export default function AddSchool(): React.ReactElement {
   useEffect(() => {
     if (!isLoading && data) {
       methods.reset({
-        schoolName: data.data[0].name ?? '',
-        city: data.data[0].city ?? 'New York City',
-        zip: data.data[0].zip ?? '',
-        country: data.data[0].country ?? defaultCountry.code.toLowerCase(),
+        schoolName: data?.data?.[0].name ?? '',
+        city: data?.data?.[0].city ?? 'New York City',
+        zip: data?.data?.[0].zip ?? '',
+        country: data?.data?.[0].country ?? defaultCountry.code.toLowerCase(),
       })
     }
   }, [isLoading])
@@ -114,7 +114,7 @@ export default function AddSchool(): React.ReactElement {
           }
         )
       } else {
-        reload()
+        push(STUDENT_PATH_DASHBOARD.class.root)
       }
     } catch (error: any) {
       enqueueSnackbar(error?.message ?? 'Something went wrong', { variant: 'error' })
