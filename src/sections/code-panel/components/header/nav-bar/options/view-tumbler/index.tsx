@@ -40,6 +40,7 @@ const ViewTumbler: FC<ViewToomblerProps> = ({ isColumnHidden, onChangeColumnVisa
       >
         <IconButton
           disableRipple
+          sx={{ color: '#637381' }}
           onClick={() => {
             onChangeColumnVisability(!isColumnHidden)
           }}
@@ -50,6 +51,7 @@ const ViewTumbler: FC<ViewToomblerProps> = ({ isColumnHidden, onChangeColumnVisa
 
       <IconButton
         disableRipple
+        sx={{ color: '#637381' }}
         onClick={handle.active ? handle.exit : handle.enter}
       >
         {handle.active ? <LiaCompressArrowsAltSolid size={22} /> : <IoExpandOutline size={22} />}
