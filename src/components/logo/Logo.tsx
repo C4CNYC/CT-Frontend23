@@ -23,7 +23,9 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
         <Box
           ref={ref}
           sx={{
-            display: 'inline-flex',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
             margin: '0 auto',
             width: '100%',
             maxWidth: '200px',
@@ -36,6 +38,11 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
           <Image
             src={tenant.logo}
             alt={`tenant${tenant.slug}`}
+            style={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain',
+            }}
           />
         </Box>
       )
