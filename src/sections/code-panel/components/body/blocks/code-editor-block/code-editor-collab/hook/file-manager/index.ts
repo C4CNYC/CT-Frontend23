@@ -92,8 +92,8 @@ export const useFileManager = () => {
 
   const sandbox = searchParams.get('sandbox')
   const isPageReady = useMemo(
-    () => !(isLessonLoading && IsUnauthFilesLoading && isLoading),
-    [isLessonLoading, IsUnauthFilesLoading, isLoading]
+    () => !isLessonLoading && !IsUnauthFilesLoading && !isLoading && !isFetching,
+    [isLessonLoading, IsUnauthFilesLoading, isLoading, isFetching]
   )
 
   const { localStorageKey, tabsMangerLocalStorageKey } = useMemo(() => {
@@ -235,10 +235,21 @@ export const useFileManager = () => {
     if (unauthFilesNotSaved.length) {
       saveProgressOfGuestTimes()
     }
-
     // Create files that need to be created
     unauthFilesNotSaved.forEach(async (file) => {
-      createStudentFile({ ...file, lessonContentId: slideId, lessonId })
+      let updateFile = authFiles.find(
+        (af) => af.name == file.name && af.extension == file.extension
+      )
+      if (updateFile) {
+        updateFile = { ...updateFile, body: file.body }
+        updateStudentFile(updateFile)
+        _setActiveFile(undefined)
+        setTimeout(() => {
+          _setActiveFile(updateFile)
+        }, 300)
+      } else {
+        createStudentFile({ ...file, lessonContentId: slideId, lessonId })
+      }
       unauthFileLocalStorageManger(localStorageKey).removeFile(file.id)
     })
 
@@ -335,8 +346,8 @@ export const useFileManager = () => {
   )
 
   const setActiveFile = useCallback(
-    (id: string): void => {
-      if (activeFile?.id === id) return
+    (id: string, force: boolean = false): void => {
+      if (activeFile?.id === id && !force) return
 
       let file: StudentFile | undefined
 
