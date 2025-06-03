@@ -21,8 +21,8 @@ import { ThemeProvider } from '@/theme'
 import '@/locales/i18n'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import 'simplebar/dist/simplebar.css'
-import '@/lib/slick/slick-theme.css'
-import 'slick-carousel/slick/slick.css'
+// import '@/lib/slick/slick-theme.css'
+// import 'slick-carousel/slick/slick.css'
 import { useTenants } from '../hooks/useTenants'
 
 type NextPageWithLayout = NextPage & {
