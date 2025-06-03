@@ -1233,5 +1233,11 @@
         "body": "And on Feedback 💬 let us know what you think: \n awesome 🏆 or not-so-awesome 💩?",
         "button": "Leave feedback"
       }
-    ]
+    ],
+    "tenant_create_success_title": "Congratulations!",
+    "tenant_create_success_subtitle": "You have registered a new organization.",
+    "tenant_create_success_desc_part_1": "You can now login here:",
+    "tenant_create_success_desc_part_2": "Using the exact same login details you just created here.",
+    "tenant_create_success_desc_part_3": "In order to have Admin permissions you must use ONLY the sub-domain you created.",
+    "tenant_create_success_desc_part_4": "Click here to login now: "
   }

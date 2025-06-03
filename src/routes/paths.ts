@@ -18,7 +18,7 @@ export const PATH_AUTH = {
   aiGenerate: path(ROOTS_AUTH, '/ai-generate'),
   onBoardingStudent: path(ROOTS_AUTH, '/on-boarding/student'),
   signIn: path(ROOTS_AUTH, '/signIn'),
-  tenantCreation: path(ROOTS_AUTH, '/tenant-creation'),
+  tenantCreation: path(ROOTS_AUTH, '/org'),
 }
 
 export const PATH_PAGE = {

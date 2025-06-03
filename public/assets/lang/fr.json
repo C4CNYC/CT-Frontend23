@@ -1215,5 +1215,11 @@
     "intro_tour_step_7_mobile_subtitle": "Et dans la section Feedback 💬, dites-nous ce que vous en pensez : Génial 🏆 ou Nul 💩 ?",
     "intro_tour_step_7_mobile_btn": "Laisser un avis",
     "lessons_language_select": "Sélectionner la langue de la leçon",
-    "privacy_policy": "Politique de Confidentialité"
+    "privacy_policy": "Politique de Confidentialité",
+    "tenant_create_success_title": "Félicitations !",
+    "tenant_create_success_subtitle": "Vous avez enregistré une nouvelle organisation.",
+    "tenant_create_success_desc_part_1": "Vous pouvez maintenant vous connecter ici :",
+    "tenant_create_success_desc_part_2": "En utilisant les mêmes identifiants de connexion que ceux que vous venez de créer.",
+    "tenant_create_success_desc_part_3": "Pour obtenir les droits d'administrateur, vous devez utiliser UNIQUEMENT le sous-domaine que vous avez créé.",
+    "tenant_create_success_desc_part_4": "Cliquez ici pour vous connecter maintenant :"
   }
