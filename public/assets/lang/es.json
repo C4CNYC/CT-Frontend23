@@ -1215,5 +1215,11 @@
     "intro_tour_step_7_mobile_subtitle": "Y en los comentarios 💬 cuéntanos qué opinas: ¿Maravilloso 🏆 o Poopie 💩?",
     "intro_tour_step_7_mobile_btn": "Dejar comentario",
     "lessons_language_select": "Seleccionar idioma de la lección",
-    "privacy_policy": "Política de Privacidad"
+    "privacy_policy": "Política de Privacidad",
+    "tenant_create_success_title": "¡Felicitaciones!",
+    "tenant_create_success_subtitle": "Ha registrado una nueva organización.",
+    "tenant_create_success_desc_part_1": "Ahora puede iniciar sesión aquí:",
+    "tenant_create_success_desc_part_2": "Utilizando exactamente los mismos datos de inicio de sesión que acaba de crear aquí.",
+    "tenant_create_success_desc_part_3": "Para tener permisos de administrador, debe usar SOLO el subdominio que creó.",
+    "tenant_create_success_desc_part_4": "Haga clic aquí para iniciar sesión ahora:"
   }

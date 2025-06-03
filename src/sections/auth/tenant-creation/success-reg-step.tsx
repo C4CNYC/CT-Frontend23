@@ -12,23 +12,25 @@ const SuccessRegStep = () => {
 
   return (
     <Stack sx={{ gap: 3 }}>
-      <CustomLabel translationKey='Congratulations!' />
+      <CustomLabel translationKey={translate('tenant_create_success_title')} />
       <Typography
         variant='body2'
         color='text.secondary'
       >
-        You have registered a new organization.
+        {translate('tenant_create_success_subtitle')}
       </Typography>
 
       <Box sx={{ mt: 2, background: '#F0EEEE80', borderRadius: '8px', p: 2 }}>
-        You can now login here:{' '}
-        <a href={`https://${subdomain}.codetribe.ai`}>{subdomain}.codetribe.ai</a>
+        {translate('tenant_create_success_desc_part_1')}{' '}
+        <a href={`https://${subdomain}.codetribe.ai`}>
+          {subdomain ? subdomain : '[subdomain]'}.codetribe.ai
+        </a>
         <br />
         <br />
-        Using the exact same login details you just created here. <br />
-        In order to have Admin permissions you must use ONLY the sub-domain you created. <br />
+        {translate('tenant_create_success_desc_part_2')} <br />
+        {translate('tenant_create_success_desc_part_3')} <br />
         <br />
-        Click here to login now: <br />
+        {translate('tenant_create_success_desc_part_4')} <br />
       </Box>
       <GoToLoginBtn link={`https://${subdomain}.codetribe.ai/auth/signIn`} />
     </Stack>
