@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { Box, InputAdornment, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 
 import { RHFSwitch, RHFTextField } from '@root/src/components'
-import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup3'
+import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import {
   getToggleBtnGroupSx,
   TOGGLE_BUTTON_GROUP_STYLES,

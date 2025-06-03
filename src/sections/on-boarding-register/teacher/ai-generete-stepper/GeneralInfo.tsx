@@ -7,7 +7,7 @@ import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import { useController } from 'react-hook-form'
 
-import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup3'
+import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
