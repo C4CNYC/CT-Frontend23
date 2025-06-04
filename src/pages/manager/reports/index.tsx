@@ -21,6 +21,7 @@ export default function ReportsPage() {
   const { data: LogActivityLast } = useLogActivityLastQuery({ nDays: 30 })
   return (
     <div>
+      <h1>Manager Reports</h1>
       <div
         style={{
           padding: '2rem',
@@ -36,7 +37,6 @@ export default function ReportsPage() {
           { data: LogActivity, name: 'LogActivity' },
         ].map(({ data, name }, index) => (
           <div key={index}>
-            <h1>Manager Reports</h1>
             <div style={{ marginBottom: '2rem' }}>
               <h2>{name}</h2>
               {data ? <LineChart data={txRx2ChartData(data)} /> : null}
