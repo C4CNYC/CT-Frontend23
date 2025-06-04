@@ -20,7 +20,7 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
       user &&
       route.includes('auth') &&
       !route.includes('on-boarding') &&
-      !route.includes('tenant-creation')
+      !route.includes('org')
     ) {
       push(STUDENT_PATH_PAGE.home)
     }

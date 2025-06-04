@@ -58,6 +58,10 @@ const BrowserView: FC<BrowserViewProps> = ({
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
           <script>
+            ${
+              teacherView
+                ? ``
+                : `
             console.logOld = console.log;
             consolelog = function() {
               window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
@@ -66,6 +70,8 @@ const BrowserView: FC<BrowserViewProps> = ({
             console.warn = consolelog;
             console.error = consolelog;
             console.debug = consolelog;
+            `
+            }
 
             // Only add event listener if contentEditable
             if (document.getElementById('VeryEditableDivId')) {

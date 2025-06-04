@@ -1212,5 +1212,11 @@
     "intro_tour_step_7_mobile_subtitle": "E no Feedback 💬 nos diga o que achou: Maravilhoso 🏆 ou Ruim 💩?",
     "intro_tour_step_7_mobile_btn": "Deixe um feedback",
     "lessons_language_select": "Selecionar idioma da lição",
-    "privacy_policy": "Política de Privacidade"
+    "privacy_policy": "Política de Privacidade",
+    "tenant_create_success_title": "Parabéns!",
+    "tenant_create_success_subtitle": "Registou uma nova organização.",
+    "tenant_create_success_desc_part_1": "Já pode fazer login aqui:",
+    "tenant_create_success_desc_part_2": "Utilizando exatamente os mesmos dados de login que acabou de criar aqui.",
+    "tenant_create_success_desc_part_3": "Para ter permissões de administrador, deve utilizar APENAS o subdomínio que criou.",
+    "tenant_create_success_desc_part_4": "Clique aqui para iniciar sessão agora:"
   }

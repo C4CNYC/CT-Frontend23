@@ -1,7 +1,6 @@
 import { createContext, useContext, ReactNode, useEffect } from 'react'
 import { useState } from 'react'
 
-import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { FieldErrors } from 'react-hook-form'
 import { useSelector } from 'react-redux'
@@ -11,7 +10,6 @@ import {
   useSetTenantLogoMutation,
   useUpdateTenantInfoMutation,
 } from '@/redux/services/tenant/tenant-creation'
-import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { RootState } from '../../../redux/store'
@@ -22,6 +20,7 @@ interface StepperContextType {
   activeStep: number
   isError: boolean
   isLoading: boolean
+  subdomain: string
 
   handleNext: () => void
   handleBack: () => void
@@ -52,7 +51,6 @@ export const StepperProvider = ({
   const [setLogo, { isLoading: isLoadingLogo }] = useSetTenantLogoMutation()
   const [updateInfo, { isLoading: isLoadingUpdateInfo }] = useUpdateTenantInfoMutation()
   const userId = useSelector((state: RootState) => state.global.user?.id)
-  const { push, route } = useRouter()
 
   const isError = Boolean(Object.keys(errors).length)
 
@@ -127,8 +125,7 @@ export const StepperProvider = ({
 
         enqueueSnackbar(translate('Info updated successfully'))
         setIsLoading(isLoadingUpdateInfo)
-
-        push(MANAGER_PATH_DASHBOARD.administration.root)
+        handleNext()
       } catch (error: any) {
         setIsLoading(false)
         enqueueSnackbar(error.message, { variant: 'error' })
@@ -158,6 +155,7 @@ export const StepperProvider = ({
         handleValidationScreenLogo,
         handleUpdateInfo,
         isLoading,
+        subdomain: methods.getValues('subdomain') || '',
       }}
     >
       {children}

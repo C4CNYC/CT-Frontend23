@@ -1196,5 +1196,11 @@
     "intro_tour_step_7_mobile_subtitle": "Ve Geri Bildirim 💬 ile ne düşündüğünüzü bize bildirin: Harika 🏆 mi yoksa Kötü mü 💩?",
     "intro_tour_step_7_mobile_btn": "Geri bildirim bırak",
     "lessons_language_select": "Ders dilini seçin",
-    "privacy_policy": "Gizlilik Politikası"
+    "privacy_policy": "Gizlilik Politikası",
+    "tenant_create_success_title": "Tebrikler!",
+    "tenant_create_success_subtitle": "Yeni bir kuruluş kaydettiniz.",
+    "tenant_create_success_desc_part_1": "Artık burada oturum açabilirsiniz:",
+    "tenant_create_success_desc_part_2": "Az önce burada oluşturduğunuz oturum açma bilgilerinin aynısını kullanarak.",
+    "tenant_create_success_desc_part_3": "Yönetici izinlerine sahip olmak için SADECE oluşturduğunuz alt etki alanını kullanmalısınız.",
+    "tenant_create_success_desc_part_4": "Şimdi oturum açmak için buraya tıklayın:"
   }
