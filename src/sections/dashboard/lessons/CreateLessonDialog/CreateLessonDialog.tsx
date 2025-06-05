@@ -43,6 +43,7 @@ interface FormValuesProps {
   autoRun: boolean
   lock: boolean
   meta: LessonMeta
+  grading_method: 'autoRun' | 'manual'
 }
 
 export interface CreateLessonIDefaultProps {
@@ -58,6 +59,7 @@ export interface CreateLessonIDefaultProps {
   autoRun?: boolean
   lock?: boolean
   meta?: LessonMeta
+  grading_method?: 'autoRun' | 'manual'
 }
 
 interface ICreateLessonDialogProps {
@@ -117,6 +119,7 @@ export default function CreateLessonDialog({
   const defaultLessonValue = {
     name: translate('default_values.createLesson.name'),
     description: translate('default_values.createLesson.description'),
+    grading_method: 'autoRun',
     autoRun: false,
     lock: false,
     ...defaultValues,
@@ -127,7 +130,8 @@ export default function CreateLessonDialog({
   useEffect(() => {
     methods.reset({
       ...defaultLessonValue,
-      autoRun: autoRun ? true : false,
+      // autoRun: autoRun ? true : false,
+      grading_method: autoRun ? 'autoRun' : 'manual',
       lock: lessonLock ? true : false,
     })
   }, [autoRun, lessonLock])
@@ -155,6 +159,7 @@ export default function CreateLessonDialog({
       independent: pseudoType.independent,
       type: pseudoType.type,
       meta: data.meta,
+      grading_method: data.grading_method,
     }
     try {
       if (isEdit && id) {
