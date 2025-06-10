@@ -110,3 +110,16 @@ export interface ITenantUpdateInfo {
   logoMini?: File
   note: string
 }
+
+export interface ITenantBrandNameCheck {
+  brandName: string
+}
+
+export interface ITenantSubdomainCheck {
+  subdomain: string
+}
+
+export interface ITenantBrandNameAndSubdomainResponse {
+  message: string
+  isAvailable: boolean
+}
