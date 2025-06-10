@@ -125,16 +125,8 @@ export default function CreateLessonDialog({
     ...defaultValues,
     duration: timeConvertorToSeconds(defaultValues?.duration),
     pseudoType: toPseudoType(defaultValues?.type as LessonType),
+    one_file_per_type: true,
   }
-
-  useEffect(() => {
-    methods.reset({
-      ...defaultLessonValue,
-      // autoRun: autoRun ? true : false,
-      grading_method: autoRun ? 'autoRun' : 'manual',
-      lock: lessonLock ? true : false,
-    })
-  }, [autoRun, lessonLock])
 
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required(translate('required_name')),
@@ -145,6 +137,27 @@ export default function CreateLessonDialog({
     resolver: yupResolver(CreateCourseSchema),
     defaultValues: defaultLessonValue,
   })
+
+  const gradingMethodWatcher = methods.watch('grading_method')
+
+  useEffect(() => {
+    methods.reset({
+      ...defaultLessonValue,
+      // autoRun: autoRun ? true : false,
+      grading_method: autoRun ? 'autoRun' : 'manual',
+      lock: lessonLock ? true : false,
+    })
+    console.log('autoRun name changed:', autoRun)
+  }, [autoRun, lessonLock])
+
+  useEffect(() => {
+    console.log('gradingMethodWatcher name changed:', gradingMethodWatcher)
+    if (gradingMethodWatcher === 'autoRun') {
+      autoRunSet('true')
+    } else if (gradingMethodWatcher === 'manual') {
+      autoRunSet('')
+    }
+  }, [gradingMethodWatcher])
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     let lesson
@@ -203,6 +216,8 @@ export default function CreateLessonDialog({
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
+        maxWidth={'sm'}
         sx={{ zIndex: 9999 }}
         PaperProps={{
           sx: {
@@ -266,7 +281,7 @@ export default function CreateLessonDialog({
               value={value}
               index={3}
             >
-              <CreateLessonAdvancedTab />
+              <CreateLessonAdvancedTab handleAutoRunSet={autoRunSet} />
             </TabPanel>
             <DialogActions>
               <Box
@@ -318,7 +333,6 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
           sx={{
             px: { xs: 2, sm: 3 },
             pt: { xs: 2, sm: 3 },
-            width: { xs: '360px', sm: '440px', md: '500px', lg: '580px' },
             height: 'auto',
             minHeight: '400px',
           }}

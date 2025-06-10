@@ -102,16 +102,16 @@ export function MainTab() {
         label={translate('lessons_independent_lesson')}
       /> */}
         {/* <Tooltip
-        slotProps={{ popper: { disablePortal: true } }}
-        title={translate('lessons_autoRun_tooltip')}
-      >
-        <Box>
-          <RHFSwitch
-            name='autoRun'
-            label={translate('lessons_autoRun')}
-          />
-        </Box>
-      </Tooltip> */}
+          slotProps={{ popper: { disablePortal: true } }}
+          title={translate('lessons_autoRun_tooltip')}
+        >
+          <Box>
+            <RHFSwitch
+              name='autoRun'
+              label={translate('lessons_autoRun')}
+            />
+          </Box>
+        </Tooltip> */}
         <Tooltip
           slotProps={{ popper: { disablePortal: true } }}
           title={translate('lesson_lock_tooltip')}

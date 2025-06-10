@@ -1222,6 +1222,7 @@
     "intro_tour_step_7_mobile_btn": "Leave feedback",
     "lessons_language_select": "Select Programming language",
     "lessons_grading_method": "Code Run Mode",
+    "lessons_one_file_per_type_toggle": "One file per type",
     "privacy_policy": "Privacy Policy",
     "cp_teacher_tour":[
       {"title":"Hi there 👋🏼", "body":"We are generating your new lesson","button":"GOT IT!"},

@@ -8,7 +8,11 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { _mochGradingMethods, TYPO_TOGGLE_BTN_SX, GRADING_METHODS_BTN_SX } from './constants'
 
-export function CreateLessonAdvancedTab() {
+type CreateLessonAdvancedTabProps = {
+  handleAutoRunSet: (value: string) => Promise<void>
+}
+
+export function CreateLessonAdvancedTab({ handleAutoRunSet }: CreateLessonAdvancedTabProps) {
   const translate = useTranslate()
 
   return (
@@ -82,6 +86,25 @@ export function CreateLessonAdvancedTab() {
         tooltip
         size='small'
       />
+
+      {/* <Stack
+        direction='row'
+        flexWrap='wrap'
+        justifyContent='space-between'
+        sx={{ '& > *': { width: '45%' } }}
+      >
+        <Tooltip
+          slotProps={{ popper: { disablePortal: true } }}
+          title={translate('One file per type enabled by default for all lessons')}
+        >
+          <Box>
+            <RHFSwitch
+              name='one_file_per_type'
+              label={translate('lessons_one_file_per_type_toggle')}
+            />
+          </Box>
+        </Tooltip>
+      </Stack> */}
     </>
   )
 }
