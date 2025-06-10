@@ -40,7 +40,7 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
             alt={`tenant${tenant.slug}`}
             style={{
               maxWidth: '100%',
-              maxHeight: '100%',
+              maxHeight: '65px',
               objectFit: 'contain',
             }}
           />
