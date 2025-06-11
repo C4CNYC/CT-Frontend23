@@ -30,6 +30,8 @@ function GoToLoginBtn({ link, ...props }: Props) {
           },
         }}
         href={link}
+        target='_blank'
+        rel='noopener noreferrer'
       >
         Go to Login
       </Link>
