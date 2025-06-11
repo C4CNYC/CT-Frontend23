@@ -131,7 +131,6 @@ export const StepperProvider = ({
       ])
 
       if (brandResult.isAvailable && subdomainResult.isAvailable) {
-        enqueueSnackbar(translate('Info updated successfully'))
         handleNext()
       } else {
         if (!brandResult.isAvailable) {

@@ -18,7 +18,7 @@ const OrgInfoStep = () => {
       <CustomLabel translationKey='Add org info' />
       <RHFSelect
         native
-        name='orgType'
+        name='org_type'
         size='small'
         sx={(theme) => ({ ...styledRegisterInput(theme) })}
         label={translate('Org type')}
@@ -49,7 +49,7 @@ const OrgInfoStep = () => {
         <RHFTextField
           type='number'
           placeholder='2300'
-          name='studentCountCurrent'
+          name='student_count_current'
           sx={(theme) => ({ ...styledRegisterInput(theme, { maxWidth: '150px' }) })}
         />
       </Stack>
@@ -65,7 +65,7 @@ const OrgInfoStep = () => {
         <RHFTextField
           type='number'
           placeholder='10000'
-          name='studentCountExpected'
+          name='student_count_expected'
           sx={(theme) => ({ ...styledRegisterInput(theme, { maxWidth: '150px' }) })}
         />
       </Stack>
