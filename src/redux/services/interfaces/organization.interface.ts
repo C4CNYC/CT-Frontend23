@@ -101,12 +101,25 @@ export interface ITenantUpdateInfo {
   surname: string
   city: string
   country: string
-  orgType: OrgType
-  studentCountCurrent: number
-  studentCountExpected: number
+  org_type: OrgType
+  student_count_current: number
+  student_count_expected: number
   brandName: string
   subdomain: string
   logo?: File
   logoMini?: File
   note: string
+}
+
+export interface ITenantBrandNameCheck {
+  brandName: string
+}
+
+export interface ITenantSubdomainCheck {
+  subdomain: string
+}
+
+export interface ITenantBrandNameAndSubdomainResponse {
+  message: string
+  isAvailable: boolean
 }

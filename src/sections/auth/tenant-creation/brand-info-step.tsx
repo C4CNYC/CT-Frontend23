@@ -9,7 +9,7 @@ import { styledRegisterInput } from './constants'
 import { useStepperContext } from './stepper-context'
 
 const BrandInfoStep = () => {
-  const { handleValidation, isError } = useStepperContext()
+  const { isError, isLoading, handleCheckBrandInfoStep } = useStepperContext()
   const translate = useTranslate()
 
   return (
@@ -61,8 +61,9 @@ const BrandInfoStep = () => {
       />
 
       <NextBtn
-        onClick={handleValidation}
+        onClick={handleCheckBrandInfoStep}
         disabled={isError}
+        loading={isLoading}
       />
     </Stack>
   )

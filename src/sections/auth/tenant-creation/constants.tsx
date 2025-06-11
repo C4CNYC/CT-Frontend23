@@ -8,9 +8,9 @@ export interface TenantFormValuesProps {
   surname: string
   city: string
   country: string
-  orgType: OrgType
-  studentCountCurrent: number
-  studentCountExpected: number
+  org_type: OrgType
+  student_count_current: number
+  student_count_expected: number
   brandName: string
   subdomain: string
   logo?: File
@@ -43,13 +43,13 @@ export const createLoginSchema = (translate: (key: string) => string) =>
     surname: Yup.string().required(translate('required_surname')).trim(),
     city: Yup.string().required(translate('required_city')).trim(),
     country: Yup.string().required(translate('required_country')).trim(),
-    orgType: Yup.mixed<OrgType>()
+    org_type: Yup.mixed<OrgType>()
       .oneOf(Object.values(OrgType))
       .required(translate('required_org_type')),
-    studentCountCurrent: Yup.lazy((value) =>
+    student_count_current: Yup.lazy((value) =>
       value === '' ? Yup.string() : Yup.number().typeError('must_be_a_number')
     ),
-    studentCountExpected: Yup.lazy((value) =>
+    student_count_expected: Yup.lazy((value) =>
       value === '' ? Yup.string() : Yup.number().typeError('must_be_a_number')
     ),
     brandName: Yup.string().required(translate('required_brand_name')).trim(),
