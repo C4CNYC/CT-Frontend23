@@ -35,6 +35,8 @@ import {
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
 import SimpleAiGenerate from './SimpleAiGenerate'
+import { AiGenerateStepperProvider, useAiGenerateStepper } from './AiGenerateStepperContext'
+import { getTodayDate } from '@root/src/utils/formatTime'
 
 // @names according to avoid bots spam
 const defaultValues = {
@@ -64,13 +66,14 @@ export default function AIGenerateStepper({
   props,
 }: AIGenerateStepperProps): React.ReactElement {
   const { push } = useRouter()
-
-  const ask = useN8nRequest()
-  const [activeStep, setActiveStep] = useState(props?.activeStep || 0)
+  const ask = useN8nRequest() 
   const [lessonId, _] = useState<null | string>(null)
   const { enqueueSnackbar } = useSnackbar()
 
   const profile = useSelector((state) => state.global.user)
+  const { activeStep, setActiveStep, nextStep, prevStep,
+    aiLessons } = useAiGenerateStepper();
+  
   const [createLesson] = useCreateLessonMutation()
   const [createAILesson] = AiGenerate()
   const [createLessonUsingN8n] = useCreateLessonUsingN8nMutation()
@@ -99,8 +102,6 @@ export default function AIGenerateStepper({
     defaultValues: { ...defaultValues, ...passedValues },
   })
 
-  const nextStep = () => setActiveStep(activeStep + 1)
-  const prevStep = () => setActiveStep(activeStep - 1)
 
   const resetRoad = () => {
     push(PATH_AUTH.onBoardingTeacher.root)
@@ -125,10 +126,7 @@ export default function AIGenerateStepper({
       localStorage.setItem('AiGenerateLessonData', JSON.stringify(lessonData))
       push(PATH_AUTH.onBoardingTeacher.launchCourse)
     } else {
-      let tempLessonName =
-        'Ai Lesson ' +
-        new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-
+      let tempLessonName = 'Ai Lesson ' + getTodayDate()
       createLesson({
         name: tempLessonName,
         description: '',
@@ -144,22 +142,19 @@ export default function AIGenerateStepper({
       })
         .unwrap()
         .then((payload) => {
-          ask(
-            JSON.stringify({
+          ask({
               lessonId: payload.id,
               chat: `${lessonData.lessonPrompt} 
             ${lessonData.context ? `Context: ${lessonData.context}` : ''}`,
               isMe: 1,
-            }),
+            },
             'chatHistoryAdd'
           ).then(() => {
-            ask(
-              JSON.stringify({
+            ask({
                 lessonId: payload.id,
-                chat: ` I'm preparing your lesson 
-                Page will update when slides arrive  `,
+                chat: ` I'm preparing your lesson \n Page will update when slides arrive  `,
                 isMe: 0,
-              }),
+              },
               'chatHistoryAdd'
             )
           })
@@ -234,7 +229,7 @@ export default function AIGenerateStepper({
     <Stack
       position='relative'
       width='100%'
-    >
+    ><AiGenerateStepperProvider initialStep={props?.activeStep||0} >
       <FormProvider
         methods={methods}
         onSubmit={methods.handleSubmit(onSubmit)}
@@ -253,11 +248,7 @@ export default function AIGenerateStepper({
         {activeStep === 2 && (
           <GeneralInfo
             isModal={isModal}
-            nextStep={nextStep}
-            prevStep={prevStep}
             closeModal={closeModal}
-            updateForm={methods.setValue as any}
-            getFormValue={methods.getValues as any}
             isTrackSelected={Boolean(methods.watch('RtrackR'))}
           />
         )}
@@ -285,7 +276,8 @@ export default function AIGenerateStepper({
           onSubmitAddons={onSubmitAddons}
           resetRoad={resetRoad}
         />
-      )}
+        )}
+        </AiGenerateStepperProvider>
     </Stack>
   )
 }
