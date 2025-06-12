@@ -23,7 +23,6 @@ import {
   TYPE_LESSON,
   getNextBtnSx,
 } from './constants'
-import { useSelector } from '@root/src/redux/store'
 import { useAiGenerateStepper } from './AiGenerateStepperContext'
 
 type IGeneralInfoProps = { 
