@@ -50,10 +50,10 @@ export const admin = {
   ],
 }
 
-export const superAdmin = {
-  subheader: 'sidebar_menu_administration',
-  items: [],
-}
+// export const superAdmin = {
+//   subheader: 'sidebar_menu_administration',
+//   items: [],
+// }
 
 export const managment = {
   subheader: 'sidebar_menu_management',
@@ -231,7 +231,7 @@ export const socials = {
 export const menuConfig = (currentRole: Role) =>
   currentRole == Role.Admin || currentRole == Role.SuperAdmin
     ? {
-        [Role.SuperAdmin]: [superAdmin, admin, managment, content],
+        [Role.SuperAdmin]: [admin, managment, content],
         [Role.Owner]: [admin, managment, content],
         [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],
@@ -240,7 +240,7 @@ export const menuConfig = (currentRole: Role) =>
         [Role.Editor]: [content],
       }
     : {
-        [Role.SuperAdmin]: [superAdmin, admin, managment, content],
+        [Role.SuperAdmin]: [admin, managment, content],
         [Role.Owner]: [admin, managment, content],
         [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],

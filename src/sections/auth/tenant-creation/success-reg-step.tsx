@@ -22,7 +22,11 @@ const SuccessRegStep = () => {
 
       <Box sx={{ mt: 2, background: '#F0EEEE80', borderRadius: '8px', p: 2 }}>
         {translate('tenant_create_success_desc_part_1')}{' '}
-        <a href={`https://${subdomain}.codetribe.ai`}>
+        <a
+          href={`https://${subdomain}.codetribe.ai`}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           {subdomain ? subdomain : '[subdomain]'}.codetribe.ai
         </a>
         <br />
