@@ -20,5 +20,13 @@ export const { useN8nRequestMutation } = extendedApi
 
 export function useN8nRequest() {
   const [ask] = useN8nRequestMutation()
-  return (prompt: string, endPointPath: string) => ask({ prompt, endPointPath })
+  return (toAsk: unknown, endPointPath: string) => {
+    let  prompt:string;
+    if (typeof toAsk !== 'string') {
+      prompt = JSON.stringify(toAsk)
+    }else {
+      prompt = toAsk as string
+    }
+    return ask({ prompt, endPointPath })
+  }
 }
