@@ -25,3 +25,7 @@ export function fToNow(date: InputValue): string {
       })
     : ''
 }
+
+export function getTodayDate(): string {
+  return new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+}
