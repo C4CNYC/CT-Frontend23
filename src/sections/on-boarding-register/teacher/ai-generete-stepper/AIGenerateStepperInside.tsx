@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -12,21 +11,20 @@ import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
 import {
   useCreateLessonMutation,
   useCreateLessonUsingN8nMutation,
-  useGetLessonsByIdsQuery,
 } from '@root/src/redux/services/manager/lessons-manager'
-import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 import { useSelector } from '@root/src/redux/store'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 import { AiGenerate } from '@root/src/utils/ai-generate'
+import { getTodayDate } from '@root/src/utils/formatTime'
 
 import AddAddons from './AddAddons'
+import { useAiGenerateStepper } from './AiGenerateStepperContext'
 import { AIPersonaInfo } from './AIPersonaInfo'
 import {
-  AIGenerateStepperProps,
+  AIGenerateStepperInsideProps,
   FormAIGenerateProps,
   GRADES,
-  IAddons,
   LESSON_DURARION,
   LEVELS,
   PERSONA,
@@ -35,8 +33,6 @@ import {
 import { GeneralInfo } from './GeneralInfo'
 import LessonPrompt from './LessonPrompt'
 import SimpleAiGenerate from './SimpleAiGenerate'
-import { AiGenerateStepperProvider, useAiGenerateStepper } from './AiGenerateStepperContext'
-import { getTodayDate } from '@root/src/utils/formatTime'
 
 // @names according to avoid bots spam
 const defaultValues = {
@@ -60,20 +56,16 @@ const defaultValues = {
 }
 
 export default function AIGenerateStepperInside({
-  isModal,
-  closeModal,
   passedValues,
-  props,
-}: AIGenerateStepperProps): React.ReactElement {
+}: AIGenerateStepperInsideProps): React.ReactElement {
   const { push } = useRouter()
-  const ask = useN8nRequest() 
+  const ask = useN8nRequest()
   const [lessonId, _] = useState<null | string>(null)
   const { enqueueSnackbar } = useSnackbar()
 
   const profile = useSelector((state) => state.global.user)
-  const { activeStep, setActiveStep, nextStep, prevStep,
-    aiLessons } = useAiGenerateStepper();
-  
+  const { activeStep, aiLessons, isModal, closeModal } = useAiGenerateStepper()
+
   const [createLesson] = useCreateLessonMutation()
   const [createAILesson] = AiGenerate()
   const [createLessonUsingN8n] = useCreateLessonUsingN8nMutation()
@@ -101,7 +93,6 @@ export default function AIGenerateStepperInside({
     mode: 'all',
     defaultValues: { ...defaultValues, ...passedValues },
   })
-
 
   const resetRoad = () => {
     push(PATH_AUTH.onBoardingTeacher.root)
@@ -142,7 +133,8 @@ export default function AIGenerateStepperInside({
       })
         .unwrap()
         .then((payload) => {
-          ask({
+          ask(
+            {
               lessonId: payload.id,
               chat: `${lessonData.lessonPrompt} 
             ${lessonData.context ? `Context: ${lessonData.context}` : ''}`,
@@ -150,7 +142,8 @@ export default function AIGenerateStepperInside({
             },
             'chatHistoryAdd'
           ).then(() => {
-            ask({
+            ask(
+              {
                 lessonId: payload.id,
                 chat: ` I'm preparing your lesson \n Page will update when slides arrive  `,
                 isMe: 0,
@@ -176,7 +169,7 @@ export default function AIGenerateStepperInside({
           enqueueSnackbar('Lesson created successfully', { variant: 'success' })
           let lessonId = payload.id ?? ''
           setTimeout(() => {
-            if (closeModal) closeModal()
+            if (isModal) closeModal()
           }, 300)
           setTimeout(() => push(`${redirectAfter}?lessonId=${lessonId}&ai=true`), 700)
         })
@@ -202,28 +195,20 @@ export default function AIGenerateStepperInside({
       })
     }
   }
-  const onSubmitAddons = (addons: IAddons) => {
+  const onSubmitAddons = () => {
     redirectAfterCompleate(lessonId ?? '')
   }
 
-  const { data: properties } = useGetPropertiesQuery({
-    entityType: 'lesson',
-    propertyName: 'aiTemplate',
-  })
-  const { data: aiTemplates } = useGetLessonsByIdsQuery(
-    properties?.data.map((item) => item.entityId) ?? []
-  )
-
   useEffect(() => {
-    if (!aiTemplates || aiTemplates.length < 1) return
+    if (!aiLessons || aiLessons.length < 1) return
     if (!methods.getValues('RtypeLessonR')) {
-      let exerciseAiTemplate = aiTemplates.find((t) => 'generator' in (t?.meta || {}))
+      let exerciseAiTemplate = aiLessons.find((t) => 'generator' in (t?.meta || {}))
       methods.setValue(
         'RtypeLessonR',
-        exerciseAiTemplate ? exerciseAiTemplate.id + 'n8n' : aiTemplates[0].id
+        exerciseAiTemplate ? exerciseAiTemplate.id + 'n8n' : aiLessons[0].id
       )
     }
-  }, [aiTemplates])
+  }, [aiLessons])
 
   return (
     <>
@@ -233,34 +218,17 @@ export default function AIGenerateStepperInside({
       >
         {activeStep === 0 && (
           <SimpleAiGenerate
-            isModal={isModal}
-            nextStep={nextStep}
             resetRoad={resetRoad}
-            closeModal={closeModal}
             updateForm={methods.setValue as any}
             getFormValue={methods.getValues as any}
-            redirectAfterComplete={redirectAfterCompleate}
-          />
-        )}
-        {activeStep === 2 && (
-          <GeneralInfo
-            isModal={isModal}
-            closeModal={closeModal}
-            isTrackSelected={Boolean(methods.watch('RtrackR'))}
           />
         )}
         {activeStep === 1 && (
-          <LessonPrompt
-            nextStep={nextStep}
-            prevStep={prevStep}
-            closeModal={closeModal}
-            isCustomLang={Boolean(methods.watch('RcustomLanguageR'))}
-          />
+          <LessonPrompt isCustomLang={Boolean(methods.watch('RcustomLanguageR'))} />
         )}
+        {activeStep === 2 && <GeneralInfo isTrackSelected={Boolean(methods.watch('RtrackR'))} />}
         {activeStep === 3 && (
           <AIPersonaInfo
-            prevStep={prevStep}
-            closeModal={closeModal}
             customPersona={Boolean(methods.watch('RcustomPersonaR'))}
             customTone={Boolean(methods.watch('RcustomToneR'))}
           />
@@ -269,11 +237,10 @@ export default function AIGenerateStepperInside({
 
       {activeStep === 4 && (
         <AddAddons
-          closeModal={closeModal}
           onSubmitAddons={onSubmitAddons}
           resetRoad={resetRoad}
         />
-        )}
-        </>
+      )}
+    </>
   )
 }

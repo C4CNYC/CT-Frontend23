@@ -11,6 +11,7 @@ import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleBu
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useAiGenerateStepper } from './AiGenerateStepperContext'
 import {
   BTN_CONTAINER_STYLES,
   getToggleBtnGroupSx,
@@ -23,24 +24,18 @@ import {
   TYPE_LESSON,
   getNextBtnSx,
 } from './constants'
-import { useAiGenerateStepper } from './AiGenerateStepperContext'
 
-type IGeneralInfoProps = { 
-  isModal: boolean
-  closeModal?: () => void
+type IGeneralInfoProps = {
   isTrackSelected: boolean
 }
 
-export function GeneralInfo({
-  isModal,
-  closeModal,
-  isTrackSelected,
-}: IGeneralInfoProps) {
+export function GeneralInfo({ isTrackSelected }: IGeneralInfoProps) {
   const theme = useTheme()
   const translate = useTranslate()
+
   const { value: trackOptions, onToggle: trackOptionsToggle } = useBoolean(false)
   const { field: RtrackRField } = useController({ name: 'RtrackR' })
-  const { nextStep, prevStep, aiLessons } = useAiGenerateStepper();
+  const { nextStep, prevStep, aiLessons, isModal, closeModal } = useAiGenerateStepper()
 
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
@@ -50,7 +45,6 @@ export function GeneralInfo({
     () => getNextBtnSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
   )
- 
 
   const RtrackRHandleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: any) => {
     RtrackRField.onChange(newAlignment === RtrackRField.value ? null : newAlignment)
@@ -60,7 +54,7 @@ export function GeneralInfo({
   const type_lesson = (
     aiLessons && aiLessons.length > 0
       ? [
-          // ...TYPE_LESSON, we dont use this anymore, 
+          // ...TYPE_LESSON, we dont use this anymore,
           ...aiLessons.map((ait) => ({
             key:
               ait.id +

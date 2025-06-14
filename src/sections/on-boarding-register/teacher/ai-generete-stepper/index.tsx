@@ -1,19 +1,26 @@
 import { Stack } from '@mui/material'
-import {
-  AIGenerateStepperProps,
-} from './constants'
+
 import { AiGenerateStepperProvider } from './AiGenerateStepperContext'
-import AIGenerateStepperInside from './AiGenerateStepper'
+import AIGenerateStepperInside from './AIGenerateStepperInside'
+import { AIGenerateStepperProps } from './constants'
 
 export default function AIGenerateStepper({
   passedValues,
   props,
+  isModal,
+  closeModal,
 }: AIGenerateStepperProps): React.ReactElement {
-
   return (
-    <Stack position='relative' width='100%'>
-      <AiGenerateStepperProvider initialStep={props?.activeStep || 0} >
-        <AIGenerateStepperInside isModal={false} />
+    <Stack
+      position='relative'
+      width='100%'
+    >
+      <AiGenerateStepperProvider
+        isModal={isModal || false}
+        closeModal={closeModal ?? (() => {})}
+        initialStep={props?.activeStep || 0}
+      >
+        <AIGenerateStepperInside />
       </AiGenerateStepperProvider>
     </Stack>
   )
