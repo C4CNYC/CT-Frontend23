@@ -59,7 +59,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     onUpdateFile,
     setActiveFile,
   } = useFileManager()
-  
+
   let preloadedCode = activeFile?.body || ''
   const { editorRef, extensions, streamingDoc, key, onCreateEditor, roomStatus } =
     useCodeEditorCollab({
@@ -75,7 +75,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const onChangeCodemirrorValue = (value: string) => {
     onChangeCodemirrorValueFromProps(value)
-    console.log('onChangeCodemirrorValue', value)
     codePanelContext.studentCodeChange(value)
     onChangeStreamingDocInfoFromProps?.(docBuilder(files, activeFile, value))
     dispatch(
@@ -113,8 +112,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     const newCodeValue =
       preloadedCode ??
       (streamingDoc && streamingDoc.toString()?.length ? streamingDoc?.toString() : preloadedCode)
-    console.log( {newCodeValue, preloadedCode, streamingDoc} )
-    setCodeValue(newCodeValue, )
+    setCodeValue(newCodeValue)
   }, [preloadedCode, streamingDoc])
 
   return (

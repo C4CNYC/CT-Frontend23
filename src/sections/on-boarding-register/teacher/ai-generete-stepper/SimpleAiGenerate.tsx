@@ -16,6 +16,7 @@ import { RHFTextField } from '@root/src/components/hook-form/RHFTextField'
 import { useGenerateLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useAiGenerateStepper } from './AiGenerateStepperContext'
 import {
   BTN_CONTAINER_STYLES,
   getNextBtnSx,
@@ -28,27 +29,16 @@ import {
 import LoaderStep from './LoaderStep'
 
 type ISimpleAiGenerateProps = {
-  nextStep: () => void
   resetRoad: () => void
-  isModal: boolean
-  closeModal?: () => void
   updateForm: (name: string, value: string) => void
   getFormValue: (name: string) => string
-  redirectAfterComplete: (lessonId: string) => void
 }
 
-const SimpleAiGenerate = ({
-  nextStep,
-  resetRoad,
-  isModal,
-  closeModal,
-  updateForm,
-  getFormValue,
-  redirectAfterComplete,
-}: ISimpleAiGenerateProps) => {
+const SimpleAiGenerate = ({ resetRoad, updateForm, getFormValue }: ISimpleAiGenerateProps) => {
   const theme = useTheme()
   const translate = useTranslate()
 
+  const { nextStep, isModal, closeModal } = useAiGenerateStepper()
   const [textFieldValue, setTextFieldValue] = useState<string>(getFormValue('RpromptR'))
 
   const [generateLesson, { isLoading: generateLessonLoading }] = useGenerateLessonMutation()
