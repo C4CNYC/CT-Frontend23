@@ -1,6 +1,6 @@
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
-import { DEFAULT_FILE_ID } from '../file-manager'
+import { DEFAULT_FILE_ID } from '../file-manager/useFileManager'
 
 export const docBuilder = (files: StudentFile[], activeFile: StudentFile, value: string) => {
   if (activeFile?.id === DEFAULT_FILE_ID) {
