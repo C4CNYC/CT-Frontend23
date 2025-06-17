@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useCallback } from 'react'
 
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
@@ -37,12 +38,14 @@ export const useFileOperations = (
 
       try {
         if (!config.isAuthenticated) {
-          return unauthFileLocalStorageManger(localStorageKey).addFile(
-            {
-              id: `${name}-${extension}-${Date.now()}`,
-              ...fileData,
-            },
-            'ignoreThisVersion'
+          return (
+            unauthFileLocalStorageManger(localStorageKey).addFile(
+              {
+                id: `${name}-${extension}-${Date.now()}`,
+                ...fileData,
+              },
+              'ignoreThisVersion'
+            ) || null
           )
         }
 

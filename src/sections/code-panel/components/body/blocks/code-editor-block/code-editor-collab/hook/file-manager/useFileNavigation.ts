@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useCallback, useEffect, useMemo } from 'react'
 
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'

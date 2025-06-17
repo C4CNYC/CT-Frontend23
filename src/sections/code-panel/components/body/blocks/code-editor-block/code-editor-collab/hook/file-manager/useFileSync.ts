@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useCallback, useEffect } from 'react'
 
 import { useRouter } from 'next/router'

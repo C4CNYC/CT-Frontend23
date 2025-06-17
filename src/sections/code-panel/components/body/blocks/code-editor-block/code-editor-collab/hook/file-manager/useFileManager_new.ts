@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useCallback, useEffect, useMemo, useReducer } from 'react'
 
 import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
