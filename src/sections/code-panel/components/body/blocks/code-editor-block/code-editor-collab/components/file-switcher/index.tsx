@@ -10,7 +10,7 @@ import DevIcon from '../dev-icon'
 import { styles } from './styles'
 
 interface FileSwitcherProps {
-  activeFile: StudentFile
+  activeFile: StudentFile | null
   onChange: (id: string) => void
   closeTab: (id: string) => void
   fileList: StudentFile[]

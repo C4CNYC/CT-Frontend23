@@ -12,7 +12,7 @@ import { RoomStatus } from '../components/status-label'
 import { useInitCodemirror, UseBaseInitReturn } from './useInitCodemirror'
 
 export interface UseCodeEditorCollabProps {
-  activeFile: StudentFile
+  activeFile: StudentFile | null
   preloadedCode?: string
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }

@@ -2,7 +2,7 @@ import { StudentFile } from '@root/src/redux/services/interfaces/workspace.inter
 
 import { DEFAULT_FILE_ID } from '../file-manager/useFileManager'
 
-export const docBuilder = (files: StudentFile[], activeFile: StudentFile, value: string) => {
+export const docBuilder = (files: StudentFile[], activeFile: StudentFile | null, value: string) => {
   if (activeFile?.id === DEFAULT_FILE_ID) {
     return {
       htmlBody: value,

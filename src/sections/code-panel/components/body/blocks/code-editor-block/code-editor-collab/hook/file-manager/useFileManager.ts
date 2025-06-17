@@ -242,13 +242,13 @@ export const useFileManager = () => {
       )
       if (updateFile) {
         updateFile = { ...updateFile, body: file.body }
-        updateStudentFile(updateFile)
+        await updateStudentFile(updateFile)
         _setActiveFile(undefined)
         setTimeout(() => {
           _setActiveFile(updateFile)
         }, 300)
       } else {
-        createStudentFile({ ...file, lessonContentId: slideId, lessonId })
+        await createStudentFile({ ...file, lessonContentId: slideId, lessonId })
       }
       unauthFileLocalStorageManger(localStorageKey).removeFile(file.id)
     })
