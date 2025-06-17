@@ -64,7 +64,7 @@ export const ChatAi = () => {
   const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const { refetch: refetchFiles, data: lessonContentFiles } = useGetStudentFilesQuery(
     { lessonId: lesson?.id || '', lessonContentId: slideId || '' },
-    { skip: !lesson?.id || !slideId || !user?.id || !userIsOwner}
+    { skip: !lesson?.id || !slideId || !user?.id || !userIsOwner }
   )
   const deleteAllFiles = useResetStudentFiles({
     lessonId: lesson?.id || '',
