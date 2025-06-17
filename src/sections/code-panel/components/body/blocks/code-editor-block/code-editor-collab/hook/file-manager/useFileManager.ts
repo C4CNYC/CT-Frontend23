@@ -202,6 +202,24 @@ export const useFileManager = () => {
 
     return [...authFilesWithoutHello, ...unauthFilesNotSaved]
   }, [authFiles, unauthFilesList, isAuthenticated]) // Use full arrays as dependencies
+  useEffect(() => {
+    if (!isAuthenticated || authFiles.length < 2 || !isPageReady) return
+    let searched = new Set(authFiles.map(f => `${f.name}.${f.extension}`))
+    if (searched.size < authFiles.length) {
+      let toDelete = []
+      for (let filename of  searched) {
+        let duplicates = authFiles.filter(f => `${f.name}.${f.extension}` === filename)
+        if (duplicates.length > 1) {
+          duplicates.sort((a, b) => b.body.length - a.body.length)
+          toDelete.push(...duplicates.slice(1).map(f => f.id))
+        }
+      }
+      if (toDelete.length) {
+        console.warn('Deleting duplicate files:', toDelete)
+        toDelete.forEach(id => deleteStudentFile({ id }))
+      }
+    }
+  },[authFiles, isPageReady, isAuthenticated])
 
   async function saveProgressOfGuestTimes() {
     let contentsWithValidations =
@@ -238,7 +256,7 @@ export const useFileManager = () => {
     // Create files that need to be created
     unauthFilesNotSaved.forEach(async (file) => {
       let updateFile = authFiles.find(
-        (af) => af.name == file.name && af.extension == file.extension
+        (af) => (af.name == file.name) && (af.extension == file.extension)
       )
       if (updateFile) {
         updateFile = { ...updateFile, body: file.body }
