@@ -70,7 +70,7 @@ export const useFileManager = () => {
     { id: query.lessonId as string },
     { skip: !query.lessonId }
   )
-
+  const shouldRunAuthFiles = !!lessonId && !!slideId && isAuthenticated
   const {
     refetch,
     isLoading,
@@ -78,7 +78,7 @@ export const useFileManager = () => {
     data: authFiles = [],
   } = useGetStudentFilesQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
-    { skip: !lessonId || !slideId || !isAuthenticated }
+    { skip: !shouldRunAuthFiles }
   )
 
   const {
@@ -395,9 +395,9 @@ export const useFileManager = () => {
   )
 
   useEffect(() => {
-    if (!isAuthenticated || sandbox) return
+    if (!shouldRunAuthFiles || sandbox) return
     if (activeFile) refetch()
-  }, [activeFile, searchParams])
+  }, [activeFile, searchParams, shouldRunAuthFiles])
 
   useEffect(() => {
     if (sandbox) {
