@@ -23,6 +23,7 @@ import { setIsActivateCompeated } from '@/redux/slices/checkers-animation'
 import {
   setCourseId,
   setLessonId,
+  setSlideId,
   setSlideIndex,
   setUnitId,
 } from '@/redux/slices/code-panel-global'
@@ -102,7 +103,7 @@ export function CodePanelLayout(): ReactElement | null {
 
   const { data: unitContent, isLoading: isLoadingUnitContent } = useGetPublicModuleContentQuery(
     { id: router.query.unitId as string },
-    { skip: !!router.query.courseId || !isAuthenticated || !router.query.unitId }
+    { skip: !!router.query.courseId || !router.query.unitId }
   )
 
   const { data: coursePublicContent, isLoading: isLoadingPublicCourse } =
@@ -111,7 +112,7 @@ export function CodePanelLayout(): ReactElement | null {
       { skip: !router.query.courseId || isAuthenticated }
     )
 
-  const courseContent = courseAuthContent || coursePublicContent || unitContent
+  const courseContent = courseAuthContent || coursePublicContent
   const isLoadingCourseContent =
     isLoadingAuthCourseContent || isLoadingPublicCourse || isLoadingUnitContent
 
@@ -257,7 +258,6 @@ export function CodePanelLayout(): ReactElement | null {
         router.query.lessonId as string,
         router.query.unitId as string
       )
-
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
         if (
@@ -270,19 +270,19 @@ export function CodePanelLayout(): ReactElement | null {
             prevLessonId: lesson.id as string,
           })
         }
-        router
-          .push(
-            STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-              courseId: courseContent.id,
-              unitId: pathStr[0],
-              lessonId: pathStr[1],
-            })
-          )
-          .then(() => {
-            dispatch(setUnitId(pathStr[0]))
-            dispatch(setLessonId(pathStr[1]))
-            dispatch(setSlideIndex(0))
+        router.push(
+          STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+            courseId: courseContent.id,
+            unitId: pathStr[0],
+            lessonId: pathStr[1],
           })
+        )
+        // .then(() => {
+        dispatch(setUnitId(pathStr[0]))
+        dispatch(setLessonId(pathStr[1]))
+        dispatch(setSlideIndex(0))
+        dispatch(setSlideId(''))
+        // })
       } else {
         enqueueSnackbar(translate('messages_course_complete'))
       }
@@ -326,7 +326,6 @@ export function CodePanelLayout(): ReactElement | null {
 
   return (
     <CodePanelContextProvider
-      lessonId={lessonIdFromRoute}
       studentCode=''
     >
       <Head>
@@ -334,7 +333,11 @@ export function CodePanelLayout(): ReactElement | null {
           name='viewport'
           content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
         />
-        <title> CodePanel: CodeTribe </title>
+        <title> {lesson?.name + (unitContent ? ' | ' + unitContent?.name : '')} </title>
+        <meta
+          name='description'
+          content={lesson?.description || ''}
+        />
       </Head>
 
       <FullScreenProvider>

@@ -1,5 +1,6 @@
 import { BaseResponseInterface } from '@/utils'
 
+import { useSelector } from '../../store'
 import { StudentFile } from '../interfaces/workspace.interface'
 
 import { managerApi } from '.'
@@ -91,7 +92,8 @@ export const useResetStudentFiles = ({
   lessonId: string
   lessonContentId?: string
 }) => {
-  let { data: files } = useGetStudentFilesQuery({ lessonId, lessonContentId })
+  const profile = useSelector((state) => state.global.user)
+  let { data: files } = useGetStudentFilesQuery({ lessonId, lessonContentId }, { skip: !profile })
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [trigger] = useLazyGetStudentFilesQuery()
 
@@ -104,5 +106,5 @@ export const useResetStudentFiles = ({
     refetch()
   }
 
-  return deleteAllFiles
+  return profile ? deleteAllFiles : () => {}
 }
