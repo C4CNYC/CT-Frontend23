@@ -325,9 +325,7 @@ export function CodePanelLayout(): ReactElement | null {
   }
 
   return (
-    <CodePanelContextProvider
-      studentCode=''
-    >
+    <CodePanelContextProvider studentCode=''>
       <Head>
         <meta
           name='viewport'
