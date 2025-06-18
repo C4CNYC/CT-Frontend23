@@ -78,7 +78,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
   const searchParams = useSearchParams()
-  const { lessonContent } = useLessonManager()
+  const { lesson, lessonContent } = useLessonManager()
   let data = lessonContent ?? []
 
   const sandbox = searchParams.get('sandbox')
@@ -181,7 +181,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   useEffect(() => {
     if (!sandbox || !data?.length) return
     onBeforeChange(0, 0)
-  }, [sandbox, data])
+  }, [sandbox, data, lessonId])
 
   useEffect(() => {
     if (lastSlide?.slideNumber) {
@@ -223,8 +223,10 @@ const SliderBlock: FC<ISliderBlock> = ({
             connectIntegrations={connectIntegrations}
             stepBgColor={currentSlide?.bg_color}
           />
-        ) : (
+        ) : lesson?.meta?.ai ? (
           <SliderBlockAiLessonComing />
+        ) : (
+          <LoadingScreen />
         )}
       </Box>
     )
