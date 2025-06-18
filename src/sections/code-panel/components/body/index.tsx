@@ -53,7 +53,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
       })
       setBrowserView(null)
     }
-  }, [lessonId, slideIndex, lessonContents])
+  }, [lessonId])
 
   const onChangeStreamingDocInfo = (doc: CodeDocument) => {
     try {
