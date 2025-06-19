@@ -1,8 +1,8 @@
 import { useCallback, useState, useMemo } from 'react'
 
-import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, Text } from '@codemirror/state'
-import { EditorView } from '@codemirror/view'
+import { Prec } from '@codemirror/state'
+import { EditorView, keymap, KeyBinding } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
 
@@ -30,9 +30,19 @@ export const useInitCodemirror = (): UseBaseInitReturn => {
 
   const lineWrap = useMemo(() => new Compartment(), [])
 
+  const customKeymap: KeyBinding[] = [
+    {
+      key: 'Enter',
+      run: (view) => {
+        view.dispatch(view.state.replaceSelection('\n'))
+        return true
+      },
+    },
+  ]
+
   const baseInit = useCallback(async (file: StudentFile) => {
     setExtensions([
-      indentUnit.of('\t'),
+      Prec.highest(keymap.of(customKeymap)),
       basicSetup(BASIC_SETUP),
       ...language(file),
       dracula,
