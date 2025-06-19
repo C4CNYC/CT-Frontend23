@@ -22,6 +22,8 @@ export interface UseBaseInitReturn {
   lineWrap: Compartment
 }
 
+export const keymapCompartment = new Compartment()
+
 export const useInitCodemirror = (): UseBaseInitReturn => {
   const [key, setKey] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
@@ -42,7 +44,9 @@ export const useInitCodemirror = (): UseBaseInitReturn => {
 
   const baseInit = useCallback(async (file: StudentFile) => {
     setExtensions([
-      Prec.highest(keymap.of(customKeymap)),
+      // Prec.highest(keymap.of(customKeymap)),
+      Prec.highest(keymapCompartment.of(keymap.of(customKeymap))),
+      keymap.of(customKeymap),
       basicSetup(BASIC_SETUP),
       ...language(file),
       dracula,
