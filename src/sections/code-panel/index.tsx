@@ -164,6 +164,18 @@ export function CodePanelLayout(): ReactElement | null {
   }, [profile, lesson])
 
   useEffect(() => {
+    if (sessionStorage?.setItem)
+      sessionStorage.setItem(
+        'lastLesson',
+        JSON.stringify({
+          lessonId: router.query.lessonId,
+          courseId: router.query.courseId,
+          unitId: router.query.unitId,
+        })
+      )
+  }, [router.query.courseId, router.query.unitId, router.query.lessonId])
+
+  useEffect(() => {
     if (!courseContent) return
 
     const courseId = router.query.courseId
