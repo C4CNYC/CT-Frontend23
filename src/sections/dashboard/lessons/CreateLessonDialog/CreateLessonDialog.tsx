@@ -29,7 +29,7 @@ import { CreateLessonAdvancedTab } from './AdvancedTab'
 import { MainTab } from './MainTab'
 import { usePseudoType } from './PseudoType'
 import SkillsTab from './SkillsTab'
-import { handleConvertAutoRunToBolean } from './utils'
+import { handleConvertAutoRunToBolean, timeConvertorToSeconds } from './utils'
 
 interface FormValuesProps {
   name: string
@@ -41,7 +41,6 @@ interface FormValuesProps {
   pseudoType: LessonTypePseudoEnum
   duration: number
   slug: string
-  autoRun: boolean
   lock: boolean
   meta: LessonMeta
   grading_method: 'autoRun' | 'manual'
@@ -57,7 +56,6 @@ export interface CreateLessonIDefaultProps {
   pseudoType?: LessonTypePseudoEnum
   duration?: Record<string, number> | null | undefined
   slug?: string
-  autoRun?: boolean
   lock?: boolean
   meta?: LessonMeta
   grading_method?: 'autoRun' | 'manual'
@@ -105,23 +103,10 @@ export default function CreateLessonDialog({
     propertyName: 'lock',
   })
 
-  const timeConvertorToSeconds = (time: Record<string, number> | null | undefined) => {
-    if (time) {
-      return Object.entries(time).reduce((acc, [timeType, time]) => {
-        if (timeType === 'minutes') {
-          return (acc += time)
-        }
-        return (acc += time * 60 + acc * 60)
-      }, 0)
-    }
-    return 0
-  }
-
   const defaultLessonValue = {
     name: translate('default_values.createLesson.name'),
     description: translate('default_values.createLesson.description'),
-    grading_method: 'autoRun',
-    autoRun: false,
+    grading_method: 'autoRun' as 'autoRun' | 'manual',
     lock: false,
     ...defaultValues,
     duration: timeConvertorToSeconds(defaultValues?.duration),
