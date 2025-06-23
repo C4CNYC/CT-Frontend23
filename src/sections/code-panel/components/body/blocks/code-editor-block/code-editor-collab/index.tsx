@@ -12,7 +12,7 @@ import FileSwitcher from './components/file-switcher'
 import StatusLabel, { RoomStatus } from './components/status-label'
 import { useCodeEditorCollab } from './hook'
 import { BASIC_SETUP } from './hook/constants'
-import { useFileManager } from './hook/file-manager'
+import { useFileManager } from './hook/file-manager/useFileManager'
 import { docBuilder } from './hook/utils/doc-builder'
 import { useStyles } from './styles'
 
@@ -50,7 +50,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     isOpen,
     barFiles,
     activeFile,
-    preloadedCode,
     isFileControllerAvailable,
 
     onAddFile,
@@ -61,6 +60,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     setActiveFile,
   } = useFileManager()
 
+  let preloadedCode = activeFile?.body || ''
   const { editorRef, extensions, streamingDoc, key, onCreateEditor, roomStatus } =
     useCodeEditorCollab({
       ...collabProps,
@@ -112,7 +112,6 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     const newCodeValue =
       preloadedCode ??
       (streamingDoc && streamingDoc.toString()?.length ? streamingDoc?.toString() : preloadedCode)
-
     setCodeValue(newCodeValue)
   }, [preloadedCode, streamingDoc])
 
