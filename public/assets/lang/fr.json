@@ -1215,6 +1215,8 @@
     "intro_tour_step_7_mobile_subtitle": "Et dans la section Feedback 💬, dites-nous ce que vous en pensez : Génial 🏆 ou Nul 💩 ?",
     "intro_tour_step_7_mobile_btn": "Laisser un avis",
     "lessons_language_select": "Sélectionner la langue de la leçon",
+    "lessons_grading_method": "Méthode de notation",
+    "lessons_one_file_per_type_toggle": "Un fichier par type",
     "privacy_policy": "Politique de Confidentialité",
     "tenant_create_success_title": "Félicitations !",
     "tenant_create_success_subtitle": "Vous avez enregistré une nouvelle organisation.",
