@@ -29,6 +29,7 @@ import { CreateLessonAdvancedTab } from './AdvancedTab'
 import { MainTab } from './MainTab'
 import { usePseudoType } from './PseudoType'
 import SkillsTab from './SkillsTab'
+import { handleConvertAutoRunToBolean } from './utils'
 
 interface FormValuesProps {
   name: string
@@ -143,19 +144,16 @@ export default function CreateLessonDialog({
   useEffect(() => {
     methods.reset({
       ...defaultLessonValue,
-      // autoRun: autoRun ? true : false,
-      grading_method: autoRun ? 'autoRun' : 'manual',
+      grading_method: handleConvertAutoRunToBolean(autoRun) ? 'autoRun' : 'manual',
       lock: lessonLock ? true : false,
     })
-    console.log('autoRun name changed:', autoRun)
   }, [autoRun, lessonLock])
 
   useEffect(() => {
-    console.log('gradingMethodWatcher name changed:', gradingMethodWatcher)
     if (gradingMethodWatcher === 'autoRun') {
       autoRunSet('true')
     } else if (gradingMethodWatcher === 'manual') {
-      autoRunSet('')
+      autoRunSet('false')
     }
   }, [gradingMethodWatcher])
 
@@ -172,7 +170,6 @@ export default function CreateLessonDialog({
       independent: pseudoType.independent,
       type: pseudoType.type,
       meta: data.meta,
-      grading_method: data.grading_method,
     }
     try {
       if (isEdit && id) {
@@ -293,7 +290,7 @@ export default function CreateLessonDialog({
               >
                 <Button onClick={handleClose}>{translate('actions_close')}</Button>
 
-                {value === 0 ? (
+                {value === 0 || value === 3 ? (
                   <LoadingButton
                     type='submit'
                     variant='contained'
