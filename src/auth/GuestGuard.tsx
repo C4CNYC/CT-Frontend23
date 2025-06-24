@@ -44,7 +44,7 @@ export default function GuestGuard({ children }: GuestGuardProps): React.ReactEl
       }
       push(STUDENT_PATH_DASHBOARD.codePanel.workSpace({ lessonId, courseId, unitId }))
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, route])
 
   return <> {children} </>
 }
