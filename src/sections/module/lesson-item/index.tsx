@@ -88,6 +88,145 @@ export default function LessonItem({
     }
   }
 
+  const typeOfLesson = {
+    practical: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            background: 'linear-gradient(#7A16C9, #F618D3B5)',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Part of Project
+        </Typography>
+      ),
+      icon: (
+        <RocketIcon
+          width={20}
+          height={20}
+        />
+      ),
+    },
+    part_project: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            background: 'linear-gradient(#7A16C9, #F618D3B5)',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Part of Project
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/part_of_project_gradient_icon.svg'
+          sx={{
+            width: 25,
+            height: 21,
+          }}
+        />
+      ),
+    },
+    exercise: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            color: '#155275 !important',
+          }}
+        >
+          Exercise
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/concept_exercises_icon.svg'
+          sx={{
+            width: 20,
+            height: 23,
+          }}
+        />
+      ),
+    },
+    concept_exercises: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            color: '#155275 !important',
+          }}
+        >
+          Concept Exercises
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/concept_exercises_icon.svg'
+          sx={{
+            width: 20,
+            height: 23,
+          }}
+        />
+      ),
+    },
+    open_project: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            background: 'linear-gradient(#C9C216, #F69018B5)',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Open Project
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/open_project_icon.svg'
+          sx={{
+            width: 19,
+            height: 26,
+          }}
+        />
+      ),
+    },
+    quiz: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            background: 'linear-gradient(#FF0000, #BA26ED, #2A26ED)',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Quiz
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/quiz_icon.svg'
+          sx={{
+            width: 20,
+            height: 20,
+          }}
+        />
+      ),
+    },
+  }
+
   return (
     <Stack
       sx={getLessonSx(theme)}
@@ -150,12 +289,10 @@ export default function LessonItem({
                 variant='body2'
                 sx={MODE_TITLE_SX}
               >
-                <RocketIcon
-                  width={20}
-                  height={20}
-                />
-                {lesson.type === 'practical' ? 'Part of Project' : 'Exercise'}
+                {typeOfLesson[lesson?.type].icon}
+                {typeOfLesson[lesson?.type] ? typeOfLesson[lesson?.type].title : 'Unknown Type'}
               </Typography>
+
               <Typography
                 variant='body2'
                 sx={DURATION_SX}

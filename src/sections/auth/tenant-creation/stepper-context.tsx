@@ -1,7 +1,6 @@
 import { createContext, useContext, ReactNode, useEffect } from 'react'
 import { useState } from 'react'
 
-import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { FieldErrors } from 'react-hook-form'
 import { useSelector } from 'react-redux'
@@ -10,8 +9,9 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import {
   useSetTenantLogoMutation,
   useUpdateTenantInfoMutation,
+  useCheckBrandNameMutation,
+  useCheckSubdomainMutation,
 } from '@/redux/services/tenant/tenant-creation'
-import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { RootState } from '../../../redux/store'
@@ -22,6 +22,7 @@ interface StepperContextType {
   activeStep: number
   isError: boolean
   isLoading: boolean
+  subdomain: string
 
   handleNext: () => void
   handleBack: () => void
@@ -30,6 +31,7 @@ interface StepperContextType {
   handleValidationScreen0: () => void
   handleValidationScreenLogo: (uploadedLogo: File | string) => void
   handleUpdateInfo: () => void
+  handleCheckBrandInfoStep: () => void
 }
 
 const StepperContext = createContext<StepperContextType | undefined>(undefined)
@@ -49,10 +51,12 @@ export const StepperProvider = ({
   const [isLoading, setIsLoading] = useState(false)
   const [currentInputs, setCurrentInputs] = useState<Array<keyof TenantFormValuesProps>>([])
   const { registerTenant } = useAuthContext()
-  const [setLogo, { isLoading: isLoadingLogo }] = useSetTenantLogoMutation()
-  const [updateInfo, { isLoading: isLoadingUpdateInfo }] = useUpdateTenantInfoMutation()
+  const [setLogo] = useSetTenantLogoMutation()
+  const [updateInfo] = useUpdateTenantInfoMutation()
+  const [handleCheckBrandName] = useCheckBrandNameMutation()
+  const [handleCheckSubdomain] = useCheckSubdomainMutation()
+
   const userId = useSelector((state: RootState) => state.global.user?.id)
-  const { push, route } = useRouter()
 
   const isError = Boolean(Object.keys(errors).length)
 
@@ -92,7 +96,7 @@ export const StepperProvider = ({
     const isValid = await methods.trigger(['logo', 'email'])
 
     if (isValid) {
-      setIsLoading(false)
+      setIsLoading(true)
       const currentLogo = methods.getValues()
 
       try {
@@ -102,13 +106,50 @@ export const StepperProvider = ({
         }).unwrap()
         methods.setValue('logo', result?.message)
         enqueueSnackbar(translate('Logo uploaded successfully'))
-        setIsLoading(isLoadingLogo)
-
         handleNext()
       } catch (error: any) {
-        setIsLoading(false)
         enqueueSnackbar(error.message, { variant: 'error' })
+      } finally {
+        setIsLoading(false)
       }
+    }
+  }
+
+  const handleCheckBrandInfoStep = async () => {
+    try {
+      const isValid = await methods.trigger(['brandName', 'subdomain'])
+      if (!isValid) return
+
+      setIsLoading(true)
+
+      const brandName = methods.getValues('brandName')
+      const subdomain = methods.getValues('subdomain')
+
+      const [brandResult, subdomainResult] = await Promise.all([
+        handleCheckBrandName({ brandName }).unwrap(),
+        handleCheckSubdomain({ subdomain }).unwrap(),
+      ])
+
+      if (brandResult.isAvailable && subdomainResult.isAvailable) {
+        handleNext()
+      } else {
+        if (!brandResult.isAvailable) {
+          methods.setError('brandName', {
+            type: 'manual',
+            message: translate(brandResult?.message),
+          })
+        }
+        if (!subdomainResult.isAvailable) {
+          methods.setError('subdomain', {
+            type: 'manual',
+            message: translate(subdomainResult?.message),
+          })
+        }
+      }
+    } catch (error: any) {
+      enqueueSnackbar(translate('validation_error'), { variant: 'error' })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -126,12 +167,11 @@ export const StepperProvider = ({
         }).unwrap()
 
         enqueueSnackbar(translate('Info updated successfully'))
-        setIsLoading(isLoadingUpdateInfo)
-
-        push(MANAGER_PATH_DASHBOARD.administration.root)
+        handleNext()
       } catch (error: any) {
-        setIsLoading(false)
         enqueueSnackbar(error.message, { variant: 'error' })
+      } finally {
+        setIsLoading(false)
       }
     }
   }
@@ -157,7 +197,9 @@ export const StepperProvider = ({
         handleValidationScreen0,
         handleValidationScreenLogo,
         handleUpdateInfo,
+        handleCheckBrandInfoStep,
         isLoading,
+        subdomain: methods.getValues('subdomain') || '',
       }}
     >
       {children}

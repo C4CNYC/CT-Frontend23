@@ -1228,5 +1228,13 @@
     "intro_tour_step_7_mobile_subtitle": "وفي التعليقات 💬 أخبرنا برأيك: رائع 🏆 أم سيئ 💩؟",
     "intro_tour_step_7_mobile_btn": "اترك تعليقًا",
     "lessons_language_select": "اختر لغة الدرس",
-    "privacy_policy": "سياسة الخصوصية"
+    "lessons_grading_method": "طريقة التقييم",
+    "lessons_one_file_per_type_toggle": "ملف واحد لكل نوع",
+    "privacy_policy": "سياسة الخصوصية",
+    "tenant_create_success_title": "تهانينا!",
+    "tenant_create_success_subtitle": "لقد سجّلت مؤسسة جديدة.",
+    "tenant_create_success_desc_part_1": "يمكنك الآن تسجيل الدخول من هنا:",
+    "tenant_create_success_desc_part_2": "باستخدام نفس بيانات تسجيل الدخول التي أنشأتها هنا.",
+    "tenant_create_success_desc_part_3": "للحصول على صلاحيات المسؤول، يجب عليك استخدام النطاق الفرعي الذي أنشأته فقط.",
+    "tenant_create_success_desc_part_4": "انقر هنا لتسجيل الدخول الآن:"
   }

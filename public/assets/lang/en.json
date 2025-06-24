@@ -1234,6 +1234,8 @@
     "intro_tour_step_7_mobile_subtitle": "And on Feedback 💬 let us know what you think: awesome  🏆 or not-so-awesome 💩?",
     "intro_tour_step_7_mobile_btn": "Leave feedback",
     "lessons_language_select": "Select Programming language",
+    "lessons_grading_method": "Code Run Mode",
+    "lessons_one_file_per_type_toggle": "One file per type",
     "privacy_policy": "Privacy Policy",
     "cp_teacher_tour":[
       {"title":"Hi there 👋🏼", "body":"We are generating your new lesson","button":"GOT IT!"},
@@ -1246,5 +1248,11 @@
         "body": "And on Feedback 💬 let us know what you think: \n awesome 🏆 or not-so-awesome 💩?",
         "button": "Leave feedback"
       }
-    ]
+    ],
+    "tenant_create_success_title": "Congratulations!",
+    "tenant_create_success_subtitle": "You have registered a new organization.",
+    "tenant_create_success_desc_part_1": "You can now login here:",
+    "tenant_create_success_desc_part_2": "Using the exact same login details you just created here.",
+    "tenant_create_success_desc_part_3": "In order to have Admin permissions you must use ONLY the sub-domain you created.",
+    "tenant_create_success_desc_part_4": "Click here to login now: "
   }

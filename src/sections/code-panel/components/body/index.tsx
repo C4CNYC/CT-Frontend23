@@ -1,4 +1,4 @@
-import { type FC, useContext, useState } from 'react'
+import { type FC, useContext, useState, useEffect } from 'react'
 
 import { Stack } from '@mui/system'
 import { FaDesktop } from '@react-icons/all-files/fa/FaDesktop'
@@ -43,6 +43,17 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
   const isCenterMode = isBrowserHidden && isInstructionsHidden
+
+  useEffect(() => {
+    if (lessonContents[slideIndex]?.preload_body) {
+      setDocument({
+        htmlBody: lessonContents[slideIndex].preload_body,
+        cssBody: '',
+        jsBody: '',
+      })
+      setBrowserView(null)
+    }
+  }, [lessonId, lessonContents])
 
   const onChangeStreamingDocInfo = (doc: CodeDocument) => {
     try {

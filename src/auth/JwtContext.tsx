@@ -3,6 +3,7 @@ import { createContext, useCallback, useEffect, useMemo, useReducer } from 'reac
 import { useDispatch } from 'react-redux'
 
 import { Role } from '@/redux/services/enums/role.enum'
+import { resetState } from '@/redux/slices/checkers-animation'
 import { cleanUser, cleanUserRole, setUser } from '@/redux/slices/global'
 import { axios } from '@/utils/axios'
 import { localStorageAvailable } from '@/utils/localStorageAvailable'
@@ -187,6 +188,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
 
       const { access_token: accessToken, user } = data
       localStorageClear()
+      reduxDispatch(resetState())
       reduxDispatch(setUser(user))
       setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
 
@@ -322,6 +324,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     setSession(null, null)
     reduxDispatch(cleanUser())
     reduxDispatch(cleanUserRole())
+    reduxDispatch(resetState())
     localStorageClear()
 
     dispatch({
