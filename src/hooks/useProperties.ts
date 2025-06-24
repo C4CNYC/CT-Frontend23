@@ -19,6 +19,7 @@ export const useProperties = ({ entityType, entityId, propertyName }: IUseProper
   const setProperty = async (value: string) => {
     if (!entityId) return
     if (property) {
+      if (property.propertyValue === value) return
       // Update if it exists
       await updateProperty({
         id: property.id,

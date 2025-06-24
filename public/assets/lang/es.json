@@ -1215,6 +1215,8 @@
     "intro_tour_step_7_mobile_subtitle": "Y en los comentarios 💬 cuéntanos qué opinas: ¿Maravilloso 🏆 o Poopie 💩?",
     "intro_tour_step_7_mobile_btn": "Dejar comentario",
     "lessons_language_select": "Seleccionar idioma de la lección",
+    "lessons_grading_method": "Método de calificación",
+    "lessons_one_file_per_type_toggle": "Un archivo por tipo",
     "privacy_policy": "Política de Privacidad",
     "tenant_create_success_title": "¡Felicitaciones!",
     "tenant_create_success_subtitle": "Ha registrado una nueva organización.",
