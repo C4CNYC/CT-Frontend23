@@ -107,6 +107,9 @@ export default function CreateCourseDialog({
             <DetailsTab
               handleClose={handleClose}
               refetch={refetch}
+              defaultValues={defaultValues}
+              id={id}
+              isEdit={isEdit}
             />
           </TabPanel>
           <TabPanel

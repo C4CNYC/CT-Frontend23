@@ -5,6 +5,7 @@ import { LoadingButton } from '@mui/lab'
 import { Box, Button, Stack } from '@mui/material'
 import { useForm } from 'react-hook-form'
 
+import { useUpdateCourseMutation } from '@/redux/services/manager/courses-manager'
 import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@root/src/components'
 import { AGE, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import { useTranslate } from '@root/src/utils/translateHelper'
@@ -16,21 +17,31 @@ import {
   FormValuesDetailsProps,
 } from './constants'
 
-function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
+function DetailsTab({ defaultValues, handleClose, refetch, id }: DetailsTabProps) {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const onlyNeededDefaultValues = {
+    level: defaultValues?.level || LEVEL.BEGINNER,
+    age: defaultValues?.age || AGE.GRADE_1,
+    customLevel: defaultValues?.customLevel || '',
+    customAge: defaultValues?.customAge || '',
+  }
+
+  const [editCourse, { isLoading: isEditLoading }] = useUpdateCourseMutation()
 
   const methods = useForm<FormValuesDetailsProps>({
     resolver: yupResolver(CreateDetailsSchema()),
-    defaultValues: defaultValues ?? {
-      level: LEVEL.BEGINNER,
-      age: AGE.GRADE_1,
-    },
+    defaultValues: onlyNeededDefaultValues,
   })
 
-  const onSubmit = (data: FormValuesDetailsProps) => {
+  const onSubmit = async (data: FormValuesDetailsProps) => {
     try {
-      // @TODO ... {level: data.customLevel ?? data.level ...}
+      if (!id) return
+
+      await editCourse({
+        id,
+        ...data,
+      }).unwrap()
 
       enqueueSnackbar(translate('messages_update_success'))
       if (refetch) refetch()
@@ -48,13 +59,13 @@ function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
 
   useEffect(() => {
     if (!!customLevel) {
-      methods.setValue('level', '')
+      methods.setValue('level', defaultValues?.level || LEVEL.BEGINNER)
     }
   }, [customLevel])
 
   useEffect(() => {
     if (!!customAge) {
-      methods.setValue('age', '')
+      methods.setValue('age', defaultValues?.age || AGE.GRADE_1)
     }
   }, [customAge])
 
@@ -115,8 +126,7 @@ function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
         <LoadingButton
           onClick={methods.handleSubmit(onSubmit)}
           variant='contained'
-          // @TODO: add loading state
-          loading={false}
+          loading={isEditLoading}
         >
           {translate('actions_save')}
         </LoadingButton>

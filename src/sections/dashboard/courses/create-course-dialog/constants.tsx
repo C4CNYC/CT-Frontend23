@@ -3,6 +3,8 @@ import * as Yup from 'yup'
 import { AGE, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
 
 export interface DetailsTabProps {
+  isEdit?: boolean
+  id: string
   defaultValues?: FormValuesDetailsProps
   handleClose: () => void
   refetch: () => void
@@ -19,8 +21,10 @@ export interface CreateCourseDialogProps {
 export interface FormValuesGeneralProps {
   name: string
   content_id: string
-  // @TODO: remove level after backend changes
-  level: string
+  level: LEVEL | ''
+  customLevel: string
+  age: AGE | ''
+  customAge: string
   price: string
   description: string
   active: boolean
