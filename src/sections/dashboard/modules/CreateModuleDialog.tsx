@@ -21,6 +21,7 @@ import {
 } from '@/redux/services/manager/modules-manager'
 import { useTranslate } from '@/utils/translateHelper'
 import ModuleLessonsAutocomplete from '@root/src/components/module-lessons-autocomplete/ModuleLessonAutocomplete'
+import { AGE, GRADING, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
 
 import { DIALOG_ACTIONS_SX, TAB_SX } from './constants'
 import DetailsTab from './DetailsTab'
@@ -39,6 +40,13 @@ interface FormValuesProps {
   initial_enrolled: number
   initial_likes: number
   initial_stars: number
+  level: LEVEL
+  customLevel: string
+  age: AGE
+  customAge: string
+  grading: GRADING
+  brief: string
+  audience: string
 }
 
 interface Prop {
@@ -265,6 +273,8 @@ export default function CreateModuleDialog({
               <DetailsTab
                 handleClose={handleClose}
                 refetch={refetch}
+                id={id as string}
+                defaultValues={defaultValues}
               />
             </TabPanel>
             <TabPanel

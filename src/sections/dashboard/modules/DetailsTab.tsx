@@ -5,8 +5,10 @@ import { LoadingButton } from '@mui/lab'
 import { Box, Button, Stack, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
 
+import { useUpdateModuleMutation } from '@/redux/services/manager/modules-manager'
 import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@root/src/components'
 import { AGE, GRADING, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
+import { capitalizeFirstSymbol } from '@root/src/utils/capitalizeFirstSymbol'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
@@ -16,22 +18,35 @@ import {
   FormValuesDetailsProps,
 } from './constants'
 
-function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
+function DetailsTab({ defaultValues, handleClose, refetch, id }: DetailsTabProps) {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const onlyNeedDefaultValues = {
+    level: defaultValues?.level || LEVEL.BEGINNER,
+    customLevel: defaultValues?.customLevel || '',
+    customAge: defaultValues?.customAge || '',
+    brief: defaultValues?.brief || '',
+    audience: defaultValues?.audience || '',
+    age: defaultValues?.age || AGE.GRADE_1,
+    grading: defaultValues?.grading || GRADING.AUTO,
+  }
+
+  const [editModule, { isLoading: isEditLoading }] = useUpdateModuleMutation()
 
   const methods = useForm<FormValuesDetailsProps>({
     resolver: yupResolver(CreateDetailsSchema()),
-    defaultValues: defaultValues ?? {
-      level: LEVEL.BEGINNER,
-      age: AGE.GRADE_1,
-      grading: GRADING.AUTO,
-    },
+    defaultValues: onlyNeedDefaultValues,
   })
 
-  const onSubmit = (data: FormValuesDetailsProps) => {
+  const onSubmit = async (data: FormValuesDetailsProps) => {
     try {
-      // @TODO ... {level: data.customLevel ?? data.level ...}
+      if (!id) return
+      // @ts-expect-error
+      await editModule({
+        id,
+        ...data,
+      }).unwrap()
+
       enqueueSnackbar(translate('messages_update_success'))
       if (refetch) refetch()
       methods.reset()
@@ -49,13 +64,13 @@ function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
 
   useEffect(() => {
     if (!!customLevel) {
-      methods.setValue('level', '')
+      methods.setValue('level', defaultValues?.level || LEVEL.BEGINNER)
     }
   }, [customLevel])
 
   useEffect(() => {
     if (!!customAge) {
-      methods.setValue('age', '')
+      methods.setValue('age', defaultValues?.age || AGE.GRADE_1)
     }
   }, [customAge])
 
@@ -74,7 +89,7 @@ function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
                 value={LEVEL[l as keyof typeof LEVEL]}
                 key={LEVEL[l as keyof typeof LEVEL]}
               >
-                {LEVEL[l as keyof typeof LEVEL]}
+                {capitalizeFirstSymbol(LEVEL[l as keyof typeof LEVEL])}
               </option>
             ))}
           </RHFSelect>
@@ -94,7 +109,7 @@ function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
                 value={AGE[a as keyof typeof AGE]}
                 key={AGE[a as keyof typeof AGE]}
               >
-                {AGE[a as keyof typeof AGE]}
+                {capitalizeFirstSymbol(AGE[a as keyof typeof AGE])}
               </option>
             ))}
           </RHFSelect>
@@ -128,7 +143,7 @@ function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
                   value={GRADING[g as keyof typeof GRADING]}
                   key={GRADING[g as keyof typeof GRADING]}
                 >
-                  {GRADING[g as keyof typeof GRADING]}
+                  {capitalizeFirstSymbol(GRADING[g as keyof typeof GRADING])}
                 </option>
               ))}
             </RHFSelect>
@@ -153,8 +168,7 @@ function DetailsTab({ defaultValues, handleClose, refetch }: DetailsTabProps) {
         <LoadingButton
           onClick={methods.handleSubmit(onSubmit)}
           variant='contained'
-          // @TODO: add loading state
-          loading={false}
+          loading={isEditLoading}
         >
           {translate('actions_save')}
         </LoadingButton>

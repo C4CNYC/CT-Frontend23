@@ -12,6 +12,7 @@ export interface FormValuesDetailsProps {
   grading: GRADING
 }
 export interface DetailsTabProps {
+  id: string
   defaultValues?: FormValuesDetailsProps
   handleClose: () => void
   refetch?: () => void

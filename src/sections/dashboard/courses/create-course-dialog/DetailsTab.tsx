@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import { useUpdateCourseMutation } from '@/redux/services/manager/courses-manager'
 import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@root/src/components'
 import { AGE, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
+import { capitalizeFirstSymbol } from '@root/src/utils/capitalizeFirstSymbol'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
@@ -84,7 +85,7 @@ function DetailsTab({ defaultValues, handleClose, refetch, id }: DetailsTabProps
                 value={LEVEL[l as keyof typeof LEVEL]}
                 key={LEVEL[l as keyof typeof LEVEL]}
               >
-                {LEVEL[l as keyof typeof LEVEL]}
+                {capitalizeFirstSymbol(LEVEL[l as keyof typeof LEVEL])}
               </option>
             ))}
           </RHFSelect>
@@ -104,7 +105,7 @@ function DetailsTab({ defaultValues, handleClose, refetch, id }: DetailsTabProps
                 value={AGE[a as keyof typeof AGE]}
                 key={AGE[a as keyof typeof AGE]}
               >
-                {AGE[a as keyof typeof AGE]}
+                {capitalizeFirstSymbol(AGE[a as keyof typeof AGE])}
               </option>
             ))}
           </RHFSelect>

@@ -13,6 +13,8 @@ import { ConfirmDialog, Label, MenuPopover, TextMaxLine, useSnackbar } from '@/c
 import { useDeleteModuleMutation } from '@/redux/services/manager/modules-manager'
 import CreateModuleDialog from '@/sections/dashboard/modules/CreateModuleDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { AGE, GRADING, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
+
 export default function ModuleCard({ module, refetch }: any): React.ReactElement | null {
   const router = useRouter()
   const translate = useTranslate()
@@ -173,6 +175,13 @@ export default function ModuleCard({ module, refetch }: any): React.ReactElement
             initial_likes: module.initial_likes as number,
             initial_stars: module.initial_stars as number,
             initial_enrolled: module.initial_enrolled as number,
+            level: module.level as LEVEL,
+            customLevel: module.customLevel as string,
+            age: module.age as AGE,
+            customAge: module.customAge as string,
+            grading: module.grading as GRADING,
+            brief: module.brief as string,
+            audience: module.audience as string,
           }}
           moduleTips={module.tips}
           refetch={refetch}

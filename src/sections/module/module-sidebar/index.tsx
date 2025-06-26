@@ -34,6 +34,13 @@ export default function ModuleSidebar({
     initial_stars: stars,
     lessons,
     description,
+    age,
+    level,
+    customLevel,
+    customAge,
+    grading,
+    brief,
+    audience,
   } = module
 
   const moduleDuration = useMemo(
@@ -68,9 +75,10 @@ export default function ModuleSidebar({
       <CollapsedItem title={translate('courses_brief')}>
         <BriefSection
           lessons={`${lessons?.length} ${translate('lessons')}`}
-          grade={grade}
-          level={level}
+          grade={customAge || age || '6th-10th Grade'}
+          level={customLevel || level || 'Beginner'}
           duration={moduleDuration ?? '.5 hour'}
+          brief={brief || ''}
         />
       </CollapsedItem>
       <CollapsedItem title={translate('courses_course_who_is_this_for')}>
@@ -81,7 +89,7 @@ export default function ModuleSidebar({
             bgcolor: theme.palette.mode === 'light' ? '#F8F8F8' : theme.palette.background.paper,
           }}
         >
-          {description}
+          {audience || description}
         </Typography>
       </CollapsedItem>
       <OnlyAdmin>

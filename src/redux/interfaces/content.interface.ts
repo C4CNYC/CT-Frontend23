@@ -2,6 +2,7 @@ import { Unit } from '@/redux/interfaces/challenges.interface'
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { AGE, GRADING, LEVEL } from '../services/interfaces/courseUnits.interface'
 import { ILesson } from '../services/interfaces/lesson.interface'
 
 export type { ILesson }
@@ -59,6 +60,13 @@ export interface IModule {
   teacher_slides?: string
   lesson_plans?: string
   teacher_forum?: string
+  level: LEVEL
+  customLevel: string
+  age: AGE
+  customAge: string
+  grading: GRADING
+  brief?: string
+  audience?: string
 }
 
 export interface IModuleContent {

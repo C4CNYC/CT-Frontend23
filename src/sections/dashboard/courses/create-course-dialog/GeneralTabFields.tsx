@@ -1,6 +1,8 @@
 import { Button, FormGroup, Stack } from '@mui/material'
 
 import { RHFSelect, RHFSwitch, RHFTextField } from '@root/src/components'
+import { LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
+import { capitalizeFirstSymbol } from '@root/src/utils/capitalizeFirstSymbol'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 function GeneralTabFields() {
@@ -18,36 +20,20 @@ function GeneralTabFields() {
         label={translate('courses_content_id')}
         placeholder='W1'
       />
-      {/* @TODO: remove level select after backend changes */}
       <RHFSelect
         native
         name='level'
         label={translate('courses_course_level')}
       >
-        <option
-          key='empty'
-          value='empty'
-        >
-          {translate('courses_select_level')}
-        </option>
-        <option
-          key='beginner'
-          value='beginner'
-        >
-          {translate('beginner')}
-        </option>
-        <option
-          key='intermediate'
-          value='intermediate'
-        >
-          {translate('intermediate')}
-        </option>
-        <option
-          key='advanced'
-          value='advanced'
-        >
-          {translate('advanced')}
-        </option>
+        <option value=''></option>
+        {Object.keys(LEVEL).map((l) => (
+          <option
+            value={LEVEL[l as keyof typeof LEVEL]}
+            key={LEVEL[l as keyof typeof LEVEL]}
+          >
+            {capitalizeFirstSymbol(LEVEL[l as keyof typeof LEVEL])}
+          </option>
+        ))}
       </RHFSelect>
       <FormGroup
         row

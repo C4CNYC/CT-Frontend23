@@ -17,6 +17,11 @@ export interface IModule {
   avatar: string | null
   tips: string[] | []
   duration: string | null
+  level: LEVEL
+  customLevel: string
+  age: AGE
+  customAge: string
+  grading: GRADING
 }
 
 export interface ILesson {
@@ -221,9 +226,9 @@ export enum LEVEL {
 }
 
 export enum GRADING {
-  AUTO = 'Auto-graded',
-  MANUAL = 'Manual-graded',
-  MIXED = 'Mixed-graded',
+  AUTO = 'auto-graded',
+  MANUAL = 'manual-graded',
+  MIXED = 'mixed-graded',
 }
 
 export interface IModuleDelete {
