@@ -1236,5 +1236,9 @@
     "tenant_create_success_desc_part_1": "Vous pouvez maintenant vous connecter ici :",
     "tenant_create_success_desc_part_2": "En utilisant les mêmes identifiants de connexion que ceux que vous venez de créer.",
     "tenant_create_success_desc_part_3": "Pour obtenir les droits d'administrateur, vous devez utiliser UNIQUEMENT le sous-domaine que vous avez créé.",
-    "tenant_create_success_desc_part_4": "Cliquez ici pour vous connecter maintenant :"
+    "tenant_create_success_desc_part_4": "Cliquez ici pour vous connecter maintenant :",
+    "manager_admin_intro_tour_step_1_title": "Paramètres de marque de l'organisation",
+    "manager_admin_intro_tour_step_1_desc": "Modifiez votre logo, votre sous-domaine ou ajoutez un domaine complet ici.",
+    "manager_admin_intro_tour_step_2_title": "Vue Élève",
+    "manager_admin_intro_tour_step_2_desc": "Basculez entre les vues Enseignant et Administrateur dans le menu Profil."
   }

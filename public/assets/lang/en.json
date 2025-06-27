@@ -1254,5 +1254,11 @@
     "tenant_create_success_desc_part_1": "You can now login here:",
     "tenant_create_success_desc_part_2": "Using the exact same login details you just created here.",
     "tenant_create_success_desc_part_3": "In order to have Admin permissions you must use ONLY the sub-domain you created.",
-    "tenant_create_success_desc_part_4": "Click here to login now: "
+    "tenant_create_success_desc_part_4": "Click here to login now: ",
+
+    "manager_admin_intro_tour_step_1_title": "Organization Brand Settings",
+    "manager_admin_intro_tour_step_1_desc": "Change your logo, sub-domain or add a full domain here.",
+    "manager_admin_intro_tour_step_2_title": "Student View",
+    "manager_admin_intro_tour_step_2_desc": "Switch between Teacher and Admin view in the profile menu."
+
   }

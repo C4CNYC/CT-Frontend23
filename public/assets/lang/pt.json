@@ -1233,5 +1233,9 @@
     "tenant_create_success_desc_part_1": "Já pode fazer login aqui:",
     "tenant_create_success_desc_part_2": "Utilizando exatamente os mesmos dados de login que acabou de criar aqui.",
     "tenant_create_success_desc_part_3": "Para ter permissões de administrador, deve utilizar APENAS o subdomínio que criou.",
-    "tenant_create_success_desc_part_4": "Clique aqui para iniciar sessão agora:"
+    "tenant_create_success_desc_part_4": "Clique aqui para iniciar sessão agora:",
+    "manager_admin_intro_tour_step_1_title": "Definições da Marca da Organização",
+    "manager_admin_intro_tour_step_1_desc": "Altere o seu logótipo, subdomínio ou adicione aqui um domínio completo.",
+    "manager_admin_intro_tour_step_2_title": "Visualização do Aluno",
+    "manager_admin_intro_tour_step_2_desc": "Alternar entre as vistas Professor e Administrador no menu de perfil."
   }

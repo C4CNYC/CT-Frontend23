@@ -1217,5 +1217,9 @@
     "tenant_create_success_desc_part_1": "Artık burada oturum açabilirsiniz:",
     "tenant_create_success_desc_part_2": "Az önce burada oluşturduğunuz oturum açma bilgilerinin aynısını kullanarak.",
     "tenant_create_success_desc_part_3": "Yönetici izinlerine sahip olmak için SADECE oluşturduğunuz alt etki alanını kullanmalısınız.",
-    "tenant_create_success_desc_part_4": "Şimdi oturum açmak için buraya tıklayın:"
+    "tenant_create_success_desc_part_4": "Şimdi oturum açmak için buraya tıklayın:",
+    "manager_admin_intro_tour_step_1_title": "Kuruluş Marka Ayarları",
+    "manager_admin_intro_tour_step_1_desc": "Logonuzu, alt alan adınızı değiştirin veya tam alan adınızı buradan ekleyin.",
+    "manager_admin_intro_tour_step_2_title": "Öğrenci Görünümü",
+    "manager_admin_intro_tour_step_2_desc": "Profil menüsünde Öğretmen ve Yönetici görünümü arasında geçiş yapın."
   }
