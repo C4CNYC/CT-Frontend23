@@ -4,6 +4,9 @@ export interface ICourse {
   id?: string | undefined
   name: string
   level: string
+  customLevel?: string
+  age: string
+  customAge?: string
   price: string
   description: string
   cover?: string
