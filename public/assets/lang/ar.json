@@ -1221,5 +1221,9 @@
     "tenant_create_success_desc_part_1": "يمكنك الآن تسجيل الدخول من هنا:",
     "tenant_create_success_desc_part_2": "باستخدام نفس بيانات تسجيل الدخول التي أنشأتها هنا.",
     "tenant_create_success_desc_part_3": "للحصول على صلاحيات المسؤول، يجب عليك استخدام النطاق الفرعي الذي أنشأته فقط.",
-    "tenant_create_success_desc_part_4": "انقر هنا لتسجيل الدخول الآن:"
+    "tenant_create_success_desc_part_4": "انقر هنا لتسجيل الدخول الآن:",
+    "manager_admin_intro_tour_step_1_title": "إعدادات علامة المؤسسة التجارية",
+    "manager_admin_intro_tour_step_1_desc": "غيّر شعارك أو نطاقك الفرعي أو أضف نطاقًا كاملاً هنا",
+    "manager_admin_intro_tour_step_2_title": "عرض الطالب",
+    "manager_admin_intro_tour_step_2_desc": "التبديل بين عرض المعلم وعرض المسؤول في قائمة الملف الشخصي"
   }
