@@ -11,7 +11,10 @@ export interface ICourseElement {
   id: string
   course_id?: string
   name: string
-  level: string
+  level: LEVEL
+  age: AGE
+  customLevel: string
+  customAge: string
   price: string
   description: string
   active: boolean
@@ -31,7 +34,10 @@ export interface ICourseContent {
   id: string
   units: Unit[]
   name: string
-  level: string
+  level: LEVEL
+  age: AGE
+  customLevel: string
+  customAge: string
   price: string
   description: string
   active: boolean
