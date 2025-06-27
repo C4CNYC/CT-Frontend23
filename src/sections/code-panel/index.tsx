@@ -87,6 +87,7 @@ export function CodePanelLayout(): ReactElement | null {
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
   const [completeLesson] = useCompleteLessonMutation()
   const [carryOverFiles] = useLessonFilesCarryOverMutation()
@@ -305,8 +306,8 @@ export function CodePanelLayout(): ReactElement | null {
   useEffect(() => {
     let timerIdForTour: string | number | NodeJS.Timeout | undefined
     let timerIdForRender: string | number | NodeJS.Timeout | undefined
-
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
+    const hasSeenTour =
+      localStorage.getItem('HAS_SEEN_TOUR') || (contentValidations && contentValidations.length > 0)
     if (!hasSeenTour) {
       timerIdForTour = setTimeout(() => {
         setShowTour(true)
