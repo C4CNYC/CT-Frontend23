@@ -70,7 +70,7 @@ export const useFileManager = () => {
     { id: query.lessonId as string },
     { skip: !query.lessonId }
   )
-
+  const shouldRunAuthFiles = !!lessonId && !!slideId && isAuthenticated
   const {
     refetch,
     isLoading,
@@ -78,7 +78,7 @@ export const useFileManager = () => {
     data: authFiles = [],
   } = useGetStudentFilesQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
-    { skip: !lessonId || !slideId || !isAuthenticated }
+    { skip: !shouldRunAuthFiles }
   )
 
   const {
@@ -202,6 +202,23 @@ export const useFileManager = () => {
 
     return [...authFilesWithoutHello, ...unauthFilesNotSaved]
   }, [authFiles, unauthFilesList, isAuthenticated]) // Use full arrays as dependencies
+  useEffect(() => {
+    if (!isAuthenticated || authFiles.length < 2 || !isPageReady) return
+    let searched = new Set(authFiles.map((f) => `${f.name}.${f.extension}`))
+    if (searched.size < authFiles.length) {
+      let toDelete = []
+      for (let filename of searched) {
+        let duplicates = authFiles.filter((f) => `${f.name}.${f.extension}` === filename)
+        if (duplicates.length > 1) {
+          duplicates.sort((a, b) => b.body.length - a.body.length)
+          toDelete.push(...duplicates.slice(1).map((f) => f.id))
+        }
+      }
+      if (toDelete.length) {
+        toDelete.forEach((id) => deleteStudentFile({ id }))
+      }
+    }
+  }, [authFiles, isPageReady, isAuthenticated])
 
   async function saveProgressOfGuestTimes() {
     let contentsWithValidations =
@@ -228,9 +245,9 @@ export const useFileManager = () => {
       file.name.toLowerCase().startsWith('hello_')
     )
 
-    let unauthFilesNotSaved = unauthFilesList.filter(
-      (file) => !authFilesWithoutHello.find((authFile) => authFile.body === file.body)
-    )
+    let unauthFilesNotSaved = unauthFilesList
+      .filter((file) => !authFilesWithoutHello.find((authFile) => authFile.body === file.body))
+      .filter((file) => file.body.length > 0)
 
     if (unauthFilesNotSaved.length) {
       saveProgressOfGuestTimes()
@@ -378,9 +395,9 @@ export const useFileManager = () => {
   )
 
   useEffect(() => {
-    if (!isAuthenticated || sandbox) return
+    if (!shouldRunAuthFiles || sandbox) return
     if (activeFile) refetch()
-  }, [activeFile, searchParams])
+  }, [activeFile, searchParams, shouldRunAuthFiles])
 
   useEffect(() => {
     if (sandbox) {

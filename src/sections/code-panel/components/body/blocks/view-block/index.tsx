@@ -1,4 +1,4 @@
-import { type FC, useContext, useState } from 'react'
+import { type FC, useContext, useState, useEffect } from 'react'
 
 import { CgBrowser } from '@react-icons/all-files/cg/CgBrowser'
 import { TbArrowBarToRight } from '@react-icons/all-files/tb/TbArrowBarToRight'
@@ -43,6 +43,12 @@ const ViewBlock: FC<IViewBlock> = ({ document, reloadBrowserView, integrations }
       reloadBrowserView()
     }
   }
+
+  useEffect(() => {
+    if (document) {
+      reloadIframe()
+    }
+  }, [document?.htmlBody])
 
   if (isBrowserHidden) {
     return null
