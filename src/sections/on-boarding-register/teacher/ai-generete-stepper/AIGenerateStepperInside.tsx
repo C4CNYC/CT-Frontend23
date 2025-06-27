@@ -152,7 +152,7 @@ export default function AIGenerateStepperInside({
             )
           })
           lessonData.newLessonId = payload.id
-          let redirectAfter = STUDENT_PATH_DASHBOARD.myLessons
+          let redirectAfter = STUDENT_PATH_DASHBOARD.codePanel.root //default was STUDENT_PATH_DASHBOARD.myLessons but we want code panel 
           if (lessonData.lessonType.includes('code-panel')) {
             lessonData.lessonType = lessonData.lessonType.replace('code-panel', '')
             redirectAfter = STUDENT_PATH_DASHBOARD.codePanel.root
