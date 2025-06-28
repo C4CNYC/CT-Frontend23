@@ -8,12 +8,12 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from '@/components'
-import {
-  useCreateAuthorMutation,
-  useUpdateAuthorCoverMutation,
-  useUpdateAuthorMutation,
-} from '@/redux/services/manager/author-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import {
+  useCreateCourseAuthorMutation,
+  useUpdateCourseAuthorCoverMutation,
+  useUpdateCourseAuthorMutation,
+} from '@root/src/redux/services/manager/course-author-manager'
 
 const LINK_URL =
   // eslint-disable-next-line no-useless-escape
@@ -40,9 +40,9 @@ export default function AuthorForm({
   defaultValues = { name: '', about: '', linkedin: '', email: '' },
 }: IAuthorFormProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
-  const [postAuthor, { isLoading }] = useCreateAuthorMutation()
-  const [editAuthor, { isLoading: isEditing }] = useUpdateAuthorMutation()
-  const [postCover] = useUpdateAuthorCoverMutation()
+  const [postAuthor, { isLoading }] = useCreateCourseAuthorMutation()
+  const [editAuthor, { isLoading: isEditing }] = useUpdateCourseAuthorMutation()
+  const [postCover] = useUpdateCourseAuthorCoverMutation()
   const translate = useTranslate()
 
   const CreateAuthorSchema = Yup.object().shape({

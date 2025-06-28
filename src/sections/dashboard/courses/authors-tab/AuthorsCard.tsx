@@ -6,8 +6,8 @@ import { useSnackbar } from 'notistack'
 
 import { SvgColor } from '@/components'
 import { IAuthor } from '@/redux/services/interfaces/author.interface'
-import { useDeleteAuthorMutation } from '@/redux/services/manager/author-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { useDeleteCourseAuthorMutation } from '@root/src/redux/services/manager/course-author-manager'
 
 import AddAuthorDialog from './AddAuthorDialog'
 
@@ -18,7 +18,7 @@ interface IAuthorsCardProps {
 
 export default function AuthorsCard({ author, courseId }: IAuthorsCardProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
-  const [deleteAuthor, { isLoading }] = useDeleteAuthorMutation()
+  const [deleteAuthor, { isLoading }] = useDeleteCourseAuthorMutation()
   const translate = useTranslate()
 
   const handleDeleteAuthor = (): void => {
