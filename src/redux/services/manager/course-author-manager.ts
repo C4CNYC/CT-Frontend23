@@ -1,23 +1,23 @@
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
-import { IAuthor, IAuthorSearchParams } from '../interfaces/author.interface'
+import { IAuthor, ICourseAuthorSearchParams } from '../interfaces/author.interface'
 
 import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAuthors: builder.query<
+    getCourseAuthors: builder.query<
       BaseListResponseInterface<IAuthor & BaseResponseInterface>,
-      IAuthorSearchParams
+      ICourseAuthorSearchParams
     >({
       query: (params) => ({
         url: '/manager/author',
         method: 'GET',
         params,
       }),
-      providesTags: ['Author'],
+      providesTags: ['CourseAuthor'],
     }),
-    updateAuthor: builder.mutation<
+    updateCourseAuthor: builder.mutation<
       IAuthor & BaseResponseInterface,
       Omit<IAuthor, 'avatar' | 'email'>
     >({
@@ -26,9 +26,9 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: 'Author' }],
+      invalidatesTags: [{ type: 'CourseAuthor' }],
     }),
-    updateAuthorCover: builder.mutation<
+    updateCourseAuthorCover: builder.mutation<
       IAuthor & BaseResponseInterface,
       { id: string; file: FormData }
     >({
@@ -37,9 +37,9 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body: file,
       }),
-      invalidatesTags: [{ type: 'Author' }],
+      invalidatesTags: [{ type: 'CourseAuthor' }],
     }),
-    createAuthor: builder.mutation<
+    createCourseAuthor: builder.mutation<
       IAuthor & BaseResponseInterface,
       { course_id: string } & Omit<IAuthor, 'avatar' | 'id'>
     >({
@@ -48,14 +48,14 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Author' }],
+      invalidatesTags: [{ type: 'CourseAuthor' }],
     }),
-    deleteAuthor: builder.mutation<IAuthor & BaseResponseInterface, { id: string }>({
+    deleteCourseAuthor: builder.mutation<IAuthor & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/manager/author/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Author' }],
+      invalidatesTags: [{ type: 'CourseAuthor' }],
     }),
     addAuthorToCourse: builder.mutation<void, { id: string; course_id: string }>({
       query: ({ id, ...body }) => ({
@@ -63,7 +63,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: 'Author' }],
+      invalidatesTags: [{ type: 'CourseAuthor' }],
     }),
     removeAuthorFromCourse: builder.mutation<void, { id: string; course_id: string }>({
       query: ({ id, ...body }) => ({
@@ -71,19 +71,19 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'DELETE',
         body,
       }),
-      invalidatesTags: [{ type: 'Author' }],
+      invalidatesTags: [{ type: 'CourseAuthor' }],
     }),
   }),
   overrideExisting: false,
 })
 
 export const {
-  useGetAuthorsQuery,
+  useGetCourseAuthorsQuery,
   // -----------------
   useAddAuthorToCourseMutation,
-  useCreateAuthorMutation,
-  useDeleteAuthorMutation,
+  useCreateCourseAuthorMutation,
+  useDeleteCourseAuthorMutation,
   useRemoveAuthorFromCourseMutation,
-  useUpdateAuthorCoverMutation,
-  useUpdateAuthorMutation,
+  useUpdateCourseAuthorCoverMutation,
+  useUpdateCourseAuthorMutation,
 } = extendedApi
