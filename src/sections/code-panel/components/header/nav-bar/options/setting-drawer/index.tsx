@@ -13,9 +13,11 @@ import {
   updateColorsEvent,
   updateFontSize,
   updateLineWrap,
+  updateEditorAutoComplete,
 } from 'src/sections/code-panel/lib/events'
 
 import EditColors from './preferences/EditColors'
+import EditorAutoComplete from './preferences/EditorAutoComplete'
 import EditorFontSize from './preferences/EditorFontSize'
 import EditorWordWrap from './preferences/EditorWordWrap'
 import IntroTour from './preferences/IntroTour'
@@ -101,6 +103,12 @@ const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.Re
             <EditorWordWrap
               onUpdateWordWrap={(wrap: boolean) => {
                 window.dispatchEvent(updateLineWrap({ detail: { wrap } }))
+              }}
+            />
+
+            <EditorAutoComplete
+              onUpdate={(isAutoComplete: boolean) => {
+                window.dispatchEvent(updateEditorAutoComplete({ detail: { isAutoComplete } }))
               }}
             />
 
