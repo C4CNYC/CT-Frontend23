@@ -23,13 +23,11 @@ import { useTranslate } from '@/utils/translateHelper'
 import ModuleLessonsAutocomplete from '@root/src/components/module-lessons-autocomplete/ModuleLessonAutocomplete'
 import { AGE, GRADING, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
 
+import AuthorsTab from './authors-tab/AuthorsTab'
 import { DIALOG_ACTIONS_SX, TAB_SX } from './constants'
 import DetailsTab from './DetailsTab'
 import MainTab from './MainTab'
 import SettingsTab from './SettingsTab'
-
-import AuthorsTab from './authors-tab/AuthorsTab'
-
 
 interface FormValuesProps {
   name: string
