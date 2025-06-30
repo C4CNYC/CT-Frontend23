@@ -1,8 +1,8 @@
 import { Button, Skeleton, Stack } from '@mui/material'
 
 import { EmptyContent } from '@/components'
-import { useGetAuthorsQuery } from '@/redux/services/manager/author-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetCourseAuthorsQuery } from '@root/src/redux/services/manager/course-author-manager'
 
 import AddAuthorDialog from './AddAuthorDialog'
 import AuthorsList from './AuthorsList'
@@ -12,7 +12,7 @@ interface IAuthorsListProps {
 }
 
 export default function AuthorsTab({ courseId }: IAuthorsListProps): React.ReactElement {
-  const { data, isLoading } = useGetAuthorsQuery({ course_id: courseId })
+  const { data, isLoading } = useGetCourseAuthorsQuery({ course_id: courseId })
   const translate = useTranslate()
 
   return (
