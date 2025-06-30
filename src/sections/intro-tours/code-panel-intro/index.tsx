@@ -25,6 +25,7 @@ export const CodePanelTour = () => {
 
   const isTourStarted = useSelector((state) => state.tour.isStarted)
   const userCreated = useSelector((state) => state.global.user?.createdAt)
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { action, index, status, type } = data
@@ -37,9 +38,13 @@ export const CodePanelTour = () => {
   }
 
   useEffect(() => {
+    const userMadeProgress = contentValidations && contentValidations.length > 0
     const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
 
     if (hasSeenTour) {
+      return
+    } else if (userMadeProgress) {
+      localStorage.setItem('HAS_SEEN_TOUR', 'true')
       return
     }
 
@@ -60,7 +65,7 @@ export const CodePanelTour = () => {
     return () => {
       clearTimeout(timeout)
     }
-  }, [userCreated, isTourStarted, dispatch])
+  }, [userCreated, isTourStarted, dispatch, contentValidations])
 
   return (
     <JoyRide
