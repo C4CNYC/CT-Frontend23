@@ -114,7 +114,10 @@ export default function OrgTableRow({
 
         <TableCell align='center'>{home_page_type}</TableCell>
 
-        <TableCell align='right'>
+        <TableCell
+          align='right'
+          className='defaultIntroAdminStep1'
+        >
           <IconButton
             color={openPopover ? 'inherit' : 'default'}
             onClick={handleOpenPopover}
