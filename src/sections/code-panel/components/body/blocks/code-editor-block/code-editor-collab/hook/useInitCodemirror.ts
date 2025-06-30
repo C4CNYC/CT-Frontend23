@@ -1,12 +1,11 @@
 import { useCallback, useState, useMemo } from 'react'
 
 import { Compartment, Extension, Text } from '@codemirror/state'
-import { Prec } from '@codemirror/state'
-import { EditorView, keymap } from '@codemirror/view'
+import { EditorView } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
 
-import { createCustomKeymap, keymapCompartment } from '@/sections/code-panel/utils/editor'
+import { indentCompartment, noAutoIndent } from '@/sections/code-panel/utils/editor'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
 import { BASIC_SETUP } from './constants'
@@ -33,7 +32,7 @@ export const useInitCodemirror = (): UseBaseInitReturn => {
 
   const baseInit = useCallback(async (file: StudentFile) => {
     setExtensions([
-      Prec.highest(keymapCompartment.of(keymap.of(createCustomKeymap(false)))),
+      indentCompartment.of(noAutoIndent),
       basicSetup(BASIC_SETUP),
       ...language(file),
       dracula,
