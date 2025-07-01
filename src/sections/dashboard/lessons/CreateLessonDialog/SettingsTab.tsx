@@ -1,23 +1,26 @@
-import { Box, Stack, Tooltip, Typography } from '@mui/material'
+import { Box, Stack, Tooltip, Typography, InputAdornment } from '@mui/material'
 
 import { languages } from '@root/src/assets/data/languages'
-import { RHFSelect, RHFSwitch } from '@root/src/components'
+import { RHFSelect, RHFSwitch, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { LessonMachineLang } from '@root/src/redux/services/enums/lesson-language.enum'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { _mochGradingMethods, TYPO_TOGGLE_BTN_SX, GRADING_METHODS_BTN_SX } from './constants'
 
-type CreateLessonAdvancedTabProps = {
+type SettingsTabProps = {
   handleAutoRunSet: (value: string) => Promise<void>
 }
 
-export function CreateLessonAdvancedTab({ handleAutoRunSet }: CreateLessonAdvancedTabProps) {
+export function SettingsTab({ handleAutoRunSet }: SettingsTabProps) {
   const translate = useTranslate()
 
   return (
     <>
-      <Stack gap={2}>
+      <Stack
+        gap={2}
+        mb={2}
+      >
         <RHFSelect
           native
           name='meta.machineLang'
@@ -61,7 +64,24 @@ export function CreateLessonAdvancedTab({ handleAutoRunSet }: CreateLessonAdvanc
             </Tooltip>
           </Stack>
         </Stack>
+
+        <RHFTextField
+          name='slug'
+          label={translate('lessons_slug')}
+          size='small'
+        />
+
+        <RHFTextField
+          name='duration'
+          label={translate('lessons_duration')}
+          size='small'
+          type='number'
+          InputProps={{
+            startAdornment: <InputAdornment position='start'>min</InputAdornment>,
+          }}
+        />
       </Stack>
+
       <Stack sx={TYPO_TOGGLE_BTN_SX}>
         <Typography
           variant='h6'
@@ -74,6 +94,7 @@ export function CreateLessonAdvancedTab({ handleAutoRunSet }: CreateLessonAdvanc
           <sup>{translate('lessons_type_select_one_star')}</sup>
         </Typography>
       </Stack>
+
       <RHFToggleButtonGroup
         name='grading_method'
         options={_mochGradingMethods}
