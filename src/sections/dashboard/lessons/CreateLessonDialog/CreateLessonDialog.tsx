@@ -25,9 +25,9 @@ import { LessonMeta } from '@root/src/redux/services/interfaces/lesson.interface
 
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
-import { CreateLessonAdvancedTab } from './AdvancedTab'
 import { MainTab } from './MainTab'
 import { usePseudoType } from './PseudoType'
+import { SettingsTab } from './SettingsTab'
 import SkillsTab from './SkillsTab'
 import { handleConvertAutoRunToBolean, timeConvertorToSeconds } from './utils'
 
@@ -227,15 +227,15 @@ export default function CreateLessonDialog({
                     {...a11yProps(0)}
                   />
                   <Tab
-                    label={translate('skills')}
+                    label={translate('settings')}
                     {...a11yProps(1)}
                   />
                   <Tab
-                    label={translate('integration')}
+                    label={translate('skills')}
                     {...a11yProps(2)}
                   />
                   <Tab
-                    label={translate('advanced')}
+                    label={translate('integration')}
                     {...a11yProps(3)}
                   />
                 </Tabs>
@@ -251,19 +251,19 @@ export default function CreateLessonDialog({
               value={value}
               index={1}
             >
-              <SkillsTab lessonId={id as string} />
+              <SettingsTab handleAutoRunSet={autoRunSet} />
             </TabPanel>
             <TabPanel
               value={value}
               index={2}
             >
-              <IntegrationsTab contentId={id as string} />
+              <SkillsTab lessonId={id as string} />
             </TabPanel>
             <TabPanel
               value={value}
               index={3}
             >
-              <CreateLessonAdvancedTab handleAutoRunSet={autoRunSet} />
+              <IntegrationsTab contentId={id as string} />
             </TabPanel>
             <DialogActions>
               <Box
@@ -275,7 +275,7 @@ export default function CreateLessonDialog({
               >
                 <Button onClick={handleClose}>{translate('actions_close')}</Button>
 
-                {value === 0 || value === 3 ? (
+                {value === 0 || value === 1 ? (
                   <LoadingButton
                     type='submit'
                     variant='contained'

@@ -40,7 +40,7 @@ export const _mochGradingMethods = [
   {
     key: 'autoRun',
     value: 'Auto-run Code',
-    tooltip: 'Automatically run the code when student write in code-editor.',
+    tooltip: 'Automatically run the code whenever the student makes any edits to the code.',
   },
   {
     key: 'manual',
