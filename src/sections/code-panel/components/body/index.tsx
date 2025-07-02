@@ -16,7 +16,7 @@ import { CodePanelBodyProps } from '@/sections/code-panel/components/body/types'
 
 import { CodePanelContext } from '../../lib/CodePanelContext'
 
-import CodeEditorBlock from './blocks/code-editor-block'
+import CodeEditorBlockContent from './blocks/code-editor-block/code-editor-block-content'
 import HidedTabBtn from './blocks/code-editor-block/elements/hided-tab-btn'
 import ResizeDivider from './blocks/resize-divider'
 import SliderBlock from './blocks/slider-block'
@@ -141,7 +141,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
               flex: 1,
             }}
           >
-            <CodeEditorBlock
+            <CodeEditorBlockContent
               preloadedCode={lessonContents[slideIndex]?.preload_body ?? ''}
               validations={lessonContents[slideIndex]?.validations || ''}
               onChangeStreamingDocInfo={onChangeStreamingDocInfo}
@@ -193,7 +193,7 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
         lessonId={lesson?.id || lessonId}
       />
 
-      <CodeEditorBlock
+      <CodeEditorBlockContent
         onChangeStreamingDocInfo={onChangeStreamingDocInfo}
         preloadedCode={lessonContents[0]?.preload_body ?? ''}
         validations={lessonContents[slideIndex]?.validations || ''}
