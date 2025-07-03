@@ -426,6 +426,8 @@
     "courses_module_slides": "Diapositivas del módulo",
     "courses_lesson_plans": "Planes de lecciones",
     "courses_teachers_forum": "Foro para maestros",
+    "courses_modal_audience": "¿A quién va dirigido?",
+    "courses_modal_for_teachers": "Para profesores",
     "lesson_dialog_title": "ES MEJOR HACER LOS ENTRENAMIENTOS EN ORDEN.",
     "lesson_dialog_subtitle": "No has terminado el entrenamiento anterior.",
     "lesson_dialog_tooltip": "La situación: Este “Entrenamiento” se basa en el código del “Entrenamiento” anterior. Si comienzas este “Entrenamiento” ahora, se añadirá la “Solución de código” del entrenamiento anterior. La “Solución de código” es el código correcto del “Entrenamiento” anterior sin ninguna personalización.",

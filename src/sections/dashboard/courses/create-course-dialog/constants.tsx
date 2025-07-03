@@ -34,6 +34,8 @@ export interface FormValuesGeneralProps {
   initial_likes: number
   initial_stars: number
   skills: []
+  audience: string
+  for_teachers: string
 }
 
 export const CreateCourseSchema = (translate: (t: string) => string) =>
@@ -71,6 +73,8 @@ export interface FormValuesDetailsProps {
   customLevel: string
   age: AGE | ''
   customAge: string
+  audience: string
+  for_teachers: string
 }
 
 export const UPLOADED_FILE_CLOSE_SX = {

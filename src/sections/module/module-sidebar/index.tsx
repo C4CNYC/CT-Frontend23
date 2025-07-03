@@ -41,6 +41,7 @@ export default function ModuleSidebar({
     grading,
     brief,
     audience,
+    authors,
   } = module
 
   const moduleDuration = useMemo(
@@ -66,6 +67,7 @@ export default function ModuleSidebar({
           isDefaultOpen={true}
         >
           <AuthorsSection
+            authors={authors || null}
             certificate={enrolled ?? 0}
             likes={likes ?? 0}
             rated={stars ?? 0}

@@ -6,7 +6,7 @@ import { Image } from '@/components'
 import { ILesson, ISkill } from '@/redux/interfaces/content.interface'
 import ImageLightBox from '@/sections/course/modules-list/module-item/ImageLightBox'
 import { BaseResponseInterface } from '@/utils'
-import { getUniqueSkills } from '@/utils/getUniqueSkills'
+import { convertSkillsArrToObject } from '@/utils/convertSkillsArrToObject'
 
 import { CHIP_SX, HEADER_IMG_SX, _mochSkills, getHeaderContainerSx } from './constants'
 
@@ -15,6 +15,7 @@ interface IModuleHeaderProps {
   description: string
   avatar: string | null
   lessons: Array<ILesson & BaseResponseInterface>
+  unitModule: any
 }
 
 export default function ModuleHeader({
@@ -22,12 +23,22 @@ export default function ModuleHeader({
   description,
   avatar,
   lessons,
+  unitModule,
 }: IModuleHeaderProps): React.ReactElement {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(500))
   const moduleCont = useMemo(() => getHeaderContainerSx(isMobile, theme), [isMobile, theme])
-  const uniqueSkills = getUniqueSkills(lessons.map((item: ILesson) => item.skills).flat())
-  const skills = uniqueSkills.length ? uniqueSkills : _mochSkills
+
+  const grading = unitModule?.grading
+  const levelOfModule = unitModule?.level
+  const lessonsLangs = lessons.map((item: ILesson) => item?.meta?.machineLang || 'HTML/CSS/JS')
+  const availableUniqueSkills = [
+    ...new Set([...lessonsLangs, levelOfModule, grading].filter((v): v is string => v != null)),
+  ]
+  const skills = availableUniqueSkills.length
+    ? convertSkillsArrToObject(availableUniqueSkills)
+    : _mochSkills
+
   return (
     <Stack sx={moduleCont}>
       {isMobile ? (
