@@ -122,6 +122,7 @@ export default function ModulePage(): React.ReactElement {
           <Box overflow={'hidden'}>
             {unitModule ? (
               <ModuleHeader
+                unitModule={unitModule}
                 name={unitModule.name}
                 lessons={unitModule?.lessons ?? []}
                 description={
