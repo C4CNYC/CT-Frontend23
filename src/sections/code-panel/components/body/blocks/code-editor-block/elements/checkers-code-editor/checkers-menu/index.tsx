@@ -8,7 +8,7 @@ import { SlClose } from '@react-icons/all-files/sl/SlClose'
 import { type IValidationMap } from '@/utils/validationMaping'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { LIST_ITEM_SX } from '../checkers-item-button/constants'
+import { LIST_ITEM_SX } from './constants'
 import { CheckerIcon } from '../CheckersIcon'
 
 interface CheckersMenuProps {
