@@ -60,7 +60,7 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
       const existingChecker = selectedContent?.checkers?.find((c) => c.text === checker.text)
       return {
         text: checker.text,
-        valid: existingChecker?.valid ?? false,
+        valid: checker.valid || existingChecker?.valid || false,
       }
     })
   }, [codeState, validations, selectedContent?.checkers])
@@ -78,29 +78,23 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
     },
     [contentValidations, contentId]
   )
-
-  // Initialize contentValidations when component mounts
   useEffect(() => {
     if (!contentId || !validations?.length || selectedContent) return
 
     const initialCheckers = checkers.map((checker) => ({
       ...checker,
-      valid: false,
     }))
 
     const newContentValidation = {
       contentId,
       checkers: initialCheckers,
     }
-
     const updatedContentValidations = contentValidations
       ? [...contentValidations, newContentValidation]
       : [newContentValidation]
 
     dispatch(setContentValidations(updatedContentValidations))
   }, [contentId, validations, selectedContent, checkers, contentValidations])
-
-  // Handle checker validation messages
   useEffect(() => {
     const handleMessage = (event: MessageEvent): void => {
       const data = event.data
@@ -119,15 +113,12 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
   }, [checkers, updateContentValidations])
-
-  // Update completion status and content validations
   useEffect(() => {
     if (!checkers.length) return
 
     const allPassed = checkers.every((checker) => checker.valid)
     const currentSlideCompleted = completedSlides[slideIndex]
 
-    // Update slide completion status
     if (currentSlideCompleted !== allPassed) {
       const newCompletedSlides = [...completedSlides]
       newCompletedSlides[slideIndex] = allPassed
@@ -135,7 +126,6 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
       dispatch(setNextStepAble(allPassed))
     }
 
-    // Update content validations if they don't match
     const checkersMatch =
       selectedContent?.checkers &&
       JSON.stringify(selectedContent.checkers) === JSON.stringify(checkers)
@@ -144,8 +134,6 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
       updateContentValidations(checkers)
     }
   }, [checkers, slideIndex, completedSlides, selectedContent?.checkers, updateContentValidations])
-
-  // Popover timer management
   useEffect(() => {
     openPopoverTimer.current = setTimeout(() => {
       setIsOpenPopover(true)

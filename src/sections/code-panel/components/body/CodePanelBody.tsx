@@ -23,7 +23,7 @@ import SliderBlock from './blocks/slider-block'
 import ViewBlock from './blocks/view-block'
 import { CodeDocument } from './blocks/view-block/browser-view/types'
 
-const CodePanelBody: FC<CodePanelBodyProps> = ({
+export const CodePanelBody: FC<CodePanelBodyProps> = ({
   lesson,
   onSubmitChallenge,
   onSubmitLesson,
@@ -64,17 +64,9 @@ const CodePanelBody: FC<CodePanelBodyProps> = ({
     } catch (error: any) {}
   }
 
-  const reloadBrowserView = () => {
-    setBrowserView({ ...document })
-  }
-
-  const openInstruction = () => {
-    dispatch(toggleInstrations(false))
-  }
-
-  const openPreview = () => {
-    dispatch(toggleBrowser(false))
-  }
+  const reloadBrowserView = () => setBrowserView({ ...document })
+  const openInstruction = () => dispatch(toggleInstrations(false))
+  const openPreview = () => dispatch(toggleBrowser(false))
 
   const getDisabled = () => {
     if (isCenterMode) return true
