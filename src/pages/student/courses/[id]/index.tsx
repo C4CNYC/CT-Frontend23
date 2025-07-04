@@ -133,6 +133,8 @@ export default function CoursePage(): React.ReactElement {
                   0
                 }
                 level={data?.level ?? '-'}
+                audience={data?.audience}
+                forTeachers={data?.for_teachers}
               />
             </Box>
           </Box>

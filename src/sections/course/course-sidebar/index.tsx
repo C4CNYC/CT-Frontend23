@@ -12,6 +12,8 @@ interface ICourseSidebarPros {
   level: string
   lessons: number
   grade: string
+  audience?: string
+  forTeachers?: boolean
 }
 
 export default function CourseSidebar({
@@ -19,6 +21,8 @@ export default function CourseSidebar({
   lessons,
   level,
   grade,
+  audience,
+  forTeachers,
 }: ICourseSidebarPros): React.ReactElement {
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
@@ -69,13 +73,24 @@ export default function CourseSidebar({
         >
           <IoImageOutline size={25} /> {translate('courses_course_who_is_this_for')}
         </Typography>
-        <Typography
-          variant='body1'
-          gutterBottom
-        >
-          {translate('courses_entry_point')}
-        </Typography>
-        <Typography variant='body1'>{translate('courses_for_beginners_info')}</Typography>
+        {audience ? (
+          <Typography
+            variant='body1'
+            gutterBottom
+          >
+            {audience}
+          </Typography>
+        ) : (
+          <>
+            <Typography
+              variant='body1'
+              gutterBottom
+            >
+              {translate('courses_entry_point')}
+            </Typography>
+            <Typography variant='body1'>{translate('courses_for_beginners_info')}</Typography>
+          </>
+        )}
         <Typography
           variant='caption'
           sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 3 }}
@@ -96,12 +111,21 @@ export default function CourseSidebar({
         >
           <IoImageOutline size={25} /> {translate('courses_for_teachers')}
         </Typography>
-        <Typography
-          variant='body1'
-          mb={3}
-        >
-          {translate('courses_for_teachers_info')}
-        </Typography>
+        {forTeachers ? (
+          <Typography
+            variant='body1'
+            mb={3}
+          >
+            {forTeachers}
+          </Typography>
+        ) : (
+          <Typography
+            variant='body1'
+            mb={3}
+          >
+            {translate('courses_for_teachers_info')}
+          </Typography>
+        )}
         <Link
           href='#'
           component={NextLink}

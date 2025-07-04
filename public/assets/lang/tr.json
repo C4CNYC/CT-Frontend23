@@ -426,6 +426,8 @@
     "courses_module_slides": "Modül Slaytları",
     "courses_lesson_plans": "Ders Planları",
     "courses_teachers_forum": "Öğretmenler Forum",
+    "courses_modal_audience": "Bu kimin için?",
+    "courses_modal_for_teachers": "Öğretmenler İçin",
     "lesson_dialog_title": "EĞİTİMLERİ SIRASIYLA YAPMAK EN İYİSİDİR.",
     "lesson_dialog_subtitle": "Önceki eğitimi tamamlamadınız.",
     "lesson_dialog_tooltip": "Durum: Bu 'Eğitim', önceki 'Eğitim'in kodu üzerine inşa edilmiştir. Şu an bu 'Eğitim' başlarsanız, önceki eğitimden gelen 'Kod Çözümü' eklenecektir. 'Kod Çözümü', önceki 'Eğitim'in doğru kodudur, kişiselleştirilmeden.",

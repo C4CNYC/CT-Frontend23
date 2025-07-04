@@ -207,6 +207,8 @@ export default function CourseCard({
             initial_likes: course.initial_likes,
             initial_stars: course.initial_stars,
             initial_enrolled: course.initial_enrolled,
+            audience: course.audience,
+            for_teachers: course.for_teachers,
           }}
           refetch={refetch}
         >
