@@ -7,7 +7,10 @@ import { type IValidation } from '@/redux/interfaces/content.interface'
 import { dispatch, useSelector } from '@/redux/store'
 import type { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { mapValidations } from '@/utils/validationMaping'
-import { setCompletedSlides } from '@root/src/redux/slices/checkers-animation'
+import {
+  setCompletedSlides,
+  setIsActivateCompeated,
+} from '@root/src/redux/slices/checkers-animation'
 import { setContentValidations, setNextStepAble } from '@root/src/redux/slices/code-panel-global'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -78,6 +81,7 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
     },
     [contentValidations, contentId]
   )
+
   useEffect(() => {
     if (!contentId || !validations?.length || selectedContent) return
 
@@ -95,6 +99,7 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
 
     dispatch(setContentValidations(updatedContentValidations))
   }, [contentId, validations, selectedContent, checkers, contentValidations])
+
   useEffect(() => {
     const handleMessage = (event: MessageEvent): void => {
       const data = event.data
@@ -119,19 +124,21 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
     const allPassed = checkers.every((checker) => checker.valid)
     const currentSlideCompleted = completedSlides[slideIndex]
 
-    if (currentSlideCompleted !== allPassed) {
+    if (allPassed && !currentSlideCompleted) {
       const newCompletedSlides = [...completedSlides]
       newCompletedSlides[slideIndex] = allPassed
       dispatch(setCompletedSlides(newCompletedSlides))
       dispatch(setNextStepAble(allPassed))
     }
-
+    let oldCount = selectedContent?.checkers?.filter((checker) => checker.valid).length || 0
+    const newCount = checkers.filter((checker) => checker.valid).length
     const checkersMatch =
       selectedContent?.checkers &&
       JSON.stringify(selectedContent.checkers) === JSON.stringify(checkers)
 
     if (!checkersMatch) {
       updateContentValidations(checkers)
+      if (newCount > oldCount) dispatch(setIsActivateCompeated(true))
     }
   }, [checkers, slideIndex, completedSlides, selectedContent?.checkers, updateContentValidations])
   useEffect(() => {
@@ -166,12 +173,7 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
         contentId={contentId}
       />
 
-      {Boolean(validations?.length) && Boolean(selectedContent) && (
-        <Checkers
-          checkers={checkers}
-          isCheckedOnce={!!selectedContent?.checkers?.length}
-        />
-      )}
+      {Boolean(validations?.length) && Boolean(selectedContent) && <Checkers checkers={checkers} />}
 
       <CodeEditorCollab
         preloadedCode={preloadedCode}

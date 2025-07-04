@@ -31,10 +31,9 @@ const CheckersCompleated = dynamic(() => import('./checkers-compleated'), {
 
 interface ICheckers {
   checkers: IValidationMap[]
-  isCheckedOnce: boolean
 }
 
-const Checkers: FC<ICheckers> = ({ checkers, isCheckedOnce }) => {
+const Checkers: FC<ICheckers> = ({ checkers }) => {
   const dispatch = useDispatch()
   const theme = useTheme()
 
@@ -109,10 +108,7 @@ const Checkers: FC<ICheckers> = ({ checkers, isCheckedOnce }) => {
             variants={CHECKERS_ANIMATION}
             style={mDivStyle}
           >
-            <CheckersMenu
-              checkers={checkers}
-              isCheckedOnce={isCheckedOnce}
-            />
+            <CheckersMenu checkers={checkers} />
           </m.div>
         </AnimatePresence>
       </Stack>
