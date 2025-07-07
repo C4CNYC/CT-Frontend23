@@ -24,7 +24,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/student/lesson/${id}/content`,
         method: 'GET',
       }),
-      keepUnusedDataFor: 360,
+      keepUnusedDataFor: 60,
       transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
         res.sort((a, b) => a.meta.order - b.meta.order),
       async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
