@@ -148,7 +148,7 @@ export const useFileManager = () => {
       LessonType.START_PROJECT,
       LessonType.QUIZ,
       LessonType.OTHER,
-    ];
+    ]
 
     if (lessonRef.current?.id && lesson?.id && lesson?.id !== lessonRef.current?.id) {
       if (

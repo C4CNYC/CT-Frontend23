@@ -34,11 +34,10 @@ export const _mochLessonTypes = [
     tooltip:
       'Build things with this lesson type: The code you type in one lesson, flows to the next, if the lesson is completed.',
   },
-   {
+  {
     key: LessonType.CONCEPT_EXERCISES,
     value: 'Concept Exercises',
-    tooltip:
-      'some text',
+    tooltip: 'some text',
   },
 ]
 
