@@ -17,6 +17,11 @@ export interface IModule {
   avatar: string | null
   tips: string[] | []
   duration: string | null
+  level: LEVEL
+  customLevel: string
+  age: AGE
+  customAge: string
+  grading: GRADING
 }
 
 export interface ILesson {
@@ -38,7 +43,10 @@ export interface ILesson {
 export interface ICourse {
   name: string
   content_id: string
-  level: string
+  level: LEVEL | ''
+  customLevel: string
+  age: AGE | ''
+  customAge: string
   price: string
   description: string
   initial_enrolled: number
@@ -51,6 +59,8 @@ export interface ICourse {
   draft: boolean
   skills: []
   units: IModule[]
+  audience: string
+  for_teachers: string
 }
 
 export interface ILessonContent {
@@ -191,6 +201,36 @@ export interface ICourseCreate {
   description: string
   active: boolean
   draft?: boolean
+}
+
+export enum AGE {
+  GRADE_1 = 'grade 1+',
+  GRADE_2 = 'grade 2+',
+  GRADE_3 = 'grade 3+',
+  GRADE_4 = 'grade 4+',
+  GRADE_5 = 'grade 5+',
+  GRADE_6 = 'grade 6+',
+  GRADE_7 = 'grade 7+',
+  GRADE_8 = 'grade 8+',
+  GRADE_9 = 'grade 9+',
+  GRADE_10 = 'grade 10+',
+  GRADE_12 = 'grade 11+',
+  GRADE_13 = 'grade 12+',
+  GRADE_18 = '18 & up',
+}
+
+export enum LEVEL {
+  ROOKIE = 'rookie',
+  BEGINNER = 'beginner',
+  INTERMEDIATE = 'intermediate',
+  PRO = 'pro',
+  NINJA = 'ninja',
+}
+
+export enum GRADING {
+  AUTO = 'auto-graded',
+  MANUAL = 'manual-graded',
+  MIXED = 'mixed-graded',
 }
 
 export interface IModuleDelete {

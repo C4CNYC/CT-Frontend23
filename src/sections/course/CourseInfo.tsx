@@ -21,7 +21,7 @@ export default function CourseInfo({ course }: ICourseInfoProps): React.ReactEle
   const [open, setOpen] = useState(false)
   const translate = useTranslate()
   const descRef = useRef<HTMLElement | null>(null)
-  const { cover, name, description, level } = course
+  const { cover, name, description, level, customLevel, age, customAge } = course
   const durationInMins = course?.units
     ?.filter((unit) => unit.active)
     .map((unit) => convertDurationToMins(unit.duration))
@@ -89,8 +89,8 @@ export default function CourseInfo({ course }: ICourseInfoProps): React.ReactEle
       ) : null}
       <CourseSummarily
         lessonsCount={lessonsCount}
-        level={level}
-        grade='6th-10th Grade'
+        level={customLevel || level || ''}
+        grade={customAge || age || ''}
         durationInMinutes={durationInMins || 60}
       />
       <Image

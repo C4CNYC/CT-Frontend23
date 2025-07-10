@@ -46,9 +46,12 @@ import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
 import { LessonManagerProvider } from './lib/LessonManagerContext'
-const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
-  ssr: false,
-})
+const CodePanelBody = dynamic(
+  async () => await import('@root/src/sections/code-panel/components/body/CodePanelBody'),
+  {
+    ssr: false,
+  }
+)
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
   { ssr: false }
@@ -87,6 +90,7 @@ export function CodePanelLayout(): ReactElement | null {
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
   const [completeLesson] = useCompleteLessonMutation()
   const [carryOverFiles] = useLessonFilesCarryOverMutation()
@@ -162,6 +166,18 @@ export function CodePanelLayout(): ReactElement | null {
     if (!profile || !lesson) return
     if (profile?.id == lesson?.userId) dispatch(setChatVisible(true))
   }, [profile, lesson])
+
+  useEffect(() => {
+    if (sessionStorage?.setItem)
+      sessionStorage.setItem(
+        'lastLesson',
+        JSON.stringify({
+          lessonId: router.query.lessonId,
+          courseId: router.query.courseId,
+          unitId: router.query.unitId,
+        })
+      )
+  }, [router.query.courseId, router.query.unitId, router.query.lessonId])
 
   useEffect(() => {
     if (!courseContent) return
@@ -305,8 +321,8 @@ export function CodePanelLayout(): ReactElement | null {
   useEffect(() => {
     let timerIdForTour: string | number | NodeJS.Timeout | undefined
     let timerIdForRender: string | number | NodeJS.Timeout | undefined
-
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
+    const hasSeenTour =
+      localStorage.getItem('HAS_SEEN_TOUR') || (contentValidations && contentValidations.length > 0)
     if (!hasSeenTour) {
       timerIdForTour = setTimeout(() => {
         setShowTour(true)

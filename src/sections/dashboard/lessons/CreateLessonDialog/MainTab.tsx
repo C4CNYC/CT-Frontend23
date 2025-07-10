@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Box, InputAdornment, Stack, Tooltip, Typography, useTheme } from '@mui/material'
+import { Box, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 
 import { RHFSwitch, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
@@ -64,22 +64,6 @@ export function MainTab() {
         tooltip
       />
 
-      <RHFTextField
-        name='slug'
-        label={translate('lessons_slug')}
-        size='small'
-      />
-
-      <RHFTextField
-        name='duration'
-        label={translate('lessons_duration')}
-        size='small'
-        type='number'
-        InputProps={{
-          startAdornment: <InputAdornment position='start'>min</InputAdornment>,
-        }}
-      />
-
       <Stack
         direction='row'
         flexWrap='wrap'
@@ -101,17 +85,6 @@ export function MainTab() {
         name='independent'
         label={translate('lessons_independent_lesson')}
       /> */}
-        {/* <Tooltip
-        slotProps={{ popper: { disablePortal: true } }}
-        title={translate('lessons_autoRun_tooltip')}
-      >
-        <Box>
-          <RHFSwitch
-            name='autoRun'
-            label={translate('lessons_autoRun')}
-          />
-        </Box>
-      </Tooltip> */}
         <Tooltip
           slotProps={{ popper: { disablePortal: true } }}
           title={translate('lesson_lock_tooltip')}
