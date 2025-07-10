@@ -8,7 +8,8 @@ export interface IValidationMap {
 
 export function mapValidations(
   code: string,
-  validations: Array<ILessonContentValidation & BaseResponseInterface>
+  validations: Array<ILessonContentValidation & BaseResponseInterface>,
+  checked: IValidationMap[] = []
 ): IValidationMap[] {
   if (!validations) return []
   let noNLCode = code.replaceAll('\n', ' ')
@@ -16,6 +17,13 @@ export function mapValidations(
     .sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1))
     .map((validator) => {
       let valid = true //in case of error in regex, we pass this test
+      let checkedBefore = checked.find((c) => c.text === validator.name)
+      if (checkedBefore?.valid) {
+        return {
+          text: validator.name,
+          valid: true,
+        }
+      }
       try {
         let reg = validator.regex.startsWith('/')
           ? eval(validator.regex)

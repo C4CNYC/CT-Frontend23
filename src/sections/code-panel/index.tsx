@@ -46,9 +46,12 @@ import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
 import { LessonManagerProvider } from './lib/LessonManagerContext'
-const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
-  ssr: false,
-})
+const CodePanelBody = dynamic(
+  async () => await import('@root/src/sections/code-panel/components/body/CodePanelBody'),
+  {
+    ssr: false,
+  }
+)
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
   { ssr: false }
