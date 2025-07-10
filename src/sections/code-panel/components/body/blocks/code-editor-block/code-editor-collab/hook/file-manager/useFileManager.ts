@@ -103,6 +103,15 @@ export const useFileManager = () => {
       case LessonType.EXERCISE:
         localStorageKey = getLocalStorageRoomKey(`${lessonId}_${slideId}`)
         break
+      case LessonType.START_PROJECT:
+        localStorageKey = getLocalStorageRoomKey(`${lessonId}_${slideId}`)
+        break
+      case LessonType.QUIZ:
+        localStorageKey = getLocalStorageRoomKey(`${lessonId}_${slideId}`)
+        break
+      case LessonType.OTHER:
+        localStorageKey = getLocalStorageRoomKey(`${lessonId}_${slideId}`)
+        break
       case LessonType.PRACTICAL:
       default:
         localStorageKey = getLocalStorageRoomKey(`${lessonId}`)
@@ -134,10 +143,17 @@ export const useFileManager = () => {
       return []
     }
 
+    const excludedTypes = [
+      LessonType.EXERCISE,
+      LessonType.START_PROJECT,
+      LessonType.QUIZ,
+      LessonType.OTHER,
+    ];
+
     if (lessonRef.current?.id && lesson?.id && lesson?.id !== lessonRef.current?.id) {
       if (
-        lesson?.type !== LessonType.EXERCISE &&
-        lessonRef.current?.type !== LessonType.EXERCISE &&
+        !excludedTypes.includes(lesson?.type) &&
+        !excludedTypes.includes(lessonRef.current?.type) &&
         !lesson?.independent
       ) {
         let files = unauthFileLocalStorageManger(localStorageKey).carryOverFiles(
@@ -407,10 +423,16 @@ export const useFileManager = () => {
   }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
+    const isTypeWithoutFileReset = [
+      LessonType.PRACTICAL,
+      LessonType.PART_PROJECT,
+      LessonType.CONCEPT_EXERCISES,
+    ].includes(lesson?.type!)
+
     if (
       !lessonRef.current ||
       (lessonRef.current?.id === lesson?.id &&
-        (activeFile?.id === DEFAULT_FILE_ID || lesson?.type === LessonType.PRACTICAL))
+        (activeFile?.id === DEFAULT_FILE_ID || isTypeWithoutFileReset))
     ) {
       lessonRef.current = lesson!
       return
@@ -472,6 +494,15 @@ export const useFileManager = () => {
 
       switch (lesson?.type) {
         case LessonType.EXERCISE:
+          _setActiveFile(unauthFilesList[0])
+          break
+        case LessonType.START_PROJECT:
+          _setActiveFile(unauthFilesList[0])
+          break
+        case LessonType.QUIZ:
+          _setActiveFile(unauthFilesList[0])
+          break
+        case LessonType.OTHER:
           _setActiveFile(unauthFilesList[0])
           break
         case LessonType.PRACTICAL:

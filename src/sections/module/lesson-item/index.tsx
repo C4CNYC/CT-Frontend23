@@ -99,7 +99,7 @@ export default function LessonItem({
             WebkitTextFillColor: 'transparent',
           }}
         >
-          Part of Project
+          Practical
         </Typography>
       ),
       icon: (
@@ -126,6 +126,30 @@ export default function LessonItem({
         <Box
           component='img'
           src='/assets/icons/lesson/part_of_project_gradient_icon.svg'
+          sx={{
+            width: 25,
+            height: 21,
+          }}
+        />
+      ),
+    },
+    start_project: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            background: '#0198ED',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Start of Project
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/part_of_project_icon.svg'
           sx={{
             width: 25,
             height: 21,
@@ -221,6 +245,30 @@ export default function LessonItem({
           sx={{
             width: 20,
             height: 20,
+          }}
+        />
+      ),
+    },
+    other: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            background: '#0198ED',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Other
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/part_of_project_icon.svg'
+          sx={{
+            width: 25,
+            height: 21,
           }}
         />
       ),

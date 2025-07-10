@@ -20,16 +20,15 @@ import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-m
 import { useTranslate } from '@/utils/translateHelper'
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useProperties } from '@root/src/hooks/useProperties'
-import { LessonType, LessonTypePseudoEnum } from '@root/src/redux/services/enums/lesson-type.enum'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { LessonMeta } from '@root/src/redux/services/interfaces/lesson.interface'
 
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
 import { MainTab } from './MainTab'
-import { usePseudoType } from './PseudoType'
 import { SettingsTab } from './SettingsTab'
 import SkillsTab from './SkillsTab'
-import { handleConvertAutoRunToBolean, timeConvertorToSeconds } from './utils'
+import { handleConvertAutoRunToBolean, timeConvertorToSeconds, typeDefaultSettings } from './utils'
 
 interface FormValuesProps {
   name: string
@@ -37,8 +36,7 @@ interface FormValuesProps {
   active: boolean
   independent: boolean
   head?: string
-  type: 'practical' | 'exercise' | 'quiz'
-  pseudoType: LessonTypePseudoEnum
+  type: LessonType
   duration: number
   slug: string
   lock: boolean
@@ -52,8 +50,7 @@ export interface CreateLessonIDefaultProps {
   active: boolean
   independent: boolean
   head?: string
-  type: 'practical' | 'exercise' | 'quiz'
-  pseudoType?: LessonTypePseudoEnum
+  type: LessonType
   duration?: Record<string, number> | null | undefined
   slug?: string
   lock?: boolean
@@ -90,8 +87,6 @@ export default function CreateLessonDialog({
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
 
-  const { toPseudoType, toDbFields } = usePseudoType({ lessonId: id, defaultValues })
-
   const [autoRun, autoRunSet, autoRunDelete] = useProperties({
     entityType: 'lesson',
     entityId: id,
@@ -110,7 +105,6 @@ export default function CreateLessonDialog({
     lock: false,
     ...defaultValues,
     duration: timeConvertorToSeconds(defaultValues?.duration),
-    pseudoType: toPseudoType(defaultValues?.type as LessonType),
     one_file_per_type: true,
   }
 
@@ -125,14 +119,27 @@ export default function CreateLessonDialog({
   })
 
   const gradingMethodWatcher = methods.watch('grading_method')
+  const lessonTypeWatcher = methods.watch('type')
 
   useEffect(() => {
+    const currentValues = methods.getValues()
+
     methods.reset({
-      ...defaultLessonValue,
+      ...currentValues,
       grading_method: handleConvertAutoRunToBolean(autoRun) ? 'autoRun' : 'manual',
       lock: lessonLock ? true : false,
     })
   }, [autoRun, lessonLock])
+
+  useEffect(() => {
+    const currentValues = methods.getValues()
+
+    methods.reset({
+      ...currentValues,
+      type: lessonTypeWatcher,
+      grading_method: typeDefaultSettings(lessonTypeWatcher).autoRun ? 'autoRun' : 'manual',
+    })
+  }, [lessonTypeWatcher])
 
   useEffect(() => {
     if (gradingMethodWatcher === 'autoRun') {
@@ -144,7 +151,6 @@ export default function CreateLessonDialog({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     let lesson
-    let pseudoType = toDbFields(data.pseudoType)
     let lessonData = {
       name: data.name,
       description: data.description,
@@ -152,21 +158,17 @@ export default function CreateLessonDialog({
       head: data.head,
       slug: data.slug,
       duration: `${data.duration * 60}`,
-      independent: pseudoType.independent,
-      type: pseudoType.type,
+      independent: typeDefaultSettings(data.type).independent,
+      type: data.type,
       meta: data.meta,
     }
     try {
       if (isEdit && id) {
         lesson = await editLesson({ id, ...lessonData }).unwrap()
-        pseudoType.autoRun ? autoRunSet('true') : autoRunDelete()
         data.lock ? lessonLockSet('true') : lessonLockDelete()
         if (refetch) refetch()
       } else {
         lesson = await createLesson(lessonData).unwrap()
-        if (pseudoType.autoRun) {
-          autoRunSet('true')
-        }
         if (data.lock) {
           lessonLockSet('true')
         }

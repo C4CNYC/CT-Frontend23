@@ -261,8 +261,14 @@ export function CodePanelLayout(): ReactElement | null {
       )
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
+        const carryOverTypes = [
+          LessonType.PRACTICAL,
+          LessonType.PART_PROJECT,
+          LessonType.CONCEPT_EXERCISES,
+        ]
+
         if (
-          nextLessonInfo.type === LessonType.PRACTICAL &&
+          carryOverTypes.includes(nextLessonInfo.type) &&
           !nextLessonInfo.isIndependent &&
           lesson
         ) {
