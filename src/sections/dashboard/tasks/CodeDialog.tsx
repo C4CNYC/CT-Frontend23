@@ -13,13 +13,13 @@ import DialogContent from '@mui/material/DialogContent'
 import { Box } from '@mui/system'
 import { dracula } from '@uiw/codemirror-theme-dracula'
 import { xcodeLight } from '@uiw/codemirror-theme-xcode'
-import CodeMirror from '@uiw/react-codemirror'
 
 import { CustomSmallSelect, useSnackbar } from '@/components'
 import {
   useCreateTaskMutation,
   useUpdateTaskMutation,
 } from '@/redux/services/manager/tasks-manager'
+import CodeMirror from '@root/src/components/code-mirror/codemirror'
 
 import TasksInput from './TasksInput'
 
@@ -275,9 +275,7 @@ export default function CreateCodeDialog({
               value={codeValue}
               height='80vh'
               extensions={[langs[lang]]}
-              onChange={(value) => {
-                onChange(value)
-              }}
+              onChange={onChange}
             />
           </div>
         </DialogContent>

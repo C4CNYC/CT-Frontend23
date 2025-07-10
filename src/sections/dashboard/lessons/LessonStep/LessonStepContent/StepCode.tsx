@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { html } from '@codemirror/lang-html'
 import { Box } from '@mui/system'
 import { dracula } from '@uiw/codemirror-theme-dracula'
-import CodeMirror, { EditorView } from '@uiw/react-codemirror'
+import { EditorView } from '@uiw/react-codemirror'
 import { useAtom } from 'jotai'
 
 import { ResizerUi } from '@/components'
@@ -12,6 +12,7 @@ import { useDebounceCallback } from '@/hooks'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import CodeMirror from '@root/src/components/code-mirror/codemirror'
 import MenuItems from '@root/src/sections/code-panel/components/editors/MenuItems'
 import { SaveButton } from '@root/src/sections/code-panel/components/editors/SaveButton'
 import { isJson } from '@root/src/utils/isJson'
@@ -94,9 +95,7 @@ export default function StepCode({
           theme={dracula}
           height='calc(100vh - 154px)'
           extensions={[html(), EditorView.lineWrapping]}
-          onChange={(value) => {
-            setValue(value)
-          }}
+          onChange={setValue}
         />
         <SaveButton
           onClick={() => {

@@ -1,9 +1,8 @@
 import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
-import CodeMirror from '@uiw/react-codemirror'
-
 import { useDispatch } from '@/redux/store'
 import { voidFunction } from '@/utils'
+import CodeMirror from '@root/src/components/code-mirror/codemirror'
 import { setCode } from '@root/src/redux/slices/code-panel-global'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 

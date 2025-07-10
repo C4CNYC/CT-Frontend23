@@ -1,7 +1,8 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 import {
-  Card,
+  Box,
+  IconButton,
   SxProps,
   ToggleButton,
   ToggleButtonGroup,
@@ -11,15 +12,12 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { FiChevronLeft } from '@react-icons/all-files/fi/FiChevronLeft'
+import { FiChevronRight } from '@react-icons/all-files/fi/FiChevronRight'
 import { FiInfo } from '@react-icons/all-files/fi/FiInfo'
 import { Controller, FieldError, useFormContext } from 'react-hook-form'
-import Carousel from 'react-slick'
 
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 import { useTranslate } from '@root/src/utils/translateHelper'
-
-import CarouselArrows from '../slider/CarouselArrows'
 
 type ToggleButtonOption = {
   key: string
@@ -55,127 +53,159 @@ export function RHFToggleButtonGroup({
   const translate = useTranslate()
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
 
-  const carouselRef = useRef<Carousel>(null)
-  const carouselSettings = {
-    arrows: false,
-    slidesToShow: 1,
-    slidesToScroll: 2,
-    infinite: false,
-    variableWidth: true,
-    rtl: Boolean(theme.direction === 'rtl'),
+  // Check scroll state
+  const updateScrollState = () => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    setCanScrollLeft(container.scrollLeft > 0)
+    setCanScrollRight(container.scrollLeft < container.scrollWidth - container.clientWidth)
   }
 
-  const handlePrev = (): void => {
-    carouselRef.current?.slickPrev()
+  useEffect(() => {
+    updateScrollState()
+    const container = scrollContainerRef.current
+    if (container) {
+      container.addEventListener('scroll', updateScrollState)
+      return () => container.removeEventListener('scroll', updateScrollState)
+    }
+  }, [options])
+
+  const scroll = (direction: 'left' | 'right') => {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    const scrollAmount = container.clientWidth * 0.8
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    })
   }
-  const handleNext = (): void => {
-    carouselRef.current?.slickNext()
+
+  const renderToggleButton = (el: ToggleButtonOption, key?: string) => {
+    const button = (
+      <ToggleButton
+        sx={{
+          flexShrink: 0,
+          minWidth: 'fit-content',
+          ...sxButton,
+        }}
+        value={el.key}
+        key={key || el.key}
+      >
+        {translate(el.value)}
+        {tooltip && (el.icon ?? <FiInfo />)}
+      </ToggleButton>
+    )
+
+    if (tooltip && el.tooltip) {
+      return (
+        <Tooltip
+          sx={tooltipSx}
+          key={key || el.key}
+          slotProps={{ popper: { disablePortal: true } }}
+          title={
+            <Typography
+              variant='body2'
+              p={1}
+            >
+              {translate(el.tooltip)}
+            </Typography>
+          }
+        >
+          {button}
+        </Tooltip>
+      )
+    }
+
+    return button
   }
 
   return (
-    <>
-      <style>
-        {`
-              .slick-track
-        {
-            display: flex !important;
-        }
-
-        .slick-slide
-        {
-            height: inherit !important;
-        }
-      `}
-      </style>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <ToggleButtonGroup
-            exclusive
-            aria-label='level'
-            sx={sxGroup}
-            {...field}
-            {...other}
-          >
-            {isMobile ? (
-              <Card
-                elevation={0}
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState: { error } }) => (
+        <ToggleButtonGroup
+          exclusive
+          aria-label='level'
+          sx={sxGroup}
+          {...field}
+          {...other}
+        >
+          {isMobile ? (
+            <Box sx={{ position: 'relative', width: '100%' }}>
+              {/* Scroll Container */}
+              <Box
+                ref={scrollContainerRef}
                 sx={{
-                  boxShadow: 'none',
-                  borderRadius: '8px',
-                  position: 'relative',
-                  background: 'transparent ',
+                  display: 'flex',
+                  gap: 1,
+                  overflowX: 'auto',
+                  scrollbarWidth: 'none', // Firefox
+                  '&::-webkit-scrollbar': { display: 'none' }, // Chrome/Safari
+                  pb: 1,
+                  px: canScrollLeft ? 5 : 0,
                 }}
               >
-                <Carousel
-                  ref={carouselRef}
-                  {...carouselSettings}
-                >
-                  {options.map((el) => (
-                    <ToggleButton
-                      sx={sxButton}
-                      value={el.key}
-                      key={el.key}
-                    >
-                      {translate(el.value)}
-                    </ToggleButton>
-                  ))}
-                </Carousel>
-                <CarouselArrows
-                  onNext={handleNext}
-                  onPrevious={handlePrev}
+                {options.map((el) => renderToggleButton(el))}
+              </Box>
+
+              {/* Navigation Arrows */}
+              {canScrollLeft && (
+                <IconButton
+                  onClick={() => scroll('left')}
                   sx={{
-                    gap: 5,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    width: '100%',
-                    pt: 1,
+                    position: 'absolute',
+                    left: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    backgroundColor: 'background.paper',
+                    boxShadow: 1,
+                    zIndex: 1,
+                    '&:hover': {
+                      backgroundColor: 'background.paper',
+                      boxShadow: 2,
+                    },
                   }}
-                />
-              </Card>
-            ) : (
-              options.map((el) =>
-                tooltip ? (
-                  <Tooltip
-                    sx={tooltipSx}
-                    key={el.key}
-                    slotProps={{ popper: { disablePortal: true } }}
-                    title={
-                      el.tooltip ? (
-                        <Typography
-                          variant='body2'
-                          p={1}
-                        >
-                          {translate(el.tooltip)}
-                        </Typography>
-                      ) : null
-                    }
-                  >
-                    <ToggleButton
-                      sx={sxButton}
-                      value={el.key}
-                    >
-                      {translate(el.value)}
-                      {el.icon ?? <FiInfo />}
-                    </ToggleButton>
-                  </Tooltip>
-                ) : (
-                  <ToggleButton
-                    sx={sxButton}
-                    value={el.key}
-                    key={el.key}
-                  >
-                    {translate(el.value)}
-                  </ToggleButton>
-                )
-              )
-            )}
-            {other.children}
-          </ToggleButtonGroup>
-        )}
-      />
-    </>
+                  size='small'
+                >
+                  <FiChevronLeft />
+                </IconButton>
+              )}
+
+              {canScrollRight && (
+                <IconButton
+                  onClick={() => scroll('right')}
+                  sx={{
+                    position: 'absolute',
+                    right: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    backgroundColor: 'background.paper',
+                    boxShadow: 1,
+                    zIndex: 1,
+                    '&:hover': {
+                      backgroundColor: 'background.paper',
+                      boxShadow: 2,
+                    },
+                  }}
+                  size='small'
+                >
+                  <FiChevronRight />
+                </IconButton>
+              )}
+            </Box>
+          ) : (
+            options.map((el) => renderToggleButton(el))
+          )}
+          {other.children}
+        </ToggleButtonGroup>
+      )}
+    />
   )
 }

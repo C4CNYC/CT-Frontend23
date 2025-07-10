@@ -3,14 +3,19 @@ import { html } from '@codemirror/lang-html'
 import { javascript } from '@codemirror/lang-javascript'
 import { json } from '@codemirror/lang-json'
 import { LanguageSupport } from '@codemirror/language'
-import { EditorView } from '@uiw/react-codemirror'
 
+type ViewType = {
+  state: {
+    selection: { ranges: { from: any; to: any }[] }
+    doc: { sliceString: (arg0: any, arg1: any) => any }
+  }
+} | null
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { getFileExtension } from '@root/src/utils/getFileExtension'
 
 import { Extensions } from '../constants'
 
-export const getSelectionRange = (view: EditorView | null) => {
+export const getSelectionRange = (view: ViewType) => {
   if (view == null) {
     return null
   }

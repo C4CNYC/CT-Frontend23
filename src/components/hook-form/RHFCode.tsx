@@ -1,6 +1,7 @@
 import { FormHelperText } from '@mui/material'
-import CodeMirror from '@uiw/react-codemirror'
 import { Controller, useFormContext } from 'react-hook-form'
+
+import CodeMirror from '../code-mirror/codemirror'
 
 interface RHFCodeProps {
   name: string
