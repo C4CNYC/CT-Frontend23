@@ -35,15 +35,9 @@ export default function StudentStepper(): React.ReactElement {
   const [hasSixDigit, setHasSixDigit] = useState<boolean>(false)
   const translate = useTranslate()
 
-  const nextStep = () => {
-    setActiveStep(activeStep + 1)
-  }
-  const prevStep = () => {
-    setActiveStep(activeStep - 1)
-  }
-  const goToStep = (step: number) => {
-    setActiveStep(step)
-  }
+  const nextStep = () => setActiveStep(activeStep + 1)
+  const prevStep = () => setActiveStep(activeStep - 1)
+  const goToStep = (step: number) => setActiveStep(step)
 
   const randomEmoji = generateRandomEmoji(true)
 
