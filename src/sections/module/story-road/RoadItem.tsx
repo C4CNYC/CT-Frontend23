@@ -22,6 +22,7 @@ import {
   getSeeMoreBtnSx,
 } from './constants'
 import RoadItemBtn from './RoadItemBtn'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 
 interface RoadItemProps {
   completed: boolean
@@ -34,7 +35,7 @@ interface RoadItemProps {
   name: string
   description: string
   lessonId: string
-  type: 'practical' | 'exercise'
+  type: LessonType
 }
 
 const PROJECT_TIME = '20 mins'
