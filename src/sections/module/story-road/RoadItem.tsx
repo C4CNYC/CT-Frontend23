@@ -7,6 +7,7 @@ import { FaChevronUp } from '@react-icons/all-files/fa/FaChevronUp'
 import { useRouter } from 'next/router'
 
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import CompletedIcon from '../icons/CompletedIcon'
@@ -22,7 +23,6 @@ import {
   getSeeMoreBtnSx,
 } from './constants'
 import RoadItemBtn from './RoadItemBtn'
-import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 
 interface RoadItemProps {
   completed: boolean
