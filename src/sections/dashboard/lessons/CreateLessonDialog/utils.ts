@@ -29,7 +29,6 @@ export const timeConvertorToSeconds = (time: Record<string, number> | null | und
 | PRACTICAL            | false   | false       |
 | START_PROJECT        | true    | true        |
 | PART_PROJECT         | true    | false       |
-| CONCEPT_EXERCISES    | true    | false       |
 | QUIZ                 | false   | true        |
 | OPEN_PROJECT         | false   | true        |
 | OTHER                | false   | true        |
@@ -44,8 +43,6 @@ export const typeDefaultSettings = (type: LessonType) => {
     case LessonType.START_PROJECT:
       return { autoRun: true, independent: true }
     case LessonType.PART_PROJECT:
-      return { autoRun: true, independent: false }
-    case LessonType.CONCEPT_EXERCISES:
       return { autoRun: true, independent: false }
     case LessonType.QUIZ:
       return { autoRun: false, independent: true }

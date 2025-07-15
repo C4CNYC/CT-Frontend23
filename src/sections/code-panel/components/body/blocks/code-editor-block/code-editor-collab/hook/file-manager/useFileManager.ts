@@ -423,11 +423,9 @@ export const useFileManager = () => {
   }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
-    const isTypeWithoutFileReset = [
-      LessonType.PRACTICAL,
-      LessonType.PART_PROJECT,
-      LessonType.CONCEPT_EXERCISES,
-    ].includes(lesson?.type!)
+    const isTypeWithoutFileReset = [LessonType.PRACTICAL, LessonType.PART_PROJECT].includes(
+      lesson?.type!
+    )
 
     if (
       !lessonRef.current ||

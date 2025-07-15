@@ -179,28 +179,6 @@ export default function LessonItem({
         />
       ),
     },
-    concept_exercises: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            color: '#155275 !important',
-          }}
-        >
-          Concept Exercises
-        </Typography>
-      ),
-      icon: (
-        <Box
-          component='img'
-          src='/assets/icons/lesson/concept_exercises_icon.svg'
-          sx={{
-            width: 20,
-            height: 23,
-          }}
-        />
-      ),
-    },
     open_project: {
       title: (
         <Typography
