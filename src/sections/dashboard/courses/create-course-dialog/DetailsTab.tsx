@@ -26,6 +26,8 @@ function DetailsTab({ defaultValues, handleClose, refetch, id }: DetailsTabProps
     age: defaultValues?.age || AGE.GRADE_1,
     customLevel: defaultValues?.customLevel || '',
     customAge: defaultValues?.customAge || '',
+    audience: defaultValues?.audience || '',
+    for_teachers: defaultValues?.for_teachers || '',
   }
 
   const [editCourse, { isLoading: isEditLoading }] = useUpdateCourseMutation()
@@ -113,6 +115,20 @@ function DetailsTab({ defaultValues, handleClose, refetch, id }: DetailsTabProps
             sx={{ width: '100%' }}
             name='customAge'
             label={translate('courses_course_other_other')}
+          />
+          <RHFTextField
+            sx={{ width: '100%' }}
+            name='audience'
+            multiline
+            rows={4}
+            label={translate('courses_modal_audience')}
+          />
+          <RHFTextField
+            sx={{ width: '100%' }}
+            name='for_teachers'
+            multiline
+            rows={4}
+            label={translate('courses_modal_for_teachers')}
           />
         </Stack>
       </FormProvider>

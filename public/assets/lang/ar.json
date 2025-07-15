@@ -426,6 +426,8 @@
     "courses_module_slides": "شرائح الوحدة",
     "courses_lesson_plans": "خطط الدروس",
     "courses_teachers_forum": "منتدى المعلمين",
+    "courses_modal_audience": "لمن هذه الدورة؟",
+    "courses_modal_for_teachers": "للمعلمين",
     "lesson_dialog_title": "من الأفضل إجراء التدريبات بالترتيب.",
     "lesson_dialog_subtitle": "لم تكمل التدريب السابق.",
     "lesson_dialog_tooltip": "الحالة: هذا \"التدريب\" يعتمد على كود التدريب السابق. إذا بدأت هذا \"التدريب\" الآن، سيتم إضافة \"حل الكود\" من التدريب السابق. \"حل الكود\" هو الكود الصحيح للتدريب السابق بدون أي تخصيص",

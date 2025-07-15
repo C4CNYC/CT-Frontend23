@@ -23,6 +23,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import ModuleLessonsAutocomplete from '@root/src/components/module-lessons-autocomplete/ModuleLessonAutocomplete'
 import { AGE, GRADING, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
 
+import AuthorsTab from './authors-tab/AuthorsTab'
 import { DIALOG_ACTIONS_SX, TAB_SX } from './constants'
 import DetailsTab from './DetailsTab'
 import MainTab from './MainTab'
@@ -252,6 +253,10 @@ export default function CreateModuleDialog({
                     label={translate('settings')}
                     {...a11yProps(3)}
                   />
+                  <Tab
+                    label={translate('courses_authors')}
+                    {...a11yProps(4)}
+                  />
                 </Tabs>
               ) : null}
             </Box>
@@ -288,6 +293,12 @@ export default function CreateModuleDialog({
               index={3}
             >
               <SettingsTab />
+            </TabPanel>
+            <TabPanel
+              value={value}
+              index={4}
+            >
+              <AuthorsTab moduleId={id || ''} />
             </TabPanel>
             {value !== 1 ? (
               <DialogActions>

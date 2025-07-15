@@ -59,6 +59,8 @@ export interface ICourse {
   draft: boolean
   skills: []
   units: IModule[]
+  audience: string
+  for_teachers: string
 }
 
 export interface ILessonContent {
