@@ -3,6 +3,7 @@ import { type FC, useMemo } from 'react'
 import { Box, type SxProps } from '@mui/material'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
+import { Role } from '@/redux/services/enums/role.enum'
 import { useSelector } from '@/redux/store'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 
@@ -22,6 +23,7 @@ export const TopPanel: FC<ITopPanel> = ({ language }) => {
   const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
   const profile = useSelector((state) => state.global.user)
+  const isStudent = profile?.role === Role.Student
 
   return (
     <Box
@@ -35,7 +37,7 @@ export const TopPanel: FC<ITopPanel> = ({ language }) => {
         {isDesktop && <HomeBtn />}
         {isDesktop && <LessonManager />}
       </Box>
-      {profile ? <GroupHeader /> : ''}
+      {profile && !isStudent ? <GroupHeader /> : ''}
       {isDesktop ? <DesktopBar language={language} /> : <MobileBar />}
     </Box>
   )
