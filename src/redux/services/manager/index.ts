@@ -29,10 +29,12 @@ export const managerApi = createApi({
     'ContentIntegration',
     'LessonContentItem',
     'Mentors',
-    'Author',
+    'ModuleAuthor',
+    'CourseAuthor',
     'Pendings',
     'School',
     'Students',
+    'Stats',
     'ClassesStudent',
     'ClassesStudentProgress',
     'SchoolSettings',
@@ -56,6 +58,11 @@ export const managerApi = createApi({
     'Properties',
     'LessonSlidePreload',
     'WorkspaceStudent',
+    'GetCompleteChalange',
   ],
+
+  //keepUnusedDataFor: 3600,
+  refetchOnMountOrArgChange: false,
+
   endpoints: () => ({}),
 })

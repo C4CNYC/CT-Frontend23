@@ -23,14 +23,17 @@ export interface FormAIGenerateProps {
 }
 
 export interface AIGenerateStepperProps {
-  isModal: boolean
+  isModal?: boolean
   closeModal?: () => void
+  passedValues?: Partial<FormAIGenerateProps>
+  props?: { activeStep?: number }
+}
+export interface AIGenerateStepperInsideProps {
   passedValues?: Partial<FormAIGenerateProps>
   props?: { activeStep?: number }
 }
 
 export interface IAddAddonsProps {
-  closeModal?: () => void
   resetRoad: () => void
   onSubmitAddons: (addons: IAddons) => void
 }
@@ -363,3 +366,8 @@ export const TYPE_PROJECT = [
   { key: 'Practical Project', value: 'Practical Project' },
   { key: 'Quiz', value: 'Quiz' },
 ]
+
+export type IAIPersonaInfoProps = {
+  customPersona: boolean
+  customTone: boolean
+}

@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
 interface CodePanelContextType {
-  lessonId: string
+  lessonId: string | undefined
   studentCode: string
   autoRun: boolean
   reloadIframe: () => void

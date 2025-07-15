@@ -11,10 +11,10 @@ import { ConfirmDialog, Image, Label, MenuPopover, useSnackbar } from '@/compone
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
 import { useDeleteCourseMutation } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
-import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
+import CreateCourseDialog from '@root/src/sections/dashboard/courses/create-course-dialog'
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface
   refetch: () => void
@@ -195,6 +195,9 @@ export default function CourseCard({
             name: course.name,
             content_id: course.content_id === course.name ? '' : course.content_id,
             level: course.level,
+            customLevel: course.customLevel,
+            age: course.age,
+            customAge: course.customAge,
             price: course.price.substring(1),
             description: course.description,
             active: course.active,
@@ -204,6 +207,8 @@ export default function CourseCard({
             initial_likes: course.initial_likes,
             initial_stars: course.initial_stars,
             initial_enrolled: course.initial_enrolled,
+            audience: course.audience,
+            for_teachers: course.for_teachers,
           }}
           refetch={refetch}
         >

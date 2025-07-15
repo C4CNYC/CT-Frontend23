@@ -7,6 +7,7 @@ import ThemeSwitcher from '@/components/theme-switcher'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import {
+  StyledLink,
   StyledLogoCont,
   StyledRoot,
   StyledSection,
@@ -70,6 +71,13 @@ export default function LoginLayout({
         <StyledSwitcher>
           <ThemeSwitcher />
         </StyledSwitcher>
+        <StyledLink
+          href={'https://codetribe.com/privacy-policy/'}
+          target='_blank'
+          variant='caption'
+        >
+          {translate('privacy_policy')}
+        </StyledLink>
       </StyledRoot>
     </GoogleOAuthProvider>
   )

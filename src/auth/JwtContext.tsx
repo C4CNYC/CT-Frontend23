@@ -3,13 +3,15 @@ import { createContext, useCallback, useEffect, useMemo, useReducer } from 'reac
 import { useDispatch } from 'react-redux'
 
 import { Role } from '@/redux/services/enums/role.enum'
+import { resetState } from '@/redux/slices/checkers-animation'
 import { cleanUser, cleanUserRole, setUser } from '@/redux/slices/global'
 import { axios } from '@/utils/axios'
 import { localStorageAvailable } from '@/utils/localStorageAvailable'
 import { voidFunction } from '@/utils/voidFunction'
 
-import { defaultLang } from '../locales/config-lang'
+import { useLogin } from '../hooks/useLogin'
 import { resetTenant, setTenant, Tenant } from '../redux/slices/tenant'
+import { localStorageClear } from '../utils/localStorageClear'
 
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
 import { isValidToken, setSession } from './utils'
@@ -102,12 +104,13 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
   const [state, dispatch] = useReducer(reducer, initialState)
   const reduxDispatch = useDispatch()
   const storageAvailable = localStorageAvailable()
+  useLogin()
 
   const initialize = useCallback(async () => {
     try {
       const accessToken = storageAvailable ? localStorage.getItem('accessToken') : ''
 
-      const tenantName = localStorage.getItem('tenantName') ?? 'codetribe'
+      const tenantName = getTenantFromDomain()
       const isManagerRoute = window.location.pathname.includes('manager/')
 
       if (accessToken && isValidToken(accessToken)) {
@@ -169,8 +172,13 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     })
   }
 
+  const getTenantFromDomain = (): string => {
+    return localStorage.getItem('tenantName') ?? 'codetribe'
+  }
+
   // LOGIN
-  const login = useCallback(async (email: string, password: string, tenantName?: string) => {
+  const login = useCallback(async (email: string, password: string) => {
+    const tenantName = getTenantFromDomain()
     try {
       if (tenantName) localStorage.setItem('tenantName', tenantName)
       const { data } = await axios.post<any, any>('auth/signin', {
@@ -179,6 +187,8 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       })
 
       const { access_token: accessToken, user } = data
+      localStorageClear()
+      reduxDispatch(resetState())
       reduxDispatch(setUser(user))
       setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
 
@@ -195,13 +205,16 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
 
   // LOGIN WITH GOOGLE
   const loginWithGoogle = async (token: string) => {
+    const tenantName = getTenantFromDomain()
+
     const { data } = await axios.post<any, any>('auth/google-signin', {
       auth_token: token,
     })
 
     const { access_token: accessToken, user } = data
+    localStorageClear()
     reduxDispatch(setUser(user))
-    setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
+    setSession(accessToken, tenantName)
 
     dispatch({
       type: Types.LOGIN,
@@ -213,6 +226,8 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
 
   // Register WITH GOOGLE
   const registerWithGoogle = async (token: string, role: Role) => {
+    const tenantName = getTenantFromDomain()
+
     try {
       const { data } = await axios.post<any, any>('auth/google-signup', {
         auth_token: token,
@@ -221,7 +236,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
 
       const { access_token: accessToken, user } = data
       reduxDispatch(setUser(user))
-      setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
+      setSession(accessToken, tenantName)
 
       dispatch({
         type: Types.REGISTER,
@@ -243,7 +258,6 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       lastName,
       emojiAvatar,
       role,
-      tenantName,
     }: {
       email: string
       password: string
@@ -251,14 +265,9 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       lastName: string
       emojiAvatar?: string
       role: Role
-      tenantName?: string
     }) => {
-      if (tenantName) {
-        await axios.post('/tenant', {
-          name: tenantName,
-        })
-        localStorage.setItem('tenantName', tenantName)
-      }
+      const tenantName = getTenantFromDomain()
+
       const { data } = await axios.post('/auth/signup', {
         email,
         password,
@@ -273,7 +282,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       localStorage.setItem('accessToken', accessToken)
 
       reduxDispatch(setUser(user))
-      setSession(accessToken, localStorage.getItem('tenantName') ?? 'codetribe')
+      setSession(accessToken, tenantName)
 
       dispatch({
         type: Types.REGISTER,
@@ -285,18 +294,21 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     []
   )
 
-  const registerToOrganization = useCallback(
-    async (email: string, password: string, firstName: string, lastName: string) => {
-      const { data } = await axios.post('/auth/signup', {
+  const registerTenant = useCallback(
+    async ({ email, password }: { email: string; password: string }) => {
+      const tenantName = getTenantFromDomain()
+
+      const { data } = await axios.post('/tenant/register', {
         email,
         password,
-        first_name: firstName,
-        last_name: lastName,
       })
+
       const { access_token: accessToken, user } = data
-      reduxDispatch(setUser(user))
 
       localStorage.setItem('accessToken', accessToken)
+
+      reduxDispatch(setUser(user))
+      setSession(accessToken, tenantName)
 
       dispatch({
         type: Types.REGISTER_TO_ORGANIZATION,
@@ -307,15 +319,14 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
     },
     []
   )
-
   // LOGOUT
   const logout = useCallback(() => {
     setSession(null, null)
     reduxDispatch(cleanUser())
     reduxDispatch(cleanUserRole())
-    const lang = localStorage.getItem('i18nextLng')
-    localStorage.clear()
-    localStorage.setItem('i18nextLng', lang ?? defaultLang.value)
+    reduxDispatch(resetState())
+    localStorageClear()
+
     dispatch({
       type: Types.LOGOUT,
     })
@@ -334,7 +345,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       loginWithGithub: voidFunction,
       loginWithTwitter: voidFunction,
       register,
-      registerToOrganization,
+      registerTenant,
       logout,
     }),
     [
@@ -347,6 +358,7 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
       login,
       logout,
       register,
+      registerTenant,
     ]
   )
 

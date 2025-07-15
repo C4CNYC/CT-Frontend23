@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { Box, Container, Skeleton, Stack, useMediaQuery, useTheme } from '@mui/material'
 import Head from 'next/head'
@@ -6,15 +6,6 @@ import { useRouter } from 'next/router'
 
 import { CustomBreadcrumbs, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { IModuleContent } from '@/redux/interfaces/content.interface'
-import {
-  useGetCoursContentQuery,
-  useGetStudentCourseModulesQuery,
-} from '@/redux/services/manager/courses-student'
-import {
-  useGetModuleWithLessonsQuery,
-  useGetPublicModuleWithLessonsQuery,
-} from '@/redux/services/manager/modules-student'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { getBreadcrumbsSx, getLessonListSx, getPageContainerSx } from '@/sections/module/constants'
@@ -22,7 +13,10 @@ import LessonsList from '@/sections/module/LessonsList'
 import ModuleSidebar from '@/sections/module/module-sidebar'
 import ModuleHeader from '@/sections/module/ModuleHeader'
 import { useTranslate } from '@/utils/translateHelper'
+import { IModuleContent } from '@root/src/redux/interfaces/content.interface'
+import { useGetStudentProgressQuery } from '@root/src/redux/services/manager/lesson-student'
 import { useGetPublicCourseContentQuery } from '@root/src/redux/services/public-student'
+import { progressGuestGet } from '@root/src/utils/progressLocalStorage'
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -37,54 +31,56 @@ export default function ModulePage(): React.ReactElement {
   const translate = useTranslate()
   const profile = useSelector((state) => state.global.user)
 
-  const { data: modules, isLoading: isLoadingModules } = useGetStudentCourseModulesQuery(
-    { id: query?.id as string },
-    { skip: !query?.id || !profile }
-  )
-  const { data: studentCourse } = useGetCoursContentQuery(
-    {
-      id: query.id as string,
-    },
-    { skip: !query.id || !profile }
-  )
-
   const { data: publicCourse } = useGetPublicCourseContentQuery(
     { id: query.id as string },
-    { skip: !query.id || !!profile }
+    { skip: !query.id }
   )
+  const { data: studentProgress } = useGetStudentProgressQuery(undefined, { skip: !profile })
 
-  const course = studentCourse ?? publicCourse
+  const course = publicCourse
 
-  const {
-    data: lessonsModule,
-    isLoading: isLoadingLessonsModule,
-    refetch: refetchModule,
-  } = useGetModuleWithLessonsQuery({ id: query.unit as string }, { skip: !query.unit || !profile })
+  function getLessonProgress(lessonId: string, challangeCount: number, slideCount: number) {
+    if (studentProgress) {
+      let p = studentProgress.find((p) => p.lessonId === lessonId)
+      return p ? Math.round((p.numberOfCompletedChallenges / challangeCount) * 100) : 0
+    } else {
+      return Math.round((progressGuestGet(lessonId) / slideCount) * 100)
+    }
+  }
 
-  const {
-    data: publicModule,
-    isLoading: isLoadingPublicModule,
-    refetch: refetchPublic,
-  } = useGetPublicModuleWithLessonsQuery(
-    { id: query.unit as string },
-    { skip: !query.unit || !!profile }
-  )
+  const unitModule = useMemo(() => {
+    let data = publicCourse
+    if (!data || !data?.units) return null
+    // if (!studentProgress) return data.units.find((m) => m.id === query.unit)
+    const updatedUnits = data.units.map((unit) => {
+      const updatedLessons = unit.lessons.map((lesson) => {
+        let progress = getLessonProgress(
+          lesson.id,
+          (lesson.meta.challenges as number) || 10,
+          lesson?.contents?.length || 10
+        )
+        return { ...lesson, progress }
+      })
 
-  const unitModule = lessonsModule ?? publicModule
-  const isLoadingModule = isLoadingLessonsModule ?? isLoadingPublicModule
-  const refetch = refetchModule ?? refetchPublic
+      // Sum up all lesson.progress values (default to 0 if not set)
+      const totalProgress = updatedLessons.reduce((sum, lesson) => sum + (lesson.progress || 0), 0)
+
+      return {
+        ...unit,
+        lessons: updatedLessons,
+        progress: totalProgress,
+      }
+    })
+    return updatedUnits.filter((m) => m.id === query.unit)[0]
+  }, [studentProgress, publicCourse])
 
   useEffect(() => {
-    if (modules) {
-      setCurrentModule(modules.filter((m) => m.id === query.unit)[0])
+    if (publicCourse?.units) {
+      let foundunit = publicCourse?.units.find((m) => m.id === query.unit)
+      // @ts-ignore since IModuleContent and Unit has inconsistencies
+      setCurrentModule(foundunit)
     }
-  }, [isLoadingModules])
-
-  useEffect(() => {
-    if (profile) {
-      refetch()
-    }
-  }, [query?.id, refetch, profile])
+  }, [publicCourse])
 
   return (
     <>
@@ -124,8 +120,9 @@ export default function ModulePage(): React.ReactElement {
           }}
         >
           <Box overflow={'hidden'}>
-            {!isLoadingModules && !isLoadingModule && unitModule ? (
+            {unitModule ? (
               <ModuleHeader
+                unitModule={unitModule}
                 name={unitModule.name}
                 lessons={unitModule?.lessons ?? []}
                 description={
@@ -139,7 +136,7 @@ export default function ModulePage(): React.ReactElement {
                 sx={{ width: '100%', height: '280px', minWidth: '410px' }}
               />
             )}
-            {!isLoadingModule ? (
+            {unitModule ? (
               <LessonsList
                 lessons={unitModule?.lessons ?? []}
                 unitId={query?.unit as string}

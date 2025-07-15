@@ -1,10 +1,11 @@
+import { useMemo } from 'react'
+
 import { Box, Container, Skeleton } from '@mui/material'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { CustomBreadcrumbs, EmptyContent, useSettingsContext } from '@/components'
 import { StudentDashboardLayout } from '@/layouts/dashboard'
-import { useGetCoursContentQuery } from '@/redux/services/manager/courses-student'
 import { useGetPublicCourseContentQuery } from '@/redux/services/public-student'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -12,7 +13,9 @@ import CourseSidebar from '@/sections/course/course-sidebar'
 import CourseInfo from '@/sections/course/CourseInfo'
 import ModulesListBlock from '@/sections/course/modules-list'
 import { useTranslate } from '@/utils/translateHelper'
+import { useGetStudentProgressQuery } from '@root/src/redux/services/manager/lesson-student'
 import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
+import { progressGuestGet } from '@root/src/utils/progressLocalStorage'
 
 CoursePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -22,21 +25,50 @@ export default function CoursePage(): React.ReactElement {
   const router = useRouter()
   const { themeStretch } = useSettingsContext()
   const profile = useSelector((state) => state.global.user)
-  const { data: courseContent, isLoading: isContentLoading } = useGetCoursContentQuery(
-    {
-      id: router.query.id as string,
-    },
-    { skip: !router.query.id || !profile }
-  )
   const { data: publicContent, isLoading: isPublicLoading } = useGetPublicCourseContentQuery(
     {
       id: router.query.id as string,
     },
-    { skip: !router.query.id || !!profile }
+    { skip: !router.query.id }
   )
+  const { data: studentProgress } = useGetStudentProgressQuery(undefined, { skip: !profile })
 
-  const data = courseContent ?? publicContent
-  const isLoading = isContentLoading ?? isPublicLoading
+  function getLessonProgress(lessonId: string, challangeCount: number, slideCount: number) {
+    if (studentProgress) {
+      let p = studentProgress.find((p) => p.lessonId === lessonId)
+      return p ? Math.round((p.numberOfCompletedChallenges / challangeCount) * 100) : 0
+    } else {
+      return Math.round((progressGuestGet(lessonId) / slideCount) * 100)
+    }
+  }
+  // Merge student progress with course content
+  const data = useMemo(() => {
+    let data = publicContent
+    if (!data || !data?.units) return publicContent
+    const updatedUnits = data.units.map((unit) => {
+      const updatedLessons = unit.lessons.map((lesson) => {
+        let progress = getLessonProgress(
+          lesson.id,
+          lesson.meta.challenges as number,
+          lesson.contents?.length || 10
+        )
+        return { ...lesson, progress }
+      })
+
+      // Sum up all lesson.progress values (default to 0 if not set)
+      const totalProgress =
+        updatedLessons.reduce((sum, lesson) => sum + (lesson.progress || 0), 0) /
+        (updatedLessons.length || 1)
+
+      return {
+        ...unit,
+        lessons: updatedLessons,
+        progress: totalProgress,
+      }
+    })
+    return { ...data, units: updatedUnits }
+  }, [studentProgress, publicContent])
+  const isLoading = isPublicLoading
   const translate = useTranslate()
 
   return (
@@ -101,6 +133,8 @@ export default function CoursePage(): React.ReactElement {
                   0
                 }
                 level={data?.level ?? '-'}
+                audience={data?.audience}
+                forTeachers={data?.for_teachers}
               />
             </Box>
           </Box>

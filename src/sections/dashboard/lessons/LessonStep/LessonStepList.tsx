@@ -29,7 +29,7 @@ import { useTranslate } from '@/utils/translateHelper'
 import AIIcon from '@root/src/assets/icons/AIIcon'
 import { ConfirmDialog } from '@root/src/components'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
-import { useBoolean } from '@root/src/hooks/useBoolean'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useCounter } from '@root/src/hooks/useCounter'
 import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
 import { LoaderStepDialog } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/LoaderStepDialog'
@@ -56,8 +56,11 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   const { locked, lockedHandler } = useContext(LessonContentContext)
 
   const [changeSlideDialogOpen, changeSlideDialogOpenSet] = useState<VoidFunction>()
-  const [LoaderStepDialogState, LoaderStepDialogStateTrue, LoaderStepDialogStateFalse] =
-    useBoolean()
+  const {
+    value: LoaderStepDialogState,
+    onTrue: LoaderStepDialogStateTrue,
+    onFalse: LoaderStepDialogStateFalse,
+  } = useBoolean(false)
   const [contentCount, contentCountSet] = useState(0)
   const [lessonLoadedAfterContent, lessonLoadedAfterContentSet] = useState(false)
   const [contentPullCount, contentPullCountDec, contentPullCountInc] = useCounter(5)
@@ -307,6 +310,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
               type: lesson?.type ?? 'practical',
               duration: lesson?.duration,
               slug: lesson?.slug,
+              meta: lesson?.meta,
             }}
             isEdit
           >

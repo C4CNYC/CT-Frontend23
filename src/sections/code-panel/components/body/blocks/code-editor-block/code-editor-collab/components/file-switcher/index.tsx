@@ -29,6 +29,10 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, f
     resizeObserver.observe(editorRef.current)
     return () => resizeObserver.disconnect()
   }, [editorRef])
+  let fileListFiltered = fileList.filter(
+    (file, index, self) =>
+      self.findIndex((f) => f.name === file.name && f.extension === file.extension) === index
+  )
 
   return (
     <Stack
@@ -42,7 +46,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, f
           onChange(id)
         }}
         variant='scrollable'
-        scrollButtons={fileList.length < 2 ? false : 'auto'}
+        scrollButtons={fileListFiltered.length < 2 ? false : 'auto'}
         selectionFollowsFocus
         TabScrollButtonProps={{
           sx: {
@@ -53,7 +57,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, f
         }}
         aria-label='scrollable prevent tabs example'
       >
-        {fileList?.map(({ name, id, extension }) => (
+        {fileListFiltered?.map(({ name, id, extension }) => (
           <Tab
             sx={styles.TAB}
             key={id}
@@ -67,7 +71,7 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, f
               </>
             }
             icon={
-              fileList.length > 1 ? (
+              fileListFiltered.length > 1 ? (
                 <IconButton
                   sx={{ p: 0 }}
                   onClick={(e) => {

@@ -15,7 +15,7 @@ import { IoChevronForwardOutline } from '@react-icons/all-files/io5/IoChevronFor
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
 import { useRouter } from 'next/router'
 
-import { useBoolean } from '@root/src/hooks/useBoolean'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import { ILesson, ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lessons-manager'
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
@@ -39,7 +39,7 @@ export function SandBoxDialog({ children }: Props): React.ReactElement {
 
   const router = useRouter()
 
-  const [dialogopen, dialogopenOpen, dialogopenClose] = useBoolean(false)
+  const { value: dialogopen, onTrue: dialogopenOpen, onFalse: dialogopenClose } = useBoolean(false)
 
   const { data: properties } = useGetPropertiesQuery(
     {

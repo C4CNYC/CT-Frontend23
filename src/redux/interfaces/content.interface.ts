@@ -1,15 +1,21 @@
 import { Unit } from '@/redux/interfaces/challenges.interface'
+import { IAuthor } from '@/redux/services/interfaces/author.interface'
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { AGE, GRADING, LEVEL } from '../services/interfaces/courseUnits.interface'
+import { ILesson } from '../services/interfaces/lesson.interface'
 
-import { IIntegration } from './integration.interface'
+export type { ILesson }
 
 export interface ICourseElement {
   id: string
   course_id?: string
   name: string
-  level: string
+  level: LEVEL
+  age: AGE
+  customLevel: string
+  customAge: string
   price: string
   description: string
   active: boolean
@@ -29,13 +35,18 @@ export interface ICourseContent {
   id: string
   units: Unit[]
   name: string
-  level: string
+  level: LEVEL
+  age: AGE
+  customLevel: string
+  customAge: string
   price: string
   description: string
   active: boolean
   cover: string
   draft: boolean
   total_lessons: number
+  audience?: string
+  for_teachers?: boolean
 }
 
 export interface IModule {
@@ -58,6 +69,14 @@ export interface IModule {
   teacher_slides?: string
   lesson_plans?: string
   teacher_forum?: string
+  level: LEVEL
+  customLevel: string
+  age: AGE
+  customAge: string
+  grading: GRADING
+  brief?: string
+  audience?: string
+  authors: IAuthor[]
 }
 
 export interface IModuleContent {
@@ -75,28 +94,6 @@ export interface IModuleContent {
   teacher_slides?: string
   lesson_plans?: string
   teacher_forum?: string
-}
-
-export enum LessonType {
-  PRACTICAL = 'practical',
-  EXERCISE = 'exercise',
-}
-
-export interface ILesson {
-  active: boolean
-  draft: boolean
-  name: string
-  description: string
-  integrations: Array<IIntegration & BaseResponseInterface>
-  id: string
-  tips: string[] | []
-  progress: number | null
-  skills: ISkill[]
-  independent?: boolean
-  contents?: ILessonContent[]
-  type: LessonType
-  slug: string
-  duration: Duration
 }
 
 export interface ILessonCurrent {
@@ -124,7 +121,7 @@ export interface ILessonContent {
   validations: Array<IValidation & BaseResponseInterface>
   type: LessonContentType
   meta: Record<string, any>
-  integrations: IIntegration[]
+  //integrations: IIntegration[]
   progress?: ILessonContentProgress[]
   title?: string
   id?: string

@@ -33,6 +33,11 @@ export const admin = {
   subheader: 'sidebar_menu_administration',
   items: [
     {
+      title: 'sidebar_menu_admin',
+      path: MANAGER_PATH_DASHBOARD.administration.root,
+      icon: <MdAdminPanelSettings />,
+    },
+    {
       title: 'sidebar_menu_members',
       path: MANAGER_PATH_DASHBOARD.organization.members,
       icon: <FaUserShield />,
@@ -45,16 +50,10 @@ export const admin = {
   ],
 }
 
-export const superAdmin = {
-  subheader: 'sidebar_menu_administration',
-  items: [
-    {
-      title: 'sidebar_menu_admin',
-      path: MANAGER_PATH_DASHBOARD.administration.root,
-      icon: <MdAdminPanelSettings />,
-    },
-  ],
-}
+// export const superAdmin = {
+//   subheader: 'sidebar_menu_administration',
+//   items: [],
+// }
 
 export const managment = {
   subheader: 'sidebar_menu_management',
@@ -232,7 +231,7 @@ export const socials = {
 export const menuConfig = (currentRole: Role) =>
   currentRole == Role.Admin || currentRole == Role.SuperAdmin
     ? {
-        [Role.SuperAdmin]: [superAdmin, admin, managment, content],
+        [Role.SuperAdmin]: [admin, managment, content],
         [Role.Owner]: [admin, managment, content],
         [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],
@@ -241,7 +240,7 @@ export const menuConfig = (currentRole: Role) =>
         [Role.Editor]: [content],
       }
     : {
-        [Role.SuperAdmin]: [superAdmin, admin, managment, content],
+        [Role.SuperAdmin]: [admin, managment, content],
         [Role.Owner]: [admin, managment, content],
         [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],

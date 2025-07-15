@@ -22,9 +22,11 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
           ref={ref}
           component='div'
           sx={{
-            width: 196,
-            height: 32,
-            display: 'inline-flex',
+            width: '45px',
+            height: '45px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             ...sx,
           }}
           {...other}
@@ -33,7 +35,12 @@ export const LogoMin = forwardRef<HTMLDivElement, LogoProps>(
             src={tenant.min_logo}
             alt={tenant.slug}
             width={45}
-            height={33}
+            height={45}
+            style={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain',
+            }}
           />
         </Box>
       )

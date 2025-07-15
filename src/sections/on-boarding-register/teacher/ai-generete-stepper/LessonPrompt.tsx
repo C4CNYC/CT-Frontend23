@@ -9,6 +9,7 @@ import { RHFSelect, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useAiGenerateStepper } from './AiGenerateStepperContext'
 import {
   BTN_CONTAINER_STYLES,
   GRADES,
@@ -24,21 +25,14 @@ import {
 } from './constants'
 
 type ILessonPromptProps = {
-  nextStep: () => void
-  prevStep: () => void
-  closeModal?: () => void
   isCustomLang: boolean
 }
 
-export default function LessonPrompt({
-  nextStep,
-  prevStep,
-  closeModal,
-  isCustomLang,
-}: ILessonPromptProps) {
+export default function LessonPrompt({ isCustomLang }: ILessonPromptProps) {
   const theme = useTheme()
   const translate = useTranslate()
 
+  const { nextStep, prevStep, isModal, closeModal } = useAiGenerateStepper()
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
@@ -64,7 +58,7 @@ export default function LessonPrompt({
         >
           {translate('ai_gen_step_2_title')}
         </Typography>
-        {closeModal ? (
+        {isModal ? (
           <IconButton
             onClick={closeModal}
             sx={{ margin: '0px 0px 0px auto' }}

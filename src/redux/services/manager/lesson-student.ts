@@ -10,6 +10,8 @@ import {
 import { ContentValidation, setContentValidations } from '@/redux/slices/code-panel-global'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { IStudentProgress } from '../interfaces/lesson.interface'
+
 import { managerApi } from '.'
 
 const extendedApi = managerApi.injectEndpoints({
@@ -22,7 +24,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/student/lesson/${id}/content`,
         method: 'GET',
       }),
-      keepUnusedDataFor: 0,
+      keepUnusedDataFor: 60,
       transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
         res.sort((a, b) => a.meta.order - b.meta.order),
       async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
@@ -35,6 +37,13 @@ const extendedApi = managerApi.injectEndpoints({
         } catch (err) {}
       },
     }),
+    getStudentProgress: builder.query<IStudentProgress[], undefined>({
+      query: () => ({
+        url: `/student/progress/lessons`,
+        method: 'GET',
+      }),
+      keepUnusedDataFor: 360,
+    }),
     getContentCheckers: builder.query<
       BaseResponseInterface & { completed_chalanges: ILessonContent[] },
       undefined
@@ -43,6 +52,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/student/progress/get-complete-chalange`,
         method: 'GET',
       }),
+      providesTags: ['GetCompleteChalange'],
       keepUnusedDataFor: 0,
       async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
         try {
@@ -142,10 +152,12 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetLessonContentStudentQuery,
+  useLazyGetLessonContentStudentQuery,
   useGetLessonStudentWithoutContentsQuery,
   useGetLessonStudentQuery,
   useGetLessonsListStudentQuery,
   useGetStudentLastVisitedUnitAndLessonQuery,
+  useGetStudentProgressQuery,
   useGetContentCheckersQuery,
   useGetStudentLastVisitedSlideQuery,
   // -------------mutation-----------

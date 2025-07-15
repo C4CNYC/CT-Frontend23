@@ -12,8 +12,10 @@ import {
   UPDATE_COLORS,
   UPDATE_FONT_SIZE,
   UPDATE_LINE_WRAP,
+  UPDATE_EDITOR_AUTO_COMPLETE,
 } from '../events'
 
+import { updateAutoComplete } from './auto-complete'
 import { copyPaste } from './copy-paste'
 import { updateLineWrap } from './line-wrap'
 import { moveCursor } from './move-cursor'
@@ -41,6 +43,9 @@ export function initListeners(
   })
   window.addEventListener(UPDATE_LINE_WRAP, (e: any) => {
     updateLineWrap(view, lineWrap, e.detail.wrap)
+  })
+  window.addEventListener(UPDATE_EDITOR_AUTO_COMPLETE, (e: any) => {
+    updateAutoComplete(view, lineWrap, e.detail.isAutoComplete)
   })
   window.addEventListener(UPDATE_FONT_SIZE, (e: any) => {
     updateFontSizeCodemirror(editor, e.detail.size)

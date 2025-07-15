@@ -2,10 +2,14 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 export interface IChatHandler {
   isChatVisible: boolean
+  isUserEdited: boolean
+  isUserOwner: boolean
 }
 
 const initialState: IChatHandler = {
   isChatVisible: false,
+  isUserEdited: false,
+  isUserOwner: false,
 }
 
 export const chatHandlerSlice = createSlice({
@@ -15,9 +19,15 @@ export const chatHandlerSlice = createSlice({
     setChatVisible: (state, { payload }: PayloadAction<boolean>): void => {
       state.isChatVisible = payload
     },
+    setUserEdited: (state, { payload }: PayloadAction<boolean>): void => {
+      state.isUserEdited = payload
+    },
+    setUserOwner: (state, { payload }: PayloadAction<boolean>): void => {
+      state.isUserOwner = payload
+    },
   },
 })
 
-export const { setChatVisible } = chatHandlerSlice.actions
+export const { setChatVisible, setUserEdited, setUserOwner } = chatHandlerSlice.actions
 
 export default chatHandlerSlice.reducer

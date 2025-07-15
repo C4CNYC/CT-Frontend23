@@ -1,17 +1,17 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { Button, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { IoChevronBack } from '@react-icons/all-files/io5/IoChevronBack'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
+import { LuInfo } from '@react-icons/all-files/lu/LuInfo'
 import { useController } from 'react-hook-form'
 
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useBoolean } from '@root/src/hooks/use-boolean'
-import { useGetLessonsByIdsQuery } from '@root/src/redux/services/manager/lessons-manager'
-import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useAiGenerateStepper } from './AiGenerateStepperContext'
 import {
   BTN_CONTAINER_STYLES,
   getToggleBtnGroupSx,
@@ -26,28 +26,16 @@ import {
 } from './constants'
 
 type IGeneralInfoProps = {
-  nextStep: () => void
-  isModal: boolean
-  closeModal?: () => void
-  prevStep: () => void
-  updateForm: (name: string, value: string) => void
-  getFormValue: (name: string) => string
   isTrackSelected: boolean
 }
 
-export function GeneralInfo({
-  nextStep,
-  prevStep,
-  isModal,
-  closeModal,
-  updateForm,
-  getFormValue,
-  isTrackSelected,
-}: IGeneralInfoProps) {
+export function GeneralInfo({ isTrackSelected }: IGeneralInfoProps) {
   const theme = useTheme()
   const translate = useTranslate()
+
   const { value: trackOptions, onToggle: trackOptionsToggle } = useBoolean(false)
   const { field: RtrackRField } = useController({ name: 'RtrackR' })
+  const { nextStep, prevStep, aiLessons, isModal, closeModal } = useAiGenerateStepper()
 
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
@@ -58,36 +46,27 @@ export function GeneralInfo({
     [theme.palette.mode]
   )
 
-  const { data: properties } = useGetPropertiesQuery({
-    entityType: 'lesson',
-    propertyName: 'aiTemplate',
-  })
-  const { data: aiTemplates } = useGetLessonsByIdsQuery(
-    properties?.data.map((item) => item.entityId) ?? []
-  )
-
   const RtrackRHandleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: any) => {
     RtrackRField.onChange(newAlignment === RtrackRField.value ? null : newAlignment)
   }
 
-  useEffect(() => {
-    if (!aiTemplates || aiTemplates.length < 1) return
-    if (!getFormValue('RtypeLessonR')) {
-      let exerciseAiTemplate = aiTemplates.find((t) => t.name.includes('Animator'))
-      updateForm('RtypeLessonR', exerciseAiTemplate ? exerciseAiTemplate.id : aiTemplates[0].id)
-    }
-  }, [aiTemplates])
-
   //type script wiening
   const type_lesson = (
-    aiTemplates && aiTemplates.length > 0
+    aiLessons && aiLessons.length > 0
       ? [
-          ...TYPE_LESSON,
-          ...aiTemplates.map((ait) => ({
-            key: ait.id,
-            value: ait.name,
+          // ...TYPE_LESSON, we dont use this anymore,
+          ...aiLessons.map((ait) => ({
+            key:
+              ait.id +
+              (ait.meta?.redirectAfterAiCreate ? 'code-panel' : '') +
+              (ait.meta?.generator ? 'n8n' : ''),
+            // wether redirect to code-panel, after lesson created
+            value:
+              ait.name +
+              (ait.meta?.redirectAfterAiCreate ? ' * ' : '') +
+              (ait.meta?.generator ? ' ** ' : ''),
             tooltip: ait.description,
-            icon: 'material-symbols:info-outline',
+            icon: <LuInfo size={16} />,
           })),
         ]
       : TYPE_LESSON
