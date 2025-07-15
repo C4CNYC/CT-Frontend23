@@ -1,4 +1,5 @@
 import { BaseSearchInterface } from '@/utils'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 
 import { IStudent } from '../services/interfaces/user.interface'
 import { ISchool } from '../slices/global'
@@ -27,7 +28,7 @@ export interface IClassProgressLesson {
   progress: number
   core: boolean
   autoGraded: boolean
-  type: 'practical' | 'exercise' | 'quiz'
+  type: LessonType
   slides: Array<{
     id: string
     name: string

@@ -99,7 +99,7 @@ export default function LessonItem({
             WebkitTextFillColor: 'transparent',
           }}
         >
-          Part of Project
+          Practical
         </Typography>
       ),
       icon: (
@@ -133,6 +133,30 @@ export default function LessonItem({
         />
       ),
     },
+    start_project: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            background: '#0198ED',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Start of Project
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/part_of_project_icon.svg'
+          sx={{
+            width: 25,
+            height: 21,
+          }}
+        />
+      ),
+    },
     exercise: {
       title: (
         <Typography
@@ -142,28 +166,6 @@ export default function LessonItem({
           }}
         >
           Exercise
-        </Typography>
-      ),
-      icon: (
-        <Box
-          component='img'
-          src='/assets/icons/lesson/concept_exercises_icon.svg'
-          sx={{
-            width: 20,
-            height: 23,
-          }}
-        />
-      ),
-    },
-    concept_exercises: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            color: '#155275 !important',
-          }}
-        >
-          Concept Exercises
         </Typography>
       ),
       icon: (
@@ -221,6 +223,30 @@ export default function LessonItem({
           sx={{
             width: 20,
             height: 20,
+          }}
+        />
+      ),
+    },
+    other: {
+      title: (
+        <Typography
+          variant='body2'
+          sx={{
+            background: '#0198ED',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Other
+        </Typography>
+      ),
+      icon: (
+        <Box
+          component='img'
+          src='/assets/icons/lesson/part_of_project_icon.svg'
+          sx={{
+            width: 25,
+            height: 21,
           }}
         />
       ),

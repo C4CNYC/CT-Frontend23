@@ -57,7 +57,7 @@ export function MainTab() {
         </Typography>
       </Stack>
       <RHFToggleButtonGroup
-        name='pseudoType'
+        name='type'
         options={_mochLessonTypes}
         sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
         sxButton={toggleButtonStyles}
