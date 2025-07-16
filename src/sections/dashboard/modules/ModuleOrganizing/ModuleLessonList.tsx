@@ -148,6 +148,7 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
                 grading: module.grading as GRADING,
                 brief: module.brief as string,
                 audience: module.audience as string,
+                meta: module.meta,
               }}
               moduleTips={module.tips}
             >
