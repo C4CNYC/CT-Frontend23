@@ -5,6 +5,10 @@ import Close from '@mui/icons-material/Close'
 import FolderIcon from '@mui/icons-material/Folder'
 import { Button, ClickAwayListener, Stack, Typography, IconButton } from '@mui/material'
 import { useTheme } from '@mui/system'
+import { useRouter } from 'next/router'
+import {
+  useGetLessonStudentWithoutContentsQuery,
+} from '@/redux/services/manager/lesson-student'
 
 import { ConfirmDialog } from '@root/src/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
@@ -38,7 +42,12 @@ const FileModal: FC<FileModalProps> = ({
   const theme = useTheme()
   const translate = useTranslate()
   const styles = useStyles(theme)
+  const router = useRouter()
 
+  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentWithoutContentsQuery(
+    { id: router.query.lessonId as string },
+    { skip: !router.query.lessonId }
+  )
   const [isDeleteExist, setIsDeleteExist] = useState<boolean>(false)
   const [fileToDelete, setFileToDelete] = useState<Pick<
     StudentFile,
@@ -91,6 +100,7 @@ const FileModal: FC<FileModalProps> = ({
             <AddStudentFileModal
               onSubmit={onAddFile}
               files={files}
+              isAllowMultipleSameType={Boolean(lesson?.meta?.is_allow_multiple_same_type)}
             >
               <IconButton>
                 <AddIcon />
