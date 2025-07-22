@@ -38,6 +38,7 @@ interface PreloadFileItemProps {
   extension: FileExtension
   lessonId: string
   contentId: string
+  getUniqueName: (extension: FileExtension) => string
 }
 
 const PreloadFileItem = ({
@@ -47,6 +48,7 @@ const PreloadFileItem = ({
   preloaded_code,
   lessonId,
   contentId,
+  getUniqueName,
 }: PreloadFileItemProps) => {
   const theme = useTheme()
   const translate = useTranslate()
@@ -75,6 +77,7 @@ const PreloadFileItem = ({
     resolver: yupResolver(FileSchema),
     defaultValues,
   })
+  const extensionWatcher = methods.watch('extension')
 
   const onSubmit = async (formData: FormValuesProps) => {
     function dirtyValues(dirtyFields: object | boolean, allValues: object): object {
@@ -119,6 +122,11 @@ const PreloadFileItem = ({
       enqueueSnackbar(translate('messages_error'))
     }
   }
+
+  useEffect(() => {
+    const newName = getUniqueName(extensionWatcher as FileExtension)
+    methods.setValue('name', newName, { shouldDirty: true })
+  }, [extensionWatcher])
 
   useEffect(() => {
     methods.reset({
