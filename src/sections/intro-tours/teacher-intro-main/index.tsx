@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react'
 import JoyRide, { ACTIONS, type CallBackProps, EVENTS, STATUS } from 'react-joyride'
 import { useDispatch } from 'react-redux'
 
+import { useProfileQuery } from '@/redux/services/auth'
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
+import { useUpdateMeMetaFlagMutation } from '@root/src/redux/services/auth'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import TooltipTourCodePanel from '../tour-tooltip'
@@ -12,6 +14,7 @@ import TooltipTourCodePanel from '../tour-tooltip'
 import { getIntroMainSteps } from './config'
 
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
+const KEY_INTRO_TOUR = 'HAS_SEEN_MAIN_TOUR'
 
 export const MainPageTour = () => {
   const translate = useTranslate()
@@ -21,6 +24,9 @@ export const MainPageTour = () => {
 
   const isReadyToStart = useSelector((state) => state.tour.readyToStartMainTour)
   const isTourStarted = useSelector((state) => state.tour.isStarted)
+  const profile = useSelector((state) => state.global.user)
+  const { data: userData, isLoading } = useProfileQuery(null as unknown as void, { skip: !profile })
+  const [updateMeMetaFlag] = useUpdateMeMetaFlagMutation()
 
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { action, index, status, type } = data
@@ -33,7 +39,9 @@ export const MainPageTour = () => {
   }
 
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_MAIN_TOUR')
+    if (isLoading) return
+
+    const hasSeenTour = userData?.meta ? userData.meta[KEY_INTRO_TOUR] : false
 
     if (hasSeenTour || !isReadyToStart) {
       return
@@ -41,12 +49,17 @@ export const MainPageTour = () => {
 
     const timeout = setTimeout(() => {
       dispatch(setStartTour(true))
-      localStorage.setItem('HAS_SEEN_MAIN_TOUR', 'true')
+      updateMeMetaFlag({ key: KEY_INTRO_TOUR, value: true })
+        .unwrap()
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error('Failed to update meta flag:', error)
+        })
     }, 1000)
     return () => {
       clearTimeout(timeout)
     }
-  }, [isTourStarted, isReadyToStart, dispatch])
+  }, [isTourStarted, isReadyToStart, dispatch, isLoading])
 
   return (
     <JoyRide
