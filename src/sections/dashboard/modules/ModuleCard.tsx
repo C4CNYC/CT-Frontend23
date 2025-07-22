@@ -182,6 +182,7 @@ export default function ModuleCard({ module, refetch }: any): React.ReactElement
             grading: module.grading as GRADING,
             brief: module.brief as string,
             audience: module.audience as string,
+            meta: module.meta,
           }}
           moduleTips={module.tips}
           refetch={refetch}
