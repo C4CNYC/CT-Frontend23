@@ -6,10 +6,8 @@ import FolderIcon from '@mui/icons-material/Folder'
 import { Button, ClickAwayListener, Stack, Typography, IconButton } from '@mui/material'
 import { useTheme } from '@mui/system'
 import { useRouter } from 'next/router'
-import {
-  useGetLessonStudentWithoutContentsQuery,
-} from '@/redux/services/manager/lesson-student'
 
+import { useGetLessonStudentWithoutContentsQuery } from '@/redux/services/manager/lesson-student'
 import { ConfirmDialog } from '@root/src/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useTranslate } from '@root/src/utils/translateHelper'

@@ -13,7 +13,7 @@ import { StudentFile } from '@root/src/redux/services/interfaces/workspace.inter
 import { FileExtension } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { useUniqueFileName } from './useUniqueFileName'
+import { getUniqueFileName } from './getUniqueFileName'
 
 interface AddStudentFileModalProps {
   children?: React.ReactElement
@@ -83,7 +83,7 @@ const AddStudentFileModal = ({
   useEffect(() => {
     if (!fileExtension) return
 
-    const uniqueName = useUniqueFileName(fileExtension, files, isAllowMultipleSameType)
+    const uniqueName = getUniqueFileName(fileExtension, files, isAllowMultipleSameType)
 
     methods.setValue('fileName', uniqueName, { shouldDirty: true })
   }, [fileExtension, files, isAllowMultipleSameType])

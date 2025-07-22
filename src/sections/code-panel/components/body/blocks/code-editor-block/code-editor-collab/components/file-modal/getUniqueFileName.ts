@@ -1,5 +1,5 @@
-import { FileExtension } from '@root/src/types/lessons'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { FileExtension } from '@root/src/types/lessons'
 
 const getDefaultNameByExtension = (ext: FileExtension) => {
   switch (ext) {
@@ -16,16 +16,14 @@ const getDefaultNameByExtension = (ext: FileExtension) => {
   }
 }
 
-export const useUniqueFileName = (
+export const getUniqueFileName = (
   extension: FileExtension | string,
   files: StudentFile[],
   isAllowMultipleSameType: boolean
 ): string => {
   const baseName = getDefaultNameByExtension(extension as FileExtension)
 
-  const existingNames = files
-    .filter((f) => f.extension === extension)
-    .map((f) => f.name)
+  const existingNames = files.filter((f) => f.extension === extension).map((f) => f.name)
 
   if (!existingNames.includes(baseName)) return baseName
 
