@@ -17,6 +17,7 @@ import { SnackbarProviderWrapper } from '@/components/snackbar'
 import ThemeLocalization from '@/locales'
 import { store } from '@/redux/store'
 import { ThemeProvider } from '@/theme'
+import { getPrimaryDomainWithHttps } from '@/utils/getPrimaryDomainWithHttps'
 
 import '@/locales/i18n'
 import 'react-lazy-load-image-component/src/effects/blur.css'
@@ -61,6 +62,67 @@ export default function MyApp({ Component, pageProps, ...props }: MyAppProps): R
     )
   }, [tenant])
 
+  const socialMetaTags = useMemo(() => {
+    if (!tenant) return null
+
+    const title = tenant?.meta?.meta_title || tenant?.name || 'Name of the company or page'
+    const description =
+      tenant?.meta?.meta_description ||
+      'Description of the company or page, which is used for SEO and social media sharing.'
+    const image = tenant?.min_logo || tenant?.favicon || ''
+    const url = getPrimaryDomainWithHttps(tenant?.domain || 'https://app.codetribe.com') || ''
+
+    return (
+      <>
+        <meta
+          property='og:type'
+          content='website'
+        />
+        <meta
+          property='og:title'
+          content={title}
+        />
+        <meta
+          property='og:description'
+          content={description}
+        />
+        <meta
+          property='og:image'
+          content={image}
+        />
+        <meta
+          property='og:url'
+          content={url}
+        />
+        <meta
+          property='og:site_name'
+          content={tenant?.name || 'Codetribe'}
+        />
+
+        <meta
+          name='twitter:card'
+          content='summary_large_image'
+        />
+        <meta
+          name='twitter:title'
+          content={title}
+        />
+        <meta
+          name='twitter:description'
+          content={description}
+        />
+        <meta
+          name='twitter:image'
+          content={image}
+        />
+        <meta
+          name='twitter:url'
+          content={url}
+        />
+      </>
+    )
+  }, [tenant])
+
   return (
     <EmotionAppCacheProvider {...props}>
       <Head>
@@ -77,6 +139,7 @@ export default function MyApp({ Component, pageProps, ...props }: MyAppProps): R
           href='data:,'
         />
         {favicon}
+        {socialMetaTags}
       </Head>
       <GoogleAnalytics></GoogleAnalytics>
       <ReduxProvider store={store}>

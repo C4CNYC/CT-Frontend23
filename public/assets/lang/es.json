@@ -1005,6 +1005,8 @@
     "create_new_name_label": "Nombre de la organización",
     "create_new_slug_label": "Slug",
     "create_new_domain_label": "Dominio",
+    "org_meta_title": "Metatítulo",
+    "org_meta_description": "Metadescripción",
     "name_validation_msg": "El nombre es obligatorio",
     "slug_validation_msg_1": "El slug debe estar en minúsculas, no contener espacios ni números, y usar solo letras y guiones",
     "slug_validation_msg_2": "El slug es obligatorio",
