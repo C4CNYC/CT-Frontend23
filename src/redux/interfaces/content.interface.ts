@@ -3,7 +3,7 @@ import { IAuthor } from '@/redux/services/interfaces/author.interface'
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
 import { LessonContentType } from '../enums/lesson-content-type.enum'
-import { AGE, GRADING, LEVEL } from '../services/interfaces/courseUnits.interface'
+import { AGE, GRADING, LEVEL, TModuleMeta } from '../services/interfaces/courseUnits.interface'
 import { ILesson } from '../services/interfaces/lesson.interface'
 
 export type { ILesson }
@@ -77,6 +77,7 @@ export interface IModule {
   brief?: string
   audience?: string
   authors: IAuthor[]
+  meta: TModuleMeta
 }
 
 export interface IModuleContent {

@@ -3,6 +3,7 @@ import { FileExtension } from '@root/src/types/lessons'
 
 import { LessonContentComplexity } from '../enums/lesson-content-complexity.enum'
 import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { LessonMachineLang } from '../enums/lesson-language.enum'
 import { LessonType } from '../enums/lesson-type.enum'
 
 import { LessonMeta } from './lesson.interface'
@@ -22,6 +23,7 @@ export interface IModule {
   age: AGE
   customAge: string
   grading: GRADING
+  meta: TModuleMeta
 }
 
 export interface ILesson {
@@ -243,4 +245,9 @@ export interface ILessonDelete {
 
 export interface ICourseDelete {
   id?: string | null
+}
+
+export type TModuleMeta = {
+  machineLang: keyof typeof LessonMachineLang
+  [key: string]: string | number
 }

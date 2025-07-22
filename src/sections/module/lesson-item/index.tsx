@@ -20,6 +20,7 @@ import { convertMinsToString } from '@root/src/utils/convertMinsToString'
 import RocketIcon from '../icons/RocketIcon'
 
 import { DURATION_SX, MODE_TITLE_SX, SEE_MORE_SX, getLessonSx } from './constants'
+import { createLessonType } from './createLessonType'
 import { LessonItemButton } from './LessonItemButton'
 import TrainingProgress from './LessonProgress'
 
@@ -89,168 +90,92 @@ export default function LessonItem({
   }
 
   const typeOfLesson = {
-    practical: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            background: 'linear-gradient(#7A16C9, #F618D3B5)',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-        >
-          Practical
-        </Typography>
-      ),
+    practical: createLessonType({
+      label: 'Practical',
+      tooltip: 'Building a project line-by-line with explanations and step-by-step guidance.',
       icon: (
         <RocketIcon
           width={20}
           height={20}
         />
       ),
-    },
-    part_project: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            background: 'linear-gradient(#7A16C9, #F618D3B5)',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-        >
-          Part of Project
-        </Typography>
-      ),
+      gradient: 'linear-gradient(#7A16C9, #F618D3B5)',
+    }),
+    part_project: createLessonType({
+      label: 'Part of Project',
+      tooltip:
+        'Build things with this lesson type: The code you type in one lesson, flows to the next, if the lesson is completed.',
       icon: (
         <Box
           component='img'
           src='/assets/icons/lesson/part_of_project_gradient_icon.svg'
-          sx={{
-            width: 25,
-            height: 21,
-          }}
+          sx={{ width: 25, height: 21 }}
         />
       ),
-    },
-    start_project: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            background: '#0198ED',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-        >
-          Start of Project
-        </Typography>
-      ),
+      gradient: 'linear-gradient(#7A16C9, #F618D3B5)',
+    }),
+    start_project: createLessonType({
+      label: 'Start of Project',
+      tooltip:
+        'The beginning lesson of a project. Subsequent lessons will build on the code typed here.',
       icon: (
         <Box
           component='img'
           src='/assets/icons/lesson/part_of_project_icon.svg'
-          sx={{
-            width: 25,
-            height: 21,
-          }}
+          sx={{ width: 25, height: 21 }}
         />
       ),
-    },
-    exercise: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            color: '#155275 !important',
-          }}
-        >
-          Exercise
-        </Typography>
-      ),
+      color: '#0198ED',
+    }),
+    exercise: createLessonType({
+      label: 'Exercise',
+      tooltip:
+        'Exercises with instructions and examples. Great for reinforcing learning or evaluating competency.',
       icon: (
         <Box
           component='img'
           src='/assets/icons/lesson/concept_exercises_icon.svg'
-          sx={{
-            width: 20,
-            height: 23,
-          }}
+          sx={{ width: 20, height: 23 }}
         />
       ),
-    },
-    open_project: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            background: 'linear-gradient(#C9C216, #F69018B5)',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-        >
-          Open Project
-        </Typography>
-      ),
+      color: '#155275',
+    }),
+    open_project: createLessonType({
+      label: 'Open Project',
+      tooltip: 'Single slide exercise type of lesson.',
       icon: (
         <Box
           component='img'
           src='/assets/icons/lesson/open_project_icon.svg'
-          sx={{
-            width: 19,
-            height: 26,
-          }}
+          sx={{ width: 19, height: 26 }}
         />
       ),
-    },
-    quiz: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            background: 'linear-gradient(#FF0000, #BA26ED, #2A26ED)',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-        >
-          Quiz
-        </Typography>
-      ),
+      gradient: 'linear-gradient(#C9C216, #F69018B5)',
+    }),
+    quiz: createLessonType({
+      label: 'Quiz',
+      tooltip: 'Multiple-choice questions to test knowledge and understanding.',
       icon: (
         <Box
           component='img'
           src='/assets/icons/lesson/quiz_icon.svg'
-          sx={{
-            width: 20,
-            height: 20,
-          }}
+          sx={{ width: 20, height: 20 }}
         />
       ),
-    },
-    other: {
-      title: (
-        <Typography
-          variant='body2'
-          sx={{
-            background: '#0198ED',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-        >
-          Other
-        </Typography>
-      ),
+      gradient: 'linear-gradient(#FF0000, #BA26ED, #2A26ED)',
+    }),
+    other: createLessonType({
+      label: 'Other',
+      tooltip: 'Any other type of lesson.',
       icon: (
         <Box
           component='img'
           src='/assets/icons/lesson/part_of_project_icon.svg'
-          sx={{
-            width: 25,
-            height: 21,
-          }}
+          sx={{ width: 25, height: 21 }}
         />
       ),
-    },
+      color: '#0198ED',
+    }),
   }
 
   return (
