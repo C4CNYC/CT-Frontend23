@@ -76,11 +76,12 @@ export default function MyApp({
   const socialMetaTags = useMemo(() => {
     if (!initialTenant) return null
 
+    const name = initialTenant?.name || 'Codetribe'
     const title = initialTenant?.meta?.meta_title || initialTenant?.name || 'CodeTribe'
     const description =
       initialTenant?.meta?.meta_description ||
       'Text-based Coding for Teens, Schools & Summer Camps – Coding real-world, social-impact websites. Learn web development with friends.'
-    const image = initialTenant?.min_logo || initialTenant?.favicon || ''
+    const image = initialTenant?.min_logo || ''
     const url =
       getPrimaryDomainWithHttps(initialTenant?.domain || 'https://app.codetribe.com') || ''
 
@@ -116,7 +117,7 @@ export default function MyApp({
         />
         <meta
           property='og:site_name'
-          content={tenant?.name || 'Codetribe'}
+          content={name}
         />
 
         <meta
