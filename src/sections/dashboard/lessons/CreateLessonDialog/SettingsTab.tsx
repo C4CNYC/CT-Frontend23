@@ -108,7 +108,7 @@ export function SettingsTab({ handleAutoRunSet }: SettingsTabProps) {
         size='small'
       />
 
-      {/* <Stack
+      <Stack
         direction='row'
         flexWrap='wrap'
         justifyContent='space-between'
@@ -120,12 +120,12 @@ export function SettingsTab({ handleAutoRunSet }: SettingsTabProps) {
         >
           <Box>
             <RHFSwitch
-              name='one_file_per_type'
-              label={translate('lessons_one_file_per_type_toggle')}
+              name='meta.is_allow_multiple_same_type'
+              label={translate('Allow multiple files of the same type')}
             />
           </Box>
         </Tooltip>
-      </Stack> */}
+      </Stack>
     </>
   )
 }
