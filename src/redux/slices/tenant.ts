@@ -23,7 +23,7 @@ export const DEFAULT_TENANT: Tenant = {
   meta: {
     meta_title: 'CodeTribe',
     meta_description:
-      'CodeTribe is a platform for learning and sharing knowledge about coding and technology.',
+      'Text-based Coding for Teens, Schools & Summer Camps – Coding real-world, social-impact websites. Learn web development with friends.',
   },
 }
 
