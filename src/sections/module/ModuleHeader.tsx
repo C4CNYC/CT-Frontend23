@@ -4,6 +4,7 @@ import { Box, Chip, Stack, Typography, useMediaQuery, useTheme } from '@mui/mate
 
 import { Image } from '@/components'
 import { ILesson, ISkill } from '@/redux/interfaces/content.interface'
+import { InvertedLessonMachineLang } from '@/redux/services/enums/lesson-language.enum'
 import ImageLightBox from '@/sections/course/modules-list/module-item/ImageLightBox'
 import { BaseResponseInterface } from '@/utils'
 import { convertSkillsArrToObject } from '@/utils/convertSkillsArrToObject'
@@ -31,9 +32,13 @@ export default function ModuleHeader({
 
   const grading = unitModule?.grading
   const levelOfModule = unitModule?.level
-  const lessonsLangs = lessons.map((item: ILesson) => item?.meta?.machineLang || 'HTML/CSS/JS')
+  const moduleMachineLang =
+    unitModule?.meta?.machineLang &&
+    InvertedLessonMachineLang[
+      unitModule?.meta?.machineLang as keyof typeof InvertedLessonMachineLang
+    ]
   const availableUniqueSkills = [
-    ...new Set([...lessonsLangs, levelOfModule, grading].filter((v): v is string => v != null)),
+    ...new Set([moduleMachineLang, levelOfModule, grading].filter((v): v is string => v != null)),
   ]
   const skills = availableUniqueSkills.length
     ? convertSkillsArrToObject(availableUniqueSkills)

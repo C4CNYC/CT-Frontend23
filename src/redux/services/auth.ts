@@ -7,7 +7,7 @@ import { IUser } from '../interfaces/auth.interface'
 import { Role } from './enums/role.enum'
 import { baseQueryWrapper } from './helpers/base_query_wrapper'
 import { baseQueryWithAuth } from './helpers/query_with_auth'
-import { IStudentProfile } from './interfaces/user.interface'
+import { IStudentProfile, IMetaFlag } from './interfaces/user.interface'
 
 export interface User extends BaseResponseInterface {
   avatar: string
@@ -98,6 +98,14 @@ export const authApi = createApi({
       }),
       invalidatesTags: ['ProfileUser'],
     }),
+    updateMeMetaFlag: builder.mutation<IMetaFlag, any>({
+      query: ({ ...body }) => ({
+        url: '/me/meta-flag',
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['ProfileUser'],
+    }),
     udpateStudentProfileAvatar: builder.mutation<void, { file: FormData }>({
       query: ({ file }) => ({
         url: '/student/profile/avatar',
@@ -147,4 +155,5 @@ export const {
   useUpdateProfileMutation,
   useResetPasswordMutation,
   useSubmitPasswordMutation,
+  useUpdateMeMetaFlagMutation,
 } = authApi

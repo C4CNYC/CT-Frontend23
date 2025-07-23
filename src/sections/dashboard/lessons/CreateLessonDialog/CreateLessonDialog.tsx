@@ -105,7 +105,6 @@ export default function CreateLessonDialog({
     lock: false,
     ...defaultValues,
     duration: timeConvertorToSeconds(defaultValues?.duration),
-    one_file_per_type: true,
   }
 
   const CreateCourseSchema = Yup.object().shape({

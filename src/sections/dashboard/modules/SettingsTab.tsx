@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 
-import { RHFTextField } from '@/components'
+import { RHFTextField, RHFSelect } from '@/components'
+import { LessonMachineLang } from '@root/src/redux/services/enums/lesson-language.enum'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 const SettingsTab = (): React.ReactElement => {
@@ -10,6 +11,20 @@ const SettingsTab = (): React.ReactElement => {
       rowGap={3}
       display='grid'
     >
+      <RHFSelect
+        native
+        name='meta.machineLang'
+        label={translate('lessons_language_select')}
+      >
+        {Object.entries(LessonMachineLang).map(([key, value]) => (
+          <option
+            key={key}
+            value={value}
+          >
+            {key}
+          </option>
+        ))}
+      </RHFSelect>
       <RHFTextField
         name='duration'
         label={translate('modules_module_duration')}
