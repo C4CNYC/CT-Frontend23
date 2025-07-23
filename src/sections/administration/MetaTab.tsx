@@ -15,12 +15,10 @@ const MetaTab = (): React.ReactElement => {
         <RHFTextField
           name='meta.meta_title'
           label={translate('org_meta_title')}
-          required
         />
         <RHFTextField
           name='meta.meta_description'
           label={translate('org_meta_description')}
-          required
         />
       </Stack>
     </Stack>
