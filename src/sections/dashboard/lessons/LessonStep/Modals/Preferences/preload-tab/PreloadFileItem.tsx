@@ -20,7 +20,7 @@ import {
   useRemoveLessonStepPreloadFileMutation,
   useUpdateLessonStepPreloadFileMutation,
 } from '@root/src/redux/services/manager/lesson-content-manager'
-import { FileExtension } from '@root/src/types/lessons'
+import { FileExtension, FileExtensions } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { INPUT_NAME_CONT_SX, INPUTS_CONT_SX, UPDATE_BOX_SX } from './constants'
@@ -69,7 +69,7 @@ const PreloadFileItem = ({
 
   const defaultValues = {
     name: name ?? 'index',
-    extension: (extension as FileExtension) ?? FileExtension.HTML,
+    extension: (extension as FileExtension) ?? FileExtensions.HTML,
     preloaded_code: preloaded_code ?? '',
   }
 
@@ -170,10 +170,10 @@ const PreloadFileItem = ({
               },
             }}
           >
-            {Object.keys(FileExtension).map((t) => (
+            {Object.keys(FileExtensions).map((t) => (
               <option
-                key={FileExtension[t as keyof typeof FileExtension]}
-                value={FileExtension[t as keyof typeof FileExtension]}
+                key={FileExtensions[t as keyof typeof FileExtensions]}
+                value={FileExtensions[t as keyof typeof FileExtensions]}
               >
                 {t}
               </option>
