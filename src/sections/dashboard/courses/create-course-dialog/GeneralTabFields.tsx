@@ -5,7 +5,11 @@ import { LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface
 import { capitalizeFirstSymbol } from '@root/src/utils/capitalizeFirstSymbol'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-function GeneralTabFields() {
+interface GeneralTabFieldsrops {
+  isSuperAdmin: boolean
+}
+
+function GeneralTabFields({ isSuperAdmin }: GeneralTabFieldsrops) {
   const translate = useTranslate()
   return (
     <>
@@ -90,7 +94,12 @@ function GeneralTabFields() {
         multiline
         rows={3}
       />
-      <Stack direction='row'>
+      <Stack
+        direction='row'
+        flexWrap='wrap'
+        justifyContent='space-between'
+        sx={{ '& > *': { width: '45%' } }}
+      >
         <RHFSwitch
           name='active'
           label={translate('courses_course_active')}
@@ -103,6 +112,12 @@ function GeneralTabFields() {
           name='catalog'
           label={translate('Catalog')}
         />
+        {isSuperAdmin ? (
+          <RHFSwitch
+            name='is_global'
+            label={translate('Global')}
+          />
+        ) : null}
       </Stack>
     </>
   )

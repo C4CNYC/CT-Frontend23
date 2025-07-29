@@ -6,6 +6,8 @@ import { Box, Button, IconButton, Stack, Typography } from '@mui/material'
 import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 import { useForm } from 'react-hook-form'
 
+import { useAuthContext } from '@/auth/useAuthContext'
+import { Role } from '@/redux/services/enums/role.enum'
 import {
   useCreateCourseMutation,
   useUpdateCourseCoverMutation,
@@ -34,6 +36,8 @@ interface GeneralTabProps {
 function GeneralTab({ defaultValues, isEdit, id, refetch, handleClose }: GeneralTabProps) {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const { user } = useAuthContext()
+  const isSuperAdmin = user?.role === Role.SuperAdmin
 
   const [uploadedFile, setUploadedFile] = useState<null | File>(null)
 
@@ -121,25 +125,25 @@ function GeneralTab({ defaultValues, isEdit, id, refetch, handleClose }: General
             />
             <SingleFilePreview file={uploadedFile ? URL.createObjectURL(uploadedFile) : null} />
           </Box>
-          <GeneralTabFields />
+          <GeneralTabFields isSuperAdmin={isSuperAdmin} />
         </Stack>
+        <Box sx={CONTROL_BTNS_BOX_SX}>
+          <Button
+            color='error'
+            variant='soft'
+            onClick={handleClose}
+          >
+            {translate('actions_close')}
+          </Button>
+          <LoadingButton
+            type='submit'
+            variant='contained'
+            loading={isEditLoading || isCreateLoading}
+          >
+            {translate('actions_save')}
+          </LoadingButton>
+        </Box>
       </FormProvider>
-      <Box sx={CONTROL_BTNS_BOX_SX}>
-        <Button
-          color='error'
-          variant='soft'
-          onClick={handleClose}
-        >
-          {translate('actions_close')}
-        </Button>
-        <LoadingButton
-          type='submit'
-          variant='contained'
-          loading={isEditLoading || isCreateLoading}
-        >
-          {translate('actions_save')}
-        </LoadingButton>
-      </Box>
     </>
   )
 }
