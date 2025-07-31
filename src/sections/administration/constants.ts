@@ -1,4 +1,5 @@
 import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
+import { IOrgMeta } from '@root/src/redux/services/interfaces/administration'
 
 export const HELPER_IMG_TEXT = {
   mt: 1,
@@ -31,11 +32,5 @@ export interface FormValuesProps {
   slug: string
   domain: string[] | string
   home_page_type: HomePageType
-}
-
-export interface FormValuesPropsR {
-  name: string
-  slug: string
-  domain: string[]
-  home_page_type: HomePageType
+  meta: IOrgMeta
 }

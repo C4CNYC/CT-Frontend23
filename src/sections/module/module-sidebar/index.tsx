@@ -5,6 +5,8 @@ import { Stack, Typography, useTheme } from '@mui/material'
 import { IModule, IModuleContent } from '@/redux/interfaces/content.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import OnlyAdmin from '@root/src/auth/OnlyAdmin'
+import { convertDurationToHours } from '@root/src/utils/convertDurationToHours'
+import { convertDurationToMins } from '@root/src/utils/convertDurationToMins'
 
 import AuthorsSection from './AuthorsSection'
 import BriefSection from './BriefSection'
@@ -79,7 +81,9 @@ export default function ModuleSidebar({
           lessons={`${lessons?.length} ${translate('lessons')}`}
           grade={customAge || age || '6th-10th Grade'}
           level={customLevel || level || 'Beginner'}
-          duration={moduleDuration ?? '.5 hour'}
+          duration={
+            convertDurationToHours(convertDurationToMins(duration), translate('hours')) ?? '.5 hour'
+          }
           brief={brief || ''}
         />
       </CollapsedItem>

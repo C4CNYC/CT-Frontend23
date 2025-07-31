@@ -75,4 +75,5 @@ export interface IUser {
   role: Role
   student_profile: IStudent & BaseResponseInterface
   city?: string | null
+  meta?: { [key: string]: string | number | boolean }
 }
