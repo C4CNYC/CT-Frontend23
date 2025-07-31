@@ -20,7 +20,7 @@ const getDefaultNameByExtension = (ext: FileExtension) => {
 export const getUniqueFileName = (
   extension: FileExtension | string,
   isAllowMultipleSameType: boolean,
-  files?: Array<ILessonPreloadFile & BaseResponseInterface>,
+  files?: Array<ILessonPreloadFile & BaseResponseInterface>
 ): string => {
   if (!files || files.length === 0) return generateRandomName()
 
