@@ -1019,6 +1019,8 @@
     "create_new_name_label": "Organisation name",
     "create_new_slug_label": "Slug",
     "create_new_domain_label": "Domain",
+    "org_meta_title": "Meta title",
+    "org_meta_description": "Meta description",
     "name_validation_msg": "Name is reqired",
     "slug_validation_msg_1": "Slug must be lowercase, contain no spaces or numbers, and only use letters and hyphens",
     "slug_validation_msg_2": "Slug is required",

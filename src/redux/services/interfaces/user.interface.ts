@@ -25,6 +25,7 @@ export interface IUser {
   cover?: string
   socials?: ISocials[]
   account?: null
+  meta?: { [key: string]: string | number | boolean }
 }
 
 export interface IUserCreate {
@@ -112,4 +113,9 @@ export interface ISocials {
   type: string
   link: string
   id?: string
+}
+
+export interface IMetaFlag {
+  key: string
+  value: string | number | boolean
 }

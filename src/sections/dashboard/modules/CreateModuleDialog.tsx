@@ -22,6 +22,7 @@ import {
 import { useTranslate } from '@/utils/translateHelper'
 import ModuleLessonsAutocomplete from '@root/src/components/module-lessons-autocomplete/ModuleLessonAutocomplete'
 import { AGE, GRADING, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
+import { TModuleMeta } from '@root/src/redux/services/interfaces/courseUnits.interface'
 
 import AuthorsTab from './authors-tab/AuthorsTab'
 import { DIALOG_ACTIONS_SX, TAB_SX } from './constants'
@@ -48,6 +49,7 @@ interface FormValuesProps {
   grading: GRADING
   brief: string
   audience: string
+  meta: TModuleMeta
 }
 
 interface Prop {
