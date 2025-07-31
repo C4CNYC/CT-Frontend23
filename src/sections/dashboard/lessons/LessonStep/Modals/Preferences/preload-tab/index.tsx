@@ -11,9 +11,8 @@ import { useGetLessonSlidePreloadFilesQuery } from '@root/src/redux/services/man
 import { FileExtension } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { useUniqueFilename } from '../../../../../../../hooks/useUniqueFilename'
-
 import { getAssetBtnSx } from './constants'
+import { useUniqueFilename } from './hooks/useUniqueFilename'
 import PreloadFileItem from './PreloadFileItem'
 
 interface PreloadTabProps {
