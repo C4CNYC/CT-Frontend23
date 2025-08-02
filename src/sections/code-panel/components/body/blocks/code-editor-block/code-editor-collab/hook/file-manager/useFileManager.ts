@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { useDebounceCallback } from '@root/src/hooks/useDebounceCallback'
 import { ILesson } from '@root/src/redux/interfaces/content.interface'
 import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
@@ -12,15 +13,16 @@ import {
   useGetLessonStudentWithoutContentsQuery,
 } from '@root/src/redux/services/manager/lesson-student'
 import { useCompleteLessonMutation } from '@root/src/redux/services/manager/progress-student'
+import { useUpdateStudentFileMutation } from '@root/src/redux/services/manager/student-file-debounced'
 import {
   useCreateStudentFileMutation,
   useDeleteStudentFileMutation,
   useGetFilesByUnauthUserQuery,
   useGetStudentFilesQuery,
-  useUpdateStudentFileMutation,
 } from '@root/src/redux/services/manager/workspace-student'
 import { useSelector } from '@root/src/redux/store'
 import { BaseResponseInterface } from '@root/src/utils'
+import { unfreeze } from '@root/src/utils/unfreeze'
 
 import {
   getLocalStorageCode,
@@ -42,7 +44,7 @@ const DEFAULT_FILE = {
 
 export const useFileManager = () => {
   const lessonRef = useRef<(ILesson & BaseResponseInterface) | null>(null)
-
+  const [files, filesSet] = useState<StudentFile[]>([])
   const { query } = useRouter()
   const searchParams = useSearchParams()
   const { isAuthenticated: isAuthenticatedSystem, user } = useAuthContext()
@@ -58,7 +60,10 @@ export const useFileManager = () => {
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [updateStudentFile] = useUpdateStudentFileMutation()
+
   const [completeLesson] = useCompleteLessonMutation()
+
+  const debouncedUpdateFile = useDebounceCallback(100)
 
   const {
     data: lesson,
@@ -201,8 +206,9 @@ export const useFileManager = () => {
     slideId,
   ])
   // Move file operations to useEffect
-  const files = useMemo(() => {
-    if (!isAuthenticated) return unauthFilesList
+  let filesHash = [...authFiles, ...unauthFilesList].map((f) => f.body).join('')
+  useEffect(() => {
+    if (!isAuthenticated) return filesSet(unauthFilesList)
 
     let authFilesWithoutHello = authFiles.filter(
       (file) => !file.name.toLowerCase().startsWith('hello_')
@@ -216,8 +222,8 @@ export const useFileManager = () => {
         )
     )
 
-    return [...authFilesWithoutHello, ...unauthFilesNotSaved]
-  }, [authFiles, unauthFilesList, isAuthenticated]) // Use full arrays as dependencies
+    filesSet(unfreeze([...authFilesWithoutHello, ...unauthFilesNotSaved]))
+  }, [filesHash, isAuthenticated]) // Use full arrays as dependencies
   useEffect(() => {
     if (!isAuthenticated || authFiles.length < 2 || !isPageReady) return
     let searched = new Set(authFiles.map((f) => `${f.name}.${f.extension}`))
@@ -338,7 +344,9 @@ export const useFileManager = () => {
     },
     [lessonId, slideId]
   )
-
+  function getFiles() {
+    return files
+  }
   const onUpdateFile = useCallback(
     async (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>): Promise<void> => {
       const filteredBody = Object.fromEntries(
@@ -351,12 +359,17 @@ export const useFileManager = () => {
           return
         }
 
-        await updateStudentFile({ id, ...filteredBody })
+        // Update local state immediately for UI consistency
+        filesSet((prevFiles) => {
+          // Create a new array with the updated file to ensure React detects the change
+          return prevFiles.map((file) => (file.id === id ? { ...file, ...filteredBody } : file))
+        })
+        updateStudentFile({ id, ...filteredBody, lessonId, lessonContentId: slideId })
       } catch (e: any) {
         throw new Error(e.message)
       }
     },
-    [isAuthenticated, localStorageKey]
+    [isAuthenticated, localStorageKey, debouncedUpdateFile, updateStudentFile]
   )
 
   const onDeleteFile = useCallback(
@@ -530,6 +543,7 @@ export const useFileManager = () => {
 
   return {
     files,
+    getFiles,
     isOpen,
     barFiles,
     localStorageKey,

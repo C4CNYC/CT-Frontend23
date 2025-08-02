@@ -30,19 +30,28 @@ export const useInitCodemirror = (): UseBaseInitReturn => {
 
   const lineWrap = useMemo(() => new Compartment(), [])
 
-  const baseInit = useCallback(async (file: StudentFile) => {
-    setExtensions([
-      indentCompartment.of(noAutoIndent),
-      basicSetup(BASIC_SETUP),
-      ...language(file),
-      dracula,
-      lineWrap.of(EditorView.lineWrapping),
-    ])
+  const baseInit = useCallback(
+    async (file: StudentFile) => {
+      try {
+        // Wait for language plugins to be dynamically loaded
+        const languagePlugins = await language(file)
 
-    setKey((prev) => ++prev)
-    setIsLoading(false)
-    return
-  }, [])
+        setExtensions([
+          indentCompartment.of(noAutoIndent),
+          basicSetup(BASIC_SETUP),
+          ...languagePlugins,
+          dracula,
+          lineWrap.of(EditorView.lineWrapping),
+        ])
+
+        setKey((prev) => ++prev)
+        setIsLoading(false)
+      } catch (error) {
+        setIsLoading(false)
+      }
+    },
+    [lineWrap]
+  )
 
   return {
     key,

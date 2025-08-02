@@ -135,7 +135,6 @@ export function CodePanelLayout(): ReactElement | null {
     { id: router.query.lessonId as string },
     { skip: !router.query.lessonId }
   )
-
   let { data: lessonsRelatedWithSlug } = useGetLessonsQuery(
     {
       slug: lessonIdFromRoute,

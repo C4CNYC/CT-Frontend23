@@ -10,9 +10,9 @@ import { type RootState } from '@/redux/store'
 import { useTranslate } from '@/utils/translateHelper'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
+import { BrowserView } from '../../../browserview/BrowserView'
 import BaseBlock from '../base-block'
 
-import BrowserView from './browser-view'
 import PreviewControls from './browser-view/preview-controls'
 import { CodeDocument } from './browser-view/types'
 import ConsoleBlock from './console-block'
