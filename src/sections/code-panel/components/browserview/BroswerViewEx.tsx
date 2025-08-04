@@ -110,7 +110,7 @@ export function BrowserViewEx({ document, iframeKey }: { document: any; iframeKe
       .catch((e) => {
         //console.error(e)
       })
-      .finally(() => setTimeout(() => processingSet((v) => false), 10000))
+      .finally(() => setTimeout(() => processingSet((v) => false), 2000))
   }, [iframeKey, files])
 
   return (
@@ -179,14 +179,13 @@ export function BrowserViewEx({ document, iframeKey }: { document: any; iframeKe
               display: stderr ? 'block' : 'none',
             }}
           >
-            {stderr}
-            {files
-              .filter((file) => file.extension.toLowerCase() === 'py')
-              .map((file) => file.body)
-              .join('\n')}
-            kedi
+            {stderr}  
           </div>
+          <div style={{ color: '#F6F9FC', whiteSpace: 'pre-wrap' }}>
           {running}
+
+            {processing ? 'Processing' : 'Ready'}
+            </div>
         </Stack>
       </Stack>
     </>

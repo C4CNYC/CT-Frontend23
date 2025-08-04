@@ -3,7 +3,7 @@ export function prepareJavaCode(code: string, test: string): string {
 import java.util.*;
 ${code}
 ${test}
-public class Binder {
+public class Main {
     public static void main(String[] args) {
         int passed = 0;
         int failed = 0;
@@ -34,7 +34,7 @@ public class Binder {
             }
         }
 
-        System.out.println("\nSummary: " + passed + " Passed, " + failed + " Failed");
+        System.out.println("Summary: " + passed + " Passed, " + failed + " Failed");
     }
 }
 

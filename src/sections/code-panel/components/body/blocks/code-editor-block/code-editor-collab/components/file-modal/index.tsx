@@ -107,7 +107,7 @@ const FileModal: FC<FileModalProps> = ({
           </Stack>
 
           <Stack>
-            {files.map(({ id, name, extension }) => {
+            {files.filter(f=>f.extension.toLocaleLowerCase()!=='test').map(({ id, name, extension }) => {
               return (
                 <Stack
                   key={id}
