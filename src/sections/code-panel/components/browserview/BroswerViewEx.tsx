@@ -179,13 +179,13 @@ export function BrowserViewEx({ document, iframeKey }: { document: any; iframeKe
               display: stderr ? 'block' : 'none',
             }}
           >
-            {stderr}  
+            {stderr}
           </div>
           <div style={{ color: '#F6F9FC', whiteSpace: 'pre-wrap' }}>
-          {running}
+            {running}
 
             {processing ? 'Processing' : 'Ready'}
-            </div>
+          </div>
         </Stack>
       </Stack>
     </>
