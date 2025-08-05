@@ -7,6 +7,7 @@ import { FaChevronUp } from '@react-icons/all-files/fa/FaChevronUp'
 import { useRouter } from 'next/router'
 
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import CompletedIcon from '../icons/CompletedIcon'
@@ -34,7 +35,7 @@ interface RoadItemProps {
   name: string
   description: string
   lessonId: string
-  type: 'practical' | 'exercise'
+  type: LessonType
 }
 
 const PROJECT_TIME = '20 mins'

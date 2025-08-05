@@ -5,6 +5,7 @@ import { Box, type SxProps } from '@mui/material'
 import useIsDesktop from '@/hooks/useIsDesktop'
 import { useSelector } from '@/redux/store'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
+import { useIsAdmin } from '@root/src/lib/use-is-admin'
 
 import { LessonManager } from '../lesson-manager'
 
@@ -22,6 +23,7 @@ export const TopPanel: FC<ITopPanel> = ({ language }) => {
   const isDesktop = useIsDesktop()
   const boxStyles = useMemo(() => getBoxStyles(isDesktop), [isDesktop])
   const profile = useSelector((state) => state.global.user)
+  const { isAdmin } = useIsAdmin()
 
   return (
     <Box
@@ -35,7 +37,7 @@ export const TopPanel: FC<ITopPanel> = ({ language }) => {
         {isDesktop && <HomeBtn />}
         {isDesktop && <LessonManager />}
       </Box>
-      {profile ? <GroupHeader /> : ''}
+      {profile && isAdmin ? <GroupHeader /> : ''}
       {isDesktop ? <DesktopBar language={language} /> : <MobileBar />}
     </Box>
   )

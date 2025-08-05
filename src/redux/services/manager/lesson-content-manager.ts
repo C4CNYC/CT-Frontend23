@@ -83,6 +83,22 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
     }),
 
+    getLessonFiles: builder.query<
+      Array<ILessonPreloadFile & BaseResponseInterface>,
+      { lessonId: string }
+    >({
+      query: ({ lessonId }) => ({
+        url: `/manager/lesson/${lessonId}/content/files`,
+        method: 'GET',
+      }),
+      providesTags: ['LessonSlidePreload'],
+      transformResponse: (
+        res: Array<ILessonPreloadFile & BaseResponseInterface>
+      ): Array<ILessonPreloadFile & BaseResponseInterface> =>
+        res.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()),
+      keepUnusedDataFor: 0,
+    }),
+
     addLessonStepPreloadFile: builder.mutation<
       ILessonPreloadFile,
       { lessonId: string; contentId: string } & Omit<ILessonPreloadFile, 'id'>
@@ -127,6 +143,7 @@ export const {
   useGetLessonContentQuery,
   useGetLessonContentByIdQuery,
   useGetLessonSlidePreloadFilesQuery,
+  useGetLessonFilesQuery,
   // -------------mutation-----------
   useUpdateLessonContentMutation,
   useCreateLessonContentMutation,

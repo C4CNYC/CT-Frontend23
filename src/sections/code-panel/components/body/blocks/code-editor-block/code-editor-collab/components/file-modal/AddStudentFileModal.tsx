@@ -4,19 +4,24 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, Stack, useTheme } from '@mui/material'
 import { IoCloseOutline } from '@react-icons/all-files/io5/IoCloseOutline'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, RHFSelect } from '@/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { useGetLessonFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
 import { FileExtension } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
+
+import { getUniqueFileName } from './getUniqueFileName'
 
 interface AddStudentFileModalProps {
   children?: React.ReactElement
   onSubmit: (fileName: string) => Promise<void>
   files: StudentFile[]
+  isAllowMultipleSameType?: boolean
 }
 
 interface FormValuesProps {
@@ -24,7 +29,13 @@ interface FormValuesProps {
   fileExtension: FileExtension | string
 }
 
-const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalProps) => {
+const AddStudentFileModal = ({
+  children,
+  onSubmit,
+  files,
+  isAllowMultipleSameType = false,
+}: AddStudentFileModalProps) => {
+  const router = useRouter()
   const theme = useTheme()
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
@@ -34,11 +45,20 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
 
   const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
 
+  const { data: allFilesForThisLesson, isLoading: isLoadingAllFilesForThisLesson } =
+    useGetLessonFilesQuery({
+      lessonId: router.query.lessonId as string,
+    })
+
   const availableExtensions = useMemo(() => {
+    if (isAllowMultipleSameType) {
+      return Object.keys(FileExtension)
+    }
+
     const alreadyReservedExt = files.map((file) => file.extension.toUpperCase())
 
     return Object.keys(FileExtension).filter((element) => !alreadyReservedExt.includes(element))
-  }, [files])
+  }, [files, isAllowMultipleSameType])
 
   const CreateStudentFileSchema = Yup.object().shape({
     fileName: Yup.string()
@@ -66,6 +86,19 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
       fileExtension: FileExtension.HTML,
     },
   })
+  const fileExtension = methods.watch('fileExtension')
+
+  useEffect(() => {
+    if (!fileExtension) return
+
+    const uniqueName = getUniqueFileName(
+      fileExtension,
+      isAllowMultipleSameType,
+      allFilesForThisLesson
+    )
+
+    methods.setValue('fileName', uniqueName, { shouldDirty: true })
+  }, [fileExtension, files, isAllowMultipleSameType])
 
   const { setValue } = methods
 
@@ -87,10 +120,12 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
   }
 
   useEffect(() => {
-    if (availableExtensions.length) {
-      setValue('fileExtension', availableExtensions[0].toLowerCase())
+    if (!isAllowMultipleSameType) {
+      if (availableExtensions.length) {
+        setValue('fileExtension', availableExtensions[0].toLowerCase())
+      }
     }
-  }, [availableExtensions])
+  }, [availableExtensions, isAllowMultipleSameType])
 
   return (
     <>

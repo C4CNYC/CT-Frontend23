@@ -5,8 +5,10 @@ import JoyRide, { ACTIONS, type CallBackProps, EVENTS, STATUS } from 'react-joyr
 import { useDispatch } from 'react-redux'
 
 import useIsDesktop from '@/hooks/useIsDesktop'
+import { useProfileQuery } from '@/redux/services/auth'
 import { setStartTour } from '@/redux/slices/tour'
 import { useSelector } from '@/redux/store'
+import { useUpdateMeMetaFlagMutation } from '@root/src/redux/services/auth'
 
 import CopyLinkModal from '../../code-panel/components/modals/CopyLinkModal'
 import WelcomeCodePanelModal from '../../code-panel/components/modals/WelcomeCodePanelModal'
@@ -16,6 +18,7 @@ import { AI_GENERATOR_TOUR_DECKTOP, AI_GENERATOR_TOUR_MOBILE } from './config'
 
 const MS_IN_SECOND = 2592000
 const STATUSES: string[] = [STATUS.FINISHED, STATUS.PAUSED, STATUS.SKIPPED]
+const KEY_INTRO_TOUR = 'HAS_SEEN_AI_GENERATOR_TOUR'
 
 interface AIGeneratorTourProps {
   withModals: boolean
@@ -28,6 +31,9 @@ export const AIGeneratorTour = ({ withModals }: AIGeneratorTourProps) => {
   const [isReadyForModals, setIsReadyForModals] = useState(false)
   const isTourStarted = useSelector((state) => state.tour.isStarted)
   const userCreated = useSelector((state) => state.global.user?.createdAt)
+  const profile = useSelector((state) => state.global.user)
+  const { data: userData, isLoading } = useProfileQuery(null as unknown as void, { skip: !profile })
+  const [updateMeMetaFlag] = useUpdateMeMetaFlagMutation()
 
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { action, index, status, type } = data
@@ -41,7 +47,9 @@ export const AIGeneratorTour = ({ withModals }: AIGeneratorTourProps) => {
   }
 
   useEffect(() => {
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_AI_GENERATOR_TOUR')
+    if (isLoading) return
+
+    const hasSeenTour = userData?.meta ? userData.meta[KEY_INTRO_TOUR] : false
 
     if (hasSeenTour) {
       return
@@ -58,13 +66,18 @@ export const AIGeneratorTour = ({ withModals }: AIGeneratorTourProps) => {
 
     const timeout = setTimeout(() => {
       dispatch(setStartTour(true))
-      localStorage.setItem('HAS_SEEN_AI_GENERATOR_TOUR', 'true')
+      updateMeMetaFlag({ key: KEY_INTRO_TOUR, value: true })
+        .unwrap()
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error('Failed to update meta flag:', error)
+        })
     }, 1000)
 
     return () => {
       clearTimeout(timeout)
     }
-  }, [userCreated, isTourStarted, dispatch])
+  }, [userCreated, isTourStarted, isLoading, dispatch])
 
   return (
     <>

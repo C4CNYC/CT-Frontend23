@@ -34,6 +34,7 @@ function OrgSwitcher() {
     (newValue: IAdministration) => {
       if (!org || org.slug === newValue.slug) return
       setOrg(newValue)
+      localStorage.removeItem('tenant')
       localStorage.setItem('tenantName', newValue.slug)
       popover.onClose()
       reload()

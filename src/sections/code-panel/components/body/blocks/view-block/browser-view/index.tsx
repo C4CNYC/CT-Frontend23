@@ -27,8 +27,8 @@ const BrowserView: FC<BrowserViewProps> = ({
   const IFRAME_STYLE = {
     border: 0,
     width: '100%',
-    height: iframeKey ? 'calc(100% - 72px)' : '100%',
-    background: '#fff',
+    height: iframeKey ? 'calc(100% - 42px)' : '100%',
+    background: '#F8F8FF',
   }
   let lessonEditable = lessonManager.userIsOwner && teacherView
 

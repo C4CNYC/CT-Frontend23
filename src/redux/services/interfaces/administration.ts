@@ -14,6 +14,7 @@ export interface IAdministration {
   home_page_type: HomePageType
   favicon: string | null
   home_page_body?: string
+  meta?: IOrgMeta
 }
 
 export interface IAdministrationCreate {
@@ -22,4 +23,10 @@ export interface IAdministrationCreate {
   domain: string
   home_page_type?: HomePageType
   home_page_body?: string
+}
+
+export interface IOrgMeta {
+  meta_title: string
+  meta_description: string
+  [key: string]: string | number | boolean
 }
