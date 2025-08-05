@@ -1,6 +1,8 @@
 export function prepareJavaCode(code: string, test: string): string {
   return `
 import java.util.*;
+import java.lang.reflect.Method;
+
 ${code}
 ${test}
 public class Main {
@@ -15,8 +17,14 @@ public class Main {
             int[] inputCopy = test.input.clone();
             try {
                 // Call student function
-                StudentCode.selectionSort(inputCopy);
+                Method method = StudentCode.class.getMethod(Tests.STUDENT_FN, int[].class);
+                int[] result = (int[]) method.invoke(null, (Object) inputCopy);
             } catch (Exception e) {
+              Method[] methods = StudentCode.class.getDeclaredMethods();
+
+        for (Method m : methods) {
+            System.out.println("Method: " + m.getName());
+        }
                 System.out.println(testName + " crashed with error: " + e.getMessage());
                 failed++;
                 continue;
