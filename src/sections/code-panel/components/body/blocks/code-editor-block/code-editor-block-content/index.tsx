@@ -79,7 +79,7 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
 
       dispatch(setContentValidations(updatedContentValidations))
     },
-    [contentValidations, contentId]
+    [contentId]
   )
 
   useEffect(() => {
@@ -98,7 +98,7 @@ const CodeEditorBlockContent: FC<ICodeEditorBlock> = ({
       : [newContentValidation]
 
     dispatch(setContentValidations(updatedContentValidations))
-  }, [contentId, validations, selectedContent, checkers, contentValidations])
+  }, [contentId, validations, selectedContent, checkers])
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent): void => {
