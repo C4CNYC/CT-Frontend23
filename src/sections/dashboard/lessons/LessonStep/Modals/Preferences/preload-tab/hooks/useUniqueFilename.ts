@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { useGetLessonSlidePreloadFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
+import { useGetLessonFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
 import { FileExtension } from '@root/src/types/lessons'
 
 const baseNames: Record<FileExtension, string> = {
@@ -11,17 +11,17 @@ const baseNames: Record<FileExtension, string> = {
 }
 
 export function useUniqueFilename(lessonId: string, contentId: string) {
-  const { data: files, isLoading } = useGetLessonSlidePreloadFilesQuery({ lessonId, contentId })
+  const { data: allFiles, isLoading } = useGetLessonFilesQuery({ lessonId })
 
   const existingNamesByExt = useMemo(() => {
     const result: Record<string, Set<string>> = {}
-    for (const file of files ?? []) {
+    for (const file of allFiles ?? []) {
       const ext = file.extension.toLowerCase()
       if (!result[ext]) result[ext] = new Set()
       result[ext].add(file.name)
     }
     return result
-  }, [files])
+  }, [allFiles])
 
   const getUniqueName = (extension: keyof typeof baseNames): string => {
     const base = baseNames[extension]
@@ -39,7 +39,7 @@ export function useUniqueFilename(lessonId: string, contentId: string) {
 
   return {
     getUniqueName,
-    files,
+    allFiles,
     isLoading,
   }
 }

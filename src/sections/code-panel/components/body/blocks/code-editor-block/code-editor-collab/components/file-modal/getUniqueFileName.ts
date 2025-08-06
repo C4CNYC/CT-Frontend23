@@ -1,4 +1,5 @@
-import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { ILessonPreloadFile } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import { FileExtension } from '@root/src/types/lessons'
 
 const getDefaultNameByExtension = (ext: FileExtension) => {
@@ -18,9 +19,11 @@ const getDefaultNameByExtension = (ext: FileExtension) => {
 
 export const getUniqueFileName = (
   extension: FileExtension | string,
-  files: StudentFile[],
-  isAllowMultipleSameType: boolean
+  isAllowMultipleSameType: boolean,
+  files?: Array<ILessonPreloadFile & BaseResponseInterface>
 ): string => {
+  if (!files || files.length === 0) return generateRandomName()
+
   const baseName = getDefaultNameByExtension(extension as FileExtension)
 
   const existingNames = files.filter((f) => f.extension === extension).map((f) => f.name)
@@ -37,4 +40,8 @@ export const getUniqueFileName = (
   }
 
   return newName
+}
+
+function generateRandomName() {
+  return Math.random().toString(36).substring(7)
 }
