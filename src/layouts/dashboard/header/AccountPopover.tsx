@@ -14,7 +14,7 @@ import { useSnackbar } from '@/components/snackbar'
 import { Role } from '@/redux/services/enums/role.enum'
 import { setStudentMode } from '@/redux/slices/global'
 import { useSelector } from '@/redux/store'
-import { MANAGER_PATH_DASHBOARD, MANAGER_PATH_PAGE } from '@/routes/manager.paths'
+import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { PATH_AUTH } from '@/routes/paths'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
@@ -132,7 +132,11 @@ export default function AccountPopover(): React.ReactElement {
           <Stack sx={{ p: 1 }}>
             <MenuItem
               onClick={() => {
-                handleClickItem(isStudentMode ? MANAGER_PATH_PAGE.home : STUDENT_PATH_PAGE.home)
+                handleClickItem(
+                  isStudentMode
+                    ? MANAGER_PATH_DASHBOARD.administration.root
+                    : STUDENT_PATH_PAGE.home
+                )
                 reduxDispatch(setStudentMode(!isStudentMode))
               }}
             >

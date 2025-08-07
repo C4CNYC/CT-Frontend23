@@ -4,12 +4,14 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, Stack, useTheme } from '@mui/material'
 import { IoCloseOutline } from '@react-icons/all-files/io5/IoCloseOutline'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, RHFSelect } from '@/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
+import { useGetLessonFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
 import { FileExtension, FileExtensions } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -33,6 +35,7 @@ const AddStudentFileModal = ({
   files,
   isAllowMultipleSameType = false,
 }: AddStudentFileModalProps) => {
+  const router = useRouter()
   const theme = useTheme()
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
@@ -41,6 +44,11 @@ const AddStudentFileModal = ({
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
+
+  const { data: allFilesForThisLesson, isLoading: isLoadingAllFilesForThisLesson } =
+    useGetLessonFilesQuery({
+      lessonId: router.query.lessonId as string,
+    })
 
   const availableExtensions = useMemo(() => {
     if (isAllowMultipleSameType) {
@@ -83,7 +91,11 @@ const AddStudentFileModal = ({
   useEffect(() => {
     if (!fileExtensions) return
 
-    const uniqueName = getUniqueFileName(fileExtensions, files, isAllowMultipleSameType)
+    const uniqueName = getUniqueFileName(
+      fileExtensions,
+      isAllowMultipleSameType,
+      allFilesForThisLesson
+    )
 
     methods.setValue('fileName', uniqueName, { shouldDirty: true })
   }, [fileExtensions, files, isAllowMultipleSameType])

@@ -21,6 +21,7 @@ import {
   useUpdateOrgMutation,
 } from '@root/src/redux/services/manager/super-admin'
 
+import CatalogTab from './CatalogTab'
 import { TAB_SX, FormValuesProps } from './constants'
 import CustomCodeTab from './CustomCodeTab'
 import FaviconTab from './FaviconTab'
@@ -158,7 +159,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
       <Dialog
         open={open}
         onClose={handleClose}
-        maxWidth='xs'
+        maxWidth='sm'
         fullWidth
       >
         <FormProvider
@@ -199,10 +200,14 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
                     label={translate('Meta')}
                     {...a11yProps(4)}
                   />
+                  <Tab
+                    label={translate('Catalog')}
+                    {...a11yProps(5)}
+                  />
                   {org.home_page_type === HomePageType.Custom ? (
                     <Tab
                       label={translate('Code')}
-                      {...a11yProps(5)}
+                      {...a11yProps(6)}
                     />
                   ) : null}
                 </Tabs>
@@ -250,6 +255,12 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
             <TabPanel
               value={value}
               index={5}
+            >
+              <CatalogTab org={org} />
+            </TabPanel>
+            <TabPanel
+              value={value}
+              index={6}
             >
               <CustomCodeTab
                 handleClose={handleClose}

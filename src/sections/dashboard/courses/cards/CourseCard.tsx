@@ -7,14 +7,16 @@ import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
 import Link from 'next/link'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { ConfirmDialog, Image, Label, MenuPopover, useSnackbar } from '@/components'
+import { Role } from '@/redux/services/enums/role.enum'
 import { ICourse } from '@/redux/services/interfaces/courseUnits.interface'
 import { useDeleteCourseMutation } from '@/redux/services/manager/courses-manager'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
-import { useIsAdmin } from '@root/src/lib/use-is-admin'
 import CreateCourseDialog from '@root/src/sections/dashboard/courses/create-course-dialog'
+
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface
   refetch: () => void
@@ -25,7 +27,9 @@ export default function CourseCard({
   refetch,
 }: ICourseCardProps): React.ReactElement | null {
   const translate = useTranslate()
-  const { isAdmin } = useIsAdmin()
+  const { user } = useAuthContext()
+  const isAdmin = user?.role === Role.Admin
+  const isSuperAdmin = user?.role === Role.SuperAdmin
   const { enqueueSnackbar } = useSnackbar()
 
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -34,7 +38,7 @@ export default function CourseCard({
 
   const [deleteCourse] = useDeleteCourseMutation()
 
-  const { name, level, price, description, active, cover } = course
+  const { name, level, price, description, active, cover, is_global } = course
 
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true)
@@ -86,7 +90,7 @@ export default function CourseCard({
         component={Link}
         href={`${MANAGER_PATH_DASHBOARD.modules.root}?course_id=${course.id}`}
       >
-        {isAdmin ? (
+        {(isAdmin && !is_global) || isSuperAdmin ? (
           <Stack
             direction='row'
             alignItems='center'
@@ -117,6 +121,23 @@ export default function CourseCard({
         </Box>
 
         <Box sx={{ position: 'relative' }}>
+          {is_global ? (
+            <Label
+              variant='soft'
+              color={'info'}
+              sx={{
+                textTransform: 'uppercase',
+                mr: 'auto',
+                position: 'absolute',
+                top: 10,
+                left: 10,
+              }}
+            >
+              Global
+            </Label>
+          ) : (
+            ''
+          )}
           <Label
             variant='soft'
             color={active ? 'success' : 'error'}
@@ -209,6 +230,7 @@ export default function CourseCard({
             initial_enrolled: course.initial_enrolled,
             audience: course.audience,
             for_teachers: course.for_teachers,
+            is_global: course.is_global,
           }}
           refetch={refetch}
         >
