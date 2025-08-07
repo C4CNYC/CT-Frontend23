@@ -63,7 +63,16 @@ export function BrowserViewHTML({
           <script>
             ${
               teacherView
-                ? ``
+                ? `
+  function validateChecker(checkerId,valid){
+    window.parent.postMessage(  {
+    type: 'checker-validation',
+    checkerId,
+    valid  },
+  '*' );
+  }
+  
+                `
                 : `
             console.logOld = console.log;
             consolelog = function() {
