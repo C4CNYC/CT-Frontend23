@@ -31,8 +31,8 @@ export const language = async (file: StudentFile): Promise<LanguageSupport[]> =>
         const { python } = await import('@codemirror/lang-python')
         return [python()]
       case Extensions.Java:
-        const { javascript: javaLang } = await import('@codemirror/lang-javascript')
-        return [javaLang()]
+        const { java } = await import('@codemirror/lang-java')
+        return [java()]
       case Extensions.Go:
         return []
       case Extensions.C:

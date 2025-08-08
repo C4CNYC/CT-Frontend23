@@ -16,21 +16,20 @@ public class Main {
 
             int[] inputCopy = test.input.clone();
             try {
-                // Call student function
-                Method method = StudentCode.class.getMethod(Tests.STUDENT_FN, int[].class);
-                int[] result = (int[]) method.invoke(null, (Object) inputCopy);
+              // Call student function
+              Method method = StudentCode.class.getMethod(Tests.STUDENT_FN, int[].class);
+              int[] result = (int[]) method.invoke(null, (Object) inputCopy);
             } catch (Exception e) {
               Method[] methods = StudentCode.class.getDeclaredMethods();
-
-        for (Method m : methods) {
-            System.out.println("Method: " + m.getName());
-        }
-                System.out.println(testName + " crashed with error: " + e.getMessage());
-                failed++;
-                continue;
+              for (Method m : methods) {
+                  System.out.println("Method: " + m.getName());
+              }
+              System.out.println(testName + " crashed with error: " + e.getMessage());
+              failed++;
+              continue;
             }
 
-            if (Arrays.equals(inputCopy, test.expected)) {
+            if (Arrays.equals(result, test.expected)) {
                 passed++;
                 System.out.println("✅ " + testName + " Passed");
             } else {

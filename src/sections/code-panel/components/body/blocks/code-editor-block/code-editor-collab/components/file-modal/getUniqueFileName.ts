@@ -14,7 +14,7 @@ const getDefaultNameByExtension = (ext: FileExtension) => {
     case 'java':
     case 'c':
     case 'cpp':
-      return 'ain'
+      return 'main'
     case 'json':
       return 'data'
     default:
