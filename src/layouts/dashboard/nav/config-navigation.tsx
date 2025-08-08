@@ -50,6 +50,17 @@ export const admin = {
   ],
 }
 
+export const adminTemporary = {
+  subheader: 'sidebar_menu_administration',
+  items: [
+    {
+      title: 'sidebar_menu_admin',
+      path: MANAGER_PATH_DASHBOARD.administration.root,
+      icon: <MdAdminPanelSettings />,
+    },
+  ],
+}
+
 // export const superAdmin = {
 //   subheader: 'sidebar_menu_administration',
 //   items: [],
@@ -125,6 +136,17 @@ export const content = {
       title: 'sidebar_menu_skills',
       path: MANAGER_PATH_DASHBOARD.skills.root,
       icon: <HiOutlineLightBulb />,
+    },
+  ],
+}
+
+export const contentForAdminTemporary = {
+  subheader: 'sidebar_menu_content',
+  items: [
+    {
+      title: 'sidebar_menu_courses',
+      path: MANAGER_PATH_DASHBOARD.courses.root,
+      icon: <MdPlayLesson />,
     },
   ],
 }
@@ -233,7 +255,8 @@ export const menuConfig = (currentRole: Role) =>
     ? {
         [Role.SuperAdmin]: [admin, managment, content],
         [Role.Owner]: [admin, managment, content],
-        [Role.Admin]: [admin, managment, content, market_sandbox],
+        [Role.Admin]: [adminTemporary, contentForAdminTemporary],
+        // [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],
         [Role.Anonymous]: [courses, general, apps],
         [Role.Manager]: [managment, content],

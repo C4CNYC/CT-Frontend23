@@ -18,6 +18,18 @@ const extendedApi = adminApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['Courses'],
     }),
+    getAdminGlobalCourses: builder.query<
+      BaseListResponseInterface<ICourse & BaseResponseInterface>,
+      ICourseSearchParams
+    >({
+      query: (params) => ({
+        url: '/course/global',
+        method: 'GET',
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ['Courses'],
+    }),
     getOwnCourses: builder.query<
       BaseListResponseInterface<ICourse & BaseResponseInterface>,
       ICourseSearchParams
@@ -30,7 +42,23 @@ const extendedApi = adminApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ['Courses'],
     }),
+    updateAdminGlobalCourseInCatalogByOrg: builder.mutation<
+      ICourse & BaseResponseInterface,
+      { course_id: string; org_id: string; is_show_in_catalog: boolean }
+    >({
+      query: ({ course_id, ...body }) => ({
+        url: `/course/catalog/${course_id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Courses'],
+    }),
   }),
 })
 
-export const { useGetAdminCoursesQuery, useGetOwnCoursesQuery } = extendedApi
+export const {
+  useGetAdminCoursesQuery,
+  useGetOwnCoursesQuery,
+  useGetAdminGlobalCoursesQuery,
+  useUpdateAdminGlobalCourseInCatalogByOrgMutation,
+} = extendedApi
