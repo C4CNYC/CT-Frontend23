@@ -71,7 +71,7 @@ export function BrowserViewEx({ document, iframeKey }: { document: any; iframeKe
     })
       .then((r) => r.json())
       .then((r) => {
-        let { err, msg, stdout, output } = r 
+        let { err, msg, stdout, output } = r
         stderrSet((err || '') + (msg || ''))
         stdoutSet(stdout || '')
         contentsSet(`Results :`)
@@ -106,7 +106,7 @@ export function BrowserViewEx({ document, iframeKey }: { document: any; iframeKe
           }
         }
       })
-      .catch((e) => { 
+      .catch((e) => {
         stderrSet('Error: ' + e.message)
         contentsSet(`Error occurred while running the code.`)
       })
