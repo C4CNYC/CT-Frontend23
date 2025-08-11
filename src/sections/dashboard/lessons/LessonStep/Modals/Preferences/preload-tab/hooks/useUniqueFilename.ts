@@ -1,13 +1,17 @@
 import { useMemo } from 'react'
 
 import { useGetLessonFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
-import { FileExtension } from '@root/src/types/lessons'
+import { FileExtensions, FileExtension } from '@root/src/types/lessons'
 
 const baseNames: Record<FileExtension, string> = {
-  [FileExtension.HTML]: 'index',
-  [FileExtension.CSS]: 'style',
-  [FileExtension.JSON]: 'data',
-  [FileExtension.JS]: 'script',
+  [FileExtensions.HTML]: 'index',
+  [FileExtensions.CSS]: 'style',
+  [FileExtensions.JSON]: 'data',
+  [FileExtensions.JS]: 'script',
+  py: 'script',
+  java: 'code',
+  test: 'test',
+  go: 'code',
 }
 
 export function useUniqueFilename(lessonId: string, contentId: string) {

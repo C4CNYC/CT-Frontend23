@@ -5,7 +5,7 @@ import { StudentFile } from '../interfaces/workspace.interface'
 
 import { managerApi } from '.'
 
-const extendedApi = managerApi.injectEndpoints({
+export const extendedApiWorkspaceStudents = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getStudentFiles: builder.query<
       Array<StudentFile & BaseResponseInterface>,
@@ -78,12 +78,12 @@ export const {
   useGetFilesByUnauthUserQuery,
   // -------------mutation-----------
   useCreateStudentFileMutation,
-  useUpdateStudentFileMutation,
+  useUpdateStudentFileMutation: useUpdateStudentFileMutationWillDebounced,
   useDeleteStudentFileMutation,
   useLazyGetStudentFilesQuery,
   useLazyGetFilesByUnauthUserQuery,
   useLessonFilesCarryOverMutation,
-} = extendedApi
+} = extendedApiWorkspaceStudents
 
 export const useResetStudentFiles = ({
   lessonId,

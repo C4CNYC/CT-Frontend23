@@ -107,41 +107,43 @@ const FileModal: FC<FileModalProps> = ({
           </Stack>
 
           <Stack>
-            {files.map(({ id, name, extension }) => {
-              return (
-                <Stack
-                  key={id}
-                  sx={styles.BUTTON_WRAPPER}
-                >
-                  <Button
-                    onClick={() => setActiveFile(id ?? '')}
-                    sx={styles.BUTTON_FILE_SX}
-                    variant='text'
+            {files
+              .filter((f) => f.extension.toLocaleLowerCase() !== 'test')
+              .map(({ id, name, extension }) => {
+                return (
+                  <Stack
+                    key={id}
+                    sx={styles.BUTTON_WRAPPER}
                   >
-                    <DevIcon
-                      sx={styles.devIcon}
-                      fileName={`${name}.${extension}`}
-                    />
-                    <Typography
-                      variant='subtitle2'
-                      noWrap
-                      textOverflow='ellipsis'
+                    <Button
+                      onClick={() => setActiveFile(id ?? '')}
+                      sx={styles.BUTTON_FILE_SX}
+                      variant='text'
                     >
-                      {name}.{extension}
-                    </Typography>
-                  </Button>
+                      <DevIcon
+                        sx={styles.devIcon}
+                        fileName={`${name}.${extension}`}
+                      />
+                      <Typography
+                        variant='subtitle2'
+                        noWrap
+                        textOverflow='ellipsis'
+                      >
+                        {name}.{extension}
+                      </Typography>
+                    </Button>
 
-                  {isDeleteExist && (
-                    <IconButton
-                      size='small'
-                      onClick={() => setFileToDelete({ id, name, extension })}
-                    >
-                      <Close />
-                    </IconButton>
-                  )}
-                </Stack>
-              )
-            })}
+                    {isDeleteExist && (
+                      <IconButton
+                        size='small'
+                        onClick={() => setFileToDelete({ id, name, extension })}
+                      >
+                        <Close />
+                      </IconButton>
+                    )}
+                  </Stack>
+                )
+              })}
           </Stack>
         </Stack>
 

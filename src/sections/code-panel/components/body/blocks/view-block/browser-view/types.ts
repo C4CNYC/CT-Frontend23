@@ -9,7 +9,7 @@ export interface BrowserViewProps {
   document: CodeDocument | null
   integrations: IIntegration[]
   isOpenHeader?: boolean
-  iframeKey?: number
+  iframeKey: number
   stepBgColor?: string
   reloadIframe?: () => void
   teacherView?: boolean

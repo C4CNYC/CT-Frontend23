@@ -26,10 +26,6 @@ interface CodeEditorCollabProps {
   onChangeCodemirrorValue?: (value: string) => void
 }
 
-const DEBOUNCE_SAVE_TIME = 4000
-
-let checkSaveTimeout: any | null = null
-
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
   withFileManager = true,
@@ -82,24 +78,11 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         Object.values(docBuilder(files, activeFile, value)).reduce((acc, curr) => acc + curr, '')
       )
     )
-
     if (value) {
       if (isFileControllerAvailable && activeFile?.body !== value) {
-        if (checkSaveTimeout) clearTimeout(checkSaveTimeout)
-
-        checkSaveTimeout = setTimeout(
-          (previousLength: number) => {
-            if (value?.length !== previousLength) {
-              onUpdateFile(activeFile?.id as string, {
-                body: value,
-              })
-            }
-          },
-          DEBOUNCE_SAVE_TIME,
-          activeFile?.body?.length
-        )
-
-        return
+        onUpdateFile(activeFile?.id as string, {
+          body: value,
+        })
       }
     }
   }

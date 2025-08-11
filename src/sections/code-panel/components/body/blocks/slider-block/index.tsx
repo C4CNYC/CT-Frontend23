@@ -339,6 +339,7 @@ const View: FC<IView> = ({
           document={connectIntegrations(body)}
           stepBgColor={stepBgColor}
           teacherView={true}
+          iframeKey={0}
         />
       )
   }

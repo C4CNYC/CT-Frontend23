@@ -3,14 +3,19 @@ import { ILessonPreloadFile } from '@root/src/redux/services/interfaces/courseUn
 import { FileExtension } from '@root/src/types/lessons'
 
 const getDefaultNameByExtension = (ext: FileExtension) => {
-  switch (ext) {
-    case FileExtension.HTML:
+  switch (ext.toLowerCase()) {
+    case 'html':
       return 'index'
-    case FileExtension.CSS:
+    case 'css':
       return 'style'
-    case FileExtension.JS:
+    case 'js':
+    case 'py':
       return 'script'
-    case FileExtension.JSON:
+    case 'java':
+    case 'c':
+    case 'cpp':
+      return 'main'
+    case 'json':
       return 'data'
     default:
       return 'file'
