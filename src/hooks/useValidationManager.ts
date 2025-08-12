@@ -51,7 +51,7 @@ export const useValidationManager = ({ validations, contentId }: UseValidationMa
 
       dispatch(setContentValidations(updatedContentValidations))
     },
-    [contentValidations, contentId]
+    [contentId]
   )
 
   // Initialize validation for new content
