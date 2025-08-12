@@ -9,7 +9,7 @@ import { BrowserViewProps, CodeDocument, TagNames } from './types'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
 
-const BrowserView: FC<BrowserViewProps> = ({
+const BrowserView: FC<BrowserViewProps & { isEditLesson: boolean }> = ({
   document,
   isOpenHeader,
   iframeKey,
@@ -17,6 +17,7 @@ const BrowserView: FC<BrowserViewProps> = ({
   integrations,
   reloadIframe,
   teacherView = false,
+  isEditLesson = false,
 }) => {
   const [docSrc, setDocSrc] = useState('')
   const [iframeProcess, setIframeProcess] = useState(false)
@@ -30,7 +31,7 @@ const BrowserView: FC<BrowserViewProps> = ({
     height: iframeKey ? 'calc(100% - 42px)' : '100%',
     background: '#F8F8FF',
   }
-  let lessonEditable = lessonManager.userIsOwner && teacherView
+  let lessonEditable = lessonManager.userIsOwner && teacherView && isEditLesson
 
   // Generate the initial HTML content
   const generateHtml = (doc: CodeDocument) => {
@@ -46,37 +47,42 @@ const BrowserView: FC<BrowserViewProps> = ({
     let htmlPart = (doc as any).length ? doc : htmls
 
     return `
-      <html style="height: 100%; box-sizing: border-box;" ${
-        lessonEditable ? 'contentEditable id="VeryEditableDivId"' : ''
-      }>
+      <html style="height: 100%; box-sizing: border-box;" id="VeryEditableDivId">
         <head>
         <link rel="stylesheet" href="/fonts/index.css" />
         <style>
           * { box-sizing: border-box; } 
-        body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'}; }
+        body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'}; 
+        
+          ${
+            lessonEditable
+              ? `
+
+            `
+              : ''
+          }
+        }
         </style>
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
           <script>
+          (function(){
             ${
               teacherView
-                ? ``
+                ? ''
                 : `
-            console.logOld = console.log;
-            consolelog = function() {
-              window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
-            };
-            console.log = consolelog;
-            console.warn = consolelog;
-            console.error = consolelog;
-            console.debug = consolelog;
+              const consolelog = function() {
+                window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
+              };
+              console.log = consolelog;
+              console.warn = consolelog;
+              console.error = consolelog;
+              console.debug = consolelog;
             `
             }
 
-            // Only add event listener if contentEditable
             if (document.getElementById('VeryEditableDivId')) {
               let debounceTimer;
-              let dbT= new Date().getTime();
               document.getElementById('VeryEditableDivId').addEventListener('input', function() {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
@@ -84,14 +90,16 @@ const BrowserView: FC<BrowserViewProps> = ({
                     type: 'contentChange', 
                     content: this.innerHTML 
                   }, '*');
-                }, 300); // Debounce to avoid excessive updates
+                }, 300);
               });
             }
+
             if (!window.__iframeSupplimentsLoaded) {
               window.__iframeSupplimentsLoaded = true;
-              ${lessonEditable ? iframeSuppliments() : null}
+              ${lessonEditable ? `(function(){ ${iframeSuppliments()} })();` : ''}
             }
-          </script>
+          })();
+        </script>
         </head>
         ${htmlPart}
       </html>
@@ -100,7 +108,7 @@ const BrowserView: FC<BrowserViewProps> = ({
 
   useEffect(() => {
     if (document == null) return
-    if (isEditing) return
+    // if (isEditing) returna
 
     setIframeProcess(true)
     const newHtml = generateHtml(document)
@@ -113,22 +121,32 @@ const BrowserView: FC<BrowserViewProps> = ({
     return () => {
       clearTimeout(timerId)
     }
-  }, [document, isEditing])
+  }, [document, isEditing, isEditLesson])
 
   // Handle messages from iframe (including content changes)
-  useEffect(() => {
-    if (!lessonEditable) return
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data.type === 'contentChange') {
-        setIsEditing(true)
-        // Here you would typically update your state/store with the new content
-        // For now, we just prevent the iframe from re-rendering
-      }
-    }
+  // useEffect(() => {
+  //   if (!lessonEditable) return
+  //   const handleMessage = (event: MessageEvent) => {
+  //     if (event.data.type === 'contentChange') {
+  //       setIsEditing(true)
+  //       // Here you would typically update your state/store with the new content
+  //       // For now, we just prevent the iframe from re-rendering
+  //     }
+  //   }
 
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
-  }, [setIsEditing, document, lessonEditable])
+  //   window.addEventListener('message', handleMessage)
+  //   return () => window.removeEventListener('message', handleMessage)
+  // }, [setIsEditing, document, lessonEditable])
+
+  //  useEffect(() => {
+  //   const iframe = iFrameRef.current
+  //   const editableDiv = iframe?.contentDocument?.getElementById('VeryEditableDivId')
+  //   if (editableDiv) {
+  //     // editableDiv.contentEditable = isEditLesson ? 'true' : 'false'
+  //     editableDiv.setAttribute('contentEditable', isEditLesson ? 'true' : 'false')
+  //   }
+  //   console.log('editableDiveditableDiveditableDiv', editableDiv)
+  // }, [isEditLesson])
 
   const IFrame = useMemo(
     () =>

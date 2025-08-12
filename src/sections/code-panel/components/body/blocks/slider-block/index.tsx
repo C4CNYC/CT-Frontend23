@@ -80,6 +80,9 @@ const SliderBlock: FC<ISliderBlock> = ({
   const searchParams = useSearchParams()
   const { lesson, lessonContent } = useLessonManager()
   let data = lessonContent ?? []
+  const [isEditLesson, setIsEditLesson] = useState(false)
+
+  const [isSlideReady, setIsSlideReady] = useState(false)
 
   const sandbox = searchParams.get('sandbox')
 
@@ -116,6 +119,16 @@ const SliderBlock: FC<ISliderBlock> = ({
       onBeforeChange(slideIndex, slideIndex - 1)
     }
   }
+
+  useEffect(() => {
+    setIsSlideReady(false)
+
+    const timeout = setTimeout(() => {
+      setIsSlideReady(true)
+    }, 30) // або трохи більше, якщо треба
+
+    return () => clearTimeout(timeout)
+  }, [slideIndex])
 
   const handleNext = (skip = false): void => {
     if (window.dataLayer) {
@@ -210,7 +223,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         height='100%'
         sx={boxSx}
       >
-        {isLoadingLessonContent ? (
+        {isLoadingLessonContent || !isSlideReady ? (
           <LoadingScreen />
         ) : currentSlide ? (
           <View
@@ -222,6 +235,7 @@ const SliderBlock: FC<ISliderBlock> = ({
             integrations={integrations}
             connectIntegrations={connectIntegrations}
             stepBgColor={currentSlide?.bg_color}
+            isEditLesson={isEditLesson}
           />
         ) : lesson?.meta?.ai ? (
           <SliderBlockAiLessonComing />
@@ -230,7 +244,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         )}
       </Box>
     )
-  }, [data, slideIndex, integrations, isLoadingLessonContent])
+  }, [data, slideIndex, integrations, isLoadingLessonContent, isEditLesson])
 
   return (
     <BaseBlock
@@ -275,7 +289,10 @@ const SliderBlock: FC<ISliderBlock> = ({
         />
       ) : (
         <>
-          <SaveEditContent />
+          <SaveEditContent
+            isEditLesson={isEditLesson}
+            setIsEditLesson={setIsEditLesson}
+          />
           {slider}
           <NextStep
             handleNext={handleNext}
@@ -321,7 +338,7 @@ const NextStep = ({
   )
 }
 
-const View: FC<IView> = ({
+const View: FC<IView & { isEditLesson: boolean }> = ({
   type,
   body,
   connectIntegrations,
@@ -329,6 +346,7 @@ const View: FC<IView> = ({
   lessonType,
   stepBgColor,
   integrations,
+  isEditLesson = false,
 }) => {
   switch (type) {
     default:
@@ -339,6 +357,7 @@ const View: FC<IView> = ({
           document={connectIntegrations(body)}
           stepBgColor={stepBgColor}
           teacherView={true}
+          isEditLesson={isEditLesson}
         />
       )
   }

@@ -53,6 +53,123 @@ height: 20px;
 margin: 2px 10px;
 }
 }
+
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 18px 5px 16px 24px;
+  gap: 5px;
+  position: absolute;
+  top: 0;
+  // right: -100%;
+  right: 10px;
+  width: 100%;
+  z-index: 10;
+  transition: right 0.3s ease;
+}
+.icon-button {
+  width: 33px;
+  height: 33px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.icon-button.active {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.context-menu {
+          position: absolute;
+          z-index: 1000;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+          padding: 4px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+          animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .context-button {
+          width: 25px;
+          height: 25px;
+          border: none;
+          border-radius: 8px;
+          background: transparent;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+
+        .context-button:hover {
+          transform: scale(1.1);
+        }
+
+        .image-btn {
+          color: #1976d2;
+        }
+
+        .image-btn:hover {
+          background: rgba(25, 118, 210, 0.1);
+        }
+
+        .video-btn {
+          color: #d32f2f;
+        }
+
+        .video-btn:hover {
+          background: rgba(211, 47, 47, 0.1);
+        }
+
+        .emoji-btn {
+          color: #ff9800;
+        }
+
+        .emoji-btn:hover {
+          background: rgba(255, 152, 0, 0.1);
+        }
+
+        .divider {
+          width: 1px;
+          height: 20px;
+          background: rgba(0, 0, 0, 0.12);
+          margin: 0 4px;
+        }
+
 `
 
 export const STACK_STYLES = {
