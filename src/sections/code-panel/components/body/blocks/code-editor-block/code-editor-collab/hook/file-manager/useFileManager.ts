@@ -64,7 +64,9 @@ export const useFileManager = () => {
   const [completeLesson] = useCompleteLessonMutation()
 
   const debouncedUpdateFile = useDebounceCallback(100)
-
+  useEffect(() => {
+    console.log('Files:', files, activeFile)
+  }, [files, activeFile])
   const {
     data: lesson,
     isLoading: isLessonLoading,
@@ -347,30 +349,40 @@ export const useFileManager = () => {
   function getFiles() {
     return files
   }
-  const onUpdateFile = useCallback(
-    async (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>): Promise<void> => {
+  const onUpdateFile = async (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>): Promise<void> => {
       const filteredBody = Object.fromEntries(
         Object.entries(body).filter(([_, value]) => value !== undefined)
-      )
-
+    )
       try {
-        if (!isAuthenticated) {
-          unauthFileLocalStorageManger(localStorageKey).updateFile(id, filteredBody)
-          return
+        // Update local state immediately for UI consistency
+        const updatedFile = files.find(file => file.id === id);
+        if (updatedFile) {
+          // Create updated version of the file
+          const newFile = { ...updatedFile, ...filteredBody };
+          
+          // Update local state first to ensure immediate UI updates
+          filesSet(prevFiles => 
+            prevFiles.map(file => file.id === id ? newFile : file)
+          );
         }
 
-        // Update local state immediately for UI consistency
-        filesSet((prevFiles) => {
-          // Create a new array with the updated file to ensure React detects the change
-          return prevFiles.map((file) => (file.id === id ? { ...file, ...filteredBody } : file))
-        })
-        updateStudentFile({ id, ...filteredBody, lessonId, lessonContentId: slideId })
+        // Then update storage based on authentication status
+        if (!isAuthenticated) {
+          unauthFileLocalStorageManger(localStorageKey).updateFile(id, filteredBody)
+        } else {
+          // Run the API update with the complete file data
+          await updateStudentFile({ 
+            id, 
+            ...filteredBody, 
+            lessonId, 
+            lessonContentId: slideId 
+          })
+        }
       } catch (e: any) {
+        console.error('Error updating file:', e)
         throw new Error(e.message)
       }
-    },
-    [isAuthenticated, localStorageKey, debouncedUpdateFile, updateStudentFile]
-  )
+    }
 
   const onDeleteFile = useCallback(
     (id: string) => {

@@ -5,7 +5,9 @@ import { setCompletedSlides, setIsActivateCompeated } from '@/redux/slices/check
 import { setContentValidations, setNextStepAble } from '@/redux/slices/code-panel-global'
 import { dispatch, useSelector } from '@/redux/store'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
-import { IValidationMap, mapValidations } from '@/utils/validationMaping'
+import { IValidationMap, CheckValidationTests } from '@root/src/utils/CheckValidationTests'
+
+import { useFileManager } from '../sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 
 interface UseValidationManagerProps {
   validations: Array<IValidation & BaseResponseInterface>
@@ -14,7 +16,15 @@ interface UseValidationManagerProps {
 
 export const useValidationManager = ({ validations, contentId }: UseValidationManagerProps) => {
   // Get required state from Redux
-  const codeState = useSelector((state) => state.codePanelGlobal.code)
+
+  const { files } = useFileManager()
+  const codeState = useMemo(() => {
+    if (!files || !Array.isArray(files)) return ''
+    return files
+      .filter((file) => file && file.extension && file.extension.toLowerCase() !== 'test')
+      .map((file) => file.body || '')
+      .join('\n')
+  }, [files])
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const completedSlides = useSelector((state) => state.checkersAnimation.completedSlides)
@@ -24,12 +34,11 @@ export const useValidationManager = ({ validations, contentId }: UseValidationMa
     () => contentValidations?.find((item) => item.contentId === contentId),
     [contentId, contentValidations]
   )
-
-  // Calculate current checkers state based on code and validations
+  console.log('CodeState:', codeState)
   const checkers = useMemo(() => {
     if (!validations?.length) return []
-
-    const mappedCheckers = mapValidations(codeState, validations)
+    console.log('Validations:', validations, codeState)
+    const mappedCheckers = CheckValidationTests(codeState, validations)
     return mappedCheckers.map((checker) => {
       const existingChecker = selectedContent?.checkers?.find((c) => c.text === checker.text)
       return {
@@ -44,6 +53,7 @@ export const useValidationManager = ({ validations, contentId }: UseValidationMa
     (updatedCheckers: IValidationMap[]) => {
       if (!contentValidations?.length || !contentId) return
 
+      console.log('Validations:', contentValidations, updatedCheckers)
       const updatedContentValidations = contentValidations.map((item) => ({
         ...item,
         checkers: item.contentId === contentId ? updatedCheckers : item.checkers,

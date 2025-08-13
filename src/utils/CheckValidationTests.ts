@@ -6,7 +6,7 @@ export interface IValidationMap {
   valid: boolean
 }
 
-export function mapValidations(
+export function CheckValidationTests(
   code: string,
   validations: Array<ILessonContentValidation & BaseResponseInterface>,
   checked: IValidationMap[] = []
