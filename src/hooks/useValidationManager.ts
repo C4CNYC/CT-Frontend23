@@ -34,10 +34,8 @@ export const useValidationManager = ({ validations, contentId }: UseValidationMa
     () => contentValidations?.find((item) => item.contentId === contentId),
     [contentId, contentValidations]
   )
-  console.log('CodeState:', codeState)
   const checkers = useMemo(() => {
     if (!validations?.length) return []
-    console.log('Validations:', validations, codeState)
     const mappedCheckers = CheckValidationTests(codeState, validations)
     return mappedCheckers.map((checker) => {
       const existingChecker = selectedContent?.checkers?.find((c) => c.text === checker.text)
@@ -53,7 +51,6 @@ export const useValidationManager = ({ validations, contentId }: UseValidationMa
     (updatedCheckers: IValidationMap[]) => {
       if (!contentValidations?.length || !contentId) return
 
-      console.log('Validations:', contentValidations, updatedCheckers)
       const updatedContentValidations = contentValidations.map((item) => ({
         ...item,
         checkers: item.contentId === contentId ? updatedCheckers : item.checkers,

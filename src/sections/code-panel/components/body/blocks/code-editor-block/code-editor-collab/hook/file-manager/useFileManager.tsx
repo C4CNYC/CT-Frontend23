@@ -1,10 +1,10 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
+import { createContext, useContext, ReactNode } from 'react'
 
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { useDebounceCallback } from '@root/src/hooks/useDebounceCallback'
 import { ILesson } from '@root/src/redux/interfaces/content.interface'
 import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
@@ -42,7 +42,7 @@ const DEFAULT_FILE = {
   body: '',
 }
 
-export const useFileManager = () => {
+export const useFileManagerOrj = () => {
   const lessonRef = useRef<(ILesson & BaseResponseInterface) | null>(null)
   const [files, filesSet] = useState<StudentFile[]>([])
   const { query } = useRouter()
@@ -63,10 +63,6 @@ export const useFileManager = () => {
 
   const [completeLesson] = useCompleteLessonMutation()
 
-  const debouncedUpdateFile = useDebounceCallback(100)
-  useEffect(() => {
-    console.log('Files:', files, activeFile)
-  }, [files, activeFile])
   const {
     data: lesson,
     isLoading: isLessonLoading,
@@ -349,40 +345,40 @@ export const useFileManager = () => {
   function getFiles() {
     return files
   }
-  const onUpdateFile = async (id: string, body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>): Promise<void> => {
-      const filteredBody = Object.fromEntries(
-        Object.entries(body).filter(([_, value]) => value !== undefined)
+  const onUpdateFile = async (
+    id: string,
+    body: Partial<Omit<StudentFile, 'lessonId' | 'id'>>
+  ): Promise<void> => {
+    const filteredBody = Object.fromEntries(
+      Object.entries(body).filter(([_, value]) => value !== undefined)
     )
-      try {
-        // Update local state immediately for UI consistency
-        const updatedFile = files.find(file => file.id === id);
-        if (updatedFile) {
-          // Create updated version of the file
-          const newFile = { ...updatedFile, ...filteredBody };
-          
-          // Update local state first to ensure immediate UI updates
-          filesSet(prevFiles => 
-            prevFiles.map(file => file.id === id ? newFile : file)
-          );
-        }
+    try {
+      // Update local state immediately for UI consistency
+      const updatedFile = files.find((file) => file.id === id)
+      if (updatedFile) {
+        // Create updated version of the file
+        const newFile = { ...updatedFile, ...filteredBody }
 
-        // Then update storage based on authentication status
-        if (!isAuthenticated) {
-          unauthFileLocalStorageManger(localStorageKey).updateFile(id, filteredBody)
-        } else {
-          // Run the API update with the complete file data
-          await updateStudentFile({ 
-            id, 
-            ...filteredBody, 
-            lessonId, 
-            lessonContentId: slideId 
-          })
-        }
-      } catch (e: any) {
-        console.error('Error updating file:', e)
-        throw new Error(e.message)
+        // Update local state first to ensure immediate UI updates
+        filesSet((prevFiles) => prevFiles.map((file) => (file.id === id ? newFile : file)))
       }
+
+      // Then update storage based on authentication status
+      if (!isAuthenticated) {
+        unauthFileLocalStorageManger(localStorageKey).updateFile(id, filteredBody)
+      } else {
+        // Run the API update with the complete file data
+        await updateStudentFile({
+          id,
+          ...filteredBody,
+          lessonId,
+          lessonContentId: slideId,
+        })
+      }
+    } catch (e: any) {
+      throw new Error(e.message)
     }
+  }
 
   const onDeleteFile = useCallback(
     (id: string) => {
@@ -571,4 +567,24 @@ export const useFileManager = () => {
     onUpdateFile,
     setActiveFile,
   }
+}
+
+type FileManagerContextType = ReturnType<typeof useFileManagerOrj> | null
+const FileManagerContext = createContext<FileManagerContextType>(null)
+export const FileManagerProvider = ({ children }: { children: ReactNode }) => {
+  // Create a single instance of the file manager hook
+  const fileManager = useFileManagerOrj()
+
+  return <FileManagerContext.Provider value={fileManager}>{children}</FileManagerContext.Provider>
+}
+
+// Hook to use the file manager instance from any component
+export const useFileManager = () => {
+  const context = useContext(FileManagerContext)
+
+  if (context === null) {
+    throw new Error('useFileManager must be used within a FileManagerProvider')
+  }
+
+  return context
 }

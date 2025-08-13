@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
@@ -19,14 +19,10 @@ export function BrowserViewHTML({
   stepBgColor,
   reloadIframe,
 }: BrowserViewProps) {
-  const [docSrc, setDocSrc] = useState('')
   const { files, activeFile } = useFileManager()
-  const [iframeProcess, setIframeProcess] = useState(false)
   const { lesson } = useLessonManager()
   const iFrameRef = useRef<HTMLIFrameElement>(null)
   const integrations = lesson?.integrations || []
-  // Generate unique key based on file content to force iframe refresh
-  const contentKey = useMemo(() => files.map(f => `${f.id}-${f.body.length}`).join('|'), [files]);
 
   const IFRAME_STYLE = {
     border: 0,
@@ -35,9 +31,15 @@ export function BrowserViewHTML({
     background: '#F8F8FF',
   }
 
-
   let document = useMemo(() => {
     if (files.length === 0) return
+
+    let tests = files
+      .filter((f) => f.extension === 'test')
+      .map((f) => f.body)
+      .join('\n')
+    tests += `;
+    function validateChecker(t,v){window.parent.postMessage({type: 'checker-validation',checkerId: t,valid: v},'*')}`
     let acc = files.reduce(
       (acc, file) => {
         if (file.extension === 'html') {
@@ -51,12 +53,19 @@ export function BrowserViewHTML({
       },
       { htmlBody: [] as string[], cssBody: [] as string[], jsBody: [] as string[] }
     )
+    acc.jsBody.push(`<script>${tests}</script>`)
     return {
       htmlBody: acc.htmlBody.join('\n'),
       cssBody: acc.cssBody.join('\n'),
       jsBody: acc.jsBody.join('\n'),
     }
   }, [files])
+  useEffect(() => {
+    if (!iFrameRef.current) return
+    if (!document) return
+    iFrameRef.current.srcdoc = generateHtml(document)
+  }, [document])
+  useEffect(() => {}, [files])
 
   const generateHtml = (doc: CodeDocument) => {
     if (!doc) return ''
@@ -93,39 +102,18 @@ export function BrowserViewHTML({
           </script>
         </head>
         ${htmlPart}
+        ${jsBody}
       </html>
     `
   }
 
-  useEffect(() => {
-    if (document == null) return
-
-    setIframeProcess(true)
-    const newHtml = generateHtml(document)
-    setDocSrc(newHtml)
-
-    const timerId = setTimeout(() => {
-      setIframeProcess(false)
-    }, 100)
-
-    return () => clearTimeout(timerId)
-  }, [document])
-
-  const IFrame = useMemo(
-    () =>
-      !iframeProcess ? (
-        <iframe
-          className='BrowserView'
-          ref={iFrameRef}
-          srcDoc={docSrc}
-          style={IFRAME_STYLE}
-          key={`${contentKey}-${docSrc.length}`}
-        />
-      ) : null,
-    [docSrc, iframeProcess, contentKey]
-  )
-
   if (!document) return <SkeletonViewBlock isOpenHeader={isOpenHeader} />
 
-  return IFrame
+  return (
+    <iframe
+      className='BrowserView'
+      ref={iFrameRef}
+      style={IFRAME_STYLE}
+    />
+  )
 }

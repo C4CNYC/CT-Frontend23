@@ -11,7 +11,6 @@ export function BrowserView({
   reloadIframe,
 }: BrowserViewProps) {
   const { files } = useFileManager()
-  console.log('BrowserView Files:', files)
 
   let fileExtensions = files.map((file) => file.extension.toLowerCase())
   if (fileExtensions.includes('py') || fileExtensions.includes('java'))

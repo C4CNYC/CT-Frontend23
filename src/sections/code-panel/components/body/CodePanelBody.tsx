@@ -35,40 +35,43 @@ export function CodePanelBody({
   const openInstruction = () => dispatch(toggleInstrations(false))
   const openPreview = () => dispatch(toggleBrowser(false))
 
-
   if (isDesktop) {
     return (
       <CodePanelBodyDesktop
-        left={!isInstructionsHidden ? (
-          <SliderBlock
-            isLoadingLessonContent={isLoadingLessonContent}
-            onSubmitChallenge={onSubmitChallenge}
-            onSubmitLesson={onSubmitLesson}
-            integrations={lesson?.integrations ?? []}
-            lessonType={lesson?.type}
-            lessonName={lesson?.name}
-            lessonId={lesson?.id || lessonId}
-          />
-        ) : (
-          <HidedTabBtn
-            title={TAB_TITLES.instructions}
-            icon={<TiDocumentText size={20} />}
-            openPanelFnc={openInstruction}
-          />
-        )}
+        left={
+          !isInstructionsHidden ? (
+            <SliderBlock
+              isLoadingLessonContent={isLoadingLessonContent}
+              onSubmitChallenge={onSubmitChallenge}
+              onSubmitLesson={onSubmitLesson}
+              integrations={lesson?.integrations ?? []}
+              lessonType={lesson?.type}
+              lessonName={lesson?.name}
+              lessonId={lesson?.id || lessonId}
+            />
+          ) : (
+            <HidedTabBtn
+              title={TAB_TITLES.instructions}
+              icon={<TiDocumentText size={20} />}
+              openPanelFnc={openInstruction}
+            />
+          )
+        }
         center=<CodeEditorBlockContent
           preloadedCode={lessonContents[slideIndex]?.preload_body ?? ''}
           contentId={lessonContents[slideIndex]?.id}
         />
-        right={!isBrowserHidden ? (
-          <ViewBlock />
-        ) : (
-          <HidedTabBtn
-            title={TAB_TITLES.browser_preview}
-            icon={<FaDesktop size={20} />}
-            openPanelFnc={openPreview}
-          />
-        )}
+        right={
+          !isBrowserHidden ? (
+            <ViewBlock />
+          ) : (
+            <HidedTabBtn
+              title={TAB_TITLES.browser_preview}
+              icon={<FaDesktop size={20} />}
+              openPanelFnc={openPreview}
+            />
+          )
+        }
       />
     )
   }

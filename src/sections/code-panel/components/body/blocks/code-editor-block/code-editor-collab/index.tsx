@@ -65,22 +65,17 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const onChangeCodemirrorValue = (value: string) => {
     codePanelContext.studentCodeChange(value)
-
-    // Build the complete document from all files
-    const updatedDoc = docBuilder(files, activeFile, value)
-
-    // Update the global code state for other components to use
     dispatch(
       setCode(
-        Object.values(updatedDoc).reduce((acc, curr) => acc + curr, '')
+        Object.values(docBuilder(files, activeFile, value)).reduce((acc, curr) => acc + curr, '')
       )
     )
-
-    // Only update the file if it's available and content has changed
-    if (value && isFileControllerAvailable && activeFile?.body !== value) {
-      onUpdateFile(activeFile?.id as string, {
-        body: value,
-      })
+    if (value) {
+      if (isFileControllerAvailable && activeFile?.body !== value) {
+        onUpdateFile(activeFile?.id as string, {
+          body: value,
+        })
+      }
     }
   }
 
