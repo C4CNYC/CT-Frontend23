@@ -1,22 +1,19 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { IValidation } from '@/redux/interfaces/content.interface'
 import { setCompletedSlides, setIsActivateCompeated } from '@/redux/slices/checkers-animation'
 import { setContentValidations, setNextStepAble } from '@/redux/slices/code-panel-global'
 import { dispatch, useSelector } from '@/redux/store'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { IValidationMap, CheckValidationTests } from '@root/src/utils/CheckValidationTests'
 
 import { useFileManager } from '../sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
+import { useLessonManager } from '../sections/code-panel/lib/LessonManagerContext'
 
-interface UseValidationManagerProps {
-  validations: Array<IValidation & BaseResponseInterface>
-  contentId?: string
-}
-
-export const useValidationManager = ({ validations, contentId }: UseValidationManagerProps) => {
+export const useValidationManager = () => {
   // Get required state from Redux
 
+  const { lessonContent, currentSlideId, lesson } = useLessonManager()
+  let validations = lessonContent?.find((lc) => lc.id == currentSlideId)?.validations || []
+  let lessonId = lesson?.id
   const { files } = useFileManager()
   const codeState = useMemo(() => {
     if (!files || !Array.isArray(files)) return ''
@@ -29,10 +26,12 @@ export const useValidationManager = ({ validations, contentId }: UseValidationMa
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const completedSlides = useSelector((state) => state.checkersAnimation.completedSlides)
 
+  const prevLessonIdRef = useRef<string>('')
+
   // Find the selected content validation
   const selectedContent = useMemo(
-    () => contentValidations?.find((item) => item.contentId === contentId),
-    [contentId, contentValidations]
+    () => contentValidations?.find((item) => item.contentId === currentSlideId),
+    [currentSlideId, contentValidations]
   )
   const checkers = useMemo(() => {
     if (!validations?.length) return []
@@ -49,25 +48,30 @@ export const useValidationManager = ({ validations, contentId }: UseValidationMa
   // Update content validations in Redux store
   const updateContentValidations = useCallback(
     (updatedCheckers: IValidationMap[]) => {
-      if (!contentValidations?.length || !contentId) return
+      if (lessonId === undefined || !currentSlideId) return
+      if (!contentValidations?.length || !currentSlideId) return
+      if (prevLessonIdRef.current !== lessonId) {
+        prevLessonIdRef.current = lessonId
+        return // Skip update during transition
+      }
 
       const updatedContentValidations = contentValidations.map((item) => ({
         ...item,
-        checkers: item.contentId === contentId ? updatedCheckers : item.checkers,
+        checkers: item.contentId === currentSlideId ? updatedCheckers : item.checkers,
       }))
 
       dispatch(setContentValidations(updatedContentValidations))
     },
-    [contentId]
+    [currentSlideId, prevLessonIdRef, lessonId, contentValidations]
   )
 
   // Initialize validation for new content
   useEffect(() => {
-    if (!contentId || !validations?.length || selectedContent) return
+    if (!currentSlideId || !validations?.length || selectedContent) return
 
     const initialCheckers = checkers.map((checker) => ({ ...checker }))
     const newContentValidation = {
-      contentId,
+      contentId: currentSlideId,
       checkers: initialCheckers,
     }
 
@@ -76,7 +80,7 @@ export const useValidationManager = ({ validations, contentId }: UseValidationMa
       : [newContentValidation]
 
     dispatch(setContentValidations(updatedContentValidations))
-  }, [contentId, validations, selectedContent])
+  }, [currentSlideId, validations, selectedContent])
 
   // Listen for external checker validation messages
   useEffect(() => {

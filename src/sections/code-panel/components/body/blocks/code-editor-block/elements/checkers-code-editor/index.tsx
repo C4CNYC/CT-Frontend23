@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux'
 import { setIsVisible } from '@/redux/slices/checkers-animation'
 import { useSelector } from '@/redux/store'
 import { useValidationManager } from '@root/src/hooks/useValidationManager'
-import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 import { type IValidationMap } from '@root/src/utils/CheckValidationTests'
 
 import CheckersMenu from './checkers-menu'
@@ -34,12 +33,8 @@ const CheckersCompleated = dynamic(() => import('./checkers-compleated'), {
 export function Checkers() {
   const dispatch = useDispatch()
   const theme = useTheme()
-  const { lessonContent, currentSlideId } = useLessonManager()
 
-  const { checkers } = useValidationManager({
-    validations: lessonContent?.find((lc) => lc.id == currentSlideId)?.validations || [],
-    contentId: currentSlideId,
-  })
+  const { checkers } = useValidationManager()
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
   const isActivateCompleted = useSelector((state) => state.checkersAnimation.isActivateCompeated)
 
