@@ -125,6 +125,7 @@ export default function UserListPage(): React.ReactElement {
 
   const { themeStretch } = useSettingsContext()
   const { filters, setFilter, resetFilters } = useFilters({
+    skipRole: Role.Student,
     name: '',
     role: '',
   })
