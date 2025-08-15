@@ -13,6 +13,11 @@ import {
 import SkeletonViewBlock from '../body/blocks/view-block/skeleton-view-box'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
+const emptyDoc ={
+  htmlBody: '',
+  cssBody: '',
+  jsBody: ''
+} as CodeDocument
 
 /** Student View for HTML based lessons */
 export function BrowserViewHTML({
@@ -37,7 +42,7 @@ export function BrowserViewHTML({
   }
 
   let document = useMemo(() => {
-    if (files.length === 0) return
+    if (files.length === 0) return emptyDoc
 
     let tests = files
       .filter((f) => f.extension === 'test')
@@ -82,9 +87,7 @@ export function BrowserViewHTML({
   }, [document, autoRun, iframeKey, previousIframeKey])
 
   const generateHtml = (doc: CodeDocument) => {
-    if (!doc) return ''
-
-    const { htmlBody = [], cssBody = [], jsBody = [] } = doc
+    const { htmlBody = [], cssBody = [], jsBody = [] } = doc || { htmlBody: '', cssBody: '', jsBody: '' }
     let integrationsScripts = integrations
       .map((integration) => integration.scripts)
       .filter(Boolean)
