@@ -88,7 +88,7 @@ const extendedApi = managerApi.injectEndpoints({
       { lessonId: string }
     >({
       query: ({ lessonId }) => ({
-        url: `/manager/lesson/${lessonId}/content/file`,
+        url: `/manager/lesson/${lessonId}/content/files`,
         method: 'GET',
       }),
       providesTags: ['LessonSlidePreload'],
