@@ -4,6 +4,8 @@ import { Card, Stack } from '@mui/material'
 import Box from '@mui/material/Box'
 
 import { useGetFriendsStudentContentQuery } from '@/redux/services/manager/friends-manager'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
 import { ChatHeader } from './ChatHeader'
 import { IChatMessages } from './chatInterface'
@@ -13,7 +15,7 @@ import { ChatSuggestions } from './ChatSuggestions'
 import { ChatAi } from './hooks/ChatAi'
 import { AiAgent } from './hooks/ChatConstants'
 
-export const CodePanelChat = (): React.ReactElement => {
+export const CodePanelChatComponent = (): React.ReactElement => {
   const { data: friendsDB, isLoading } = useGetFriendsStudentContentQuery(
     { take: 20 },
     { skip: true }
@@ -121,42 +123,12 @@ export const CodePanelChat = (): React.ReactElement => {
   )
 }
 
-/*
+export function CodePanelChat() {
+  const { user } = useAuthContext()
+  const { lesson } = useLessonManager()
 
-import ChatHeaderDetail from './chatHeaderDetail'
-import { ChatNav } from './chatNav'
-
-
-
-  const selectedFriend = useMemo(
-    () => friends.find((friend) => friend.id === selectedChat),
-    [friendsDB, selectedChat]
-  )
-  const handleSelectChat = (id: string): void => {
-    setSelectedChat(id)
+  if (!user || !lesson || !lesson.id || !user.id) {
+    return null
   }
-  
-
-  const renderNav = (
-    <ChatNav
-      selectChat={handleSelectChat}
-      selectedConversation={selectedChat}
-      isLoading={isLoading}
-      friends={friends}
-    />
-  )
-
-  const renderHead = (
-    <Stack
-      direction='row'
-      alignItems='center'
-      flexShrink={0}
-      sx={{ pr: 1, pl: 2.5, py: 1, minHeight: 72 }}
-    >
-      <ChatHeaderDetail
-        name={selectedFriend?.first_name}
-        avatar={selectedFriend?.avatar}
-        status={selectedFriend?.active}
-      />
-    </Stack>
-  )*/
+  return <CodePanelChatComponent />
+}

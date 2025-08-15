@@ -99,7 +99,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     { skip: !lessonId || !profile }
   )
 
-  const handleDebouncedCallback = useDebounceCallback(5000)
+  const handleDebouncedCallback = useDebounceCallback(1000)
 
   const hasNextStep = slideIndex < data?.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length

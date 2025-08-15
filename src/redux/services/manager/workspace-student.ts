@@ -93,7 +93,10 @@ export const useResetStudentFiles = ({
   lessonContentId?: string
 }) => {
   const profile = useSelector((state) => state.global.user)
-  let { data: files } = useGetStudentFilesQuery({ lessonId, lessonContentId }, { skip: !profile })
+  let { data: files } = useGetStudentFilesQuery(
+    { lessonId, lessonContentId },
+    { skip: !profile || !lessonId || !lessonContentId }
+  )
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [trigger] = useLazyGetStudentFilesQuery()
 

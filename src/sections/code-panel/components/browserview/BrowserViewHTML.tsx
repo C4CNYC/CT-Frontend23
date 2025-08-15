@@ -1,7 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { useDebounceCallback } from '@root/src/hooks/useDebounceCallback'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
+import { useCodePanel } from '../../lib/CodePanelContext'
 import { useFileManager } from '../body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 import {
   BrowserViewProps,
@@ -21,8 +23,11 @@ export function BrowserViewHTML({
 }: BrowserViewProps) {
   const { files, activeFile } = useFileManager()
   const { lesson } = useLessonManager()
+  const { autoRun } = useCodePanel()
   const iFrameRef = useRef<HTMLIFrameElement>(null)
   const integrations = lesson?.integrations || []
+  const debounceCallback = useDebounceCallback(500)
+  const [previousIframeKey, setPreviousIframeKey] = useState<string | number | undefined>(iframeKey)
 
   const IFRAME_STYLE = {
     border: 0,
@@ -60,12 +65,21 @@ export function BrowserViewHTML({
       jsBody: acc.jsBody.join('\n'),
     }
   }, [files])
+
   useEffect(() => {
     if (!iFrameRef.current) return
     if (!document) return
-    iFrameRef.current.srcdoc = generateHtml(document)
-  }, [document])
-  useEffect(() => {}, [files])
+
+    if (autoRun) {
+      debounceCallback(() => {
+        iFrameRef.current!.srcdoc = generateHtml(document)
+      })
+    } else if (iframeKey !== previousIframeKey) {
+      // When autoRun is disabled, only update when iframeKey actually changes
+      iFrameRef.current.srcdoc = generateHtml(document)
+      setPreviousIframeKey(iframeKey)
+    }
+  }, [document, autoRun, iframeKey, previousIframeKey])
 
   const generateHtml = (doc: CodeDocument) => {
     if (!doc) return ''
