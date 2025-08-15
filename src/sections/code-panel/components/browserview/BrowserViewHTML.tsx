@@ -13,10 +13,10 @@ import {
 import SkeletonViewBlock from '../body/blocks/view-block/skeleton-view-box'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
-const emptyDoc ={
+const emptyDoc = {
   htmlBody: '',
   cssBody: '',
-  jsBody: ''
+  jsBody: '',
 } as CodeDocument
 
 /** Student View for HTML based lessons */
@@ -87,7 +87,11 @@ export function BrowserViewHTML({
   }, [document, autoRun, iframeKey, previousIframeKey])
 
   const generateHtml = (doc: CodeDocument) => {
-    const { htmlBody = [], cssBody = [], jsBody = [] } = doc || { htmlBody: '', cssBody: '', jsBody: '' }
+    const {
+      htmlBody = [],
+      cssBody = [],
+      jsBody = [],
+    } = doc || { htmlBody: '', cssBody: '', jsBody: '' }
     let integrationsScripts = integrations
       .map((integration) => integration.scripts)
       .filter(Boolean)
