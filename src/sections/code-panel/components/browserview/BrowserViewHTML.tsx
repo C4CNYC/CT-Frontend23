@@ -13,11 +13,7 @@ import {
 import SkeletonViewBlock from '../body/blocks/view-block/skeleton-view-box'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
-const emptyDoc = {
-  htmlBody: '',
-  cssBody: '',
-  jsBody: '',
-} as CodeDocument
+const emptyDoc = { htmlBody: '', cssBody: '', jsBody: '' } as CodeDocument
 
 /** Student View for HTML based lessons */
 export function BrowserViewHTML({
