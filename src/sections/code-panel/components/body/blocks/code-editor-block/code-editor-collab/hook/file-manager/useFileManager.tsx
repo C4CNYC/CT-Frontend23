@@ -204,7 +204,7 @@ export const useFileManagerOrj = () => {
     slideId,
   ])
   // Move file operations to useEffect
-  let filesHash = [...authFiles, ...unauthFilesList].map((f) => f.body).join('')
+  let filesHash = [...authFiles, ...unauthFilesList].map((f) => f.id + f.body + ' ').join('')
   useEffect(() => {
     if (!isAuthenticated) return filesSet(unauthFilesList)
 
@@ -219,9 +219,8 @@ export const useFileManagerOrj = () => {
           (authFile) => authFile.name === file.name && authFile.extension === file.extension
         )
     )
-
     filesSet(unfreeze([...authFilesWithoutHello, ...unauthFilesNotSaved]))
-  }, [filesHash, isAuthenticated]) // Use full arrays as dependencies
+  }, [filesHash, isAuthenticated, authFiles]) // Use full arrays as dependencies
   useEffect(() => {
     if (!isAuthenticated || authFiles.length < 2 || !isPageReady) return
     let searched = new Set(authFiles.map((f) => `${f.name}.${f.extension}`))
@@ -353,13 +352,9 @@ export const useFileManagerOrj = () => {
       Object.entries(body).filter(([_, value]) => value !== undefined)
     )
     try {
-      // Update local state immediately for UI consistency
       const updatedFile = files.find((file) => file.id === id)
       if (updatedFile) {
-        // Create updated version of the file
         const newFile = { ...updatedFile, ...filteredBody }
-
-        // Update local state first to ensure immediate UI updates
         filesSet((prevFiles) => prevFiles.map((file) => (file.id === id ? newFile : file)))
       }
 
@@ -468,8 +463,7 @@ export const useFileManagerOrj = () => {
 
   /* authorized user entry point */
   useEffect(() => {
-    if (isLoading || isFetching || !isAuthenticated) return
-
+    if (isLoading || isFetching || !shouldRunAuthFiles || files.length < 1) return
     if (files?.[0] && !files.find((file) => file.id === activeFile?.id)) {
       const lastVisitedTabs = tabsLocalStorageManger(tabsMangerLocalStorageKey).getTabs()
 
@@ -491,7 +485,16 @@ export const useFileManagerOrj = () => {
         tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(files[0].id)
       }
     }
-  }, [files])
+  }, [
+    files,
+    authFiles,
+    shouldRunAuthFiles,
+    _setActiveFile,
+    _setBarFiles,
+    isLoading,
+    isFetching,
+    tabsMangerLocalStorageKey,
+  ])
 
   /* not authorized user entry point */
   useEffect(() => {

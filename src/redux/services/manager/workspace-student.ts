@@ -16,10 +16,10 @@ export const extendedApiWorkspaceStudents = managerApi.injectEndpoints({
         method: 'GET',
         params: {
           lessonId,
-          lessonContentId: lessonContentId,
+          lessonContentId,
         },
       }),
-      keepUnusedDataFor: 360,
+      keepUnusedDataFor: 0,
       providesTags: ['WorkspaceStudent'],
     }),
     getFilesByUnauthUser: builder.query<
