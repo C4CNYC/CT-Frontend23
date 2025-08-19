@@ -338,12 +338,12 @@ export function CodePanelLayout(): ReactElement | null {
     }
   }, [isShowTour, showTour])
 
-  if (!isLoadingComplete && render) {
+  if (!lesson || (!isLoadingComplete && render)) {
     return <SkeletonCodePanel />
   }
 
   return (
-    <CodePanelContextProvider studentCode=''>
+    <CodePanelContextProvider>
       <Head>
         <meta
           name='viewport'

@@ -25,6 +25,7 @@ export function ViewBlock() {
   if (isBrowserHidden) {
     return null
   }
+  console.log('ViewBlock render', codePanelContext.reloadIframeKey, iframeKey) // eslint-disable-line no-console
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToRight size={20} />}

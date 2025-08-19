@@ -14,12 +14,7 @@ export function BrowserView({
 
   let fileExtensions = files.map((file) => file.extension.toLowerCase())
   if (fileExtensions.includes('py') || fileExtensions.includes('java'))
-    return (
-      <BrowserViewEx
-        document={document}
-        iframeKey={iframeKey}
-      />
-    )
+    return <BrowserViewEx iframeKey={iframeKey} />
   return (
     <BrowserViewHTML
       isOpenHeader={isOpenHeader}

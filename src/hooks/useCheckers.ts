@@ -34,7 +34,6 @@ export function useCheckers() {
       .map((file) => file.body || '')
       .join('\n')
   }, [files])
-
   useEffect(() => {
     if (!codeState || !validations.length) return
     fnIncUse(2)
