@@ -12,13 +12,6 @@ import { dispatch, useSelector } from '../redux/store'
 import { useFileManager } from '../sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 import { useLessonManager } from '../sections/code-panel/lib/LessonManagerContext'
 
-let fnInc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-function fnIncUse(n: number, ...args: any[]) {
-  fnInc[n] = fnInc[n] + 1
-  //console.log('fnIncUse', n, fnInc[n] , args)
-}
-let lastRenderTime = 0
-
 export function useCheckers() {
   const { lessonContent, currentSlideId, lesson } = useLessonManager()
   let validations = lessonContent?.find((lc) => lc.id == currentSlideId)?.validations || []
@@ -67,7 +60,7 @@ export function useCheckers() {
 
       if (existingValidationIndex >= 0) {
         const existingCheckers = contentValidations[existingValidationIndex].checkers || []
-        const previousPassedCount = existingCheckers.filter((checker) => checker.valid).length
+        const previousPassedCount = countPassed(existingCheckers)
 
         checkers.forEach((checker) => {
           const existingChecker = existingCheckers.find((c) => c.text === checker.text)
@@ -77,7 +70,7 @@ export function useCheckers() {
         })
 
         allPassed = checkers.length > 0 && checkers.every((checker) => checker.valid)
-        const newPassedCount = checkers.filter((checker) => checker.valid).length
+        const newPassedCount = countPassed(checkers)
         if (newPassedCount > previousPassedCount) {
           dispatch(setIsActivateCompeated(true))
         }
@@ -128,6 +121,11 @@ export function useCheckers() {
           const updatedCheckers = checkers.map((checker) =>
             checker.text === data.checkerId ? { ...checker, valid: data.valid } : checker
           )
+          const newPassedCount = countPassed(updatedCheckers)
+          const previousPassedCount = countPassed(checkers)
+          if (newPassedCount > previousPassedCount) {
+            dispatch(setIsActivateCompeated(true))
+          }
           updateContentValidations(updatedCheckers)
         }
       }
@@ -153,3 +151,13 @@ export function useCheckers() {
     allPassed,
   }
 }
+
+let fnInc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+function fnIncUse(n: number, ...args: any[]) {
+  fnInc[n] = fnInc[n] + 1
+  //console.log('fnIncUse', n, fnInc[n] , args)
+}
+function countPassed(checkers: IValidationMap[]): number {
+  return checkers.filter((checker) => checker.valid).length
+}
+let lastRenderTime = 0
