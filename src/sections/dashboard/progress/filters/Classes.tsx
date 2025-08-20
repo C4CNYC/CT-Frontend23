@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   Autocomplete,
@@ -28,6 +28,7 @@ export default function FilterClassesAutocomplete({
   setClass,
 }: IFilterCoursesAutocomplete): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId)
+  const [current, setCurrent] = useState<(IClass & BaseResponseInterface) | undefined>()
   const { filters: classesFilters, setFilter: setCourseFilters } = useFilters<ICourseSearchParams>({
     take: 50,
     name: '',
@@ -57,6 +58,14 @@ export default function FilterClassesAutocomplete({
     setClass(classes.data[0] ? classes.data[0].id : '')
   }, [classes])
 
+  useEffect(() => {
+    if (classId) {
+      setCurrent(classes?.data.find((c) => c.id === classId))
+    } else {
+      setCurrent(classes?.data[0])
+    }
+  }, [classId])
+
   if (isLoading) {
     return (
       <Skeleton
@@ -76,7 +85,7 @@ export default function FilterClassesAutocomplete({
     <>
       <Stack>
         <Autocomplete<IClass & BaseResponseInterface>
-          value={(classId && classes?.data.find((c) => c.id === classId)) || classes?.data[0]}
+          value={current}
           options={classes?.data ?? []}
           onChange={onChangeCourse}
           renderInput={(params) => (
@@ -85,12 +94,6 @@ export default function FilterClassesAutocomplete({
               label={translate('class')}
             />
           )}
-          onInputChange={(e, value) => {
-            if (classes?.data.find((c) => c.id === classId)?.name === value) {
-              return
-            }
-            setCourseFilters('name', value)
-          }}
           getOptionLabel={(option) => option.name}
           sx={{
             width: { xs: '260px', sm: '260px', md: '260px', lg: '260px' },
