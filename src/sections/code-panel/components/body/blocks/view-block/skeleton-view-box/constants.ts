@@ -39,6 +39,7 @@ export const CODING_TYP_SX = {
   color: '#c4c4c4',
   fontSize: '1.1rem',
   maxWidth: '250px',
+  whiteSpace: 'pre-wrap',
 }
 
 export const HEADER_SKELETON_SX = {

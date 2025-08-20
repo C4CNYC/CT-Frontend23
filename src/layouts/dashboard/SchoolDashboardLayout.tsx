@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Button, Typography } from '@mui/material'
 import { m } from 'framer-motion'
@@ -8,8 +8,7 @@ import PageNotFoundIllustration from '@/assets/illustrations/PageNotFoundIllustr
 import { MotionContainer, varBounce } from '@/components/animate'
 import SkeletonPanel from '@/layouts/dashboard/SkeletonPanel'
 import { useGetMySchoolsQuery } from '@/redux/services/manager/schools-manager'
-import { setSchool } from '@/redux/slices/manager'
-import { RootState, dispatch, useSelector } from '@/redux/store'
+import { RootState, useSelector } from '@/redux/store'
 
 import CompactLayout from '../compact'
 
@@ -26,10 +25,10 @@ export function SchoolDashboardLayout({
   const { data, isLoading } = useGetMySchoolsQuery({})
   const schoolId = useSelector((state: RootState) => state.manager.schoolId)
 
-  useEffect(() => {
-    if (!data?.data) return
-    dispatch(setSchool(!(schoolId === '') ? schoolId : data.data[0] ? data.data[0].id : ''))
-  }, [data])
+  // useEffect(() => {
+  //   if (!data?.data) return
+  //   dispatch(setSchool(!(schoolId === '') ? schoolId : data.data[0] ? data.data[0].id : ''))
+  // }, [data])
 
   if (!data?.data.length && !isLoading) {
     return (

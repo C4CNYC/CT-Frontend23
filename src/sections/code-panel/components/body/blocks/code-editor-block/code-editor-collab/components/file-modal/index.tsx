@@ -12,6 +12,7 @@ import { ConfirmDialog } from '@root/src/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useFileManager } from '../../hook/file-manager/useFileManager'
 import DevIcon from '../dev-icon'
 
 import AddStudentFileModal from './AddStudentFileModal'
@@ -41,6 +42,7 @@ const FileModal: FC<FileModalProps> = ({
   const translate = useTranslate()
   const styles = useStyles(theme)
   const router = useRouter()
+  const fileManager = useFileManager()
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentWithoutContentsQuery(
     { id: router.query.lessonId as string },
@@ -107,41 +109,43 @@ const FileModal: FC<FileModalProps> = ({
           </Stack>
 
           <Stack>
-            {files.map(({ id, name, extension }) => {
-              return (
-                <Stack
-                  key={id}
-                  sx={styles.BUTTON_WRAPPER}
-                >
-                  <Button
-                    onClick={() => setActiveFile(id ?? '')}
-                    sx={styles.BUTTON_FILE_SX}
-                    variant='text'
+            {files
+              .filter((f) => f.extension.toLocaleLowerCase() !== 'test')
+              .map(({ id, name, extension }) => {
+                return (
+                  <Stack
+                    key={id}
+                    sx={styles.BUTTON_WRAPPER}
                   >
-                    <DevIcon
-                      sx={styles.devIcon}
-                      fileName={`${name}.${extension}`}
-                    />
-                    <Typography
-                      variant='subtitle2'
-                      noWrap
-                      textOverflow='ellipsis'
+                    <Button
+                      onClick={() => setActiveFile(id ?? '')}
+                      sx={styles.BUTTON_FILE_SX}
+                      variant='text'
                     >
-                      {name}.{extension}
-                    </Typography>
-                  </Button>
+                      <DevIcon
+                        sx={styles.devIcon}
+                        fileName={`${name}.${extension}`}
+                      />
+                      <Typography
+                        variant='subtitle2'
+                        noWrap
+                        textOverflow='ellipsis'
+                      >
+                        {name}.{extension}
+                      </Typography>
+                    </Button>
 
-                  {isDeleteExist && (
-                    <IconButton
-                      size='small'
-                      onClick={() => setFileToDelete({ id, name, extension })}
-                    >
-                      <Close />
-                    </IconButton>
-                  )}
-                </Stack>
-              )
-            })}
+                    {isDeleteExist && (
+                      <IconButton
+                        size='small'
+                        onClick={() => setFileToDelete({ id, name, extension })}
+                      >
+                        <Close />
+                      </IconButton>
+                    )}
+                  </Stack>
+                )
+              })}
           </Stack>
         </Stack>
 

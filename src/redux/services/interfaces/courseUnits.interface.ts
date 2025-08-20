@@ -63,6 +63,8 @@ export interface ICourse {
   units: IModule[]
   audience: string
   for_teachers: string
+  is_global: boolean
+  is_show_in_catalog?: boolean
 }
 
 export interface ILessonContent {

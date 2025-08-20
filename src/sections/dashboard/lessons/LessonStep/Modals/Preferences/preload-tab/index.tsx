@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack'
 import { EmptyContent } from '@root/src/components'
 import { useAddLessonStepPreloadFileMutation } from '@root/src/redux/services/manager/lesson-content-manager'
 import { useGetLessonSlidePreloadFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
-import { FileExtension } from '@root/src/types/lessons'
+import { FileExtension, FileExtensions } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { getAssetBtnSx } from './constants'
@@ -33,13 +33,13 @@ const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
   const { data, isLoading } = useGetLessonSlidePreloadFilesQuery({ lessonId, contentId })
 
   const onCreate = async () => {
-    const fileName = await getUniqueName(FileExtension.HTML)
+    const fileName = await getUniqueName(FileExtensions.HTML)
 
     try {
       await postFile({
         lessonId,
         contentId,
-        extension: FileExtension.HTML,
+        extension: FileExtensions.HTML,
         name: fileName,
         preloaded_code: '',
       }).unwrap()

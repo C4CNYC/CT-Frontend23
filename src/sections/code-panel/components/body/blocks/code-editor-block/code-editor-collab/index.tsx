@@ -3,7 +3,6 @@ import { type FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 
 import { useDispatch } from '@/redux/store'
-import { voidFunction } from '@/utils'
 import { setCode } from '@root/src/redux/slices/code-panel-global'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
@@ -22,27 +21,18 @@ interface CodeEditorCollabProps {
   withFileManager?: boolean
   isMultipleExtensionFiles?: boolean
   preloadedCode?: string
-  onChangeStreamingDocInfo?: (value: Record<string, string>) => void
-  onChangeCodemirrorValue?: (value: string) => void
 }
-
-const DEBOUNCE_SAVE_TIME = 4000
-
-let checkSaveTimeout: any | null = null
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   className,
   withFileManager = true,
   isReadOnly: _isReadOnly = false,
   isMultipleExtensionFiles = false,
-  onChangeStreamingDocInfo: onChangeStreamingDocInfoFromProps,
-  onChangeCodemirrorValue: onChangeCodemirrorValueFromProps = voidFunction,
   ...collabProps
 }) => {
   const styles = useStyles()
   const dispatch = useDispatch()
   const codePanelContext = useContext(CodePanelContext)
-
   const [codeValue, setCodeValue] = useState<string | undefined>('')
 
   const {
@@ -74,32 +64,17 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   )
 
   const onChangeCodemirrorValue = (value: string) => {
-    onChangeCodemirrorValueFromProps(value)
     codePanelContext.studentCodeChange(value)
-    onChangeStreamingDocInfoFromProps?.(docBuilder(files, activeFile, value))
     dispatch(
       setCode(
         Object.values(docBuilder(files, activeFile, value)).reduce((acc, curr) => acc + curr, '')
       )
     )
-
     if (value) {
       if (isFileControllerAvailable && activeFile?.body !== value) {
-        if (checkSaveTimeout) clearTimeout(checkSaveTimeout)
-
-        checkSaveTimeout = setTimeout(
-          (previousLength: number) => {
-            if (value?.length !== previousLength) {
-              onUpdateFile(activeFile?.id as string, {
-                body: value,
-              })
-            }
-          },
-          DEBOUNCE_SAVE_TIME,
-          activeFile?.body?.length
-        )
-
-        return
+        onUpdateFile(activeFile?.id as string, {
+          body: value,
+        })
       }
     }
   }

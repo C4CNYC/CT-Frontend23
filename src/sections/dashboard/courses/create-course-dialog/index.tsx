@@ -46,7 +46,7 @@ export default function CreateCourseDialog({
         open={open}
         onClose={handleClose}
         fullWidth
-        maxWidth='xs'
+        maxWidth='sm'
       >
         <DialogTitle
           variant='h5'

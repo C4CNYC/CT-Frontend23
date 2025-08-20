@@ -50,6 +50,22 @@ export const admin = {
   ],
 }
 
+export const adminTemporary = {
+  subheader: 'sidebar_menu_administration',
+  items: [
+    {
+      title: 'sidebar_menu_admin',
+      path: MANAGER_PATH_DASHBOARD.administration.root,
+      icon: <MdAdminPanelSettings />,
+    },
+    {
+      title: 'sidebar_menu_members',
+      path: MANAGER_PATH_DASHBOARD.organization.members,
+      icon: <FaUserShield />,
+    },
+  ],
+}
+
 // export const superAdmin = {
 //   subheader: 'sidebar_menu_administration',
 //   items: [],
@@ -82,6 +98,32 @@ export const managment = {
       title: 'sidebar_menu_progress',
       path: MANAGER_PATH_DASHBOARD.school.progress,
       icon: <GiProgression />,
+    },
+  ],
+}
+
+export const managmentForAdminTemporary = {
+  subheader: 'sidebar_menu_management',
+  items: [
+    {
+      title: 'sidebar_menu_school',
+      path: MANAGER_PATH_DASHBOARD.school.general,
+      icon: <FaSchool />,
+    },
+    {
+      title: 'sidebar_menu_students',
+      path: MANAGER_PATH_DASHBOARD.school.students,
+      icon: <FaUsers />,
+    },
+    {
+      title: 'sidebar_menu_classes',
+      path: MANAGER_PATH_DASHBOARD.school.classes,
+      icon: <IoMdSchool />,
+    },
+    {
+      title: 'sidebar_menu_assignments',
+      path: MANAGER_PATH_DASHBOARD.school.assignments,
+      icon: <AiOutlineSolution />,
     },
   ],
 }
@@ -125,6 +167,27 @@ export const content = {
       title: 'sidebar_menu_skills',
       path: MANAGER_PATH_DASHBOARD.skills.root,
       icon: <HiOutlineLightBulb />,
+    },
+  ],
+}
+
+export const contentForAdminTemporary = {
+  subheader: 'sidebar_menu_content',
+  items: [
+    {
+      title: 'sidebar_menu_courses',
+      path: MANAGER_PATH_DASHBOARD.courses.root,
+      icon: <MdPlayLesson />,
+    },
+    {
+      title: 'sidebar_menu_modules',
+      path: MANAGER_PATH_DASHBOARD.modules.root,
+      icon: <GoFileSubmodule />,
+    },
+    {
+      title: 'sidebar_menu_lessons',
+      path: MANAGER_PATH_DASHBOARD.lessons.root,
+      icon: <MdPlayLesson />,
     },
   ],
 }
@@ -233,7 +296,8 @@ export const menuConfig = (currentRole: Role) =>
     ? {
         [Role.SuperAdmin]: [admin, managment, content],
         [Role.Owner]: [admin, managment, content],
-        [Role.Admin]: [admin, managment, content, market_sandbox],
+        [Role.Admin]: [admin, managmentForAdminTemporary, contentForAdminTemporary],
+        // [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],
         [Role.Anonymous]: [courses, general, apps],
         [Role.Manager]: [managment, content],

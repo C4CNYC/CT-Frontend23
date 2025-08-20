@@ -36,6 +36,7 @@ export interface FormValuesGeneralProps {
   skills: []
   audience: string
   for_teachers: string
+  is_global: boolean
 }
 
 export const CreateCourseSchema = (translate: (t: string) => string) =>

@@ -5,7 +5,7 @@ import { ListItem } from '@mui/material'
 import { IoMdCheckmarkCircleOutline } from '@react-icons/all-files/io/IoMdCheckmarkCircleOutline'
 import { SlClose } from '@react-icons/all-files/sl/SlClose'
 
-import { type IValidationMap } from '@/utils/validationMaping'
+import { type IValidationMap } from '@root/src/utils/CheckValidationTests'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { CheckerIcon } from '../CheckersIcon'
