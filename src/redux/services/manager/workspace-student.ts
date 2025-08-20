@@ -16,10 +16,10 @@ export const extendedApiWorkspaceStudents = managerApi.injectEndpoints({
         method: 'GET',
         params: {
           lessonId,
-          lessonContentId: lessonContentId,
+          lessonContentId,
         },
       }),
-      keepUnusedDataFor: 360,
+      keepUnusedDataFor: 0,
       providesTags: ['WorkspaceStudent'],
     }),
     getFilesByUnauthUser: builder.query<
@@ -93,7 +93,10 @@ export const useResetStudentFiles = ({
   lessonContentId?: string
 }) => {
   const profile = useSelector((state) => state.global.user)
-  let { data: files } = useGetStudentFilesQuery({ lessonId, lessonContentId }, { skip: !profile })
+  let { data: files } = useGetStudentFilesQuery(
+    { lessonId, lessonContentId },
+    { skip: !profile || !lessonId || !lessonContentId }
+  )
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [trigger] = useLazyGetStudentFilesQuery()
 

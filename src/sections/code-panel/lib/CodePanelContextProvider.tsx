@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useDebounceCallback } from '@root/src/hooks/useDebounceCallback'
 import { useProperties } from '@root/src/hooks/useProperties'
 import { useSelector } from '@root/src/redux/store'
 
@@ -7,10 +8,9 @@ import { CodePanelContext } from './CodePanelContext'
 
 type Props = {
   children: React.ReactNode
-  studentCode: string
 }
 
-export function CodePanelContextProvider({ children, ...props }: Props): JSX.Element {
+export function CodePanelContextProvider({ children }: Props): JSX.Element {
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const [studentCode, setStudentCode] = useState<string>('')
   const [iframeKey, setIframeKey] = useState<number>(0)
@@ -25,10 +25,15 @@ export function CodePanelContextProvider({ children, ...props }: Props): JSX.Ele
   const reloadIframe = () => {
     setIframeKey((key) => key + 1)
   }
+
+  // Create debounced reload function with 500ms delay
+  const debouncedReload = useDebounceCallback(500)
+
   function studentCodeChange(code: string) {
     setStudentCode(code)
     if (autoRun) {
-      reloadIframe()
+      // Use debounced reload instead of immediate reload
+      debouncedReload(reloadIframe)
     }
   }
 

@@ -42,6 +42,7 @@ import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { isUuid } from '@root/src/utils/isUuid'
 import { progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
+import { FileManagerProvider } from './components/body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
@@ -337,12 +338,12 @@ export function CodePanelLayout(): ReactElement | null {
     }
   }, [isShowTour, showTour])
 
-  if (!isLoadingComplete && render) {
+  if (!lesson || (!isLoadingComplete && render)) {
     return <SkeletonCodePanel />
   }
 
   return (
-    <CodePanelContextProvider studentCode=''>
+    <CodePanelContextProvider>
       <Head>
         <meta
           name='viewport'
@@ -362,25 +363,31 @@ export function CodePanelLayout(): ReactElement | null {
           lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
           lessonContent={lessonContent}
         >
-          {router.query.ai ? <CPTeacherTour /> : showTour || isShowTour ? <CodePanelTour /> : null}
-          <Box
-            sx={{
-              bgcolor: (theme) =>
-                theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
-            <CodePanelHeader language={DEFAULT_LANGUAGE} />
-            <CodePanelBody
-              lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-              isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}
-              lessonContents={lessonContent ?? []}
-              language={DEFAULT_LANGUAGE}
-              onSubmitChallenge={onSubmitChallenge}
-              onSubmitLesson={onSubmitLesson}
-            />
-          </Box>
+          <FileManagerProvider>
+            {router.query.ai ? (
+              <CPTeacherTour />
+            ) : showTour || isShowTour ? (
+              <CodePanelTour />
+            ) : null}
+            <Box
+              sx={{
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              <CodePanelHeader language={DEFAULT_LANGUAGE} />
+              <CodePanelBody
+                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+                isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}
+                lessonContents={lessonContent ?? []}
+                language={DEFAULT_LANGUAGE}
+                onSubmitChallenge={onSubmitChallenge}
+                onSubmitLesson={onSubmitLesson}
+              />
+            </Box>
+          </FileManagerProvider>
         </LessonManagerProvider>
       </FullScreenProvider>
 

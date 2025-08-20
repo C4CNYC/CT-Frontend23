@@ -132,6 +132,12 @@ export const authApi = createApi({
         body,
       }),
     }),
+    resetPasswordUser: builder.query<IUser, string>({
+      query: (id) => ({
+        url: `/reset-password-user/${id}`,
+        method: 'GET',
+      }),
+    }),
     submitPassword: builder.mutation<BaseResponseInterface, { id: string; password: string }>({
       query: ({ ...body }) => ({
         url: '/submit-password',
@@ -155,5 +161,6 @@ export const {
   useUpdateProfileMutation,
   useResetPasswordMutation,
   useSubmitPasswordMutation,
+  useResetPasswordUserQuery,
   useUpdateMeMetaFlagMutation,
 } = authApi

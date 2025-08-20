@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { useDebounceCallback } from '@root/src/hooks/useDebounceCallback'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
-import { iframeSuppliments } from '../body/blocks/view-block/browser-view/iframeSuppliments'
+import { useCodePanel } from '../../lib/CodePanelContext'
+import { useFileManager } from '../body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 import {
   BrowserViewProps,
   CodeDocument,
@@ -11,21 +13,22 @@ import {
 import SkeletonViewBlock from '../body/blocks/view-block/skeleton-view-box'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
+const emptyDoc = { htmlBody: '', cssBody: '', jsBody: '' } as CodeDocument
 
+/** Student View for HTML based lessons */
 export function BrowserViewHTML({
-  document,
   isOpenHeader,
   iframeKey,
   stepBgColor,
-  integrations,
   reloadIframe,
-  teacherView = false,
 }: BrowserViewProps) {
-  const [docSrc, setDocSrc] = useState('')
-  const [iframeProcess, setIframeProcess] = useState(false)
-  const [isEditing, setIsEditing] = useState(false) // Track if user is editing
-  const lessonManager = useLessonManager()
+  const { files, activeFile } = useFileManager()
+  const { lesson } = useLessonManager()
+  const { autoRun } = useCodePanel()
   const iFrameRef = useRef<HTMLIFrameElement>(null)
+  const integrations = lesson?.integrations || []
+  const debounceCallback = useDebounceCallback(500)
+  const [previousIframeKey, setPreviousIframeKey] = useState<string | number | undefined>(iframeKey)
 
   const IFRAME_STYLE = {
     border: 0,
@@ -33,12 +36,58 @@ export function BrowserViewHTML({
     height: iframeKey ? 'calc(100% - 42px)' : '100%',
     background: '#F8F8FF',
   }
-  let lessonEditable = lessonManager.userIsOwner && teacherView
+
+  let document = useMemo(() => {
+    if (files.length === 0) return emptyDoc
+
+    let tests = files
+      .filter((f) => f.extension === 'test')
+      .map((f) => f.body)
+      .join('\n')
+    tests += `;
+    function validateChecker(t,v){window.parent.postMessage({type: 'checker-validation',checkerId: t,valid: v},'*')}`
+    let acc = files.reduce(
+      (acc, file) => {
+        if (file.extension === 'html') {
+          acc.htmlBody.push(file.body)
+        } else if (file.extension === 'css') {
+          file.body ? acc.cssBody.push(`<style>${file.body}</style>`) : null
+        } else if (file.extension === 'js') {
+          file.body ? acc.jsBody.push(`<script>${file.body}</script>`) : null
+        }
+        return acc
+      },
+      { htmlBody: [] as string[], cssBody: [] as string[], jsBody: [] as string[] }
+    )
+    acc.jsBody.push(`<script>${tests}</script>`)
+    return {
+      htmlBody: acc.htmlBody.join('\n'),
+      cssBody: acc.cssBody.join('\n'),
+      jsBody: acc.jsBody.join('\n'),
+    }
+  }, [files])
+
+  useEffect(() => {
+    if (!iFrameRef.current) return
+    if (!document) return
+
+    if (autoRun) {
+      debounceCallback(() => {
+        iFrameRef.current!.srcdoc = generateHtml(document)
+      })
+    } else if (iframeKey !== previousIframeKey) {
+      // When autoRun is disabled, only update when iframeKey actually changes
+      iFrameRef.current.srcdoc = generateHtml(document)
+      setPreviousIframeKey(iframeKey)
+    }
+  }, [document, autoRun, iframeKey, previousIframeKey])
 
   const generateHtml = (doc: CodeDocument) => {
-    if (!doc) return ''
-
-    const { htmlBody = [], cssBody = [], jsBody = [] } = doc
+    const {
+      htmlBody = [],
+      cssBody = [],
+      jsBody = [],
+    } = doc || { htmlBody: '', cssBody: '', jsBody: '' }
     let integrationsScripts = integrations
       .map((integration) => integration.scripts)
       .filter(Boolean)
@@ -49,9 +98,7 @@ export function BrowserViewHTML({
 
     return `
       <html 
-      style="height: 100%; box-sizing: border-box;" 
-      
-      ${lessonEditable ? 'contentEditable id="VeryEditableDivId"' : ''}>
+      style="height: 100%; box-sizing: border-box;" >
         <head>
         <link rel="stylesheet" href="/fonts/index.css" />
         <style>
@@ -61,19 +108,6 @@ export function BrowserViewHTML({
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
           <script>
-            ${
-              teacherView
-                ? `
-  function validateChecker(checkerId,valid){
-    window.parent.postMessage(  {
-    type: 'checker-validation',
-    checkerId,
-    valid  },
-  '*' );
-  }
-  
-                `
-                : `
             console.logOld = console.log;
             consolelog = function() {
               window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
@@ -81,79 +115,22 @@ export function BrowserViewHTML({
             console.log = consolelog;
             console.warn = consolelog;
             console.error = consolelog;
-            console.debug = consolelog;
-            `
-            }
-
-            // Only add event listener if contentEditable
-            if (document.getElementById('VeryEditableDivId')) {
-              let debounceTimer;
-              let dbT= new Date().getTime();
-              document.getElementById('VeryEditableDivId').addEventListener('input', function() {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => {
-                  window.parent.postMessage({ 
-                    type: 'contentChange', 
-                    content: this.innerHTML 
-                  }, '*');
-                }, 300); // Debounce to avoid excessive updates
-              });
-            }
-            if (!window.__iframeSupplimentsLoaded) {
-              window.__iframeSupplimentsLoaded = true;
-              ${lessonEditable ? iframeSuppliments() : null}
-            }
+            console.debug = consolelog;              
           </script>
         </head>
         ${htmlPart}
+        ${jsBody}
       </html>
     `
   }
 
-  useEffect(() => {
-    if (document == null) return
-    if (isEditing) return
-
-    setIframeProcess(true)
-    const newHtml = generateHtml(document)
-    setDocSrc(newHtml)
-
-    const timerId = setTimeout(() => {
-      setIframeProcess(false)
-    }, 100)
-
-    return () => {
-      clearTimeout(timerId)
-    }
-  }, [document, isEditing])
-
-  useEffect(() => {
-    if (!lessonEditable) return
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data.type === 'contentChange') {
-        setIsEditing(true)
-      }
-    }
-
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
-  }, [setIsEditing, document, lessonEditable])
-
-  const IFrame = useMemo(
-    () =>
-      !iframeProcess ? (
-        <iframe
-          className={teacherView ? 'BrowserViewTeacherView' : 'BrowserView'}
-          ref={iFrameRef}
-          srcDoc={docSrc}
-          style={IFRAME_STYLE}
-          key={docSrc}
-        />
-      ) : null,
-    [docSrc, iframeProcess]
-  )
-
   if (!document) return <SkeletonViewBlock isOpenHeader={isOpenHeader} />
 
-  return IFrame
+  return (
+    <iframe
+      className='BrowserView'
+      ref={iFrameRef}
+      style={IFRAME_STYLE}
+    />
+  )
 }

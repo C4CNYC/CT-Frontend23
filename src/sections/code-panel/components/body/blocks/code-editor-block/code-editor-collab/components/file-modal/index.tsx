@@ -12,6 +12,7 @@ import { ConfirmDialog } from '@root/src/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useFileManager } from '../../hook/file-manager/useFileManager'
 import DevIcon from '../dev-icon'
 
 import AddStudentFileModal from './AddStudentFileModal'
@@ -41,6 +42,7 @@ const FileModal: FC<FileModalProps> = ({
   const translate = useTranslate()
   const styles = useStyles(theme)
   const router = useRouter()
+  const fileManager = useFileManager()
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentWithoutContentsQuery(
     { id: router.query.lessonId as string },

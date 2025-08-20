@@ -18,7 +18,6 @@ import {
   toggleInstrations,
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
-import BrowserView from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { useDebounceCallback } from '@root/src/hooks'
@@ -29,6 +28,7 @@ import {
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 import { progressGuestGetAll, progressGuestSet } from '@root/src/utils/progressLocalStorage'
 
+import { BrowserViewTeacher } from '../../../browserview/BrowserViewTeacher'
 import BaseBlock from '../base-block'
 import { CodeDocument } from '../view-block/browser-view/types'
 
@@ -99,7 +99,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     { skip: !lessonId || !profile }
   )
 
-  const handleDebouncedCallback = useDebounceCallback(5000)
+  const handleDebouncedCallback = useDebounceCallback(1000)
 
   const hasNextStep = slideIndex < data?.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length
@@ -167,7 +167,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     if (slideId) dispatch(setSlideId(slideId))
   }
 
-  const connectIntegrations = (body: string): CodeDocument | null => {
+  const connectIntegrations = (body: string): CodeDocument => {
     if (integrations) {
       return {
         htmlBody: body ? JSON.parse(body).content : '',
@@ -175,7 +175,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         jsBody: integrations.reduce((ac, cur) => ac + cur.scripts, ''),
       }
     }
-    return null
+    return { htmlBody: body ? JSON.parse(body).content : '', cssBody: '', jsBody: '' }
   }
 
   useEffect(() => {
@@ -213,15 +213,11 @@ const SliderBlock: FC<ISliderBlock> = ({
         {isLoadingLessonContent ? (
           <LoadingScreen />
         ) : currentSlide ? (
-          <View
-            title={currentSlide?.title}
-            lessonType={lessonType}
+          <BrowserViewTeacher
             key={currentSlide?.id}
-            type={currentSlide?.type}
-            body={currentSlide?.body}
-            integrations={integrations}
-            connectIntegrations={connectIntegrations}
             stepBgColor={currentSlide?.bg_color}
+            document={connectIntegrations(currentSlide?.body)}
+            iframeKey={0}
           />
         ) : lesson?.meta?.ai ? (
           <SliderBlockAiLessonComing />
@@ -244,13 +240,10 @@ const SliderBlock: FC<ISliderBlock> = ({
       takeHeaderSettings={takeHeaderSettings}
     >
       <Box sx={progressWrapperSx}>
-        {data.map((slide, index) => (
+        {data.map((_slide, index) => (
           <Box
             key={index}
-            sx={{
-              bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`,
-              ...PROGRESS_ITEM_SX,
-            }}
+            sx={{ bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`, ...PROGRESS_ITEM_SX }}
           ></Box>
         ))}
       </Box>
@@ -321,27 +314,4 @@ const NextStep = ({
   )
 }
 
-const View: FC<IView> = ({
-  type,
-  body,
-  connectIntegrations,
-  title,
-  lessonType,
-  stepBgColor,
-  integrations,
-}) => {
-  switch (type) {
-    default:
-    case 'code':
-      return (
-        <BrowserView
-          integrations={integrations}
-          document={connectIntegrations(body)}
-          stepBgColor={stepBgColor}
-          teacherView={true}
-          iframeKey={0}
-        />
-      )
-  }
-}
 export default SliderBlock

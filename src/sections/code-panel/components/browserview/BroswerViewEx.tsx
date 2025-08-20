@@ -15,7 +15,7 @@ import {
 import { prepareJavaCode } from './prepare/java'
 import { preparePythonCode } from './prepare/python'
 
-export function BrowserViewEx({ document, iframeKey }: { document: any; iframeKey: number }) {
+export function BrowserViewEx({ iframeKey }: { iframeKey: number }) {
   const theme = useTheme()
   const isLight = theme.palette.mode === 'light'
   const isOpenHeader = true
