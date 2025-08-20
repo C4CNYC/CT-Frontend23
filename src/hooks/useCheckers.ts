@@ -6,24 +6,25 @@ import {
   setNextStepAble,
   ContentValidation,
 } from '@/redux/slices/code-panel-global'
-import { dispatch, useSelector } from '@/redux/store'
-import { CheckValidationTests } from '@root/src/utils/CheckValidationTests'
+import { CheckValidationTests, IValidationMap } from '@root/src/utils/CheckValidationTests'
 
+import { dispatch, useSelector } from '../redux/store'
 import { useFileManager } from '../sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 import { useLessonManager } from '../sections/code-panel/lib/LessonManagerContext'
 
 let fnInc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-function fnIncUse(n: number) {
+function fnIncUse(n: number, ...args: any[]) {
   fnInc[n] = fnInc[n] + 1
-  //console.log('fnIncUse', n, fnInc[n]) // eslint-disable-line no-console
+  //console.log('fnIncUse', n, fnInc[n] , args)
 }
 let lastRenderTime = 0
+
 export function useCheckers() {
   const { lessonContent, currentSlideId, lesson } = useLessonManager()
   let validations = lessonContent?.find((lc) => lc.id == currentSlideId)?.validations || []
   const { files } = useFileManager()
   const { completedSlides } = useSelector((state) => state.checkersAnimation)
-  const { contentValidations } = useSelector((state) => state.codePanelGlobal)
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   fnIncUse(0)
   const codeState = useMemo(() => {
@@ -34,11 +35,28 @@ export function useCheckers() {
       .map((file) => file.body || '')
       .join('\n')
   }, [files])
+
+  function selectedContentCheckersGet() {
+    return contentValidations?.find((item) => item.contentId === currentSlideId)?.checkers || []
+  }
+
+  function updateContentValidations(updatedCheckers: IValidationMap[]) {
+    fnIncUse(3)
+    if (!currentSlideId) return
+    if (!contentValidations?.length || !currentSlideId) return
+
+    const updatedContentValidations = contentValidations.map((item) => ({
+      ...item,
+      checkers: item.contentId === currentSlideId ? updatedCheckers : item.checkers,
+    }))
+
+    dispatch(setContentValidations(updatedContentValidations))
+  }
   useEffect(() => {
     if (!codeState || !validations.length) return
     fnIncUse(2)
     const checkers = CheckValidationTests(codeState, validations)
-    const allPassed = checkers.length > 0 && checkers.every((checker) => checker.valid)
+    let allPassed = checkers.length > 0 && checkers.every((checker) => checker.valid)
 
     let updatedContentValidations: ContentValidation[] = []
 
@@ -50,12 +68,19 @@ export function useCheckers() {
       if (existingValidationIndex >= 0) {
         const existingCheckers = contentValidations[existingValidationIndex].checkers || []
         const previousPassedCount = existingCheckers.filter((checker) => checker.valid).length
-        const newPassedCount = checkers.filter((checker) => checker.valid).length
 
+        checkers.forEach((checker) => {
+          const existingChecker = existingCheckers.find((c) => c.text === checker.text)
+          if (existingChecker) {
+            checker.valid = existingChecker.valid || checker.valid
+          }
+        })
+
+        allPassed = checkers.length > 0 && checkers.every((checker) => checker.valid)
+        const newPassedCount = checkers.filter((checker) => checker.valid).length
         if (newPassedCount > previousPassedCount) {
           dispatch(setIsActivateCompeated(true))
         }
-
         updatedContentValidations = contentValidations.map((item, index) =>
           index === existingValidationIndex ? { ...item, checkers } : item
         )
@@ -68,7 +93,7 @@ export function useCheckers() {
     if (JSON.stringify(updatedContentValidations) !== JSON.stringify(contentValidations)) {
       if (true || Date.now() - lastRenderTime > 100) {
         lastRenderTime = Date.now()
-        fnIncUse(6)
+        fnIncUse(92)
         dispatch(setContentValidations(updatedContentValidations))
       }
     }
@@ -83,11 +108,34 @@ export function useCheckers() {
         newCompletedSlides[slideIndex] = true
       }
       if (JSON.stringify(newCompletedSlides) === JSON.stringify(completedSlides)) return
-      fnIncUse(5)
+      fnIncUse(107)
       dispatch(setCompletedSlides(newCompletedSlides))
       dispatch(setNextStepAble(true))
     }
   }, [codeState, validations, completedSlides, currentSlideId, contentValidations, slideIndex])
+  useEffect(() => {
+    fnIncUse(119)
+    const handleMessage = (event: MessageEvent): void => {
+      const data = event.data
+      if (
+        data?.type === 'checker-validation' &&
+        data.checkerId &&
+        typeof data.valid === 'boolean'
+      ) {
+        let checkers = selectedContentCheckersGet()
+        const checkerToUpdate = checkers.find((checker) => checker.text === data.checkerId)
+        if (checkerToUpdate && checkerToUpdate.valid !== data.valid) {
+          const updatedCheckers = checkers.map((checker) =>
+            checker.text === data.checkerId ? { ...checker, valid: data.valid } : checker
+          )
+          updateContentValidations(updatedCheckers)
+        }
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [updateContentValidations])
 
   const currentCheckers = useMemo(() => {
     if (!contentValidations || !currentSlideId) return []
@@ -97,10 +145,9 @@ export function useCheckers() {
   }, [contentValidations, currentSlideId])
 
   const allPassed = useMemo(() => {
-    fnIncUse(4)
+    fnIncUse(152)
     return currentCheckers.length > 0 && currentCheckers.every((checker) => checker.valid)
   }, [currentCheckers])
-
   return {
     checkers: currentCheckers,
     allPassed,
