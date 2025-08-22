@@ -128,6 +128,9 @@ export function useCheckers() {
           }
           updateContentValidations(updatedCheckers)
         }
+        document.querySelectorAll("iframe").forEach((iframe) => {
+          iframe.contentWindow?.postMessage(event.data, "*");
+        });
       }
     }
 
