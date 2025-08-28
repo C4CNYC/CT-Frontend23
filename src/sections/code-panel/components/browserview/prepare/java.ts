@@ -15,10 +15,11 @@ public class Main {
             Tests.TestCase test = entry.getValue();
 
             int[] inputCopy = test.input.clone();
+            int[] result = null;
             try {
               // Call student function
               Method method = StudentCode.class.getMethod(Tests.STUDENT_FN, int[].class);
-              int[] result = (int[]) method.invoke(null, (Object) inputCopy);
+              result = (int[]) method.invoke(null, (Object) inputCopy);
             } catch (Exception e) {
               Method[] methods = StudentCode.class.getDeclaredMethods();
               for (Method m : methods) {

@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const imageJson = await response.json()
           const resizedImageUrl = `${imageJson.urls.raw}&w=${width}&h=${height}&fit=crop`
           const imageResponse = await fetch(resizedImageUrl)
-          imageData = Buffer.from(await imageResponse.arrayBuffer())
+          imageData = await imageResponse.arrayBuffer()
           cache.set(cacheKey, imageData)
         }
       } catch (fetchError) {}
