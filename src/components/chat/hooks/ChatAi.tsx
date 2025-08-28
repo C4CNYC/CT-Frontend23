@@ -175,8 +175,13 @@ export const ChatAi = () => {
       'chatHistoryAdd'
     )
   const sendMessage =
-    (setMessages: Dispatch<SetStateAction<IChatMessages[]>>) => (message: string) => {
+    (
+      setMessages: Dispatch<SetStateAction<IChatMessages[]>>,
+      setIsLoading?: Dispatch<SetStateAction<boolean>>
+    ) =>
+    (message: string) => {
       let ctime = new Date().getTime()
+      setIsLoading?.(true)
       setMessages((s) => [{ chat: message, isMe: true, id: ctime, ctime }, ...(s || [])])
       chatHistoryAdd(message, 1)
       modifySlide(slideId, message).then(async (res) => {
@@ -251,7 +256,8 @@ export const ChatAi = () => {
           }
         }
         chatHistoryAdd(responseMessage, 0)
-        if (!errorOccured)
+        if (!errorOccured) {
+          setIsLoading?.(false)
           setMessages((s) => [
             {
               chat: responseMessage,
@@ -262,6 +268,7 @@ export const ChatAi = () => {
             },
             ...s,
           ])
+        }
       })
     }
 

@@ -9,7 +9,7 @@ import { BrowserViewProps, CodeDocument, TagNames } from './types'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
 
-const BrowserView: FC<BrowserViewProps & { isEditLesson: boolean }> = ({
+const BrowserView: FC<BrowserViewProps> = ({
   document,
   isOpenHeader,
   iframeKey,
@@ -17,7 +17,6 @@ const BrowserView: FC<BrowserViewProps & { isEditLesson: boolean }> = ({
   integrations,
   reloadIframe,
   teacherView = false,
-  isEditLesson = false,
 }) => {
   const [docSrc, setDocSrc] = useState('')
   const [iframeProcess, setIframeProcess] = useState(false)
@@ -31,7 +30,7 @@ const BrowserView: FC<BrowserViewProps & { isEditLesson: boolean }> = ({
     height: iframeKey ? 'calc(100% - 42px)' : '100%',
     background: '#F8F8FF',
   }
-  let lessonEditable = lessonManager.userIsOwner && teacherView && isEditLesson
+  let lessonEditable = lessonManager.userIsOwner && teacherView
 
   // Generate the initial HTML content
   const generateHtml = (doc: CodeDocument) => {
@@ -52,16 +51,7 @@ const BrowserView: FC<BrowserViewProps & { isEditLesson: boolean }> = ({
         <link rel="stylesheet" href="/fonts/index.css" />
         <style>
           * { box-sizing: border-box; } 
-        body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'}; 
-        
-          ${
-            lessonEditable
-              ? `
-
-            `
-              : ''
-          }
-        }
+        body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'};}
         </style>
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
@@ -108,7 +98,7 @@ const BrowserView: FC<BrowserViewProps & { isEditLesson: boolean }> = ({
 
   useEffect(() => {
     if (document == null) return
-    // if (isEditing) returna
+    if (isEditing) return
 
     setIframeProcess(true)
     const newHtml = generateHtml(document)
@@ -121,32 +111,22 @@ const BrowserView: FC<BrowserViewProps & { isEditLesson: boolean }> = ({
     return () => {
       clearTimeout(timerId)
     }
-  }, [document, isEditing, isEditLesson])
+  }, [document, isEditing])
 
   // Handle messages from iframe (including content changes)
-  // useEffect(() => {
-  //   if (!lessonEditable) return
-  //   const handleMessage = (event: MessageEvent) => {
-  //     if (event.data.type === 'contentChange') {
-  //       setIsEditing(true)
-  //       // Here you would typically update your state/store with the new content
-  //       // For now, we just prevent the iframe from re-rendering
-  //     }
-  //   }
+  useEffect(() => {
+    if (!lessonEditable) return
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'contentChange') {
+        setIsEditing(true)
+        // Here you would typically update your state/store with the new content
+        // For now, we just prevent the iframe from re-rendering
+      }
+    }
 
-  //   window.addEventListener('message', handleMessage)
-  //   return () => window.removeEventListener('message', handleMessage)
-  // }, [setIsEditing, document, lessonEditable])
-
-  //  useEffect(() => {
-  //   const iframe = iFrameRef.current
-  //   const editableDiv = iframe?.contentDocument?.getElementById('VeryEditableDivId')
-  //   if (editableDiv) {
-  //     // editableDiv.contentEditable = isEditLesson ? 'true' : 'false'
-  //     editableDiv.setAttribute('contentEditable', isEditLesson ? 'true' : 'false')
-  //   }
-  //   console.log('editableDiveditableDiveditableDiv', editableDiv)
-  // }, [isEditLesson])
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [setIsEditing, document, lessonEditable])
 
   const IFrame = useMemo(
     () =>

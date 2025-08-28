@@ -33,8 +33,8 @@ import BaseBlock from '../base-block'
 import { CodeDocument } from '../view-block/browser-view/types'
 
 import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
+import { EditContentLayer } from './edit-content-layer'
 import Navigation from './navigation'
-import { SaveEditContent } from './SaveEditContent'
 import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
 
 interface ISliderBlock {
@@ -235,7 +235,6 @@ const SliderBlock: FC<ISliderBlock> = ({
             integrations={integrations}
             connectIntegrations={connectIntegrations}
             stepBgColor={currentSlide?.bg_color}
-            isEditLesson={isEditLesson}
           />
         ) : lesson?.meta?.ai ? (
           <SliderBlockAiLessonComing />
@@ -244,7 +243,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         )}
       </Box>
     )
-  }, [data, slideIndex, integrations, isLoadingLessonContent, isEditLesson])
+  }, [data, slideIndex, integrations, isLoadingLessonContent])
 
   return (
     <BaseBlock
@@ -289,7 +288,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         />
       ) : (
         <>
-          <SaveEditContent
+          <EditContentLayer
             isEditLesson={isEditLesson}
             setIsEditLesson={setIsEditLesson}
           />
@@ -338,7 +337,7 @@ const NextStep = ({
   )
 }
 
-const View: FC<IView & { isEditLesson: boolean }> = ({
+const View: FC<IView> = ({
   type,
   body,
   connectIntegrations,
@@ -346,7 +345,6 @@ const View: FC<IView & { isEditLesson: boolean }> = ({
   lessonType,
   stepBgColor,
   integrations,
-  isEditLesson = false,
 }) => {
   switch (type) {
     default:
@@ -357,7 +355,6 @@ const View: FC<IView & { isEditLesson: boolean }> = ({
           document={connectIntegrations(body)}
           stepBgColor={stepBgColor}
           teacherView={true}
-          isEditLesson={isEditLesson}
         />
       )
   }
