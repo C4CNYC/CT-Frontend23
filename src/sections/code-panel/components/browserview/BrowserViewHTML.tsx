@@ -22,30 +22,40 @@ export function BrowserViewHTML({
   stepBgColor,
   reloadIframe,
 }: BrowserViewProps) {
-  const { files, activeFile } = useFileManager()
-  const { lesson } = useLessonManager()
+  const { files } = useFileManager()
+  const { lesson, lessonContent, currentSlideId } = useLessonManager()
   const { autoRun } = useCodePanel()
   const iFrameRef = useRef<HTMLIFrameElement>(null)
   const integrations = lesson?.integrations || []
   const debounceCallback = useDebounceCallback(500)
   const [previousIframeKey, setPreviousIframeKey] = useState<string | number | undefined>(iframeKey)
-
-  const IFRAME_STYLE = {
-    border: 0,
-    width: '100%',
-    height: iframeKey ? 'calc(100% - 42px)' : '100%',
-    background: '#F8F8FF',
-  }
+  let validations = lessonContent?.find((lc) => lc.id == currentSlideId)?.validations || []
 
   let document = useMemo(() => {
     if (files.length === 0) return emptyDoc
 
-    let tests = files
-      .filter((f) => f.extension === 'test')
-      .map((f) => f.body)
-      .join('\n')
-    tests += `;
-    function validateChecker(t,v){window.parent.postMessage({type: 'checker-validation',checkerId: t,valid: v},'*')}`
+    let tests = `;
+    function validateChecker(t,v,type='checker-validation'){
+      window.parent.postMessage({type,checkerId: t,valid: v},'*')
+    }`
+    tests +=
+      `\n //Test Files \n ` +
+      files
+        .filter((f) => f.extension === 'test')
+        .map((f) => f.body)
+        .join('\n')
+    tests +=
+      '\n //Validations \n ' +
+      validations
+        .filter((v) => v.type === 'code')
+        .map(
+          (v) => `
+      validateChecker(\`${v.name}\`, ${v.regex} )
+      `
+        )
+        .join('\n')
+    //output, error,code ,
+
     let acc = files.reduce(
       (acc, file) => {
         if (file.extension === 'html') {
@@ -76,7 +86,7 @@ export function BrowserViewHTML({
         iFrameRef.current!.srcdoc = generateHtml(document)
       })
     } else if (iframeKey !== previousIframeKey) {
-      // When autoRun is disabled, only update when iframeKey actually changes
+      // if autoRun is disabled
       iFrameRef.current.srcdoc = generateHtml(document)
       setPreviousIframeKey(iframeKey)
     }
@@ -130,7 +140,12 @@ export function BrowserViewHTML({
     <iframe
       className='BrowserView'
       ref={iFrameRef}
-      style={IFRAME_STYLE}
+      style={{
+        border: 0,
+        width: '100%',
+        height: iframeKey ? 'calc(100% - 42px)' : '100%',
+        background: '#F8F8FF',
+      }}
     />
   )
 }

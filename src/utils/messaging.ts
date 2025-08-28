@@ -1,9 +1,7 @@
-
 /**
  * Processes messaging events.
  * @param event 
- * @param cb 
- */
+ * @param cb  
 enum MessageTypes { 'checker-relay', 'checker-validation', 'checker-update' }
 
 export function messaging(
@@ -15,3 +13,4 @@ export function messaging(
     cb(data)
   }
 }
+*/
