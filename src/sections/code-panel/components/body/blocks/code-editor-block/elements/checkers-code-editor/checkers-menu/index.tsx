@@ -1,16 +1,13 @@
 import { type FC } from 'react'
 
 import { Box, Typography } from '@mui/material'
-import { ListItem } from '@mui/material'
-import { IoMdCheckmarkCircleOutline } from '@react-icons/all-files/io/IoMdCheckmarkCircleOutline'
-import { SlClose } from '@react-icons/all-files/sl/SlClose'
 
 import { type IValidationMap } from '@root/src/utils/CheckValidationTests'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { CheckerIcon } from '../CheckersIcon'
 
-import { LIST_ITEM_SX } from './constants'
+import CheckerItem from './checkers-item'
 
 interface CheckersMenuProps {
   checkers: IValidationMap[]
@@ -20,7 +17,7 @@ const CheckersMenu: FC<CheckersMenuProps> = ({ checkers }) => {
   const translate = useTranslate()
   return (
     <Box sx={BOX_SX}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
         <CheckerIcon
           width={14}
           height={15}
@@ -32,23 +29,10 @@ const CheckersMenu: FC<CheckersMenuProps> = ({ checkers }) => {
       </Box>
 
       {checkers.map((item, i) => (
-        <ListItem
-          sx={LIST_ITEM_SX}
+        <CheckerItem
           key={i}
-        >
-          {item.valid ? (
-            <IoMdCheckmarkCircleOutline
-              color='#75CF6D'
-              style={{ minWidth: 20 }}
-            />
-          ) : (
-            <SlClose
-              color='#F44336'
-              style={{ minWidth: 16 }}
-            />
-          )}
-          <Typography fontSize={12}>{item.text}</Typography>
-        </ListItem>
+          item={item}
+        />
       ))}
     </Box>
   )
@@ -57,7 +41,7 @@ const CheckersMenu: FC<CheckersMenuProps> = ({ checkers }) => {
 const BOX_SX = {
   minHeight: 130,
   color: '#fff',
-  width: 220,
+  width: 320,
   p: '8px 16px',
 }
 

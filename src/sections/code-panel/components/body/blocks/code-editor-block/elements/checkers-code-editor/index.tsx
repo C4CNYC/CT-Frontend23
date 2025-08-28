@@ -65,12 +65,12 @@ export function Checkers() {
     return null
   }
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      sx={{ position: 'relative' }}
+      ref={ref}
+    >
       {isActivateCompleted ? <CheckersCompleated /> : null}
-      <Box
-        sx={OPEN_BOX_SX}
-        ref={ref}
-      >
+      <Box sx={OPEN_BOX_SX}>
         <AnimatePresence>
           <m.div
             initial='visible'
