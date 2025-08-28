@@ -183,7 +183,17 @@ export default function Validation({
                         >
                           {row.name}
                         </StyledTableCell>
-                        <StyledTableCell align='left'>{row.regex}</StyledTableCell>
+                        <StyledTableCell
+                          align='left'
+                          sx={{
+                            maxWidth: '250px',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {row.regex}
+                        </StyledTableCell>
                         <StyledTableCell align='left'>
                           {format(new Date(row.createdAt), 'dd/MM/yyyy')}
                         </StyledTableCell>
@@ -197,10 +207,7 @@ export default function Validation({
                           <CreateEditValidation
                             stepId={stepId}
                             id={row.id}
-                            defaultValues={{
-                              name: row.name,
-                              regex: row.regex,
-                            }}
+                            defaultValues={row}
                           >
                             <IconButton>
                               <MdOutlineModeEdit />

@@ -169,6 +169,15 @@
     "files": "Files",
     "rule": "Description",
     "regex": "Test",
+    "checker_type_help":{
+      "regex":"Check the student's code by using regular expressions.",
+      "code":"Runs Code you write with student code.",
+      "output":"After student code runs, checks for output, if regex wanted, put between slashes /regex/",
+      "error":"After student code runs checks for errors, if regex wanted, put between slashes /regex/",
+      "input":"Checks input patters",
+      "action":"For internal actions, like running tests, etc.",
+      "signal":"Checks internal signals, time passed, events, etc."
+    },
     "private": "Private",
     "open_catalog": "Open Catalog",
     "sequence": "Sequence",

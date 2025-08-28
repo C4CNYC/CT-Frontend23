@@ -5,6 +5,7 @@ import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 import { LessonContentType } from '../enums/lesson-content-type.enum'
 import { AGE, GRADING, LEVEL, TModuleMeta } from '../services/interfaces/courseUnits.interface'
 import { ILesson } from '../services/interfaces/lesson.interface'
+import { ILessonContentValidation } from '../services/interfaces/lessonContentValidation.interface'
 
 export type { ILesson }
 
@@ -119,7 +120,7 @@ export interface ILessonContent {
   preload_body: string
   tips: string
   solution_body: string
-  validations: Array<IValidation & BaseResponseInterface>
+  validations: Array<ILessonContentValidation & BaseResponseInterface>
   type: LessonContentType
   meta: Record<string, any>
   //integrations: IIntegration[]
@@ -133,11 +134,6 @@ export interface ISkill {
   name: string
   description: string
   id: string
-}
-
-export interface IValidation {
-  name: string
-  regex: string
 }
 
 // ================
