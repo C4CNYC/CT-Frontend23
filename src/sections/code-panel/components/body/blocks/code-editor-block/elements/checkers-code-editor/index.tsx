@@ -12,7 +12,7 @@ import { useSelector } from '@/redux/store'
 import { useCheckers } from '@root/src/hooks/useCheckers'
 import { type IValidationMap } from '@root/src/utils/CheckValidationTests'
 
-import CheckersMenu from './checkers-menu'
+import CheckersMenu from './checkers-menu/CheckersMenu'
 import { CheckerIcon } from './CheckersIcon'
 import {
   getBoxSx,
