@@ -44,13 +44,24 @@ export function BrowserViewHTML({
         .filter((f) => f.extension === 'test')
         .map((f) => f.body)
         .join('\n')
+
     tests +=
-      '\n //Validations \n ' +
+      `
+     //Validations
+     console.logOld('Running Validations...');
+      let checkCodeCheckers = []
+      ` +
       validations
         .filter((v) => v.type === 'code')
         .map(
           (v) => `
-      validateChecker(\`${v.name}\`, ${v.regex} )
+          // validator: ${v.name}
+        checkCodeCheckers.push(()=>{
+          let output = false;
+          try{ output = eval(\`(()=>{${v.regex}})()\`); }catch(e){console.logOld(e);  output = false }
+          validateChecker(\`${v.name}\`,  output )
+        })  
+        checkCodeCheckers.forEach(c=>c())
       `
         )
         .join('\n')
@@ -119,13 +130,20 @@ export function BrowserViewHTML({
           ${integrationsScripts}
           <script>
             console.logOld = console.log;
-            consolelog = function() {
+            let logsOutput = [];
+            let logsError = [];
+            consolelog = (type)=>function() {
+              switch(type){
+                case 'error': logsError.push([...arguments]); break;
+                case 'log':
+                case 'output': logsOutput.push([...arguments]); break;
+                }
               window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
             };
-            console.log = consolelog;
-            console.warn = consolelog;
-            console.error = consolelog;
-            console.debug = consolelog;              
+            console.log = consolelog('log');
+            console.warn = consolelog('warn');
+            console.error = consolelog('error');
+            console.debug = consolelog('debug');              
           </script>
         </head>
         ${htmlPart}
