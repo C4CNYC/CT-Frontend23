@@ -12,7 +12,9 @@ import DialogTitle from '@mui/material/DialogTitle'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
+import { useAuthContext } from '@/auth/useAuthContext'
 import { useSnackbar, FormProvider } from '@/components'
+import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
 import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
@@ -29,6 +31,7 @@ import LogoMiniTab from './LogoMiniTab'
 import LogoTab from './LogoTab'
 import MainTab from './MainTab'
 import MetaTab from './MetaTab'
+import SettingsTab from './SettingsTab'
 
 interface Prop {
   org?: IAdministration
@@ -85,6 +88,8 @@ function a11yProps(index: number): Record<string, string> {
 export default function AddEditOrgModal({ children, org }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false)
   const [value, setValue] = React.useState(0)
+  const { user } = useAuthContext()
+  const isSuperAdmin = user?.role === Role.SuperAdmin
 
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
@@ -204,10 +209,16 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
                     label={translate('Catalog')}
                     {...a11yProps(5)}
                   />
+                  {isSuperAdmin ? (
+                    <Tab
+                      label={translate('Settings')}
+                      {...a11yProps(6)}
+                    />
+                  ) : null}
                   {org.home_page_type === HomePageType.Custom ? (
                     <Tab
                       label={translate('Code')}
-                      {...a11yProps(6)}
+                      {...a11yProps(7)}
                     />
                   ) : null}
                 </Tabs>
@@ -258,9 +269,17 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
             >
               <CatalogTab org={org} />
             </TabPanel>
+            {isSuperAdmin ? (
+              <TabPanel
+                value={value}
+                index={6}
+              >
+                <SettingsTab />
+              </TabPanel>
+            ) : null}
             <TabPanel
               value={value}
-              index={6}
+              index={7}
             >
               <CustomCodeTab
                 handleClose={handleClose}
@@ -269,7 +288,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
               />
             </TabPanel>
           </DialogContent>
-          {value === 0 || value === 4 ? (
+          {value === 0 || value === 4 || value === 6 ? (
             <DialogActions>
               <Stack
                 sx={{
