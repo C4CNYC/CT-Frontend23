@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import { Tooltip, IconButton, Collapse, Box, Typography } from '@mui/material'
 import { FaCheckCircle } from '@react-icons/all-files/fa/FaCheckCircle'
-import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown'
 import { FaChevronRight } from '@react-icons/all-files/fa/FaChevronRight'
 import { FaClock } from '@react-icons/all-files/fa/FaClock'
 import { FaExclamationTriangle } from '@react-icons/all-files/fa/FaExclamationTriangle'
@@ -24,12 +23,22 @@ const CheckerItem = ({ item }: { item: any }) => {
     const iconStyle = { fontSize: '20px' }
     switch (status) {
       case 'passed':
-        return <FaCheckCircle style={{ ...iconStyle, color: '#4ade80', fontSize: '13px' }} />
+        return (
+          <FaCheckCircle
+            style={{ ...iconStyle, color: '#4ade80', width: '13px', height: '13px' }}
+          />
+        )
       case 'failed':
-        return <FaTimesCircle style={{ ...iconStyle, color: '#f87171', fontSize: '13px' }} />
+        return (
+          <FaTimesCircle
+            style={{ ...iconStyle, color: '#f87171', width: '13px', height: '13px' }}
+          />
+        )
       case 'warning':
         return (
-          <FaExclamationTriangle style={{ ...iconStyle, color: '#facc15', fontSize: '13px' }} />
+          <FaExclamationTriangle
+            style={{ ...iconStyle, color: '#facc15', width: '13px', height: '13px' }}
+          />
         )
       case 'running':
         return (
@@ -38,19 +47,19 @@ const CheckerItem = ({ item }: { item: any }) => {
               ...iconStyle,
               color: '#60a5fa',
               animation: 'pulse 2s infinite',
-              fontSize: '13px',
+              width: '13px',
+              height: '13px',
             }}
           />
         )
       default:
-        return <FaPlay style={{ ...iconStyle, color: '#9ca3af', fontSize: '13px' }} />
+        return <FaPlay style={{ ...iconStyle, color: '#9ca3af', width: '13px', height: '13px' }} />
     }
   }
 
   return (
     <Box>
-      {1 > 0 && <Box sx={{ borderTop: '1px solid #989ea7' }} />}
-
+      <Box sx={{ borderTop: '1px solid #989ea7' }} />
       <Box
         sx={{
           p: '8px 0',
@@ -63,19 +72,44 @@ const CheckerItem = ({ item }: { item: any }) => {
         onClick={() => toggleTestExpanded(item.id)}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, padding: '0 8px' }}>
-            {expandedTests[item.id] ? (
-              <FaChevronDown style={{ fontSize: '11px', color: '#d1d5db' }} />
-            ) : (
-              <FaChevronRight style={{ fontSize: '11px', color: '#d1d5db' }} />
-            )}
-            {getStatusIcon(!item.isValid ? 'passed' : 'failed')}
-            <Typography
-              variant='body2'
-              sx={{ color: 'white', fontWeight: 400, fontSize: '12px', lineHeight: '1.5' }}
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 2,
+              padding: '0 8px',
+              width: '100%',
+            }}
+          >
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 2 }}
             >
-              {item.text}
-            </Typography>
+              {getStatusIcon(item.isValid ? 'passed' : 'failed')}
+              <Typography
+                variant='body2'
+                sx={{
+                  color: 'white',
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '1.5',
+                  maxWidth: '85%',
+                }}
+              >
+                {item.text}
+              </Typography>
+            </Box>
+
+            <FaChevronRight
+              style={{
+                minWidth: '13px',
+                minHeight: '13px',
+                maxHeight: '13px',
+                color: '#d1d5db',
+                transform: `rotate(${expandedTests[item.id] ? 90 : 0}deg)`,
+                transition: 'transform 0.2s',
+              }}
+            />
           </Box>
         </Box>
       </Box>
@@ -87,7 +121,7 @@ const CheckerItem = ({ item }: { item: any }) => {
         <Box sx={{ backgroundColor: '#1f2937' }}>
           {true ? (
             <Box>
-              {1 > 0 && <Box sx={{ borderTop: '1px solid #374151' }} />}
+              <Box sx={{ borderTop: '1px solid #374151' }} />
               <Box sx={{ p: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
                   {true && (
@@ -134,53 +168,53 @@ const CheckerItem = ({ item }: { item: any }) => {
                     >
                       {item.description || 'No description provided.'}
                     </Typography>
-                    {false && (
-                      <Box
-                        sx={{
-                          mt: 1,
-                          p: 1,
-                          backgroundColor: 'rgba(127, 29, 29, 0.3)',
-                          border: '1px solid rgba(185, 28, 28, 0.5)',
-                          borderRadius: '8px',
-                        }}
-                      >
-                        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
-                          <FaTimesCircle
-                            style={{
-                              fontSize: '12px',
-                              color: '#f87171',
-                              marginTop: '2px',
-                              flexShrink: 0,
-                            }}
-                          />
-                          <Box>
-                            <Typography
-                              variant='body2'
-                              sx={{
-                                color: '#fca5a5',
-                                fontWeight: 'bold',
-                                fontSize: '14px',
-                              }}
-                            >
-                              Error:
-                            </Typography>
-                            <Typography
-                              variant='body2'
-                              sx={{
-                                color: '#fecaca',
-                                fontWeight: 400,
-                                fontSize: '12px',
-                                lineHeight: '1.5',
-                              }}
-                            >
-                              {item.error || 'An unknown error occurred.'}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Box>
-                    )}
                   </Box>
                 </Box>
+                {true && (
+                  <Box
+                    sx={{
+                      mt: 1,
+                      p: 1,
+                      backgroundColor: 'rgba(127, 29, 29, 0.3)',
+                      border: '1px solid rgba(185, 28, 28, 0.5)',
+                      borderRadius: '8px',
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
+                      <FaTimesCircle
+                        style={{
+                          fontSize: '12px',
+                          color: '#f87171',
+                          marginTop: '2px',
+                          flexShrink: 0,
+                        }}
+                      />
+                      <Box>
+                        <Typography
+                          variant='body2'
+                          sx={{
+                            color: '#fca5a5',
+                            fontWeight: 'bold',
+                            fontSize: '14px',
+                          }}
+                        >
+                          Error:
+                        </Typography>
+                        <Typography
+                          variant='body2'
+                          sx={{
+                            color: '#fecaca',
+                            fontWeight: 400,
+                            fontSize: '12px',
+                            lineHeight: '1.5',
+                          }}
+                        >
+                          {item.error || 'An unknown error occurred.'}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
               </Box>
             </Box>
           ) : null}
