@@ -113,11 +113,13 @@ export function useCheckers() {
       const data = event.data
       let checkerIds: { name: string; isValid: boolean }[] = []
       if (!data || !data.type) return
-      if ('checker-validation' === data.type && data.checkerId && Boolean(data.valid)) {
-        checkerIds.push({ name: data.checkerId, isValid: Boolean(data.valid) })
+      if (['checker-validation', 'ConsoleLog'].includes(data.type)) {
         document.querySelectorAll('iframe').forEach((iframe) => {
           iframe.contentWindow?.postMessage(event.data, '*')
         })
+      }
+      if ('checker-validation' === data.type && data.checkerId && Boolean(data.valid)) {
+        checkerIds.push({ name: data.checkerId, isValid: Boolean(data.valid) })
       } else if ('ConsoleLog' === data.type && data.message) {
         validations.forEach((validator) => {
           let isValid
@@ -142,7 +144,7 @@ export function useCheckers() {
       for (let { name: checkerId, isValid } of checkerIds) {
         const checkerIndex = updatedCheckers.findIndex((checker) => checker.text === checkerId)
 
-        if (checkerIndex !== -1 && updatedCheckers[checkerIndex].valid !== isValid) {
+        if (checkerIndex !== -1 && updatedCheckers[checkerIndex].valid !== isValid && isValid) {
           updatedCheckers[checkerIndex] = { ...updatedCheckers[checkerIndex], valid: isValid }
           hasChanges = true
         }
