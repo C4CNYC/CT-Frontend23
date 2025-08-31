@@ -121,7 +121,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
       meta: org?.meta ?? {},
     },
   })
-  const { isValid, isSubmitting, isDirty } = methods.formState
+  const { formState } = methods
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -303,7 +303,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
                   type='submit'
                   variant='contained'
                   loading={isLoading || isUpdating}
-                  disabled={!isDirty || !isValid || isSubmitting}
+                  disabled={formState.isSubmitting}
                 >
                   {translate(org ? 'actions_update' : 'actions_create')}
                 </LoadingButton>
