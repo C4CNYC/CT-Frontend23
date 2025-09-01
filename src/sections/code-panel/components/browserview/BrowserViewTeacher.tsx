@@ -1,28 +1,24 @@
-import { type FC, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
-import SkeletonViewBlock from '../skeleton-view-box'
-
-import { iframeSuppliments } from './iframeSuppliments'
-import { BrowserViewProps, CodeDocument, TagNames } from './types'
+import { iframeSuppliments } from '../body/blocks/view-block/browser-view/iframeSuppliments'
+import {
+  BrowserViewTeacherProps,
+  CodeDocument,
+  TagNames,
+} from '../body/blocks/view-block/browser-view/types'
+import SkeletonViewBlock from '../body/blocks/view-block/skeleton-view-box'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
 
-const BrowserView: FC<BrowserViewProps> = ({
-  document,
-  isOpenHeader,
-  iframeKey,
-  stepBgColor,
-  integrations,
-  reloadIframe,
-  teacherView = false,
-}) => {
+export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: BrowserViewTeacherProps) {
   const [docSrc, setDocSrc] = useState('')
   const [iframeProcess, setIframeProcess] = useState(false)
   const [isEditing, setIsEditing] = useState(false) // Track if user is editing
   const lessonManager = useLessonManager()
   const iFrameRef = useRef<HTMLIFrameElement>(null)
+  let integrations = lessonManager.lesson?.integrations || []
 
   const IFRAME_STYLE = {
     border: 0,
@@ -30,7 +26,7 @@ const BrowserView: FC<BrowserViewProps> = ({
     height: iframeKey ? 'calc(100% - 42px)' : '100%',
     background: '#F8F8FF',
   }
-  let lessonEditable = lessonManager.userIsOwner && teacherView
+  let lessonEditable = lessonManager.userIsOwner
 
   // Generate the initial HTML content
   const generateHtml = (doc: CodeDocument) => {
@@ -55,22 +51,7 @@ const BrowserView: FC<BrowserViewProps> = ({
         </style>
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
-          <script>
-          (function(){
-            ${
-              teacherView
-                ? ''
-                : `
-              const consolelog = function() {
-                window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
-              };
-              console.log = consolelog;
-              console.warn = consolelog;
-              console.error = consolelog;
-              console.debug = consolelog;
-            `
-            }
-
+          <script> 
             if (document.getElementById('VeryEditableDivId')) {
               let debounceTimer;
               document.getElementById('VeryEditableDivId').addEventListener('input', function() {
@@ -132,7 +113,7 @@ const BrowserView: FC<BrowserViewProps> = ({
     () =>
       !iframeProcess ? (
         <iframe
-          className={teacherView ? 'BrowserViewTeacherView' : 'BrowserView'}
+          className='BrowserViewTeacherView'
           ref={iFrameRef}
           srcDoc={docSrc}
           style={IFRAME_STYLE}
@@ -146,5 +127,3 @@ const BrowserView: FC<BrowserViewProps> = ({
 
   return IFrame
 }
-
-export default BrowserView

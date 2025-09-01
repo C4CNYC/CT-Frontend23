@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { yupResolver } from '@hookform/resolvers/yup'
 import CloseIcon from '@mui/icons-material/Close'
 import { LoadingButton } from '@mui/lab'
@@ -12,6 +10,11 @@ import {
   DialogTitle,
   Grid,
   IconButton,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  FormHelperText,
 } from '@mui/material'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
@@ -23,12 +26,14 @@ import {
   useUpdateLessonContentValidationManagerMutation,
 } from '@/redux/services/manager/lesson-content-validation-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { useBoolean } from '@root/src/hooks/use-boolean'
+import {
+  ILessonContentValidation,
+  ILCV_type,
+} from '@root/src/redux/services/interfaces/lessonContentValidation.interface'
 import { isValidRegex } from '@root/src/utils/isValidRegex'
 
-interface FormValuesProps {
-  regex: string
-  name: string
-}
+interface FormValuesProps extends ILessonContentValidation {}
 
 interface Props {
   children?: React.ReactElement
@@ -44,14 +49,24 @@ export default function CreateEditValidation({
   defaultValues = {
     regex: '',
     name: '',
+    description: '',
+    type: 'regex' as const,
   },
 }: Props): React.ReactElement {
-  const [open, setOpenDialog] = useState<boolean>(false)
+  const { value: open, onFalse: openFalse, onTrue: openTrue } = useBoolean(false)
   const isEdit = Boolean(id)
   const translate = useTranslate()
   const CreateLessonDemonSchema = Yup.object().shape({
-    regex: Yup.string().required(translate('required_regex')),
+    regex: Yup.string().when('type', {
+      is: (type: string) => type !== 'action' && type !== 'signal',
+      then: (schema) => schema.required(translate('required_regex')),
+      otherwise: (schema) => schema.notRequired(),
+    }),
     name: Yup.string().required(translate('required_name')),
+    description: Yup.string(),
+    type: Yup.string()
+      .oneOf([...ILCV_type])
+      .required(),
   })
 
   const { enqueueSnackbar } = useSnackbar()
@@ -65,7 +80,8 @@ export default function CreateEditValidation({
   })
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    if (!isValidRegex(data.regex)) {
+    // Only validate regex format if type is 'regex'
+    if (data.type === 'regex' && !isValidRegex(data.regex)) {
       enqueueSnackbar(translate('invalid_regex'), { variant: 'error' })
       return
     }
@@ -86,7 +102,7 @@ export default function CreateEditValidation({
         id ? translate('validation_rule_updated') : translate('validation_rule_created')
       )
       methods.reset()
-      setOpenDialog(false)
+      openFalse()
     } catch (e: any) {
       enqueueSnackbar(translate('messages_error'), { variant: 'error' })
     }
@@ -94,88 +110,119 @@ export default function CreateEditValidation({
 
   return (
     <>
-      <Box
-        onClick={() => {
-          setOpenDialog(true)
-        }}
-      >
-        {children}
-      </Box>
-      <Dialog
-        open={open}
-        onClose={() => {
-          setOpenDialog(false)
-        }}
-      >
-        <Box
-          display='flex'
-          justifyContent='space-between'
-          alignItems='flex-end'
+      <Box onClick={openTrue}> {children} </Box>
+      {open ? (
+        <Dialog
+          open={open}
+          onClose={openFalse}
         >
-          <DialogTitle
-            variant='h5'
-            sx={{ pb: 1, pt: 2 }}
+          <Box
+            display='flex'
+            justifyContent='space-between'
+            alignItems='flex-end'
           >
-            {id ? translate('actions_update_rule') : translate('actions_create_rule')}
-          </DialogTitle>
-          <IconButton
-            onClick={() => {
-              setOpenDialog(false)
-            }}
-            sx={{ mb: '5px', mr: '14px' }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Box>
-        <DialogContent sx={{ p: 0 }}>
-          <FormProvider
-            methods={methods}
-            onSubmit={methods.handleSubmit(onSubmit)}
-          >
-            <Grid
-              item
-              xs={12}
-              md={8}
+            <DialogTitle
+              variant='h5'
+              sx={{ pb: 1, pt: 2 }}
             >
-              <Card sx={{ p: 3 }}>
-                <RHFTextField
-                  sx={{ mb: 3 }}
-                  name='name'
-                  label={translate('name')}
-                />
-                <RHFTextField
-                  sx={{ mb: 3 }}
-                  name='regex'
-                  label={translate('regex')}
-                />
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    gap: 2,
-                    mt: 7,
-                  }}
-                >
-                  <Button
-                    onClick={() => {
-                      setOpenDialog(false)
+              {id ? translate('actions_update_rule') : translate('actions_create_rule')}
+            </DialogTitle>
+            <IconButton
+              onClick={openFalse}
+              sx={{ mb: '5px', mr: '14px' }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <DialogContent sx={{ p: 0 }}>
+            <FormProvider
+              methods={methods}
+              onSubmit={methods.handleSubmit(onSubmit)}
+            >
+              <Grid
+                item
+                xs={12}
+                md={8}
+              >
+                <Card sx={{ p: 3 }}>
+                  <RHFTextField
+                    sx={{ mb: 3 }}
+                    name='name'
+                    label={translate('name')}
+                  />
+                  <RHFTextField
+                    sx={{ mb: 3 }}
+                    name='description'
+                    label={translate('description')}
+                    multiline
+                    rows={2}
+                  />
+                  <FormControl
+                    fullWidth
+                    sx={{ mb: 3 }}
+                  >
+                    <InputLabel id='type-select-label'>{translate('type')}</InputLabel>
+                    <Select
+                      labelId='type-select-label'
+                      value={methods.watch('type') || ''}
+                      label={translate('type')}
+                      onChange={(e) =>
+                        methods.setValue('type', e.target.value as FormValuesProps['type'], {
+                          shouldValidate: true,
+                        })
+                      }
+                      error={!!methods.formState.errors.type}
+                    >
+                      {ILCV_type.map((type) => (
+                        <MenuItem
+                          key={type}
+                          value={type}
+                        >
+                          {type.charAt(0).toUpperCase() + type.slice(1)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {methods.formState.errors.type && (
+                      <FormHelperText error>{methods.formState.errors.type.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                  <RHFTextField
+                    sx={{ mb: 3 }}
+                    name='regex'
+                    label={
+                      methods.watch('type') === 'regex' ? translate('regex') : translate('pattern')
+                    }
+                    helperText={translate(
+                      methods.watch('type')
+                        ? `checker_type_help.${methods.watch('type')}`
+                        : 'pattern_help'
+                    )}
+                    multiline
+                    rows={4}
+                  />
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      gap: 2,
+                      mt: 7,
                     }}
                   >
-                    {translate('actions_close')}
-                  </Button>
-                  <LoadingButton
-                    type='submit'
-                    variant='contained'
-                    loading={updateLoading || createLoading}
-                  >
-                    {translate('actions_save')}
-                  </LoadingButton>
-                </Box>
-              </Card>
-            </Grid>
-          </FormProvider>
-        </DialogContent>
-      </Dialog>
+                    <Button onClick={openFalse}>{translate('actions_close')}</Button>
+                    <LoadingButton
+                      type='submit'
+                      variant='contained'
+                      loading={updateLoading || createLoading}
+                    >
+                      {translate('actions_save')}
+                    </LoadingButton>
+                  </Box>
+                </Card>
+              </Grid>
+            </FormProvider>
+          </DialogContent>
+        </Dialog>
+      ) : null}
     </>
   )
 }

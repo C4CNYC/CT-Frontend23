@@ -12,7 +12,7 @@ import * as Yup from 'yup'
 import { FormProvider, RHFTextField, RHFSelect } from '@/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useGetLessonFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
-import { FileExtension } from '@root/src/types/lessons'
+import { FileExtension, FileExtensions } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { getUniqueFileName } from './getUniqueFileName'
@@ -26,7 +26,7 @@ interface AddStudentFileModalProps {
 
 interface FormValuesProps {
   fileName: string
-  fileExtension: FileExtension | string
+  fileExtensions: FileExtension | string
 }
 
 const AddStudentFileModal = ({
@@ -52,12 +52,12 @@ const AddStudentFileModal = ({
 
   const availableExtensions = useMemo(() => {
     if (isAllowMultipleSameType) {
-      return Object.keys(FileExtension)
+      return Object.keys(FileExtensions)
     }
 
     const alreadyReservedExt = files.map((file) => file.extension.toUpperCase())
 
-    return Object.keys(FileExtension).filter((element) => !alreadyReservedExt.includes(element))
+    return Object.keys(FileExtensions).filter((element) => !alreadyReservedExt.includes(element))
   }, [files, isAllowMultipleSameType])
 
   const CreateStudentFileSchema = Yup.object().shape({
@@ -72,33 +72,33 @@ const AddStudentFileModal = ({
         'unique-file',
         translate('file_with_same_name_and_extension_exists'),
         (value, context) => {
-          const extension = context.parent.fileExtension
+          const extension = context.parent.fileExtensions
           return !files.some((file) => file.name === value && file.extension === extension)
         }
       ),
-    fileExtension: Yup.string(),
+    fileExtensions: Yup.string(),
   })
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateStudentFileSchema),
     defaultValues: {
       fileName: '',
-      fileExtension: FileExtension.HTML,
+      fileExtensions: FileExtensions.HTML,
     },
   })
-  const fileExtension = methods.watch('fileExtension')
+  const fileExtensions = methods.watch('fileExtensions')
 
   useEffect(() => {
-    if (!fileExtension) return
+    if (!fileExtensions) return
 
     const uniqueName = getUniqueFileName(
-      fileExtension,
+      fileExtensions,
       isAllowMultipleSameType,
       allFilesForThisLesson
     )
 
     methods.setValue('fileName', uniqueName, { shouldDirty: true })
-  }, [fileExtension, files, isAllowMultipleSameType])
+  }, [fileExtensions, files, isAllowMultipleSameType])
 
   const { setValue } = methods
 
@@ -106,7 +106,7 @@ const AddStudentFileModal = ({
     setIsLoading(true)
 
     try {
-      await onSubmit(`${data.fileName.trim()}.${data.fileExtension}`)
+      await onSubmit(`${data.fileName.trim()}.${data.fileExtensions}`)
     } catch (e) {
       enqueueSnackbar({ message: translate('messages_error'), variant: 'error' })
       return
@@ -122,7 +122,7 @@ const AddStudentFileModal = ({
   useEffect(() => {
     if (!isAllowMultipleSameType) {
       if (availableExtensions.length) {
-        setValue('fileExtension', availableExtensions[0].toLowerCase())
+        setValue('fileExtensions', availableExtensions[0].toLowerCase())
       }
     }
   }, [availableExtensions, isAllowMultipleSameType])
@@ -191,7 +191,7 @@ const AddStudentFileModal = ({
                   native
                   disabled={!availableExtensions?.length}
                   label={translate('file_extension_label')}
-                  name='fileExtension'
+                  name='fileExtensions'
                   size='small'
                   sx={{
                     mt: 1,
@@ -202,8 +202,8 @@ const AddStudentFileModal = ({
                 >
                   {availableExtensions?.map((t) => (
                     <option
-                      key={FileExtension[t as keyof typeof FileExtension]}
-                      value={FileExtension[t as keyof typeof FileExtension]}
+                      key={FileExtensions[t as keyof typeof FileExtensions]}
+                      value={FileExtensions[t as keyof typeof FileExtensions]}
                     >
                       {t}
                     </option>

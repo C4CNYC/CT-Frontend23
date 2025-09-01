@@ -1,4 +1,4 @@
-import { type FC, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { Box, useTheme } from '@mui/material'
 import { Stack } from '@mui/system'
@@ -9,7 +9,8 @@ import { useDispatch } from 'react-redux'
 
 import { setIsVisible } from '@/redux/slices/checkers-animation'
 import { useSelector } from '@/redux/store'
-import { type IValidationMap } from '@/utils/validationMaping'
+import { useCheckers } from '@root/src/hooks/useCheckers'
+import { type IValidationMap } from '@root/src/utils/CheckValidationTests'
 
 import CheckersMenu from './checkers-menu'
 import { CheckerIcon } from './CheckersIcon'
@@ -29,14 +30,10 @@ const CheckersCompleated = dynamic(() => import('./checkers-compleated'), {
   ssr: false,
 })
 
-interface ICheckers {
-  checkers: IValidationMap[]
-}
-
-const Checkers: FC<ICheckers> = ({ checkers }) => {
+export function Checkers() {
   const dispatch = useDispatch()
   const theme = useTheme()
-
+  const { checkers } = useCheckers()
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
   const isActivateCompleted = useSelector((state) => state.checkersAnimation.isActivateCompeated)
 
@@ -64,6 +61,9 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
     return '#C4C4C4'
   }
 
+  if (!checkers || !checkers.length) {
+    return null
+  }
   return (
     <Box sx={{ position: 'relative' }}>
       {isActivateCompleted ? <CheckersCompleated /> : null}
@@ -115,5 +115,3 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
     </Box>
   )
 }
-
-export default Checkers

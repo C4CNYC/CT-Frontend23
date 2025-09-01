@@ -24,7 +24,7 @@ import {
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { dispatch, useSelector } from '@root/src/redux/store'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
-import { FileExtension } from '@root/src/types/lessons'
+import { FileExtensions } from '@root/src/types/lessons'
 import { JsonParseFromAiResponse } from '@root/src/utils/stripQuotesFromAiResponse'
 
 import { IChatMessages } from '../chatInterface'
@@ -239,7 +239,7 @@ export const ChatAi = () => {
                 contentId: firstSlide?.id || slideId,
                 preloaded_code: JsonParseFromAiResponse(aiResponse).content,
                 name: 'index',
-                extension: FileExtension.HTML,
+                extension: FileExtensions.HTML,
               })
               refetchFiles()
               break

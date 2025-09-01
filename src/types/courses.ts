@@ -14,6 +14,7 @@ export interface ICourse {
   draft: boolean
   total_lessons?: number
   units?: IModule[]
+  is_show_in_catalog?: boolean
 }
 
 export interface IUserProfileSchool {
