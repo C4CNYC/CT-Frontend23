@@ -25,7 +25,6 @@ const AdaptivePopup = React.memo(
     let hideTimeout = useRef<NodeJS.Timeout | undefined>(undefined)
 
     const saveCursorPosition = () => {
-      // Отримуємо selection з iframe документа
       const iframeDoc = iframeSliderRef.current?.contentDocument
       const selection = iframeDoc?.getSelection()
       if (selection && (selection?.rangeCount ?? 0) > 0) {
@@ -34,27 +33,22 @@ const AdaptivePopup = React.memo(
     }
 
     const getCaretPosition = () => {
-      // Працюємо з selection з iframe документа
       const iframeDoc = iframeSliderRef.current?.contentDocument
       const selection = iframeDoc?.getSelection()
       if (!selection || selection.rangeCount === 0) return null
 
       const range = selection.getRangeAt(0)
 
-      // Створюємо тимчасовий span для точного визначення позиції курсора
       const span = iframeDoc.createElement('span')
-      span.innerHTML = '&#8203;' // Zero-width space
+      span.innerHTML = '&#8203;'
       range.insertNode(span)
 
       const rect = span.getBoundingClientRect()
-      // Отримуємо координати iframe відносно основного документа
       const iframeRect = iframeSliderRef.current.getBoundingClientRect()
 
-      // Видаляємо тимчасовий span
       span.remove()
 
       return {
-        // Координати відносно основного документа (iframe + позиція в iframe)
         x: rect.left - iframeRect.left,
         y: rect.top - iframeRect.top,
         height: rect.height || 20,
@@ -69,58 +63,45 @@ const AdaptivePopup = React.memo(
       const y = caretPos.y
       const caretHeight = caretPos.height
 
-      // Розміри iframe (контейнера)
       const containerWidth = iframeSliderRef.current?.offsetWidth || 0
       const containerHeight = iframeSliderRef.current?.offsetHeight || 0
 
-      // Розміри попапу (точні розміри з вашого CSS)
-      // const popupWidth = 119
-      // const popupHeight = 35
       const popupWidth = 96
       const popupHeight = 30
 
-      // Відстань від краю для перемикання позиції
       const edgeThreshold = 70
 
       let position = 'top'
       let popupX = x
       let popupY = y
 
-      // Визначаємо відстані від країв
       const distanceFromTop = y
       const distanceFromBottom = containerHeight - y
       const distanceFromLeft = x
       const distanceFromRight = containerWidth - x
 
-      // Логіка вибору позиції
       if (distanceFromRight < edgeThreshold && distanceFromRight < distanceFromLeft) {
-        // Близько до правого краю - показуємо зліва від курсора
         position = 'left'
         popupX = x - popupWidth - 12
         popupY = y - popupHeight / 2
       } else if (distanceFromLeft < edgeThreshold && distanceFromLeft < distanceFromRight) {
-        // Близько до лівого краю - показуємо справа від курсора
         position = 'right'
         popupX = x + 12
         popupY = y - popupHeight / 2
       } else if (distanceFromTop < edgeThreshold) {
-        // Близько до верхнього краю - показуємо під курсором
         position = 'bottom'
         popupX = x - popupWidth / 2
         popupY = y + caretHeight + 12
       } else {
-        // За замовчуванням - над курсором
         position = 'top'
         popupX = x - popupWidth / 2
         popupY = y - popupHeight - 12
       }
 
-      // Корегуємо позицію щоб попап не виходив за межі iframe
       const padding = 8
       popupX = Math.max(padding, Math.min(popupX, containerWidth - popupWidth - padding))
       popupY = Math.max(padding, Math.min(popupY, containerHeight - popupHeight - padding))
 
-      // Додаємо offset iframe відносно основного документа
       const iframeRect = iframeSliderRef.current.getBoundingClientRect()
       const finalX = popupX + iframeRect.left
       const finalY = popupY + iframeRect.top
@@ -129,7 +110,6 @@ const AdaptivePopup = React.memo(
       setMenuPosition(position)
       setShowContextMenu(true)
 
-      // Автоматично ховаємо попап через 4 секунди
       clearTimeout(hideTimeout.current)
       hideTimeout.current = setTimeout(hidePopup, 4000)
     }
@@ -161,12 +141,10 @@ const AdaptivePopup = React.memo(
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isEditMode) return
 
-      // Ховаємо меню при натисканні клавіш друку
       if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Enter') {
         setShowContextMenu(false)
       }
 
-      // Показуємо при навігаційних клавішах
       const navKeys = [
         'ArrowUp',
         'ArrowDown',
@@ -184,7 +162,6 @@ const AdaptivePopup = React.memo(
       saveCursorPosition()
     }
 
-    // Обробник зміни селекції в iframe
     useEffect(() => {
       const handleSelectionChange = () => {
         const iframeDoc = iframeSliderRef.current?.contentDocument
@@ -193,14 +170,12 @@ const AdaptivePopup = React.memo(
         }
       }
 
-      // Додаємо обробник до iframe документа
       const iframeDoc = iframeSliderRef.current?.contentDocument
       iframeDoc?.addEventListener('selectionchange', handleSelectionChange)
 
       return () => iframeDoc?.removeEventListener('selectionchange', handleSelectionChange)
     }, [showContextMenu, isEditMode, iframeSliderRef])
 
-    // Ховаємо попап при кліці поза iframe
     useEffect(() => {
       const handleClickOutside = (e: MouseEvent) => {
         const iframeRect = iframeSliderRef.current?.getBoundingClientRect()
@@ -208,7 +183,6 @@ const AdaptivePopup = React.memo(
           const clickX = e.clientX
           const clickY = e.clientY
 
-          // Перевіряємо чи клік був поза iframe
           if (
             clickX < iframeRect.left ||
             clickX > iframeRect.right ||
@@ -245,12 +219,10 @@ const AdaptivePopup = React.memo(
 
       const onIframeLoad = () => {
         if (editableDivRef.current) {
-          // Видаляємо попередні обробники щоб уникнути дублювання
           editableDivRef.current.removeEventListener('click', handleContentClick)
           editableDivRef.current.removeEventListener('focus', handleContentFocus)
           editableDivRef.current.removeEventListener('keydown', handleKeyDown)
 
-          // Додаємо нові обробники
           editableDivRef.current.addEventListener('click', handleContentClick)
           editableDivRef.current.addEventListener('focus', handleContentFocus)
           editableDivRef.current.addEventListener('keydown', handleKeyDown)

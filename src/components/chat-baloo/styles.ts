@@ -300,6 +300,7 @@ export const styles = {
     backdropFilter: 'blur(8px)',
     transition: 'all 0.2s ease',
     maxHeight: '40px',
+    padding: '7px',
   },
 
   sendButton: {

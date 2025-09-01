@@ -15,11 +15,17 @@ import { MediaInsertModal } from '@root/src/sections/dashboard/medias/MediaInser
 import { YouTubeInsertModal } from '@root/src/sections/dashboard/medias/YouTubeInsertModal'
 
 import AdaptivePopup from '../adaptive-popup'
+import { ModalAskToSave } from '../modal-ask-to-save'
 import { handleEmojiSelect, handleInsertImage, handleInsertVideo } from '../utils'
 
 import { TOP_BAR_STYLES, ICON_BUTTON_STYLES } from './styles'
 
-export function EditContentLayer({ isEditLesson, setIsEditLesson }: any) {
+export function EditContentLayer({
+  isEditLesson,
+  setIsEditLesson,
+  isOpenModalCurrentSlideEdited,
+  setIsOpenModalCurrentSlideEdited,
+}: any) {
   const { enqueueSnackbar } = useSnackbar()
 
   const {
@@ -84,8 +90,21 @@ export function EditContentLayer({ isEditLesson, setIsEditLesson }: any) {
 
     if (editableDivRef.current) {
       setIsEditLesson((prev: any) => !prev)
-      console.log('Toggling edit mode to:', editableDivRef)
       editableDivRef.current.setAttribute('contentEditable', value ? 'true' : 'false')
+    } else {
+      enqueueSnackbar('Editable area not found, pleease go to main editor', { variant: 'error' })
+    }
+  }
+
+  const handleSaveEdited = () => {
+    if (lessonManager.currentSlideUpdated) {
+      lessonManager.saveSlideDB()
+    }
+
+    if (editableDivRef.current) {
+      setIsEditLesson(false)
+      editableDivRef.current.setAttribute('contentEditable', 'false')
+      setIsOpenModalCurrentSlideEdited(false)
     } else {
       enqueueSnackbar('Editable area not found, pleease go to main editor', { variant: 'error' })
     }
@@ -154,6 +173,13 @@ export function EditContentLayer({ isEditLesson, setIsEditLesson }: any) {
           onEmojiSelect={handleEmojiSelect}
           open={isOpenEmojiSelector}
           onClose={handleCloseEmojiSelector}
+        />
+      )}
+      {isOpenModalCurrentSlideEdited && (
+        <ModalAskToSave
+          isOpen={isOpenModalCurrentSlideEdited}
+          setIsOpen={setIsOpenModalCurrentSlideEdited}
+          handleSaveEdited={handleSaveEdited}
         />
       )}
     </>

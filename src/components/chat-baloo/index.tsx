@@ -416,11 +416,11 @@ export default function ChatBaloo({ onClose }: any) {
                   ...styles.textInput,
                   '& .MuiOutlinedInput-root': {
                     color: 'white',
+                    maxHeight: '35px',
+                    overflowY: 'auto',
+                    padding: 0,
                     '& fieldset': {
-                      borderColor: 'rgba(255, 255, 255, 0.3)',
-                    },
-                    '&:hover fieldset': {
-                      borderColor: 'rgba(255, 255, 255, 0.5)',
+                      display: 'none',
                     },
                     '&.Mui-focused fieldset': {
                       borderColor: '#a855f7',

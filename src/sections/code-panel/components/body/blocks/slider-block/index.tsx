@@ -78,11 +78,11 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
   const searchParams = useSearchParams()
-  const { lesson, lessonContent } = useLessonManager()
+  const { lesson, lessonContent, currentSlideUpdated } = useLessonManager()
   let data = lessonContent ?? []
   const [isEditLesson, setIsEditLesson] = useState(false)
-
   const [isSlideReady, setIsSlideReady] = useState(false)
+  const [isOpenModalCurrentSlideEdited, setIsOpenModalCurrentSlideEdited] = useState(false)
 
   const sandbox = searchParams.get('sandbox')
 
@@ -115,6 +115,12 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [])
 
   const handlePrev = (): void => {
+    if (currentSlideUpdated) {
+      setIsOpenModalCurrentSlideEdited(true)
+      return
+    }
+    setIsEditLesson(false)
+
     if (slideIndex > 0) {
       onBeforeChange(slideIndex, slideIndex - 1)
     }
@@ -125,12 +131,18 @@ const SliderBlock: FC<ISliderBlock> = ({
 
     const timeout = setTimeout(() => {
       setIsSlideReady(true)
-    }, 30) // або трохи більше, якщо треба
+    }, 30)
 
     return () => clearTimeout(timeout)
   }, [slideIndex])
 
   const handleNext = (skip = false): void => {
+    if (currentSlideUpdated) {
+      setIsOpenModalCurrentSlideEdited(true)
+      return
+    }
+    setIsEditLesson(false)
+
     if (window.dataLayer) {
       window.dataLayer.push({
         event: 'Slide_Swiped',
@@ -245,6 +257,16 @@ const SliderBlock: FC<ISliderBlock> = ({
     )
   }, [data, slideIndex, integrations, isLoadingLessonContent])
 
+  const editContentLayer = (
+    <EditContentLayer
+      key={slideIndex}
+      isEditLesson={isEditLesson}
+      setIsEditLesson={setIsEditLesson}
+      isOpenModalCurrentSlideEdited={isOpenModalCurrentSlideEdited}
+      setIsOpenModalCurrentSlideEdited={setIsOpenModalCurrentSlideEdited}
+    />
+  )
+
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToLeft size={20} />}
@@ -288,10 +310,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         />
       ) : (
         <>
-          <EditContentLayer
-            isEditLesson={isEditLesson}
-            setIsEditLesson={setIsEditLesson}
-          />
+          {editContentLayer}
           {slider}
           <NextStep
             handleNext={handleNext}

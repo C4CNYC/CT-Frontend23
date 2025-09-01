@@ -33,6 +33,7 @@ interface LessonManagerContextProps {
   addNewSlide: (newSlide: ILessonContent & BaseResponseInterface) => void
   setLessonContent: Dispatch<SetStateAction<(ILessonContent & BaseResponseInterface)[]>>
   saveSlideDB: () => void
+  resetCurrentSlide: () => void
 }
 
 const LessonManagerContext = createContext<LessonManagerContextProps | undefined>(undefined)
@@ -147,6 +148,7 @@ export const LessonManagerProvider: React.FC<{
         enqueueSnackbar('Error updating slide', { variant: 'error' })
       })
   }
+
   return (
     <LessonManagerContext.Provider
       value={{
