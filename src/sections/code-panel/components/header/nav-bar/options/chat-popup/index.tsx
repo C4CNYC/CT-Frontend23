@@ -2,7 +2,6 @@ import { type CSSProperties, type FC } from 'react'
 
 // import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
-import CloseIcon from '@mui/icons-material/Close'
 import { Box, IconButton, useTheme } from '@mui/material'
 import { SxProps, Theme } from '@mui/system'
 import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEllipsesOutline'

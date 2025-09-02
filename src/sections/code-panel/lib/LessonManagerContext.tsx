@@ -33,7 +33,6 @@ interface LessonManagerContextProps {
   addNewSlide: (newSlide: ILessonContent & BaseResponseInterface) => void
   setLessonContent: Dispatch<SetStateAction<(ILessonContent & BaseResponseInterface)[]>>
   saveSlideDB: () => void
-  resetCurrentSlide: () => void
 }
 
 const LessonManagerContext = createContext<LessonManagerContextProps | undefined>(undefined)

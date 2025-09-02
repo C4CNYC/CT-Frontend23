@@ -1,15 +1,11 @@
 import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react'
 
 import { Box, Paper, Typography, TextField, Button, Chip } from '@mui/material'
-import { IoArrowBackCircleSharp } from '@react-icons/all-files/io5/IoArrowBackCircleSharp'
 import { IoChatbubbleEllipses } from '@react-icons/all-files/io5/IoChatbubbleEllipses'
 import { IoClose } from '@react-icons/all-files/io5/IoClose'
-import { IoHappy } from '@react-icons/all-files/io5/IoHappy'
 import { IoPerson } from '@react-icons/all-files/io5/IoPerson'
-import { IoRemove } from '@react-icons/all-files/io5/IoRemove'
 import { IoSend } from '@react-icons/all-files/io5/IoSend'
 import { IoSparkles } from '@react-icons/all-files/io5/IoSparkles'
-import { IoTrash } from '@react-icons/all-files/io5/IoTrash'
 import { formatDistanceToNowStrict } from 'date-fns'
 
 import { Image } from '@/components'
@@ -169,7 +165,6 @@ export default function ChatBaloo({ onClose }: any) {
           ...(false ? styles.chatContainerMinimized : {}),
         }}
       >
-        {/* Header */}
         <Box style={styles.header}>
           <Box style={styles.headerContent}>
             <Box style={styles.headerLeft}>
@@ -195,12 +190,12 @@ export default function ChatBaloo({ onClose }: any) {
               </Box>
             </Box>
             <Box style={styles.headerControls}>
-              <Button
+              {/* <Button
                 onClick={toggleMinimize}
                 sx={styles.controlButton}
               >
                 <IoRemove size={16} />
-              </Button>
+              </Button> */}
               <Button
                 onClick={closeChat}
                 sx={styles.controlButton}
@@ -216,7 +211,6 @@ export default function ChatBaloo({ onClose }: any) {
             <ChatSkeleton />
           ) : (
             <>
-              {/* Messages */}
               <Box sx={{ ...styles.messagesContainer }}>
                 {[...messages].reverse().map((message) => (
                   <Box
@@ -303,7 +297,7 @@ export default function ChatBaloo({ onClose }: any) {
                         </span>
 
                         {/* Hover buttons */}
-                        {!message.isMe && (
+                        {/* {!message.isMe && (
                           <Box
                             sx={{
                               ...styles.hoverButtons,
@@ -332,7 +326,7 @@ export default function ChatBaloo({ onClose }: any) {
                               <IoTrash size={20} />
                             </Button>
                           </Box>
-                        )}
+                        )} */}
                       </Box>
                     </Box>
                   </Box>
@@ -376,7 +370,6 @@ export default function ChatBaloo({ onClose }: any) {
             </>
           )}
 
-          {/* Recommendations */}
           {chatAi?.chatAiOptions && chatAi.chatAiOptions.length ? (
             <Box style={styles.recommendationsSection}>
               <Box sx={styles.recommendationsContainer}>
@@ -400,7 +393,6 @@ export default function ChatBaloo({ onClose }: any) {
             </Box>
           ) : null}
 
-          {/* Input */}
           <Box style={styles.inputSection}>
             <Box style={styles.inputContainer}>
               <TextField
