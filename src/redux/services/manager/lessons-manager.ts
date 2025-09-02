@@ -108,7 +108,6 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'GET',
       }),
       transformResponse: (response: { lesson: ILesson } & BaseResponseInterface) => {
-        console.log('Exported lesson data:', response)
         // Create filename with lesson name and current date
         const currentDate = new Date().toISOString().split('T')[0]
         const filename = `${response.lesson.name}_${currentDate}.json`
