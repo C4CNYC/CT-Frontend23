@@ -12,7 +12,7 @@ import { useSelector } from '@/redux/store'
 import { useCheckers } from '@root/src/hooks/useCheckers'
 import { type IValidationMap } from '@root/src/utils/CheckValidationTests'
 
-import CheckersMenu from './checkers-menu'
+import CheckersMenu from './checkers-menu/CheckersMenu'
 import { CheckerIcon } from './CheckersIcon'
 import {
   getBoxSx,
@@ -65,12 +65,12 @@ export function Checkers() {
     return null
   }
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      sx={{ position: 'relative' }}
+      ref={ref}
+    >
       {isActivateCompleted ? <CheckersCompleated /> : null}
-      <Box
-        sx={OPEN_BOX_SX}
-        ref={ref}
-      >
+      <Box sx={OPEN_BOX_SX}>
         <AnimatePresence>
           <m.div
             initial='visible'
