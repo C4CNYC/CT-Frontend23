@@ -41,9 +41,8 @@ export function LessonImportDialog() {
 
     try {
       const response = await LessonImport({ file: selectedFile }).unwrap()
-      response?.id
-        ? enqueueSnackbar(translate('exportimport.success'), { variant: 'success' })
-        : enqueueSnackbar(translate('error'), { variant: 'error' })
+      if (!response.id) return enqueueSnackbar(translate('error'), { variant: 'error' })
+      enqueueSnackbar(translate('exportimport.success'), { variant: 'success' })
 
       if (window.confirm(translate('prompt_open_new_lesson'))) {
         router.push(

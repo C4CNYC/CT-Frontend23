@@ -4,6 +4,7 @@ import { Draggable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
 import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FaFileExport } from '@react-icons/all-files/fa6/FaFileExport'
 import { FaRegCopy } from '@react-icons/all-files/fa6/FaRegCopy'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
@@ -78,7 +79,7 @@ export default function LessonCard({
     setLoading(true)
     if (lesson.id) {
       try {
-        lessonExport({ lesson_id: lesson.id }).unwrap()
+        await lessonExport({ lesson_id: lesson.id }).unwrap()
         if (refetch) refetch()
         enqueueSnackbar(translate('lesson_exported_msg'))
       } catch (e: any) {
@@ -289,7 +290,7 @@ export default function LessonCard({
           {translate('actions_clone')}
         </MenuItem>
         <MenuItem onClick={handleExport}>
-          <FaRegCopy />
+          <FaFileExport />
           {translate('actions_export')}
         </MenuItem>
         <Divider sx={{ borderStyle: 'dashed' }} />

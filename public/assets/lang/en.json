@@ -1267,7 +1267,7 @@
     "exportimport":{
       "dialog_import_lesson": "Import Lesson",
       "success" : "Lesson imported successfully",
-      "error" : "Error occured importing the lesson"
+      "error" : "Error occurred importing the lesson"
     },
     "tenant_create_success_title": "Congratulations!",
     "tenant_create_success_subtitle": "You have registered a new organization.",
