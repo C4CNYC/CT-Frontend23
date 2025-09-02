@@ -42,11 +42,8 @@ export function CheckValidationTests(
             break
 
           case 'output':
-          case 'error':
-          case 'code':
-          case 'input':
-          case 'action':
-          case 'signal':
+          case 'execute':
+          case 'manual':
             break // Always false, will be checked externally
         }
 
