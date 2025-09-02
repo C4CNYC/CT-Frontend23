@@ -87,6 +87,46 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['Lessons'],
     }),
+    importLesson: builder.mutation<ILessonCreate & BaseResponseInterface, { file: File }>({
+      query: ({ file }) => {
+        const formData = new FormData()
+        formData.append('file', file)
+        return {
+          url: '/manager/lesson-import-export/import',
+          method: 'POST',
+          body: formData,
+        }
+      },
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    exportLesson: builder.mutation<
+      { lesson: ILesson } & BaseResponseInterface,
+      { lesson_id: string }
+    >({
+      query: ({ lesson_id }) => ({
+        url: `/manager/lesson-import-export/export/${lesson_id}`,
+        method: 'GET',
+      }),
+      transformResponse: (response: { lesson: ILesson } & BaseResponseInterface) => {
+        // Create filename with lesson name and current date
+        const currentDate = new Date().toISOString().split('T')[0]
+        const filename = `${response.lesson.name}_${currentDate}.json`
+
+        // Trigger download
+        const blob = new Blob([JSON.stringify(response, null, 2)], { type: 'application/json' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = filename
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+
+        return response
+      },
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
     generateLesson: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
       query: ({ ...body }) => ({
         url: '/manager/lesson/generate',
@@ -210,6 +250,8 @@ export const {
   useCreateLessonMutation,
   useCreateByCloningLessonMutation,
   useCreateByAIMutation,
+  useImportLessonMutation,
+  useExportLessonMutation,
   useGenerateLessonMutation,
   useGenerateLessonMultiMutation,
   useAskAIMutation,

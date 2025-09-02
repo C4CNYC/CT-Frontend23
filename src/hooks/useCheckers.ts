@@ -124,7 +124,6 @@ export function useCheckers() {
         validations.forEach((validator) => {
           let isValid
           switch (validator.type) {
-            case 'error':
             case 'output':
               if (isValidRegex(validator.regex)) {
                 isValid = new RegExp(validator.regex).test(data.message)
