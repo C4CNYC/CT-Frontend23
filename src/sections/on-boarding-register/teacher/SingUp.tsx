@@ -11,6 +11,7 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { RHFTextField, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { useTenants } from '@root/src/hooks/useTenants'
 
 import { styledRegisterInput } from '../styles'
 
@@ -30,6 +31,7 @@ export default function SingUp({
   goToStep,
 }: Props): React.ReactElement {
   const translate = useTranslate()
+  const tenant = useTenants()
 
   const { enqueueSnackbar } = useSnackbar()
   const { registerWithGoogle } = useAuthContext()
@@ -110,41 +112,48 @@ export default function SingUp({
             ),
           }}
         />
-        <Divider
-          sx={{ my: 3 }}
-          flexItem
-        >
-          <Typography
-            sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
-            variant='body1'
-          >
-            {translate('login_or')}
-          </Typography>
-        </Divider>
-        <LoadingButton
-          onClick={() => {
-            onRegisterWithGoogle()
-          }}
-          loading={isLoading}
-          sx={(theme) => ({
-            color:
-              theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.text.primary,
-            textTransform: 'none',
-            py: 1.5,
-            mb: 1,
-            gap: 2,
-            background: theme.palette.mode === 'light' ? '#efefef' : '',
-            fontWeight: 400,
-            fontSize: '1.3em',
-            '&:hover': {
-              color: theme.palette.grey[900],
-              background: theme.palette.mode === 'light' ? '' : '#fff',
-            },
-          })}
-        >
-          <FcGoogle size='50px' />
-          {translate('login_sign_up_with_google')}
-        </LoadingButton>
+        {tenant?.meta?.is_enabled_google_auth ? (
+          <>
+            <Divider
+              sx={{ my: 3 }}
+              flexItem
+            >
+              <Typography
+                sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
+                variant='body1'
+              >
+                {translate('login_or')}
+              </Typography>
+            </Divider>
+
+            <LoadingButton
+              onClick={() => {
+                onRegisterWithGoogle()
+              }}
+              loading={isLoading}
+              sx={(theme) => ({
+                color:
+                  theme.palette.mode === 'light'
+                    ? theme.palette.grey[600]
+                    : theme.palette.text.primary,
+                textTransform: 'none',
+                py: 1.5,
+                mb: 1,
+                gap: 2,
+                background: theme.palette.mode === 'light' ? '#efefef' : '',
+                fontWeight: 400,
+                fontSize: '1.3em',
+                '&:hover': {
+                  color: theme.palette.grey[900],
+                  background: theme.palette.mode === 'light' ? '' : '#fff',
+                },
+              })}
+            >
+              <FcGoogle size='50px' />
+              {translate('login_sign_up_with_google')}
+            </LoadingButton>
+          </>
+        ) : null}
       </Stack>
     </>
   )
