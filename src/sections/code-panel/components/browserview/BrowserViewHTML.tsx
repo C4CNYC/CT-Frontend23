@@ -52,7 +52,7 @@ export function BrowserViewHTML({
       let checkCodeCheckers = []
       ` +
       validations
-        .filter((v) => v.type === 'code')
+        .filter((v) => v.type === 'execute')
         .map(
           (v) => `
           // validator: ${v.name}
