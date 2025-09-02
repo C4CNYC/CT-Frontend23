@@ -16,9 +16,11 @@ import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useDeleteLessonMutation,
   useCloneLessonMutation,
+  useExportLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 interface Props {
   lesson: ILesson
@@ -38,13 +40,18 @@ export default function LessonCard({
   const router = useRouter()
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const {
+    value: openConfirm,
+    onTrue: handleOpenConfirm,
+    onFalse: handleCloseConfirm,
+  } = useBoolean(false)
 
-  const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
   const [deleteLesson] = useDeleteLessonMutation()
   const [cloneLesson] = useCloneLessonMutation()
+  const [lessonExport] = useExportLessonMutation()
 
   const onDelete = async (): Promise<void> => {
     setLoading(true)
@@ -62,20 +69,24 @@ export default function LessonCard({
     }
   }
 
-  const handleOpenConfirm = (): void => {
-    setOpenConfirm(true)
-  }
-
-  const handleCloseConfirm = (): void => {
-    setOpenConfirm(false)
-  }
-
   const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
     setOpenPopover(event.currentTarget)
     event.stopPropagation()
     event.preventDefault()
   }
-
+  const handleExport = async (): Promise<void> => {
+    setLoading(true)
+    if (lesson.id) {
+      try {
+        lessonExport({ lesson_id: lesson.id }).unwrap()
+        if (refetch) refetch()
+        enqueueSnackbar(translate('lesson_exported_msg'))
+      } catch (e: any) {
+        enqueueSnackbar(e.data.message, { variant: 'error' })
+      }
+      setLoading(false)
+    }
+  }
   const openPreview = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
   }
@@ -276,6 +287,10 @@ export default function LessonCard({
         >
           <FaRegCopy />
           {translate('actions_clone')}
+        </MenuItem>
+        <MenuItem onClick={handleExport}>
+          <FaRegCopy />
+          {translate('actions_export')}
         </MenuItem>
         <Divider sx={{ borderStyle: 'dashed' }} />
         {lock || lesson.id.endsWith('000000000000') ? (

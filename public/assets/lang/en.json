@@ -11,6 +11,8 @@
     "actions_close": "Close",
     "actions_save": "Save",
     "actions_search": "Search",
+    "actions_import": "Import",
+    "actions_export": "Export",
     "actions_save_changes": "Save Changes",
     "actions_clear": "Clear",
     "actions_update": "Update",
@@ -1262,6 +1264,11 @@
         "button": "Leave feedback"
       }
     ],
+    "exportimport":{
+      "dialog_import_lesson": "Import Lesson",
+      "success" : "Lesson imported successfully",
+      "error" : "Error occured importing the lesson"
+    },
     "tenant_create_success_title": "Congratulations!",
     "tenant_create_success_subtitle": "You have registered a new organization.",
     "tenant_create_success_desc_part_1": "You can now login here:",

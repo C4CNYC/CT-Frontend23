@@ -10,8 +10,6 @@ import {
   DialogTitle,
   Grid,
   IconButton,
-  MenuItem,
-  Select,
   FormControl,
   InputLabel,
   FormHelperText,
@@ -26,12 +24,15 @@ import {
   useUpdateLessonContentValidationManagerMutation,
 } from '@/redux/services/manager/lesson-content-validation-manager'
 import { useTranslate } from '@/utils/translateHelper'
+import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import {
   ILessonContentValidation,
   ILCV_type,
 } from '@root/src/redux/services/interfaces/lessonContentValidation.interface'
 import { isValidRegex } from '@root/src/utils/isValidRegex'
+
+import { GRADING_METHODS_BTN_SX } from '../../CreateLessonDialog/constants'
 
 interface FormValuesProps extends ILessonContentValidation {}
 
@@ -162,26 +163,22 @@ export default function CreateEditValidation({
                     sx={{ mb: 3 }}
                   >
                     <InputLabel id='type-select-label'>{translate('type')}</InputLabel>
-                    <Select
-                      labelId='type-select-label'
-                      value={methods.watch('type') || ''}
-                      label={translate('type')}
-                      onChange={(e) =>
-                        methods.setValue('type', e.target.value as FormValuesProps['type'], {
-                          shouldValidate: true,
-                        })
-                      }
-                      error={!!methods.formState.errors.type}
-                    >
-                      {ILCV_type.map((type) => (
-                        <MenuItem
-                          key={type}
-                          value={type}
-                        >
-                          {type.charAt(0).toUpperCase() + type.slice(1)}
-                        </MenuItem>
-                      ))}
-                    </Select>
+
+                    <RHFToggleButtonGroup
+                      name='type'
+                      options={ILCV_type.map((type) => ({
+                        key: type,
+                        value: type,
+                        tooltip: type.charAt(0).toUpperCase() + type.slice(1),
+                      }))}
+                      sxGroup={{
+                        width: { xs: 'auto', md: 'max-content' },
+                        border: { xs: 'none', md: '1px solid rgba(145, 158, 171, 0.24)' },
+                        margin: '0.8rem 0',
+                      }}
+                      sxButton={GRADING_METHODS_BTN_SX}
+                      tooltip
+                    />
                     {methods.formState.errors.type && (
                       <FormHelperText error>{methods.formState.errors.type.message}</FormHelperText>
                     )}
