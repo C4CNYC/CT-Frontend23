@@ -4,6 +4,9 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 export interface IValidationMap {
   text: string
   valid: boolean
+  description: string
+  id: string
+  errorMessage: string
 }
 
 export function CheckValidationTests(
@@ -23,10 +26,14 @@ export function CheckValidationTests(
         return {
           text: validator.name,
           valid: true,
+          description: validator.description || '',
+          id: validator.id || '',
+          errorMessage: '',
         }
       }
 
       const validatorType = validator.type || 'regex' // default to regex
+      let errorMessage = ''
       try {
         switch (validatorType) {
           default:
@@ -51,11 +58,15 @@ export function CheckValidationTests(
       } catch (e) {
         // eslint-disable-next-line no-console
         // console.error('CheckValidationTests error:', e, 'validator:', validator)
+        errorMessage = (e as Error).message
       }
 
       return {
         text: validator.name,
         valid,
+        description: validator.description || '',
+        id: validator.id || '',
+        errorMessage,
       }
     })
   return valResults
