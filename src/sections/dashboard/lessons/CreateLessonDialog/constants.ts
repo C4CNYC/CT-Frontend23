@@ -63,6 +63,7 @@ export const GRADING_METHODS_BTN_SX = {
   gap: 1,
   m: { xs: 'auto', md: '0 !important' },
   padding: '0.3rem 0.8rem',
+  flexGrow: 1,
 
   '&.Mui-selected, &.Mui-selected:hover': {
     background: 'rgb(117, 202, 103)',
