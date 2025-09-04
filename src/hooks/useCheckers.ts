@@ -12,6 +12,7 @@ import { dispatch, useSelector } from '../redux/store'
 import { useFileManager } from '../sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 import { useLessonManager } from '../sections/code-panel/lib/LessonManagerContext'
 import { isValidRegex } from '../utils/isValidRegex'
+import { sendValidationMessageToIframes } from '../utils/sendValidationMessageToIframes'
 
 export function useCheckers() {
   const { lessonContent, currentSlideId } = useLessonManager()
@@ -75,6 +76,13 @@ export function useCheckers() {
         if (newPassedCount > previousPassedCount) {
           dispatch(setIsActivateCompeated(true))
         }
+        checkers.forEach((checker) => {
+          let existingChecker = existingCheckers.find((c) => c.text === checker.text)
+          if (!existingChecker) return
+          if (existingChecker.valid !== checker.valid && checker.valid) {
+            sendValidationMessageToIframes(checker.text, checker.valid)
+          }
+        })
         updatedContentValidations = contentValidations.map((item, index) =>
           index === existingValidationIndex ? { ...item, checkers } : item
         )
@@ -129,6 +137,9 @@ export function useCheckers() {
                 isValid = new RegExp(validator.regex).test(data.message)
               } else {
                 isValid = data.message.includes(validator.regex)
+              }
+              if (isValid) {
+                sendValidationMessageToIframes(validator.name, isValid)
               }
           }
           if (typeof isValid === 'boolean') {
