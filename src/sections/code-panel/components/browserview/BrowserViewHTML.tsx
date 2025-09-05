@@ -22,30 +22,51 @@ export function BrowserViewHTML({
   stepBgColor,
   reloadIframe,
 }: BrowserViewProps) {
-  const { files, activeFile } = useFileManager()
-  const { lesson } = useLessonManager()
+  const { files } = useFileManager()
+  const { lesson, lessonContent, currentSlideId } = useLessonManager()
   const { autoRun } = useCodePanel()
   const iFrameRef = useRef<HTMLIFrameElement>(null)
   const integrations = lesson?.integrations || []
   const debounceCallback = useDebounceCallback(500)
   const [previousIframeKey, setPreviousIframeKey] = useState<string | number | undefined>(iframeKey)
-
-  const IFRAME_STYLE = {
-    border: 0,
-    width: '100%',
-    height: iframeKey ? 'calc(100% - 42px)' : '100%',
-    background: '#F8F8FF',
-  }
+  let validations = lessonContent?.find((lc) => lc.id == currentSlideId)?.validations || []
 
   let document = useMemo(() => {
     if (files.length === 0) return emptyDoc
 
-    let tests = files
-      .filter((f) => f.extension === 'test')
-      .map((f) => f.body)
-      .join('\n')
-    tests += `;
-    function validateChecker(t,v){window.parent.postMessage({type: 'checker-validation',checkerId: t,valid: v},'*')}`
+    let tests = `;
+    function validateChecker(t,v,type='checker-validation'){
+      window.parent.postMessage({type,checkerId: t,valid: v},'*')
+    }`
+    tests +=
+      `\n //Test Files \n ` +
+      files
+        .filter((f) => f.extension === 'test')
+        .map((f) => f.body)
+        .join('\n')
+
+    tests +=
+      `
+     //Validations
+     console.logOld('Running Validations...');
+      let checkCodeCheckers = []
+      ` +
+      validations
+        .filter((v) => v.type === 'execute')
+        .map(
+          (v) => `
+          // validator: ${v.name}
+        checkCodeCheckers.push(()=>{
+          let output = false;
+          try{ output = eval(\`(()=>{${v.regex}})()\`); }catch(e){console.logOld(e);  output = false }
+          validateChecker(\`${v.name}\`,  output )
+        })  
+        checkCodeCheckers.forEach(c=>c())
+      `
+        )
+        .join('\n')
+    //output, error,code ,
+
     let acc = files.reduce(
       (acc, file) => {
         if (file.extension === 'html') {
@@ -76,7 +97,7 @@ export function BrowserViewHTML({
         iFrameRef.current!.srcdoc = generateHtml(document)
       })
     } else if (iframeKey !== previousIframeKey) {
-      // When autoRun is disabled, only update when iframeKey actually changes
+      // if autoRun is disabled
       iFrameRef.current.srcdoc = generateHtml(document)
       setPreviousIframeKey(iframeKey)
     }
@@ -109,13 +130,20 @@ export function BrowserViewHTML({
           ${integrationsScripts}
           <script>
             console.logOld = console.log;
-            consolelog = function() {
+            let logsOutput = [];
+            let logsError = [];
+            consolelog = (type)=>function() {
+              switch(type){
+                case 'error': logsError.push([...arguments]); break;
+                case 'log':
+                case 'output': logsOutput.push([...arguments]); break;
+                }
               window.parent.postMessage({ type: 'ConsoleLog', message: JSON.stringify(arguments) }, '*');
             };
-            console.log = consolelog;
-            console.warn = consolelog;
-            console.error = consolelog;
-            console.debug = consolelog;              
+            console.log = consolelog('log');
+            console.warn = consolelog('warn');
+            console.error = consolelog('error');
+            console.debug = consolelog('debug');              
           </script>
         </head>
         ${htmlPart}
@@ -130,7 +158,12 @@ export function BrowserViewHTML({
     <iframe
       className='BrowserView'
       ref={iFrameRef}
-      style={IFRAME_STYLE}
+      style={{
+        border: 0,
+        width: '100%',
+        height: iframeKey ? 'calc(100% - 42px)' : '100%',
+        background: '#F8F8FF',
+      }}
     />
   )
 }

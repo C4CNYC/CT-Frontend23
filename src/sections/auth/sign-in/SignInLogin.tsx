@@ -13,6 +13,7 @@ import { RHFTextField, useSnackbar } from '@/components'
 import { STUDENT_PATH_PAGE } from '@/routes/student.paths'
 import { styledRegisterInput } from '@/sections/on-boarding-register/styles'
 import { useTranslate } from '@/utils/translateHelper'
+import { useTenants } from '@root/src/hooks/useTenants'
 
 interface IProps {
   isValid?: boolean
@@ -25,6 +26,7 @@ export default function SignInLogin({
 }: Partial<StepWizardChildProps> & IProps): React.ReactElement {
   const translate = useTranslate()
   const router = useRouter()
+  const tenant = useTenants()
 
   const { enqueueSnackbar } = useSnackbar()
   const { loginWithGoogle } = useAuthContext()
@@ -85,39 +87,43 @@ export default function SignInLogin({
             ),
           }}
         />
-        <Divider
-          sx={{ my: 3 }}
-          flexItem
-        >
-          <Typography
-            sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
-            variant='body1'
-          >
-            {translate('login_or')}
-          </Typography>
-        </Divider>
-        <LoadingButton
-          onClick={() => {
-            onLoginWithGoogle()
-          }}
-          loading={isLoading}
-          sx={(theme) => ({
-            color: theme.palette.grey[600],
-            textTransform: 'none',
-            py: 1.5,
-            mb: 1,
-            gap: 2,
-            background: '#efefef',
-            fontWeight: 400,
-            fontSize: '1.3em',
-            '&:hover': {
-              color: theme.palette.grey[900],
-            },
-          })}
-        >
-          <FcGoogle size='50px' />
-          {translate('login_with_google')}
-        </LoadingButton>
+        {tenant?.meta?.is_enabled_google_auth ? (
+          <>
+            <Divider
+              sx={{ my: 3 }}
+              flexItem
+            >
+              <Typography
+                sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
+                variant='body1'
+              >
+                {translate('login_or')}
+              </Typography>
+            </Divider>
+            <LoadingButton
+              onClick={() => {
+                onLoginWithGoogle()
+              }}
+              loading={isLoading}
+              sx={(theme) => ({
+                color: theme.palette.grey[600],
+                textTransform: 'none',
+                py: 1.5,
+                mb: 1,
+                gap: 2,
+                background: '#efefef',
+                fontWeight: 400,
+                fontSize: '1.3em',
+                '&:hover': {
+                  color: theme.palette.grey[900],
+                },
+              })}
+            >
+              <FcGoogle size='50px' />
+              {translate('login_with_google')}
+            </LoadingButton>
+          </>
+        ) : null}
       </Stack>
     </>
   )

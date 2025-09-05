@@ -26,6 +26,7 @@ import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton
 import { useTranslate } from '@/utils/translateHelper'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
+import { LessonImportDialog } from '@root/src/sections/dashboard/lessons/LessonImportDialog'
 
 import FilterLessons from './filter'
 
@@ -231,6 +232,8 @@ export default function LessonsListPage(): React.ReactElement {
               >
                 {translate('lessons_create_lesson')}
               </Button>
+
+              <LessonImportDialog />
             </Box>
           }
         />

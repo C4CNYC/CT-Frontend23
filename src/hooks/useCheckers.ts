@@ -11,9 +11,11 @@ import { CheckValidationTests, IValidationMap } from '@root/src/utils/CheckValid
 import { dispatch, useSelector } from '../redux/store'
 import { useFileManager } from '../sections/code-panel/components/body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 import { useLessonManager } from '../sections/code-panel/lib/LessonManagerContext'
+import { isValidRegex } from '../utils/isValidRegex'
+import { sendValidationMessageToIframes } from '../utils/sendValidationMessageToIframes'
 
 export function useCheckers() {
-  const { lessonContent, currentSlideId, lesson } = useLessonManager()
+  const { lessonContent, currentSlideId } = useLessonManager()
   let validations = lessonContent?.find((lc) => lc.id == currentSlideId)?.validations || []
   const { files } = useFileManager()
   const { completedSlides } = useSelector((state) => state.checkersAnimation)
@@ -74,6 +76,13 @@ export function useCheckers() {
         if (newPassedCount > previousPassedCount) {
           dispatch(setIsActivateCompeated(true))
         }
+        checkers.forEach((checker) => {
+          let existingChecker = existingCheckers.find((c) => c.text === checker.text)
+          if (!existingChecker) return
+          if (existingChecker.valid !== checker.valid && checker.valid) {
+            sendValidationMessageToIframes(checker.text, checker.valid)
+          }
+        })
         updatedContentValidations = contentValidations.map((item, index) =>
           index === existingValidationIndex ? { ...item, checkers } : item
         )
@@ -110,28 +119,61 @@ export function useCheckers() {
     fnIncUse(119)
     const handleMessage = (event: MessageEvent): void => {
       const data = event.data
-      if (
-        data?.type === 'checker-validation' &&
-        data.checkerId &&
-        typeof data.valid === 'boolean'
-      ) {
-        let checkers = selectedContentCheckersGet()
-        const checkerToUpdate = checkers.find((checker) => checker.text === data.checkerId)
-        if (checkerToUpdate && checkerToUpdate.valid !== data.valid) {
-          const updatedCheckers = checkers.map((checker) =>
-            checker.text === data.checkerId ? { ...checker, valid: data.valid } : checker
-          )
-          const newPassedCount = countPassed(updatedCheckers)
-          const previousPassedCount = countPassed(checkers)
-          if (newPassedCount > previousPassedCount) {
-            dispatch(setIsActivateCompeated(true))
+      let checkerIds: { name: string; isValid: boolean }[] = []
+      if (!data || !data.type) return
+      if (['checker-validation', 'ConsoleLog'].includes(data.type)) {
+        document.querySelectorAll('iframe').forEach((iframe) => {
+          iframe.contentWindow?.postMessage(event.data, '*')
+        })
+      }
+      if ('checker-validation' === data.type && data.checkerId && Boolean(data.valid)) {
+        checkerIds.push({ name: data.checkerId, isValid: Boolean(data.valid) })
+      } else if ('ConsoleLog' === data.type && data.message) {
+        validations.forEach((validator) => {
+          let isValid
+          switch (validator.type) {
+            case 'output':
+              if (isValidRegex(validator.regex)) {
+                isValid = new RegExp(validator.regex).test(data.message)
+              } else {
+                isValid = data.message.includes(validator.regex)
+              }
+              if (isValid) {
+                sendValidationMessageToIframes(validator.name, isValid)
+              }
           }
-          updateContentValidations(updatedCheckers)
+          if (typeof isValid === 'boolean') {
+            checkerIds.push({ name: validator.name, isValid })
+          }
+        })
+      }
+      let checkers = selectedContentCheckersGet()
+      let hasChanges = false
+      let updatedCheckers = [...checkers] // Work with a copy
+
+      for (let { name: checkerId, isValid } of checkerIds) {
+        const checkerIndex = updatedCheckers.findIndex((checker) => checker.text === checkerId)
+
+        if (checkerIndex !== -1 && updatedCheckers[checkerIndex].valid !== isValid && isValid) {
+          updatedCheckers[checkerIndex] = { ...updatedCheckers[checkerIndex], valid: isValid }
+          hasChanges = true
         }
+      }
+
+      if (hasChanges) {
+        const newPassedCount = countPassed(updatedCheckers)
+        const previousPassedCount = countPassed(checkers)
+
+        if (newPassedCount > previousPassedCount) {
+          dispatch(setIsActivateCompeated(true))
+        }
+
+        updateContentValidations(updatedCheckers)
       }
     }
 
     window.addEventListener('message', handleMessage)
+
     return () => window.removeEventListener('message', handleMessage)
   }, [updateContentValidations])
 
@@ -155,7 +197,7 @@ export function useCheckers() {
 let fnInc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 function fnIncUse(n: number, ...args: any[]) {
   fnInc[n] = fnInc[n] + 1
-  //console.log('fnIncUse', n, fnInc[n] , args)
+  // console.log('fnIncUse', n, fnInc[n], args)
 }
 function countPassed(checkers: IValidationMap[]): number {
   return checkers.filter((checker) => checker.valid).length

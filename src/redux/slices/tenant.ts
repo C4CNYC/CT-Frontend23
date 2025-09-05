@@ -11,6 +11,7 @@ export interface Tenant {
   home_page_type?: string
   domain?: string
   meta?: IOrgMeta
+  updatedAt?: string
 }
 
 export const DEFAULT_TENANT: Tenant = {

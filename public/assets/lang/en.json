@@ -11,6 +11,8 @@
     "actions_close": "Close",
     "actions_save": "Save",
     "actions_search": "Search",
+    "actions_import": "Import",
+    "actions_export": "Export",
     "actions_save_changes": "Save Changes",
     "actions_clear": "Clear",
     "actions_update": "Update",
@@ -169,6 +171,17 @@
     "files": "Files",
     "rule": "Description",
     "regex": "Test",
+    "checker_type_help":{
+      "regex":"Check the student's code by using regular expressions.",
+      "execute":"Runs Code you write with student code.",
+      "output":"After student code runs, checks for output, if regex wanted, put between slashes /regex/",
+      "error":"After student code runs checks for errors, if regex wanted, put between slashes /regex/",
+      "input":"Checks input patters",
+      "manual":"For internal actions, like running tests, etc.",
+      "signal":"Checks internal signals, time passed, events, etc."
+    },
+    "code":"Code",
+    "comment":"Comment",
     "private": "Private",
     "open_catalog": "Open Catalog",
     "sequence": "Sequence",
@@ -1253,6 +1266,17 @@
         "button": "Leave feedback"
       }
     ],
+    "exportimport":{
+      "dialog_import_lesson": "Import Lesson",
+      "success" : "Lesson imported successfully",
+      "error" : "Error occurred importing the lesson",
+      "regex": "",
+       "output":"",
+        "execute":"",
+        "manual":"Manual",
+        "open_new_lesson":"Open the new lesson",
+        "error_import_failed":"Import failed. "
+    },
     "tenant_create_success_title": "Congratulations!",
     "tenant_create_success_subtitle": "You have registered a new organization.",
     "tenant_create_success_desc_part_1": "You can now login here:",

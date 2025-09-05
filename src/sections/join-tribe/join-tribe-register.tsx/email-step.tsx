@@ -8,6 +8,7 @@ import { useSnackbar } from 'notistack'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { RHFTextField } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
+import { useTenants } from '@root/src/hooks/useTenants'
 
 interface IEmailStepProps {
   nextStep: () => void
@@ -17,6 +18,7 @@ interface IEmailStepProps {
 export default function EmailStep({ nextStep, isValid }: IEmailStepProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const { registerWithGoogle } = useAuthContext()
+  const tenant = useTenants()
 
   const onRegisterWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
@@ -68,39 +70,44 @@ export default function EmailStep({ nextStep, isValid }: IEmailStepProps): React
             ),
           }}
         />
-        <Divider
-          sx={{ my: 1 }}
-          flexItem
-        >
-          <Typography
-            sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
-            variant='body1'
-          >
-            OR
-          </Typography>
-        </Divider>
-        <LoadingButton
-          onClick={() => {
-            onRegisterWithGoogle()
-          }}
-          loading={false}
-          sx={(theme) => ({
-            color: theme.palette.grey[600],
-            textTransform: 'none',
-            py: 1.5,
-            mb: 1,
-            gap: 2,
-            background: theme.palette.grey[200],
-            fontWeight: 400,
-            fontSize: '1.3em',
-            '&:hover': {
-              color: theme.palette.grey[900],
-            },
-          })}
-        >
-          <FcGoogle size='50px' />
-          Sign up with Google
-        </LoadingButton>
+        {tenant?.meta?.is_enabled_google_auth ? (
+          <>
+            <Divider
+              sx={{ my: 1 }}
+              flexItem
+            >
+              <Typography
+                sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
+                variant='body1'
+              >
+                OR
+              </Typography>
+            </Divider>
+
+            <LoadingButton
+              onClick={() => {
+                onRegisterWithGoogle()
+              }}
+              loading={false}
+              sx={(theme) => ({
+                color: theme.palette.grey[600],
+                textTransform: 'none',
+                py: 1.5,
+                mb: 1,
+                gap: 2,
+                background: theme.palette.grey[200],
+                fontWeight: 400,
+                fontSize: '1.3em',
+                '&:hover': {
+                  color: theme.palette.grey[900],
+                },
+              })}
+            >
+              <FcGoogle size='50px' />
+              Sign up with Google
+            </LoadingButton>
+          </>
+        ) : null}
       </Stack>
     </>
   )

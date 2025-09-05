@@ -4,6 +4,9 @@ import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 export interface IValidationMap {
   text: string
   valid: boolean
+  description: string
+  id: string
+  errorMessage: string
 }
 
 export function CheckValidationTests(
@@ -16,31 +19,54 @@ export function CheckValidationTests(
   let valResults = new Array(...validations)
     .sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1))
     .map((validator) => {
-      let valid = true //in case of error in regex, we pass this test
+      let valid = false //in case of error in regex, we pass this test
+
       let checkedBefore = checked.find((c) => c.text === validator.name)
       if (checkedBefore?.valid) {
         return {
           text: validator.name,
           valid: true,
+          description: validator.description || '',
+          id: validator.id || '',
+          errorMessage: '',
         }
       }
+
+      const validatorType = validator.type || 'regex' // default to regex
+      let errorMessage = ''
       try {
-        let reg = validator.regex.startsWith('/')
-          ? eval(validator.regex)
-          : new RegExp(validator.regex)
-        valid =
-          reg.test(code) ||
-          reg.test(noNLCode) ||
-          !!code.match(reg) ||
-          code.replace(/\s/g, '') === validator.regex.replace(/\s/g, '')
+        switch (validatorType) {
+          default:
+          case 'regex':
+            let reg = validator.regex.startsWith('/')
+              ? eval(validator.regex)
+              : new RegExp(validator.regex)
+            valid =
+              reg.test(code) ||
+              reg.test(noNLCode) ||
+              !!code.match(reg) ||
+              code.replace(/\s/g, '') === validator.regex.replace(/\s/g, '')
+            break
+
+          case 'output':
+          case 'execute':
+          case 'manual':
+            break // Always false, will be checked externally
+        }
+
+        // console.log('Validator Type:', { validatorType, regex: validator.regex, valid })
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error('error oldu', e)
+        // console.error('CheckValidationTests error:', e, 'validator:', validator)
+        errorMessage = (e as Error).message
       }
 
       return {
         text: validator.name,
         valid,
+        description: validator.description || '',
+        id: validator.id || '',
+        errorMessage,
       }
     })
   return valResults
