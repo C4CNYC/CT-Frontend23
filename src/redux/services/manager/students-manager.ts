@@ -70,6 +70,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Pendings', 'ClassesStudentList', 'Pendings'],
     }),
     createStudent: builder.mutation<IStudent & BaseResponseInterface, { schoolId: string }>({
       query: ({ schoolId, ...body }) => ({
@@ -107,7 +108,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Students'],
+      invalidatesTags: ['Students', 'Pendings', 'ClassesStudentList'],
     }),
     studentLeftClass: builder.mutation<void, { classId: string; student_id: string }>({
       query: ({ classId, ...body }) => ({
@@ -115,7 +116,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'DELETE',
         body,
       }),
-      invalidatesTags: ['Students', 'ClassesStudent'],
+      invalidatesTags: ['Students', 'ClassesStudentList', 'Pendings'],
     }),
     studentResetPassword: builder.mutation<
       void,
