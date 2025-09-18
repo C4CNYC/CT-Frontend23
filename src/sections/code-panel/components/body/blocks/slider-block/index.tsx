@@ -33,8 +33,8 @@ import BaseBlock from '../base-block'
 import { CodeDocument } from '../view-block/browser-view/types'
 
 import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
+import { EditContentLayer } from './edit-content-layer'
 import Navigation from './navigation'
-import { SaveEditContent } from './SaveEditContent'
 import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
 
 interface ISliderBlock {
@@ -78,8 +78,11 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
   const searchParams = useSearchParams()
-  const { lesson, lessonContent } = useLessonManager()
+  const { lesson, lessonContent, currentSlideUpdated } = useLessonManager()
   let data = lessonContent ?? []
+  const [isEditLesson, setIsEditLesson] = useState(false)
+  const [isSlideReady, setIsSlideReady] = useState(false)
+  const [isOpenModalCurrentSlideEdited, setIsOpenModalCurrentSlideEdited] = useState(false)
 
   const sandbox = searchParams.get('sandbox')
 
@@ -112,12 +115,34 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [])
 
   const handlePrev = (): void => {
+    if (currentSlideUpdated) {
+      setIsOpenModalCurrentSlideEdited(true)
+      return
+    }
+    setIsEditLesson(false)
+
     if (slideIndex > 0) {
       onBeforeChange(slideIndex, slideIndex - 1)
     }
   }
 
+  useEffect(() => {
+    setIsSlideReady(false)
+
+    const timeout = setTimeout(() => {
+      setIsSlideReady(true)
+    }, 30)
+
+    return () => clearTimeout(timeout)
+  }, [slideIndex])
+
   const handleNext = (skip = false): void => {
+    if (currentSlideUpdated) {
+      setIsOpenModalCurrentSlideEdited(true)
+      return
+    }
+    setIsEditLesson(false)
+
     if (window.dataLayer) {
       window.dataLayer.push({
         event: 'Slide_Swiped',
@@ -210,7 +235,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         height='100%'
         sx={boxSx}
       >
-        {isLoadingLessonContent ? (
+        {isLoadingLessonContent || !isSlideReady ? (
           <LoadingScreen />
         ) : currentSlide ? (
           <BrowserViewTeacher
@@ -227,6 +252,16 @@ const SliderBlock: FC<ISliderBlock> = ({
       </Box>
     )
   }, [data, slideIndex, integrations, isLoadingLessonContent])
+
+  const editContentLayer = (
+    <EditContentLayer
+      key={slideIndex}
+      isEditLesson={isEditLesson}
+      setIsEditLesson={setIsEditLesson}
+      isOpenModalCurrentSlideEdited={isOpenModalCurrentSlideEdited}
+      setIsOpenModalCurrentSlideEdited={setIsOpenModalCurrentSlideEdited}
+    />
+  )
 
   return (
     <BaseBlock
@@ -268,7 +303,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         />
       ) : (
         <>
-          <SaveEditContent />
+          {editContentLayer}
           {slider}
           <NextStep
             handleNext={handleNext}

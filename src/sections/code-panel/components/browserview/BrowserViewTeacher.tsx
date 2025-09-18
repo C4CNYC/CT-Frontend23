@@ -42,21 +42,18 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
     let htmlPart = (doc as any).length ? doc : htmls
 
     return `
-      <html style="height: 100%; box-sizing: border-box;" ${
-        lessonEditable ? 'contentEditable id="VeryEditableDivId"' : ''
-      }>
+      <html style="height: 100%; box-sizing: border-box;" id="VeryEditableDivId">
         <head>
         <link rel="stylesheet" href="/fonts/index.css" />
         <style>
           * { box-sizing: border-box; } 
-        body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'}; }
+        body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'};}
         </style>
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
           <script> 
             if (document.getElementById('VeryEditableDivId')) {
               let debounceTimer;
-              let dbT= new Date().getTime();
               document.getElementById('VeryEditableDivId').addEventListener('input', function() {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
@@ -64,14 +61,15 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
                     type: 'contentChange', 
                     content: this.innerHTML 
                   }, '*');
-                }, 300); // Debounce to avoid excessive updates
+                }, 300);
               });
             }
+
             if (!window.__iframeSupplimentsLoaded) {
               window.__iframeSupplimentsLoaded = true;
-              ${lessonEditable ? iframeSuppliments() : null}
+              ${lessonEditable ? `(function(){ ${iframeSuppliments()} })();` : ''}
             }
-          </script>
+        </script>
         </head>
         ${htmlPart}
       </html>

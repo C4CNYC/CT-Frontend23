@@ -2,7 +2,6 @@ import { type CSSProperties, type FC } from 'react'
 
 // import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
-import CloseIcon from '@mui/icons-material/Close'
 import { Box, IconButton, useTheme } from '@mui/material'
 import { SxProps, Theme } from '@mui/system'
 import { IoChatboxEllipsesOutline } from '@react-icons/all-files/io5/IoChatboxEllipsesOutline'
@@ -14,6 +13,7 @@ import { setChatVisible } from '@/redux/slices/chat-handler'
 import { useSelector } from '@/redux/store'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { CodePanelChat } from '@root/src/components/chat/CodePanelChat'
+import ChatBaloo from '@root/src/components/chat-baloo'
 
 const ChatPopup: FC = () => {
   const theme = useTheme()
@@ -38,13 +38,14 @@ const ChatPopup: FC = () => {
         isDesktop ? (
           <Draggable>
             <div style={DRAGGABLE_STYLES}>
-              <IconButton
+              {/* <IconButton
                 onClick={() => dispatch(setChatVisible(false))}
                 sx={ICON_BUTTON_STYLES}
               >
                 <CloseIcon />
-              </IconButton>
-              <CodePanelChat />
+              </IconButton> */}
+              {/* <CodePanelChat /> */}
+              <ChatBaloo onClose={() => dispatch(setChatVisible(false))} />
             </div>
           </Draggable>
         ) : (
@@ -75,10 +76,21 @@ const ICON_BUTTON_STYLES = {
   mb: '2px',
 }
 
+// const DRAGGABLE_STYLES: CSSProperties = {
+//   position: 'absolute',
+//   height: '500px',
+//   width: '600px',
+//   right: 20,
+//   bottom: 20,
+//   zIndex: 5000,
+//   display: 'flex',
+//   flexDirection: 'column',
+// }
+
 const DRAGGABLE_STYLES: CSSProperties = {
   position: 'absolute',
-  height: '500px',
-  width: '600px',
+  height: '600px',
+  width: '382px',
   right: 20,
   bottom: 20,
   zIndex: 5000,

@@ -147,6 +147,7 @@ export const LessonManagerProvider: React.FC<{
         enqueueSnackbar('Error updating slide', { variant: 'error' })
       })
   }
+
   return (
     <LessonManagerContext.Provider
       value={{
