@@ -11,7 +11,6 @@ import {
   Grid,
   IconButton,
   FormControl,
-  InputLabel,
   FormHelperText,
 } from '@mui/material'
 import { useSnackbar } from 'notistack'
@@ -109,6 +108,19 @@ export default function CreateEditValidation({
     }
   }
 
+  function getLabel(type: string | undefined): string {
+    switch (type) {
+      case 'regex':
+      case 'output':
+        return translate('regex')
+      case 'execute':
+        return translate('code')
+      case 'manual':
+        return translate('comment')
+    }
+    return type || ''
+  }
+
   return (
     <>
       <Box onClick={openTrue}> {children} </Box>
@@ -162,8 +174,6 @@ export default function CreateEditValidation({
                     fullWidth
                     sx={{ mb: 3 }}
                   >
-                    <InputLabel id='type-select-label'>{translate('type')}</InputLabel>
-
                     <RHFToggleButtonGroup
                       name='type'
                       options={ILCV_type.map((type) => ({
@@ -172,7 +182,7 @@ export default function CreateEditValidation({
                         tooltip: type.charAt(0).toUpperCase() + type.slice(1),
                       }))}
                       sxGroup={{
-                        width: { xs: 'auto', md: 'max-content' },
+                        width: { xs: '100%', sm: '100%' },
                         border: { xs: 'none', md: '1px solid rgba(145, 158, 171, 0.24)' },
                         margin: '0.8rem 0',
                       }}
@@ -186,9 +196,7 @@ export default function CreateEditValidation({
                   <RHFTextField
                     sx={{ mb: 3 }}
                     name='regex'
-                    label={
-                      methods.watch('type') === 'regex' ? translate('regex') : translate('pattern')
-                    }
+                    label={getLabel(methods.watch('type'))}
                     helperText={translate(
                       methods.watch('type')
                         ? `checker_type_help.${methods.watch('type')}`

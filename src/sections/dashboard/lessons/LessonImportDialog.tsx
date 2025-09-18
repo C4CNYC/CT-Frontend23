@@ -44,7 +44,7 @@ export function LessonImportDialog() {
       if (!response.id) return enqueueSnackbar(translate('error'), { variant: 'error' })
       enqueueSnackbar(translate('exportimport.success'), { variant: 'success' })
 
-      if (window.confirm(translate('prompt_open_new_lesson'))) {
+      if (window.confirm(translate('exportimport.open_new_lesson'))) {
         router.push(
           `${router.pathname}?${new URLSearchParams({ lessonId: response.id })}`,
           undefined,
@@ -56,7 +56,7 @@ export function LessonImportDialog() {
 
       handleCloseDialog()
     } catch (error) {
-      enqueueSnackbar(translate('error_import_failed'), { variant: 'error' })
+      enqueueSnackbar(translate('exportimport.error_import_failed'), { variant: 'error' })
     }
   }
 
