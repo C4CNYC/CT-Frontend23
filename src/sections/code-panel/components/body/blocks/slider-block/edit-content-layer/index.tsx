@@ -61,19 +61,32 @@ export function EditContentLayer({
         'iframe.BrowserViewTeacherView'
       ) as HTMLIFrameElement | null
 
-      if (iframe && iframe.contentDocument) {
-        iframeSliderRef.current = iframe
+      if (iframe && !iframe.dataset.processed) {
+        iframe.dataset.processed = 'true'
 
-        const editableDiv = iframe.contentDocument.getElementById(
-          'VeryEditableDivId'
-        ) as HTMLDivElement | null
-
-        if (editableDiv) {
-          editableDivRef.current = editableDiv
-          observer.disconnect()
+        if (iframe.contentDocument) {
+          checkForEditableDiv(iframe)
+        } else {
+          iframe.addEventListener('load', () => {
+            checkForEditableDiv(iframe)
+          })
         }
       }
     })
+
+    const checkForEditableDiv = (iframe: HTMLIFrameElement) => {
+      const editableDiv = iframe.contentDocument?.getElementById(
+        'VeryEditableDivId'
+      ) as HTMLDivElement | null
+
+      if (editableDiv) {
+        iframeSliderRef.current = iframe
+        editableDivRef.current = editableDiv
+        observer.disconnect()
+      } else {
+        setTimeout(() => checkForEditableDiv(iframe), 100)
+      }
+    }
 
     observer.observe(document.body, { childList: true, subtree: true })
 

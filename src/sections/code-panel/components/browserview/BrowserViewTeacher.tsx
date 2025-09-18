@@ -69,7 +69,6 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
               window.__iframeSupplimentsLoaded = true;
               ${lessonEditable ? `(function(){ ${iframeSuppliments()} })();` : ''}
             }
-          })();
         </script>
         </head>
         ${htmlPart}
