@@ -10,6 +10,7 @@ import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
+import { useTenants } from '@root/src/hooks/useTenants'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { generateRandomEmoji } from '@root/src/utils'
 
@@ -29,6 +30,7 @@ interface FormValuesProps {
 
 export default function LaunchCourseStepper() {
   const { push } = useRouter()
+  const tenant = useTenants()
 
   const translate = useTranslate()
 
@@ -84,7 +86,7 @@ export default function LaunchCourseStepper() {
   return (
     <Stack
       sx={{
-        minHeight: '460px',
+        minHeight: tenant?.meta?.is_enabled_google_auth ? '460px' : '300px',
         justifyContent: 'center',
         position: 'relative',
         width: '100%',

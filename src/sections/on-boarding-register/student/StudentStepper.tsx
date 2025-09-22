@@ -11,6 +11,7 @@ import { FormProvider, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
 import { generateRandomEmoji } from '@/utils'
 import { useTranslate } from '@/utils/translateHelper'
+import { useTenants } from '@root/src/hooks/useTenants'
 import { StyledContent } from '@root/src/layouts/login/styles'
 
 import { RegisterStudentTeacher, SingLink } from '../links'
@@ -34,6 +35,7 @@ export default function StudentStepper(): React.ReactElement {
   const [hasOneNumber, setHasOneNumber] = useState<boolean>(false)
   const [hasSixDigit, setHasSixDigit] = useState<boolean>(false)
   const translate = useTranslate()
+  const tenant = useTenants()
 
   const nextStep = () => setActiveStep(activeStep + 1)
   const prevStep = () => setActiveStep(activeStep - 1)
@@ -97,7 +99,7 @@ export default function StudentStepper(): React.ReactElement {
       <Stack
         sx={{
           width: '100%',
-          minHeight: '460px',
+          minHeight: tenant?.meta?.is_enabled_google_auth ? '460px' : '300px',
           justifyContent: 'center',
           position: 'relative',
         }}
