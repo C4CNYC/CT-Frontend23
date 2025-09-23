@@ -1,18 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { marked } from 'marked'
+
 import { useDebounceCallback } from '@root/src/hooks/useDebounceCallback'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
+import { FileExtensions } from '@root/src/types/lessons'
 
 import { useCodePanel } from '../../lib/CodePanelContext'
 import { useFileManager } from '../body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
-import {
-  BrowserViewProps,
-  CodeDocument,
-  TagNames,
-} from '../body/blocks/view-block/browser-view/types'
+import { BrowserViewProps, CodeDocument } from '../body/blocks/view-block/browser-view/types'
 import SkeletonViewBlock from '../body/blocks/view-block/skeleton-view-box'
 
-const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
 const emptyDoc = { htmlBody: '', cssBody: '', jsBody: '' } as CodeDocument
 
 /** Student View for HTML based lessons */
@@ -69,12 +67,23 @@ export function BrowserViewHTML({
 
     let acc = files.reduce(
       (acc, file) => {
-        if (file.extension === 'html') {
-          acc.htmlBody.push(file.body)
-        } else if (file.extension === 'css') {
-          file.body ? acc.cssBody.push(`<style>${file.body}</style>`) : null
-        } else if (file.extension === 'js') {
-          file.body ? acc.jsBody.push(`<script>${file.body}</script>`) : null
+        switch (file.extension.toLowerCase()) {
+          case FileExtensions.HTML:
+            acc.htmlBody.push(file.body)
+            break
+          case FileExtensions.MD:
+            acc.htmlBody.push(
+              '<div class="markdown-body">' +
+                marked.parse(file.body || '', { async: false }) +
+                '</div>'
+            )
+            break
+          case FileExtensions.CSS:
+            file.body ? acc.cssBody.push(file.body) : null
+            break
+          case FileExtensions.JS:
+            file.body ? acc.jsBody.push(`<script>${file.body}</script>`) : null
+            break
         }
         return acc
       },
@@ -125,8 +134,8 @@ export function BrowserViewHTML({
         <style>
           * { box-sizing: border-box; } 
         body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'}; }
+        ${cssBody}
         </style>
-          ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
           <script>
             console.logOld = console.log;

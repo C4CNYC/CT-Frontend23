@@ -55,7 +55,6 @@ export const useFileManagerOrj = () => {
   //const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId) || String(query?.lessonId)
-
   const [createStudentFile] = useCreateStudentFileMutation()
   const [deleteStudentFile] = useDeleteStudentFileMutation()
   const [updateStudentFile] = useUpdateStudentFileMutation()
@@ -142,7 +141,7 @@ export const useFileManagerOrj = () => {
 
   useEffect(() => {
     fnIncUse(131, unauthFilesList.current.length)
-    if (isUnauthFilesFetching || IsUnauthFilesLoading || isLessonLoading || !slideId) {
+    if (!isPageReady || !slideId) {
       return
     }
 
@@ -213,16 +212,7 @@ export const useFileManagerOrj = () => {
       unauthFiles,
       'ignoreThisVersion'
     )
-  }, [
-    isAuthenticated,
-    unauthFiles,
-    localStorageKey,
-    activeFile,
-    isUnauthFilesFetching,
-    IsUnauthFilesLoading,
-    lesson,
-    slideId,
-  ])
+  }, [isAuthenticated, unauthFiles, localStorageKey, activeFile, isPageReady, lesson, slideId])
   // Move file operations to useEffect
   let filesHash = [...authFiles, ...unauthFilesList.current]
     .map((f) => f.id + f.body + ' ')
@@ -460,17 +450,16 @@ export const useFileManagerOrj = () => {
   const setActiveFile = useCallback(
     (id: string, force: boolean = false): void => {
       if (activeFile?.id === id && !force) return
-
       let file = files.find((file) => file.id === id)
-
       if (!file) return
-
+      tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(file.id)
       _setActiveFile(file)
-      if (!files.find((file) => file.id === id)) {
-        tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(file.id)
-      }
+      _setBarFiles((prev) => {
+        if (prev.find((f) => f.id === file!.id)) return prev
+        return [...prev, file!]
+      })
     },
-    [files, barFiles, activeFile?.id]
+    [files, _setActiveFile, activeFile?.id]
   )
 
   const onCloseFile = useCallback(
@@ -539,10 +528,10 @@ export const useFileManagerOrj = () => {
       }
 
       _setActiveFile(files[0])
+      tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(files[0].id)
 
       if (!barFiles.find((file) => file.id === files[0].id)) {
         _setBarFiles((prev) => [...prev, files[0]])
-        tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(files[0].id)
       }
     }
   }, [
