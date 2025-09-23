@@ -8,6 +8,7 @@ const baseNames: Record<FileExtension, string> = {
   [FileExtensions.CSS]: 'style',
   [FileExtensions.JSON]: 'data',
   [FileExtensions.JS]: 'script',
+  [FileExtensions.MD]: 'content',
   py: 'script',
   java: 'code',
   test: 'test',
