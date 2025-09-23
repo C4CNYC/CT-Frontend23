@@ -128,13 +128,12 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   useEffect(() => {
     setIsSlideReady(false)
-
     const timeout = setTimeout(() => {
       setIsSlideReady(true)
     }, 30)
 
     return () => clearTimeout(timeout)
-  }, [slideIndex])
+  }, [slideIndex, setIsSlideReady])
 
   const handleNext = (skip = false): void => {
     if (currentSlideUpdated) {
@@ -228,7 +227,6 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const slider = useMemo(() => {
     const currentSlide = data[slideIndex]
-
     return (
       <Box
         className='sliderTour'
@@ -251,7 +249,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         )}
       </Box>
     )
-  }, [data, slideIndex, integrations, isLoadingLessonContent])
+  }, [data, slideIndex, integrations, isLoadingLessonContent, isSlideReady])
 
   const editContentLayer = (
     <EditContentLayer

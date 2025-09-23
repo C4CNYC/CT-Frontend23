@@ -9,7 +9,7 @@ import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 
-import ChatPopup from '../options/chat-popup'
+import { ChatPopup } from '../options/chat-popup'
 import Menu from '../options/menu'
 import SettingDrawer from '../options/setting-drawer'
 import Timer from '../options/timer'

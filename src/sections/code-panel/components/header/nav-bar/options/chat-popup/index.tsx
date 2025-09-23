@@ -13,9 +13,9 @@ import { setChatVisible } from '@/redux/slices/chat-handler'
 import { useSelector } from '@/redux/store'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { CodePanelChat } from '@root/src/components/chat/CodePanelChat'
-import ChatBaloo from '@root/src/components/chat-baloo'
+import { ChatBaloo } from '@root/src/components/chat-baloo'
 
-const ChatPopup: FC = () => {
+export const ChatPopup: FC = () => {
   const theme = useTheme()
   const isDesktop = useIsDesktop()
   const dispatch = useDispatch()
@@ -97,5 +97,3 @@ const DRAGGABLE_STYLES: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
 }
-
-export default ChatPopup

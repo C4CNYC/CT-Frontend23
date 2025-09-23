@@ -34,7 +34,7 @@ styleSheet.textContent = `
 `
 document.head.appendChild(styleSheet)
 
-export default function ChatBaloo({ onClose }: any) {
+export function ChatBaloo({ onClose }: any) {
   const { data: friendsDB, isLoading } = useGetFriendsStudentContentQuery(
     { take: 20 },
     { skip: true }
