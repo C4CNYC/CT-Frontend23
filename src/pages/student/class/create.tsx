@@ -91,6 +91,7 @@ export default function CreateClass(): React.ReactElement {
           )
           return
         } else {
+          localStorage.setItem('isClassCreated', 'true')
           push(STUDENT_PATH_DASHBOARD.class.id(classInfo.id))
         }
       }

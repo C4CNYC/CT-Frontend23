@@ -7,6 +7,7 @@ import { LuSave } from '@react-icons/all-files/lu/LuSave'
 import { MdClose } from '@react-icons/all-files/md/MdClose'
 
 import { useSnackbar } from '@/components'
+import { useLocalStorageKey } from '@/hooks/useLocalStorageKey'
 import { EmojiSelector } from '@root/src/components/emoji-selector/EmojiSelectDialog'
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
@@ -27,6 +28,7 @@ export function EditContentLayer({
   setIsOpenModalCurrentSlideEdited,
 }: any) {
   const { enqueueSnackbar } = useSnackbar()
+  const headerSettingsValue = useLocalStorageKey('HeadersSettings')
 
   const {
     value: isOpenAdvancedEditor,
@@ -125,7 +127,7 @@ export function EditContentLayer({
 
   return (
     <>
-      <Box sx={TOP_BAR_STYLES}>
+      <Box sx={{ ...TOP_BAR_STYLES, top: headerSettingsValue?.instructions ? '50px' : '20px' }}>
         <Tooltip
           title={'You created this lesson or have editing rights to edit slides and exercise code.'}
         >

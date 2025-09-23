@@ -65,6 +65,12 @@ const BaseBlock: FC<IBaseBlock> = ({ children, className, title, icon, hideTabsH
       localStorageKey,
       JSON.stringify({ ...getHeaderSettings(), [className]: false })
     )
+
+    window.dispatchEvent(
+      new CustomEvent('localstorage-update', {
+        detail: { key: localStorageKey, value: { ...getHeaderSettings(), [className]: false } },
+      })
+    )
   }
 
   useEffect(() => {
