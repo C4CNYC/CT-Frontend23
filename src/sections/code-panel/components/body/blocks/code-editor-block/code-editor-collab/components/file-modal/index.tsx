@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import AddIcon from '@mui/icons-material/Add'
 import Close from '@mui/icons-material/Close'
@@ -18,31 +18,20 @@ import DevIcon from '../dev-icon'
 import AddStudentFileModal from './AddStudentFileModal'
 import { useStyles } from './styles'
 
-interface FileModalProps {
-  isOpen: boolean
-  files: StudentFile[]
-  isFileControllerAvailable: boolean
-
-  onDeleteFile: (id: string) => void
-  setActiveFile: (id: string) => void
-  setIsOpen: (isOpen: boolean) => void
-  onAddFile: (fileName: string) => Promise<void>
-}
-
-const FileModal: FC<FileModalProps> = ({
-  files,
-  isOpen,
-  isFileControllerAvailable,
-  onAddFile,
-  setIsOpen,
-  onDeleteFile,
-  setActiveFile,
-}) => {
+export const FileModal = () => {
   const theme = useTheme()
   const translate = useTranslate()
   const styles = useStyles(theme)
   const router = useRouter()
-  const fileManager = useFileManager()
+  const {
+    files,
+    setActiveFile,
+    onDeleteFile,
+    setIsOpen,
+    onAddFile,
+    isOpen,
+    isFileControllerAvailable,
+  } = useFileManager()
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentWithoutContentsQuery(
     { id: router.query.lessonId as string },
@@ -178,5 +167,3 @@ const FileModal: FC<FileModalProps> = ({
     </ClickAwayListener>
   )
 }
-
-export default FileModal

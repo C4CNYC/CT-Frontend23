@@ -344,26 +344,26 @@ export function CodePanelLayout(): ReactElement | null {
 
   return (
     <CodePanelContextProvider>
-      <Head>
-        <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
-        />
-        <title> {lesson?.name + (unitContent ? ' | ' + unitContent?.name : '')} </title>
-        <meta
-          name='description'
-          content={lesson?.description || ''}
-        />
-      </Head>
+      <LessonManagerProvider
+        data={courseContent}
+        isLoading={isLoadingCourseContent}
+        lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+        lessonContent={lessonContent}
+      >
+        <FileManagerProvider>
+          <Head>
+            <meta
+              name='viewport'
+              content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+            />
+            <title> {lesson?.name + (unitContent ? ' | ' + unitContent?.name : '')} </title>
+            <meta
+              name='description'
+              content={lesson?.description || ''}
+            />
+          </Head>
 
-      <FullScreenProvider>
-        <LessonManagerProvider
-          data={courseContent}
-          isLoading={isLoadingCourseContent}
-          lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-          lessonContent={lessonContent}
-        >
-          <FileManagerProvider>
+          <FullScreenProvider>
             {router.query.ai ? (
               <CPTeacherTour />
             ) : showTour || isShowTour ? (
@@ -387,20 +387,20 @@ export function CodePanelLayout(): ReactElement | null {
                 onSubmitLesson={onSubmitLesson}
               />
             </Box>
-          </FileManagerProvider>
-        </LessonManagerProvider>
-      </FullScreenProvider>
+          </FullScreenProvider>
 
-      {!profile && <SignUpDialog />}
+          {!profile && <SignUpDialog />}
 
-      {showConfetti && (
-        <Confetti
-          numberOfPieces={500}
-          recycle={false}
-          gravity={0.25}
-          onConfettiComplete={onConfettiComplete}
-        />
-      )}
+          {showConfetti && (
+            <Confetti
+              numberOfPieces={500}
+              recycle={false}
+              gravity={0.25}
+              onConfettiComplete={onConfettiComplete}
+            />
+          )}
+        </FileManagerProvider>
+      </LessonManagerProvider>
     </CodePanelContextProvider>
   )
 }

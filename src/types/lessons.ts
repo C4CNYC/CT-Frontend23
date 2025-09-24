@@ -2,6 +2,7 @@ export const FileExtensions = {
   JS: 'js' as const,
   CSS: 'css' as const,
   HTML: 'html' as const,
+  MD: 'md' as const,
   JSON: 'json' as const,
   PY: 'py' as const,
   JAVA: 'java' as const,

@@ -4,14 +4,13 @@ export const TOP_BAR_STYLES = {
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
-  padding: '18px 5px 16px 24px',
   gap: '5px',
   position: 'absolute',
-  top: 0,
+  top: '20px',
   right: '10px',
-  width: '100%',
+  width: 'auto',
   zIndex: 10,
-  transition: 'right 0.3s ease',
+  transition: 'top 0.3s ease, right 0.3s ease',
 }
 
 export const ICON_BUTTON_STYLES = {

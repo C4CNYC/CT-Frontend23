@@ -21,6 +21,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 
 interface Props {
   sx?: Record<string, any>
+  text?: string
 }
 
 export function LoadingScreen({ sx }: Props): React.ReactElement | null {
