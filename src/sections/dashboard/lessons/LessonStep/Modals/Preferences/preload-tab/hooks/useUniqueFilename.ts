@@ -29,6 +29,7 @@ export function useUniqueFilename(lessonId: string, contentId: string) {
   }, [allFiles])
 
   const getUniqueName = (extension: keyof typeof baseNames): string => {
+    debugger
     const base = baseNames[extension]
     const existing = existingNamesByExt[extension] ?? new Set()
 

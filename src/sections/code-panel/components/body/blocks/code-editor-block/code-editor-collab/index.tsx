@@ -6,7 +6,7 @@ import { useDispatch } from '@/redux/store'
 import { setCode } from '@root/src/redux/slices/code-panel-global'
 import { CodePanelContext } from '@root/src/sections/code-panel/lib/CodePanelContext'
 
-import FileModal from './components/file-modal'
+import { FileModal } from './components/file-modal'
 import FileSwitcher from './components/file-switcher'
 import StatusLabel, { RoomStatus } from './components/status-label'
 import { useCodeEditorCollab } from './hook'
@@ -37,15 +37,11 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 
   const {
     files,
-    isOpen,
     barFiles,
     activeFile,
     isFileControllerAvailable,
 
-    onAddFile,
-    setIsOpen,
     onCloseFile,
-    onDeleteFile,
     onUpdateFile,
     setActiveFile,
   } = useFileManager()
@@ -97,16 +93,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
     >
       {withFileManager && (
         <>
-          <FileModal
-            files={files}
-            isOpen={isOpen}
-            isFileControllerAvailable={isFileControllerAvailable}
-            setIsOpen={setIsOpen}
-            onAddFile={onAddFile}
-            onDeleteFile={onDeleteFile}
-            setActiveFile={setActiveFile}
-          />
-
+          <FileModal />
           <FileSwitcher
             fileList={barFiles}
             activeFile={activeFile}

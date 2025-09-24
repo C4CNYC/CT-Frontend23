@@ -42,7 +42,7 @@ const DEFAULT_FILE = {
 export const useFileManagerOrj = () => {
   const lessonRef = useRef<(ILesson & BaseResponseInterface) | null>(null)
   const [files, filesSet] = useState<StudentFile[]>([])
-  const unauthFilesList = useRef<StudentFile[]>([])
+  const guestFilesList = useRef<StudentFile[]>([])
   const { query } = useRouter()
   const searchParams = useSearchParams()
   const { user } = useAuthContext()
@@ -52,7 +52,7 @@ export const useFileManagerOrj = () => {
   const [barFiles, _setBarFiles] = useState<StudentFile[]>([])
   const [activeFile, _setActiveFile] = useState<StudentFile>()
 
-  //const slideId = useSelector((state) => state.codePanelGlobal.slideId)
+  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId) || String(query?.lessonId)
   const [createStudentFile] = useCreateStudentFileMutation()
@@ -60,12 +60,7 @@ export const useFileManagerOrj = () => {
   const [updateStudentFile] = useUpdateStudentFileMutation()
   const [completeLesson] = useCompleteLessonMutation()
 
-  const {
-    lesson,
-    isLoading: isLessonLoading,
-    lessonContent,
-    currentSlideId: slideId,
-  } = useLessonManager()
+  const { lesson, isLoading: isLessonLoading, lessonContent } = useLessonManager()
   const shouldRunAuthFiles = !!lessonId && !!slideId && isAuthenticated
   const {
     data: authFiles = [],
@@ -78,25 +73,33 @@ export const useFileManagerOrj = () => {
   )
 
   const {
-    data: unauthFiles = [],
+    data: guestFiles = [],
     isLoading: IsUnauthFilesLoading,
     isFetching: isUnauthFilesFetching,
   } = useGetFilesByUnauthUserQuery(
     { lessonId: lessonId!, lessonContentId: slideId || '' },
     { skip: !lessonId || !slideId || isAuthenticated }
   )
+
   fnIncUse(
-    83,
+    90,
+    'general',
     files.length,
     incVal,
-    unauthFilesList.current.length,
-    unauthFiles.length,
-    unauthFiles.map((f) => f.name)
+    guestFilesList.current.length,
+    guestFiles.length,
+    guestFiles.map((f) => f.name)
   )
   const sandbox = searchParams.get('sandbox')
   const isPageReady = useMemo(
-    () => !isLessonLoading && !IsUnauthFilesLoading && !isLoading && !isFetching,
-    [isLessonLoading, IsUnauthFilesLoading, isLoading, isFetching]
+    () =>
+      !isLessonLoading &&
+      !IsUnauthFilesLoading &&
+      !isLoading &&
+      !isFetching &&
+      !!lessonId &&
+      !!slideId,
+    [isLessonLoading, IsUnauthFilesLoading, isLoading, isFetching, lessonId, slideId]
   )
 
   const { localStorageKey, tabsMangerLocalStorageKey } = useMemo(() => {
@@ -140,8 +143,8 @@ export const useFileManagerOrj = () => {
   }, [files])
 
   useEffect(() => {
-    fnIncUse(131, unauthFilesList.current.length)
-    if (!isPageReady || !slideId) {
+    fnIncUse(147, guestFilesList.current.length)
+    if (!isPageReady) {
       return
     }
 
@@ -161,11 +164,11 @@ export const useFileManagerOrj = () => {
       ) {
         let files = unauthFileLocalStorageManger(localStorageKey).carryOverFiles(
           getLocalStorageRoomKey(`${lessonRef.current?.id}`),
-          unauthFiles,
+          guestFiles,
           true
         )
         lessonRef.current = lesson!
-        unauthFilesList.current = files
+        guestFilesList.current = files
         incValSet((v) => v + 1)
         return
       }
@@ -177,90 +180,90 @@ export const useFileManagerOrj = () => {
       (file) => file.body.length > 10
     )
     if (accountableExistingFiles.length) {
-      unauthFilesList.current = Object.values(accountableExistingFiles)
+      guestFilesList.current = Object.values(accountableExistingFiles)
       incValSet((v) => v + 1)
       return
     }
     const files = unauthFileLocalStorageManger(localStorageKey).getFiles(
-      unauthFiles,
+      guestFiles,
       'ignoreThisVersion'
     )
     fnIncUse(
-      177,
+      193,
+      'guestFilesInit',
       files.length,
       incVal,
-      unauthFilesList.current.length,
-      unauthFiles.length,
-      unauthFiles.map((f) => f.name),
+      guestFilesList.current.length,
+      guestFiles.length,
+      guestFiles.map((f) => f.name),
       files.map((f) => f.name)
     )
     if (!isAuthenticated) {
       if (!files.length) {
-        if (!unauthFiles.length) {
+        if (!guestFiles.length) {
           unauthFileLocalStorageManger(localStorageKey).addFile(
             { ...DEFAULT_FILE, lessonContentId: slideId },
             'ignoreThisVersion'
           )
         } else {
-          unauthFiles.forEach((file) => {
+          guestFiles.forEach((file) => {
             unauthFileLocalStorageManger(localStorageKey).addFile(file, 'ignoreThisVersion')
           })
         }
       }
     }
-    unauthFilesList.current = unauthFileLocalStorageManger(localStorageKey).getFiles(
-      unauthFiles,
+    guestFilesList.current = unauthFileLocalStorageManger(localStorageKey).getFiles(
+      guestFiles,
       'ignoreThisVersion'
     )
-  }, [isAuthenticated, unauthFiles, localStorageKey, activeFile, isPageReady, lesson, slideId])
+  }, [isAuthenticated, guestFiles, localStorageKey, activeFile, isPageReady, lesson, slideId])
   // Move file operations to useEffect
-  let filesHash = [...authFiles, ...unauthFilesList.current]
-    .map((f) => f.id + f.body + ' ')
-    .join('')
-
+  let filesHash = [...authFiles, ...guestFilesList.current].map((f) => f.id + f.body + ' ').join('')
+  fnIncUse(225, 'filesHash', filesHash)
   useEffect(() => {
+    if (isAuthenticated || files.length > 0) return
     fnIncUse(
-      208,
+      228,
+      'unauth files set 2',
       files.length,
       incVal,
-      unauthFilesList.current.length,
+      guestFilesList.current.length,
       files.length,
       incVal,
-      unauthFilesList.current.length,
+      guestFilesList.current.length,
       isAuthenticated,
       files.length > 0,
-      unauthFilesList.current.length < 0
+      guestFilesList.current.length < 0
     )
-    if (isAuthenticated || files.length > 0) return
-    filesSet(unauthFilesList.current)
-  }, [filesSet, isAuthenticated, unauthFilesList.current.length, files.length])
+    filesSet(guestFilesList.current)
+  }, [filesSet, isAuthenticated, guestFilesList.current.length, files.length])
 
   useEffect(() => {
-    fnIncUse(216, files.length, incVal, unauthFilesList.current.length)
     if (!isAuthenticated) return
+    fnIncUse(246, 'auth files', files.length, incVal, guestFilesList.current.length)
 
     let authFilesWithoutHello = authFiles.filter(
       (file) => !file.name.toLowerCase().startsWith('hello_')
     )
 
     // Just compute the derived state here, no side effects
-    let unauthFilesNotSaved = unauthFilesList.current.filter(
+    let guestFilesNotSaved = guestFilesList.current.filter(
       (file) =>
         !authFilesWithoutHello.find(
           (authFile) => authFile.name === file.name && authFile.extension === file.extension
         )
     )
-    let updateNecessary = [...authFilesWithoutHello, ...unauthFilesNotSaved]
+    let updateNecessary = [...authFilesWithoutHello, ...guestFilesNotSaved]
       .filter((file) => !files.find((f) => f.body === file.body))
       .filter((file) => !files.find((f) => f.body === file.body))
-    // console.log('Update necessary files:', files, authFilesWithoutHello, unauthFilesNotSaved)
+    // console.log('Update necessary files:', files, authFilesWithoutHello, guestFilesNotSaved)
     if (!updateNecessary.length) return
-    filesSet(unfreeze([...authFilesWithoutHello, ...unauthFilesNotSaved]))
-  }, [files, filesHash, isAuthenticated, authFiles, unauthFilesList])
+    filesSet(unfreeze([...authFilesWithoutHello, ...guestFilesNotSaved]))
+  }, [files, filesHash, isAuthenticated, authFiles, guestFilesList])
 
   useEffect(() => {
-    fnIncUse(238, files.length, incVal, unauthFilesList.current.length)
     if (!isAuthenticated || authFiles.length < 2 || !isPageReady) return
+    fnIncUse(269, 'unauth files page fln', files.length, incVal, guestFilesList.current.length)
     let searched = new Set(authFiles.map((f) => `${f.name}.${f.extension}`))
     if (searched.size < authFiles.length) {
       let toDelete = []
@@ -293,8 +296,8 @@ export const useFileManagerOrj = () => {
   }
   // Handle side effects in useEffect
   useEffect(() => {
-    fnIncUse(271, files.length, incVal, unauthFilesList.current.length)
     if (!isPageReady || !isAuthenticated) return
+    fnIncUse(303, 'auth, handle side eff', files.length, incVal, guestFilesList.current.length)
 
     let authFilesWithoutHello = authFiles.filter(
       (file) => !file.name.toLowerCase().startsWith('hello_')
@@ -303,25 +306,26 @@ export const useFileManagerOrj = () => {
       file.name.toLowerCase().startsWith('hello_')
     )
 
-    let unauthFilesNotSaved = unauthFilesList.current
+    let guestFilesNotSaved = guestFilesList.current
       .filter((file) => !authFilesWithoutHello.find((authFile) => authFile.body === file.body))
       .filter((file) => file.body.length > 0)
 
-    if (unauthFilesNotSaved.length) {
+    if (guestFilesNotSaved.length) {
       saveProgressOfGuestTimes()
     }
 
     fnIncUse(
-      288,
+      321,
+      'will create files',
       files.length,
       incVal,
-      unauthFilesList.current.length,
-      unauthFiles.length,
+      guestFilesList.current.length,
+      guestFiles.length,
       incVal,
-      unauthFilesList.current.length
+      guestFilesList.current.length
     )
     // Create files that need to be created
-    unauthFilesNotSaved.forEach(async (file) => {
+    guestFilesNotSaved.forEach(async (file) => {
       let updateFile = authFiles.find(
         (af) => af.name == file.name && af.extension == file.extension
       )
@@ -339,14 +343,14 @@ export const useFileManagerOrj = () => {
     })
 
     // Delete hello files if needed
-    if (unauthFilesNotSaved.length + authFilesWithoutHello.length) {
+    if (guestFilesNotSaved.length + authFilesWithoutHello.length) {
       authFilesWithHello.forEach((file) => deleteStudentFile(file))
     }
-  }, [authFiles.length, unauthFilesList, isAuthenticated, slideId, lessonId, isPageReady])
+  }, [authFiles.length, guestFilesList, isAuthenticated, slideId, lessonId, isPageReady])
 
   useEffect(() => {
-    fnIncUse(315, files.length, incVal, unauthFilesList.current.length)
     if (!isAuthenticated || !files || !lessonId || !slideId || !localstorageCode) return
+    fnIncUse(356, 'kill default', files.length, incVal, guestFilesList.current.length)
     let file = getLocalStorageFile(localStorageKey, 'default')
     if (file && file?.body) {
       killLocalStorageFile(localStorageKey, 'default')
@@ -405,11 +409,11 @@ export const useFileManagerOrj = () => {
     if (!isAuthenticated) {
       unauthFileLocalStorageManger(localStorageKey).updateFile(id, filteredBody)
       const updatedUnauthFiles = unauthFileLocalStorageManger(localStorageKey).getFiles(
-        unauthFiles,
+        guestFiles,
         'ignoreThisVersion'
       )
 
-      unauthFilesList.current = updatedUnauthFiles
+      guestFilesList.current = updatedUnauthFiles
       filesSet(updatedUnauthFiles)
     } else {
       // Run the API update with the complete file data
@@ -428,24 +432,22 @@ export const useFileManagerOrj = () => {
     }
   }
 
-  const onDeleteFile = useCallback(
-    (id: string) => {
-      try {
-        if (!isAuthenticated) {
-          unauthFileLocalStorageManger(localStorageKey).removeFile(id)
-        } else {
-          deleteStudentFile({ id }).unwrap()
-        }
-
-        if (activeFile?.id === id) _setActiveFile(barFiles[0] || files[0])
-        _setBarFiles((prev) => prev.filter((file) => file.id !== id))
-        tabsLocalStorageManger(tabsMangerLocalStorageKey).removeTab(id)
-      } catch (e: any) {
-        throw new Error(e.message)
+  const onDeleteFile = (id: string) => {
+    try {
+      if (!isAuthenticated) {
+        unauthFileLocalStorageManger(localStorageKey).removeFile(id)
+      } else {
+        deleteStudentFile({ id }).unwrap()
       }
-    },
-    [deleteStudentFile, activeFile, barFiles, files, isAuthenticated, localStorageKey]
-  )
+
+      if (activeFile?.id === id) _setActiveFile(barFiles[0] || files[0])
+      _setBarFiles((prev) => prev.filter((file) => file.id !== id))
+      filesSet((prevFiles) => prevFiles.filter((file) => file.id !== id))
+      tabsLocalStorageManger(tabsMangerLocalStorageKey).removeTab(id)
+    } catch (e: any) {
+      throw new Error(e.message)
+    }
+  }
 
   const setActiveFile = useCallback(
     (id: string, force: boolean = false): void => {
@@ -459,7 +461,7 @@ export const useFileManagerOrj = () => {
         return [...prev, file!]
       })
     },
-    [files, _setActiveFile, activeFile?.id]
+    [files, _setActiveFile, _setBarFiles, activeFile?.id]
   )
 
   const onCloseFile = useCallback(
@@ -472,13 +474,13 @@ export const useFileManagerOrj = () => {
   )
 
   useEffect(() => {
-    fnIncUse(442, files.length, incVal, unauthFilesList.current.length)
     if (!shouldRunAuthFiles || sandbox) return
+    fnIncUse(442, 'activeFileRefetch', files.length, incVal, guestFilesList.current.length)
     if (activeFile) refetch()
   }, [activeFile, searchParams, shouldRunAuthFiles])
 
   useEffect(() => {
-    fnIncUse(448, files.length, incVal, unauthFilesList.current.length)
+    fnIncUse(448, files.length, 'sandbox', incVal, guestFilesList.current.length)
     if (sandbox) {
       _setActiveFile({ ...DEFAULT_FILE, body: localstorageCode ?? '' })
       _setBarFiles([{ ...DEFAULT_FILE, body: localstorageCode ?? '' }])
@@ -486,7 +488,7 @@ export const useFileManagerOrj = () => {
   }, [isAuthenticated, searchParams, localstorageCode])
 
   useEffect(() => {
-    fnIncUse(456, files.length, incVal, unauthFilesList.current.length)
+    fnIncUse(456, 'lessonSlideChange', files.length, incVal, guestFilesList.current.length)
     const isTypeWithoutFileReset = [LessonType.PRACTICAL, LessonType.PART_PROJECT].includes(
       lesson?.type!
     )
@@ -511,8 +513,8 @@ export const useFileManagerOrj = () => {
 
   /* authorized user entry point */
   useEffect(() => {
-    fnIncUse(481, files.length, incVal, unauthFilesList.current.length)
-    if (isLoading || isFetching || !shouldRunAuthFiles || files.length < 1) return
+    if (!isPageReady || !shouldRunAuthFiles || files.length < 1) return
+    fnIncUse(522, 'auth user entry point', files.length, incVal, guestFilesList.current.length)
     if (files?.[0] && !files.find((file) => file.id === activeFile?.id)) {
       const lastVisitedTabs = tabsLocalStorageManger(tabsMangerLocalStorageKey).getTabs()
 
@@ -540,15 +542,14 @@ export const useFileManagerOrj = () => {
     shouldRunAuthFiles,
     _setActiveFile,
     _setBarFiles,
-    isLoading,
-    isFetching,
+    isPageReady,
     tabsMangerLocalStorageKey,
   ])
 
   /* not authorized user entry point */
   useEffect(() => {
-    fnIncUse(517, files.length, incVal, unauthFilesList.current.length)
-    if (IsUnauthFilesLoading || isUnauthFilesFetching || isAuthenticated) return
+    if (!isPageReady || isAuthenticated) return
+    fnIncUse(558, 'unauth user entry point', files.length, incVal, guestFilesList.current.length)
 
     if (files.length && !files.find((file) => file.id === activeFile?.id)) {
       const lastVisitedTabs = tabsLocalStorageManger(tabsMangerLocalStorageKey).getTabs()
@@ -587,41 +588,53 @@ export const useFileManagerOrj = () => {
         tabsLocalStorageManger(tabsMangerLocalStorageKey).addTab(files[0].id)
       }
     }
-  }, [
-    lesson,
-    activeFile?.id,
-    files.length,
-    isAuthenticated,
-    IsUnauthFilesLoading,
-    isUnauthFilesFetching,
-  ])
+  }, [lesson, activeFile?.id, files.length, isAuthenticated, isPageReady])
 
-  return {
-    files,
-    getFiles,
-    isOpen,
-    barFiles,
-    localStorageKey,
-    activeFile: activeFile!,
-    preloadedCode: activeFile?.body!,
-    isFileLoading: isFetching || isLoading || IsUnauthFilesLoading || isUnauthFilesFetching,
-    isFileControllerAvailable: !!activeFile || !!unauthFilesList.current.length,
+  return useMemo(
+    () => ({
+      files,
+      getFiles,
+      isOpen,
+      barFiles,
+      localStorageKey,
+      activeFile: activeFile!,
+      preloadedCode: activeFile?.body!,
+      isFileLoading: isFetching || isLoading || IsUnauthFilesLoading || isUnauthFilesFetching,
+      isFileControllerAvailable: !!activeFile || !!guestFilesList.current.length,
 
-    setIsOpen,
-    onAddFile,
-    onCloseFile,
-    onDeleteFile,
-    onUpdateFile,
-    setActiveFile,
-  }
+      setIsOpen,
+      onAddFile,
+      onCloseFile,
+      onDeleteFile,
+      onUpdateFile,
+      setActiveFile,
+    }),
+    [
+      files,
+      getFiles,
+      isOpen,
+      barFiles,
+      localStorageKey,
+      activeFile,
+      isFetching,
+      isLoading,
+      IsUnauthFilesLoading,
+      isUnauthFilesFetching,
+      guestFilesList.current.length,
+      setIsOpen,
+      onAddFile,
+      onCloseFile,
+      onDeleteFile,
+      onUpdateFile,
+      setActiveFile,
+    ]
+  )
 }
 
 type FileManagerContextType = ReturnType<typeof useFileManagerOrj> | null
 const FileManagerContext = createContext<FileManagerContextType>(null)
 export const FileManagerProvider = ({ children }: { children: ReactNode }) => {
-  // Create a single instance of the file manager hook
   const fileManager = useFileManagerOrj()
-
   return <FileManagerContext.Provider value={fileManager}>{children}</FileManagerContext.Provider>
 }
 
@@ -640,6 +653,6 @@ let fnInc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 function fnIncUse(n: number, ...args: any[]) {
   if (!(n in fnInc)) fnInc[n] = 0
   fnInc[n] = fnInc[n] + 1
-  // console.log('fnIncUse', n, fnInc[n], args)
+  //console.log('fnIncUse', n, fnInc[n], args)
 }
 let lastRenderTime = 0
