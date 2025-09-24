@@ -36,7 +36,6 @@ export function CodePanelContextProvider({ children }: Props): JSX.Element {
       debouncedReload(reloadIframe)
     }
   }
-
   return (
     <Provider
       value={{

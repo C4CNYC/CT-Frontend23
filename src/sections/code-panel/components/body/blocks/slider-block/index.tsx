@@ -90,6 +90,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const unit = useSelector((state) => state.codePanelGlobal.unitId)
   const course = useSelector((state) => state.codePanelGlobal.courseId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
 
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
   const [noteText, setNoteText] = useState(localStorage.getItem(`sandboxNotes${profile?.id}`) ?? '')
@@ -183,12 +184,14 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
   }
 
-  const onBeforeChange = (_: number, next: number) => {
-    if (!data || !data?.length) return
+  const onBeforeChange = (current: number, next: number) => {
+    if (!data || !data?.length || !data[next]) return
+    let slideNextId = data[next]?.id
+    if (slideId == slideNextId) return
+
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    let slideId = data[next]?.id
-    if (slideId) dispatch(setSlideId(slideId))
+    if (slideNextId) dispatch(setSlideId(slideNextId))
   }
 
   const connectIntegrations = (body: string): CodeDocument => {
@@ -208,6 +211,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [sandbox, data, lessonId])
 
   useEffect(() => {
+    if (!data || data.length < 1) return
+    if (isLastSlideLoading) return
     if (lastSlide?.slideNumber) {
       onBeforeChange(slideIndex, lastSlide.slideNumber)
     } else {
@@ -216,7 +221,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         onBeforeChange(slideIndex, progress.lastSlide)
       }
     }
-  }, [data, lastSlide])
+  }, [lastSlide, data.length])
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
@@ -234,7 +239,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         sx={boxSx}
       >
         {isLoadingLessonContent || !isSlideReady ? (
-          <LoadingScreen />
+          <LoadingScreen text='Lesson is loading' />
         ) : currentSlide ? (
           <BrowserViewTeacher
             key={currentSlide?.id}
@@ -245,11 +250,11 @@ const SliderBlock: FC<ISliderBlock> = ({
         ) : lesson?.meta?.ai ? (
           <SliderBlockAiLessonComing />
         ) : (
-          <LoadingScreen />
+          <LoadingScreen text='Slide not found' />
         )}
       </Box>
     )
-  }, [data, slideIndex, integrations, isLoadingLessonContent, isSlideReady])
+  }, [data, slideIndex, lesson, isLoadingLessonContent, isSlideReady])
 
   const editContentLayer = (
     <EditContentLayer
