@@ -3,7 +3,8 @@ import { IIntegration } from '@/redux/services/interfaces/integration.interface'
 import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
 import { BaseResponseInterface } from '@root/src/utils'
 
-import StepCode from './StepCode'
+import { StepCode } from './StepCode'
+import { StepMd } from './StepMd'
 import { StepTinyMce } from './StepTinyMce'
 
 export type EditorSelectorProps = {
@@ -42,6 +43,18 @@ export function EditorSelector({
     case LessonContentType.TinyMce:
       return (
         <StepTinyMce
+          content={content}
+          integrations={integrations ?? []}
+          onSubmit={onSubmit}
+          data={data!}
+          lessonId={lessonId as string}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+        />
+      )
+    case LessonContentType.Md:
+      return (
+        <StepMd
           content={content}
           integrations={integrations ?? []}
           onSubmit={onSubmit}

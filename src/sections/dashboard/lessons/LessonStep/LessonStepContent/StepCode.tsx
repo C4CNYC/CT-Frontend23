@@ -28,10 +28,7 @@ interface Props {
   lessonId: string
 }
 
-/**
-   @todo: this component should be removed and BrowserView '@root/src/sections/code-panel/components/body/blocks/view-block/browser-view'  be used 
-**/
-export default function StepCode({
+export function StepCode({
   content,
   integrations,
   onSubmit,
