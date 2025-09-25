@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 
 import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
 import {
   setNextStepAble,

@@ -22,7 +22,7 @@ import { useRouter } from 'next/router'
 
 import { Image } from '@/components/image/Image'
 import { useSnackbar } from '@root/src/components/snackbar'
-import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
 import { ILessonContent } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import {
   useCreateLessonContentMutation,
