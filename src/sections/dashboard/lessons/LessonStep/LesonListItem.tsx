@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import { MenuPopover } from '@/components'
-import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'

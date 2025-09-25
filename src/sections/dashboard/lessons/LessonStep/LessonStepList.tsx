@@ -31,7 +31,7 @@ import { ConfirmDialog } from '@root/src/components'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useCounter } from '@root/src/hooks/useCounter'
-import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
 import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { LoaderStepDialog } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/LoaderStepDialog'
 

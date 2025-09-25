@@ -874,6 +874,7 @@
     "slide_content_changed_barge": "Content Changed",
     "slide_switch_tabs_standard": "Standard",
     "slide_switch_tabs_html": "HTML",
+    "slide_switch_tabs_md": "Markdown",
     "slide_switch_tabs_remirror": "Remirror",
     "slide_switch_tab_dialog_title": " Any unsaved edit in the current editor can be deleted if you switch",
     "slide_switch_tab_dialog_subtitle": "Are you sure you want to switch?",

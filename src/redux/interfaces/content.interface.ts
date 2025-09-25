@@ -2,7 +2,7 @@ import { Unit } from '@/redux/interfaces/challenges.interface'
 import { IAuthor } from '@/redux/services/interfaces/author.interface'
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
-import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { LessonContentType } from '../services/enums/lesson-content-type.enum'
 import { AGE, GRADING, LEVEL, TModuleMeta } from '../services/interfaces/courseUnits.interface'
 import { ILesson } from '../services/interfaces/lesson.interface'
 import { ILessonContentValidation } from '../services/interfaces/lessonContentValidation.interface'
