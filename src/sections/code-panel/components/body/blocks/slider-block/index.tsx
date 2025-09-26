@@ -197,7 +197,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   const connectIntegrations = (body: string): CodeDocument => {
     if (integrations) {
       return {
-        htmlBody: body ? JSON.parse(body).content : '',
+        htmlBody: body && JSON.parse(body).extension !== 'md' ? JSON.parse(body).content : '',
+        mdBody: body && JSON.parse(body).extension === 'md' ? JSON.parse(body).content : '',
         cssBody: integrations.reduce((ac, cur) => ac + cur.head, ''),
         jsBody: integrations.reduce((ac, cur) => ac + cur.scripts, ''),
       }
@@ -232,6 +233,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const slider = useMemo(() => {
     const currentSlide = data[slideIndex]
+    console.log('currentSlide render', currentSlide) // eslint-disable-line no-console
     return (
       <Box
         className='sliderTour'
