@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 
+import { convertMdToHtml } from '../body/blocks/slider-block/utils'
 import { iframeSuppliments } from '../body/blocks/view-block/browser-view/iframeSuppliments'
 import {
   BrowserViewTeacherProps,
@@ -32,7 +33,7 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
   const generateHtml = (doc: CodeDocument) => {
     if (!doc) return ''
 
-    const { htmlBody = [], cssBody = [], jsBody = [] } = doc
+    const { htmlBody = [], cssBody = [], jsBody = [], mdBody = [] } = doc
     let integrationsScripts = integrations
       .map((integration) => integration.scripts)
       .filter(Boolean)
@@ -40,6 +41,17 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
 
     let htmls = Array.isArray(htmlBody) ? htmlBody : [htmlBody]
     let htmlPart = (doc as any).length ? doc : htmls
+    let docContentForRender
+
+    if (mdBody && mdBody.length) {
+      docContentForRender =
+        '<div class="markdown-body">' + convertMdToHtml((mdBody as string) || '') + '</div>'
+    } else if (htmlPart && Array.isArray(htmlPart)) {
+      docContentForRender = htmlPart
+    } else {
+      docContentForRender = '<h1>Hello World</h1>'
+    }
+    console.log('Generated HTML:', htmlBody) // eslint-disable-line no-console
 
     return `
       <html style="height: 100%; box-sizing: border-box;" id="VeryEditableDivId">
@@ -71,7 +83,7 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
             }
         </script>
         </head>
-        ${htmlPart}
+        ${docContentForRender}
       </html>
     `
   }
@@ -83,7 +95,6 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
     setIframeProcess(true)
     const newHtml = generateHtml(document)
     setDocSrc(newHtml)
-
     const timerId = setTimeout(() => {
       setIframeProcess(false)
     }, 100)

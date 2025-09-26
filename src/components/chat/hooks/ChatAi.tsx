@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
 import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
 import {
   useGetLessonContentQuery,

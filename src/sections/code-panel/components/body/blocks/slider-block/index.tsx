@@ -8,8 +8,8 @@ import { useDispatch } from 'react-redux'
 
 import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
+import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import {
   setNextStepAble,
   setSlideId,
@@ -197,7 +197,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   const connectIntegrations = (body: string): CodeDocument => {
     if (integrations) {
       return {
-        htmlBody: body ? JSON.parse(body).content : '',
+        htmlBody: body && JSON.parse(body).extension !== 'md' ? JSON.parse(body).content : '',
+        mdBody: body && JSON.parse(body).extension === 'md' ? JSON.parse(body).content : '',
         cssBody: integrations.reduce((ac, cur) => ac + cur.head, ''),
         jsBody: integrations.reduce((ac, cur) => ac + cur.scripts, ''),
       }
@@ -232,6 +233,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const slider = useMemo(() => {
     const currentSlide = data[slideIndex]
+    console.log('currentSlide render', currentSlide) // eslint-disable-line no-console
     return (
       <Box
         className='sliderTour'

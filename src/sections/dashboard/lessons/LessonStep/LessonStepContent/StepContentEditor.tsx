@@ -26,7 +26,7 @@ import {
 import { useGetLessonIntegrationsQuery } from '@/redux/services/manager/lessons-manager'
 import { useTranslate } from '@/utils/translateHelper'
 import { Label } from '@root/src/components'
-import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
 import LessonSchareModal from '../Modals/LessonShareModal'
@@ -191,6 +191,13 @@ export default function StepContentEditor(): React.ReactElement {
               sx={{ gap: 1 }}
             >
               <BsCodeSlash size='20px' /> {translate('slide_switch_tabs_html')}
+            </ToggleButton>
+            <ToggleButton
+              value={LessonContentType.Md}
+              aria-label='Markdown'
+              sx={{ gap: 1 }}
+            >
+              <BsCodeSlash size='20px' /> {translate('slide_switch_tabs_md')}
             </ToggleButton>
           </StyledToggleButtonGroup>
           {locked ? <Label color='info'>{translate('slide_content_changed_barge')}</Label> : null}
