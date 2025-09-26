@@ -11,6 +11,8 @@ import { useUpdateLessonContentMutation } from '@root/src/redux/services/manager
 import { useSelector } from '@root/src/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import { convertHtmlToMd, stripHead } from '../components/body/blocks/slider-block/utils'
+
 import { resetLessonEvent } from './events'
 
 interface LessonManagerContextProps {
@@ -134,10 +136,23 @@ export const LessonManagerProvider: React.FC<{
   function saveSlideDB() {
     let currentSlide = lessonContent.find((s) => s.id === slideId)
     if (!currentSlide) return
+
+    let customBody
+    if (currentSlide.type === 'code') {
+      customBody = currentSlide.body
+    } else if (currentSlide.type === 'md') {
+      customBody = JSON.stringify({
+        extension: 'md',
+        content: convertHtmlToMd(stripHead(JSON.parse(currentSlide.body).content as string)),
+      })
+    } else {
+      customBody = currentSlide.body
+    }
+
     updateLessonContent({
       lessonId: lesson?.id || '',
       id: currentSlide.id,
-      body: currentSlide.body,
+      body: customBody,
     })
       .then(() => {
         enqueueSnackbar('Slide updated successfully', { variant: 'success' })

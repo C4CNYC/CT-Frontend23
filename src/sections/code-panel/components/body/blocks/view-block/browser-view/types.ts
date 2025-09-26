@@ -1,5 +1,6 @@
 export interface CodeDocument {
   htmlBody?: string
+  mdBody?: string
   cssBody?: string
   jsBody?: string
 }
