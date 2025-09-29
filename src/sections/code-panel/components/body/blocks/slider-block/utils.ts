@@ -1,4 +1,5 @@
-import { marked } from 'marked'
+import MarkdownIt from 'markdown-it'
+import markdownItAttrs from 'markdown-it-attrs'
 import TurndownService from 'turndown'
 
 import { ImageAttributes } from '@root/src/sections/dashboard/medias/MediaModal'
@@ -20,7 +21,9 @@ export const handleInsertVideo = (url: string) => {
 }
 
 export const convertMdToHtml = (md: string) => {
-  return marked(md)
+  const mdConverter = new MarkdownIt()
+  mdConverter.use(markdownItAttrs)
+  return mdConverter.render(md)
 }
 
 export const convertHtmlToMd = (html: string): string => {
