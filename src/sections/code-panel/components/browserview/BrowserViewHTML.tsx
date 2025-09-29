@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { marked } from 'marked'
+import MarkdownIt from 'markdown-it'
+import markdownItAttrs from 'markdown-it-attrs'
 
 import { useDebounceCallback } from '@root/src/hooks/useDebounceCallback'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
@@ -12,6 +13,10 @@ import { BrowserViewProps, CodeDocument } from '../body/blocks/view-block/browse
 import SkeletonViewBlock from '../body/blocks/view-block/skeleton-view-box'
 
 const emptyDoc = { htmlBody: '', cssBody: '', jsBody: '' } as CodeDocument
+
+// Initialize markdown-it with attrs plugin
+const md = new MarkdownIt()
+md.use(markdownItAttrs)
 
 /** Student View for HTML based lessons */
 export function BrowserViewHTML({
@@ -72,11 +77,7 @@ export function BrowserViewHTML({
             acc.htmlBody.push(file.body)
             break
           case FileExtensions.MD:
-            acc.htmlBody.push(
-              '<div class="markdown-body">' +
-                marked.parse(file.body || '', { async: false }) +
-                '</div>'
-            )
+            acc.htmlBody.push('<div class="markdown-body">' + md.render(file.body || '') + '</div>')
             break
           case FileExtensions.CSS:
             file.body ? acc.cssBody.push(file.body) : null
