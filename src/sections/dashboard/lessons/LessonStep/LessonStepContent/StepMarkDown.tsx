@@ -15,6 +15,7 @@ import MenuItems from '@root/src/sections/code-panel/components/editors/MenuItem
 import { SaveButton } from '@root/src/sections/code-panel/components/editors/SaveButton'
 import { isJson } from '@root/src/utils/isJson'
 
+import { convertMdToHtml } from '../../../../code-panel/components/body/blocks/slider-block/utils'
 import { lessonViewAtom } from '../lesson-atoms/lesson-view-atom'
 
 import { LessonContentContext } from './LessonContent.context'
@@ -128,7 +129,10 @@ export default function StepMarkDown({
               width: '100%',
               height: '100%',
             }}
-            src={'data:text/html,' + encodeURIComponent(pageSkeleton(staticValue) as string)}
+            src={
+              'data:text/html,' +
+              encodeURIComponent(pageSkeleton(convertMdToHtml(staticValue)) as string)
+            }
           />
         </Box>
       )}

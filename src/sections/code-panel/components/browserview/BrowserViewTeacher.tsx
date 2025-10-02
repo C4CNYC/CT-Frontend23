@@ -44,14 +44,12 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
     let docContentForRender
 
     if (mdBody && mdBody.length) {
-      docContentForRender =
-        '<div class="markdown-body">' + convertMdToHtml((mdBody as string) || '') + '</div>'
+      docContentForRender = convertMdToHtml((mdBody as string) || '')
     } else if (htmlPart && Array.isArray(htmlPart)) {
       docContentForRender = htmlPart
     } else {
       docContentForRender = '<h1>Hello World</h1>'
     }
-    console.log('Generated HTML:', htmlBody) // eslint-disable-line no-console
 
     return `
       <html style="height: 100%; box-sizing: border-box;" id="VeryEditableDivId">
