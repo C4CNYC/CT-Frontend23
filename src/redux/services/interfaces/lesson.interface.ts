@@ -7,8 +7,15 @@ import { LessonType } from '../enums/lesson-type.enum'
 import { ILessonContent } from './courseUnits.interface'
 import { IIntegration } from './integration.interface'
 
+export const LessonDisplayEngine = {
+  CodePanel: 'codepanel',
+  Slides: 'slides',
+  Custom: 'custom',
+} as const
+
 export type LessonMeta = {
   humanLang: string
+  displayEngine?: keyof typeof LessonDisplayEngine
   machineLang: keyof typeof LessonMachineLang
   /**  allow students to create multiple files    */
   createMultipleFiles: 0 | 1
