@@ -184,19 +184,19 @@ export const useFileManagerOrj = () => {
       incValSet((v) => v + 1)
       return
     }
-    const files = unauthFileLocalStorageManger(localStorageKey).getFiles(
+    const _files = unauthFileLocalStorageManger(localStorageKey).getFiles(
       guestFiles,
       'ignoreThisVersion'
     )
     fnIncUse(
       193,
       'guestFilesInit',
-      files.length,
+      _files.length,
       incVal,
       guestFilesList.current.length,
       guestFiles.length,
       guestFiles.map((f) => f.name),
-      files.map((f) => f.name)
+      _files.map((f) => f.name)
     )
     if (!isAuthenticated) {
       if (!files.length) {
@@ -216,6 +216,24 @@ export const useFileManagerOrj = () => {
       guestFiles,
       'ignoreThisVersion'
     )
+
+    if (!isAuthenticated && !files.length) {
+      fnIncUse(
+        227,
+        'unauth files set 1',
+        files.length,
+        incVal,
+        guestFilesList.current.length,
+        files.length,
+        incVal,
+        guestFilesList.current.length,
+        isAuthenticated,
+        files.length > 0,
+        guestFilesList.current.length < 0
+      )
+
+      filesSet(guestFilesList.current)
+    }
   }, [isAuthenticated, guestFiles, localStorageKey, activeFile, isPageReady, lesson, slideId])
   // Move file operations to useEffect
   let filesHash = [...authFiles, ...guestFilesList.current].map((f) => f.id + f.body + ' ').join('')
