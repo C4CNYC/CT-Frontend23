@@ -21,7 +21,7 @@ export const CodePanelContext = createContext<CodePanelContextType>({
 export const useCodePanel = () => {
   const context = useContext(CodePanelContext)
   if (!context) {
-    throw new Error('useLessonManager must be used within a LessonManagerProvider')
+    throw new Error('useCodePanel must be used within a CodePanelContextProvider')
   }
   return context
 }

@@ -57,10 +57,12 @@ export function CodePanelBody({
             />
           )
         }
-        center=<CodeEditorBlockContent
-          preloadedCode={lessonContents[slideIndex]?.preload_body ?? ''}
-          contentId={lessonContents[slideIndex]?.id}
-        />
+        center={
+          <CodeEditorBlockContent
+            preloadedCode={lessonContents[slideIndex]?.preload_body ?? ''}
+            contentId={lessonContents[slideIndex]?.id}
+          />
+        }
         right={
           !isBrowserHidden ? (
             <ViewBlock />
