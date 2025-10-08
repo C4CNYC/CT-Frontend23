@@ -7,6 +7,8 @@ import { useRouter } from 'next/router'
 import { useSelector } from '@/redux/store'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useSetLastWorkspaceQueryMutation } from '@root/src/redux/services/manager/activity-student'
+import { useGetLessonStudentWithoutContentsQuery } from '@root/src/redux/services/manager/lesson-student'
+import { CodePanelSlides } from '@root/src/sections/code-panel-slides/code-panel-slides'
 
 const CodePanelLayout = dynamic(
   async () => (await import('@root/src/sections/code-panel')).CodePanelLayout,
@@ -27,6 +29,10 @@ export default function CodePanelContainer(): ReactElement | null {
   const workspaceRef = useRef<{ query: string }>({ query: '' })
   const profile = useSelector((state) => state.global.user)
 
+  const { data: lesson } = useGetLessonStudentWithoutContentsQuery(
+    { id: router.query.lessonId as string },
+    { skip: !router.query.lessonId }
+  )
   const [updateWorkspaceActivity] = useSetLastWorkspaceQueryMutation()
 
   useEffect(() => {
@@ -46,5 +52,9 @@ export default function CodePanelContainer(): ReactElement | null {
   }, [router, profile])
 
   if (!isInitialized) return null
+  if (!lesson) return <>loading</>
+  if (lesson.meta.displayEngine === 'slides') {
+    return <CodePanelSlides lessonId={lesson.id} />
+  }
   return <CodePanelLayout />
 }
