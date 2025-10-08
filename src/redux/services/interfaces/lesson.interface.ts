@@ -11,17 +11,17 @@ export const LessonDisplayEngine = {
   CodePanel: 'codepanel',
   Slides: 'slides',
   Custom: 'custom',
-} as const
+}
 
 export type LessonMeta = {
   humanLang: string
-  displayEngine?: keyof typeof LessonDisplayEngine
+  displayEngine?: (typeof LessonDisplayEngine)[keyof typeof LessonDisplayEngine]
   machineLang: keyof typeof LessonMachineLang
   /**  allow students to create multiple files    */
   createMultipleFiles: 0 | 1
   /**  Teacher/Owner cant delete the lesson    */
   lock: 0 | 1
-  [key: string]: string | number
+  [key: string]: string | number | undefined
 }
 
 export interface ILesson {
