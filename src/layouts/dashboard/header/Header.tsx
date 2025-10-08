@@ -8,6 +8,7 @@ import { useSettingsContext } from '@/components/settings'
 import ThemeSwitcher from '@/components/theme-switcher'
 import { useOffSetTop } from '@/hooks/useOffSetTop'
 import { useResponsive } from '@/hooks/useResponsive'
+import { Role } from '@/redux/services/enums/role.enum'
 import { useSelector } from '@/redux/store'
 import { bgBlur } from '@/utils/cssStyles'
 import AIIcon from '@root/src/assets/icons/AIIcon'
@@ -43,7 +44,11 @@ export default function Header({ onOpenNav }: Props): React.ReactElement | null 
   const isSchoolSection = router.pathname.includes('dashboard/school')
 
   const isOffset = useOffSetTop(HEADER_SIZES.H_DASHBOARD_DESKTOP) && !isNavHorizontal
-  const canSeeLessonGen = !!user?.id && user?.role !== 'anonymous' && user?.role !== 'student'
+  const canSeeLessonGen =
+    !!user?.id &&
+    user?.role !== Role.Anonymous &&
+    user?.role !== Role.Student &&
+    user?.role !== Role.Manager
 
   const renderContent = (
     <>
