@@ -25,9 +25,11 @@ import { LessonMeta } from '@root/src/redux/services/interfaces/lesson.interface
 
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
+import { DisplayEngine } from './DisplayEngine'
 import { MainTab } from './MainTab'
 import { SettingsTab } from './SettingsTab'
 import SkillsTab from './SkillsTab'
+import { TabPanel } from './TabPanel'
 import { handleConvertAutoRunToBolean, timeConvertorToSeconds, typeDefaultSettings } from './utils'
 
 interface FormValuesProps {
@@ -239,6 +241,10 @@ export default function CreateLessonDialog({
                     label={translate('integration')}
                     {...a11yProps(3)}
                   />
+                  <Tab
+                    label={translate('type')}
+                    {...a11yProps(4)}
+                  />
                 </Tabs>
               </Box>
             ) : null}
@@ -266,6 +272,7 @@ export default function CreateLessonDialog({
             >
               <IntegrationsTab contentId={id as string} />
             </TabPanel>
+            <DisplayEngine open={value === 4} />
             <DialogActions>
               <Box
                 sx={{
@@ -276,7 +283,7 @@ export default function CreateLessonDialog({
               >
                 <Button onClick={handleClose}>{translate('actions_close')}</Button>
 
-                {value === 0 || value === 1 ? (
+                {[0, 1, 4].includes(value) ? (
                   <LoadingButton
                     type='submit'
                     variant='contained'
@@ -291,39 +298,6 @@ export default function CreateLessonDialog({
         </DialogContent>
       </Dialog>
     </>
-  )
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode
-  index: number
-  value: number
-}
-
-function TabPanel(props: TabPanelProps): React.ReactElement {
-  const { children, value, index, ...other } = props
-
-  return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box
-          sx={{
-            px: { xs: 2, sm: 3 },
-            pt: { xs: 2, sm: 3 },
-            height: 'auto',
-            minHeight: '400px',
-          }}
-        >
-          {children}
-        </Box>
-      )}
-    </div>
   )
 }
 
