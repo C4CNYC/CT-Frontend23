@@ -41,23 +41,23 @@ export interface FormValuesGeneralProps {
 
 export const CreateCourseSchema = (translate: (t: string) => string) =>
   Yup.object().shape({
-    name: Yup.string().required(translate('required_name')),
-    level: Yup.string().required(translate('required_level')),
-    price: Yup.string().required(translate('required_price')),
-    description: Yup.string().required(translate('required_description')),
-    content_id: Yup.string().required(translate('required_content_id')),
+    name: Yup.string().default('Build AI Agents for Everything'),
+    level: Yup.string().default(LEVEL.BEGINNER),
+    price: Yup.string().default('0'),
+    description: Yup.string().default('Learn how to build AI Agents from Scratch'),
+    content_id: Yup.string().default(Math.random().toString(36).substring(2, 10)),
     initial_likes: Yup.number()
       .transform((value) => (Number.isNaN(value) ? null : value))
       .nullable()
-      .required(translate('required_initial_likes')),
+      .default(0),
     initial_stars: Yup.number()
       .transform((value) => (Number.isNaN(value) ? null : value))
       .nullable()
-      .required(translate('required_initial_stars')),
+      .default(0),
     initial_enrolled: Yup.number()
       .transform((value) => (Number.isNaN(value) ? null : value))
       .nullable()
-      .required(translate('required_initial_enrolled')),
+      .default(0),
     skills: Yup.array(),
   })
 
