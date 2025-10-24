@@ -94,7 +94,7 @@ function GeneralTabFields({ isSuperAdmin }: GeneralTabFieldsrops) {
         label={translate('courses_initial_enrolled')}
         type='number'
       />
-      
+
       <Stack
         direction='row'
         flexWrap='wrap'
