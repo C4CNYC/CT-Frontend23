@@ -23,7 +23,7 @@ export const DomainFields = () => {
         >
           <RHFTextField
             name={`domain.${index}`}
-            label={index === 0 ? translate('create_new_domain_label') : 'asdfasdf'}
+            label={index === 0 ? translate('create_new_domain_label') : ''}
             required={index === 0}
             helperText={
               index === 0
