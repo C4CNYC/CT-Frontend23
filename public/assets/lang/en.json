@@ -1216,6 +1216,8 @@
     "intro_tour_lesson_creation_step_3_subtitle": "You can create slides in a simple editor 📄 or in HTML.",
     "intro_tour_lesson_creation_step_4_title": "Preview Student View 👩‍🎓🔍",
     "intro_tour_lesson_creation_step_4_subtitle": "See how the slides look in the Coding Panel (Workspace).",
+    "intro_tour_lesson_creation_step_5_title": "Select format for editor ",
+    "intro_tour_lesson_creation_step_5_subtitle": "Choose between the simple editor 📝 or HTML format 🌐 or Markdown 📄",
     "intro_tour_step_1_desktop_title": "💥 The Coding Panel 👩‍💻 💥",
     "intro_tour_step_1_desktop_subtitle": "Here is where all the learning and building happens. 🤩",
     "intro_tour_step_2_desktop_title": "The Slides",

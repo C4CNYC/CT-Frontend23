@@ -1194,6 +1194,8 @@
     "intro_tour_lesson_creation_step_3_subtitle": "Vous pouvez créer des diapositives dans un éditeur simple 📄 ou en HTML.",
     "intro_tour_lesson_creation_step_4_title": "Aperçu de la Vue Étudiant 👩‍🎓🔍",
     "intro_tour_lesson_creation_step_4_subtitle": "Voyez à quoi ressemblent les diapositives dans le panneau de codage (Workspace).",
+    "intro_tour_lesson_creation_step_5_title": "Sélectionnez le format de l'éditeur", 
+    "intro_tour_lesson_creation_step_5_subtitle": "Choisissez entre l'éditeur simple 📝, le format HTML 🌐 ou Markdown 📄",
     "intro_tour_step_1_desktop_title": "💥 Le Panneau de Codage 👩‍💻 💥",
     "intro_tour_step_1_desktop_subtitle": "C’est ici que tout l’apprentissage et la création se passent. 🤩",
     "intro_tour_step_2_desktop_title": "Les Diapositives",
