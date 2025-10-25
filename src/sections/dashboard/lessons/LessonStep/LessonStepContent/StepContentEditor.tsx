@@ -173,6 +173,7 @@ export default function StepContentEditor(): React.ReactElement {
               setOpen(true)
             }}
             aria-label='select slide type'
+            className='lessonCreationStep5'
           >
             <Divider
               orientation='vertical'

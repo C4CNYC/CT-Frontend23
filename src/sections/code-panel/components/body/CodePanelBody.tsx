@@ -48,6 +48,7 @@ export function CodePanelBody({
               lessonType={lesson?.type}
               lessonName={lesson?.name}
               lessonId={lesson?.id || lessonId}
+              lessonMeta={lesson?.meta}
             />
           ) : (
             <HidedTabBtn
@@ -93,6 +94,7 @@ export function CodePanelBody({
         integrations={lesson?.integrations ?? []}
         lessonType={lesson?.type}
         lessonId={lesson?.id || lessonId}
+        lessonMeta={lesson?.meta}
       />
 
       <CodeEditorBlockContent

@@ -96,6 +96,19 @@ export function MainTab() {
             />
           </Box>
         </Tooltip>
+        <Tooltip
+          slotProps={{ popper: { disablePortal: true } }}
+          title={translate(
+            'Hide the default back and next buttons on the instructions/slide panel.'
+          )}
+        >
+          <Box>
+            <RHFSwitch
+              name='meta.hideDefaultButtons'
+              label={translate('Hide default buttons')}
+            />
+          </Box>
+        </Tooltip>
       </Stack>
     </Stack>
   )
