@@ -85,6 +85,7 @@ const MainTab = ({
       <Stack
         justifyContent='space-between'
         height='100%'
+        mb={1}
       >
         <Stack gap={2}>
           <RHFTextField
@@ -114,7 +115,16 @@ const MainTab = ({
           </RHFSelect>
         </Stack>
       </Stack>
-      <DialogActions>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: '100%',
+          padding: '15px 25px',
+          background: '#F6F9FC',
+        }}
+      >
         <Stack
           sx={{
             flexDirection: 'row',
@@ -133,7 +143,7 @@ const MainTab = ({
             {translate(org ? 'actions_update' : 'actions_create')}
           </LoadingButton>
         </Stack>
-      </DialogActions>
+      </div>
     </FormProvider>
   )
 }

@@ -169,16 +169,27 @@ const LogoTab = ({ id, handleClose }: LogoTabProps): React.ReactElement => {
             />
           </Box>
 
-          <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', mt: 5.5, gap: 1 }}>
-            <Button onClick={handleClose}>{translate('actions_close')}</Button>
-            <LoadingButton
-              type='submit'
-              variant='contained'
-              loading={isLoadingLogo || isLoadingMiniLogo || isLoadingFavicon}
-            >
-              {translate('actions_save')}
-            </LoadingButton>
-          </Stack>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              width: '100%',
+              padding: '15px 25px',
+              background: '#F6F9FC',
+            }}
+          >
+            <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 1 }}>
+              <Button onClick={handleClose}>{translate('actions_close')}</Button>
+              <LoadingButton
+                type='submit'
+                variant='contained'
+                loading={isLoadingLogo || isLoadingMiniLogo || isLoadingFavicon}
+              >
+                {translate('actions_save')}
+              </LoadingButton>
+            </Stack>
+          </div>
         </Stack>
       </FormProvider>
     </>
