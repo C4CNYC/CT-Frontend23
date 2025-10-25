@@ -9,6 +9,7 @@ import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useSetLastWorkspaceQueryMutation } from '@root/src/redux/services/manager/activity-student'
 import { useGetLessonStudentWithoutContentsQuery } from '@root/src/redux/services/manager/lesson-student'
 import { CodePanelSlides } from '@root/src/sections/code-panel-slides/code-panel-slides'
+import { CodePanelSlidesBare } from '@root/src/sections/code-panel-slides/code-panel-slides-bare'
 
 const CodePanelLayout = dynamic(
   async () => (await import('@root/src/sections/code-panel')).CodePanelLayout,
@@ -53,8 +54,12 @@ export default function CodePanelContainer(): ReactElement | null {
 
   if (!isInitialized) return null
   if (!lesson) return <>loading</>
-  if (lesson.meta.displayEngine === 'slides') {
-    return <CodePanelSlides lessonId={lesson.id} />
+  switch (lesson.meta.displayEngine) {
+    case 'bareslides':
+      return <CodePanelSlidesBare lessonId={lesson.id} />
+    case 'slides':
+      return <CodePanelSlides lessonId={lesson.id} />
+    default:
+      return <CodePanelLayout />
   }
-  return <CodePanelLayout />
 }

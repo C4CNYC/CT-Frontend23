@@ -19,20 +19,15 @@ import { route2Number, route2String } from '@root/src/utils/route2String'
 import { CodePanelSlidesRender } from './CodePanelSlidesRender'
 import { LessonManagerProvider } from './LessonManagerContext'
 
-// sets lessonId, unitId, courseId, slideId, slideIndex in redux
 export function CodePanelSlides({ lessonId }: { lessonId: string }) {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentWithoutContentsQuery(
+  const { data: lesson } = useGetLessonStudentWithoutContentsQuery(
     { id: lessonId },
     { skip: !lessonId }
   )
-  const {
-    data: lessonContent,
-    isLoading: isLoadingLessonContent,
-    isFetching: isFetchingLessonContent,
-    isError: isErrorLessonContent,
-  } = useGetLessonContentStudentQuery({ id: lessonId }, { skip: !lessonId })
+  const { data: lessonContent, isLoading: isLoadingLessonContent } =
+    useGetLessonContentStudentQuery({ id: lessonId }, { skip: !lessonId })
   useEffect(() => {
     dispatch(setLessonId(lessonId))
     dispatch(setUnitId(route2String(router.query.unitId)))

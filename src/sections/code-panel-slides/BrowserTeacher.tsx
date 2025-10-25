@@ -21,14 +21,7 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
   const lessonManager = useLessonManager()
   let integrations = lessonManager.lesson?.integrations || []
 
-  const IFRAME_STYLE = {
-    border: 0,
-    width: '100%',
-    height: iframeKey ? 'calc(100% - 42px)' : '100%',
-    background: '#F8F8FF',
-  }
   let lessonEditable = lessonManager.userIsOwner
-  // Generate the initial HTML content
   const generateHtml = (doc: CodeDocument) => {
     if (!doc) return ''
     const { htmlBody = [], cssBody = [], jsBody = [], mdBody = [] } = doc
@@ -122,7 +115,11 @@ export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: Browse
           className='BrowserViewTeacherView'
           ref={iFrameRef}
           srcDoc={docSrc}
-          style={IFRAME_STYLE}
+          style={{
+            border: 0,
+            width: '100%',
+            height: '100%',
+          }}
           key={docSrc} // Key helps React decide when to recreate iframe
         />
       ) : null,

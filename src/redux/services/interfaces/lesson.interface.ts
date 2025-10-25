@@ -10,11 +10,12 @@ import { IIntegration } from './integration.interface'
 export const LessonDisplayEngine = {
   CodePanel: 'codepanel',
   Slides: 'slides',
+  BareSlides: 'bareslides',
   Custom: 'custom',
 }
 
 export type LessonMeta = {
-  humanLang: string
+  humanLang: string 
   displayEngine?: (typeof LessonDisplayEngine)[keyof typeof LessonDisplayEngine]
   machineLang: keyof typeof LessonMachineLang
   /**  allow students to create multiple files    */
