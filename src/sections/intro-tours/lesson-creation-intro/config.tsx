@@ -39,4 +39,11 @@ export const getLessonCreationSteps = (translate: (key: string) => string): Step
       },
     },
   },
+  {
+    target: '.lessonCreationStep5',
+    title: <div>{translate('intro_tour_lesson_creation_step_5_title')}</div>,
+    content: <div>{translate('intro_tour_lesson_creation_step_5_subtitle')}</div>,
+    disableBeacon: true,
+    placement: 'auto' as const,
+  },
 ]
