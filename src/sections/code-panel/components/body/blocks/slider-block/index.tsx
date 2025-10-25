@@ -45,6 +45,7 @@ interface ISliderBlock {
   lessonName?: string
   lessonId?: string
   isLoadingLessonContent: boolean
+  lessonMeta?: Record<string, any>
 }
 
 interface IView {
@@ -72,6 +73,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   lessonName,
   lessonId,
   isLoadingLessonContent,
+  lessonMeta,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
@@ -310,13 +312,15 @@ const SliderBlock: FC<ISliderBlock> = ({
         <>
           {editContentLayer}
           {slider}
-          <NextStep
-            handleNext={handleNext}
-            handlePrev={handlePrev}
-            stepHasValidation={stepHasValidation}
-            hasNextStep={hasNextStep}
-            lessonName={lessonName}
-          />
+          {!lessonMeta?.hideDefaultButtons && (
+            <NextStep
+              handleNext={handleNext}
+              handlePrev={handlePrev}
+              stepHasValidation={stepHasValidation}
+              hasNextStep={hasNextStep}
+              lessonName={lessonName}
+            />
+          )}
         </>
       )}
     </BaseBlock>

@@ -53,6 +53,7 @@ export function CodeEditorBlockContent({ preloadedCode, contentId }: ICodeEditor
         />
       }
       className='codeEditorTour'
+      styles={{ borderWidth: 0 }}
     >
       <CodeEditorStyles isDesktop={isDesktop} />
       <MumuSpeedDial

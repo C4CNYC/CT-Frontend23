@@ -62,7 +62,7 @@ export default function CreateEditValidation({
       then: (schema) => schema.required(translate('required_regex')),
       otherwise: (schema) => schema.notRequired(),
     }),
-    name: Yup.string().required(translate('required_name')),
+    name: Yup.string(),
     description: Yup.string(),
     type: Yup.string()
       .oneOf([...ILCV_type])
@@ -161,12 +161,12 @@ export default function CreateEditValidation({
                   <RHFTextField
                     sx={{ mb: 3 }}
                     name='name'
-                    label={translate('name')}
+                    label={translate('Description')}
                   />
                   <RHFTextField
                     sx={{ mb: 3 }}
                     name='description'
-                    label={translate('description')}
+                    label={translate('Hint')}
                     multiline
                     rows={2}
                   />
