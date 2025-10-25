@@ -116,9 +116,6 @@ export default function DetailsStep({
                 native
                 name='course'
                 size='small'
-                onChange={(event: any) => {
-                  methods.setValue('course', event?.target?.value)
-                }}
                 disabled={!data?.length}
                 sx={selectStyle(theme)}
               >
@@ -133,14 +130,22 @@ export default function DetailsStep({
                   ''
                 )}
                 {data
-                  ? data.map((course) => (
+                  ? [
                       <option
-                        key={course.id}
-                        value={course.id}
+                        key='empty'
+                        value='empty'
                       >
-                        {course.name}
-                      </option>
-                    ))
+                        {translate('quest_select_course')}
+                      </option>,
+                      ...data.map((course) => (
+                        <option
+                          key={course.id}
+                          value={course.id}
+                        >
+                          {course.name}
+                        </option>
+                      )),
+                    ]
                   : null}
               </RHFSelect>
             ) : (
