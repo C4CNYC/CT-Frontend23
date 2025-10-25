@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import { Box, Grid, Tab, Tabs } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 
@@ -92,6 +93,64 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
     setValue(newValue)
   }
 
+  const tabs = [
+    {
+      label: translate('general'),
+      component: (
+        <MainTab
+          org={org}
+          handleClose={handleClose}
+        />
+      ),
+    },
+    {
+      label: translate('Logo'),
+      component: (
+        <LogoTab
+          id={org?.id!}
+          handleClose={handleClose}
+        />
+      ),
+    },
+    {
+      label: translate('Meta'),
+      component: (
+        <MetaTab
+          org={org}
+          handleClose={handleClose}
+        />
+      ),
+    },
+    { label: translate('Catalog'), component: <CatalogTab org={org} /> },
+    ...(isSuperAdmin
+      ? [
+          {
+            label: translate('Settings'),
+            component: (
+              <SettingsTab
+                org={org}
+                handleClose={handleClose}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(org?.home_page_type === HomePageType.Custom
+      ? [
+          {
+            label: translate('Landing Page'),
+            component: (
+              <CustomCodeTab
+                handleClose={handleClose}
+                id={org?.id!}
+                code={org?.home_page_body}
+              />
+            ),
+          },
+        ]
+      : []),
+  ]
+
   return (
     <>
       <Box
@@ -120,92 +179,27 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
                 onChange={handleChange}
                 aria-label='basic tabs example'
               >
-                <Tab
-                  label={translate('general')}
-                  {...a11yProps(0)}
-                />
-                <Tab
-                  label={translate('Logo')}
-                  {...a11yProps(1)}
-                />
-                <Tab
-                  label={translate('Meta')}
-                  {...a11yProps(2)}
-                />
-                <Tab
-                  label={translate('Catalog')}
-                  {...a11yProps(3)}
-                />
-                {isSuperAdmin ? (
+                {tabs.map((tab, i) => (
                   <Tab
-                    label={translate('Settings')}
-                    {...a11yProps(4)}
+                    key={i}
+                    label={tab.label}
+                    {...a11yProps(i)}
                   />
-                ) : null}
-                {org.home_page_type === HomePageType.Custom ? (
-                  <Tab
-                    label={translate('Landing Page')}
-                    {...a11yProps(5)}
-                  />
-                ) : null}
+                ))}
               </Tabs>
             ) : null}
           </Box>
-          <TabPanel
-            value={value}
-            index={0}
-          >
-            <MainTab
-              org={org}
-              handleClose={handleClose}
-            />
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={1}
-          >
-            <LogoTab
-              handleClose={handleClose}
-              id={org?.id as string}
-            />
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={2}
-          >
-            <MetaTab
-              org={org}
-              handleClose={handleClose}
-            />
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={3}
-          >
-            <CatalogTab org={org} />
-          </TabPanel>
-          {isSuperAdmin ? (
+          {tabs.map((tab, i) => (
             <TabPanel
+              key={i}
               value={value}
-              index={4}
+              index={i}
             >
-              <SettingsTab
-                org={org}
-                handleClose={handleClose}
-              />
+              {tab.component}
             </TabPanel>
-          ) : null}
-          <TabPanel
-            value={value}
-            index={5}
-          >
-            <CustomCodeTab
-              handleClose={handleClose}
-              code={org?.home_page_body}
-              id={org?.id as string}
-            />
-          </TabPanel>
+          ))}
         </DialogContent>
+        <DialogActions />
       </Dialog>
     </>
   )
