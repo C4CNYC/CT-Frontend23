@@ -19,12 +19,17 @@ export const DomainFields = () => {
       {fields.map((field, index) => (
         <div
           key={field.id}
-          style={{ display: 'flex', gap: '.5rem' }}
+          style={{ display: 'flex', gap: '.5rem', marginBottom: '1rem' }}
         >
           <RHFTextField
             name={`domain.${index}`}
             label={index === 0 ? translate('create_new_domain_label') : ''}
             required={index === 0}
+            helperText={
+              index === 0
+                ? ''
+                : 'Important: Create a CNAME record in your domain DNS settings and point it to [tenant-slug].codetribe.ai for it to show correctly.'
+            }
           />
           <Button onClick={() => remove(index)}>
             <FaMinus size={16} />

@@ -19,6 +19,12 @@ function GeneralTabFields({ isSuperAdmin }: GeneralTabFieldsrops) {
         label={translate('courses_course_name')}
       />
       <RHFTextField
+        name='description'
+        label={translate('courses_course_description')}
+        multiline
+        rows={3}
+      />
+      <RHFTextField
         sx={{ width: '100%' }}
         name='content_id'
         label={translate('courses_content_id')}
@@ -88,12 +94,7 @@ function GeneralTabFields({ isSuperAdmin }: GeneralTabFieldsrops) {
         label={translate('courses_initial_enrolled')}
         type='number'
       />
-      <RHFTextField
-        name='description'
-        label={translate('courses_course_description')}
-        multiline
-        rows={3}
-      />
+
       <Stack
         direction='row'
         flexWrap='wrap'

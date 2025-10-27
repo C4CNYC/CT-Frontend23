@@ -1194,6 +1194,8 @@
     "intro_tour_lesson_creation_step_3_subtitle": "Puedes crear diapositivas en un editor simple 📄 o en HTML.",
     "intro_tour_lesson_creation_step_4_title": "Vista Previa del Estudiante 👩‍🎓🔍",
     "intro_tour_lesson_creation_step_4_subtitle": "Ve cómo se ven las diapositivas en el panel de programación (Espacio de Trabajo).",
+    "intro_tour_lesson_creation_step_5_title": "Seleccionar formato para el editor",
+"intro_tour_lesson_creation_step_5_subtitle": "Elige entre el editor simple 📝, el formato HTML 🌐 o Markdown 📄",
     "intro_tour_step_1_desktop_title": "💥 El Panel de Codificación 👩‍💻 💥",
     "intro_tour_step_1_desktop_subtitle": "Aquí es donde ocurre todo el aprendizaje y la construcción. 🤩",
     "intro_tour_step_2_desktop_title": "Las Diapositivas",
