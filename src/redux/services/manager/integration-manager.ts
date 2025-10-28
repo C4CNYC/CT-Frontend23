@@ -23,7 +23,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Integrations' }],
+      invalidatesTags: ['Integrations'],
     }),
     editIntegration: builder.mutation<IIntegration, { id: string } & IIntegration>({
       query: ({ id, ...body }) => ({
@@ -31,14 +31,14 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: 'Integrations' }],
+      invalidatesTags: ['Integrations'],
     }),
     deleteIntegration: builder.mutation<IIntegration, { integrationId: string }>({
       query: ({ integrationId }) => ({
         url: `/manager/integration/${integrationId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Integrations' }],
+      invalidatesTags: ['Integrations'],
     }),
   }),
   overrideExisting: false,
