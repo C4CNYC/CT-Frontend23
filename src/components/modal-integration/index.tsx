@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -60,6 +60,12 @@ export function ModalIntegration({
     resolver: yupResolver(IntegrationSchema),
     defaultValues,
   })
+
+  useEffect(() => {
+    if (open) {
+      methods.reset(defaultValues)
+    }
+  }, [open])
 
   const { handleSubmit } = methods
 

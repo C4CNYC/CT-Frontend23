@@ -114,6 +114,7 @@ export default function LessonCard({
           shallow: true,
         }
       )
+      if (refetch) refetch()
     })
 
     return

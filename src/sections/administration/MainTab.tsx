@@ -56,7 +56,8 @@ const MainTab = ({
       meta: org?.meta ?? {},
     },
   })
-  const { formState } = methods
+  const { formState, watch } = methods
+  const watchSlug = watch('slug')
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -97,7 +98,7 @@ const MainTab = ({
             label={translate('create_new_slug_label')}
             required
           />
-          <DomainFields />
+          <DomainFields slug={watchSlug} />
           <RHFSelect
             name='home_page_type'
             native
