@@ -172,6 +172,9 @@ export default function LessonsListPage(): React.ReactElement {
         lesson_id: draggableId,
         sort: getSort(result, lessons),
       })
+      if (userRole === Role.Admin || userRole === Role.SuperAdmin) {
+        refetchAdminLessons()
+      }
     },
     [filters, lessons]
   )
@@ -194,6 +197,9 @@ export default function LessonsListPage(): React.ReactElement {
           shallow: true,
         }
       )
+    }
+    if (userRole === Role.Admin || userRole === Role.SuperAdmin) {
+      refetchAdminLessons()
     }
   }
 
