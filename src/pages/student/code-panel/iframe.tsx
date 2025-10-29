@@ -75,6 +75,7 @@ export default function Iframe() {
           height: '100%',
           display: 'block',
           boxSizing: 'border-box',
+          overflow: 'hidden',
         }}
         dangerouslySetInnerHTML={{ __html: doc }}
       />

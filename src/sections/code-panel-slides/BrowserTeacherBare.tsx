@@ -18,7 +18,7 @@ export function BrowserViewTeacherBare({ slide }: { slide: ILessonContent }) {
       className='BrowserViewTeacherView'
       id='lessonFrame'
       src={`/student/code-panel/iframe?slideId=${slide.id}&lessonId=${lesson.id}`}
-      style={{ border: 0, width: '100vw', height: '100vh' }}
+      style={{ border: 0, width: '100%', height: '100%', overflow: 'hidden' }}
     />
   )
 }
