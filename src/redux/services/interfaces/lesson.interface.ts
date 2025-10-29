@@ -15,7 +15,7 @@ export const LessonDisplayEngine = {
 }
 
 export type LessonMeta = {
-  humanLang: string 
+  humanLang: string
   displayEngine?: (typeof LessonDisplayEngine)[keyof typeof LessonDisplayEngine]
   machineLang: keyof typeof LessonMachineLang
   /**  allow students to create multiple files    */

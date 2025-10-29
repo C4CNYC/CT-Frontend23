@@ -15,9 +15,11 @@ self.addEventListener('message', event => {
         
         downloadAndExtractZip(zipUrl, scopePath)
             .then(() => {
+                console.log('sw Success:', zipUrl);
                 port.postMessage({ success: true });
             })
             .catch(error => {
+                console.error('sw Error:', error);
                 port.postMessage({ success: false, error: error.message });
             });
     }
@@ -41,12 +43,13 @@ async function downloadAndExtractZip(zipUrl, scopePath) {
         const fileMap = new Map();
         
         for (const [filename, fileData] of Object.entries(extractedFiles)) {
-            const filePath = scopePath + filename;
+            let filenameRemovedPrefix = filename.split('/').slice(1).join('/');
+            const filePath = scopePath + '/' + filenameRemovedPrefix;
             fileMap.set(filePath, fileData);
         }
         
         zipCache.set(scopePath, fileMap);
-        
+        console.log(`sw Extracted ${fileMap.size} files for scope: ${scopePath}`, zipCache.entries());
         return true;
     } catch (error) {
         console.error('Error downloading and extracting ZIP:', error);
@@ -56,7 +59,7 @@ async function downloadAndExtractZip(zipUrl, scopePath) {
 
 self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
-    
+    console.log('sw:', url.pathname);
     for (const [scopePath, fileMap] of zipCache.entries()) {
         if (url.pathname.startsWith(scopePath)) {
             const fileData = fileMap.get(url.pathname);
