@@ -83,26 +83,35 @@ const SettingsTab = ({
           />
         </Stack>
       </Stack>
-      <Stack
-        sx={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          gap: 2,
-          paddingTop: 4,
-          paddingBottom: 4,
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: '100%',
+          padding: '15px 25px',
+          background: '#F6F9FC',
         }}
       >
-        <Button onClick={handleClose}>{translate('actions_close')}</Button>
-
-        <LoadingButton
-          type='submit'
-          variant='contained'
-          loading={isUpdating}
-          disabled={formState.isSubmitting || !org}
+        <Stack
+          sx={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            gap: 2,
+          }}
         >
-          {translate('actions_update')}
-        </LoadingButton>
-      </Stack>
+          <Button onClick={handleClose}>{translate('actions_close')}</Button>
+
+          <LoadingButton
+            type='submit'
+            variant='contained'
+            loading={isUpdating}
+            disabled={formState.isSubmitting || !org}
+          >
+            {translate('actions_update')}
+          </LoadingButton>
+        </Stack>
+      </div>
     </FormProvider>
   )
 }

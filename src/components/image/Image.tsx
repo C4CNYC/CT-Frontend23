@@ -61,9 +61,9 @@ export const Image = forwardRef<HTMLSpanElement, ImageProps>(
             width: 1,
             height: 1,
             backgroundSize: 'contain!important',
-            objectFit: 'fill!important',
+            objectFit: 'contain !important',
             '& .MuiBox-root': {
-              objectFit: 'fill!important',
+              objectFit: 'contain !important',
             },
           },
           ...sx,
