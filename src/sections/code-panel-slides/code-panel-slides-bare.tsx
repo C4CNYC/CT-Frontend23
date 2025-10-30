@@ -16,7 +16,7 @@ import {
 import { useDispatch } from '@root/src/redux/store'
 import { route2Number, route2String } from '@root/src/utils/route2String'
 
-import { CodePanelSlidesRender } from './CodePanelSlidesRender'
+import { BrowserViewTeacherBare } from './BrowserTeacherBare'
 import { LessonManagerProvider } from './LessonManagerContext'
 
 export function CodePanelSlidesBare({ lessonId }: { lessonId: string }) {
@@ -43,7 +43,7 @@ export function CodePanelSlidesBare({ lessonId }: { lessonId: string }) {
       lesson={lesson}
       lessonContent={lessonContent}
     >
-      <CodePanelSlidesRender />
+      <BrowserViewTeacherBare />
     </LessonManagerProvider>
   )
 }

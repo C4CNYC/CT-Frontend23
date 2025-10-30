@@ -52,9 +52,17 @@ export default function Iframe() {
     Array.from(containerRef.current.querySelectorAll('script[data-integration]')).forEach((s) =>
       s.remove()
     )
-
-    // Add new scripts
-    ;(lesson?.integrations || []).forEach((integration) => {
+    let integrationScripts = (lesson?.integrations || []).map((i) => i)
+    integrationScripts.push({
+      scripts: `window.addEventListener("message", 
+      (e) => {   window.parent.postMessage(e.data, "*");}); `,
+      name: 'iframe-communication',
+      head: '',
+      id: '1',
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
+    })
+    integrationScripts.forEach((integration) => {
       if (integration.scripts) {
         const script = document.createElement('script')
         script.textContent = integration.scripts
@@ -65,20 +73,18 @@ export default function Iframe() {
   }, [doc, lesson?.integrations])
 
   return (
-    <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <iframe
-        ref={containerRef}
-        id='lessonFrame'
-        style={{
-          border: 0,
-          width: '100%',
-          height: '100%',
-          display: 'block',
-          boxSizing: 'border-box',
-          overflow: 'hidden',
-        }}
-        dangerouslySetInnerHTML={{ __html: doc }}
-      />
-    </div>
+    <iframe
+      ref={containerRef}
+      id='lessonFrame'
+      style={{
+        border: 0,
+        width: '100%',
+        height: '100%',
+        display: 'block',
+        boxSizing: 'border-box',
+        overflow: 'hidden',
+      }}
+      dangerouslySetInnerHTML={{ __html: doc }}
+    />
   )
 }

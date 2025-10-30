@@ -16,7 +16,7 @@ import {
 import { useDispatch } from '@root/src/redux/store'
 import { route2Number, route2String } from '@root/src/utils/route2String'
 
-import { CodePanelSlidesRender } from './CodePanelSlidesRender'
+import { CodePanelSlidesRender } from './CodePanelSlidesRender copy'
 import { LessonManagerProvider } from './LessonManagerContext'
 
 export function CodePanelSlides({ lessonId }: { lessonId: string }) {

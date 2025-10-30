@@ -56,7 +56,11 @@ export default function CodePanelContainer(): ReactElement | null {
   if (!lesson) return <>loading</>
   switch (lesson.meta.displayEngine) {
     case 'bareslides':
-      return <CodePanelSlidesBare lessonId={lesson.id} />
+      return (
+        <div style={{ height: '100%', width: '100%', overflow: 'hidden' }}>
+          <CodePanelSlidesBare lessonId={lesson.id} />
+        </div>
+      )
     case 'slides':
       return <CodePanelSlides lessonId={lesson.id} />
     default:

@@ -14,7 +14,7 @@ export function useLessonLoader(): { init: () => Promise<void> } {
       })
       await navigator.serviceWorker.ready
     } catch (error) {
-      return Promise.reject(new Error('[Status] Service Worker registration failed (error)'))
+      return Promise.reject(new Error('[Status] Service Worker reg failed!'))
     }
   }
 
