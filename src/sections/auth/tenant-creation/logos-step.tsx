@@ -44,7 +44,13 @@ const LogosStep = () => {
             </IconButton>
           ) : null}
           <RHFUploadBox
-            sx={{ width: '120px', height: '120px' }}
+            sx={{
+              width: '120px',
+              height: '120px',
+              filter: uploadedLogo
+                ? 'grayscale(1) contrast(1.2) brightness(0.8) blur(3px)'
+                : 'none',
+            }}
             name='logo'
             accept={{
               'image/*': [],
@@ -58,17 +64,15 @@ const LogosStep = () => {
                 <Typography variant='button'>{translate('Square Logo')}</Typography>
               </Stack>
             }
-            helperText={
-              <Typography
-                variant='caption'
-                noWrap
-                width='90px'
-                sx={HELPER_IMG_TEXT}
-              >
-                {uploadedLogo?.name}
-              </Typography>
-            }
           />
+          <Typography
+            variant='caption'
+            noWrap
+            width='90px'
+            sx={HELPER_IMG_TEXT}
+          >
+            {uploadedLogo?.name}
+          </Typography>
           <SingleFilePreview file={uploadedLogo ? URL.createObjectURL(uploadedLogo) : null} />
         </Box>
         <CustomLabel

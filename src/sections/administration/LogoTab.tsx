@@ -87,17 +87,20 @@ const LogoTab = ({ id, handleClose }: LogoTabProps): React.ReactElement => {
               onDrop={(files: File[]) => {
                 setUploadedFileLogo(files[0])
               }}
-              helperText={
-                <Typography
-                  variant='caption'
-                  noWrap
-                  width='90px'
-                  sx={HELPER_IMG_TEXT}
-                >
-                  {uploadedFileLogo?.name}
-                </Typography>
-              }
+              sx={{
+                filter: uploadedFileLogo
+                  ? 'grayscale(1) contrast(1.2) brightness(0.8) blur(3px)'
+                  : 'none',
+              }}
             />
+            <Typography
+              variant='caption'
+              noWrap
+              width='90px'
+              sx={HELPER_IMG_TEXT}
+            >
+              {uploadedFileLogo?.name}
+            </Typography>
             <SingleFilePreview
               file={uploadedFileLogo ? URL.createObjectURL(uploadedFileLogo) : null}
             />
@@ -120,17 +123,20 @@ const LogoTab = ({ id, handleClose }: LogoTabProps): React.ReactElement => {
               onDrop={(files: File[]) => {
                 setUploadedFileMiniLogo(files[0])
               }}
-              helperText={
-                <Typography
-                  variant='caption'
-                  noWrap
-                  width='90px'
-                  sx={HELPER_IMG_TEXT}
-                >
-                  {uploadedFileMiniLogo?.name}
-                </Typography>
-              }
+              sx={{
+                filter: uploadedFileMiniLogo
+                  ? 'grayscale(1) contrast(1.2) brightness(0.8) blur(3px)'
+                  : 'none',
+              }}
             />
+            <Typography
+              variant='caption'
+              noWrap
+              width='90px'
+              sx={HELPER_IMG_TEXT}
+            >
+              {uploadedFileMiniLogo?.name}
+            </Typography>
             <SingleFilePreview
               file={uploadedFileMiniLogo ? URL.createObjectURL(uploadedFileMiniLogo) : null}
             />
@@ -153,17 +159,20 @@ const LogoTab = ({ id, handleClose }: LogoTabProps): React.ReactElement => {
               onDrop={(files: File[]) => {
                 setUploadedFileFavicon(files[0])
               }}
-              helperText={
-                <Typography
-                  variant='caption'
-                  noWrap
-                  width='90px'
-                  sx={HELPER_IMG_TEXT}
-                >
-                  {uploadedFileFavicon?.name}
-                </Typography>
-              }
+              sx={{
+                filter: uploadedFileFavicon
+                  ? 'grayscale(1) contrast(1.2) brightness(0.8) blur(3px)'
+                  : 'none',
+              }}
             />
+            <Typography
+              variant='caption'
+              noWrap
+              width='90px'
+              sx={HELPER_IMG_TEXT}
+            >
+              {uploadedFileFavicon?.name}
+            </Typography>
             <SingleFilePreview
               file={uploadedFileFavicon ? URL.createObjectURL(uploadedFileFavicon) : null}
             />
