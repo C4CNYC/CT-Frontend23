@@ -1,5 +1,6 @@
 import { AiOutlineSolution } from '@react-icons/all-files/ai/AiOutlineSolution'
 import { BiConversation } from '@react-icons/all-files/bi/BiConversation'
+import { CgTemplate } from '@react-icons/all-files/cg/CgTemplate'
 import { FaRegStickyNote } from '@react-icons/all-files/fa/FaRegStickyNote'
 import { FaSchool } from '@react-icons/all-files/fa/FaSchool'
 import { FaTasks } from '@react-icons/all-files/fa/FaTasks'
@@ -162,6 +163,11 @@ export const content = {
       title: 'sidebar_menu_integrations',
       path: MANAGER_PATH_DASHBOARD.apps.root,
       icon: <FiSettings />,
+    },
+    {
+      title: 'Environments',
+      path: MANAGER_PATH_DASHBOARD.environments.root,
+      icon: <CgTemplate />,
     },
     {
       title: 'sidebar_menu_skills',
