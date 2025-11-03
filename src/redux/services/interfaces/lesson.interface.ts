@@ -1,3 +1,4 @@
+import { IEnvironment } from '@root/src/redux/interfaces/environment.interface'
 import { BaseResponseInterface } from '@root/src/utils/baseResponse.interface'
 
 import { ISkill } from '../../interfaces/content.interface'
@@ -36,6 +37,7 @@ export interface ILesson {
   id: string
   independent: boolean
   integrations: Array<IIntegration & BaseResponseInterface>
+  environments: Array<IEnvironment & BaseResponseInterface>
   meta: LessonMeta
   name: string
   progress: number | null

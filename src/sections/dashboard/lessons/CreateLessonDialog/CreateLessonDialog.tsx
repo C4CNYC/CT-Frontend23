@@ -23,6 +23,7 @@ import { useProperties } from '@root/src/hooks/useProperties'
 import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { LessonMeta } from '@root/src/redux/services/interfaces/lesson.interface'
 
+import { EnvironmentsTab } from '../LessonStep/Modals/Preferences/EnvironmentsTab'
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
 import { DisplayEngine } from './DisplayEngine'
@@ -238,12 +239,16 @@ export default function CreateLessonDialog({
                     {...a11yProps(2)}
                   />
                   <Tab
-                    label={translate('integration')}
+                    label={translate('environments')}
                     {...a11yProps(3)}
                   />
                   <Tab
-                    label={translate('type')}
+                    label={translate('integration')}
                     {...a11yProps(4)}
+                  />
+                  <Tab
+                    label={translate('type')}
+                    {...a11yProps(5)}
                   />
                 </Tabs>
               </Box>
@@ -270,9 +275,15 @@ export default function CreateLessonDialog({
               value={value}
               index={3}
             >
+              <EnvironmentsTab contentId={id as string} />
+            </TabPanel>
+            <TabPanel
+              value={value}
+              index={4}
+            >
               <IntegrationsTab contentId={id as string} />
             </TabPanel>
-            <DisplayEngine open={value === 4} />
+            <DisplayEngine open={value === 5} />
             <DialogActions>
               <Box
                 sx={{
@@ -283,7 +294,7 @@ export default function CreateLessonDialog({
               >
                 <Button onClick={handleClose}>{translate('actions_close')}</Button>
 
-                {[0, 1, 4].includes(value) ? (
+                {[0, 1, 5].includes(value) ? (
                   <LoadingButton
                     type='submit'
                     variant='contained'

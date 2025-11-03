@@ -27,6 +27,7 @@ import {
   useSettingsContext,
   useTable,
 } from '@/components'
+import { EnvironmentModal } from '@/components/environments/EnvironmentModal'
 import { useFilters } from '@/hooks'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
 import {
@@ -38,8 +39,6 @@ import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
 import SkeletonTable from '@/sections/dashboard/skeleton/SkeletonTable'
 import { useTranslate } from '@/utils/translateHelper'
-
-import { EnvironmentModal } from './EnvironmentModal'
 
 EnvironmentsPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 

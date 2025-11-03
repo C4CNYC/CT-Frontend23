@@ -2,6 +2,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { IEnvironment } from '../../interfaces/environment.interface'
 import { AiLessonGenerate } from '../interfaces/ai.interface'
 import {
   ILesson,
@@ -235,6 +236,44 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['ContentIntegration'],
     }),
+    // ============ Lesson Environments ============
+    getLessonEnvironments: builder.query<
+      Array<IEnvironment & BaseResponseInterface>,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/manager/lesson/${id}/environment`,
+        method: 'GET',
+      }),
+      providesTags: ['Environments'],
+      keepUnusedDataFor: 0,
+    }),
+    addEnvironment: builder.mutation<void, { lessonId: string; environment_id: string }>({
+      query: ({ lessonId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/environment`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
+    removeEnvironment: builder.mutation<void, { lessonId: string; environment_id: string }>({
+      query: ({ lessonId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/environment`,
+        method: 'DELETE',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
+    updateEnvironmentOrder: builder.mutation<void, { lessonId: string; environment_ids: string[] }>(
+      {
+        query: ({ lessonId, ...body }) => ({
+          url: `/manager/lesson/${lessonId}/environment/order`,
+          method: 'PATCH',
+          body,
+        }),
+        invalidatesTags: ['Environments'],
+      }
+    ),
   }),
   overrideExisting: false,
 })
@@ -246,6 +285,7 @@ export const {
   useGetLessonQuery,
   useCloneLessonMutation,
   useGetLessonIntegrationsQuery,
+  useGetLessonEnvironmentsQuery,
   // -------------mutation-----------
   useCreateLessonMutation,
   useCreateByCloningLessonMutation,
@@ -262,4 +302,7 @@ export const {
   useDeleteLessonMutation,
   useAddIntegrationMutation,
   useRemoveIntegrationMutation,
+  useAddEnvironmentMutation,
+  useRemoveEnvironmentMutation,
+  useUpdateEnvironmentOrderMutation,
 } = extendedApi
