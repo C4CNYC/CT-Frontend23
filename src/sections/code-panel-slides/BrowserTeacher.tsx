@@ -13,7 +13,12 @@ import { useLessonManager } from './LessonManagerContext'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
 
-export function BrowserViewTeacher({ document, isOpenHeader, iframeKey }: BrowserViewTeacherProps) {
+export function BrowserViewTeacher({
+  document,
+  isOpenHeader,
+  iframeKey,
+  stepBgColor,
+}: BrowserViewTeacherProps & { stepBgColor?: string }) {
   const [docSrc, setDocSrc] = useState('')
   const [iframeProcess, setIframeProcess] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
