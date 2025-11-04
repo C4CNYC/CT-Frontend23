@@ -27,6 +27,7 @@ import { useUpdateLessonContentMutation } from '@/redux/services/manager/lesson-
 import { useTranslate } from '@/utils/translateHelper'
 import { MediaModal } from '@root/src/sections/dashboard/medias/MediaModal'
 
+import { ContentEnvironmentsTab } from './ContentEnvironmentsTab'
 import { GeneralTab } from './GeneralTab'
 import PreloadTab from './preload-tab'
 
@@ -196,6 +197,10 @@ export default function Preferences({
                     label={translate('cover')}
                     {...a11yProps(4)}
                   />
+                  <Tab
+                    label={translate('content_environments')}
+                    {...a11yProps(5)}
+                  />
                 </Tabs>
               </Box>
               <TabPanel
@@ -256,6 +261,15 @@ export default function Preferences({
                     {translate('insert_media_btn')}
                   </Button>
                 </MediaModal>
+              </TabPanel>
+              <TabPanel
+                value={value}
+                index={5}
+              >
+                <ContentEnvironmentsTab
+                  lessonId={lessonId}
+                  contentId={contentId}
+                />
               </TabPanel>
             </DialogContent>
 

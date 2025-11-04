@@ -557,6 +557,7 @@
     "integrations_lets_create": "Let's create an integration",
     "environments": "Environments",
     "environment": "Environment",
+    "content_environments": "Environments",
     "environment_updated_msg": "Environment updated successfully",
     "environment_created_msg": "Environment created successfully",
     "environment_removed_msg": "Environment removed",
