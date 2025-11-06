@@ -121,6 +121,7 @@ export default function CreateLessonDialog({
 
   const gradingMethodWatcher = methods.watch('grading_method')
   const lessonTypeWatcher = methods.watch('type')
+  const displayEngineWatcher = methods.watch('meta.displayEngine')
 
   useEffect(() => {
     const currentValues = methods.getValues()
@@ -272,7 +273,10 @@ export default function CreateLessonDialog({
             >
               <IntegrationsTab contentId={id as string} />
             </TabPanel>
-            <DisplayEngine open={value === 4} />
+            <DisplayEngine
+              open={value === 4}
+              displayEngineWatcher={displayEngineWatcher}
+            />
             <DialogActions>
               <Box
                 sx={{
