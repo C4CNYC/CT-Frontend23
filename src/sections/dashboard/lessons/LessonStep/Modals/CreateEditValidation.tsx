@@ -121,6 +121,8 @@ export default function CreateEditValidation({
     return type || ''
   }
 
+  console.log('methods.watch() ', methods.watch('type'), getLabel(methods.watch('type')))
+
   return (
     <>
       <Box onClick={openTrue}> {children} </Box>
