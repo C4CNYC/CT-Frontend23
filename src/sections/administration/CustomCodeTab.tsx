@@ -83,6 +83,7 @@ const CustomCodeTab = ({ handleClose, code, id }: CustomCodeTabProps): React.Rea
             width: '100%',
             padding: '15px 25px',
             background: '#F6F9FC',
+            zIndex: 10,
           }}
         >
           <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', mt: 4, gap: 1 }}>
