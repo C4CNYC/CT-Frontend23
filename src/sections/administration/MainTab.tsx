@@ -123,6 +123,7 @@ const MainTab = ({
           width: '100%',
           padding: '15px 25px',
           background: '#F6F9FC',
+          zIndex: 10,
         }}
       >
         <Stack
