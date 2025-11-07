@@ -44,7 +44,7 @@ export default function InviteTeacherDialog({
   const [createUser] = useCreateOrgMemberMutation()
   const { enqueueSnackbar } = useSnackbar()
   const { filters, setFilter } = useFilters({ email: '' })
-  const { data: members } = useGetOrgMembersQuery({ ...filters }, { skip: !!filters.email })
+  const { data: members } = useGetOrgMembersQuery({ ...filters }, { skip: !filters.email })
   const translate = useTranslate()
 
   const addUserToSchool = async (userId: string, schoolId: string): Promise<void> => {
@@ -100,7 +100,7 @@ export default function InviteTeacherDialog({
             />
             <Button
               variant='contained'
-              disabled={!filters.email}
+              disabled={!!members?.data.length || !filters.email}
               onClick={onSendInvite}
             >
               {translate('members_send_invite')}
