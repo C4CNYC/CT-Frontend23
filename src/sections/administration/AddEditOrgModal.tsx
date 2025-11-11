@@ -107,7 +107,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
       label: translate('Logo'),
       component: (
         <LogoTab
-          id={org?.id!}
+          org={org}
           handleClose={handleClose}
         />
       ),

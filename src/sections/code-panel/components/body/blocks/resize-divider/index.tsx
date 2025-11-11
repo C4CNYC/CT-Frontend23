@@ -23,7 +23,8 @@ const ResizeDivider: FC<ResizeDividerProps> = ({ isBrowserHidden, props }) => {
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        minWidth: '8px',
+        minWidth: '4px',
+        width: '4px!important',
         '&:hover': {
           background: '#fff!important',
         },
@@ -32,12 +33,17 @@ const ResizeDivider: FC<ResizeDividerProps> = ({ isBrowserHidden, props }) => {
       <Box
         sx={{
           backgroundColor: '#A6A6A6',
+          opacity: 0,
+          transition: 'opacity 0.3s',
           boxShadow: 'none',
           maxHeight: '150px',
           borderRadius: '24px',
-          width: '6px!important',
+          width: '3px!important',
           '&:after': {
             display: 'none!important',
+          },
+          '&:hover': {
+            opacity: 1,
           },
         }}
       />

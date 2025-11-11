@@ -71,7 +71,7 @@ export default function OrgTableRow({
             <Avatar
               variant='rounded'
               alt='logo'
-              src={logo ?? ''}
+              src={logo ? `${logo}?t=${row.updatedAt || Date.now()}` : ''}
             >
               Logo
             </Avatar>
@@ -86,7 +86,7 @@ export default function OrgTableRow({
             <Avatar
               variant='rounded'
               alt={'min_logo'}
-              src={min_logo ?? ''}
+              src={min_logo ? `${min_logo}?t=${row.updatedAt || Date.now()}` : ''}
             >
               Mini
             </Avatar>
@@ -101,7 +101,7 @@ export default function OrgTableRow({
           >
             <Avatar
               alt={'org_favicon'}
-              src={favicon ?? ''}
+              src={favicon ? `${favicon}?t=${row.updatedAt || Date.now()}` : ''}
             >
               Icon
             </Avatar>
