@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { ILessonContent, type ILesson } from '@/redux/interfaces/content.interface'
 import { type BaseResponseInterface } from '@/utils'
 import { useSnackbar } from '@root/src/components/snackbar'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useUpdateLessonContentMutation } from '@root/src/redux/services/manager/lesson-content-manager'
 import { useSelector } from '@root/src/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -20,6 +21,9 @@ interface LessonManagerContextProps {
   slidesUpdated: string[]
   currentSlideUpdated: boolean
   currentSlideId: string
+  checkersAnimation: ReturnType<typeof useBoolean>
+  checkersAnimationNumber: number
+  checkersAnimationNumberSet: (v: number) => void
   setIsOpenDrawer: (isOpen: boolean) => void
   onChooseLesson: (lessonId: string, unitId: string) => void
   updateSlide: (
@@ -41,6 +45,8 @@ export const LessonManagerProvider: React.FC<{
 }> = ({ children, lesson, lessonContent: initialLessonContent, isLoading }) => {
   const { enqueueSnackbar } = useSnackbar()
   const [updateLessonContent] = useUpdateLessonContentMutation()
+  const checkersAnimation = useBoolean()
+  const [checkersAnimationNumber, checkersAnimationNumberSet] = useState(1)
   const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const [lessonContent, setLessonContent] = useState<(ILessonContent & BaseResponseInterface)[]>([])
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
@@ -131,12 +137,15 @@ export const LessonManagerProvider: React.FC<{
         userIsOwner,
         currentSlideUpdated: slidesUpdated.some((s) => s === slideId),
         currentSlideId: slideId,
+        checkersAnimation,
+        checkersAnimationNumber,
 
         setIsOpenDrawer,
         onChooseLesson,
         updateSlide,
         addNewSlide,
         setLessonContent,
+        checkersAnimationNumberSet,
       }}
     >
       {children}
