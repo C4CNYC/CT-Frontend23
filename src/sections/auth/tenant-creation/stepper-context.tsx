@@ -1,6 +1,7 @@
 import { createContext, useContext, ReactNode, useEffect } from 'react'
 import { useState } from 'react'
 
+import { usePathname, useRouter } from 'next/navigation'
 import { useSnackbar } from 'notistack'
 import { FieldErrors } from 'react-hook-form'
 import { useSelector } from 'react-redux'
@@ -12,6 +13,7 @@ import {
   useCheckBrandNameMutation,
   useCheckSubdomainMutation,
 } from '@/redux/services/tenant/tenant-creation'
+import { PATH_AUTH } from '@/routes/paths'
 import { useTranslate } from '@/utils/translateHelper'
 
 import { RootState } from '../../../redux/store'
@@ -47,10 +49,12 @@ export const StepperProvider = ({
 }) => {
   const { enqueueSnackbar } = useSnackbar()
   const translate = useTranslate()
+  const { replace } = useRouter()
+  const pathname = usePathname()
   const [activeStep, setActiveStep] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [currentInputs, setCurrentInputs] = useState<Array<keyof TenantFormValuesProps>>([])
-  const { registerTenant } = useAuthContext()
+  const { registerTenant, logout } = useAuthContext()
   const [setLogo] = useSetTenantLogoMutation()
   const [updateInfo] = useUpdateTenantInfoMutation()
   const [handleCheckBrandName] = useCheckBrandNameMutation()
@@ -184,6 +188,28 @@ export const StepperProvider = ({
 
     setCurrentInputs(inputNames)
   }, [activeStep])
+
+  useEffect(() => {
+    const currentPath = pathname
+
+    return () => {
+      if (currentPath === '/auth/org') {
+        logout()
+        replace(PATH_AUTH.signIn)
+      }
+    }
+  }, [pathname])
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (window.location.pathname === '/auth/org') {
+        logout()
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [])
 
   return (
     <StepperContext.Provider

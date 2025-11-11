@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material'
@@ -16,192 +16,147 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import { HELPER_IMG_TEXT, UPLOAD_IMG_BTN } from './constants'
 
 interface LogoTabProps {
-  id: string
+  org: any
   handleClose: () => void
 }
 
-const LogoTab = ({ id, handleClose }: LogoTabProps): React.ReactElement => {
+const LogoTab = ({ org, handleClose }: LogoTabProps): React.ReactElement => {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const methods = useForm()
 
-  const [uploadedFileLogo, setUploadedFileLogo] = useState<null | File>(null)
-  const [uploadedFileMiniLogo, setUploadedFileMiniLogo] = useState<null | File>(null)
-  const [uploadedFileFavicon, setUploadedFileFavicon] = useState<null | File>(null)
+  const [logo, setLogo] = useState<File | string | null>(null)
+  const [miniLogo, setMiniLogo] = useState<File | string | null>(null)
+  const [favicon, setFavicon] = useState<File | string | null>(null)
 
   const [updateLogo, { isLoading: isLoadingLogo }] = useUpdateOrgLogoMutation()
   const [updateMiniLogo, { isLoading: isLoadingMiniLogo }] = useUpdateOrgLogoMiniMutation()
   const [updateFavicon, { isLoading: isLoadingFavicon }] = useUpdateOrgFaviconMutation()
 
-  const methods = useForm()
+  useEffect(() => {
+    if (org) {
+      setLogo(org.logo || null)
+      setMiniLogo(org.min_logo || null)
+      setFavicon(org.favicon || null)
+    }
+  }, [org])
+
+  const renderUploadBlock = (
+    title: string,
+    file: File | string | null,
+    setFile: (value: File | string | null) => void,
+    name: string
+  ) => (
+    <Box>
+      <Typography variant='body2'>{title}</Typography>
+      <Box sx={{ position: 'relative', mb: 4 }}>
+        {file && (
+          <IconButton
+            sx={UPLOAD_IMG_BTN}
+            onClick={() => setFile(null)}
+          >
+            <IoMdClose size='20px' />
+          </IconButton>
+        )}
+
+        <RHFUpload
+          name={name}
+          onDrop={(files: File[]) => setFile(files[0])}
+          sx={{
+            filter: file ? 'grayscale(1) contrast(1.2) brightness(0.8) blur(3px)' : 'none',
+          }}
+        />
+
+        <Typography
+          variant='caption'
+          noWrap
+          width='90px'
+          sx={HELPER_IMG_TEXT}
+        >
+          {typeof file === 'string' ? '' : file?.name || ''}
+        </Typography>
+
+        <SingleFilePreview
+          file={
+            file
+              ? typeof file === 'string'
+                ? `${file}?t=${org.updatedAt || Date.now()}`
+                : URL.createObjectURL(file)
+              : null
+          }
+        />
+      </Box>
+    </Box>
+  )
 
   const onSubmit = async (): Promise<void> => {
-    const file = new FormData()
-    const fileMiniLogo = new FormData()
-    const fileFavicon = new FormData()
-
     try {
-      if (uploadedFileLogo) {
-        file.append('file', uploadedFileLogo)
-        await updateLogo({ id, file }).unwrap()
+      if (logo && typeof logo !== 'string') {
+        const fd = new FormData()
+        fd.append('file', logo)
+        await updateLogo({ id: org?.id, file: fd }).unwrap()
       }
-      if (uploadedFileMiniLogo) {
-        fileMiniLogo.append('file', uploadedFileMiniLogo)
-        await updateMiniLogo({ id, file: fileMiniLogo }).unwrap()
+
+      if (miniLogo && typeof miniLogo !== 'string') {
+        const fd = new FormData()
+        fd.append('file', miniLogo)
+        await updateMiniLogo({ id: org?.id, file: fd }).unwrap()
       }
-      if (uploadedFileFavicon) {
-        fileFavicon.append('file', uploadedFileFavicon)
-        await updateFavicon({ id, file: fileFavicon }).unwrap()
+
+      if (favicon && typeof favicon !== 'string') {
+        const fd = new FormData()
+        fd.append('file', favicon)
+        await updateFavicon({ id: org?.id, file: fd }).unwrap()
       }
 
       enqueueSnackbar(translate('messages_update_success'))
     } catch (e: any) {
-      enqueueSnackbar(e.data.message ?? translate('message_error'), { variant: 'error' })
+      enqueueSnackbar(e?.data?.message ?? translate('message_error'), { variant: 'error' })
     }
   }
 
   return (
-    <>
-      <FormProvider
-        methods={methods}
-        onSubmit={methods.handleSubmit(onSubmit)}
-        style={{ height: '100%' }}
+    <FormProvider
+      methods={methods}
+      onSubmit={methods.handleSubmit(onSubmit)}
+      style={{ height: '100%' }}
+    >
+      <Stack
+        justifyContent='space-between'
+        height='100%'
       >
-        <Stack
-          justifyContent='space-between'
-          height='100%'
+        {renderUploadBlock('Upload Logo', logo, setLogo, 'logo')}
+        {renderUploadBlock('Upload Mini Logo', miniLogo, setMiniLogo, 'min_logo')}
+        {renderUploadBlock('Upload Favicon', favicon, setFavicon, 'favicon')}
+
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            width: '100%',
+            p: '15px 25px',
+            background: '#F6F9FC',
+            zIndex: 10,
+          }}
         >
-          <Typography variant='body2'>Upload Logo</Typography>
-          <Box sx={{ position: 'relative', mb: 4 }}>
-            {uploadedFileLogo ? (
-              <IconButton
-                sx={UPLOAD_IMG_BTN}
-                onClick={() => {
-                  setUploadedFileLogo(null)
-                }}
-              >
-                <IoMdClose size='20px' />
-              </IconButton>
-            ) : null}
-            <RHFUpload
-              name='logo'
-              onDrop={(files: File[]) => {
-                setUploadedFileLogo(files[0])
-              }}
-              sx={{
-                filter: uploadedFileLogo
-                  ? 'grayscale(1) contrast(1.2) brightness(0.8) blur(3px)'
-                  : 'none',
-              }}
-            />
-            <Typography
-              variant='caption'
-              noWrap
-              width='90px'
-              sx={HELPER_IMG_TEXT}
-            >
-              {uploadedFileLogo?.name}
-            </Typography>
-            <SingleFilePreview
-              file={uploadedFileLogo ? URL.createObjectURL(uploadedFileLogo) : null}
-            />
-          </Box>
-
-          <Typography variant='body2'>Upload Mini Logo</Typography>
-          <Box sx={{ position: 'relative', mb: 4 }}>
-            {uploadedFileMiniLogo ? (
-              <IconButton
-                sx={UPLOAD_IMG_BTN}
-                onClick={() => {
-                  setUploadedFileMiniLogo(null)
-                }}
-              >
-                <IoMdClose size='20px' />
-              </IconButton>
-            ) : null}
-            <RHFUpload
-              name='logo_mini'
-              onDrop={(files: File[]) => {
-                setUploadedFileMiniLogo(files[0])
-              }}
-              sx={{
-                filter: uploadedFileMiniLogo
-                  ? 'grayscale(1) contrast(1.2) brightness(0.8) blur(3px)'
-                  : 'none',
-              }}
-            />
-            <Typography
-              variant='caption'
-              noWrap
-              width='90px'
-              sx={HELPER_IMG_TEXT}
-            >
-              {uploadedFileMiniLogo?.name}
-            </Typography>
-            <SingleFilePreview
-              file={uploadedFileMiniLogo ? URL.createObjectURL(uploadedFileMiniLogo) : null}
-            />
-          </Box>
-
-          <Typography variant='body2'>Upload Favicon</Typography>
-          <Box sx={{ position: 'relative', mb: 4 }}>
-            {uploadedFileFavicon ? (
-              <IconButton
-                sx={UPLOAD_IMG_BTN}
-                onClick={() => {
-                  setUploadedFileFavicon(null)
-                }}
-              >
-                <IoMdClose size='20px' />
-              </IconButton>
-            ) : null}
-            <RHFUpload
-              name='favicon'
-              onDrop={(files: File[]) => {
-                setUploadedFileFavicon(files[0])
-              }}
-              sx={{
-                filter: uploadedFileFavicon
-                  ? 'grayscale(1) contrast(1.2) brightness(0.8) blur(3px)'
-                  : 'none',
-              }}
-            />
-            <Typography
-              variant='caption'
-              noWrap
-              width='90px'
-              sx={HELPER_IMG_TEXT}
-            >
-              {uploadedFileFavicon?.name}
-            </Typography>
-            <SingleFilePreview
-              file={uploadedFileFavicon ? URL.createObjectURL(uploadedFileFavicon) : null}
-            />
-          </Box>
-
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              width: '100%',
-              padding: '15px 25px',
-              background: '#F6F9FC',
-            }}
+          <Stack
+            direction='row'
+            justifyContent='flex-end'
+            gap={1}
           >
-            <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 1 }}>
-              <Button onClick={handleClose}>{translate('actions_close')}</Button>
-              <LoadingButton
-                type='submit'
-                variant='contained'
-                loading={isLoadingLogo || isLoadingMiniLogo || isLoadingFavicon}
-              >
-                {translate('actions_save')}
-              </LoadingButton>
-            </Stack>
-          </div>
-        </Stack>
-      </FormProvider>
-    </>
+            <Button onClick={handleClose}>{translate('actions_close')}</Button>
+            <LoadingButton
+              type='submit'
+              variant='contained'
+              loading={isLoadingLogo || isLoadingMiniLogo || isLoadingFavicon}
+            >
+              {translate('actions_save')}
+            </LoadingButton>
+          </Stack>
+        </Box>
+      </Stack>
+    </FormProvider>
   )
 }
 
