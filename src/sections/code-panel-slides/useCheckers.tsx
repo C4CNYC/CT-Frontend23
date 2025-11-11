@@ -37,10 +37,8 @@ export function useCheckers() {
       const data = event.data
       let checkerIds: { name: string; isValid: boolean }[] = []
       if (!data || !data.type) return
-      console.log('useCheckers received message', data)
       if (['checker-validation', 'ConsoleLog'].includes(data.type)) {
         document.querySelectorAll('iframe').forEach((iframe) => {
-          console.log(event.source === iframe.contentWindow)
           if (event.source !== iframe.contentWindow)
             iframe.contentWindow?.postMessage(event.data, '*')
         })
@@ -117,7 +115,7 @@ export function useCheckers() {
 let fnInc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 function fnIncUse(n: number, ...args: any[]) {
   fnInc[n] = fnInc[n] + 1
-  console.log('useCheckers fnInc', n, fnInc[n], ...args)
+  //console.log('useCheckers fnInc', n, fnInc[n], ...args)
 }
 function countPassed(checkers: IValidationMap[]): number {
   return checkers.filter((checker) => checker.valid).length

@@ -25,7 +25,6 @@ export default function Iframe() {
 
   let pageReady = !!slide && !!lesson
 
-  console.log('IFRAME RENDER', { slide, lesson })
   function getIframeContent() {
     let integrationsStyles = (lesson?.integrations || [])
       .map((integration) => integration.head)
@@ -59,7 +58,6 @@ export default function Iframe() {
 
   useEffect(() => {
     if (!containerRef.current || !pageReady || !doc) return
-    console.log('IFRAME LOAD EFFECT', { doc, slide, lesson })
     const iframe = containerRef.current
     const handleLoad = () => {
       ;[...iframe.querySelectorAll('script[data-integration]')].forEach((s) => s.remove())
@@ -102,7 +100,6 @@ export default function Iframe() {
       )
 
       integrationScripts.forEach((integration) => {
-        console.log('ADDING INTEGRATION SCRIPT TO IFRAME', integration)
         if (integration) {
           new Function(integration)()
           /*
