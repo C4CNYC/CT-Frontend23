@@ -59,6 +59,7 @@ export const managerApi = createApi({
     'LessonSlidePreload',
     'WorkspaceStudent',
     'GetCompleteChalange',
+    'Environments',
   ],
 
   //keepUnusedDataFor: 3600,

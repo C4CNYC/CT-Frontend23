@@ -28,7 +28,15 @@ const nextConfig = {
             value: 'public, max-age=31536000, immutable', // Cache for 1 year, immutable
           },
         ],
-      },
+      },{
+        source: '/assets/js/service-worker.js',
+        headers: [
+          {
+            key: 'Service-Worker-Allowed',
+            value: '/',
+          },
+        ],
+      }
     ];
   },
 }

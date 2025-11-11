@@ -1,5 +1,6 @@
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
+import { IEnvironment } from '../../interfaces/environment.interface'
 import {
   ILessonContent,
   ILessonContentUpdate,
@@ -135,6 +136,54 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['LessonSlidePreload'],
     }),
+    // ============ Content Environments ============
+    getContentEnvironments: builder.query<
+      Array<IEnvironment & BaseResponseInterface>,
+      { lessonId: string; contentId: string }
+    >({
+      query: ({ lessonId, contentId }) => ({
+        url: `/manager/lesson/${lessonId}/content/${contentId}/environments`,
+        method: 'GET',
+      }),
+      providesTags: ['Environments'],
+      keepUnusedDataFor: 0,
+    }),
+
+    addContentEnvironment: builder.mutation<
+      void,
+      { lessonId: string; contentId: string; environment_id: string }
+    >({
+      query: ({ lessonId, contentId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/content/${contentId}/environments`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
+
+    removeContentEnvironment: builder.mutation<
+      void,
+      { lessonId: string; contentId: string; environment_id: string }
+    >({
+      query: ({ lessonId, contentId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/content/${contentId}/environments`,
+        method: 'DELETE',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
+
+    updateContentEnvironmentOrder: builder.mutation<
+      void,
+      { lessonId: string; contentId: string; environment_ids: string[] }
+    >({
+      query: ({ lessonId, contentId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/content/${contentId}/environments/order`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
   }),
   overrideExisting: false,
 })
@@ -144,6 +193,7 @@ export const {
   useGetLessonContentByIdQuery,
   useGetLessonSlidePreloadFilesQuery,
   useGetLessonFilesQuery,
+  useGetContentEnvironmentsQuery,
   // -------------mutation-----------
   useUpdateLessonContentMutation,
   useCreateLessonContentMutation,
@@ -151,4 +201,7 @@ export const {
   useAddLessonStepPreloadFileMutation,
   useUpdateLessonStepPreloadFileMutation,
   useRemoveLessonStepPreloadFileMutation,
+  useAddContentEnvironmentMutation,
+  useRemoveContentEnvironmentMutation,
+  useUpdateContentEnvironmentOrderMutation,
 } = extendedApi

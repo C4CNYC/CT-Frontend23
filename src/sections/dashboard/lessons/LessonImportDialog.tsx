@@ -14,6 +14,8 @@ import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useImportLessonMutation } from '@root/src/redux/services/manager/lessons-manager'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { MdFileDump2LessonJSON } from './HandleImportHelper'
+
 export function LessonImportDialog() {
   const {
     value: openDialog,
@@ -32,32 +34,52 @@ export function LessonImportDialog() {
       setSelectedFile(event.target.files[0])
     }
   }
-
-  const handleImport = async () => {
-    if (!selectedFile) {
-      enqueueSnackbar(translate('error_no_file_selected'), { variant: 'error' })
-      return
-    }
-
+  async function uploadJSON(jsonStr: string) {
     try {
-      const response = await LessonImport({ file: selectedFile }).unwrap()
-      if (!response.id) return enqueueSnackbar(translate('error'), { variant: 'error' })
+      const blob = new Blob([jsonStr], { type: 'application/json' })
+      const file = new File([blob], 'lesson.json', { type: 'application/json' })
+      const response = await LessonImport({ file }).unwrap()
+      if (!response.id) throw new Error('Invalid response')
+
       enqueueSnackbar(translate('exportimport.success'), { variant: 'success' })
 
       if (window.confirm(translate('exportimport.open_new_lesson'))) {
         router.push(
           `${router.pathname}?${new URLSearchParams({ lessonId: response.id })}`,
           undefined,
-          {
-            shallow: true,
-          }
+          { shallow: true }
         )
       }
-
       handleCloseDialog()
-    } catch (error) {
+    } catch {
       enqueueSnackbar(translate('exportimport.error_import_failed'), { variant: 'error' })
     }
+  }
+
+  function handleImportFile(file: File) {
+    const reader = new FileReader()
+    reader.onload = () => {
+      const text = reader.result as string
+      const ext = file.name.split('.').pop()?.toLowerCase()
+
+      if (ext === 'md') {
+        const jsonStr = MdFileDump2LessonJSON(text)
+        uploadJSON(jsonStr)
+      } else if (ext === 'json') {
+        uploadJSON(text)
+      } else {
+        enqueueSnackbar('md or json file required', { variant: 'error' })
+      }
+    }
+    reader.readAsText(file)
+  }
+
+  async function handleImport() {
+    if (!selectedFile) {
+      enqueueSnackbar(translate('error_no_file_selected'), { variant: 'error' })
+      return
+    }
+    handleImportFile(selectedFile)
   }
 
   return (
