@@ -1,5 +1,5 @@
 const zipCache = new Map();
-
+let scope = '/';
 let fflate;
 try {
     importScripts('https://cdn.jsdelivr.net/npm/fflate@0.8.0/umd/index.js');
@@ -16,6 +16,7 @@ self.addEventListener('message', event => {
         downloadAndExtractZip(zipUrl, scopePath)
             .then(() => {
                 console.log('sw Success:', zipUrl);
+                scope = scopePath;
                 port.postMessage({ success: true });
             })
             .catch(error => {
@@ -43,6 +44,7 @@ async function downloadAndExtractZip(zipUrl, scopePath) {
         const fileMap = new Map();
         
         for (const [filename, fileData] of Object.entries(extractedFiles)) {
+            console.log('sw Extracted file:', filename);
             let filenameRemovedPrefix = filename.split('/').slice(1).join('/');
             const filePath = scopePath + '/' + filenameRemovedPrefix;
             fileMap.set(filePath, fileData);
