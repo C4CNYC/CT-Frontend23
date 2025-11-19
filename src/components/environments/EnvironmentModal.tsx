@@ -185,12 +185,16 @@ export function EnvironmentModal({
               {isEdit && id && (
                 <Box>
                   <FileUploadSection environmentId={id} />
-                  {defaultValues.zipFile && <Button
-                    variant='outlined'
-                    href={defaultValues.zipFile}
-                    target='_blank'
-                    rel='noopener noreferrer'>Existing File</Button>
-                  }
+                  {defaultValues.zipFile && (
+                    <Button
+                      variant='outlined'
+                      href={defaultValues.zipFile}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      Existing File
+                    </Button>
+                  )}
                 </Box>
               )}
             </Stack>
