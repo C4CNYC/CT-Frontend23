@@ -164,6 +164,11 @@ export const content = {
       icon: <FiSettings />,
     },
     {
+      title: 'sidebar_menu_environments',
+      path: MANAGER_PATH_DASHBOARD.environments.root,
+      icon: <FiSettings />,
+    },
+    {
       title: 'sidebar_menu_skills',
       path: MANAGER_PATH_DASHBOARD.skills.root,
       icon: <HiOutlineLightBulb />,

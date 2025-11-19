@@ -1,3 +1,4 @@
+import { IEnvironment } from '@root/src/redux/interfaces/environment.interface'
 import { BaseResponseInterface } from '@root/src/utils/baseResponse.interface'
 
 import { ISkill } from '../../interfaces/content.interface'
@@ -10,6 +11,7 @@ import { IIntegration } from './integration.interface'
 export const LessonDisplayEngine = {
   CodePanel: 'codepanel',
   Slides: 'slides',
+  BareSlides: 'bareslides',
   Custom: 'custom',
 }
 
@@ -35,6 +37,7 @@ export interface ILesson {
   id: string
   independent: boolean
   integrations: Array<IIntegration & BaseResponseInterface>
+  environments: Array<IEnvironment & BaseResponseInterface>
   meta: LessonMeta
   name: string
   progress: number | null

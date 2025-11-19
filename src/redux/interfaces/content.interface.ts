@@ -7,6 +7,8 @@ import { AGE, GRADING, LEVEL, TModuleMeta } from '../services/interfaces/courseU
 import { ILesson } from '../services/interfaces/lesson.interface'
 import { ILessonContentValidation } from '../services/interfaces/lessonContentValidation.interface'
 
+import { IEnvironment } from './environment.interface'
+
 export type { ILesson }
 
 export interface ICourseElement {
@@ -128,6 +130,7 @@ export interface ILessonContent {
   title?: string
   id?: string
   bg_color?: string
+  environments?: Array<IEnvironment & BaseResponseInterface>
 }
 
 export interface ISkill {

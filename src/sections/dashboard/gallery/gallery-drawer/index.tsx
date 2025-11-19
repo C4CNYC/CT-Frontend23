@@ -7,7 +7,7 @@ import { BsArrowsFullscreen } from '@react-icons/all-files/bs/BsArrowsFullscreen
 import { TbArrowsMinimize } from '@react-icons/all-files/tb/TbArrowsMinimize'
 import { useSnackbar } from 'notistack'
 
-import { UseBooleanReturn } from '@root/src/hooks/use-boolean'
+import { UseBoolean } from '@root/src/hooks/use-boolean'
 import { APIError } from '@root/src/redux/interfaces/custom-error.interface'
 import { useUpdateProjectMutation } from '@root/src/redux/services/manager/gallery-student'
 
@@ -21,7 +21,7 @@ import ModalFooter from './ModalFooter'
 import { ArrowLeft, ArrowRight } from './navigation'
 
 type GalleryDialog = {
-  drawer: UseBooleanReturn
+  drawer: UseBoolean
 }
 
 export default function GalleryDrawer({ drawer }: GalleryDialog): React.ReactElement {
