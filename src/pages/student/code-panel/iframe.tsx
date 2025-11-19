@@ -6,6 +6,7 @@ import {
   useGetLessonContentStudentQuery,
   useGetLessonStudentWithoutContentsQuery,
 } from '@root/src/redux/services/manager/lesson-student'
+import { jsonparse } from '@root/src/utils/jsonparse'
 
 export default function Iframe() {
   const containerRef = useRef<HTMLIFrameElement>(null)
@@ -22,68 +23,102 @@ export default function Iframe() {
   )
   let slide = lessonContent ? lessonContent[0] : null
 
+  let pageReady = !!slide && !!lesson
+
   function getIframeContent() {
     let integrationsStyles = (lesson?.integrations || [])
       .map((integration) => integration.head)
       .filter(Boolean)
       .join('\n')
-
+    // eslint-disable-next-line no-console
+    console.log('GENERATE IFRAME CONTENT WITH INTEGRATIONS', slide)
     if (!slide || !slide.body) return ''
-    let slideContent = JSON.parse(slide.body)
     return `
-      <div>
+      <iframe
+      id='lessonFrame'
+      style="
+        border: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        box-sizing: border-box;
+        overflow: hidden;" >
         <link rel="stylesheet" href="/fonts/index.css" />
         <style>*{box-sizing:border-box}body{margin:0;padding:0;height:100%}</style>
-        ${integrationsStyles}
-        <script>let slideContent=${JSON.stringify(slideContent.content)}</script>
-        <body>Empty IFrame</body>
-      </div>
+        ${integrationsStyles} 
+        <body> Content Loading ...</body>
+      </iframe>
     `
   }
 
   useEffect(() => {
-    if (!slide || slide.body == null) return
+    if (!pageReady) return
     setDoc(getIframeContent())
-  }, [slide, lesson?.integrations])
+  }, [pageReady])
 
   useEffect(() => {
-    if (!containerRef.current) return
-    // Remove old scripts
-    Array.from(containerRef.current.querySelectorAll('script[data-integration]')).forEach((s) =>
-      s.remove()
-    )
-    let integrationScripts = (lesson?.integrations || []).map((i) => i)
-    integrationScripts.push({
-      scripts: `window.addEventListener("message", 
-      (e) => {   window.parent.postMessage(e.data, "*");}); `,
-      name: 'iframe-communication',
-      head: '',
-      id: '1',
-      createdAt: new Date().toString(),
-      updatedAt: new Date().toString(),
-    })
-    integrationScripts.forEach((integration) => {
-      if (integration.scripts) {
-        const script = document.createElement('script')
-        script.textContent = integration.scripts
-        script.setAttribute('data-integration', 'true')
-        containerRef.current?.appendChild(script)
-      }
-    })
-  }, [doc, lesson?.integrations])
+    if (!containerRef.current || !pageReady || !doc) return
+    const iframe = containerRef.current
+    const handleLoad = () => {
+      ;[...iframe.querySelectorAll('script[data-integration]')].forEach((s) => s.remove())
+      let integrationScripts: string[] = []
+
+      let slideContent = jsonparse(slide?.body, {})
+      integrationScripts.push(`
+        globalThis.CTIFrame = {
+          "slideContent":${JSON.stringify(slideContent)},
+          "environments":${JSON.stringify(slide?.environments || [])},
+          "validate":(t,v,type='checker-validation')=>{
+            window.parent.postMessage({type,checkerId: t,valid: v},'*')
+          }
+        }
+      `)
+
+      let slideEntegrations = (slide?.environments || [])
+        .map((env) => env.script)
+        .filter((e): e is string => !!e)
+      integrationScripts = integrationScripts
+        .concat(slideEntegrations)
+        .concat((lesson?.integrations || []).map((i) => i.scripts).filter(Boolean))
+
+      integrationScripts.push(
+        `window.addEventListener("message",
+        (e) => {
+          if (!e.data || e.data.type !== "checker-validation") return;
+          console.log(window, window.parent, window == window.parent);
+          if(window === window.parent ) 
+            return;
+          if(typeof e.data.vanisher == 'undefined') 
+            e.data.vanisher = 3; //
+          e.data.vanisher--;
+          if(e.data.vanisher <= 0) 
+            return; // prevent infinite loop
+          console.log("Received validation message in iframe:", e.data);
+          window.parent.postMessage(e.data, "*");
+        });
+        console.log("Integration script loaded in iframe");`
+      )
+
+      integrationScripts.forEach((integration) => {
+        if (integration) {
+          new Function(integration)()
+          /*
+          const script = document.createElement('script')
+          script.textContent = integration
+          script.setAttribute('data-integration', 'true')
+          document.body.appendChild(script)
+          */
+        }
+      })
+    }
+
+    handleLoad()
+  }, [doc, pageReady])
 
   return (
-    <iframe
+    <div
       ref={containerRef}
-      id='lessonFrame'
-      style={{
-        border: 0,
-        width: '100%',
-        height: '100%',
-        display: 'block',
-        boxSizing: 'border-box',
-        overflow: 'hidden',
-      }}
+      style={{ width: '100%', height: '100%' }}
       dangerouslySetInnerHTML={{ __html: doc }}
     />
   )

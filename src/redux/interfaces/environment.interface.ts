@@ -2,10 +2,8 @@ import { BaseSearchInterface } from '@/utils'
 
 export interface IEnvironment {
   name: string
-  description?: string
-  head?: string
-  scripts?: string
-  configuration?: Record<string, any>
+  style?: string
+  script?: string
   active?: boolean
   zipFile?: string
 }

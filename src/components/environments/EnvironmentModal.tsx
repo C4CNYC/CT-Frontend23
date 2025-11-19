@@ -35,10 +35,11 @@ const EnvironmentSchema = Yup.object().shape({
 interface EnvironmentForm {
   name: string
   description?: string
-  head?: string
-  scripts?: string
+  style?: string
+  script?: string
   configuration?: Record<string, any>
   active?: boolean
+  zipFile?: string
 }
 
 interface Prop {
@@ -55,10 +56,11 @@ export function EnvironmentModal({
   defaultValues = {
     name: '',
     description: '',
-    head: '',
-    scripts: '',
+    style: '',
+    script: '',
     configuration: {},
     active: true,
+    zipFile: '',
   },
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false)
@@ -158,11 +160,11 @@ export function EnvironmentModal({
               <Box>
                 <ModalCodeFullscreen
                   title={translate('environments_head_links')}
-                  name='head'
+                  name='style'
                 />
                 <RHFCode
                   placeholder={translate('environments_head_links_plh')}
-                  name='head'
+                  name='style'
                   height='180px'
                   extensions={[javascript({ jsx: true })]}
                 />
@@ -170,18 +172,29 @@ export function EnvironmentModal({
               <Box>
                 <ModalCodeFullscreen
                   title={translate('environments_body_scripts')}
-                  name='scripts'
+                  name='script'
                 />
                 <RHFCode
                   placeholder={translate('environments_body_scripts_plh')}
-                  name='scripts'
+                  name='script'
                   height='180px'
                   extensions={[javascript({ jsx: true })]}
                 />
               </Box>
+
               {isEdit && id && (
                 <Box>
                   <FileUploadSection environmentId={id} />
+                  {defaultValues.zipFile && (
+                    <Button
+                      variant='outlined'
+                      href={defaultValues.zipFile}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      Existing File
+                    </Button>
+                  )}
                 </Box>
               )}
             </Stack>

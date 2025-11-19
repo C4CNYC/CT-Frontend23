@@ -10,12 +10,9 @@ import { sendValidationMessageToIframes } from '@root/src/utils/sendValidationMe
 import { useLessonManager } from './LessonManagerContext'
 
 export function useCheckers() {
-  const { lessonContent, currentSlideId } = useLessonManager()
+  const { lessonContent, currentSlideId, checkersAnimation } = useLessonManager()
   let validations = lessonContent?.find((lc) => lc.id == currentSlideId)?.validations || []
-  const { completedSlides } = useSelector((state) => state.checkersAnimation)
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  fnIncUse(0)
 
   function selectedContentCheckersGet() {
     return contentValidations?.find((item) => item.contentId === currentSlideId)?.checkers || []
@@ -42,11 +39,13 @@ export function useCheckers() {
       if (!data || !data.type) return
       if (['checker-validation', 'ConsoleLog'].includes(data.type)) {
         document.querySelectorAll('iframe').forEach((iframe) => {
-          iframe.contentWindow?.postMessage(event.data, '*')
+          if (event.source !== iframe.contentWindow)
+            iframe.contentWindow?.postMessage(event.data, '*')
         })
       }
       if ('checker-validation' === data.type && data.checkerId && Boolean(data.valid)) {
         checkerIds.push({ name: data.checkerId, isValid: Boolean(data.valid) })
+        checkersAnimation.onTrue()
       } else if ('ConsoleLog' === data.type && data.message) {
         validations.forEach((validator) => {
           let isValid
@@ -116,6 +115,7 @@ export function useCheckers() {
 let fnInc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 function fnIncUse(n: number, ...args: any[]) {
   fnInc[n] = fnInc[n] + 1
+  //console.log('useCheckers fnInc', n, fnInc[n], ...args)
 }
 function countPassed(checkers: IValidationMap[]): number {
   return checkers.filter((checker) => checker.valid).length

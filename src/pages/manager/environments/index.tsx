@@ -123,7 +123,6 @@ export default function EnvironmentsPage(): React.ReactElement {
                   <TableHead>
                     <TableRow>
                       <TableCell align='left'>{translate('name')}</TableCell>
-                      <TableCell align='left'>{translate('description')}</TableCell>
                       <TableCell align='left'>{translate('status')}</TableCell>
                       <TableCell align='left'>{translate('actions_create')}</TableCell>
                       <TableCell align='left'>{translate('actions_update')}</TableCell>
@@ -134,7 +133,6 @@ export default function EnvironmentsPage(): React.ReactElement {
                     {data?.map((row) => (
                       <TableRow key={row.id}>
                         <TableCell align='left'>{row.name}</TableCell>
-                        <TableCell align='left'>{row.description}</TableCell>
                         <TableCell align='left'>
                           {row.active ? translate('active') : translate('inactive')}
                         </TableCell>
