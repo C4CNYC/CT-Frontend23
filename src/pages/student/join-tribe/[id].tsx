@@ -29,10 +29,12 @@ export default function JoinTribe(): React.ReactElement {
   }
 
   if (user) {
-    ;<JoinTribeModal
-      classInfo={data}
-      isSignIn={true}
-    />
+    return (
+      <JoinTribeModal
+        classInfo={data}
+        isSignIn={true}
+      />
+    )
   }
 
   return (
