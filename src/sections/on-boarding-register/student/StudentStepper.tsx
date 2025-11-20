@@ -105,7 +105,9 @@ export default function StudentStepper(): React.ReactElement {
         }}
       >
         <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}>
-          {activeStep !== 2 && <RegisterStudentTeacher />}
+          {tenant?.meta?.is_enabled_teacher_register_feature
+            ? activeStep !== 2 && <RegisterStudentTeacher />
+            : null}
           <FormProvider
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
