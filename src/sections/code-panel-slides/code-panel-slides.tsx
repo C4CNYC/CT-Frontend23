@@ -16,6 +16,8 @@ import {
 import { useDispatch } from '@root/src/redux/store'
 import { route2Number, route2String } from '@root/src/utils/route2String'
 
+import { FullScreenProvider } from '../code-panel/lib/FullScreenContext'
+
 import { CodePanelSlidesRender } from './CodePanelSlidesRender copy'
 import { LessonManagerProvider } from './LessonManagerContext'
 
@@ -43,7 +45,9 @@ export function CodePanelSlides({ lessonId }: { lessonId: string }) {
       lesson={lesson}
       lessonContent={lessonContent}
     >
-      <CodePanelSlidesRender />
+      <FullScreenProvider>
+        <CodePanelSlidesRender />
+      </FullScreenProvider>
     </LessonManagerProvider>
   )
 }

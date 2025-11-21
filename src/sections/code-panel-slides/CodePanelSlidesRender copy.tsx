@@ -25,6 +25,7 @@ import { CodeDocument } from '../code-panel/components/body/blocks/view-block/br
 
 import { BrowserViewTeacher } from './BrowserTeacher'
 import { useLessonManager } from './LessonManagerContext'
+import { TopPanel } from './TopPanel'
 
 interface CodePanelSlidesRenderProps {
   onSubmitLesson?: () => void
@@ -40,7 +41,6 @@ interface CodePanelSlidesRenderProps {
 export function CodePanelSlidesRender({
   onSubmitLesson = () => {},
   onSubmitChallenge = () => {},
-  integrations = [],
   lessonType,
   lessonName,
   lessonId,
@@ -50,6 +50,7 @@ export function CodePanelSlidesRender({
   const dispatch = useDispatch()
   const { lesson, lessonContent, currentSlideUpdated } = useLessonManager()
   let data = lessonContent ?? []
+  let integrations = lesson?.integrations
   const [isSlideReady, setIsSlideReady] = useState(false)
 
   const profile = useSelector((state) => state.global.user)
@@ -196,8 +197,16 @@ export function CodePanelSlidesRender({
   if (!lesson || !lessonContent) return <LoadingScreen text='Loading lesson...' />
 
   return (
-    <>
-      {slider}
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh',
+        width: '100%',
+      }}
+    >
+      <TopPanel language={'html'} />
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>{slider}</Box>
       {!lessonMeta?.hideDefaultButtons && (
         <Navigation
           hasPrev={slideIndex > 0}
@@ -209,6 +218,6 @@ export function CodePanelSlidesRender({
           lessonName={lessonName}
         />
       )}
-    </>
+    </Box>
   )
 }
