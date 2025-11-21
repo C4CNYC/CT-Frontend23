@@ -527,8 +527,15 @@
     "lessons_type": "Lesson Type",
     "lessons_type_select_one": "Select one",
     "lessons_type_select_one_star": "*",
-    "lessons_displayEngine_helper": "Choose how the lesson is displayed to students.",
-    "lessons_displayEngine": "Display Engine",
+    "lessons_displayEngine":{
+        "codepanel": "3-pane display: slides, code panel, output",
+        "slides": "Renders one wide slide",
+        "bareslides": "Provides everything, lets environments to render",
+        "onethird": "⅓ Slides and ⅔ is environment render",
+        "custom": "Custom display engine for specialized layouts",
+        "helper":"Choose how the lesson is displayed to students.",
+        "displayEngine":"Display Engine"
+    },
     "allows_students_to_create_multiple_files": "Allows students to create multiple files",
     "lesson_create_multiple_files":"Create Multiple Files",
     "lessons_active_tooltip": "The lesson will show in the catalog or is shareable to the class or in a Quest.",

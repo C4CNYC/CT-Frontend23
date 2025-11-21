@@ -371,7 +371,7 @@ export const skeletonStyles = {
 }
 
 // Constants
-const TYPING_ANIMATION_CSS = `
+export const TYPING_ANIMATION_CSS = `
   @keyframes bounce {
     0%, 80%, 100% { transform: translateY(0); }
     40% { transform: translateY(-8px); }

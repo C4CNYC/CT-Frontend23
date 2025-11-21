@@ -9,7 +9,11 @@ export const FullScreenProvider = ({ children }: { children: React.ReactNode }) 
 
   return (
     <FullScreenContext.Provider value={handle}>
-      <FullScreen handle={handle}>{children}</FullScreen>
+      <div style={{ height: '100%', width: '100%' }}>
+        <FullScreen handle={handle}>
+          <div style={{ height: '100%', width: '100%' }}>{children}</div>
+        </FullScreen>
+      </div>
     </FullScreenContext.Provider>
   )
 }

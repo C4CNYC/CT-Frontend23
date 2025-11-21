@@ -12,6 +12,7 @@ export const LessonDisplayEngine = {
   CodePanel: 'codepanel',
   Slides: 'slides',
   BareSlides: 'bareslides',
+  OneThird: 'onethird',
   Custom: 'custom',
 }
 
