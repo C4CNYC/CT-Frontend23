@@ -1,10 +1,11 @@
 import { useMemo } from 'react'
 
-import { Button, Link, Stack } from '@mui/material'
-import { useRouter } from 'next/router'
+import { LoadingButton } from '@mui/lab'
+import { Button, Stack } from '@mui/material'
 
-import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { useContinueCourse } from '../hooks/useContinueCourse'
 
 import { CONTINUE_COURSE_BTN_SX, ENROLL_COURSE_BTN_SX, getExploreCourseBtnSX } from './constants'
 
@@ -13,6 +14,7 @@ interface Props {
   progress: number | null
   courseId: string
   isLight: boolean
+  profile?: any
 }
 
 export default function CourseButtons({
@@ -20,28 +22,33 @@ export default function CourseButtons({
   progress,
   courseId,
   isLight,
+  profile,
 }: Props): React.ReactElement {
-  const { push } = useRouter()
   const translate = useTranslate()
   const exploreCourseBtnSx = useMemo(() => getExploreCourseBtnSX(isLight), [isLight])
+
+  const { continueCourse, isLoading } = useContinueCourse(courseId, profile?.id || '')
+
   return (
     <Stack
       direction='row'
       sx={{ gap: { xs: 1, sm: 3 }, pb: 3, pt: 2 }}
     >
       {progress && progress > 0 ? (
-        <Button
-          component={Link}
+        <LoadingButton
+          loading={isLoading}
+          sx={CONTINUE_COURSE_BTN_SX}
+          variant='outlined'
+          disabled={isLoading}
           onClick={async (e) => {
             e.stopPropagation()
             e.preventDefault()
-            await push(`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`)
+
+            await continueCourse()
           }}
-          variant='outlined'
-          sx={CONTINUE_COURSE_BTN_SX}
         >
           {translate('actions_continue')} 🙌🏾
-        </Button>
+        </LoadingButton>
       ) : (
         <Button
           onClick={redirect}
