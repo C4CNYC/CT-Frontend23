@@ -7,7 +7,6 @@ import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-glob
 import { useSelector } from '@/redux/store'
 import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
-import { useAuthContext } from '@root/src/auth/useAuthContext'
 
 import Menu from '../../code-panel/components/header/nav-bar/options/menu'
 import Timer from '../../code-panel/components/header/nav-bar/options/timer'
@@ -21,13 +20,11 @@ interface IDesktopBar {
 }
 
 const DesktopBar: FC<IDesktopBar> = ({ language, publicPage }) => {
-  const { user } = useAuthContext()
-  let isAdmin = user?.role?.includes('admin')
   const dispatch = useDispatch()
   const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
   const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
-  const onChangeColumnVisability = (value: boolean) => {
+  const onChangeColumnVisibility = (value: boolean) => {
     dispatch(toggleBrowser(value))
     dispatch(toggleInstrations(value))
   }
@@ -48,7 +45,7 @@ const DesktopBar: FC<IDesktopBar> = ({ language, publicPage }) => {
 
       <ViewTumbler
         isColumnHidden={isBrowserHidden && isInstructionsHidden}
-        onChangeColumnVisability={onChangeColumnVisability}
+        onChangeColumnVisability={onChangeColumnVisibility}
       />
 
       <Menu />
