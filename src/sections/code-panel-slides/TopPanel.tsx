@@ -35,7 +35,7 @@ export const TopPanel: FC<ITopPanel> = ({ language }) => {
       >
         {isDesktop && <HomeBtn />}
       </Box>
-      {profile && isAdmin ? <GroupHeader /> : ''}
+      {profile && isAdmin && <GroupHeader />}
       {isDesktop ? <DesktopBar language={language} /> : <MobileBar />}
     </Box>
   )
