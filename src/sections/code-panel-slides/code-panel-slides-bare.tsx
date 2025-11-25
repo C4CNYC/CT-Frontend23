@@ -9,6 +9,7 @@ import {
   setSlideIndex,
   setUnitId,
 } from '@/redux/slices/code-panel-global'
+import SkeletonCodePanel from '@/sections/code-panel/components/skeleton'
 import {
   useGetLessonContentStudentQuery,
   useGetLessonStudentWithoutContentsQuery,
@@ -35,7 +36,7 @@ export function CodePanelSlidesBare({ lessonId }: { lessonId: string }) {
     dispatch(setSlideId(route2String(router.query.slideId)))
     dispatch(setSlideIndex(route2Number(router.query.slideIndex)))
   }, [dispatch, lessonId, router.query])
-  if (!lesson || !lessonContent) return <>loading</>
+  if (!lesson || !lessonContent) return <SkeletonCodePanel />
 
   return (
     <LessonManagerProvider

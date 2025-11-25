@@ -36,6 +36,10 @@ import { useTranslate } from '@/utils/translateHelper'
 import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
+import {
+  useCompleteStudentLessonMutation,
+  useVisitStudentLessonMutation,
+} from '@root/src/redux/services/manager/progress-student'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
@@ -94,7 +98,9 @@ export function CodePanelLayout(): ReactElement | null {
   const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
   const [completeLesson] = useCompleteLessonMutation()
+  const [visitLesson] = useVisitStudentLessonMutation()
   const [carryOverFiles] = useLessonFilesCarryOverMutation()
+  const [completeLessonForProgress] = useCompleteStudentLessonMutation()
 
   const lessonIdFromRoute = Array.isArray(router.query.lessonId)
     ? router.query.lessonId.join()
@@ -168,6 +174,10 @@ export function CodePanelLayout(): ReactElement | null {
   }, [profile, lesson])
 
   useEffect(() => {
+    if (profile && router.query.lessonId) {
+      visitLesson({ studentId: profile.id, lessonId: router.query.lessonId as string })
+    }
+
     if (sessionStorage?.setItem)
       sessionStorage.setItem(
         'lastLesson',
@@ -268,6 +278,13 @@ export function CodePanelLayout(): ReactElement | null {
     setShowConfetti(true)
     try {
       enqueueSnackbar(translate('messages_lesson_complete'))
+      if (profile && router.query.lessonId) {
+        completeLessonForProgress({
+          studentId: profile?.id,
+          lessonId: router.query.lessonId as string,
+        })
+      }
+
       if (!courseContent) return
       const nextLessonInfo = getNextLessonId(
         courseContent.units,

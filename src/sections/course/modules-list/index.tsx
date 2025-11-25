@@ -2,16 +2,18 @@ import { Skeleton, Stack, useTheme } from '@mui/material'
 
 import { Unit } from '@/redux/interfaces/challenges.interface'
 import { useGetStudentLastVisitedUnitAndLessonQuery } from '@/redux/services/manager/lesson-student'
-import { useSelector } from '@/redux/store'
 
 import ModuleItem from './module-item'
 
 interface ModulesListBlockProps {
   modules: Unit[] | undefined
+  profile: any
 }
-export default function ModulesListBlock({ modules }: ModulesListBlockProps): React.ReactElement {
+export default function ModulesListBlock({
+  modules,
+  profile,
+}: ModulesListBlockProps): React.ReactElement {
   const theme = useTheme()
-  const profile = useSelector((state) => state.global.user)
   const { data: lastVisitedData } = useGetStudentLastVisitedUnitAndLessonQuery(
     null as unknown as void,
     { skip: !profile }
@@ -33,6 +35,7 @@ export default function ModulesListBlock({ modules }: ModulesListBlockProps): Re
               key={m.id}
               unit={m}
               lastVisited={m.id === lastVisitedData?.lastVisitedUnitId}
+              profile={profile}
             />
           ))
         : Array.from('12345').map((el) => (

@@ -81,6 +81,7 @@ export default function CourseList({ publicPage }: Props): React.ReactElement {
           data?.data?.map((el) => (
             <CoursesItem
               course={el}
+              profile={profile}
               key={el.id}
             />
           ))
