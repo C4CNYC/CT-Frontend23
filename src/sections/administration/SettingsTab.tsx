@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider } from '@/components'
+import { convertStringToBool } from '@/utils/convertStringToBool'
 import { RHFSwitch } from '@root/src/components'
 import { useUpdateOrgMutation } from '@root/src/redux/services/manager/super-admin'
 import { useTranslate } from '@root/src/utils/translateHelper'
@@ -28,15 +29,26 @@ const SettingsTab = ({
 
   const CreateOrgSchema = Yup.object().shape({
     meta: Yup.object().shape({
-      meta_title: Yup.string(),
-      meta_description: Yup.string(),
+      is_enabled_google_auth: Yup.boolean(),
+      is_enabled_powered_by_code_tribe: Yup.boolean(),
+      is_enabled_monetization: Yup.boolean(),
+      is_enabled_teacher_register_feature: Yup.boolean(),
     }),
   })
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateOrgSchema),
     defaultValues: {
-      meta: org?.meta ?? {},
+      meta: {
+        is_enabled_google_auth: convertStringToBool(org?.meta?.is_enabled_google_auth),
+        is_enabled_powered_by_code_tribe: convertStringToBool(
+          org?.meta?.is_enabled_powered_by_code_tribe
+        ),
+        is_enabled_monetization: convertStringToBool(org?.meta?.is_enabled_monetization),
+        is_enabled_teacher_register_feature: convertStringToBool(
+          org?.meta?.is_enabled_teacher_register_feature
+        ),
+      },
     },
   })
   const { formState } = methods
@@ -80,6 +92,10 @@ const SettingsTab = ({
           <RHFSwitch
             name='meta.is_enabled_monetization'
             label={translate('Monetization')}
+          />
+          <RHFSwitch
+            name='meta.is_enabled_teacher_register_feature'
+            label={translate('Teacher Registration')}
           />
         </Stack>
       </Stack>

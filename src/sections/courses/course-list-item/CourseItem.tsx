@@ -17,11 +17,12 @@ import CourseStatistics from './CourseStatistics'
 
 interface Props {
   course: ICourseElement
+  profile?: any
 }
 
 const MAX_DESCRIPTION_LENGTH = 80
 
-export default function CoursesItem({ course }: Props): React.ReactElement {
+export default function CoursesItem({ course, profile }: Props): React.ReactElement {
   const { push } = useRouter()
   const theme = useTheme()
   const translate = useTranslate()
@@ -115,6 +116,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
             progress={course.progress}
             courseId={course.id}
             isLight={isLight}
+            profile={profile}
           />
           <CourseInfo course={course} />
         </Box>

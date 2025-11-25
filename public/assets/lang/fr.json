@@ -533,6 +533,15 @@
     "integrations_body_links_plh": "Liens ou scripts du body",
     "integrations_empty": "Vous n'avez aucune intégration.",
     "integrations_lets_create": "Créons une intégration",
+    "lessons_displayEngine": {
+    "codepanel": "Affichage à 3 volets : diapositives, panneau de code, sortie",
+    "slides": "Affiche une large diapositive",
+    "bareslides": "Fournit tout, permet aux environnements d’être affichés",
+    "onethird": "⅓ diapositives et ⅔ affichage de l’environnement",
+    "custom": "Moteur d’affichage personnalisé pour des mises en page spécialisées",
+    "helper": "Choisissez comment la leçon est affichée aux étudiants.",
+    "displayEngine": "Moteur d’affichage"
+},
     "properties": "Propriété",
     "properties_removed": "Propriété supprimée",
     "entityType": "Type d'entité",

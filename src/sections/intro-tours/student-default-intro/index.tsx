@@ -40,7 +40,10 @@ export const StudentDefaultIntro = () => {
   useEffect(() => {
     if (isLoading) return
 
-    const hasSeenTour = userData?.meta ? userData.meta[KEY_INTRO_TOUR] : false
+    const isUserAuthenticated = !!userData?.id
+    const hasSeenTour = isUserAuthenticated
+      ? userData?.meta?.[KEY_INTRO_TOUR]
+      : localStorage.getItem(KEY_INTRO_TOUR) === 'true'
 
     if (hasSeenTour) {
       return
@@ -48,12 +51,17 @@ export const StudentDefaultIntro = () => {
 
     const timeout = setTimeout(() => {
       dispatch(setStartTour(true))
-      updateMeMetaFlag({ key: KEY_INTRO_TOUR, value: true })
-        .unwrap()
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.error('Failed to update meta flag:', error)
-        })
+
+      if (isUserAuthenticated) {
+        updateMeMetaFlag({ key: KEY_INTRO_TOUR, value: true })
+          .unwrap()
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.error('Failed to update meta flag:', error)
+          })
+      } else {
+        localStorage.setItem(KEY_INTRO_TOUR, 'true')
+      }
     }, 1000)
     return () => {
       clearTimeout(timeout)

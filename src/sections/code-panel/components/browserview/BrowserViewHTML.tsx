@@ -171,7 +171,7 @@ export function BrowserViewHTML({
       style={{
         border: 0,
         width: '100%',
-        height: iframeKey ? 'calc(100% - 42px)' : '100%',
+        height: '100%',
         background: '#F8F8FF',
       }}
     />

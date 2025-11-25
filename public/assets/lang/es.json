@@ -522,6 +522,15 @@
     "lesson_share_button": "Compartir",
     "lesson_create_favorite_input": "Favoritos",
     "lesson_create_favorite_btn": "IR",
+    "lessons_displayEngine": {
+        "codepanel": "Visualización de 3 paneles: diapositivas, panel de código, salida",
+        "slides": "Muestra una diapositiva ancha",
+        "bareslides": "Proporciona todo, permite que los entornos se rendericen",
+        "onethird": "⅓ diapositivas y ⅔ es renderizado del entorno",
+        "custom": "Motor de visualización personalizado para diseños especializados",
+        "helper": "Elige cómo se muestra la lección a los estudiantes.",
+        "displayEngine": "Motor de visualización"
+    },
     "integrations": "Integraciones",
     "integration": "Integración",
     "integrations_updated_msg": "Integración actualizada exitosamente",

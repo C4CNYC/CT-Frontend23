@@ -9,12 +9,15 @@ import {
   setSlideIndex,
   setUnitId,
 } from '@/redux/slices/code-panel-global'
+import SkeletonCodePanel from '@/sections/code-panel/components/skeleton'
 import {
   useGetLessonContentStudentQuery,
   useGetLessonStudentWithoutContentsQuery,
 } from '@root/src/redux/services/manager/lesson-student'
 import { useDispatch } from '@root/src/redux/store'
 import { route2Number, route2String } from '@root/src/utils/route2String'
+
+import { FullScreenProvider } from '../code-panel/lib/FullScreenContext'
 
 import { CodePanelSlidesRender } from './CodePanelSlidesRender copy'
 import { LessonManagerProvider } from './LessonManagerContext'
@@ -35,7 +38,7 @@ export function CodePanelSlides({ lessonId }: { lessonId: string }) {
     dispatch(setSlideId(route2String(router.query.slideId)))
     dispatch(setSlideIndex(route2Number(router.query.slideIndex)))
   }, [dispatch, lessonId, router.query])
-  if (!lesson || !lessonContent) return <>loading</>
+  if (!lesson || !lessonContent) return <SkeletonCodePanel />
 
   return (
     <LessonManagerProvider
@@ -43,7 +46,9 @@ export function CodePanelSlides({ lessonId }: { lessonId: string }) {
       lesson={lesson}
       lessonContent={lessonContent}
     >
-      <CodePanelSlidesRender />
+      <FullScreenProvider>
+        <CodePanelSlidesRender />
+      </FullScreenProvider>
     </LessonManagerProvider>
   )
 }

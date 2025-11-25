@@ -92,6 +92,7 @@ export default function JoinTribeRegister({
           <EmailStep
             nextStep={() => setCurrentStep(currentStep + 1)}
             isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
+            classId={classId}
           />
         )}
         {currentStep === 1 && (
