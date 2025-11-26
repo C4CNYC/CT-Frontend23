@@ -42,6 +42,7 @@ const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.Re
   return (
     <Box sx={BOX_STYLES}>
       <IconButton
+        sx={{ width: '26px', height: '26px', padding: '3px' }}
         onClick={() => {
           setDrawer(true)
         }}
@@ -128,7 +129,7 @@ const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.Re
 
 const BOX_STYLES = {
   display: 'flex',
-  width: '100%',
+  width: '26px',
   alignItems: 'center',
   justifyContent: 'center',
 }
