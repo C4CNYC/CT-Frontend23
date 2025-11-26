@@ -1,15 +1,7 @@
 import { useMemo } from 'react'
 
-import {
-  Box,
-  Button,
-  IconButton,
-  Link,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { LoadingButton } from '@mui/lab'
+import { Box, IconButton, Link, Stack, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { HiOutlineArrowNarrowRight } from '@react-icons/all-files/hi/HiOutlineArrowNarrowRight'
 import { MdIosShare } from '@react-icons/all-files/md/MdIosShare'
 import NextLink from 'next/link'
@@ -19,6 +11,8 @@ import { Unit } from '@/redux/interfaces/challenges.interface'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTranslate } from '@/utils/translateHelper'
 
+import { useContinueUnit } from '../hooks/useContinueUnit'
+
 import { getBtnSx, getImgSx, getModuleItemCont, INFO_CONT_SX, seeMoreBtn } from './constants'
 import ImageLightBox from './ImageLightBox'
 import ModuleProgress from './ModuleProgress'
@@ -26,14 +20,20 @@ import ModuleProgress from './ModuleProgress'
 interface IModuleItemProps {
   unit: Unit | undefined
   lastVisited: boolean
+  profile: any
 }
 
-export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): React.ReactElement {
+export default function ModuleItem({
+  unit,
+  lastVisited,
+  profile,
+}: IModuleItemProps): React.ReactElement {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(800))
   const { query } = useRouter()
   const translate = useTranslate()
   const router = useRouter()
+  const { continueUnit, isLoading } = useContinueUnit(unit?.id as string, profile?.id as string)
 
   const moduleContSx = useMemo(() => getModuleItemCont(theme), [theme])
   const imgSx = useMemo(() => getImgSx(unit?.avatar, theme), [theme, unit?.avatar])
@@ -42,6 +42,23 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
     [theme, isMobile, lastVisited]
   )
   const moreBtnSx = useMemo(() => seeMoreBtn(isMobile), [isMobile])
+
+  const handleContinueLesson = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    if (profile && profile.id) {
+      await continueUnit()
+    } else {
+      router.push(
+        STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+          courseId: query.id as string,
+          unitId: unit?.id,
+          lessonId: unit?.lessons?.[0].id,
+        })
+      )
+    }
+  }
 
   return (
     <Stack
@@ -99,18 +116,11 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
           alignItems='center'
           gap={isMobile ? 0 : 3}
         >
-          <Button
-            component={NextLink}
-            href={STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-              courseId: query.id as string,
-              unitId: unit?.id,
-              lessonId: unit?.lessons?.[0].id,
-            })}
+          <LoadingButton
+            loading={isLoading}
+            onClick={handleContinueLesson}
             sx={btnSx}
             variant='text'
-            onClick={(event) => {
-              event.stopPropagation()
-            }}
           >
             {translate('get_coding', {
               time: lastVisited ? 'Again' : '',
@@ -140,7 +150,7 @@ export default function ModuleItem({ unit, lastVisited }: IModuleItemProps): Rea
               size={24}
               style={lastVisited ? { stroke: 'url(#blue-gradient)' } : {}}
             />
-          </Button>
+          </LoadingButton>
           <Link
             href={STUDENT_PATH_DASHBOARD.courses.unit(query.id as string, unit?.id as string)}
             component={NextLink}

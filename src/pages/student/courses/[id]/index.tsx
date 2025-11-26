@@ -111,7 +111,10 @@ export default function CoursePage(): React.ReactElement {
             <Box overflow={'hidden'}>
               <CourseInfo course={data} />
               {data.units?.length ? (
-                <ModulesListBlock modules={data?.units} />
+                <ModulesListBlock
+                  modules={data?.units}
+                  profile={profile}
+                />
               ) : (
                 <EmptyContent
                   title='No modules'

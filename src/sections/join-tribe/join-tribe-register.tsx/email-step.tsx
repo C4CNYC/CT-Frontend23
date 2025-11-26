@@ -3,27 +3,39 @@ import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/mat
 import { FaArrowRight } from '@react-icons/all-files/fa/FaArrowRight'
 import { FcGoogle } from '@react-icons/all-files/fc/FcGoogle'
 import { useGoogleLogin } from '@react-oauth/google'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 
 import { useAuthContext } from '@/auth/useAuthContext'
 import { RHFTextField } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
+import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { useTenants } from '@root/src/hooks/useTenants'
 
 interface IEmailStepProps {
   nextStep: () => void
   isValid?: boolean
+  classId: string
 }
 
-export default function EmailStep({ nextStep, isValid }: IEmailStepProps): React.ReactElement {
+export default function EmailStep({
+  nextStep,
+  isValid,
+  classId,
+}: IEmailStepProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const { registerWithGoogle } = useAuthContext()
   const tenant = useTenants()
+  const { push, query } = useRouter()
 
   const onRegisterWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
       try {
-        registerWithGoogle(token, Role.Student)
+        await registerWithGoogle(token, Role.Student)
+        push(
+          `${STUDENT_PATH_DASHBOARD.class.id(classId)}?` +
+            `${new URLSearchParams({ joinCode: query.id as string })}`
+        )
       } catch (error: any) {
         enqueueSnackbar(error.message, { variant: 'error' })
       }
