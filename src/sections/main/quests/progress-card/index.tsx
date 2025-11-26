@@ -9,9 +9,13 @@ import { useRouter } from 'next/router'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { useFilters } from '@/hooks'
 import { IClassProgressCourse, IClassProgressModule } from '@/redux/interfaces/class.interface'
-import { useGetClassProgressQuery } from '@/redux/services/manager/classes-student'
+import {
+  useGetClassProgressQuery,
+  useGetClassStudentsQuery,
+} from '@/redux/services/manager/classes-student'
 import ProgressTable from '@/sections/dashboard/progress/progressTable/ProgressTable'
 import { SkeletonProgressTable } from '@/sections/dashboard/progress/progressTable/SkeletonProgressTable'
+import { transformClassProgress } from '@/utils/transformClassProgress'
 import { useTranslate } from '@/utils/translateHelper'
 
 interface IProgressCardProps {
@@ -53,7 +57,7 @@ export default function ProgressCard({ activeTab }: IProgressCardProps): React.R
     user: 'name',
   })
 
-  const { data: progressData, isLoading } = useGetClassProgressQuery(
+  const { data: progressData, isLoading: progressLoading } = useGetClassProgressQuery(
     {
       id: query.id as string,
     },
@@ -62,22 +66,45 @@ export default function ProgressCard({ activeTab }: IProgressCardProps): React.R
     }
   )
 
+  const { data: studentsData, isLoading: studentsLoading } = useGetClassStudentsQuery(
+    {
+      id: query.id as string,
+    },
+    {
+      skip: !query.id || !activeTab,
+    }
+  )
+
+  // Transform the progress data to the format expected by ProgressTable
+  const transformedProgressData = useMemo(() => {
+    if (!progressData || !studentsData?.data) return []
+    return transformClassProgress(progressData, studentsData.data)
+  }, [progressData, studentsData])
+
+  const isLoading = progressLoading || studentsLoading
+
   const filteredData =
     loggedUser?.role !== 'student'
-      ? progressData
-      : progressData?.filter((c) => c.id === loggedUser?.student_profile.id)
+      ? transformedProgressData
+      : transformedProgressData?.filter((c) => c.id === loggedUser?.student_profile.id)
   const translate = useTranslate()
   const [activeData, setActiveData] = useState<IClassProgressCourse[] | IClassProgressModule[]>([])
   const [selectedIdx, setSelectedIdx] = useState(0)
   useEffect(() => {
+    if (!filteredData || filteredData.length === 0) return
+
+    const firstStudentData = filteredData[0]
     const selectedData = filters.moduleId.length
-      ? filteredData?.[0].courses.find((c) => c.id === filters.courseId)!.modules
-      : filteredData?.[0].courses
-    setActiveData(selectedData!)
-    if (filters.moduleId.length)
-      setSelectedIdx(selectedData!.findIndex((m) => m.id === filters.moduleId) ?? 0)
-    else if (filters.courseId.length)
-      setSelectedIdx(selectedData!.findIndex((c) => c.id === filters.courseId) ?? 0)
+      ? firstStudentData.courses.find((c) => c.id === filters.courseId)?.modules
+      : firstStudentData.courses
+
+    if (selectedData) {
+      setActiveData(selectedData)
+      if (filters.moduleId.length)
+        setSelectedIdx(selectedData.findIndex((m) => m.id === filters.moduleId) ?? 0)
+      else if (filters.courseId.length)
+        setSelectedIdx(selectedData.findIndex((c) => c.id === filters.courseId) ?? 0)
+    }
   }, [filters, filteredData])
 
   const levelName = useMemo(
