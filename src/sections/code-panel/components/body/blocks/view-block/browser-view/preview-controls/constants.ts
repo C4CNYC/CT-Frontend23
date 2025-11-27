@@ -20,9 +20,17 @@ export const btnStyles = (disabled: boolean, customColor: string) => ({
 
 export const PREVIEW_CONT_SX = {
   flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
   width: '100%',
-  py: 0.5,
+  py: 0.3,
   pl: 1,
   pr: 1,
   gap: 1,
+}
+
+export const PREVIEW_SETTINGS_SX = {
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  width: '100%',
 }
