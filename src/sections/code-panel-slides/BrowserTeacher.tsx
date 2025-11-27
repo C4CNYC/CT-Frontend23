@@ -10,6 +10,7 @@ import {
 import SkeletonViewBlock from '../code-panel/components/body/blocks/view-block/skeleton-view-box'
 
 import { CheckersCompleated } from './CheckersCompleated'
+import { useFileManager } from './hooks/useFileManager'
 import { useLessonManager } from './LessonManagerContext'
 import { useLessonLoader } from './ServiceWorkerLoader'
 import { useCheckers } from './useCheckers'
@@ -20,12 +21,27 @@ export function BrowserViewTeacher({
   document,
   isOpenHeader,
   iframeKey,
-  stepBgColor,
 }: BrowserViewTeacherProps & { stepBgColor?: string }) {
   const [docSrc, setDocSrc] = useState('')
   const [iframeProcess, setIframeProcess] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const iFrameRef = useRef<HTMLIFrameElement>(null)
+  const [readiness, readinessSetter] = useState(0)
+
+  const { file, onUpdateFile } = useFileManager({})
+  function readinessSet(value: number) {
+    if (readiness + value == 3) {
+      window.document.querySelectorAll('iframe').forEach((f: HTMLIFrameElement) => {
+        if (f.contentWindow)
+          f.contentWindow.postMessage({ type: 'load-progress', content: file?.body || '' }, '*')
+      })
+    } else {
+      readinessSetter((r) => r | value)
+    }
+  }
+  useEffect(() => {
+    if (file) readinessSet(2)
+  }, [file])
   useCheckers()
   useLessonLoader()
   const lessonManager = useLessonManager()
@@ -57,20 +73,20 @@ export function BrowserViewTeacher({
         <head>
         <link rel="stylesheet" href="/fonts/index.css" />
         <style>
-          * { box-sizing: border-box; } 
+          * { box-sizing: border-box; }
         body { margin: 0; padding: 0; height: 100%; max-height: ${iframeKey ? '97%' : '100%'};}
         </style>
           ${getBody(cssBody as string, TagNames.Style)}
           ${integrationsScripts}
-          <script> 
+          <script>
             if (document.getElementById('VeryEditableDivId')) {
               let debounceTimer;
               document.getElementById('VeryEditableDivId').addEventListener('input', function() {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
-                  window.parent.postMessage({ 
-                    type: 'contentChange', 
-                    content: this.innerHTML 
+                  window.parent.postMessage({
+                    type: 'contentChange',
+                    content: this.innerHTML
                   }, '*');
                 }, 300);
               });
@@ -107,15 +123,23 @@ export function BrowserViewTeacher({
   useEffect(() => {
     if (!lessonEditable) return
     const handleMessage = (event: MessageEvent) => {
-      // console.log(event.data)
-      if (event.data.type === 'contentChange') {
-        setIsEditing(true)
+      console.log(event.data)
+      switch (event.data.type) {
+        case 'contentChange':
+          setIsEditing(true)
+          break
+        case 'save-progress':
+          onUpdateFile(event.data.content || '')
+          break
+        case 'app-ready':
+          readinessSet(1)
+          break
       }
     }
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [setIsEditing, document, lessonEditable])
+  }, [setIsEditing, document, lessonEditable, onUpdateFile])
 
   const IFrame = useMemo(() => (!iframeProcess ? '' : null), [docSrc, iframeProcess])
 
