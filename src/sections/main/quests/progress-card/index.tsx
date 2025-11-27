@@ -101,9 +101,19 @@ export default function ProgressCard({ activeTab }: IProgressCardProps): React.R
     if (selectedData) {
       setActiveData(selectedData)
       if (filters.moduleId.length)
-        setSelectedIdx(selectedData.findIndex((m) => m.id === filters.moduleId) ?? 0)
+        setSelectedIdx(
+          Math.max(
+            selectedData.findIndex((m) => m.id === filters.moduleId),
+            0
+          )
+        )
       else if (filters.courseId.length)
-        setSelectedIdx(selectedData.findIndex((c) => c.id === filters.courseId) ?? 0)
+        setSelectedIdx(
+          Math.max(
+            selectedData.findIndex((c) => c.id === filters.courseId),
+            0
+          )
+        )
     }
   }, [filters, filteredData])
 
