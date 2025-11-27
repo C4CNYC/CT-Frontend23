@@ -9,7 +9,10 @@ import {
 } from '../code-panel/components/body/blocks/view-block/browser-view/types'
 import SkeletonViewBlock from '../code-panel/components/body/blocks/view-block/skeleton-view-box'
 
+import { CheckersCompleated } from './CheckersCompleated'
 import { useLessonManager } from './LessonManagerContext'
+import { useLessonLoader } from './ServiceWorkerLoader'
+import { useCheckers } from './useCheckers'
 
 const getBody = (body: string, tagName: TagNames): string => `<${tagName}>${body}</${tagName}>`
 
@@ -23,6 +26,8 @@ export function BrowserViewTeacher({
   const [iframeProcess, setIframeProcess] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const iFrameRef = useRef<HTMLIFrameElement>(null)
+  useCheckers()
+  useLessonLoader()
   const lessonManager = useLessonManager()
   let integrations = lessonManager.lesson?.integrations || []
 
@@ -102,10 +107,9 @@ export function BrowserViewTeacher({
   useEffect(() => {
     if (!lessonEditable) return
     const handleMessage = (event: MessageEvent) => {
+      // console.log(event.data)
       if (event.data.type === 'contentChange') {
         setIsEditing(true)
-        // Here you would typically update your state/store with the new content
-        // For now, we just prevent the iframe from re-rendering
       }
     }
 
@@ -113,25 +117,24 @@ export function BrowserViewTeacher({
     return () => window.removeEventListener('message', handleMessage)
   }, [setIsEditing, document, lessonEditable])
 
-  const IFrame = useMemo(
-    () =>
-      !iframeProcess ? (
-        <iframe
-          className='BrowserViewTeacherView'
-          ref={iFrameRef}
-          srcDoc={docSrc}
-          style={{
-            border: 0,
-            width: '100%',
-            height: '100%',
-          }}
-          key={docSrc} // Key helps React decide when to recreate iframe
-        />
-      ) : null,
-    [docSrc, iframeProcess]
-  )
+  const IFrame = useMemo(() => (!iframeProcess ? '' : null), [docSrc, iframeProcess])
 
   if (!document) return <SkeletonViewBlock isOpenHeader={isOpenHeader} />
 
-  return IFrame
+  return (
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      {lessonManager.checkersAnimation.value && <CheckersCompleated />}
+      <iframe
+        className='BrowserViewTeacherView'
+        ref={iFrameRef}
+        srcDoc={docSrc}
+        style={{
+          border: 0,
+          width: '100%',
+          height: '100%',
+        }}
+        key={docSrc} // Key helps React decide when to recreate iframe
+      />
+    </div>
+  )
 }
