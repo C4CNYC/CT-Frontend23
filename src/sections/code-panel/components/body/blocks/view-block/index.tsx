@@ -40,9 +40,11 @@ export function ViewBlock() {
       hideTabsHandler={() => dispatch(toggleBrowser(true))}
       takeHeaderSettings={setIsOpenHeader}
     >
-      {!codePanelContext.autoRun && (
-        <PreviewControls reloadIframe={() => setIframeKey((k) => k + 1)} />
-      )}
+      <PreviewControls
+        reloadIframe={() => setIframeKey((k) => k + 1)}
+        isAutoRun={codePanelContext.autoRun}
+      />
+
       <BrowserView
         isOpenHeader={isOpenHeader}
         iframeKey={iframeKey + codePanelContext.reloadIframeKey}

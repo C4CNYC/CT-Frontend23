@@ -20,7 +20,7 @@ const EmailPassStep = () => {
 
   return (
     <Stack sx={{ gap: 3 }}>
-      <CustomLabel translationKey='Create a tenant' />
+      <CustomLabel translationKey='Create an Organization' />
       <RHFTextField
         name='email'
         label={translate('email')}
