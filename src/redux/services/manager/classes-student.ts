@@ -1,7 +1,7 @@
 import {
+  ClassProgressResult,
   ClassSearchParams,
   IClass,
-  IClassProgress,
   IMentor,
 } from '@/redux/interfaces/class.interface'
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
@@ -50,7 +50,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ['ClassesStudent'],
     }),
-    getClassProgress: builder.query<IClassProgress[], { id: string }>({
+    getClassProgress: builder.query<ClassProgressResult, { id: string }>({
       query: ({ id }) => ({
         url: `/student/class/${id}/progress`,
         method: 'GET',
