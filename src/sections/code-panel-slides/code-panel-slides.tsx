@@ -32,10 +32,16 @@ export function CodePanelSlides({ lessonId }: { lessonId: string }) {
   const { data: lessonContent, isLoading: isLoadingLessonContent } =
     useGetLessonContentStudentQuery({ id: lessonId }, { skip: !lessonId })
   useEffect(() => {
+    if (!lesson || !lessonContent || !lessonContent.length) return
     dispatch(setLessonId(lessonId))
     dispatch(setUnitId(route2String(router.query.unitId)))
     dispatch(setCourseId(route2String(router.query.courseId)))
-    dispatch(setSlideId(route2String(router.query.slideId)))
+    let slideId = route2String(router.query.slideId)
+    if (!slideId && lessonContent && lessonContent.length > 0) {
+      slideId = lessonContent[0].id
+    }
+
+    dispatch(setSlideId(slideId))
     dispatch(setSlideIndex(route2Number(router.query.slideIndex)))
   }, [dispatch, lessonId, router.query])
   if (!lesson || !lessonContent) return <SkeletonCodePanel />

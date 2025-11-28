@@ -21,7 +21,7 @@ interface UseFileManagerProps {
 }
 
 export const useFileManager = ({ sandbox = false }: UseFileManagerProps) => {
-  const { lesson, currentSlideId } = useLessonManager()
+  const { lesson, currentSlideId, lessonContent } = useLessonManager()
   const lessonId = lesson?.id || '',
     lessonContentId = currentSlideId
   const [file, setFile] = useState<StudentFile | null>(sandbox ? DEFAULT_FILE : null)
@@ -35,7 +35,6 @@ export const useFileManager = ({ sandbox = false }: UseFileManagerProps) => {
     { lessonId, lessonContentId },
     { skip: !lessonId || !lessonContentId || sandbox }
   )
-
   const [updateStudentFile] = useUpdateStudentFileMutation()
 
   useEffect(() => {

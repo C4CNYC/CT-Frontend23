@@ -10,7 +10,7 @@ import {
 import SkeletonViewBlock from '../code-panel/components/body/blocks/view-block/skeleton-view-box'
 
 import { CheckersCompleated } from './CheckersCompleated'
-import { useFileManager } from './hooks/useFileManager'
+import { useFileReadiness } from './hooks/useFileReadiness'
 import { useLessonManager } from './LessonManagerContext'
 import { useLessonLoader } from './ServiceWorkerLoader'
 import { useCheckers } from './useCheckers'
@@ -26,22 +26,7 @@ export function BrowserViewTeacher({
   const [iframeProcess, setIframeProcess] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const iFrameRef = useRef<HTMLIFrameElement>(null)
-  const [readiness, readinessSetter] = useState(0)
-
-  const { file, onUpdateFile } = useFileManager({})
-  function readinessSet(value: number) {
-    if (readiness + value == 3) {
-      window.document.querySelectorAll('iframe').forEach((f: HTMLIFrameElement) => {
-        if (f.contentWindow)
-          f.contentWindow.postMessage({ type: 'load-progress', content: file?.body || '' }, '*')
-      })
-    } else {
-      readinessSetter((r) => r | value)
-    }
-  }
-  useEffect(() => {
-    if (file) readinessSet(2)
-  }, [file])
+  useFileReadiness({})
   useCheckers()
   useLessonLoader()
   const lessonManager = useLessonManager()
@@ -119,27 +104,15 @@ export function BrowserViewTeacher({
     }
   }, [document, isEditing])
 
-  // Handle messages from iframe (including content changes)
   useEffect(() => {
     if (!lessonEditable) return
     const handleMessage = (event: MessageEvent) => {
-      console.log(event.data)
-      switch (event.data.type) {
-        case 'contentChange':
-          setIsEditing(true)
-          break
-        case 'save-progress':
-          onUpdateFile(event.data.content || '')
-          break
-        case 'app-ready':
-          readinessSet(1)
-          break
-      }
+      if (event.data.type === 'contentChange') setIsEditing(true)
     }
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [setIsEditing, document, lessonEditable, onUpdateFile])
+  }, [setIsEditing, lessonEditable])
 
   const IFrame = useMemo(() => (!iframeProcess ? '' : null), [docSrc, iframeProcess])
 
