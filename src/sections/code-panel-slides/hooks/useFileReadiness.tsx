@@ -12,21 +12,16 @@ export const useFileReadiness = ({ sandbox = false }: UseFileReadinessProps = {}
   const [readyApp, readyAppSet] = useState(false)
   const [messageSent, setMessageSent] = useState(false)
 
-  useEffect(()=>{
-    if(!readyFile || !readyApp || messageSent)
-      return;
-    
+  useEffect(() => {
+    if (!readyFile || !readyApp || messageSent) return
+
     setMessageSent(true)
     window.document.querySelectorAll('iframe').forEach((iframe: HTMLIFrameElement) => {
       if (iframe.contentWindow) {
-        iframe.contentWindow.postMessage(
-          { type: 'load-progress', content: file?.body || '' },
-          '*'
-        )
+        iframe.contentWindow.postMessage({ type: 'load-progress', content: file?.body || '' }, '*')
       }
     })
-
-  },[readyFile, readyApp, file])
+  }, [readyFile, readyApp, file])
 
   useEffect(() => {
     if (file) {
@@ -57,6 +52,6 @@ export const useFileReadiness = ({ sandbox = false }: UseFileReadinessProps = {}
     onUpdateFile,
     isLoading,
     error,
-    readiness: readyApp && readyFile, 
+    readiness: readyApp && readyFile,
   }
 }
