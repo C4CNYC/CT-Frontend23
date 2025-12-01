@@ -1,6 +1,7 @@
 import SkeletonViewBlock from '../code-panel/components/body/blocks/view-block/skeleton-view-box'
 
 import { CheckersCompleated } from './CheckersCompleated'
+import { useFileReadiness } from './hooks/useFileReadiness'
 import { useLessonManager } from './LessonManagerContext'
 import { useLessonLoader } from './ServiceWorkerLoader'
 import { useCheckers } from './useCheckers'
@@ -8,6 +9,7 @@ import { useCheckers } from './useCheckers'
 export function BrowserViewTeacherBare() {
   const { lesson, lessonContent, checkersAnimation } = useLessonManager()
   const currentSlide = lessonContent ? lessonContent[0] : null
+  useFileReadiness({})
   useCheckers()
   useLessonLoader()
 
