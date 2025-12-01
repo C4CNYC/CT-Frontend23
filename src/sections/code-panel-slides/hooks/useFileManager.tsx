@@ -21,7 +21,7 @@ interface UseFileManagerProps {
 }
 
 export const useFileManager = ({ sandbox = false }: UseFileManagerProps) => {
-  const { lesson, currentSlideId, lessonContent } = useLessonManager()
+  const { lesson, currentSlideId } = useLessonManager()
   const lessonId = lesson?.id || '',
     lessonContentId = currentSlideId
   const [file, setFile] = useState<StudentFile | null>(sandbox ? DEFAULT_FILE : null)
