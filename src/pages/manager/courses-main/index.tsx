@@ -51,7 +51,7 @@ export default function CoursesListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('courses')} | CodeTribe</title>
+        <title> {translate('courses')+ ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs

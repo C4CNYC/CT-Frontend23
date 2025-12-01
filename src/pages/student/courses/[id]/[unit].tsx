@@ -85,7 +85,7 @@ export default function ModulePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{unitModule?.name ?? translate('module')} | CodeTribe</title>
+        <title>{unitModule?.name ?? translate('module')+ ` | CodeTribe`}</title>
       </Head>
       <Container
         maxWidth={themeStretch ? false : 'lg'}

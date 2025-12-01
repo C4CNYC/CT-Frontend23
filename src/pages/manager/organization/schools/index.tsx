@@ -18,7 +18,7 @@ export default function Index(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('organization')} | CodeTribe</title>
+        <title> {translate('organization')+ ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs

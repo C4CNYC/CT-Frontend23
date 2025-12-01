@@ -71,7 +71,7 @@ export default function ModulesListPage(): React.ReactElement | string {
   return (
     <>
       <Head>
-        <title> {translate('modules')} | CodeTribe</title>
+        <title> {translate('modules')+ ` | CodeTribe`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

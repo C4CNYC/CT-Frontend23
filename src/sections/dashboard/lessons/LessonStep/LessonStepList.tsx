@@ -286,7 +286,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   return (
     <>
       <Head>
-        <title>{lesson?.name} | CodeTribe</title>
+        <title>{lesson?.name+ ` | CodeTribe`}</title>
       </Head>
       <Box
         sx={{ p: 2 }}

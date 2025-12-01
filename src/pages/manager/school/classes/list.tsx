@@ -189,7 +189,7 @@ export default function UserListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('classes')} | CodeTribe</title>
+        <title> {translate('classes')+ ` | CodeTribe`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

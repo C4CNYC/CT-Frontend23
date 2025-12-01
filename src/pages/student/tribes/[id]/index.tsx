@@ -28,7 +28,7 @@ export default function TribeProfilePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('tribe_name', { name: data?.name })} | CodeTribe</title>
+        <title>{translate('tribe_name', { name: data?.name })+ ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <Card
