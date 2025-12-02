@@ -90,7 +90,6 @@ export const LessonManagerProvider: React.FC<{
       let el = prev.find((s) => s.id === slideId)
       if (!el || !(value !== undefined)) return prev
       // @ts-ignore
-
       el[part] = value
 
       return prev
