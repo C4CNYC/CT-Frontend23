@@ -27,6 +27,7 @@ const MetaTab = ({
   const [updateOrg, { isLoading: isUpdating }] = useUpdateOrgMutation()
 
   const CreateOrgSchema = Yup.object().shape({
+    domain: Yup.array().of(Yup.string()),
     meta: Yup.object().shape({
       meta_title: Yup.string(),
       meta_description: Yup.string(),
@@ -36,6 +37,7 @@ const MetaTab = ({
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateOrgSchema),
     defaultValues: {
+      domain: org?.domain?.split(',').filter(Boolean) ?? [],
       meta: org?.meta ?? {},
     },
   })
