@@ -35,7 +35,7 @@ export default function UserEditPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('students_edit_student')+ ` | CodeTribe`}</title>
+        <title> {translate('students_edit_student') + ` | CodeTribe`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

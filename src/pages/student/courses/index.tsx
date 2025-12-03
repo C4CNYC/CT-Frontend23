@@ -19,7 +19,7 @@ export default function Courses(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('courses_catalog')+ ` | CodeTribe`}</title>
+        <title> {translate('courses_catalog') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs

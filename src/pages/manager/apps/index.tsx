@@ -63,7 +63,7 @@ export default function AppsPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('integrations')+ ` | CodeTribe`}</title>
+        <title>{translate('integrations') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         {!isLoading ? (

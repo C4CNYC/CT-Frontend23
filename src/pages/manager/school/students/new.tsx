@@ -20,7 +20,7 @@ export default function UserCreatePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('students_create_new')+ ` | CodeTribe`}</title>
+        <title> {translate('students_create_new') + ` | CodeTribe`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

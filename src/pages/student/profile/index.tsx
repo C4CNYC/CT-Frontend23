@@ -52,7 +52,7 @@ export default function UserProfile(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('profile')+ ` | CodeTribe`}</title>
+        <title>{translate('profile') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs

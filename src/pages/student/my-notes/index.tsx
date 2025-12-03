@@ -41,7 +41,7 @@ export default function Goals(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('notes_my')+ ` | CodeTribe`}</title>
+        <title>{translate('notes_my') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs

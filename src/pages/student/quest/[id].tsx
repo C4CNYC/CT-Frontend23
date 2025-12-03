@@ -86,7 +86,7 @@ export default function Quest(): React.ReactElement | null {
   return (
     <>
       <Head>
-        <title>{translate('quest')+ ` | CodeTribe`}</title>
+        <title>{translate('quest') + ` | CodeTribe`}</title>
       </Head>
       <Container
         maxWidth={themeStretch ? false : 'lg'}

@@ -113,7 +113,7 @@ export default function CreateClass(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('class_create_class')+ ` | CodeTribe`}</title>
+        <title>{translate('class_create_class') + ` | CodeTribe`}</title>
       </Head>
       <Container
         maxWidth={false}
