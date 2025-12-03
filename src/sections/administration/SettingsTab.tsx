@@ -28,6 +28,7 @@ const SettingsTab = ({
   const [updateOrg, { isLoading: isUpdating }] = useUpdateOrgMutation()
 
   const CreateOrgSchema = Yup.object().shape({
+    domain: Yup.array().of(Yup.string()),
     meta: Yup.object().shape({
       is_enabled_google_auth: Yup.boolean(),
       is_enabled_powered_by_code_tribe: Yup.boolean(),
@@ -39,6 +40,7 @@ const SettingsTab = ({
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateOrgSchema),
     defaultValues: {
+      domain: org?.domain?.split(',').filter(Boolean) ?? [],
       meta: {
         is_enabled_google_auth: convertStringToBool(org?.meta?.is_enabled_google_auth),
         is_enabled_powered_by_code_tribe: convertStringToBool(
