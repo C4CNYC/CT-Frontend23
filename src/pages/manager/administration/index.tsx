@@ -152,7 +152,7 @@ export default function AdministrationPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('Administration')} | CodeTribe</title>
+        <title> {translate('Administration') + ` | CodeTribe`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

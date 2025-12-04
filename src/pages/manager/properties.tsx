@@ -108,7 +108,7 @@ export default function ManagerProperties(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('properties')} | CodeTribe</title>
+        <title>{translate('properties') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         {!propertiesLoading ? (
