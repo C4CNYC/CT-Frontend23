@@ -64,8 +64,8 @@ const SettingsTab = ({
           domain,
           meta: {
             ...org?.meta,
-            ...data.meta
-          }
+            ...data.meta,
+          },
         }).unwrap()
         enqueueSnackbar(translate('messages_update_success'))
       }
