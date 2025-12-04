@@ -64,7 +64,7 @@ export default function EnvironmentsPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('environments')} | CodeTribe</title>
+        <title>{translate('environments') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         {!isLoading ? (

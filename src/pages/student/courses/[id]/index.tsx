@@ -74,7 +74,7 @@ export default function CoursePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{data?.name ?? translate('course')} | CodeTribe</title>
+        <title>{data?.name ?? translate('course') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs

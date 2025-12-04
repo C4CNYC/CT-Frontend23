@@ -17,7 +17,7 @@ export default function Page404(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('not_found')} | CodeTribe</title>
+        <title> {translate('not_found') + `| CodeTribe`}</title>
       </Head>
 
       <MotionContainer>

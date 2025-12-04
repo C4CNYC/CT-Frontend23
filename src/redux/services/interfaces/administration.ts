@@ -23,6 +23,7 @@ export interface IAdministrationCreate {
   domain: string
   home_page_type?: HomePageType
   home_page_body?: string
+  meta?: IOrgMeta
 }
 
 export interface IOrgMeta {
