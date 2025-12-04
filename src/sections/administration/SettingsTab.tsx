@@ -59,7 +59,14 @@ const SettingsTab = ({
     try {
       let domain = Array.isArray(data.domain) ? data.domain.join(',') : data.domain || ''
       if (org) {
-        await updateOrg({ id: org.id, ...data, domain }).unwrap()
+        await updateOrg({
+          id: org.id,
+          domain,
+          meta: {
+            ...org?.meta,
+            ...data.meta
+          }
+        }).unwrap()
         enqueueSnackbar(translate('messages_update_success'))
       }
     } catch (e: any) {
