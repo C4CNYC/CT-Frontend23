@@ -3,14 +3,26 @@ import React, { useState, useEffect } from 'react'
 import { javascript } from '@codemirror/lang-javascript'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  FormControlLabel,
+  Switch,
+} from '@mui/material'
 import { Box } from '@mui/system'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { FormProvider, RHFCode, RHFTextField } from '@/components'
 import { ModalCodeFullscreen } from '@/components/modal-code-fullscreen'
+import { useIsSuperAdmin } from '@/hooks/useIsSuperAdmin'
+import { Role } from '@/redux/services/enums/role.enum'
 import {
   useCreateIntegrationMutation,
   useEditIntegrationMutation,
@@ -18,13 +30,15 @@ import {
 import { useTranslate } from '@/utils/translateHelper'
 
 const IntegrationSchema = Yup.object().shape({
-  name: Yup.string().required('Tenant name is required'),
+  name: Yup.string().required('Integration name is required'),
+  public: Yup.boolean(),
 })
 
 interface IntegrationForm {
   name: string
   head: string
   scripts: string
+  public?: boolean // New field
 }
 
 interface Prop {
@@ -42,10 +56,12 @@ export function ModalIntegration({
     name: '',
     scripts: '',
     head: '',
+    public: false, // Default to false
   },
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
+  const isSuperAdmin = useIsSuperAdmin()
   const handleOpen = (): void => {
     setOpen(true)
   }
@@ -71,22 +87,27 @@ export function ModalIntegration({
 
   const onSubmit = async (data: IntegrationForm): Promise<void> => {
     try {
-      enqueueSnackbar(
-        id ? translate('integrations_updated_msg') : translate('integrations_created_msg')
-      )
+      if (id) {
+        await updateIntegration({
+          id,
+          ...data,
+        }).unwrap()
+        enqueueSnackbar(translate('integrations_updated_msg'))
+      } else {
+        await createIntegration(data).unwrap()
+        enqueueSnackbar(translate('integrations_created_msg'))
+      }
+      methods.reset()
+      handleClose()
     } catch (e: any) {
-      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+      if (e.status === 403) {
+        enqueueSnackbar(translate('integrations_permission_denied'), { variant: 'error' })
+      } else if (e.status === 404) {
+        enqueueSnackbar(translate('integrations_not_found'), { variant: 'error' })
+      } else {
+        enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+      }
     }
-    if (id) {
-      await updateIntegration({
-        id,
-        ...data,
-      }).unwrap()
-    } else {
-      await createIntegration(data).unwrap()
-    }
-    methods.reset()
-    handleClose()
   }
   const onCancel = (): void => {
     methods.reset()
@@ -107,73 +128,55 @@ export function ModalIntegration({
           onSubmit={handleSubmit(onSubmit)}
         >
           <DialogContent>
-            {isEdit ? (
-              <Stack gap={2}>
+            <Stack gap={2}>
+              <Box>
+                <RHFTextField
+                  placeholder={translate('name')}
+                  name='name'
+                />
+              </Box>
+
+              <RoleBasedGuard roles={[Role.SuperAdmin]}>
                 <Box>
-                  <RHFTextField
-                    placeholder={translate('name')}
-                    name='name'
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        {...methods.register('public')}
+                        checked={methods.watch('public')}
+                        onChange={(e) => methods.setValue('public', e.target.checked)}
+                      />
+                    }
+                    label={translate('integrations_make_public')}
                   />
                 </Box>
-                <Box>
-                  <ModalCodeFullscreen
-                    title={translate('integrations_head_links_plh')}
-                    name='head'
-                  />
-                  <RHFCode
-                    placeholder={translate('integrations_head_links_plh')}
-                    name='head'
-                    height='180px'
-                    extensions={[javascript({ jsx: true })]}
-                  />
-                </Box>
-                <Box>
-                  <ModalCodeFullscreen
-                    title={translate('integrations_body_links_plh')}
-                    name='scripts'
-                  />
-                  <RHFCode
-                    placeholder={translate('integrations_body_links_plh')}
-                    name='scripts'
-                    height='180px'
-                    extensions={[javascript({ jsx: true })]}
-                  />
-                </Box>
-              </Stack>
-            ) : (
-              <Stack gap={2}>
-                <Box>
-                  <RHFTextField
-                    placeholder={translate('name')}
-                    name='name'
-                  />
-                </Box>
-                <Box>
-                  <ModalCodeFullscreen
-                    title={translate('integrations_head_links_plh')}
-                    name='head'
-                  />
-                  <RHFCode
-                    placeholder={translate('integrations_head_links_plh')}
-                    name='head'
-                    height='180px'
-                    extensions={[javascript({ jsx: true })]}
-                  />
-                </Box>
-                <Box>
-                  <ModalCodeFullscreen
-                    title={translate('integrations_body_links_plh')}
-                    name='scripts'
-                  />
-                  <RHFCode
-                    placeholder={translate('integrations_body_links_plh')}
-                    name='scripts'
-                    height='180px'
-                    extensions={[javascript({ jsx: true })]}
-                  />
-                </Box>
-              </Stack>
-            )}
+              </RoleBasedGuard>
+
+              <Box>
+                <ModalCodeFullscreen
+                  title={translate('integrations_head_links_plh')}
+                  name='head'
+                />
+                <RHFCode
+                  placeholder={translate('integrations_head_links_plh')}
+                  name='head'
+                  height='180px'
+                  extensions={[javascript({ jsx: true })]}
+                />
+              </Box>
+
+              <Box>
+                <ModalCodeFullscreen
+                  title={translate('integrations_body_links_plh')}
+                  name='scripts'
+                />
+                <RHFCode
+                  placeholder={translate('integrations_body_links_plh')}
+                  name='scripts'
+                  height='180px'
+                  extensions={[javascript({ jsx: true })]}
+                />
+              </Box>
+            </Stack>
           </DialogContent>
           <DialogActions>
             <Button
