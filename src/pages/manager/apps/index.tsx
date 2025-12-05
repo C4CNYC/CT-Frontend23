@@ -1,16 +1,22 @@
+import { useMemo, useState } from 'react'
+
 import {
   Button,
   Card,
+  Container,
+  FormControlLabel,
   IconButton,
   Skeleton,
+  Stack,
+  Switch,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from '@mui/material'
-import { Container, Stack } from '@mui/system'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
 import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
@@ -19,6 +25,7 @@ import omit from 'lodash-es/omit'
 import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import {
   CustomBreadcrumbs,
   Scrollbar,
@@ -29,11 +36,14 @@ import {
 } from '@/components'
 import { ModalIntegration } from '@/components/modal-integration'
 import { useFilters } from '@/hooks'
+import { useIsSuperAdmin } from '@/hooks/useIsSuperAdmin'
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'
+import { Role } from '@/redux/services/enums/role.enum'
 import {
   useDeleteIntegrationMutation,
   useGetIntegrationsListQuery,
 } from '@/redux/services/manager/integration-manager'
+import { useSelector } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { SkeletonBreadcrumbs } from '@/sections/dashboard/skeleton/skeletonBreadcrumbs'
@@ -47,8 +57,27 @@ export default function AppsPage(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar()
   const { themeStretch } = useSettingsContext()
   const { filters, setFilter } = useFilters({ name: '' })
+  const isSuperAdmin = useIsSuperAdmin()
+  const tenant = useSelector((state: any) => state.tenant)
+  const [publicFilter, setPublicFilter] = useState<boolean | null>(null)
+  const [selectedOrg, setSelectedOrg] = useState<string | null>(null)
 
-  const { data, isLoading } = useGetIntegrationsListQuery({ ...filters })
+  const queryFilters = useMemo(() => {
+    const baseFilters = {
+      name: filters.name || '',
+      page: filters.page || 0,
+    }
+    if (isSuperAdmin) {
+      return {
+        ...baseFilters,
+        ...(publicFilter !== null && { public: publicFilter }),
+        ...(selectedOrg && { organization_id: selectedOrg }),
+      }
+    }
+    return baseFilters
+  }, [filters.name, filters.page, isSuperAdmin, publicFilter, selectedOrg])
+
+  const { data, isLoading } = useGetIntegrationsListQuery(queryFilters)
   const [removeIntegration] = useDeleteIntegrationMutation()
 
   const onDelete = async (id: string): Promise<void> => {
@@ -56,7 +85,13 @@ export default function AppsPage(): React.ReactElement {
       await removeIntegration({ integrationId: id }).unwrap()
       enqueueSnackbar(translate('integrations_removed_msg'))
     } catch (e: any) {
-      enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+      if (e.status === 403) {
+        enqueueSnackbar(translate('integrations_permission_denied'), { variant: 'error' })
+      } else if (e.status === 404) {
+        enqueueSnackbar(translate('integrations_not_found'), { variant: 'error' })
+      } else {
+        enqueueSnackbar(translate('messages_error'), { variant: 'error' })
+      }
     }
   }
 
@@ -67,29 +102,56 @@ export default function AppsPage(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         {!isLoading ? (
-          <CustomBreadcrumbs
-            heading=''
-            links={[
-              {
-                name: translate('home'),
-                href: STUDENT_PATH_DASHBOARD.class.root,
-              },
-              {
-                name: translate('integrations'),
-                href: MANAGER_PATH_DASHBOARD.apps.root,
-              },
-            ]}
-            action={
-              <ModalIntegration>
-                <Button
-                  variant='contained'
-                  startIcon={<FaPlus />}
-                >
-                  {translate('integrations_add_int')}
-                </Button>
-              </ModalIntegration>
-            }
-          />
+          <>
+            <CustomBreadcrumbs
+              heading=''
+              links={[
+                {
+                  name: translate('home'),
+                  href: STUDENT_PATH_DASHBOARD.class.root,
+                },
+                {
+                  name: translate('integrations'),
+                  href: MANAGER_PATH_DASHBOARD.apps.root,
+                },
+              ]}
+              action={
+                <ModalIntegration>
+                  <Button
+                    variant='contained'
+                    startIcon={<FaPlus />}
+                  >
+                    {translate('integrations_add_int')}
+                  </Button>
+                </ModalIntegration>
+              }
+            />
+
+            <RoleBasedGuard roles={[Role.SuperAdmin]}>
+              <Stack
+                direction='row'
+                spacing={2}
+                mb={2}
+              >
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={publicFilter === true}
+                      onChange={(e) => setPublicFilter(e.target.checked ? true : null)}
+                    />
+                  }
+                  label={translate('integrations_public_only')}
+                />
+                <TextField
+                  label={translate('filter')}
+                  variant='outlined'
+                  size='small'
+                  value={filters.name}
+                  onChange={(e) => setFilter('name', e.target.value)}
+                />
+              </Stack>
+            </RoleBasedGuard>
+          </>
         ) : (
           <Stack
             direction='row'
@@ -122,6 +184,8 @@ export default function AppsPage(): React.ReactElement {
                   <TableHead>
                     <TableRow>
                       <TableCell align='left'>{translate('title')}</TableCell>
+                      <TableCell align='left'>{translate('integrations_public')}</TableCell>
+                      <TableCell align='left'>{translate('integrations_organization')}</TableCell>
                       <TableCell align='left'>{translate('actions_create')}</TableCell>
                       <TableCell align='left'>{translate('actions_update')}</TableCell>
                       <TableCell align='right'></TableCell>
@@ -131,6 +195,32 @@ export default function AppsPage(): React.ReactElement {
                     {data?.data.map((row) => (
                       <TableRow key={row.name}>
                         <TableCell align='left'>{row.name}</TableCell>
+                        <TableCell align='left'>
+                          {isSuperAdmin && (
+                            <Switch
+                              checked={row.public}
+                              disabled
+                              size='small'
+                            />
+                          )}
+                          {!isSuperAdmin && row.public && (
+                            <span>{translate('integrations_public_badge')}</span>
+                          )}
+                        </TableCell>
+                        <TableCell align='left'>
+                          {isSuperAdmin && row.organization_id && (
+                            <span>{row.organization_id}</span>
+                          )}
+                          {!isSuperAdmin &&
+                            row.organization_id !== tenant.slug &&
+                            row.organization_id && (
+                              <span>{translate('integrations_external')}</span>
+                            )}
+                          {!isSuperAdmin &&
+                            (!row.organization_id || row.organization_id === tenant.slug) && (
+                              <span>{translate('integrations_own')}</span>
+                            )}
+                        </TableCell>
                         <TableCell align='left'>
                           {format(new Date(row.createdAt), 'MM/dd/yyyy')}
                         </TableCell>
@@ -143,15 +233,17 @@ export default function AppsPage(): React.ReactElement {
                             justifyContent='flex-end'
                             gap={2}
                           >
-                            <ModalIntegration
-                              isEdit
-                              id={row.id}
-                              defaultValues={omit(row, ['updatedAt', 'createdAt', 'id'])}
-                            >
-                              <IconButton>
-                                <MdOutlineModeEdit />
-                              </IconButton>
-                            </ModalIntegration>
+                            <RoleBasedGuard roles={[Role.SuperAdmin]}>
+                              <ModalIntegration
+                                isEdit
+                                id={row.id}
+                                defaultValues={omit(row, ['updatedAt', 'createdAt', 'id'])}
+                              >
+                                <IconButton>
+                                  <MdOutlineModeEdit />
+                                </IconButton>
+                              </ModalIntegration>
+                            </RoleBasedGuard>
                             <IconButton
                               onClick={async () => {
                                 await onDelete(row.id)
