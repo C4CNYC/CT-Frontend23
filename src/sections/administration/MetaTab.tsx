@@ -27,7 +27,9 @@ const MetaTab = ({
   const [updateOrg, { isLoading: isUpdating }] = useUpdateOrgMutation()
 
   const CreateOrgSchema = Yup.object().shape({
-    domain: Yup.array().of(Yup.string()),
+    domain: Yup.string()
+      .transform((value) => ',' + value.join(',') + ',')
+      .required('domain_validation_msg'),
     meta: Yup.object().shape({
       meta_title: Yup.string(),
       meta_description: Yup.string(),
