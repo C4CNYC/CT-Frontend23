@@ -567,7 +567,7 @@
     "integrations_organization": "Organization",
     "integrations_make_public": "Make this integration public",
     "integrations_public_only": "Show public only",
-    "integrations_filter_organization": "Filter by organization",
+    "filter": "Filter",
     "integrations_public_badge": "Public",
     "integrations_external": "External",
     "integrations_own": "Own",

@@ -17,7 +17,6 @@ import {
   TableRow,
   TextField,
 } from '@mui/material'
-import { Autocomplete } from '@mui/material'
 import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { IoTrashOutline } from '@react-icons/all-files/io5/IoTrashOutline'
 import { MdOutlineModeEdit } from '@react-icons/all-files/md/MdOutlineModeEdit'
@@ -64,8 +63,10 @@ export default function AppsPage(): React.ReactElement {
   const [selectedOrg, setSelectedOrg] = useState<string | null>(null)
 
   const queryFilters = useMemo(() => {
-    const baseFilters = { name: filters.name || '' }
-
+    const baseFilters = {
+      name: filters.name || '',
+      page: filters.page || 0,
+    }
     if (isSuperAdmin) {
       return {
         ...baseFilters,
@@ -73,9 +74,8 @@ export default function AppsPage(): React.ReactElement {
         ...(selectedOrg && { organization_id: selectedOrg }),
       }
     }
-
     return baseFilters
-  }, [filters.name, isSuperAdmin, publicFilter, selectedOrg])
+  }, [filters.name, filters.page, isSuperAdmin, publicFilter, selectedOrg])
 
   const { data, isLoading } = useGetIntegrationsListQuery(queryFilters)
   const [removeIntegration] = useDeleteIntegrationMutation()
@@ -142,18 +142,12 @@ export default function AppsPage(): React.ReactElement {
                   }
                   label={translate('integrations_public_only')}
                 />
-                <Autocomplete
-                  options={[]} // TODO: Populate with available organizations
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={translate('integrations_filter_organization')}
-                      variant='outlined'
-                      size='small'
-                    />
-                  )}
-                  value={selectedOrg}
-                  onChange={(_, newValue) => setSelectedOrg(newValue)}
+                <TextField
+                  label={translate('filter')}
+                  variant='outlined'
+                  size='small'
+                  value={filters.name}
+                  onChange={(e) => setFilter('name', e.target.value)}
                 />
               </Stack>
             </RoleBasedGuard>

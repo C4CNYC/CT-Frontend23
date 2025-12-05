@@ -524,7 +524,7 @@
   "integrations_organization": "Organizasyon",
   "integrations_make_public": "Bu entegrasyonu herkese açık yap",
   "integrations_public_only": "Sadece herkese açık olanları göster",
-  "integrations_filter_organization": "Organizasyona göre filtrele",
+  "filter": "Filtrele",
   "integrations_public_badge": "Herkese Açık",
   "integrations_external": "Harici",
   "integrations_own": "Kendi",
