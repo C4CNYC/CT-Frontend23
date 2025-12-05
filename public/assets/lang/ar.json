@@ -539,7 +539,7 @@
     "integrations_organization": "منظمة",
     "integrations_make_public": "جعل هذا التكامل عاماً",
     "integrations_public_only": "عرض العام فقط",
-    "integrations_filter_organization": "تصفية حسب المنظمة",
+    "filter": "تصفية حسب",
     "integrations_public_badge": "عام",
     "integrations_external": "خارجي",
     "integrations_own": "خاص",

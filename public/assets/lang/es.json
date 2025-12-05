@@ -547,7 +547,7 @@
     "integrations_organization": "Organización",
     "integrations_make_public": "Hacer esta integración pública",
     "integrations_public_only": "Mostrar solo públicas",
-    "integrations_filter_organization": "Filtrar por organización",
+    "filter": "Filtrar",
     "integrations_public_badge": "Público",
     "integrations_external": "Externo",
     "integrations_own": "Propio",
