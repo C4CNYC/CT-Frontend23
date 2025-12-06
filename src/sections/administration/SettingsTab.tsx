@@ -28,7 +28,9 @@ const SettingsTab = ({
   const [updateOrg, { isLoading: isUpdating }] = useUpdateOrgMutation()
 
   const CreateOrgSchema = Yup.object().shape({
-    domain: Yup.array().of(Yup.string()),
+    domain: Yup.string()
+      .transform((value) => ',' + value.join(',') + ',')
+      .required('domain_validation_msg'),
     meta: Yup.object().shape({
       is_enabled_google_auth: Yup.boolean(),
       is_enabled_powered_by_code_tribe: Yup.boolean(),
