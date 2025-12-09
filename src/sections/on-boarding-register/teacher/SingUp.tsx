@@ -18,6 +18,7 @@ import { styledRegisterInput } from '../styles'
 interface Props {
   isValid?: boolean
   isTeacher: boolean
+  inviteData?: any
   nextStep: () => void
   resetRoad?: () => void
   goToStep: (s: number) => void
@@ -29,6 +30,7 @@ export default function SingUp({
   isValid,
   isTeacher,
   goToStep,
+  inviteData,
 }: Props): React.ReactElement {
   const translate = useTranslate()
   const tenant = useTenants()
@@ -91,6 +93,8 @@ export default function SingUp({
           label={translate('email')}
           defaultValue=''
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          disabled={!!inviteData}
+          InputLabelProps={{ shrink: inviteData ? true : undefined }}
           onKeyDown={(e) => {
             if (goToStep && isValid && e.code === 'Enter') {
               goToStep(1)
@@ -112,7 +116,7 @@ export default function SingUp({
             ),
           }}
         />
-        {tenant?.meta?.is_enabled_google_auth ? (
+        {!inviteData && tenant?.meta?.is_enabled_google_auth ? (
           <>
             <Divider
               sx={{ my: 3 }}

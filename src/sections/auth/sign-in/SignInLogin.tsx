@@ -17,12 +17,14 @@ import { useTenants } from '@root/src/hooks/useTenants'
 
 interface IProps {
   isValid?: boolean
+  inviteData?: any
 }
 
 export default function SignInLogin({
   isValid,
   goToStep,
   nextStep,
+  inviteData,
 }: Partial<StepWizardChildProps> & IProps): React.ReactElement {
   const translate = useTranslate()
   const router = useRouter()
@@ -65,6 +67,8 @@ export default function SignInLogin({
           name='email'
           label={translate('email')}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          disabled={!!inviteData?.email}
+          InputLabelProps={{ shrink: inviteData ? true : undefined }}
           onKeyDown={(e) => {
             if (goToStep && isValid && e.code === 'Enter') {
               goToStep(2)
@@ -87,7 +91,7 @@ export default function SignInLogin({
             ),
           }}
         />
-        {tenant?.meta?.is_enabled_google_auth ? (
+        {!inviteData && tenant?.meta?.is_enabled_google_auth ? (
           <>
             <Divider
               sx={{ my: 3 }}

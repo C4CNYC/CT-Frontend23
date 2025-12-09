@@ -13,12 +13,24 @@ interface GuestGuardProps {
 }
 
 export default function GuestGuard({ children }: GuestGuardProps): React.ReactElement | null {
-  const { push, route } = useRouter()
+  const { push, route, query, asPath } = useRouter()
   const { isAuthenticated, user } = useAuthContext()
   useEffect(() => {
+    const hasInviteCode =
+      route.includes('invite-v2') ||
+      typeof query.inviteCode === 'string' ||
+      typeof query.code === 'string' ||
+      asPath.includes('inviteCode=') ||
+      asPath.includes('code=')
+
+    if (hasInviteCode) {
+      return
+    }
+
     const isAuthRoute = route.includes('auth')
     const isOnboardingRoute = route.includes('on-boarding')
     const isOrgRoute = route.includes('org')
+
     let lastLesson = sessionStorage.getItem('lastLesson')
 
     if (!isAuthenticated || !user || !isAuthRoute || isOnboardingRoute || isOrgRoute) return
