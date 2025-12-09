@@ -18,6 +18,7 @@ import { RESER_PASS_SX, TYPO_CONT_SX, SINGIN_BTN_SX } from './constants'
 interface Props {
   isSubmiting: boolean
   isError: string
+  inviteData?: any
 }
 
 export default function SingInPassword({
@@ -27,6 +28,7 @@ export default function SingInPassword({
   isSubmiting,
   isError,
   currentStep,
+  inviteData,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
   const theme = useTheme()
   const translate = useTranslate()
