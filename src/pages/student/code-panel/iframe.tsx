@@ -106,7 +106,12 @@ export default function Iframe() {
 
       integrationScripts.forEach((integration) => {
         if (integration) {
-          new Function(integration)()
+          try {
+            new Function(integration)()
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log(e)
+          }
           /*
           const script = document.createElement('script')
           script.textContent = integration
