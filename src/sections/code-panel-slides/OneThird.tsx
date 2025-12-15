@@ -39,7 +39,7 @@ export function OneThird({ lessonId }: { lessonId: string }) {
     dispatch(setCourseId(route2String(router.query.courseId)))
 
     let slideId = route2String(router.query.slideId)
-    if (!slideId && lessonContent && lessonContent.length > 0) {
+    if (!slideId) {
       slideId = lessonContent[0].id
     }
 
@@ -56,10 +56,13 @@ export function OneThird({ lessonId }: { lessonId: string }) {
     >
       <FullScreenProvider>
         <div style={{ display: 'flex', height: '100%', width: '100%' }}>
-          <div style={{ 
-            flex: '0 0 33.333%', 
-            overflow: 'hidden', 
-            position:'relative' }}>
+          <div
+            style={{
+              flex: '0 0 33.333%',
+              overflow: 'hidden',
+              position: 'relative',
+            }}
+          >
             <CodePanelSlidesRender />
           </div>
           <div style={{ flex: '0 0 66.667%', overflow: 'hidden' }}>
