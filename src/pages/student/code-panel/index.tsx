@@ -11,6 +11,7 @@ import { useSetLastWorkspaceQueryMutation } from '@root/src/redux/services/manag
 import { useGetLessonStudentWithoutContentsQuery } from '@root/src/redux/services/manager/lesson-student'
 import { CodePanelSlides } from '@root/src/sections/code-panel-slides/code-panel-slides'
 import { CodePanelSlidesBare } from '@root/src/sections/code-panel-slides/code-panel-slides-bare'
+import { OneThird } from '@root/src/sections/code-panel-slides/OneThird'
 
 const CodePanelLayout = dynamic(
   async () => (await import('@root/src/sections/code-panel')).CodePanelLayout,
@@ -64,6 +65,8 @@ export default function CodePanelContainer(): ReactElement | null {
       )
     case 'slides':
       return <CodePanelSlides lessonId={lesson.id} />
+    case 'onethird':
+      return <OneThird lessonId={lesson.id} />
     default:
       return <CodePanelLayout />
   }
