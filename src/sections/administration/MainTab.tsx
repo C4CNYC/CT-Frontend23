@@ -9,7 +9,10 @@ import * as Yup from 'yup'
 
 import { FormProvider } from '@/components'
 import { RHFSelect, RHFTextField } from '@/components'
-import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
+import {
+  HomePageType,
+  HomePageTargetType,
+} from '@root/src/redux/services/enums/administration.enum'
 import {
   useCreateOrgMutation,
   useUpdateOrgMutation,
@@ -102,12 +105,26 @@ const MainTab = ({
           <RHFSelect
             name='home_page_type'
             native
-            label={translate('home_page_type')}
+            label={translate('Landing page type')}
           >
             {Object.keys(HomePageType).map((c) => (
               <option
                 key={HomePageType[c as keyof typeof HomePageType]}
                 value={HomePageType[c as keyof typeof HomePageType]}
+              >
+                {c}
+              </option>
+            ))}
+          </RHFSelect>
+          <RHFSelect
+            name='meta.homepage_target'
+            native
+            label={translate('Homepage target (logo target & logged-in user target)')}
+          >
+            {Object.keys(HomePageTargetType).map((c) => (
+              <option
+                key={HomePageTargetType[c as keyof typeof HomePageTargetType]}
+                value={HomePageTargetType[c as keyof typeof HomePageTargetType]}
               >
                 {c}
               </option>

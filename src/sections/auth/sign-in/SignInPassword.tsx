@@ -21,7 +21,7 @@ interface Props {
   inviteData?: any
 }
 
-export default function SingInPassword({
+export default function SignInPassword({
   previousStep,
   nextStep,
   isActive,
@@ -79,7 +79,7 @@ export default function SingInPassword({
           label={translate('password')}
           type={showPassword ? 'text' : 'password'}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
-          inputRef={(input) => input && isActive && input.focus()}
+          // inputRef={(input) => input && isActive && input.focus()}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
