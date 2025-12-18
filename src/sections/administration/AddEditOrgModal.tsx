@@ -20,6 +20,7 @@ import LogoTab from './LogoTab'
 import MainTab from './MainTab'
 import MetaTab from './MetaTab'
 import SettingsTab from './SettingsTab'
+import SettingsTabForAdmins from './SettingsTabForAdmins'
 
 interface Prop {
   org?: IAdministration
@@ -78,6 +79,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
   const [value, setValue] = React.useState(0)
   const { user } = useAuthContext()
   const isSuperAdmin = user?.role === Role.SuperAdmin
+  const isAdmin = user?.role === Role.Admin
 
   const translate = useTranslate()
 
@@ -128,6 +130,19 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
             label: translate('Settings'),
             component: (
               <SettingsTab
+                org={org}
+                handleClose={handleClose}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(isAdmin || isSuperAdmin
+      ? [
+          {
+            label: translate(isSuperAdmin ? 'Settings (Admin)' : 'Settings'),
+            component: (
+              <SettingsTabForAdmins
                 org={org}
                 handleClose={handleClose}
               />
