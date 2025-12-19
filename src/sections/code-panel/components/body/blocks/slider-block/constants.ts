@@ -1,5 +1,10 @@
 import { Theme, type SxProps } from '@mui/system'
 
+import { IIntegration } from '@/redux/interfaces/integration.interface'
+import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
+
+import { CodeDocument } from '../view-block/browser-view/types'
 export const getBoxSx = (isDesktop: boolean, isOpenHeader: boolean): SxProps => ({
   overflowY: 'scroll',
   scrollbarWidth: 'none',
@@ -61,4 +66,33 @@ export const PROGRESS_ITEM_SX = {
   height: 4,
   flex: 1,
   borderRadius: 16,
+}
+
+export interface NextStepProps {
+  handleNext: (skip?: boolean) => void
+  handlePrev: () => void
+  stepHasValidation: boolean
+  hasNextStep: boolean
+  lessonName?: string
+}
+
+export interface ISliderBlock {
+  onSubmitLesson: () => void
+  onSubmitChallenge: (slideId: string, code?: string) => void
+  integrations: Array<IIntegration & BaseResponseInterface>
+  lessonType?: string
+  lessonName?: string
+  lessonId?: string
+  isLoadingLessonContent: boolean
+  lessonMeta?: Record<string, any>
+}
+
+export interface IView {
+  type: LessonContentType
+  body: string
+  integrations: IIntegration[]
+  connectIntegrations: (body: string) => CodeDocument | null
+  title?: string
+  lessonType?: string
+  stepBgColor?: string | undefined
 }
