@@ -78,7 +78,6 @@ export interface NextStepProps {
 }
 
 export interface ISliderBlock {
-  data: Array<ILessonContent & BaseResponseInterface>
   onSubmitLesson: () => void
   onSubmitChallenge: (slideId: string, code?: string) => void
   integrations: Array<IIntegration & BaseResponseInterface>
