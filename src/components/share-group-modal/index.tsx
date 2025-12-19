@@ -114,7 +114,8 @@ export default function ShareGroupModal({
   }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting.share_token)}`
 
   useEffect(() => {
-    if (query.onBoarding) {
+    if (query.onBoarding || localStorage.getItem('isClassCreated') === 'true') {
+      localStorage.removeItem('isClassCreated')
       handleOpen()
       delete query.onBoarding
       replace({ pathname, query }, undefined, { shallow: true })

@@ -5,8 +5,13 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
 import { useSelector } from '@/redux/store'
+import SkeletonCodePanel from '@/sections/code-panel/components/skeleton'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useSetLastWorkspaceQueryMutation } from '@root/src/redux/services/manager/activity-student'
+import { useGetLessonStudentWithoutContentsQuery } from '@root/src/redux/services/manager/lesson-student'
+import { CodePanelSlides } from '@root/src/sections/code-panel-slides/code-panel-slides'
+import { CodePanelSlidesBare } from '@root/src/sections/code-panel-slides/code-panel-slides-bare'
+import { OneThird } from '@root/src/sections/code-panel-slides/OneThird'
 
 const CodePanelLayout = dynamic(
   async () => (await import('@root/src/sections/code-panel')).CodePanelLayout,
@@ -27,6 +32,10 @@ export default function CodePanelContainer(): ReactElement | null {
   const workspaceRef = useRef<{ query: string }>({ query: '' })
   const profile = useSelector((state) => state.global.user)
 
+  const { data: lesson } = useGetLessonStudentWithoutContentsQuery(
+    { id: router.query.lessonId as string },
+    { skip: !router.query.lessonId }
+  )
   const [updateWorkspaceActivity] = useSetLastWorkspaceQueryMutation()
 
   useEffect(() => {
@@ -46,5 +55,19 @@ export default function CodePanelContainer(): ReactElement | null {
   }, [router, profile])
 
   if (!isInitialized) return null
-  return <CodePanelLayout />
+  if (!lesson) return <SkeletonCodePanel />
+  switch (lesson.meta.displayEngine) {
+    case 'bareslides':
+      return (
+        <div style={{ height: '100%', width: '100%', overflow: 'hidden' }}>
+          <CodePanelSlidesBare lessonId={lesson.id} />
+        </div>
+      )
+    case 'slides':
+      return <CodePanelSlides lessonId={lesson.id} />
+    case 'onethird':
+      return <OneThird lessonId={lesson.id} />
+    default:
+      return <CodePanelLayout />
+  }
 }

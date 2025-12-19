@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Box, InputAdornment, Stack, Tooltip, Typography, useTheme } from '@mui/material'
+import { Box, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 
 import { RHFSwitch, RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
@@ -57,27 +57,11 @@ export function MainTab() {
         </Typography>
       </Stack>
       <RHFToggleButtonGroup
-        name='pseudoType'
+        name='type'
         options={_mochLessonTypes}
         sxGroup={TOGGLE_BUTTON_GROUP_STYLES}
         sxButton={toggleButtonStyles}
         tooltip
-      />
-
-      <RHFTextField
-        name='slug'
-        label={translate('lessons_slug')}
-        size='small'
-      />
-
-      <RHFTextField
-        name='duration'
-        label={translate('lessons_duration')}
-        size='small'
-        type='number'
-        InputProps={{
-          startAdornment: <InputAdornment position='start'>min</InputAdornment>,
-        }}
       />
 
       <Stack
@@ -101,17 +85,6 @@ export function MainTab() {
         name='independent'
         label={translate('lessons_independent_lesson')}
       /> */}
-        {/* <Tooltip
-        slotProps={{ popper: { disablePortal: true } }}
-        title={translate('lessons_autoRun_tooltip')}
-      >
-        <Box>
-          <RHFSwitch
-            name='autoRun'
-            label={translate('lessons_autoRun')}
-          />
-        </Box>
-      </Tooltip> */}
         <Tooltip
           slotProps={{ popper: { disablePortal: true } }}
           title={translate('lesson_lock_tooltip')}
@@ -120,6 +93,19 @@ export function MainTab() {
             <RHFSwitch
               name='lock'
               label={translate('lessons_lock')}
+            />
+          </Box>
+        </Tooltip>
+        <Tooltip
+          slotProps={{ popper: { disablePortal: true } }}
+          title={translate(
+            'Hide the default back and next buttons on the instructions/slide panel.'
+          )}
+        >
+          <Box>
+            <RHFSwitch
+              name='meta.hideDefaultButtons'
+              label={translate('Hide default buttons')}
             />
           </Box>
         </Tooltip>

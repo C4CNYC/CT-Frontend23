@@ -23,6 +23,7 @@ import { setIsActivateCompeated } from '@/redux/slices/checkers-animation'
 import {
   setCourseId,
   setLessonId,
+  setSlideId,
   setSlideIndex,
   setUnitId,
 } from '@/redux/slices/code-panel-global'
@@ -35,19 +36,27 @@ import { useTranslate } from '@/utils/translateHelper'
 import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { ILesson } from '@root/src/redux/services/interfaces/lesson.interface'
 import { useGetLessonsQuery } from '@root/src/redux/services/manager/lessons-manager'
+import {
+  useCompleteStudentLessonMutation,
+  useVisitStudentLessonMutation,
+} from '@root/src/redux/services/manager/progress-student'
 import { useLessonFilesCarryOverMutation } from '@root/src/redux/services/manager/workspace-student'
 import { useGetPublicModuleContentQuery } from '@root/src/redux/services/public-student'
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { isUuid } from '@root/src/utils/isUuid'
 import { progressGuestSetValidation } from '@root/src/utils/progressLocalStorage'
 
+import { FileManagerProvider } from './components/body/blocks/code-editor-block/code-editor-collab/hook/file-manager/useFileManager'
 import SignUpDialog from './components/sign-up-dialog'
 import { CodePanelContextProvider } from './lib/CodePanelContextProvider'
 import { FullScreenProvider } from './lib/FullScreenContext'
 import { LessonManagerProvider } from './lib/LessonManagerContext'
-const CodePanelBody = dynamic(async () => await import('@/sections/code-panel/components/body'), {
-  ssr: false,
-})
+const CodePanelBody = dynamic(
+  async () => await import('@root/src/sections/code-panel/components/body/CodePanelBody'),
+  {
+    ssr: false,
+  }
+)
 const CodePanelTour = dynamic(
   async () => await import('@/sections/intro-tours/code-panel-intro/index'),
   { ssr: false }
@@ -86,9 +95,12 @@ export function CodePanelLayout(): ReactElement | null {
   const lastUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
   const lastCourseId = useSelector((state: RootState) => state.codePanelGlobal.courseId)
   const lastLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
 
   const [completeLesson] = useCompleteLessonMutation()
+  const [visitLesson] = useVisitStudentLessonMutation()
   const [carryOverFiles] = useLessonFilesCarryOverMutation()
+  const [completeLessonForProgress] = useCompleteStudentLessonMutation()
 
   const lessonIdFromRoute = Array.isArray(router.query.lessonId)
     ? router.query.lessonId.join()
@@ -102,7 +114,7 @@ export function CodePanelLayout(): ReactElement | null {
 
   const { data: unitContent, isLoading: isLoadingUnitContent } = useGetPublicModuleContentQuery(
     { id: router.query.unitId as string },
-    { skip: !!router.query.courseId || !isAuthenticated || !router.query.unitId }
+    { skip: !!router.query.courseId || !router.query.unitId }
   )
 
   const { data: coursePublicContent, isLoading: isLoadingPublicCourse } =
@@ -111,7 +123,7 @@ export function CodePanelLayout(): ReactElement | null {
       { skip: !router.query.courseId || isAuthenticated }
     )
 
-  const courseContent = courseAuthContent || coursePublicContent || unitContent
+  const courseContent = courseAuthContent || coursePublicContent
   const isLoadingCourseContent =
     isLoadingAuthCourseContent || isLoadingPublicCourse || isLoadingUnitContent
 
@@ -130,7 +142,6 @@ export function CodePanelLayout(): ReactElement | null {
     { id: router.query.lessonId as string },
     { skip: !router.query.lessonId }
   )
-
   let { data: lessonsRelatedWithSlug } = useGetLessonsQuery(
     {
       slug: lessonIdFromRoute,
@@ -161,6 +172,22 @@ export function CodePanelLayout(): ReactElement | null {
     if (!profile || !lesson) return
     if (profile?.id == lesson?.userId) dispatch(setChatVisible(true))
   }, [profile, lesson])
+
+  useEffect(() => {
+    if (profile && router.query.lessonId) {
+      visitLesson({ studentId: profile.id, lessonId: router.query.lessonId as string })
+    }
+
+    if (sessionStorage?.setItem)
+      sessionStorage.setItem(
+        'lastLesson',
+        JSON.stringify({
+          lessonId: router.query.lessonId,
+          courseId: router.query.courseId,
+          unitId: router.query.unitId,
+        })
+      )
+  }, [router.query.courseId, router.query.unitId, router.query.lessonId])
 
   useEffect(() => {
     if (!courseContent) return
@@ -251,17 +278,25 @@ export function CodePanelLayout(): ReactElement | null {
     setShowConfetti(true)
     try {
       enqueueSnackbar(translate('messages_lesson_complete'))
+      if (profile && router.query.lessonId) {
+        completeLessonForProgress({
+          studentId: profile?.id,
+          lessonId: router.query.lessonId as string,
+        })
+      }
+
       if (!courseContent) return
       const nextLessonInfo = getNextLessonId(
         courseContent.units,
         router.query.lessonId as string,
         router.query.unitId as string
       )
-
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split('/')
+        const carryOverTypes = [LessonType.PRACTICAL, LessonType.PART_PROJECT]
+
         if (
-          nextLessonInfo.type === LessonType.PRACTICAL &&
+          carryOverTypes.includes(nextLessonInfo.type) &&
           !nextLessonInfo.isIndependent &&
           lesson
         ) {
@@ -270,19 +305,19 @@ export function CodePanelLayout(): ReactElement | null {
             prevLessonId: lesson.id as string,
           })
         }
-        router
-          .push(
-            STUDENT_PATH_DASHBOARD.codePanel.workSpace({
-              courseId: courseContent.id,
-              unitId: pathStr[0],
-              lessonId: pathStr[1],
-            })
-          )
-          .then(() => {
-            dispatch(setUnitId(pathStr[0]))
-            dispatch(setLessonId(pathStr[1]))
-            dispatch(setSlideIndex(0))
+        router.push(
+          STUDENT_PATH_DASHBOARD.codePanel.workSpace({
+            courseId: courseContent.id,
+            unitId: pathStr[0],
+            lessonId: pathStr[1],
           })
+        )
+        // .then(() => {
+        dispatch(setUnitId(pathStr[0]))
+        dispatch(setLessonId(pathStr[1]))
+        dispatch(setSlideIndex(0))
+        dispatch(setSlideId(''))
+        // })
       } else {
         enqueueSnackbar(translate('messages_course_complete'))
       }
@@ -305,8 +340,8 @@ export function CodePanelLayout(): ReactElement | null {
   useEffect(() => {
     let timerIdForTour: string | number | NodeJS.Timeout | undefined
     let timerIdForRender: string | number | NodeJS.Timeout | undefined
-
-    const hasSeenTour = localStorage.getItem('HAS_SEEN_TOUR')
+    const hasSeenTour =
+      localStorage.getItem('HAS_SEEN_TOUR') || (contentValidations && contentValidations.length > 0)
     if (!hasSeenTour) {
       timerIdForTour = setTimeout(() => {
         setShowTour(true)
@@ -320,62 +355,69 @@ export function CodePanelLayout(): ReactElement | null {
     }
   }, [isShowTour, showTour])
 
-  if (!isLoadingComplete && render) {
+  if (!lesson || (!isLoadingComplete && render)) {
     return <SkeletonCodePanel />
   }
 
   return (
-    <CodePanelContextProvider
-      lessonId={lessonIdFromRoute}
-      studentCode=''
-    >
-      <Head>
-        <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
-        />
-        <title> CodePanel: CodeTribe </title>
-      </Head>
-
-      <FullScreenProvider>
-        <LessonManagerProvider
-          data={courseContent}
-          isLoading={isLoadingCourseContent}
-          lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-          lessonContent={lessonContent}
-        >
-          {router.query.ai ? <CPTeacherTour /> : showTour || isShowTour ? <CodePanelTour /> : null}
-          <Box
-            sx={{
-              bgcolor: (theme) =>
-                theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
-            <CodePanelHeader language={DEFAULT_LANGUAGE} />
-            <CodePanelBody
-              lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
-              isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}
-              lessonContents={lessonContent ?? []}
-              language={DEFAULT_LANGUAGE}
-              onSubmitChallenge={onSubmitChallenge}
-              onSubmitLesson={onSubmitLesson}
+    <CodePanelContextProvider>
+      <LessonManagerProvider
+        data={courseContent}
+        isLoading={isLoadingCourseContent}
+        lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+        lessonContent={lessonContent}
+      >
+        <FileManagerProvider>
+          <Head>
+            <meta
+              name='viewport'
+              content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
             />
-          </Box>
-        </LessonManagerProvider>
-      </FullScreenProvider>
+            <title> {lesson?.name + (unitContent ? ' | ' + unitContent?.name : '')} </title>
+            <meta
+              name='description'
+              content={lesson?.description || ''}
+            />
+          </Head>
 
-      {!profile && <SignUpDialog />}
+          <FullScreenProvider>
+            {router.query.ai ? (
+              <CPTeacherTour />
+            ) : showTour || isShowTour ? (
+              <CodePanelTour />
+            ) : null}
+            <Box
+              sx={{
+                bgcolor: (theme) =>
+                  theme.palette.mode === 'light' ? 'white' : theme.palette.background.neutral,
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              <CodePanelHeader language={DEFAULT_LANGUAGE} />
+              <CodePanelBody
+                lesson={lesson as (ILesson & BaseResponseInterface) | undefined}
+                isLoadingLessonContent={isLoadingLessonContent || isFetchingLessonContent}
+                lessonContents={lessonContent ?? []}
+                language={DEFAULT_LANGUAGE}
+                onSubmitChallenge={onSubmitChallenge}
+                onSubmitLesson={onSubmitLesson}
+              />
+            </Box>
+          </FullScreenProvider>
 
-      {showConfetti && (
-        <Confetti
-          numberOfPieces={500}
-          recycle={false}
-          gravity={0.25}
-          onConfettiComplete={onConfettiComplete}
-        />
-      )}
+          {!profile && <SignUpDialog />}
+
+          {showConfetti && (
+            <Confetti
+              numberOfPieces={500}
+              recycle={false}
+              gravity={0.25}
+              onConfettiComplete={onConfettiComplete}
+            />
+          )}
+        </FileManagerProvider>
+      </LessonManagerProvider>
     </CodePanelContextProvider>
   )
 }

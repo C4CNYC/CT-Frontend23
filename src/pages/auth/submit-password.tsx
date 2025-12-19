@@ -1,23 +1,24 @@
-import { Stack, Typography } from '@mui/material'
+import { Stack } from '@mui/material'
 
 import LoginLayout from '@/layouts/login/LoginLayout'
 import SubmitPasswordForm from '@/sections/auth/SubmitPasswordForm'
+import { StyledContent } from '@root/src/layouts/login/styles'
 
 export default function SubmitPassword(): React.ReactElement {
   return (
     <LoginLayout>
-      <Stack
-        spacing={2}
-        sx={{ position: 'relative' }}
-      >
-        <Typography
-          variant='h4'
-          sx={{ mb: 2, textAlign: 'center' }}
+      <StyledContent>
+        <Stack
+          sx={{
+            width: '100%',
+            minHeight: '300px',
+            justifyContent: 'center',
+            position: 'relative',
+          }}
         >
-          Create your password
-        </Typography>
-        <SubmitPasswordForm />
-      </Stack>
+          <SubmitPasswordForm />
+        </Stack>
+      </StyledContent>
     </LoginLayout>
   )
 }

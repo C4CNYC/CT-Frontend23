@@ -1,12 +1,18 @@
+import React from 'react'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Button, Stack } from '@mui/material'
+import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
-import { FormProvider, RHFSelect, RHFTextField, useSnackbar } from '@/components'
-import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
-import { IAdministration } from '@root/src/redux/services/interfaces/administration'
+import { FormProvider } from '@/components'
+import { RHFSelect, RHFTextField } from '@/components'
+import {
+  HomePageType,
+  HomePageTargetType,
+} from '@root/src/redux/services/enums/administration.enum'
 import {
   useCreateOrgMutation,
   useUpdateOrgMutation,
@@ -16,12 +22,13 @@ import { useTranslate } from '@root/src/utils/translateHelper'
 import { FormValuesProps } from './constants'
 import { DomainFields } from './DomainFields'
 
-interface MainTabProps {
+const MainTab = ({
+  org,
+  handleClose,
+}: {
+  org: any
   handleClose: () => void
-  org?: IAdministration
-}
-
-const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
+}): React.ReactElement => {
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -49,8 +56,11 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
       slug: org?.slug,
       domain: org?.domain?.split(',').filter(Boolean) ?? [],
       home_page_type: org?.home_page_type ?? HomePageType.Default,
+      meta: org?.meta ?? {},
     },
   })
+  const { formState, watch } = methods
+  const watchSlug = watch('slug')
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -78,6 +88,7 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
       <Stack
         justifyContent='space-between'
         height='100%'
+        mb={1}
       >
         <Stack gap={2}>
           <RHFTextField
@@ -90,11 +101,11 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
             label={translate('create_new_slug_label')}
             required
           />
-          <DomainFields />
+          <DomainFields slug={watchSlug} />
           <RHFSelect
             name='home_page_type'
             native
-            label={translate('home_page_type')}
+            label={translate('Landing page type')}
           >
             {Object.keys(HomePageType).map((c) => (
               <option
@@ -105,24 +116,52 @@ const MainTab = ({ handleClose, org }: MainTabProps): React.ReactElement => {
               </option>
             ))}
           </RHFSelect>
+          <RHFSelect
+            name='meta.homepage_target'
+            native
+            label={translate('Homepage target (logo target & logged-in user target)')}
+          >
+            {Object.keys(HomePageTargetType).map((c) => (
+              <option
+                key={HomePageTargetType[c as keyof typeof HomePageTargetType]}
+                value={HomePageTargetType[c as keyof typeof HomePageTargetType]}
+              >
+                {c}
+              </option>
+            ))}
+          </RHFSelect>
         </Stack>
+      </Stack>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: '100%',
+          padding: '15px 25px',
+          background: '#F6F9FC',
+          zIndex: 10,
+        }}
+      >
         <Stack
           sx={{
             flexDirection: 'row',
             justifyContent: 'flex-end',
-            gap: 1,
+            gap: 2,
           }}
         >
           <Button onClick={handleClose}>{translate('actions_close')}</Button>
+
           <LoadingButton
             type='submit'
             variant='contained'
             loading={isLoading || isUpdating}
+            disabled={formState.isSubmitting}
           >
             {translate(org ? 'actions_update' : 'actions_create')}
           </LoadingButton>
         </Stack>
-      </Stack>
+      </div>
     </FormProvider>
   )
 }

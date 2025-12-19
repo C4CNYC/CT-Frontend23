@@ -1,8 +1,13 @@
 import { Unit } from '@/redux/interfaces/challenges.interface'
+import { IAuthor } from '@/redux/services/interfaces/author.interface'
 import { BaseResponseInterface, BaseSearchInterface } from '@/utils'
 
-import { LessonContentType } from '../enums/lesson-content-type.enum'
+import { LessonContentType } from '../services/enums/lesson-content-type.enum'
+import { AGE, GRADING, LEVEL, TModuleMeta } from '../services/interfaces/courseUnits.interface'
 import { ILesson } from '../services/interfaces/lesson.interface'
+import { ILessonContentValidation } from '../services/interfaces/lessonContentValidation.interface'
+
+import { IEnvironment } from './environment.interface'
 
 export type { ILesson }
 
@@ -10,7 +15,10 @@ export interface ICourseElement {
   id: string
   course_id?: string
   name: string
-  level: string
+  level: LEVEL
+  age: AGE
+  customLevel: string
+  customAge: string
   price: string
   description: string
   active: boolean
@@ -30,13 +38,18 @@ export interface ICourseContent {
   id: string
   units: Unit[]
   name: string
-  level: string
+  level: LEVEL
+  age: AGE
+  customLevel: string
+  customAge: string
   price: string
   description: string
   active: boolean
   cover: string
   draft: boolean
   total_lessons: number
+  audience?: string
+  for_teachers?: boolean
 }
 
 export interface IModule {
@@ -59,6 +72,15 @@ export interface IModule {
   teacher_slides?: string
   lesson_plans?: string
   teacher_forum?: string
+  level: LEVEL
+  customLevel: string
+  age: AGE
+  customAge: string
+  grading: GRADING
+  brief?: string
+  audience?: string
+  authors: IAuthor[]
+  meta: TModuleMeta
 }
 
 export interface IModuleContent {
@@ -100,7 +122,7 @@ export interface ILessonContent {
   preload_body: string
   tips: string
   solution_body: string
-  validations: Array<IValidation & BaseResponseInterface>
+  validations: Array<ILessonContentValidation & BaseResponseInterface>
   type: LessonContentType
   meta: Record<string, any>
   //integrations: IIntegration[]
@@ -108,17 +130,13 @@ export interface ILessonContent {
   title?: string
   id?: string
   bg_color?: string
+  environments?: Array<IEnvironment & BaseResponseInterface>
 }
 
 export interface ISkill {
   name: string
   description: string
   id: string
-}
-
-export interface IValidation {
-  name: string
-  regex: string
 }
 
 // ================

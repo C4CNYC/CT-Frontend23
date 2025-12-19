@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Avatar, FormGroup, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 import { UseFormReturn } from 'react-hook-form'
@@ -30,7 +30,7 @@ export default function DetailsStep({
   const theme = useTheme()
   const { data, isLoading } = coursesData
   const [type, setType] = useState<AssignmentTypes>(initialType || AssignmentTypes.COURSE)
-  const [course, setCourse] = useState<string | null>()
+  const course = methods.watch('course') as string | null
   const [lesson, setLesson] = useState<string | undefined>(initialLesson || undefined)
   const [module, setModule] = useState<string | undefined>()
   const translate = useTranslate()
@@ -50,18 +50,6 @@ export default function DetailsStep({
     isLoading: lessonLoading,
     isFetching: lessonFetching,
   } = useGetOwnLessonsQuery(filters)
-
-  useEffect(() => {
-    setCourse(methods.getValues('course'))
-
-    if (data) {
-      methods.setValue('course', data[0]?.id)
-    }
-  }, [data])
-
-  if (!course && data) {
-    setCourse(data[0]?.id)
-  }
 
   return (
     <Stack sx={{ gap: 4, minHeight: '630px' }}>
@@ -89,7 +77,6 @@ export default function DetailsStep({
             size='small'
             onChange={(event: any) => {
               setType(event?.target?.value)
-              setCourse(null)
               methods.setValue('type', event?.target?.value)
             }}
             value={type}
@@ -129,10 +116,6 @@ export default function DetailsStep({
                 native
                 name='course'
                 size='small'
-                onChange={(event: any) => {
-                  methods.setValue('course', event?.target?.value)
-                  setCourse(event?.target?.value)
-                }}
                 disabled={!data?.length}
                 sx={selectStyle(theme)}
               >
@@ -147,14 +130,22 @@ export default function DetailsStep({
                   ''
                 )}
                 {data
-                  ? data.map((course) => (
+                  ? [
                       <option
-                        key={course.id}
-                        value={course.id}
+                        key='empty'
+                        value='empty'
                       >
-                        {course.name}
-                      </option>
-                    ))
+                        {translate('quest_select_course')}
+                      </option>,
+                      ...data.map((course) => (
+                        <option
+                          key={course.id}
+                          value={course.id}
+                        >
+                          {course.name}
+                        </option>
+                      )),
+                    ]
                   : null}
               </RHFSelect>
             ) : (

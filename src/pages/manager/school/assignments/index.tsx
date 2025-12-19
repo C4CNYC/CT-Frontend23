@@ -273,7 +273,7 @@ export default function AsssignmentsListPage() {
   return (
     <>
       <Head>
-        <title> {translate('assignments')} | CodeTribe</title>
+        <title> {translate('assignments') + ` | CodeTribe`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

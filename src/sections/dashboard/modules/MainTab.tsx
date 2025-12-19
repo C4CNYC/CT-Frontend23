@@ -4,7 +4,7 @@ import { IoMdClose } from '@react-icons/all-files/io/IoMdClose'
 import { RHFSwitch, RHFTextField, RHFUpload, SingleFilePreview } from '@/components'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
-import { HELPER_IMG_TEXT, INPUT_SX, UPLOAD_IMG_BTN } from './constants'
+import { HELPER_IMG_TEXT, UPLOAD_IMG_BTN } from './constants'
 
 interface MainTabProps {
   uploadedFile: File | null
@@ -21,7 +21,11 @@ const MainTab = ({
 }: MainTabProps): React.ReactElement => {
   const translate = useTranslate()
   return (
-    <>
+    <Box
+      rowGap={3}
+      display='grid'
+      mt={2}
+    >
       <Box>
         <Typography
           variant='body1'
@@ -103,7 +107,6 @@ const MainTab = ({
         </Box>
       </Box>
       <RHFTextField
-        sx={INPUT_SX}
         name='name'
         label={translate('modules_module_name')}
         required
@@ -121,7 +124,7 @@ const MainTab = ({
         name='active'
         label={translate('modules_module_active')}
       />
-    </>
+    </Box>
   )
 }
 

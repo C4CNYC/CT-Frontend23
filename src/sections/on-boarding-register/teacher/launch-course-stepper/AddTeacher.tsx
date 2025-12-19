@@ -4,6 +4,7 @@ import { LoadingButton } from '@mui/lab'
 import { Divider, IconButton, InputAdornment, Stack, Typography } from '@mui/material'
 import { HiEye } from '@react-icons/all-files/hi/HiEye'
 import { HiEyeOff } from '@react-icons/all-files/hi/HiEyeOff'
+import { useRouter } from 'next/router'
 
 import { RHFTextField } from '@/components'
 import { useTranslate } from '@/utils/translateHelper'
@@ -14,6 +15,7 @@ import { SUBMIT_BTN_SX } from '../constants'
 interface Props {
   isSubmitting: boolean
   isSubmitSuccessful: boolean
+  inviteData?: any
   nextStep: () => void
 }
 
@@ -21,16 +23,21 @@ export default function AddTeacher({
   isSubmitting,
   isSubmitSuccessful,
   nextStep,
+  inviteData,
 }: Props): React.ReactElement {
   const translate = useTranslate()
+  const router = useRouter()
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   useEffect(() => {
+    if (inviteData && isSubmitSuccessful) {
+      router.push(inviteData.inviteLink)
+    }
     if (isSubmitSuccessful) {
       nextStep()
     }
-  }, [isSubmitSuccessful])
+  }, [isSubmitSuccessful, inviteData])
 
   return (
     <Stack minHeight={450}>

@@ -18,6 +18,7 @@ import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/
 import { useTranslate } from '@/utils/translateHelper'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { useBoolean } from '@root/src/hooks/use-boolean'
+import { AGE, GRADING, LEVEL } from '@root/src/redux/services/interfaces/courseUnits.interface'
 import InsertExisistingLessonModal from '@root/src/sections/dashboard/lessons/InsertExisistingLessonModal'
 import { useGetLessonsQuery } from 'src/redux/services/manager/lessons-manager'
 
@@ -140,6 +141,14 @@ export default function ModuleLessonList({ moduleId }: Props): React.ReactElemen
                 initial_likes: module.initial_likes as number,
                 initial_stars: module.initial_stars as number,
                 initial_enrolled: module.initial_enrolled as number,
+                level: module.level as LEVEL,
+                customLevel: module.customLevel as string,
+                age: module.age as AGE,
+                customAge: module.customAge as string,
+                grading: module.grading as GRADING,
+                brief: module.brief as string,
+                audience: module.audience as string,
+                meta: module.meta,
               }}
               moduleTips={module.tips}
             >

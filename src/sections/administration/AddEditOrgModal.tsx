@@ -3,19 +3,24 @@ import { useState } from 'react'
 
 import { Box, Grid, Tab, Tabs } from '@mui/material'
 import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 
+import { useAuthContext } from '@/auth/useAuthContext'
+import { Role } from '@/redux/services/enums/role.enum'
 import { useTranslate } from '@/utils/translateHelper'
 import { HomePageType } from '@root/src/redux/services/enums/administration.enum'
 import { IAdministration } from '@root/src/redux/services/interfaces/administration'
 
+import CatalogTab from './CatalogTab'
 import { TAB_SX } from './constants'
 import CustomCodeTab from './CustomCodeTab'
-import FaviconTab from './FaviconTab'
-import LogoMiniTab from './LogoMiniTab'
 import LogoTab from './LogoTab'
 import MainTab from './MainTab'
+import MetaTab from './MetaTab'
+import SettingsTab from './SettingsTab'
+import SettingsTabForAdmins from './SettingsTabForAdmins'
 
 interface Prop {
   org?: IAdministration
@@ -72,6 +77,9 @@ function a11yProps(index: number): Record<string, string> {
 export default function AddEditOrgModal({ children, org }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false)
   const [value, setValue] = React.useState(0)
+  const { user } = useAuthContext()
+  const isSuperAdmin = user?.role === Role.SuperAdmin
+  const isAdmin = user?.role === Role.Admin
 
   const translate = useTranslate()
 
@@ -87,6 +95,77 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
     setValue(newValue)
   }
 
+  const tabs = [
+    {
+      label: translate('general'),
+      component: (
+        <MainTab
+          org={org}
+          handleClose={handleClose}
+        />
+      ),
+    },
+    {
+      label: translate('Logo'),
+      component: (
+        <LogoTab
+          org={org}
+          handleClose={handleClose}
+        />
+      ),
+    },
+    {
+      label: translate('Meta'),
+      component: (
+        <MetaTab
+          org={org}
+          handleClose={handleClose}
+        />
+      ),
+    },
+    { label: translate('Catalog'), component: <CatalogTab org={org} /> },
+    ...(isSuperAdmin
+      ? [
+          {
+            label: translate('Settings'),
+            component: (
+              <SettingsTab
+                org={org}
+                handleClose={handleClose}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(isAdmin || isSuperAdmin
+      ? [
+          {
+            label: translate(isSuperAdmin ? 'Settings (Admin)' : 'Settings'),
+            component: (
+              <SettingsTabForAdmins
+                org={org}
+                handleClose={handleClose}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(org?.home_page_type === HomePageType.Custom
+      ? [
+          {
+            label: translate('Landing Page'),
+            component: (
+              <CustomCodeTab
+                handleClose={handleClose}
+                id={org?.id!}
+                code={org?.home_page_body}
+              />
+            ),
+          },
+        ]
+      : []),
+  ]
+
   return (
     <>
       <Box
@@ -99,7 +178,7 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
       <Dialog
         open={open}
         onClose={handleClose}
-        maxWidth='xs'
+        maxWidth='sm'
         fullWidth
       >
         <DialogTitle>
@@ -115,78 +194,27 @@ export default function AddEditOrgModal({ children, org }: Prop): React.ReactEle
                 onChange={handleChange}
                 aria-label='basic tabs example'
               >
-                <Tab
-                  label={translate('general')}
-                  {...a11yProps(0)}
-                />
-                <Tab
-                  label={translate('Logo')}
-                  {...a11yProps(1)}
-                />
-                <Tab
-                  label={translate('Logo-mini')}
-                  {...a11yProps(2)}
-                />
-                <Tab
-                  label={translate('Favicon')}
-                  {...a11yProps(3)}
-                />
-                {org.home_page_type === HomePageType.Custom ? (
+                {tabs.map((tab, i) => (
                   <Tab
-                    label={translate('Code')}
-                    {...a11yProps(4)}
+                    key={i}
+                    label={tab.label}
+                    {...a11yProps(i)}
                   />
-                ) : null}
+                ))}
               </Tabs>
             ) : null}
           </Box>
-          <TabPanel
-            value={value}
-            index={0}
-          >
-            <MainTab
-              handleClose={handleClose}
-              org={org}
-            />
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={1}
-          >
-            <LogoTab
-              handleClose={handleClose}
-              id={org?.id as string}
-            />
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={2}
-          >
-            <LogoMiniTab
-              handleClose={handleClose}
-              id={org?.id as string}
-            />
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={3}
-          >
-            <FaviconTab
-              handleClose={handleClose}
-              id={org?.id as string}
-            />
-          </TabPanel>
-          <TabPanel
-            value={value}
-            index={4}
-          >
-            <CustomCodeTab
-              handleClose={handleClose}
-              code={org?.home_page_body}
-              id={org?.id as string}
-            />
-          </TabPanel>
+          {tabs.map((tab, i) => (
+            <TabPanel
+              key={i}
+              value={value}
+              index={i}
+            >
+              {tab.component}
+            </TabPanel>
+          ))}
         </DialogContent>
+        <DialogActions />
       </Dialog>
     </>
   )

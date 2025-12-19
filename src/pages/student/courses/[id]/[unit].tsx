@@ -85,7 +85,7 @@ export default function ModulePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{unitModule?.name ?? translate('module')} | CodeTribe</title>
+        <title>{unitModule?.name ?? translate('module') + ` | CodeTribe`}</title>
       </Head>
       <Container
         maxWidth={themeStretch ? false : 'lg'}
@@ -122,6 +122,7 @@ export default function ModulePage(): React.ReactElement {
           <Box overflow={'hidden'}>
             {unitModule ? (
               <ModuleHeader
+                unitModule={unitModule}
                 name={unitModule.name}
                 lessons={unitModule?.lessons ?? []}
                 description={

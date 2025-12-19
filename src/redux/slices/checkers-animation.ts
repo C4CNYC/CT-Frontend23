@@ -38,10 +38,21 @@ export const chekersAnimationSlice = createSlice({
     ): void => {
       state.completedSlides = payload
     },
+    resetState: (state): void => {
+      state.isVisible = initialState.isVisible
+      state.isTextOpened = initialState.isTextOpened
+      state.isActivateCompeated = initialState.isActivateCompeated
+      state.completedSlides = initialState.completedSlides
+    },
   },
 })
 
-export const { setIsVisible, setIsTextOpened, setIsActivateCompeated, setCompletedSlides } =
-  chekersAnimationSlice.actions
+export const {
+  setIsVisible,
+  setIsTextOpened,
+  setIsActivateCompeated,
+  setCompletedSlides,
+  resetState,
+} = chekersAnimationSlice.actions
 
 export default chekersAnimationSlice.reducer

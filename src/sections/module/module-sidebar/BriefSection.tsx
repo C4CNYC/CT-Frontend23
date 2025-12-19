@@ -13,12 +13,14 @@ import { MdOutlinePlayLesson } from '@react-icons/all-files/md/MdOutlinePlayLess
 import { SiLevelsdotfyi } from '@react-icons/all-files/si/SiLevelsdotfyi'
 
 import { useTranslate } from '@/utils/translateHelper'
+import { capitalizeFirstSymbol } from '@root/src/utils/capitalizeFirstSymbol'
 
 interface IBriefSectionProps {
   duration: string
   level: string
   lessons: string
   grade: string
+  brief: string
 }
 
 export default function BriefSection({
@@ -26,6 +28,7 @@ export default function BriefSection({
   level,
   lessons,
   grade,
+  brief,
 }: IBriefSectionProps): React.ReactElement {
   const theme = useTheme()
   const translate = useTranslate()
@@ -49,7 +52,7 @@ export default function BriefSection({
           <ListItemIcon>
             <SiLevelsdotfyi size={20} />
           </ListItemIcon>
-          <ListItemText primary={level} />
+          <ListItemText primary={capitalizeFirstSymbol(level)} />
         </ListItem>
         <ListItem>
           <ListItemIcon>
@@ -61,12 +64,16 @@ export default function BriefSection({
           <ListItemIcon>
             <LuSchool size={20} />
           </ListItemIcon>
-          <ListItemText primary={grade} />
+          <ListItemText primary={capitalizeFirstSymbol(grade)} />
         </ListItem>
       </List>
       <Box sx={{ px: 2 }}>
-        <Typography variant='body2'>{translate('courses_for_beginners_info')}</Typography>
-        <Typography variant='body2'>{translate('courses_entry_point')}</Typography>
+        {brief || (
+          <>
+            <Typography variant='body2'>{translate('courses_for_beginners_info')}</Typography>
+            <Typography variant='body2'>{translate('courses_entry_point')}</Typography>
+          </>
+        )}
       </Box>
     </Box>
   )

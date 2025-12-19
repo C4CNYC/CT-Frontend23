@@ -24,6 +24,7 @@ export function SingleFilePreview({ file }: Props): React.ReactElement | null {
         position: 'absolute',
         width: '100%',
         height: '87%',
+        padding: '10px',
       }}
     />
   )

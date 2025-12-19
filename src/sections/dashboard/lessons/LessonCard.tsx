@@ -4,6 +4,7 @@ import { Draggable } from '@hello-pangea/dnd'
 import { LoadingButton } from '@mui/lab'
 import { Box, Card, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import { CgMoreVerticalAlt } from '@react-icons/all-files/cg/CgMoreVerticalAlt'
+import { FaFileExport } from '@react-icons/all-files/fa6/FaFileExport'
 import { FaRegCopy } from '@react-icons/all-files/fa6/FaRegCopy'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { GoPencil } from '@react-icons/all-files/go/GoPencil'
@@ -16,9 +17,11 @@ import { ILesson } from '@/redux/services/interfaces/courseUnits.interface'
 import {
   useDeleteLessonMutation,
   useCloneLessonMutation,
+  useExportLessonMutation,
 } from '@/redux/services/manager/lessons-manager'
 import CreateLessonDialog from '@/sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog'
 import { useTranslate } from '@/utils/translateHelper'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 interface Props {
   lesson: ILesson
@@ -38,13 +41,18 @@ export default function LessonCard({
   const router = useRouter()
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
+  const {
+    value: openConfirm,
+    onTrue: handleOpenConfirm,
+    onFalse: handleCloseConfirm,
+  } = useBoolean(false)
 
-  const [openConfirm, setOpenConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
   const [deleteLesson] = useDeleteLessonMutation()
   const [cloneLesson] = useCloneLessonMutation()
+  const [lessonExport] = useExportLessonMutation()
 
   const onDelete = async (): Promise<void> => {
     setLoading(true)
@@ -62,20 +70,24 @@ export default function LessonCard({
     }
   }
 
-  const handleOpenConfirm = (): void => {
-    setOpenConfirm(true)
-  }
-
-  const handleCloseConfirm = (): void => {
-    setOpenConfirm(false)
-  }
-
   const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
     setOpenPopover(event.currentTarget)
     event.stopPropagation()
     event.preventDefault()
   }
-
+  const handleExport = async (): Promise<void> => {
+    setLoading(true)
+    if (lesson.id) {
+      try {
+        await lessonExport({ lesson_id: lesson.id }).unwrap()
+        if (refetch) refetch()
+        enqueueSnackbar(translate('lesson_exported_msg'))
+      } catch (e: any) {
+        enqueueSnackbar(e.data.message, { variant: 'error' })
+      }
+      setLoading(false)
+    }
+  }
   const openPreview = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
   }
@@ -102,6 +114,7 @@ export default function LessonCard({
           shallow: true,
         }
       )
+      if (refetch) refetch()
     })
 
     return
@@ -276,6 +289,10 @@ export default function LessonCard({
         >
           <FaRegCopy />
           {translate('actions_clone')}
+        </MenuItem>
+        <MenuItem onClick={handleExport}>
+          <FaFileExport />
+          {translate('actions_export')}
         </MenuItem>
         <Divider sx={{ borderStyle: 'dashed' }} />
         {lock || lesson.id.endsWith('000000000000') ? (

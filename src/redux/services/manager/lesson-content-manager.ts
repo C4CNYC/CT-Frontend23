@@ -1,5 +1,6 @@
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 
+import { IEnvironment } from '../../interfaces/environment.interface'
 import {
   ILessonContent,
   ILessonContentUpdate,
@@ -83,6 +84,22 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
     }),
 
+    getLessonFiles: builder.query<
+      Array<ILessonPreloadFile & BaseResponseInterface>,
+      { lessonId: string }
+    >({
+      query: ({ lessonId }) => ({
+        url: `/manager/lesson/${lessonId}/content/files`,
+        method: 'GET',
+      }),
+      providesTags: ['LessonSlidePreload'],
+      transformResponse: (
+        res: Array<ILessonPreloadFile & BaseResponseInterface>
+      ): Array<ILessonPreloadFile & BaseResponseInterface> =>
+        res.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()),
+      keepUnusedDataFor: 0,
+    }),
+
     addLessonStepPreloadFile: builder.mutation<
       ILessonPreloadFile,
       { lessonId: string; contentId: string } & Omit<ILessonPreloadFile, 'id'>
@@ -119,6 +136,54 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['LessonSlidePreload'],
     }),
+    // ============ Content Environments ============
+    getContentEnvironments: builder.query<
+      Array<IEnvironment & BaseResponseInterface>,
+      { lessonId: string; contentId: string }
+    >({
+      query: ({ lessonId, contentId }) => ({
+        url: `/manager/lesson/${lessonId}/content/${contentId}/environments`,
+        method: 'GET',
+      }),
+      providesTags: ['Environments'],
+      keepUnusedDataFor: 0,
+    }),
+
+    addContentEnvironment: builder.mutation<
+      void,
+      { lessonId: string; contentId: string; environment_id: string }
+    >({
+      query: ({ lessonId, contentId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/content/${contentId}/environments`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
+
+    removeContentEnvironment: builder.mutation<
+      void,
+      { lessonId: string; contentId: string; environment_id: string }
+    >({
+      query: ({ lessonId, contentId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/content/${contentId}/environments`,
+        method: 'DELETE',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
+
+    updateContentEnvironmentOrder: builder.mutation<
+      void,
+      { lessonId: string; contentId: string; environment_ids: string[] }
+    >({
+      query: ({ lessonId, contentId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/content/${contentId}/environments/order`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
   }),
   overrideExisting: false,
 })
@@ -127,6 +192,8 @@ export const {
   useGetLessonContentQuery,
   useGetLessonContentByIdQuery,
   useGetLessonSlidePreloadFilesQuery,
+  useGetLessonFilesQuery,
+  useGetContentEnvironmentsQuery,
   // -------------mutation-----------
   useUpdateLessonContentMutation,
   useCreateLessonContentMutation,
@@ -134,4 +201,7 @@ export const {
   useAddLessonStepPreloadFileMutation,
   useUpdateLessonStepPreloadFileMutation,
   useRemoveLessonStepPreloadFileMutation,
+  useAddContentEnvironmentMutation,
+  useRemoveContentEnvironmentMutation,
+  useUpdateContentEnvironmentOrderMutation,
 } = extendedApi

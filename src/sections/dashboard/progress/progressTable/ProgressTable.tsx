@@ -267,9 +267,7 @@ export default function ProgressTable({
                     <>
                       <TableCell size='small'>{el?.first_name}</TableCell>
                       <TableCell size='small'>
-                        {!lastNameOnly
-                          ? `${el?.last_name ? el?.last_name?.substring(0, 1) : ''}`
-                          : el?.last_name}
+                        {!lastNameOnly ? `${el?.last_name ? el?.last_name : ''}` : el?.last_name}
                       </TableCell>
                     </>
                   )}
@@ -290,9 +288,7 @@ export default function ProgressTable({
                         <TableItemProgress
                           key={item.id}
                           studentName={`${el.first_name} ${
-                            !lastNameOnly
-                              ? `${el?.last_name ? el?.last_name?.substring(0, 1) : ''}`
-                              : el?.last_name
+                            !lastNameOnly ? `${el?.last_name ? el?.last_name : ''}` : el?.last_name
                           }`}
                           type={levelName}
                           name={item.name}

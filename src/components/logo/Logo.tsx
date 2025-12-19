@@ -3,8 +3,13 @@ import { forwardRef, useMemo } from 'react'
 import { Box, BoxProps, Link } from '@mui/material'
 import NextLink from 'next/link'
 
+import { useTenants } from '@/hooks/useTenants'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
-import { useSelector } from '@root/src/redux/store'
+import { useAuthContext } from '@root/src/auth/useAuthContext'
+import {
+  HomePageTargetType,
+  homePageTargetList,
+} from '@root/src/redux/services/enums/administration.enum'
 
 import { Image } from '../image'
 
@@ -16,14 +21,20 @@ export interface LogoProps extends BoxProps {
 // eslint-disable-next-line react/display-name
 export const Logo = forwardRef<HTMLDivElement, LogoProps>(
   ({ disabledLink = false, isLogoNav = false, sx, ...other }, ref): React.ReactElement | null => {
-    const tenant = useSelector((state) => state.tenant)
+    const { isAuthenticated } = useAuthContext()
+    const tenant = useTenants()
+    const homePageTarget: HomePageTargetType = tenant?.meta?.homepage_target
+      ? (tenant.meta.homepage_target as HomePageTargetType)
+      : HomePageTargetType.Catalog
 
     const logo = useMemo(() => {
       return (
         <Box
           ref={ref}
           sx={{
-            display: 'inline-flex',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
             margin: '0 auto',
             width: '100%',
             maxWidth: '200px',
@@ -34,8 +45,13 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
           {...other}
         >
           <Image
-            src={tenant.logo}
-            alt={`tenant${tenant.slug}`}
+            src={tenant?.logo || ''}
+            alt={`tenant${tenant?.slug || 'logo'}`}
+            style={{
+              maxWidth: '100%',
+              maxHeight: '65px',
+              objectFit: 'contain',
+            }}
           />
         </Box>
       )
@@ -48,7 +64,9 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
     return (
       <Link
         component={NextLink}
-        href={STUDENT_PATH_DASHBOARD.courses.root}
+        href={
+          isAuthenticated ? homePageTargetList[homePageTarget] : STUDENT_PATH_DASHBOARD.courses.root
+        }
       >
         {logo}
       </Link>

@@ -91,6 +91,7 @@ export default function CreateClass(): React.ReactElement {
           )
           return
         } else {
+          localStorage.setItem('isClassCreated', 'true')
           push(STUDENT_PATH_DASHBOARD.class.id(classInfo.id))
         }
       }
@@ -112,7 +113,7 @@ export default function CreateClass(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('class_create_class')} | CodeTribe</title>
+        <title>{translate('class_create_class') + ` | CodeTribe`}</title>
       </Head>
       <Container
         maxWidth={false}

@@ -1,11 +1,11 @@
 import { useCallback, useState, useMemo } from 'react'
 
-import { indentUnit } from '@codemirror/language'
 import { Compartment, Extension, Text } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup'
 import { dracula } from '@uiw/codemirror-theme-dracula'
 
+import { indentCompartment, noAutoIndent } from '@/sections/code-panel/utils/editor'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 
 import { BASIC_SETUP } from './constants'
@@ -30,19 +30,28 @@ export const useInitCodemirror = (): UseBaseInitReturn => {
 
   const lineWrap = useMemo(() => new Compartment(), [])
 
-  const baseInit = useCallback(async (file: StudentFile) => {
-    setExtensions([
-      indentUnit.of('\t'),
-      basicSetup(BASIC_SETUP),
-      ...language(file),
-      dracula,
-      lineWrap.of(EditorView.lineWrapping),
-    ])
+  const baseInit = useCallback(
+    async (file: StudentFile) => {
+      try {
+        // Wait for language plugins to be dynamically loaded
+        const languagePlugins = await language(file)
 
-    setKey((prev) => ++prev)
-    setIsLoading(false)
-    return
-  }, [])
+        setExtensions([
+          indentCompartment.of(noAutoIndent),
+          basicSetup(BASIC_SETUP),
+          ...languagePlugins,
+          dracula,
+          lineWrap.of(EditorView.lineWrapping),
+        ])
+
+        setKey((prev) => ++prev)
+        setIsLoading(false)
+      } catch (error) {
+        setIsLoading(false)
+      }
+    },
+    [lineWrap]
+  )
 
   return {
     key,

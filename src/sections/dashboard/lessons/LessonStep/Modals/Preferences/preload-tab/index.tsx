@@ -6,14 +6,13 @@ import { FaPlus } from '@react-icons/all-files/fa6/FaPlus'
 import { useSnackbar } from 'notistack'
 
 import { EmptyContent } from '@root/src/components'
-import {
-  useAddLessonStepPreloadFileMutation,
-  useGetLessonSlidePreloadFilesQuery,
-} from '@root/src/redux/services/manager/lesson-content-manager'
-import { FileExtension } from '@root/src/types/lessons'
+import { useAddLessonStepPreloadFileMutation } from '@root/src/redux/services/manager/lesson-content-manager'
+import { useGetLessonSlidePreloadFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
+import { FileExtension, FileExtensions } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { getAssetBtnSx } from './constants'
+import { useUniqueFilename } from './hooks/useUniqueFilename'
 import PreloadFileItem from './PreloadFileItem'
 
 interface PreloadTabProps {
@@ -29,19 +28,19 @@ const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
   const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
   const addAssetSx = useMemo(() => getAssetBtnSx(isDarkMode), [isDarkMode])
 
-  const { data, isLoading } = useGetLessonSlidePreloadFilesQuery({
-    lessonId,
-    contentId,
-  })
   const [postFile, { isLoading: isCreating }] = useAddLessonStepPreloadFileMutation()
+  const { getUniqueName } = useUniqueFilename(lessonId, contentId)
+  const { data, isLoading } = useGetLessonSlidePreloadFilesQuery({ lessonId, contentId })
 
   const onCreate = async () => {
+    const fileName = await getUniqueName(FileExtensions.HTML)
+
     try {
       await postFile({
         lessonId,
         contentId,
-        extension: FileExtension.HTML,
-        name: generateRandomName(),
+        extension: FileExtensions.HTML,
+        name: fileName,
         preloaded_code: '',
       }).unwrap()
       enqueueSnackbar(translate('messages_added'))
@@ -77,6 +76,7 @@ const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
               lessonId={lessonId}
               contentId={contentId}
               key={el.id}
+              getUniqueName={getUniqueName}
             />
           ))
         )}
@@ -93,10 +93,6 @@ const PreloadTab = ({ lessonId, contentId }: PreloadTabProps) => {
       </Stack>
     </>
   )
-}
-
-function generateRandomName() {
-  return Math.random().toString(36).substring(7)
 }
 
 export default PreloadTab

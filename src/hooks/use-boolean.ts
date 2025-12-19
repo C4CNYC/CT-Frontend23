@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useCallback } from 'react'
 
-export type UseBooleanReturn = {
+export type UseBoolean = {
   value: boolean
   onTrue: () => void
   onFalse: () => void
@@ -10,7 +10,7 @@ export type UseBooleanReturn = {
   setValue: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function useBoolean(defaultValue: boolean = false): UseBooleanReturn {
+export function useBoolean(defaultValue: boolean = false): UseBoolean {
   const [value, setValue] = useState(defaultValue)
 
   const onTrue = useCallback(() => {

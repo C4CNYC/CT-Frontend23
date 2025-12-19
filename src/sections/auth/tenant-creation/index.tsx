@@ -18,6 +18,7 @@ import NoteStep from './note-step'
 import OrgInfoStep from './org-info-step'
 import OwnerStep from './owner-step'
 import { StepperProvider, useStepperContext } from './stepper-context'
+import SuccessRegStep from './success-reg-step'
 
 export default function TenantCreation() {
   const translate = useTranslate()
@@ -36,26 +37,38 @@ export default function TenantCreation() {
         errors={methods.formState.errors}
         methods={methods}
       >
-        <RegStepper />
-        <BackBtn />
-        <Stack
-          sx={{
-            width: '100%',
-            minHeight: '400px',
-            justifyContent: 'center',
-            position: 'relative',
-            mb: 0.5,
-          }}
-        >
-          <FormProvider methods={methods}>
-            <RenderStep />
-          </FormProvider>
-        </Stack>
+        <TenantCreationBody methods={methods} />
+      </StepperProvider>
+    </StyledContent>
+  )
+}
+
+function TenantCreationBody({ methods }: { methods: any }) {
+  const { activeStep } = useStepperContext()
+
+  return (
+    <>
+      <RegStepper />
+      {activeStep !== 6 && <BackBtn />}
+      <Stack
+        sx={{
+          width: '100%',
+          minHeight: '400px',
+          justifyContent: 'center',
+          position: 'relative',
+          mb: 0.5,
+        }}
+      >
+        <FormProvider methods={methods}>
+          <RenderStep />
+        </FormProvider>
+      </Stack>
+      {activeStep !== 6 && (
         <Box sx={{ position: 'absolute', bottom: 14, left: 0, right: 0 }}>
           <SingLink />
         </Box>
-      </StepperProvider>
-    </StyledContent>
+      )}
+    </>
   )
 }
 
@@ -74,6 +87,8 @@ function RenderStep() {
       return <LogosStep />
     case 5:
       return <NoteStep />
+    case 6:
+      return <SuccessRegStep />
     default:
       return <EmailPassStep />
   }

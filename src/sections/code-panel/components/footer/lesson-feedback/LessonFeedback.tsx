@@ -233,7 +233,7 @@ export default function LessonFeedback({
             sx={{ pb: 1, pt: 2, pl: 4 }}
           >
             {feedbackType === feedbackTypes.general
-              ? translate('rate_slide_title')
+              ? translate('General Feedback & Support')
               : feedbackType === feedbackTypes.training
                 ? translate('rate_training_title')
                 : translate('rate_slide_title')}

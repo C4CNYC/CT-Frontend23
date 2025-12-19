@@ -16,12 +16,12 @@ import { ICourseSearchParams } from '@/redux/services/interfaces/courseUnits.int
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
 import { CourseCard } from '@/sections/dashboard/courses/cards'
-import CreateCourseDialog from '@/sections/dashboard/courses/CreateCourseDialog'
 import FilterCourses from '@/sections/dashboard/courses/filter'
 import SkeletonCourses from '@/sections/dashboard/courses/skeletonCourses'
 import SkeletonList from '@/sections/dashboard/skeleton/skeletonList'
 import { useTranslate } from '@/utils/translateHelper'
 import { useIsAdmin } from '@root/src/lib/use-is-admin'
+import CreateCourseDialog from '@root/src/sections/dashboard/courses/create-course-dialog'
 
 CoursesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
@@ -51,7 +51,7 @@ export default function CoursesListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('courses')} | CodeTribe</title>
+        <title> {translate('courses') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs

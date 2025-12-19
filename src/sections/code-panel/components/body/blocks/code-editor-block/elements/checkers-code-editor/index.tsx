@@ -1,4 +1,4 @@
-import { type FC, useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { Box, useTheme } from '@mui/material'
 import { Stack } from '@mui/system'
@@ -7,12 +7,12 @@ import dynamic from 'next/dynamic'
 import { useDetectClickOutside } from 'react-detect-click-outside'
 import { useDispatch } from 'react-redux'
 
-import { setIsVisible, setCompletedSlides } from '@/redux/slices/checkers-animation'
-import { setContentValidations, setNextStepAble } from '@/redux/slices/code-panel-global'
+import { setIsVisible } from '@/redux/slices/checkers-animation'
 import { useSelector } from '@/redux/store'
-import { type IValidationMap } from '@/utils/validationMaping'
+import { useCheckers } from '@root/src/hooks/useCheckers'
+import { type IValidationMap } from '@root/src/utils/CheckValidationTests'
 
-import CheckersMenu from './checkers-menu'
+import CheckersMenu from './checkers-menu/CheckersMenu'
 import { CheckerIcon } from './CheckersIcon'
 import {
   getBoxSx,
@@ -30,31 +30,18 @@ const CheckersCompleated = dynamic(() => import('./checkers-compleated'), {
   ssr: false,
 })
 
-interface ICheckers {
-  checkers: IValidationMap[]
-  contentId?: string | undefined
-  isCheckedOnce: boolean
-}
-
-const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
+export function Checkers() {
   const dispatch = useDispatch()
   const theme = useTheme()
-
+  const { checkers } = useCheckers()
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible)
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const completedSlides = useSelector((state) => state.checkersAnimation.completedSlides)
-  const contentValidations = useSelector((state) => state.codePanelGlobal.contentValidations)
   const isActivateCompleted = useSelector((state) => state.checkersAnimation.isActivateCompeated)
 
   const getBoxStyle = useMemo(() => getBoxSx(theme), [theme])
   const mDivStyle = useMemo(() => getMDivStyles(theme), [theme])
 
   const handleCollapse = (): void => {
-    if (isVisible) {
-      dispatch(setIsVisible(false))
-    } else {
-      dispatch(setIsVisible(true))
-    }
+    dispatch(setIsVisible(isVisible ? false : true))
   }
 
   const handleClose = (): void => {
@@ -65,55 +52,25 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
 
   const ref = useDetectClickOutside({ onTriggered: handleClose })
 
-  useEffect(() => {
-    if (!checkers.length) {
-      return
-    }
-    const allPassed = checkers.reduce((prev, curr) => prev && curr.valid, true)
-    if (allPassed) {
-      const checkedContents = contentValidations?.map((item) => ({
-        ...item,
-        checkers: item.contentId === contentId ? checkers : item.checkers,
-      }))
-      if (checkedContents?.length) {
-        // Setting content validation to an empty array here causes a React error:
-        // "Maximum update depth exceeded"
-        // Checking for an empty array solves this error
-        dispatch(setContentValidations(checkedContents))
-      }
-      const newCompletedSlides = [...completedSlides]
-      newCompletedSlides[slideIndex] = true
-      dispatch(setCompletedSlides(newCompletedSlides))
-    }
-    dispatch(setNextStepAble(allPassed))
-  }, [checkers, slideIndex])
-
   const handleIconColor = (checkers: IValidationMap[]): string => {
-    let containsValid = false
-    let containsInvalid = false
+    const hasValid = checkers.some((c) => c.valid)
+    const hasInvalid = checkers.some((c) => !c.valid)
 
-    checkers.forEach((checker) => {
-      checker.valid ? (containsValid = true) : (containsInvalid = true)
-    })
-
-    if (containsValid && !containsInvalid) {
-      return '#75CF6D'
-    }
-
-    if (containsValid && containsInvalid) {
-      return '#ED9526'
-    }
-
+    if (hasValid && !hasInvalid) return '#75CF6D'
+    if (hasValid && hasInvalid) return '#ED9526'
     return '#C4C4C4'
   }
 
+  if (!checkers || !checkers.length) {
+    return null
+  }
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      sx={{ position: 'relative' }}
+      ref={ref}
+    >
       {isActivateCompleted ? <CheckersCompleated /> : null}
-      <Box
-        sx={OPEN_BOX_SX}
-        ref={ref}
-      >
+      <Box sx={OPEN_BOX_SX}>
         <AnimatePresence>
           <m.div
             initial='visible'
@@ -151,15 +108,10 @@ const Checkers: FC<ICheckers> = ({ checkers, contentId, isCheckedOnce }) => {
             variants={CHECKERS_ANIMATION}
             style={mDivStyle}
           >
-            <CheckersMenu
-              checkers={checkers}
-              isCheckedOnce={isCheckedOnce}
-            />
+            <CheckersMenu checkers={checkers} />
           </m.div>
         </AnimatePresence>
       </Stack>
     </Box>
   )
 }
-
-export default Checkers

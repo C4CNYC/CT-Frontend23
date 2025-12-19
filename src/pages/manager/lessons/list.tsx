@@ -26,6 +26,7 @@ import SkeletonList, { DefaultSkeletonItem } from '@/sections/dashboard/skeleton
 import { useTranslate } from '@/utils/translateHelper'
 import { useAuthContext } from '@root/src/auth/useAuthContext'
 import { useGetPropertiesQuery } from '@root/src/redux/services/manager/properties-manager'
+import { LessonImportDialog } from '@root/src/sections/dashboard/lessons/LessonImportDialog'
 
 import FilterLessons from './filter'
 
@@ -171,6 +172,9 @@ export default function LessonsListPage(): React.ReactElement {
         lesson_id: draggableId,
         sort: getSort(result, lessons),
       })
+      if (userRole === Role.Admin || userRole === Role.SuperAdmin) {
+        refetchAdminLessons()
+      }
     },
     [filters, lessons]
   )
@@ -194,12 +198,15 @@ export default function LessonsListPage(): React.ReactElement {
         }
       )
     }
+    if (userRole === Role.Admin || userRole === Role.SuperAdmin) {
+      refetchAdminLessons()
+    }
   }
 
   return (
     <>
       <Head>
-        {router.query.lessonId ? null : <title>{translate('lessons_list')} | CodeTribe</title>}
+        {router.query.lessonId ? null : <title>{translate('lessons_list') + ` | CodeTribe`}</title>}
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -231,6 +238,8 @@ export default function LessonsListPage(): React.ReactElement {
               >
                 {translate('lessons_create_lesson')}
               </Button>
+
+              <LessonImportDialog />
             </Box>
           }
         />
