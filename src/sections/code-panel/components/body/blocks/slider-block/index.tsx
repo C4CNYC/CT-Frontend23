@@ -3,13 +3,12 @@ import React, { type FC, useCallback, useEffect, useMemo, useState } from 'react
 import { Box, useTheme } from '@mui/material'
 import { SlDirections } from '@react-icons/all-files/sl/SlDirections'
 import { TbArrowBarToLeft } from '@react-icons/all-files/tb/TbArrowBarToLeft'
+import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 
 import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { IIntegration } from '@/redux/interfaces/integration.interface'
-import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import {
   setNextStepAble,
   setSlideId,
@@ -18,9 +17,9 @@ import {
   toggleInstrations,
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { useDebounceCallback } from '@root/src/hooks'
+import { useBoolean } from '@root/src/hooks/use-boolean'
 import {
   useGetStudentLastVisitedSlideQuery,
   useUpdateStudentLastVisitedSlideMutation,
@@ -32,33 +31,20 @@ import { BrowserViewTeacher } from '../../../browserview/BrowserViewTeacher'
 import BaseBlock from '../base-block'
 import { CodeDocument } from '../view-block/browser-view/types'
 
-import { PROGRESS_ITEM_SX, getBoxSx, getProgressWrapperSx } from './constants'
+import {
+  ISliderBlock,
+  NextStepProps,
+  PROGRESS_ITEM_SX,
+  getBoxSx,
+  getProgressWrapperSx,
+} from './constants'
 import { EditContentLayer } from './edit-content-layer'
 import Navigation from './navigation'
 import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
 
-interface ISliderBlock {
-  onSubmitLesson: () => void
-  onSubmitChallenge: (slideId: string, code?: string) => void
-  integrations: Array<IIntegration & BaseResponseInterface>
-  lessonType?: string
-  lessonName?: string
-  lessonId?: string
-  isLoadingLessonContent: boolean
-  lessonMeta?: Record<string, any>
-}
+const NextLessonDialog = dynamic(async () => await import('./next-lesson-dialog'))
 
-interface IView {
-  type: LessonContentType
-  body: string
-  integrations: IIntegration[]
-  connectIntegrations: (body: string) => CodeDocument | null
-  title?: string
-  lessonType?: string
-  stepBgColor?: string | undefined
-}
-
-const icon = (
+export const icon = (
   <SlDirections
     size='20px'
     color='#43D4DD'
@@ -82,6 +68,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const searchParams = useSearchParams()
   const { lesson, lessonContent, currentSlideUpdated } = useLessonManager()
   let data = lessonContent ?? []
+  const { value, onFalse, onTrue } = useBoolean()
   const [isEditLesson, setIsEditLesson] = useState(false)
   const [isSlideReady, setIsSlideReady] = useState(false)
   const [isOpenModalCurrentSlideEdited, setIsOpenModalCurrentSlideEdited] = useState(false)
@@ -168,7 +155,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     if (hasNextStep) {
       onBeforeChange(slideIndex, slideIndex + 1)
     } else {
-      onSubmitLesson()
+      onTrue()
     }
   }
 
@@ -286,7 +273,7 @@ const SliderBlock: FC<ISliderBlock> = ({
           <Box
             key={index}
             sx={{ bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`, ...PROGRESS_ITEM_SX }}
-          ></Box>
+          />
         ))}
       </Box>
       {sandbox ? (
@@ -323,16 +310,14 @@ const SliderBlock: FC<ISliderBlock> = ({
           )}
         </>
       )}
+      <NextLessonDialog
+        open={value}
+        onClose={onFalse}
+        onSubmitLesson={onSubmitLesson}
+        lessonName={lessonName ?? ''}
+      />
     </BaseBlock>
   )
-}
-
-interface NextStepProps {
-  handleNext: (skip?: boolean) => void
-  handlePrev: () => void
-  stepHasValidation: boolean
-  hasNextStep: boolean
-  lessonName?: string
 }
 
 const NextStep = ({
