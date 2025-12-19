@@ -1,3 +1,5 @@
+import { useSelector } from '@/redux/store'
+
 import SkeletonViewBlock from '../code-panel/components/body/blocks/view-block/skeleton-view-box'
 
 import { CheckersCompleated } from './CheckersCompleated'
@@ -8,7 +10,10 @@ import { useCheckers } from './useCheckers'
 
 export function BrowserViewTeacherBare() {
   const { lesson, lessonContent, checkersAnimation } = useLessonManager()
-  const currentSlide = lessonContent ? lessonContent[0] : null
+  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
+  const currentSlide = lessonContent
+    ? lessonContent.find((slide) => slide.id === slideId) || lessonContent[0]
+    : null
   useFileReadiness({})
   useCheckers()
   useLessonLoader()

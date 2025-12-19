@@ -44,6 +44,7 @@ const Navigation: FC<INavigation> = ({
   hasPrev,
   stepHasValidation,
   canMoveNext,
+  hasNextStep,
   lessonName,
 }) => {
   const theme = useTheme()

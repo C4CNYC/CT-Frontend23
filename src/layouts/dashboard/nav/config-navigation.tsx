@@ -205,6 +205,7 @@ export const courses = {
       title: 'sidebar_menu_catalog',
       icon: <FaUserFriends size={20} />,
       component: () => <CatalogMenuItem />,
+      visibleWhen: (ctx: MenuContext) => !ctx.tenant?.meta?.is_hided_nav_catalog_icon,
     },
     {
       path: '',
@@ -317,3 +318,34 @@ export const menuConfig = (currentRole: Role) =>
         [Role.Manager]: [managment, content],
         [Role.Editor]: [content],
       }
+
+export function filterMenu(menu: MenuSection[], ctx: MenuContext): MenuSection[] {
+  return menu
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) => {
+        if (!item.visibleWhen) return true
+        return item.visibleWhen(ctx)
+      }),
+    }))
+    .filter((section) => section.items.length > 0)
+}
+
+export interface MenuContext {
+  tenant?: any
+  user?: any
+  role?: Role
+}
+
+export interface MenuItem {
+  title: string
+  path: string
+  icon: React.ReactElement
+  component?: (children: React.ReactElement) => React.ReactElement
+  visibleWhen?: (ctx: MenuContext) => boolean
+}
+
+export interface MenuSection {
+  subheader: string
+  items: MenuItem[]
+}
