@@ -9,8 +9,6 @@ import { useDispatch } from 'react-redux'
 
 import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { IIntegration } from '@/redux/interfaces/integration.interface'
-import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import {
   setNextStepAble,
   setSlideId,
@@ -19,8 +17,6 @@ import {
   toggleInstrations,
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
-import { CodeDocument } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
-import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { useDebounceCallback } from '@root/src/hooks'
 import { useBoolean } from '@root/src/hooks/use-boolean'
@@ -33,6 +29,7 @@ import { progressGuestGetAll, progressGuestSet } from '@root/src/utils/progressL
 
 import { BrowserViewTeacher } from '../../../browserview/BrowserViewTeacher'
 import BaseBlock from '../base-block'
+import { CodeDocument } from '../view-block/browser-view/types'
 
 import {
   ISliderBlock,
@@ -44,30 +41,6 @@ import {
 import { EditContentLayer } from './edit-content-layer'
 import Navigation from './navigation'
 import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
-
-interface ISliderBlock {
-  onSubmitLesson: () => void
-  onSubmitChallenge: (slideId: string, code?: string) => void
-  integrations: Array<IIntegration & BaseResponseInterface>
-  lessonType?: string
-  lessonName?: string
-  lessonId?: string
-  isLoadingLessonContent: boolean
-  lessonMeta?: Record<string, any>
-}
-
-interface IView {
-  type: LessonContentType
-  body: string
-  integrations: IIntegration[]
-  connectIntegrations: (body: string) => CodeDocument | null
-  title?: string
-  lessonType?: string
-  stepBgColor?: string | undefined
-}
-
-const icon = (
-import View from './View'
 
 const NextLessonDialog = dynamic(async () => await import('./next-lesson-dialog'))
 

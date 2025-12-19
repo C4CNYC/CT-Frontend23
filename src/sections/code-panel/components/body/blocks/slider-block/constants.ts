@@ -1,10 +1,11 @@
 import { Theme, type SxProps } from '@mui/system'
 
-import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
-import { CodeDocument } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
+
+import { CodeDocument } from '../view-block/browser-view/types'
 export const getBoxSx = (isDesktop: boolean, isOpenHeader: boolean): SxProps => ({
   overflowY: 'scroll',
   scrollbarWidth: 'none',
@@ -85,6 +86,7 @@ export interface ISliderBlock {
   lessonName?: string
   lessonId?: string
   isLoadingLessonContent: boolean
+  lessonMeta?: Record<string, any>
 }
 
 export interface IView {

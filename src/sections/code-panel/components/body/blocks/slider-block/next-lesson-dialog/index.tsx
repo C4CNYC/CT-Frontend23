@@ -66,7 +66,7 @@ function NextLessonDialog({ open, onClose, onSubmitLesson, lessonName }: Props) 
 
     try {
       if (rating) {
-        sendGeneralFeedback({
+        await sendGeneralFeedback({
           general_message,
           rating: rating,
           userId: user?.id,
