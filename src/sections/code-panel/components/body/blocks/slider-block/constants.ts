@@ -1,6 +1,5 @@
 import { Theme, type SxProps } from '@mui/system'
 
-import { ILessonContent } from '@/redux/interfaces/content.interface'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
