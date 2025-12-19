@@ -12,6 +12,8 @@ import {
 import { useRouter } from 'next/router'
 
 import CustomPopover, { usePopover } from '@/components/custom-popover'
+import { setSchool as setSchoolRedux } from '@/redux/slices/manager'
+import { dispatch } from '@/redux/store'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
 import { Role } from '@root/src/redux/services/enums/role.enum'
 import { useGetMySchoolsQuery } from '@root/src/redux/services/manager/schools-manager'
@@ -35,6 +37,7 @@ function SchoolSwitcher() {
       if (!school || school.id === newValue.id) return
       setSchool(newValue)
       localStorage.setItem('x-school-id', newValue.id)
+      dispatch(setSchoolRedux(newValue.id))
       popover.onClose()
       reload()
     },
@@ -50,6 +53,7 @@ function SchoolSwitcher() {
     const selectedSchool = schoolLocalData || data.data[0]
     setSchool(selectedSchool)
     localStorage.setItem('x-school-id', selectedSchool.id)
+    dispatch(setSchoolRedux(selectedSchool.id))
   }, [isLoading, data])
 
   if (isLoading) {

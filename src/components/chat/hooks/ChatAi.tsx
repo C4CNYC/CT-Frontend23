@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 
 import { useAuthContext } from '@root/src/auth/useAuthContext'
-import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
 import { useN8nRequest } from '@root/src/redux/services/manager/ai-services'
 import {
   useGetLessonContentQuery,
@@ -24,7 +24,7 @@ import {
 import { setChatVisible } from '@root/src/redux/slices/chat-handler'
 import { dispatch, useSelector } from '@root/src/redux/store'
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
-import { FileExtension } from '@root/src/types/lessons'
+import { FileExtensions } from '@root/src/types/lessons'
 import { JsonParseFromAiResponse } from '@root/src/utils/stripQuotesFromAiResponse'
 
 import { IChatMessages } from '../chatInterface'
@@ -58,13 +58,16 @@ export const ChatAi = () => {
     { lessonId: lesson?.id || '' },
     { skip: !lesson?.id }
   )
-  let userIsOwner = lesson?.userId == user?.id
-  let minsSinceLesson = Math.floor((Date.now() - Date.parse(lesson?.createdAt || '')) / 60000)
+  const userIsOwner = useMemo(() => lesson?.userId == user?.id, [lesson?.userId, user?.id])
+  const minsSinceLesson = useMemo(
+    () => Math.floor((Date.now() - Date.parse(lesson?.createdAt || '')) / 60000),
+    [lesson?.createdAt]
+  )
   const [chatAiOptions, setChatAiOptions] = useState<ChatAiOptionsType[]>([])
   const slideId = useSelector((state) => state.codePanelGlobal.slideId)
   const { refetch: refetchFiles, data: lessonContentFiles } = useGetStudentFilesQuery(
     { lessonId: lesson?.id || '', lessonContentId: slideId || '' },
-    { skip: !lesson?.id || !slideId }
+    { skip: !lesson?.id || !slideId || !user?.id || !userIsOwner }
   )
   const deleteAllFiles = useResetStudentFiles({
     lessonId: lesson?.id || '',
@@ -161,9 +164,10 @@ export const ChatAi = () => {
     }>
   const translateHuman4Us = (slideId: string, message: any) =>
     ask(JSON.stringify({ lessonId: lesson?.id, chat: message }), 'translateHuman4Us')
-  const chatHistoryGet = () =>
-    ask(JSON.stringify({ lessonId: lesson?.id }), 'chatHistoryGet').then((res) => {
-      return 'data' in res ? (res.data as unknown as IChatMessages[]) : []
+  const chatHistoryGet = (): Promise<IChatMessages[]> =>
+    ask(JSON.stringify({ lessonId: lesson?.id }), 'chatHistoryGet').then((res: any) => {
+      if ('data' in res && res.data && Array.isArray(res.data)) return res.data as IChatMessages[]
+      return []
     })
   const chatHistoryAdd = (message: string, isMe = 0) =>
     ask(
@@ -174,84 +178,116 @@ export const ChatAi = () => {
       }),
       'chatHistoryAdd'
     )
+
+  // Process AI response based on action type
+  const processAiResponse = async (action: string, aiResponse: string, message: string) => {
+    switch (action) {
+      case 'add':
+        return await processAddAction(aiResponse, message)
+      case 'regex':
+        return await processRegexAction(aiResponse, message)
+      case 'precode':
+        return await processPreCodeAction(aiResponse)
+      default:
+        updateSlide(slideId, 'body', aiResponse)
+        return false
+    }
+  }
+
+  // Handle 'add' action - creates a new slide
+  const processAddAction = async (aiResponse: string, message: string) => {
+    const order = lessonContent?.findIndex((lc) => lc.id === slideId) || 0
+    try {
+      const newLessonContent = await addLessonContent({
+        lessonId: lesson?.id || '',
+        title: message,
+        body: aiResponse,
+        tips: '',
+        type: LessonContentType.Editable,
+        meta: { order: order + 0.1 },
+      }).unwrap()
+
+      addNewSlide({
+        ...newLessonContent,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
+      return false
+    } catch (e) {
+      return true // error occurred
+    }
+  }
+
+  // Handle 'regex' action - updates validation rules
+  const processRegexAction = async (aiResponse: string, message: string) => {
+    await validationUpdate({
+      regex: JsonParseFromAiResponse(aiResponse).content,
+      name: message,
+      id: slideId,
+    }).unwrap()
+    lessonValidations.refetch()
+    return false
+  }
+
+  // Handle 'precode' action - sets up preloaded code
+  const processPreCodeAction = async (aiResponse: string) => {
+    const firstSlide = lessonContent?.find((_c, i) => 0 === i)
+    lessonFiles.data?.forEach((f) => {
+      deleteLessonStepPreloadFile({
+        lessonId: lesson?.id || '',
+        contentId: firstSlide?.id || slideId,
+        fileId: f.id,
+      })
+    })
+    deleteAllFiles()
+    await addLessonStepPreloadFile({
+      lessonId: lesson?.id || '',
+      contentId: firstSlide?.id || slideId,
+      preloaded_code: JsonParseFromAiResponse(aiResponse).content,
+      name: 'index',
+      extension: FileExtensions.HTML,
+    })
+    refetchFiles()
+    return false
+  }
+
   const sendMessage =
-    (setMessages: Dispatch<SetStateAction<IChatMessages[]>>) => (message: string) => {
+    (
+      setMessages: Dispatch<SetStateAction<IChatMessages[]>>,
+      setIsLoading?: Dispatch<SetStateAction<boolean>>
+    ) =>
+    async (message: string) => {
       let ctime = new Date().getTime()
-      setMessages((s) => [{ chat: message, isMe: true, id: ctime, ctime }, ...(s || [])])
-      chatHistoryAdd(message, 1)
-      modifySlide(slideId, message).then(async (res) => {
+      setIsLoading?.(true)
+
+      try {
+        setMessages((s) => [{ chat: message, isMe: true, id: ctime, ctime }, ...(s || [])])
+        await chatHistoryAdd(message, 1)
+
+        const res = await modifySlide(slideId, message)
         ctime = new Date().getTime()
+
         let responseMessage = 'Making changes...'
         let aiResponse = ''
         let errorOccured = false
+
         try {
           JSON.parse(res.data[0].output)
           aiResponse = res.data[0].output
-          let action = res.data[0].action
-          switch (action) {
-            case 'add':
-              let order = lessonContent?.findIndex((lc) => lc.id === slideId) || 0
-              try {
-                let newLessonContent = await addLessonContent({
-                  lessonId: lesson?.id || '',
-                  title: message,
-                  body: aiResponse,
-                  tips: '',
-                  type: LessonContentType.Editable,
-                  meta: { order: order + 0.1 },
-                }).unwrap()
-
-                addNewSlide({
-                  ...newLessonContent,
-                  createdAt: new Date().toISOString(),
-                  updatedAt: new Date().toISOString(),
-                })
-              } catch (e) {
-                errorOccured = true
-              }
-              break
-            case 'regex':
-              await validationUpdate({
-                regex: JsonParseFromAiResponse(aiResponse).content,
-                name: message,
-                id: slideId,
-              }).unwrap()
-              lessonValidations.refetch()
-
-              break
-            case 'precode':
-              let firstSlide = lessonContent?.find((_c, i) => 0 === i)
-              lessonFiles.data?.forEach((f) => {
-                deleteLessonStepPreloadFile({
-                  lessonId: lesson?.id || '',
-                  contentId: firstSlide?.id || slideId,
-                  fileId: f.id,
-                })
-              })
-              deleteAllFiles()
-              addLessonStepPreloadFile({
-                lessonId: lesson?.id || '',
-                contentId: firstSlide?.id || slideId,
-                preloaded_code: JsonParseFromAiResponse(aiResponse).content,
-                name: 'index',
-                extension: FileExtension.HTML,
-              })
-              refetchFiles()
-              break
-            default:
-              updateSlide(slideId, 'body', aiResponse)
-          }
+          errorOccured = await processAiResponse(res.data[0].action, aiResponse, message)
         } catch (e) {
           errorOccured = true
-          // console.error('Error parsing response', e)
-          if (e instanceof Error) {
-            responseMessage = `Error occurred: ` + e.message
+          if (e instanceof SyntaxError) {
+            responseMessage = `I received an invalid response format. Let me try a different approach.`
+          } else if (e instanceof Error) {
+            responseMessage = `I encountered an issue: ${e.message}. Let me try again differently.`
           } else {
-            responseMessage = 'I didnt understand ai response'
+            responseMessage = 'I had trouble processing that request. Could you try rephrasing it?'
           }
         }
-        chatHistoryAdd(responseMessage, 0)
-        if (!errorOccured)
+
+        await chatHistoryAdd(responseMessage, 0)
+        if (!errorOccured) {
           setMessages((s) => [
             {
               chat: responseMessage,
@@ -262,7 +298,20 @@ export const ChatAi = () => {
             },
             ...s,
           ])
-      })
+        }
+      } catch (error) {
+        setMessages((s) => [
+          {
+            chat: 'Sorry, I encountered an error processing your request. Please try again.',
+            isMe: false,
+            id: new Date().getTime(),
+            ctime: new Date().getTime(),
+          },
+          ...s,
+        ])
+      } finally {
+        setIsLoading?.(false)
+      }
     }
 
   useEffect(() => {

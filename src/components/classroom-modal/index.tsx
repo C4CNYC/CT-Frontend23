@@ -42,7 +42,12 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
   )
 
   const onLoginWithGoogle = useGoogleLogin({
-    scope: 'https://www.googleapis.com/auth/classroom.courses.readonly',
+    scope: [
+      'https://www.googleapis.com/auth/classroom.courses.readonly',
+      'https://www.googleapis.com/auth/classroom.rosters.readonly',
+      'https://www.googleapis.com/auth/classroom.profile.emails',
+      'https://www.googleapis.com/auth/classroom.profile.photos',
+    ].join(' '),
     onSuccess: async ({ access_token: accessToken }) => {
       setToken(accessToken)
     },

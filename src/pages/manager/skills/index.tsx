@@ -65,7 +65,7 @@ export default function Skills(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('skills')} | CodeTribe</title>
+        <title> {translate('skills') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         {!isLoading ? (

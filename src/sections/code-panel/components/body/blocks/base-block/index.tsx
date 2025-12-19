@@ -18,6 +18,7 @@ interface IBaseBlock {
   closeIcon?: React.ReactElement
   hideTabsHandler?: () => void
   takeHeaderSettings?: (isOpen: boolean) => void
+  styles?: { [key: string]: any }
 }
 
 const isClosedHeaders = {
@@ -34,7 +35,14 @@ interface IHeaderSettings {
 
 const localStorageKey = 'HeadersSettings'
 
-const BaseBlock: FC<IBaseBlock> = ({ children, className, title, icon, hideTabsHandler }) => {
+const BaseBlock: FC<IBaseBlock> = ({
+  children,
+  className,
+  title,
+  icon,
+  hideTabsHandler,
+  styles,
+}) => {
   const theme = useTheme()
   const storageAvailable = localStorageAvailable()
   const isDesktop = useIsDesktop()
@@ -65,6 +73,12 @@ const BaseBlock: FC<IBaseBlock> = ({ children, className, title, icon, hideTabsH
       localStorageKey,
       JSON.stringify({ ...getHeaderSettings(), [className]: false })
     )
+
+    window.dispatchEvent(
+      new CustomEvent('localstorage-update', {
+        detail: { key: localStorageKey, value: { ...getHeaderSettings(), [className]: false } },
+      })
+    )
   }
 
   useEffect(() => {
@@ -76,6 +90,7 @@ const BaseBlock: FC<IBaseBlock> = ({ children, className, title, icon, hideTabsH
     <Box
       className={className}
       sx={boxStyles}
+      style={styles}
     >
       <Collapse in={isClosedHeader?.[className]}>
         <Header

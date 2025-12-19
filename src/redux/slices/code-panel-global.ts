@@ -74,6 +74,7 @@ export const codePanelSlice = createSlice({
       state,
       { payload }: PayloadAction<PickedStoreItem<'contentValidations'>>
     ): void => {
+      if (JSON.stringify(state.contentValidations) === JSON.stringify(payload)) return
       state.contentValidations = payload
     },
     setPrevLessonId: (state, { payload }: PayloadAction<PickedStoreItem<'prevLessonId'>>): void => {

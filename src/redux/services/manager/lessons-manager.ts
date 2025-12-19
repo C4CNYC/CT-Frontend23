@@ -2,6 +2,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import { BaseListResponseInterface, BaseResponseInterface } from '@/utils'
 
+import { IEnvironment } from '../../interfaces/environment.interface'
 import { AiLessonGenerate } from '../interfaces/ai.interface'
 import {
   ILesson,
@@ -86,6 +87,46 @@ const extendedApi = managerApi.injectEndpoints({
         method: 'POST',
       }),
       invalidatesTags: ['Lessons'],
+    }),
+    importLesson: builder.mutation<ILessonCreate & BaseResponseInterface, { file: File }>({
+      query: ({ file }) => {
+        const formData = new FormData()
+        formData.append('file', file)
+        return {
+          url: '/manager/lesson-import-export/import',
+          method: 'POST',
+          body: formData,
+        }
+      },
+      invalidatesTags: [{ type: 'Lessons' }],
+    }),
+    exportLesson: builder.mutation<
+      { lesson: ILesson } & BaseResponseInterface,
+      { lesson_id: string }
+    >({
+      query: ({ lesson_id }) => ({
+        url: `/manager/lesson-import-export/export/${lesson_id}`,
+        method: 'GET',
+      }),
+      transformResponse: (response: { lesson: ILesson } & BaseResponseInterface) => {
+        // Create filename with lesson name and current date
+        const currentDate = new Date().toISOString().split('T')[0]
+        const filename = `${response.lesson.name}_${currentDate}.json`
+
+        // Trigger download
+        const blob = new Blob([JSON.stringify(response, null, 2)], { type: 'application/json' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = filename
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+
+        return response
+      },
+      invalidatesTags: [{ type: 'Lessons' }],
     }),
     generateLesson: builder.mutation<ILesson & BaseResponseInterface, ILessonGenerate>({
       query: ({ ...body }) => ({
@@ -195,6 +236,44 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['ContentIntegration'],
     }),
+    // ============ Lesson Environments ============
+    getLessonEnvironments: builder.query<
+      Array<IEnvironment & BaseResponseInterface>,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/manager/lesson/${id}/environment`,
+        method: 'GET',
+      }),
+      providesTags: ['Environments'],
+      keepUnusedDataFor: 0,
+    }),
+    addEnvironment: builder.mutation<void, { lessonId: string; environment_id: string }>({
+      query: ({ lessonId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/environment`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
+    removeEnvironment: builder.mutation<void, { lessonId: string; environment_id: string }>({
+      query: ({ lessonId, ...body }) => ({
+        url: `/manager/lesson/${lessonId}/environment`,
+        method: 'DELETE',
+        body,
+      }),
+      invalidatesTags: ['Environments'],
+    }),
+    updateEnvironmentOrder: builder.mutation<void, { lessonId: string; environment_ids: string[] }>(
+      {
+        query: ({ lessonId, ...body }) => ({
+          url: `/manager/lesson/${lessonId}/environment/order`,
+          method: 'PATCH',
+          body,
+        }),
+        invalidatesTags: ['Environments'],
+      }
+    ),
   }),
   overrideExisting: false,
 })
@@ -206,10 +285,13 @@ export const {
   useGetLessonQuery,
   useCloneLessonMutation,
   useGetLessonIntegrationsQuery,
+  useGetLessonEnvironmentsQuery,
   // -------------mutation-----------
   useCreateLessonMutation,
   useCreateByCloningLessonMutation,
   useCreateByAIMutation,
+  useImportLessonMutation,
+  useExportLessonMutation,
   useGenerateLessonMutation,
   useGenerateLessonMultiMutation,
   useAskAIMutation,
@@ -220,4 +302,7 @@ export const {
   useDeleteLessonMutation,
   useAddIntegrationMutation,
   useRemoveIntegrationMutation,
+  useAddEnvironmentMutation,
+  useRemoveEnvironmentMutation,
+  useUpdateEnvironmentOrderMutation,
 } = extendedApi

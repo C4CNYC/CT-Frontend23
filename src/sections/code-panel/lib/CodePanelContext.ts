@@ -1,7 +1,7 @@
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 interface CodePanelContextType {
-  lessonId: string
+  lessonId: string | undefined
   studentCode: string
   autoRun: boolean
   reloadIframe: () => void
@@ -17,3 +17,11 @@ export const CodePanelContext = createContext<CodePanelContextType>({
   reloadIframeKey: 0,
   studentCodeChange: (code: string) => {},
 })
+
+export const useCodePanel = () => {
+  const context = useContext(CodePanelContext)
+  if (!context) {
+    throw new Error('useCodePanel must be used within a CodePanelContextProvider')
+  }
+  return context
+}

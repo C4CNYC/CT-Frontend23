@@ -29,10 +29,12 @@ const FileSwitcher: FC<FileSwitcherProps> = ({ onChange, closeTab, activeFile, f
     resizeObserver.observe(editorRef.current)
     return () => resizeObserver.disconnect()
   }, [editorRef])
-  let fileListFiltered = fileList.filter(
-    (file, index, self) =>
-      self.findIndex((f) => f.name === file.name && f.extension === file.extension) === index
-  )
+  let fileListFiltered = fileList
+    .filter((f) => f.extension.toLocaleLowerCase() != 'test')
+    .filter(
+      (file, index, self) =>
+        self.findIndex((f) => f.name === file.name && f.extension === file.extension) === index
+    )
 
   return (
     <Stack

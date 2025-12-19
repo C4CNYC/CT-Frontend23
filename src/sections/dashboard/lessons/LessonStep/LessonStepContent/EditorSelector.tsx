@@ -1,9 +1,10 @@
 import { ILessonContent } from '@/redux/services/interfaces/courseUnits.interface'
 import { IIntegration } from '@/redux/services/interfaces/integration.interface'
-import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
 import { BaseResponseInterface } from '@root/src/utils'
 
 import StepCode from './StepCode'
+import StepMarkDown from './StepMarkDown'
 import { StepTinyMce } from './StepTinyMce'
 
 export type EditorSelectorProps = {
@@ -49,6 +50,16 @@ export function EditorSelector({
           lessonId={lessonId as string}
           bgColor={bgColor}
           setBgColor={setBgColor}
+        />
+      )
+    case LessonContentType.Md:
+      return (
+        <StepMarkDown
+          content={content}
+          integrations={integrations ?? []}
+          onSubmit={onSubmit}
+          data={data!}
+          lessonId={lessonId as string}
         />
       )
   }

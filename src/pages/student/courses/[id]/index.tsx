@@ -74,7 +74,7 @@ export default function CoursePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{data?.name ?? translate('course')} | CodeTribe</title>
+        <title>{data?.name ?? translate('course') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
@@ -111,7 +111,10 @@ export default function CoursePage(): React.ReactElement {
             <Box overflow={'hidden'}>
               <CourseInfo course={data} />
               {data.units?.length ? (
-                <ModulesListBlock modules={data?.units} />
+                <ModulesListBlock
+                  modules={data?.units}
+                  profile={profile}
+                />
               ) : (
                 <EmptyContent
                   title='No modules'
@@ -133,6 +136,8 @@ export default function CoursePage(): React.ReactElement {
                   0
                 }
                 level={data?.level ?? '-'}
+                audience={data?.audience}
+                forTeachers={data?.for_teachers}
               />
             </Box>
           </Box>

@@ -34,13 +34,56 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['GetCompleteChalange'],
     }),
+
+    getLastLessonByCourse: builder.query<any, { courseId: string; studentId: string }>({
+      query: ({ courseId, studentId }) => ({
+        url: `/student/progress/course/${courseId}/${studentId}`,
+        method: 'GET',
+      }),
+      providesTags: ['Progress'],
+    }),
+
+    getLastLessonByModule: builder.query<any, { moduleId: string; studentId: string }>({
+      query: ({ moduleId, studentId }) => ({
+        url: `/student/progress/module/${moduleId}/${studentId}`,
+        method: 'GET',
+      }),
+      providesTags: ['Progress'],
+    }),
+
+    completeStudentLesson: builder.mutation<any, { studentId: string; lessonId: string }>({
+      query: ({ studentId, lessonId }) => ({
+        url: `/student/progress/complete-lesson`,
+        method: 'POST',
+        body: {
+          studentId,
+          lessonId,
+        },
+      }),
+      invalidatesTags: ['Progress'],
+    }),
+
+    visitStudentLesson: builder.mutation<any, { studentId: string; lessonId: string }>({
+      query: ({ studentId, lessonId }) => ({
+        url: `/student/progress/visit-lesson`,
+        method: 'POST',
+        body: {
+          studentId,
+          lessonId,
+        },
+      }),
+      invalidatesTags: ['Progress'],
+    }),
   }),
   overrideExisting: true,
 })
 
 export const {
   useGetMyProgressByCourseQuery,
-  // -------------mutation-----------
   useCompleteLessonMutation,
   useResetContentChalangesMutation,
+  useGetLastLessonByCourseQuery,
+  useGetLastLessonByModuleQuery,
+  useCompleteStudentLessonMutation,
+  useVisitStudentLessonMutation,
 } = extendedApi

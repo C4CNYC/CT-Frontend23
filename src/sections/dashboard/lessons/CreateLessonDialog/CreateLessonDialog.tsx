@@ -20,15 +20,18 @@ import { useAddLessonToModuleMutation } from '@/redux/services/manager/modules-m
 import { useTranslate } from '@/utils/translateHelper'
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useProperties } from '@root/src/hooks/useProperties'
-import { LessonType, LessonTypePseudoEnum } from '@root/src/redux/services/enums/lesson-type.enum'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { LessonMeta } from '@root/src/redux/services/interfaces/lesson.interface'
 
+import { EnvironmentsTab } from '../LessonStep/Modals/Preferences/EnvironmentsTab'
 import { IntegrationsTab } from '../LessonStep/Modals/Preferences/IntegrationsTab'
 
-import { CreateLessonAdvancedTab } from './AdvancedTab'
+import { DisplayEngine } from './DisplayEngine'
 import { MainTab } from './MainTab'
-import { usePseudoType } from './PseudoType'
+import { SettingsTab } from './SettingsTab'
 import SkillsTab from './SkillsTab'
+import { TabPanel } from './TabPanel'
+import { handleConvertAutoRunToBolean, timeConvertorToSeconds, typeDefaultSettings } from './utils'
 
 interface FormValuesProps {
   name: string
@@ -36,13 +39,12 @@ interface FormValuesProps {
   active: boolean
   independent: boolean
   head?: string
-  type: 'practical' | 'exercise' | 'quiz'
-  pseudoType: LessonTypePseudoEnum
+  type: LessonType
   duration: number
   slug: string
-  autoRun: boolean
   lock: boolean
   meta: LessonMeta
+  grading_method: 'autoRun' | 'manual'
 }
 
 export interface CreateLessonIDefaultProps {
@@ -51,13 +53,12 @@ export interface CreateLessonIDefaultProps {
   active: boolean
   independent: boolean
   head?: string
-  type: 'practical' | 'exercise' | 'quiz'
-  pseudoType?: LessonTypePseudoEnum
+  type: LessonType
   duration?: Record<string, number> | null | undefined
   slug?: string
-  autoRun?: boolean
   lock?: boolean
   meta?: LessonMeta
+  grading_method?: 'autoRun' | 'manual'
 }
 
 interface ICreateLessonDialogProps {
@@ -89,8 +90,6 @@ export default function CreateLessonDialog({
   const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation()
   const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation()
 
-  const { toPseudoType, toDbFields } = usePseudoType({ lessonId: id, defaultValues })
-
   const [autoRun, autoRunSet, autoRunDelete] = useProperties({
     entityType: 'lesson',
     entityId: id,
@@ -102,35 +101,14 @@ export default function CreateLessonDialog({
     propertyName: 'lock',
   })
 
-  const timeConvertorToSeconds = (time: Record<string, number> | null | undefined) => {
-    if (time) {
-      return Object.entries(time).reduce((acc, [timeType, time]) => {
-        if (timeType === 'minutes') {
-          return (acc += time)
-        }
-        return (acc += time * 60 + acc * 60)
-      }, 0)
-    }
-    return 0
-  }
-
   const defaultLessonValue = {
     name: translate('default_values.createLesson.name'),
     description: translate('default_values.createLesson.description'),
-    autoRun: false,
+    grading_method: 'autoRun' as 'autoRun' | 'manual',
     lock: false,
     ...defaultValues,
     duration: timeConvertorToSeconds(defaultValues?.duration),
-    pseudoType: toPseudoType(defaultValues?.type as LessonType),
   }
-
-  useEffect(() => {
-    methods.reset({
-      ...defaultLessonValue,
-      autoRun: autoRun ? true : false,
-      lock: lessonLock ? true : false,
-    })
-  }, [autoRun, lessonLock])
 
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required(translate('required_name')),
@@ -142,9 +120,39 @@ export default function CreateLessonDialog({
     defaultValues: defaultLessonValue,
   })
 
+  const gradingMethodWatcher = methods.watch('grading_method')
+  const lessonTypeWatcher = methods.watch('type')
+
+  useEffect(() => {
+    const currentValues = methods.getValues()
+
+    methods.reset({
+      ...currentValues,
+      grading_method: handleConvertAutoRunToBolean(autoRun) ? 'autoRun' : 'manual',
+      lock: lessonLock ? true : false,
+    })
+  }, [autoRun, lessonLock])
+
+  useEffect(() => {
+    const currentValues = methods.getValues()
+
+    methods.reset({
+      ...currentValues,
+      type: lessonTypeWatcher,
+      grading_method: typeDefaultSettings(lessonTypeWatcher).autoRun ? 'autoRun' : 'manual',
+    })
+  }, [lessonTypeWatcher])
+
+  useEffect(() => {
+    if (gradingMethodWatcher === 'autoRun') {
+      autoRunSet('true')
+    } else if (gradingMethodWatcher === 'manual') {
+      autoRunSet('false')
+    }
+  }, [gradingMethodWatcher])
+
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     let lesson
-    let pseudoType = toDbFields(data.pseudoType)
     let lessonData = {
       name: data.name,
       description: data.description,
@@ -152,21 +160,17 @@ export default function CreateLessonDialog({
       head: data.head,
       slug: data.slug,
       duration: `${data.duration * 60}`,
-      independent: pseudoType.independent,
-      type: pseudoType.type,
+      independent: typeDefaultSettings(data.type).independent,
+      type: data.type,
       meta: data.meta,
     }
     try {
       if (isEdit && id) {
         lesson = await editLesson({ id, ...lessonData }).unwrap()
-        pseudoType.autoRun ? autoRunSet('true') : autoRunDelete()
         data.lock ? lessonLockSet('true') : lessonLockDelete()
         if (refetch) refetch()
       } else {
         lesson = await createLesson(lessonData).unwrap()
-        if (pseudoType.autoRun) {
-          autoRunSet('true')
-        }
         if (data.lock) {
           lessonLockSet('true')
         }
@@ -198,6 +202,8 @@ export default function CreateLessonDialog({
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
+        maxWidth={'sm'}
         sx={{ zIndex: 9999 }}
         PaperProps={{
           sx: {
@@ -225,16 +231,24 @@ export default function CreateLessonDialog({
                     {...a11yProps(0)}
                   />
                   <Tab
-                    label={translate('skills')}
+                    label={translate('settings')}
                     {...a11yProps(1)}
                   />
                   <Tab
-                    label={translate('integration')}
+                    label={translate('skills')}
                     {...a11yProps(2)}
                   />
                   <Tab
-                    label={translate('advanced')}
+                    label={translate('environments')}
                     {...a11yProps(3)}
+                  />
+                  <Tab
+                    label={translate('integration')}
+                    {...a11yProps(4)}
+                  />
+                  <Tab
+                    label={translate('type')}
+                    {...a11yProps(5)}
                   />
                 </Tabs>
               </Box>
@@ -249,20 +263,27 @@ export default function CreateLessonDialog({
               value={value}
               index={1}
             >
-              <SkillsTab lessonId={id as string} />
+              <SettingsTab handleAutoRunSet={autoRunSet} />
             </TabPanel>
             <TabPanel
               value={value}
               index={2}
             >
-              <IntegrationsTab contentId={id as string} />
+              <SkillsTab lessonId={id as string} />
             </TabPanel>
             <TabPanel
               value={value}
               index={3}
             >
-              <CreateLessonAdvancedTab />
+              <EnvironmentsTab contentId={id as string} />
             </TabPanel>
+            <TabPanel
+              value={value}
+              index={4}
+            >
+              <IntegrationsTab contentId={id as string} />
+            </TabPanel>
+            <DisplayEngine open={value === 5} />
             <DialogActions>
               <Box
                 sx={{
@@ -273,7 +294,7 @@ export default function CreateLessonDialog({
               >
                 <Button onClick={handleClose}>{translate('actions_close')}</Button>
 
-                {value === 0 ? (
+                {[0, 1, 5].includes(value) ? (
                   <LoadingButton
                     type='submit'
                     variant='contained'
@@ -288,40 +309,6 @@ export default function CreateLessonDialog({
         </DialogContent>
       </Dialog>
     </>
-  )
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode
-  index: number
-  value: number
-}
-
-function TabPanel(props: TabPanelProps): React.ReactElement {
-  const { children, value, index, ...other } = props
-
-  return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box
-          sx={{
-            px: { xs: 2, sm: 3 },
-            pt: { xs: 2, sm: 3 },
-            width: { xs: '360px', sm: '440px', md: '500px', lg: '580px' },
-            height: 'auto',
-            minHeight: '400px',
-          }}
-        >
-          {children}
-        </Box>
-      )}
-    </div>
   )
 }
 

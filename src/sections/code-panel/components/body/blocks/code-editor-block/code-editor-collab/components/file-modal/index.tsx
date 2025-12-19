@@ -1,44 +1,42 @@
-import { type FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import AddIcon from '@mui/icons-material/Add'
 import Close from '@mui/icons-material/Close'
 import FolderIcon from '@mui/icons-material/Folder'
 import { Button, ClickAwayListener, Stack, Typography, IconButton } from '@mui/material'
 import { useTheme } from '@mui/system'
+import { useRouter } from 'next/router'
 
+import { useGetLessonStudentWithoutContentsQuery } from '@/redux/services/manager/lesson-student'
 import { ConfirmDialog } from '@root/src/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useFileManager } from '../../hook/file-manager/useFileManager'
 import DevIcon from '../dev-icon'
 
 import AddStudentFileModal from './AddStudentFileModal'
 import { useStyles } from './styles'
 
-interface FileModalProps {
-  isOpen: boolean
-  files: StudentFile[]
-  isFileControllerAvailable: boolean
-
-  onDeleteFile: (id: string) => void
-  setActiveFile: (id: string) => void
-  setIsOpen: (isOpen: boolean) => void
-  onAddFile: (fileName: string) => Promise<void>
-}
-
-const FileModal: FC<FileModalProps> = ({
-  files,
-  isOpen,
-  isFileControllerAvailable,
-  onAddFile,
-  setIsOpen,
-  onDeleteFile,
-  setActiveFile,
-}) => {
+export const FileModal = () => {
   const theme = useTheme()
   const translate = useTranslate()
   const styles = useStyles(theme)
+  const router = useRouter()
+  const {
+    files,
+    setActiveFile,
+    onDeleteFile,
+    setIsOpen,
+    onAddFile,
+    isOpen,
+    isFileControllerAvailable,
+  } = useFileManager()
 
+  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentWithoutContentsQuery(
+    { id: router.query.lessonId as string },
+    { skip: !router.query.lessonId }
+  )
   const [isDeleteExist, setIsDeleteExist] = useState<boolean>(false)
   const [fileToDelete, setFileToDelete] = useState<Pick<
     StudentFile,
@@ -91,6 +89,7 @@ const FileModal: FC<FileModalProps> = ({
             <AddStudentFileModal
               onSubmit={onAddFile}
               files={files}
+              isAllowMultipleSameType={Boolean(lesson?.meta?.is_allow_multiple_same_type)}
             >
               <IconButton>
                 <AddIcon />
@@ -99,41 +98,43 @@ const FileModal: FC<FileModalProps> = ({
           </Stack>
 
           <Stack>
-            {files.map(({ id, name, extension }) => {
-              return (
-                <Stack
-                  key={id}
-                  sx={styles.BUTTON_WRAPPER}
-                >
-                  <Button
-                    onClick={() => setActiveFile(id ?? '')}
-                    sx={styles.BUTTON_FILE_SX}
-                    variant='text'
+            {files
+              .filter((f) => f.extension.toLocaleLowerCase() !== 'test')
+              .map(({ id, name, extension }) => {
+                return (
+                  <Stack
+                    key={id}
+                    sx={styles.BUTTON_WRAPPER}
                   >
-                    <DevIcon
-                      sx={styles.devIcon}
-                      fileName={`${name}.${extension}`}
-                    />
-                    <Typography
-                      variant='subtitle2'
-                      noWrap
-                      textOverflow='ellipsis'
+                    <Button
+                      onClick={() => setActiveFile(id ?? '')}
+                      sx={styles.BUTTON_FILE_SX}
+                      variant='text'
                     >
-                      {name}.{extension}
-                    </Typography>
-                  </Button>
+                      <DevIcon
+                        sx={styles.devIcon}
+                        fileName={`${name}.${extension}`}
+                      />
+                      <Typography
+                        variant='subtitle2'
+                        noWrap
+                        textOverflow='ellipsis'
+                      >
+                        {name}.{extension}
+                      </Typography>
+                    </Button>
 
-                  {isDeleteExist && (
-                    <IconButton
-                      size='small'
-                      onClick={() => setFileToDelete({ id, name, extension })}
-                    >
-                      <Close />
-                    </IconButton>
-                  )}
-                </Stack>
-              )
-            })}
+                    {isDeleteExist && (
+                      <IconButton
+                        size='small'
+                        onClick={() => setFileToDelete({ id, name, extension })}
+                      >
+                        <Close />
+                      </IconButton>
+                    )}
+                  </Stack>
+                )
+              })}
           </Stack>
         </Stack>
 
@@ -166,5 +167,3 @@ const FileModal: FC<FileModalProps> = ({
     </ClickAwayListener>
   )
 }
-
-export default FileModal

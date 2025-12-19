@@ -15,6 +15,7 @@ import { IoDiamondOutline } from '@react-icons/all-files/io5/IoDiamondOutline'
 
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useAiGenerateStepper } from './AiGenerateStepperContext'
 import {
   BTN_CONTAINER_STYLES,
   getSkipBtnSx,
@@ -26,10 +27,11 @@ import {
   STEP_TYTLE_STYLES,
 } from './constants'
 
-const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) => {
+const AddAddons = ({ resetRoad, onSubmitAddons }: IAddAddonsProps) => {
   const theme = useTheme()
   const translate = useTranslate()
 
+  const { isModal, closeModal } = useAiGenerateStepper()
   const [addons, setAddons] = useState<IAddons>({
     quiz: false,
     autoGrading: false,
@@ -68,7 +70,7 @@ const AddAddons = ({ closeModal, resetRoad, onSubmitAddons }: IAddAddonsProps) =
         >
           {translate('ai_gen_addon_title')}
         </Typography>
-        {closeModal ? (
+        {isModal ? (
           <IconButton
             onClick={closeModal}
             sx={{ margin: '0px 0px 0px auto' }}

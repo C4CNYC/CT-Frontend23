@@ -125,6 +125,7 @@ export default function UserListPage(): React.ReactElement {
 
   const { themeStretch } = useSettingsContext()
   const { filters, setFilter, resetFilters } = useFilters({
+    skipRole: Role.Student,
     name: '',
     role: '',
   })
@@ -158,7 +159,7 @@ export default function UserListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('members')} | CodeTribe</title>
+        <title> {translate('members') + ` | CodeTribe`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

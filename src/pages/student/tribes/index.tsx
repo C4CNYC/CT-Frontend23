@@ -33,7 +33,7 @@ export default function Tribes(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate('sidebar_menu_tribes')} | CodeTribe</title>
+        <title>{translate('sidebar_menu_tribes') + ` | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs

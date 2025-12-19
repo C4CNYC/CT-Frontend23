@@ -9,8 +9,8 @@ import { useDispatch } from 'react-redux'
 
 import { LoadingScreen } from '@/components'
 import useIsDesktop from '@/hooks/useIsDesktop'
-import { LessonContentType } from '@/redux/enums/lesson-content-type.enum'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
+import { LessonContentType } from '@/redux/services/enums/lesson-content-type.enum'
 import {
   setNextStepAble,
   setSlideId,
@@ -20,7 +20,6 @@ import {
 } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { CodeDocument } from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
-import BrowserView from '@/sections/code-panel/components/body/blocks/view-block/browser-view/index'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useTranslate } from '@/utils/translateHelper'
 import { useDebounceCallback } from '@root/src/hooks'
@@ -32,6 +31,7 @@ import {
 import { useLessonManager } from '@root/src/sections/code-panel/lib/LessonManagerContext'
 import { progressGuestGetAll, progressGuestSet } from '@root/src/utils/progressLocalStorage'
 
+import { BrowserViewTeacher } from '../../../browserview/BrowserViewTeacher'
 import BaseBlock from '../base-block'
 
 import {
@@ -41,8 +41,8 @@ import {
   getBoxSx,
   getProgressWrapperSx,
 } from './constants'
+import { EditContentLayer } from './edit-content-layer'
 import Navigation from './navigation'
-import { SaveEditContent } from './SaveEditContent'
 import { SliderBlockAiLessonComing } from './SliderBlockAiLessonComing'
 
 interface ISliderBlock {
@@ -53,6 +53,7 @@ interface ISliderBlock {
   lessonName?: string
   lessonId?: string
   isLoadingLessonContent: boolean
+  lessonMeta?: Record<string, any>
 }
 
 interface IView {
@@ -85,15 +86,19 @@ const SliderBlock: FC<ISliderBlock> = ({
   lessonName,
   lessonId,
   isLoadingLessonContent,
+  lessonMeta,
 }) => {
   const theme = useTheme()
   const dispatch = useDispatch()
   const isDesktop = useIsDesktop()
   const translate = useTranslate()
   const searchParams = useSearchParams()
-  const { lessonContent } = useLessonManager()
+  const { lesson, lessonContent, currentSlideUpdated } = useLessonManager()
   let data = lessonContent ?? []
   const { value, onFalse, onTrue } = useBoolean()
+  const [isEditLesson, setIsEditLesson] = useState(false)
+  const [isSlideReady, setIsSlideReady] = useState(false)
+  const [isOpenModalCurrentSlideEdited, setIsOpenModalCurrentSlideEdited] = useState(false)
 
   const sandbox = searchParams.get('sandbox')
 
@@ -101,6 +106,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   const unit = useSelector((state) => state.codePanelGlobal.unitId)
   const course = useSelector((state) => state.codePanelGlobal.courseId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
+  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
 
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true)
   const [noteText, setNoteText] = useState(localStorage.getItem(`sandboxNotes${profile?.id}`) ?? '')
@@ -113,7 +119,7 @@ const SliderBlock: FC<ISliderBlock> = ({
     { skip: !lessonId || !profile }
   )
 
-  const handleDebouncedCallback = useDebounceCallback(5000)
+  const handleDebouncedCallback = useDebounceCallback(1000)
 
   const hasNextStep = slideIndex < data?.length - 1
   const stepHasValidation = !!data[slideIndex]?.validations?.length
@@ -126,12 +132,33 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [])
 
   const handlePrev = (): void => {
+    if (currentSlideUpdated) {
+      setIsOpenModalCurrentSlideEdited(true)
+      return
+    }
+    setIsEditLesson(false)
+
     if (slideIndex > 0) {
       onBeforeChange(slideIndex, slideIndex - 1)
     }
   }
 
+  useEffect(() => {
+    setIsSlideReady(false)
+    const timeout = setTimeout(() => {
+      setIsSlideReady(true)
+    }, 30)
+
+    return () => clearTimeout(timeout)
+  }, [slideIndex, setIsSlideReady])
+
   const handleNext = (skip = false): void => {
+    if (currentSlideUpdated) {
+      setIsOpenModalCurrentSlideEdited(true)
+      return
+    }
+    setIsEditLesson(false)
+
     if (window.dataLayer) {
       window.dataLayer.push({
         event: 'Slide_Swiped',
@@ -173,31 +200,36 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
   }
 
-  const onBeforeChange = (_: number, next: number) => {
-    if (!data || !data?.length) return
+  const onBeforeChange = (current: number, next: number) => {
+    if (!data || !data?.length || !data[next]) return
+    let slideNextId = data[next]?.id
+    if (slideId == slideNextId) return
+
     dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
     dispatch(setSlideIndex(next))
-    let slideId = data[next]?.id
-    if (slideId) dispatch(setSlideId(slideId))
+    if (slideNextId) dispatch(setSlideId(slideNextId))
   }
 
-  const connectIntegrations = (body: string): CodeDocument | null => {
+  const connectIntegrations = (body: string): CodeDocument => {
     if (integrations) {
       return {
-        htmlBody: body ? JSON.parse(body).content : '',
+        htmlBody: body && JSON.parse(body).extension !== 'md' ? JSON.parse(body).content : '',
+        mdBody: body && JSON.parse(body).extension === 'md' ? JSON.parse(body).content : '',
         cssBody: integrations.reduce((ac, cur) => ac + cur.head, ''),
         jsBody: integrations.reduce((ac, cur) => ac + cur.scripts, ''),
       }
     }
-    return null
+    return { htmlBody: body ? JSON.parse(body).content : '', cssBody: '', jsBody: '' }
   }
 
   useEffect(() => {
     if (!sandbox || !data?.length) return
     onBeforeChange(0, 0)
-  }, [sandbox, data])
+  }, [sandbox, data, lessonId])
 
   useEffect(() => {
+    if (!data || data.length < 1) return
+    if (isLastSlideLoading) return
     if (lastSlide?.slideNumber) {
       onBeforeChange(slideIndex, lastSlide.slideNumber)
     } else {
@@ -206,7 +238,7 @@ const SliderBlock: FC<ISliderBlock> = ({
         onBeforeChange(slideIndex, progress.lastSlide)
       }
     }
-  }, [data, lastSlide])
+  }, [lastSlide, data.length])
 
   useEffect(() => {
     dispatch(setNextStepAble(false))
@@ -217,32 +249,40 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const slider = useMemo(() => {
     const currentSlide = data[slideIndex]
-
+    console.log('currentSlide render', currentSlide) // eslint-disable-line no-console
     return (
       <Box
         className='sliderTour'
         height='100%'
         sx={boxSx}
       >
-        {isLoadingLessonContent ? (
-          <LoadingScreen />
+        {isLoadingLessonContent || !isSlideReady ? (
+          <LoadingScreen text='Lesson is loading' />
         ) : currentSlide ? (
-          <View
-            title={currentSlide?.title}
-            lessonType={lessonType}
+          <BrowserViewTeacher
             key={currentSlide?.id}
-            type={currentSlide?.type}
-            body={currentSlide?.body}
-            integrations={integrations}
-            connectIntegrations={connectIntegrations}
             stepBgColor={currentSlide?.bg_color}
+            document={connectIntegrations(currentSlide?.body)}
+            iframeKey={0}
           />
-        ) : (
+        ) : lesson?.meta?.ai ? (
           <SliderBlockAiLessonComing />
+        ) : (
+          <LoadingScreen text='Slide not found' />
         )}
       </Box>
     )
-  }, [data, slideIndex, integrations, isLoadingLessonContent])
+  }, [data, slideIndex, lesson, isLoadingLessonContent, isSlideReady])
+
+  const editContentLayer = (
+    <EditContentLayer
+      key={slideIndex}
+      isEditLesson={isEditLesson}
+      setIsEditLesson={setIsEditLesson}
+      isOpenModalCurrentSlideEdited={isOpenModalCurrentSlideEdited}
+      setIsOpenModalCurrentSlideEdited={setIsOpenModalCurrentSlideEdited}
+    />
+  )
 
   return (
     <BaseBlock
@@ -256,13 +296,10 @@ const SliderBlock: FC<ISliderBlock> = ({
       takeHeaderSettings={takeHeaderSettings}
     >
       <Box sx={progressWrapperSx}>
-        {data.map((slide, index) => (
+        {data.map((_slide, index) => (
           <Box
             key={index}
-            sx={{
-              bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`,
-              ...PROGRESS_ITEM_SX,
-            }}
+            sx={{ bgcolor: `${slideIndex >= index ? '#708090' : '#D3D3D3'}`, ...PROGRESS_ITEM_SX }}
           />
         ))}
       </Box>
@@ -287,15 +324,17 @@ const SliderBlock: FC<ISliderBlock> = ({
         />
       ) : (
         <>
-          <SaveEditContent />
+          {editContentLayer}
           {slider}
-          <NextStep
-            handleNext={handleNext}
-            handlePrev={handlePrev}
-            stepHasValidation={stepHasValidation}
-            hasNextStep={hasNextStep}
-            lessonName={lessonName}
-          />
+          {!lessonMeta?.hideDefaultButtons && (
+            <NextStep
+              handleNext={handleNext}
+              handlePrev={handlePrev}
+              stepHasValidation={stepHasValidation}
+              hasNextStep={hasNextStep}
+              lessonName={lessonName}
+            />
+          )}
         </>
       )}
       <NextLessonDialog
@@ -331,26 +370,4 @@ const NextStep = ({
   )
 }
 
-const View: FC<IView> = ({
-  type,
-  body,
-  connectIntegrations,
-  title,
-  lessonType,
-  stepBgColor,
-  integrations,
-}) => {
-  switch (type) {
-    default:
-    case 'code':
-      return (
-        <BrowserView
-          integrations={integrations}
-          document={connectIntegrations(body)}
-          stepBgColor={stepBgColor}
-          teacherView={true}
-        />
-      )
-  }
-}
 export default SliderBlock

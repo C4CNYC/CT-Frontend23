@@ -1,37 +1,40 @@
 import { useState } from 'react'
 
+import { useDebounceCallback } from '@root/src/hooks/useDebounceCallback'
 import { useProperties } from '@root/src/hooks/useProperties'
+import { useSelector } from '@root/src/redux/store'
 
 import { CodePanelContext } from './CodePanelContext'
 
 type Props = {
   children: React.ReactNode
-  lessonId: string
-  studentCode: string
 }
 
-export function CodePanelContextProvider({ children, ...props }: Props): JSX.Element {
-  const [lessonId, setLessonId] = useState<string>(props.lessonId)
+export function CodePanelContextProvider({ children }: Props): JSX.Element {
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
   const [studentCode, setStudentCode] = useState<string>('')
   const [iframeKey, setIframeKey] = useState<number>(0)
-  const [autoRun] = useProperties({
+  let [autoRunString] = useProperties({
     entityType: 'lesson',
-    entityId: props.lessonId,
+    entityId: lessonId,
     propertyName: 'autoRun',
   })
-
+  // @ts-ignore
+  const autoRun = autoRunString === 'true' || autoRunString === 1 || autoRunString === true
   const { Provider } = CodePanelContext
 
   const reloadIframe = () => {
     setIframeKey((key) => key + 1)
   }
+
+  const debouncedReload = useDebounceCallback(500)
+
   function studentCodeChange(code: string) {
     setStudentCode(code)
     if (autoRun) {
-      reloadIframe()
+      debouncedReload(reloadIframe)
     }
   }
-
   return (
     <Provider
       value={{

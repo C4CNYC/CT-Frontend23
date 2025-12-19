@@ -18,15 +18,17 @@ import { RESER_PASS_SX, TYPO_CONT_SX, SINGIN_BTN_SX } from './constants'
 interface Props {
   isSubmiting: boolean
   isError: string
+  inviteData?: any
 }
 
-export default function SingInPassword({
+export default function SignInPassword({
   previousStep,
   nextStep,
   isActive,
   isSubmiting,
   isError,
   currentStep,
+  inviteData,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
   const theme = useTheme()
   const translate = useTranslate()
@@ -77,7 +79,7 @@ export default function SingInPassword({
           label={translate('password')}
           type={showPassword ? 'text' : 'password'}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
-          inputRef={(input) => input && isActive && input.focus()}
+          // inputRef={(input) => input && isActive && input.focus()}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>

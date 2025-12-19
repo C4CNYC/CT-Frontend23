@@ -11,6 +11,12 @@ import { useUpdateLessonContentMutation } from '@root/src/redux/services/manager
 import { useSelector } from '@root/src/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
 
+import {
+  convertHtmlToMd,
+  stripHead,
+  extractBodyContent,
+} from '../components/body/blocks/slider-block/utils'
+
 import { resetLessonEvent } from './events'
 
 interface LessonManagerContextProps {
@@ -134,10 +140,30 @@ export const LessonManagerProvider: React.FC<{
   function saveSlideDB() {
     let currentSlide = lessonContent.find((s) => s.id === slideId)
     if (!currentSlide) return
+
+    let customBody
+
+    if (currentSlide.type === 'code') {
+      customBody = JSON.stringify({
+        extension: 'html',
+        content: extractBodyContent(JSON.parse(currentSlide.body).content as string),
+      })
+    } else if (currentSlide.type === 'md') {
+      customBody = JSON.stringify({
+        extension: 'md',
+        content: convertHtmlToMd(stripHead(JSON.parse(currentSlide.body).content as string)),
+      })
+    } else {
+      customBody = JSON.stringify({
+        extension: 'html',
+        content: extractBodyContent(JSON.parse(currentSlide.body).content as string),
+      })
+    }
+
     updateLessonContent({
       lessonId: lesson?.id || '',
       id: currentSlide.id,
-      body: currentSlide.body,
+      body: customBody,
     })
       .then(() => {
         enqueueSnackbar('Slide updated successfully', { variant: 'success' })
@@ -147,6 +173,7 @@ export const LessonManagerProvider: React.FC<{
         enqueueSnackbar('Error updating slide', { variant: 'error' })
       })
   }
+
   return (
     <LessonManagerContext.Provider
       value={{

@@ -75,16 +75,28 @@ const CustomCodeTab = ({ handleClose, code, id }: CustomCodeTabProps): React.Rea
             </Box>
           </Box>
         </Stack>
-        <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', mt: 4, gap: 1 }}>
-          <Button onClick={handleClose}>{translate('actions_close')}</Button>
-          <LoadingButton
-            type='submit'
-            variant='contained'
-            loading={isUpdating}
-          >
-            {translate('actions_update')}
-          </LoadingButton>
-        </Stack>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            width: '100%',
+            padding: '15px 25px',
+            background: '#F6F9FC',
+            zIndex: 10,
+          }}
+        >
+          <Stack sx={{ flexDirection: 'row', justifyContent: 'flex-end', mt: 4, gap: 1 }}>
+            <Button onClick={handleClose}>{translate('actions_close')}</Button>
+            <LoadingButton
+              type='submit'
+              variant='contained'
+              loading={isUpdating}
+            >
+              {translate('actions_update')}
+            </LoadingButton>
+          </Stack>
+        </div>
       </Stack>
     </FormProvider>
   )

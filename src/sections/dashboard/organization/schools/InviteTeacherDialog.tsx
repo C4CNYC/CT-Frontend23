@@ -12,6 +12,7 @@ import {
   TextField,
 } from '@mui/material'
 import { useSnackbar } from 'notistack'
+import { useSelector } from 'react-redux'
 
 import { Scrollbar } from '@/components'
 import { useFilters } from '@/hooks'
@@ -20,8 +21,11 @@ import {
   useGetOrgMembersQuery,
 } from '@/redux/services/admin/members-admin'
 import { useAddTeacherMutation } from '@/redux/services/admin/school-amdin'
-import { Role } from '@/redux/services/enums/role.enum'
+import { useCreateInviteTeacherToSchoolMutation } from '@/redux/services/manager/invite-system'
 import { useTranslate } from '@/utils/translateHelper'
+
+import { RootState } from '../../../../redux/store'
+import { PATH_MAIN } from '../../../../routes/paths'
 
 import UserItem from './UserItem'
 
@@ -41,16 +45,25 @@ export default function InviteTeacherDialog({
   ...other
 }: Props): React.ReactElement | null {
   const [addTeacher] = useAddTeacherMutation()
+  const [inviteTeacherToSchool] = useCreateInviteTeacherToSchoolMutation()
   const [createUser] = useCreateOrgMemberMutation()
   const { enqueueSnackbar } = useSnackbar()
   const { filters, setFilter } = useFilters({ email: '' })
   const { data: members } = useGetOrgMembersQuery({ ...filters }, { skip: !filters.email })
   const translate = useTranslate()
+  const currentUserId = useSelector((state: RootState) => state.global.user?.id)
 
-  const addUserToSchool = async (userId: string, schoolId: string): Promise<void> => {
+  const addUserToSchool = async (user_email: string, schoolId: string): Promise<void> => {
     try {
-      await addTeacher({ user_id: userId, schoolId }).unwrap()
-      enqueueSnackbar(translate('schools_teacher_added_act'))
+      if (!currentUserId) return
+
+      await inviteTeacherToSchool({
+        createdBy: currentUserId,
+        email: user_email,
+        schoolId,
+        redirectUrl: PATH_MAIN.index,
+      }).unwrap()
+      enqueueSnackbar(translate('messages_invite_sent'))
     } catch (e: any) {
       enqueueSnackbar(e.data.message, { variant: 'error' })
     }
@@ -58,15 +71,16 @@ export default function InviteTeacherDialog({
 
   const onSendInvite = async (): Promise<void> => {
     try {
-      const user = await createUser({
-        id: '',
+      if (!currentUserId) return
+
+      await inviteTeacherToSchool({
+        createdBy: currentUserId,
         email: filters.email,
-        role: Role.Manager,
-        first_name: '',
-        last_name: '',
+        schoolId,
+        redirectUrl: PATH_MAIN.index,
       }).unwrap()
       enqueueSnackbar(translate('messages_invite_sent'))
-      await addUserToSchool(user.id, schoolId)
+
       setFilter('email', '')
       onClose()
     } catch (e: any) {
@@ -114,7 +128,7 @@ export default function InviteTeacherDialog({
                 {members.data.map((person) => (
                   <UserItem
                     addHandler={async () => {
-                      await addUserToSchool(person.id, schoolId)
+                      await addUserToSchool(person.email, schoolId)
                     }}
                     invited={teachersIds.includes(person.id)}
                     key={person.id}

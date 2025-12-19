@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
+import { IOrgMeta } from '../services/interfaces/administration'
+
 export interface Tenant {
   name: string
   slug: string
@@ -7,6 +9,9 @@ export interface Tenant {
   min_logo: string
   favicon: string
   home_page_type?: string
+  domain?: string
+  meta?: IOrgMeta
+  updatedAt?: string
 }
 
 export const DEFAULT_TENANT: Tenant = {
@@ -15,6 +20,12 @@ export const DEFAULT_TENANT: Tenant = {
   logo: '/logo/logo.png',
   min_logo: '/logo/logo.png',
   favicon: '/favicon/favicon-32x32.png',
+  domain: 'app.codetribe.com',
+  meta: {
+    meta_title: 'CodeTribe',
+    meta_description:
+      'Text-based Coding for Teens, Schools & Summer Camps – Coding real-world, social-impact websites. Learn web development with friends.',
+  },
 }
 
 const initialState: Tenant = {
@@ -23,6 +34,11 @@ const initialState: Tenant = {
   logo: '',
   min_logo: '',
   favicon: '',
+  domain: '',
+  meta: {
+    meta_title: '',
+    meta_description: '',
+  },
 }
 
 export const tenantSlice = createSlice({
@@ -35,6 +51,12 @@ export const tenantSlice = createSlice({
       state.logo = action.payload.logo || DEFAULT_TENANT.logo
       state.min_logo = action.payload.min_logo || DEFAULT_TENANT.min_logo
       state.favicon = action.payload.favicon || DEFAULT_TENANT.favicon
+      state.domain = action.payload.domain || DEFAULT_TENANT.domain
+      state.meta = {
+        meta_title: action.payload.meta?.meta_title ?? DEFAULT_TENANT.meta?.meta_title ?? '',
+        meta_description:
+          action.payload.meta?.meta_description ?? DEFAULT_TENANT.meta?.meta_description ?? '',
+      }
     },
     resetTenant: (state) => {
       state.name = ''
@@ -42,6 +64,11 @@ export const tenantSlice = createSlice({
       state.logo = ''
       state.min_logo = ''
       state.favicon = ''
+      state.domain = ''
+      state.meta = {
+        meta_title: '',
+        meta_description: '',
+      }
     },
   },
 })

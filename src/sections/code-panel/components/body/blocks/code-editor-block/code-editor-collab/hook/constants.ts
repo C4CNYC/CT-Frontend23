@@ -25,6 +25,12 @@ export enum Extensions {
   Html = 'html',
   Js = 'js',
   Json = 'json',
+  Py = 'py',
+  Java = 'java',
+  Test = 'test',
+  Go = 'go',
+  C = 'c',
+  Cpp = 'cpp',
 }
 
 export const DEFAULT_FILE = {

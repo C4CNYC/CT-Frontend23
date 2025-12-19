@@ -20,7 +20,7 @@ import {
   useRemoveLessonStepPreloadFileMutation,
   useUpdateLessonStepPreloadFileMutation,
 } from '@root/src/redux/services/manager/lesson-content-manager'
-import { FileExtension } from '@root/src/types/lessons'
+import { FileExtension, FileExtensions } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
 import { INPUT_NAME_CONT_SX, INPUTS_CONT_SX, UPDATE_BOX_SX } from './constants'
@@ -38,6 +38,7 @@ interface PreloadFileItemProps {
   extension: FileExtension
   lessonId: string
   contentId: string
+  getUniqueName: (extension: FileExtension) => string
 }
 
 const PreloadFileItem = ({
@@ -47,6 +48,7 @@ const PreloadFileItem = ({
   preloaded_code,
   lessonId,
   contentId,
+  getUniqueName,
 }: PreloadFileItemProps) => {
   const theme = useTheme()
   const translate = useTranslate()
@@ -67,7 +69,7 @@ const PreloadFileItem = ({
 
   const defaultValues = {
     name: name ?? 'index',
-    extension: (extension as FileExtension) ?? FileExtension.HTML,
+    extension: (extension as FileExtension) ?? FileExtensions.HTML,
     preloaded_code: preloaded_code ?? '',
   }
 
@@ -75,6 +77,7 @@ const PreloadFileItem = ({
     resolver: yupResolver(FileSchema),
     defaultValues,
   })
+  const extensionWatcher = methods.watch('extension')
 
   const onSubmit = async (formData: FormValuesProps) => {
     function dirtyValues(dirtyFields: object | boolean, allValues: object): object {
@@ -121,6 +124,11 @@ const PreloadFileItem = ({
   }
 
   useEffect(() => {
+    const newName = getUniqueName(extensionWatcher as FileExtension)
+    methods.setValue('name', newName, { shouldDirty: true })
+  }, [extensionWatcher])
+
+  useEffect(() => {
     methods.reset({
       preloaded_code,
       name,
@@ -162,10 +170,10 @@ const PreloadFileItem = ({
               },
             }}
           >
-            {Object.keys(FileExtension).map((t) => (
+            {Object.keys(FileExtensions).map((t) => (
               <option
-                key={FileExtension[t as keyof typeof FileExtension]}
-                value={FileExtension[t as keyof typeof FileExtension]}
+                key={FileExtensions[t as keyof typeof FileExtensions]}
+                value={FileExtensions[t as keyof typeof FileExtensions]}
               >
                 {t}
               </option>

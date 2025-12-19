@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Stack } from '@mui/material'
@@ -9,7 +9,9 @@ import * as Yup from 'yup'
 import { useAuthContext } from '@/auth/useAuthContext'
 import { FormProvider, useSnackbar } from '@/components'
 import { Role } from '@/redux/services/enums/role.enum'
+import { useGetInviteQuery } from '@/redux/services/manager/invite-system'
 import { useTranslate } from '@/utils/translateHelper'
+import { useTenants } from '@root/src/hooks/useTenants'
 import { PATH_AUTH } from '@root/src/routes/paths'
 import { generateRandomEmoji } from '@root/src/utils'
 
@@ -28,12 +30,15 @@ interface FormValuesProps {
 }
 
 export default function LaunchCourseStepper() {
-  const { push } = useRouter()
+  const { push, query } = useRouter()
+  const tenant = useTenants()
+  const inviteCode = query.inviteCode as string | undefined
 
   const translate = useTranslate()
 
   const { enqueueSnackbar } = useSnackbar()
   const { register } = useAuthContext()
+  const { data: inviteData } = useGetInviteQuery(inviteCode as string, { skip: !inviteCode })
 
   const [activeStep, setActiveStep] = useState(0)
 
@@ -81,16 +86,26 @@ export default function LaunchCourseStepper() {
     }
   }
 
+  useEffect(() => {
+    if (inviteCode && inviteData) {
+      methods.setValue('email', inviteData?.email || '', {
+        shouldDirty: true,
+      })
+    }
+  }, [inviteCode, inviteData])
+
   return (
     <Stack
       sx={{
-        minHeight: '460px',
+        minHeight: !inviteCode && tenant?.meta?.is_enabled_google_auth ? '460px' : '300px',
         justifyContent: 'center',
         position: 'relative',
         width: '100%',
       }}
     >
-      {activeStep === 0 || activeStep === 1 ? <RegisterStudentTeacher isTeacher /> : null}
+      {!inviteCode && !inviteData ? (
+        <>{activeStep === 0 || activeStep === 1 ? <RegisterStudentTeacher isTeacher /> : null}</>
+      ) : null}
 
       <FormProvider
         methods={methods}
@@ -103,6 +118,7 @@ export default function LaunchCourseStepper() {
             resetRoad={() => push(PATH_AUTH.onBoardingTeacher.root)}
             isValid={!methods.formState.errors.email && methods.formState.dirtyFields.email}
             isTeacher={true}
+            inviteData={inviteData}
           />
         )}
         {(activeStep === 1 || activeStep === 2) && (
@@ -116,12 +132,17 @@ export default function LaunchCourseStepper() {
             nextStep={nextStep}
             isSubmitting={methods.formState.isSubmitting}
             isSubmitSuccessful={methods.formState.isSubmitSuccessful}
+            inviteData={inviteData}
           />
         )}
       </FormProvider>
 
-      {activeStep === 2 && <AddSchool />}
-      <SingLink />
+      {!inviteData && (
+        <>
+          {activeStep === 2 && <AddSchool />}
+          <SingLink />
+        </>
+      )}
     </Stack>
   )
 }

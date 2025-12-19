@@ -31,7 +31,8 @@ import { ConfirmDialog } from '@root/src/components'
 import CustomPopover, { usePopover } from '@root/src/components/custom-popover'
 import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useCounter } from '@root/src/hooks/useCounter'
-import { LessonContentType } from '@root/src/redux/enums/lesson-content-type.enum'
+import { LessonContentType } from '@root/src/redux/services/enums/lesson-content-type.enum'
+import { LessonType } from '@root/src/redux/services/enums/lesson-type.enum'
 import { LoaderStepDialog } from '@root/src/sections/on-boarding-register/teacher/ai-generete-stepper/LoaderStepDialog'
 
 import CreateLessonDialog from '../CreateLessonDialog/CreateLessonDialog'
@@ -285,7 +286,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
   return (
     <>
       <Head>
-        <title>{lesson?.name} | CodeTribe</title>
+        <title>{lesson?.name + ` | CodeTribe`}</title>
       </Head>
       <Box
         sx={{ p: 2 }}
@@ -307,7 +308,7 @@ export default function LessonStepList({ lessonId }: Props): React.ReactElement 
               active: lesson?.active as boolean,
               head: lesson?.head || '',
               independent: lesson?.independent ?? false,
-              type: lesson?.type ?? 'practical',
+              type: lesson?.type ?? LessonType.PRACTICAL,
               duration: lesson?.duration,
               slug: lesson?.slug,
               meta: lesson?.meta,

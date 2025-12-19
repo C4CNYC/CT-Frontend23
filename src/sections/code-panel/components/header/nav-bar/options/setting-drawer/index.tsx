@@ -13,9 +13,11 @@ import {
   updateColorsEvent,
   updateFontSize,
   updateLineWrap,
+  updateEditorAutoComplete,
 } from 'src/sections/code-panel/lib/events'
 
 import EditColors from './preferences/EditColors'
+import EditorAutoComplete from './preferences/EditorAutoComplete'
 import EditorFontSize from './preferences/EditorFontSize'
 import EditorWordWrap from './preferences/EditorWordWrap'
 import IntroTour from './preferences/IntroTour'
@@ -40,6 +42,7 @@ const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.Re
   return (
     <Box sx={BOX_STYLES}>
       <IconButton
+        sx={{ width: '26px', height: '26px', padding: '3px' }}
         onClick={() => {
           setDrawer(true)
         }}
@@ -104,6 +107,12 @@ const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.Re
               }}
             />
 
+            <EditorAutoComplete
+              onUpdate={(isAutoComplete: boolean) => {
+                window.dispatchEvent(updateEditorAutoComplete({ detail: { isAutoComplete } }))
+              }}
+            />
+
             <Typography variant='subtitle2'>{translate('customize')}</Typography>
 
             <EditColors
@@ -120,7 +129,7 @@ const SettingDrawer = ({ iconColor = '#637381' }: ISettingDrawerProps): React.Re
 
 const BOX_STYLES = {
   display: 'flex',
-  width: '100%',
+  width: '26px',
   alignItems: 'center',
   justifyContent: 'center',
 }

@@ -43,6 +43,9 @@ export const MANAGER_PATH_DASHBOARD = {
   apps: {
     root: path(MANAGER_ROOTS_DASHBOARD, '/apps'),
   },
+  environments: {
+    root: path(MANAGER_ROOTS_DASHBOARD, '/environments'),
+  },
   properties: path(MANAGER_ROOTS_DASHBOARD, '/properties'),
   skills: {
     root: path(MANAGER_ROOTS_DASHBOARD, '/skills'),

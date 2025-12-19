@@ -1,3 +1,4 @@
+import { IEnvironment } from '@root/src/redux/interfaces/environment.interface'
 import { BaseResponseInterface } from '@root/src/utils/baseResponse.interface'
 
 import { ISkill } from '../../interfaces/content.interface'
@@ -7,14 +8,23 @@ import { LessonType } from '../enums/lesson-type.enum'
 import { ILessonContent } from './courseUnits.interface'
 import { IIntegration } from './integration.interface'
 
+export const LessonDisplayEngine = {
+  CodePanel: 'codepanel',
+  Slides: 'slides',
+  BareSlides: 'bareslides',
+  OneThird: 'onethird',
+  Custom: 'custom',
+}
+
 export type LessonMeta = {
   humanLang: string
+  displayEngine?: (typeof LessonDisplayEngine)[keyof typeof LessonDisplayEngine]
   machineLang: keyof typeof LessonMachineLang
   /**  allow students to create multiple files    */
   createMultipleFiles: 0 | 1
   /**  Teacher/Owner cant delete the lesson    */
   lock: 0 | 1
-  [key: string]: string | number
+  [key: string]: string | number | undefined
 }
 
 export interface ILesson {
@@ -28,6 +38,7 @@ export interface ILesson {
   id: string
   independent: boolean
   integrations: Array<IIntegration & BaseResponseInterface>
+  environments: Array<IEnvironment & BaseResponseInterface>
   meta: LessonMeta
   name: string
   progress: number | null

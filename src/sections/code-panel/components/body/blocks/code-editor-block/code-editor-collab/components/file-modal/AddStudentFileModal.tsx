@@ -4,27 +4,38 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, Stack, useTheme } from '@mui/material'
 import { IoCloseOutline } from '@react-icons/all-files/io5/IoCloseOutline'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { FormProvider, RHFTextField, RHFSelect } from '@/components'
 import { StudentFile } from '@root/src/redux/services/interfaces/workspace.interface'
-import { FileExtension } from '@root/src/types/lessons'
+import { useGetLessonFilesQuery } from '@root/src/redux/services/manager/lesson-content-manager'
+import { FileExtension, FileExtensions } from '@root/src/types/lessons'
 import { useTranslate } from '@root/src/utils/translateHelper'
+
+import { getUniqueFileName } from './getUniqueFileName'
 
 interface AddStudentFileModalProps {
   children?: React.ReactElement
   onSubmit: (fileName: string) => Promise<void>
   files: StudentFile[]
+  isAllowMultipleSameType?: boolean
 }
 
 interface FormValuesProps {
   fileName: string
-  fileExtension: FileExtension | string
+  fileExtensions: FileExtension | string
 }
 
-const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalProps) => {
+const AddStudentFileModal = ({
+  children,
+  onSubmit,
+  files,
+  isAllowMultipleSameType = false,
+}: AddStudentFileModalProps) => {
+  const router = useRouter()
   const theme = useTheme()
   const translate = useTranslate()
   const { enqueueSnackbar } = useSnackbar()
@@ -34,11 +45,20 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
 
   const isDarkMode = useMemo(() => theme.palette.mode === 'dark', [theme.palette.mode])
 
+  const { data: allFilesForThisLesson, isLoading: isLoadingAllFilesForThisLesson } =
+    useGetLessonFilesQuery({
+      lessonId: router.query.lessonId as string,
+    })
+
   const availableExtensions = useMemo(() => {
+    if (isAllowMultipleSameType) {
+      return Object.keys(FileExtensions)
+    }
+
     const alreadyReservedExt = files.map((file) => file.extension.toUpperCase())
 
-    return Object.keys(FileExtension).filter((element) => !alreadyReservedExt.includes(element))
-  }, [files])
+    return Object.keys(FileExtensions).filter((element) => !alreadyReservedExt.includes(element))
+  }, [files, isAllowMultipleSameType])
 
   const CreateStudentFileSchema = Yup.object().shape({
     fileName: Yup.string()
@@ -52,20 +72,33 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
         'unique-file',
         translate('file_with_same_name_and_extension_exists'),
         (value, context) => {
-          const extension = context.parent.fileExtension
+          const extension = context.parent.fileExtensions
           return !files.some((file) => file.name === value && file.extension === extension)
         }
       ),
-    fileExtension: Yup.string(),
+    fileExtensions: Yup.string(),
   })
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateStudentFileSchema),
     defaultValues: {
       fileName: '',
-      fileExtension: FileExtension.HTML,
+      fileExtensions: FileExtensions.HTML,
     },
   })
+  const fileExtensions = methods.watch('fileExtensions')
+
+  useEffect(() => {
+    if (!fileExtensions) return
+
+    const uniqueName = getUniqueFileName(
+      fileExtensions,
+      isAllowMultipleSameType,
+      allFilesForThisLesson
+    )
+
+    methods.setValue('fileName', uniqueName, { shouldDirty: true })
+  }, [fileExtensions, files, isAllowMultipleSameType])
 
   const { setValue } = methods
 
@@ -73,7 +106,7 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
     setIsLoading(true)
 
     try {
-      await onSubmit(`${data.fileName.trim()}.${data.fileExtension}`)
+      await onSubmit(`${data.fileName.trim()}.${data.fileExtensions}`)
     } catch (e) {
       enqueueSnackbar({ message: translate('messages_error'), variant: 'error' })
       return
@@ -87,10 +120,12 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
   }
 
   useEffect(() => {
-    if (availableExtensions.length) {
-      setValue('fileExtension', availableExtensions[0].toLowerCase())
+    if (!isAllowMultipleSameType) {
+      if (availableExtensions.length) {
+        setValue('fileExtensions', availableExtensions[0].toLowerCase())
+      }
     }
-  }, [availableExtensions])
+  }, [availableExtensions, isAllowMultipleSameType])
 
   return (
     <>
@@ -156,7 +191,7 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
                   native
                   disabled={!availableExtensions?.length}
                   label={translate('file_extension_label')}
-                  name='fileExtension'
+                  name='fileExtensions'
                   size='small'
                   sx={{
                     mt: 1,
@@ -167,8 +202,8 @@ const AddStudentFileModal = ({ children, onSubmit, files }: AddStudentFileModalP
                 >
                   {availableExtensions?.map((t) => (
                     <option
-                      key={FileExtension[t as keyof typeof FileExtension]}
-                      value={FileExtension[t as keyof typeof FileExtension]}
+                      key={FileExtensions[t as keyof typeof FileExtensions]}
+                      value={FileExtensions[t as keyof typeof FileExtensions]}
                     >
                       {t}
                     </option>

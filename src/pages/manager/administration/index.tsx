@@ -44,6 +44,8 @@ import {
 } from '@root/src/redux/services/manager/super-admin'
 import AddEditOrgModal from '@root/src/sections/administration/AddEditOrgModal'
 import OrgTableRow from '@root/src/sections/administration/OrgTableRow'
+import { AdminDefaultIntro } from '@root/src/sections/intro-tours/admin-default-intro'
+
 const STATUS_OPTIONS = ['all']
 
 const TABLE_HEAD = [
@@ -150,10 +152,11 @@ export default function AdministrationPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate('Administration')} | CodeTribe</title>
+        <title> {translate('Administration') + ` | CodeTribe`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
+        <AdminDefaultIntro />
         <CustomBreadcrumbs
           heading=''
           links={[

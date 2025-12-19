@@ -50,10 +50,26 @@ export const admin = {
   ],
 }
 
-export const superAdmin = {
+export const adminTemporary = {
   subheader: 'sidebar_menu_administration',
-  items: [],
+  items: [
+    {
+      title: 'sidebar_menu_admin',
+      path: MANAGER_PATH_DASHBOARD.administration.root,
+      icon: <MdAdminPanelSettings />,
+    },
+    {
+      title: 'sidebar_menu_members',
+      path: MANAGER_PATH_DASHBOARD.organization.members,
+      icon: <FaUserShield />,
+    },
+  ],
 }
+
+// export const superAdmin = {
+//   subheader: 'sidebar_menu_administration',
+//   items: [],
+// }
 
 export const managment = {
   subheader: 'sidebar_menu_management',
@@ -82,6 +98,32 @@ export const managment = {
       title: 'sidebar_menu_progress',
       path: MANAGER_PATH_DASHBOARD.school.progress,
       icon: <GiProgression />,
+    },
+  ],
+}
+
+export const managmentForAdminTemporary = {
+  subheader: 'sidebar_menu_management',
+  items: [
+    {
+      title: 'sidebar_menu_school',
+      path: MANAGER_PATH_DASHBOARD.school.general,
+      icon: <FaSchool />,
+    },
+    {
+      title: 'sidebar_menu_students',
+      path: MANAGER_PATH_DASHBOARD.school.students,
+      icon: <FaUsers />,
+    },
+    {
+      title: 'sidebar_menu_classes',
+      path: MANAGER_PATH_DASHBOARD.school.classes,
+      icon: <IoMdSchool />,
+    },
+    {
+      title: 'sidebar_menu_assignments',
+      path: MANAGER_PATH_DASHBOARD.school.assignments,
+      icon: <AiOutlineSolution />,
     },
   ],
 }
@@ -122,9 +164,35 @@ export const content = {
       icon: <FiSettings />,
     },
     {
+      title: 'sidebar_menu_environments',
+      path: MANAGER_PATH_DASHBOARD.environments.root,
+      icon: <FiSettings />,
+    },
+    {
       title: 'sidebar_menu_skills',
       path: MANAGER_PATH_DASHBOARD.skills.root,
       icon: <HiOutlineLightBulb />,
+    },
+  ],
+}
+
+export const contentForAdminTemporary = {
+  subheader: 'sidebar_menu_content',
+  items: [
+    {
+      title: 'sidebar_menu_courses',
+      path: MANAGER_PATH_DASHBOARD.courses.root,
+      icon: <MdPlayLesson />,
+    },
+    {
+      title: 'sidebar_menu_modules',
+      path: MANAGER_PATH_DASHBOARD.modules.root,
+      icon: <GoFileSubmodule />,
+    },
+    {
+      title: 'sidebar_menu_lessons',
+      path: MANAGER_PATH_DASHBOARD.lessons.root,
+      icon: <MdPlayLesson />,
     },
   ],
 }
@@ -137,6 +205,7 @@ export const courses = {
       title: 'sidebar_menu_catalog',
       icon: <FaUserFriends size={20} />,
       component: () => <CatalogMenuItem />,
+      visibleWhen: (ctx: MenuContext) => !ctx.tenant?.meta?.is_hided_nav_catalog_icon,
     },
     {
       path: '',
@@ -231,16 +300,17 @@ export const socials = {
 export const menuConfig = (currentRole: Role) =>
   currentRole == Role.Admin || currentRole == Role.SuperAdmin
     ? {
-        [Role.SuperAdmin]: [superAdmin, admin, managment, content],
+        [Role.SuperAdmin]: [admin, managment, content],
         [Role.Owner]: [admin, managment, content],
-        [Role.Admin]: [admin, managment, content, market_sandbox],
+        [Role.Admin]: [admin, managmentForAdminTemporary, contentForAdminTemporary],
+        // [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],
         [Role.Anonymous]: [courses, general, apps],
         [Role.Manager]: [managment, content],
         [Role.Editor]: [content],
       }
     : {
-        [Role.SuperAdmin]: [superAdmin, admin, managment, content],
+        [Role.SuperAdmin]: [admin, managment, content],
         [Role.Owner]: [admin, managment, content],
         [Role.Admin]: [admin, managment, content, market_sandbox],
         [Role.Student]: [courses, general, apps],
@@ -248,3 +318,34 @@ export const menuConfig = (currentRole: Role) =>
         [Role.Manager]: [managment, content],
         [Role.Editor]: [content],
       }
+
+export function filterMenu(menu: MenuSection[], ctx: MenuContext): MenuSection[] {
+  return menu
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) => {
+        if (!item.visibleWhen) return true
+        return item.visibleWhen(ctx)
+      }),
+    }))
+    .filter((section) => section.items.length > 0)
+}
+
+export interface MenuContext {
+  tenant?: any
+  user?: any
+  role?: Role
+}
+
+export interface MenuItem {
+  title: string
+  path: string
+  icon: React.ReactElement
+  component?: (children: React.ReactElement) => React.ReactElement
+  visibleWhen?: (ctx: MenuContext) => boolean
+}
+
+export interface MenuSection {
+  subheader: string
+  items: MenuItem[]
+}

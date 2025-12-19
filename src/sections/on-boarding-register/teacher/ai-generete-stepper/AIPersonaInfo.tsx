@@ -8,6 +8,7 @@ import { RHFTextField } from '@root/src/components'
 import { RHFToggleButtonGroup } from '@root/src/components/hook-form/RHFToggleButtonGroup'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
+import { useAiGenerateStepper } from './AiGenerateStepperContext'
 import {
   BTN_CONTAINER_STYLES,
   getToggleBtnGroupSx,
@@ -23,17 +24,13 @@ import {
   IAIPersonaInfoProps,
 } from './constants'
 
-export function AIPersonaInfo({
-  prevStep,
-  closeModal,
-  customPersona,
-  customTone,
-}: IAIPersonaInfoProps) {
+export function AIPersonaInfo({ customPersona, customTone }: IAIPersonaInfoProps) {
   const theme = useTheme()
   const translate = useTranslate()
 
   const [disableSubmit, setDisableSubmit] = useState(false)
 
+  const { prevStep, isModal, closeModal } = useAiGenerateStepper()
   const toggleButtonStyles = useMemo(
     () => getToggleBtnGroupSx(theme.palette.mode === 'dark'),
     [theme.palette.mode]
@@ -77,7 +74,7 @@ export function AIPersonaInfo({
           >
             {translate('ai_gen_step_3_title')}
           </Typography>
-          {closeModal ? (
+          {isModal ? (
             <IconButton
               onClick={closeModal}
               sx={{ margin: '0px 0px 0px auto' }}
