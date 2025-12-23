@@ -29,9 +29,9 @@ export default function EmailStep({
   const { push, query } = useRouter()
 
   const onRegisterWithGoogle = useGoogleLogin({
-    onSuccess: async ({ access_token: token }) => {
+    onSuccess: async ({ code }) => {
       try {
-        await registerWithGoogle(token, Role.Student)
+        await registerWithGoogle(code, Role.Student)
         push(
           `${STUDENT_PATH_DASHBOARD.class.id(classId)}?` +
             `${new URLSearchParams({ joinCode: query.id as string })}`
@@ -40,6 +40,8 @@ export default function EmailStep({
         enqueueSnackbar(error.message, { variant: 'error' })
       }
     },
+    flow: 'auth-code',
+    ux_mode: 'popup',
   })
 
   return (

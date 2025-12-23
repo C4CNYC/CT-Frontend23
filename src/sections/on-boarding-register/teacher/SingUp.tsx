@@ -41,11 +41,11 @@ export default function SingUp({
   const [isLoading, setIsLoading] = useState(false)
 
   const onRegisterWithGoogle = useGoogleLogin({
-    onSuccess: async ({ access_token: token }) => {
+    onSuccess: async ({ code }) => {
       setIsLoading(true)
       try {
         const role = isTeacher ? Role.Manager : Role.Student
-        await registerWithGoogle(token, role)
+        await registerWithGoogle(code, role)
 
         goToStep(2)
       } catch (error: any) {
@@ -53,6 +53,8 @@ export default function SingUp({
       }
       setIsLoading(false)
     },
+    flow: 'auth-code',
+    ux_mode: 'popup',
   })
 
   return (

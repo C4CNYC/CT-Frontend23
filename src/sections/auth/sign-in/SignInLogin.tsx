@@ -36,16 +36,18 @@ export default function SignInLogin({
   const [isLoading, setIsLoading] = useState(false)
 
   const onLoginWithGoogle = useGoogleLogin({
-    onSuccess: async ({ access_token: token }) => {
+    onSuccess: async ({ code }) => {
       setIsLoading(true)
       try {
-        await loginWithGoogle(token)
+        await loginWithGoogle(code)
         router.push(STUDENT_PATH_PAGE.home)
       } catch (error: any) {
         enqueueSnackbar(error.message, { variant: 'error' })
       }
       setIsLoading(false)
     },
+    flow: 'auth-code',
+    ux_mode: 'popup',
   })
 
   return (

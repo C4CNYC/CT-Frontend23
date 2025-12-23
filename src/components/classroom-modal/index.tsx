@@ -48,9 +48,11 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
       'https://www.googleapis.com/auth/classroom.profile.emails',
       'https://www.googleapis.com/auth/classroom.profile.photos',
     ].join(' '),
-    onSuccess: async ({ access_token: accessToken }) => {
-      setToken(accessToken)
+    onSuccess: async ({ code }) => {
+      setToken(code)
     },
+    flow: 'auth-code',
+    ux_mode: 'popup',
   })
 
   const onMigrateStudents = async () => {
