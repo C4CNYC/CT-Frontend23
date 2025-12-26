@@ -204,11 +204,11 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
   }, [])
 
   // LOGIN WITH GOOGLE
-  const loginWithGoogle = async (token: string) => {
+  const loginWithGoogle = async (code: string) => {
     const tenantName = getTenantFromDomain()
 
     const { data } = await axios.post<any, any>('auth/google-signin', {
-      auth_token: token,
+      code,
     })
 
     const { access_token: accessToken, user } = data
@@ -225,12 +225,12 @@ export function AuthProvider({ children, tenant }: AuthProviderProps): React.Rea
   }
 
   // Register WITH GOOGLE
-  const registerWithGoogle = async (token: string, role: Role) => {
+  const registerWithGoogle = async (code: string, role: Role) => {
     const tenantName = getTenantFromDomain()
 
     try {
       const { data } = await axios.post<any, any>('auth/google-signup', {
-        auth_token: token,
+        code,
         role,
       })
 
