@@ -72,7 +72,6 @@ export const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
                   onClick(lesson.id, module.id)
                   onClose()
                 }}
-                style={{ pointerEvents: 'none' }}
                 sx={getButtonSx(lesson.id === currentLessonId, theme.palette.mode === 'light')}
               >
                 <Box display='flex'>
