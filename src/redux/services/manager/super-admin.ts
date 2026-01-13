@@ -71,6 +71,14 @@ export const superAdmin = createApi({
       }),
       invalidatesTags: ['Administration'],
     }),
+    deleteOrgLogo: builder.mutation<BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `/org/${id}/logo`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Administration'],
+    }),
+
     updateOrgLogoMini: builder.mutation<
       IAdministration & BaseResponseInterface,
       { id: string; file: FormData }
@@ -82,6 +90,14 @@ export const superAdmin = createApi({
       }),
       invalidatesTags: ['Administration'],
     }),
+    deleteOrgLogoMini: builder.mutation<BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `/org/${id}/mini-logo`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Administration'],
+    }),
+
     updateOrgFavicon: builder.mutation<
       IAdministration & BaseResponseInterface,
       { id: string; file: FormData }
@@ -93,17 +109,26 @@ export const superAdmin = createApi({
       }),
       invalidatesTags: ['Administration'],
     }),
+    deleteOrgFavicon: builder.mutation<BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `/org/${id}/favicon`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Administration'],
+    }),
   }),
 })
 
 export const {
   useGetOrgListQuery,
   useGetOrgQuery,
-
   useCreateOrgMutation,
   useUpdateOrgMutation,
   useUpdateOrgLogoMiniMutation,
   useUpdateOrgLogoMutation,
   useDeleteOrgMutation,
   useUpdateOrgFaviconMutation,
+  useDeleteOrgLogoMutation,
+  useDeleteOrgLogoMiniMutation,
+  useDeleteOrgFaviconMutation,
 } = superAdmin
