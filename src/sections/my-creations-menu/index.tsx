@@ -34,8 +34,7 @@ export default function MyCreationsMenu(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
   const isDesktop = useResponsive('up', 'md')
-
-  const [createLesson] = useCreateLessonMutation()
+ 
   const [createByCloningLesson] = useCreateByCloningLessonMutation()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
@@ -60,16 +59,7 @@ export default function MyCreationsMenu(): React.ReactElement {
       )
     }
   }
-
-  const createNewLesson = async () => {
-    const lesson = await createLesson({
-      name: translate('my_new_lesson') as string,
-      description: translate('my_lesson_description') as string,
-      active: true,
-      duration: '60',
-    }).unwrap()
-    return lesson
-  }
+ 
 
   return (
     <>
