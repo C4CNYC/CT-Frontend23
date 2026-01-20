@@ -10,6 +10,9 @@ import {
   useUpdateOrgLogoMutation,
   useUpdateOrgLogoMiniMutation,
   useUpdateOrgFaviconMutation,
+  useDeleteOrgFaviconMutation,
+  useDeleteOrgLogoMiniMutation,
+  useDeleteOrgLogoMutation,
 } from '@root/src/redux/services/manager/super-admin'
 import { useTranslate } from '@root/src/utils/translateHelper'
 
@@ -33,6 +36,10 @@ const LogoTab = ({ org, handleClose }: LogoTabProps): React.ReactElement => {
   const [updateMiniLogo, { isLoading: isLoadingMiniLogo }] = useUpdateOrgLogoMiniMutation()
   const [updateFavicon, { isLoading: isLoadingFavicon }] = useUpdateOrgFaviconMutation()
 
+  const [deleteLogo] = useDeleteOrgLogoMutation()
+  const [deleteMiniLogo] = useDeleteOrgLogoMiniMutation()
+  const [deleteFavicon] = useDeleteOrgFaviconMutation()
+
   useEffect(() => {
     if (org) {
       setLogo(org.logo || null)
@@ -45,7 +52,8 @@ const LogoTab = ({ org, handleClose }: LogoTabProps): React.ReactElement => {
     title: string,
     file: File | string | null,
     setFile: (value: File | string | null) => void,
-    name: string
+    name: string,
+    onDelete?: () => Promise<void>
   ) => (
     <Box>
       <Typography variant='body2'>{title}</Typography>
@@ -53,7 +61,12 @@ const LogoTab = ({ org, handleClose }: LogoTabProps): React.ReactElement => {
         {file && (
           <IconButton
             sx={UPLOAD_IMG_BTN}
-            onClick={() => setFile(null)}
+            onClick={async () => {
+              if (typeof file === 'string' && onDelete) {
+                await onDelete()
+              }
+              setFile(null)
+            }}
           >
             <IoMdClose size='20px' />
           </IconButton>
@@ -125,9 +138,20 @@ const LogoTab = ({ org, handleClose }: LogoTabProps): React.ReactElement => {
         justifyContent='space-between'
         height='100%'
       >
-        {renderUploadBlock('Upload Logo', logo, setLogo, 'logo')}
-        {renderUploadBlock('Upload Mini Logo', miniLogo, setMiniLogo, 'min_logo')}
-        {renderUploadBlock('Upload Favicon', favicon, setFavicon, 'favicon')}
+        {renderUploadBlock('Upload Logo', logo, setLogo, 'logo', async () => {
+          await deleteLogo({ id: org.id }).unwrap()
+          enqueueSnackbar('Logo deleted')
+        })}
+
+        {renderUploadBlock('Upload Mini Logo', miniLogo, setMiniLogo, 'min_logo', async () => {
+          await deleteMiniLogo({ id: org.id }).unwrap()
+          enqueueSnackbar('Mini logo deleted')
+        })}
+
+        {renderUploadBlock('Upload Favicon', favicon, setFavicon, 'favicon', async () => {
+          await deleteFavicon({ id: org.id }).unwrap()
+          enqueueSnackbar('Favicon deleted')
+        })}
 
         <Box
           sx={{
