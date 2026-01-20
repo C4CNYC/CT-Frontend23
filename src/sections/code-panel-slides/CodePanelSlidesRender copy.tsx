@@ -26,6 +26,7 @@ import { CodeDocument } from '../code-panel/components/body/blocks/view-block/br
 import { BrowserViewTeacher } from './BrowserTeacher'
 import { useLessonManager } from './LessonManagerContext'
 import { TopPanel } from './TopPanel'
+import { useCheckers } from './useCheckers'
 
 interface CodePanelSlidesRenderProps {
   onSubmitLesson?: () => void
@@ -39,8 +40,8 @@ interface CodePanelSlidesRenderProps {
 }
 
 export function CodePanelSlidesRender({
-  onSubmitLesson = () => {},
-  onSubmitChallenge = () => {},
+  onSubmitLesson = () => { },
+  onSubmitChallenge = () => { },
   lessonType,
   lessonName,
   lessonId,
@@ -49,6 +50,7 @@ export function CodePanelSlidesRender({
 }: CodePanelSlidesRenderProps) {
   const dispatch = useDispatch()
   const { lesson, lessonContent, currentSlideUpdated } = useLessonManager()
+  useCheckers()
   let data = lessonContent ?? []
   let integrations = lesson?.integrations
   const [isSlideReady, setIsSlideReady] = useState(false)
