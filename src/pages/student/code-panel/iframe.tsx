@@ -93,7 +93,7 @@ export default function Iframe() {
       integrationScripts.push(
         `window.addEventListener("message",
         (e) => {
-          let types = ["checker-validation", 'save-progress', 'app-ready']
+          let types = ["checker-validation", 'save-progress', 'app-ready', 'nextSlide', 'prevSlide']
           console.log("type", e.data.type)
           if (e.data && types.includes(e.data.type) ){
           console.log(window, window.parent, window == window.parent);
