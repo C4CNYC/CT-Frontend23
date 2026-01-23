@@ -2,14 +2,14 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 
 import { setIsActivateCompeated } from '@/redux/slices/checkers-animation'
 import { setContentValidations, ContentValidation } from '@/redux/slices/code-panel-global'
+import {
+  useCompleteLessonMutation,
+  useCompleteStudentLessonMutation,
+} from '@root/src/redux/services/manager/progress-student'
 import { dispatch, useSelector } from '@root/src/redux/store'
 import { IValidationMap } from '@root/src/utils/CheckValidationTests'
 import { isValidRegex } from '@root/src/utils/isValidRegex'
 import { sendValidationMessageToIframes } from '@root/src/utils/sendValidationMessageToIframes'
-import {
-  useCompleteLessonMutation,
-  useCompleteStudentLessonMutation
-} from '@root/src/redux/services/manager/progress-student'
 
 import { useLessonManager } from './LessonManagerContext'
 
@@ -23,42 +23,42 @@ export function useCheckers() {
   const courseId = useSelector((state) => state.codePanelGlobal.courseId)
   const unitId = useSelector((state) => state.codePanelGlobal.unitId)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  
+
   // Local state to store content validations derived from lessonContent
   const [localContentValidations, setLocalContentValidations] = useState<ContentValidation[]>([])
-  
+
   // Function to derive contentValidations from lessonContent
   const deriveContentValidationsFromLessonContent = useCallback(() => {
     if (!lessonContent || !Array.isArray(lessonContent)) return []
-    
+
     return lessonContent.map((content) => {
       if (!content.validations || !Array.isArray(content.validations)) {
         return {
           contentId: content.id || '',
-          checkers: []
+          checkers: [],
         }
       }
-      
+
       // Convert validations to IValidationMap format
       const checkers = content.validations.map((validation) => ({
         text: validation.name,
         valid: false, // Default to false, will be updated when validation is checked
         description: validation.description || '',
         id: validation.id || '',
-        errorMessage: ''
+        errorMessage: '',
       }))
-      
+
       return {
         contentId: content.id || '',
-        checkers
+        checkers,
       }
     })
   }, [lessonContent])
-  
+
   // Initialize localContentValidations from lessonContent
   useEffect(() => {
     const derivedValidations = deriveContentValidationsFromLessonContent()
-    
+
     // If we have Redux validations, merge them with the derived ones
     if (reduxContentValidations && reduxContentValidations.length > 0) {
       const mergedValidations = derivedValidations.map((derived) => {
@@ -70,7 +70,7 @@ export function useCheckers() {
       setLocalContentValidations(derivedValidations)
     }
   }, [lessonContent, reduxContentValidations, deriveContentValidationsFromLessonContent])
-  
+
   // Use localContentValidations instead of Redux contentValidations
   const contentValidations = localContentValidations
 
@@ -90,7 +90,7 @@ export function useCheckers() {
 
     // Update local state
     setLocalContentValidations(updatedContentValidations)
-    
+
     // Also update Redux for backward compatibility
     dispatch(setContentValidations(updatedContentValidations))
   }
@@ -132,7 +132,6 @@ export function useCheckers() {
       let checkers = selectedContentCheckersGet()
       let hasChanges = false
       let updatedCheckers = [...checkers] // Work with a copy
-      console.log(checkers)
       for (let { name: checkerId, isValid } of checkerIds) {
         const checkerIndex = updatedCheckers.findIndex((checker) => checker.text === checkerId)
 
@@ -151,12 +150,14 @@ export function useCheckers() {
         }
 
         updateContentValidations(updatedCheckers)
-        
+
         // Save progress to database when all checkers are passed
-        console.log(
-          updatedCheckers.length, 
-          updatedCheckers.map((checker) => checker.valid))
-        const allPassed = updatedCheckers.length > 0 && updatedCheckers.every((checker) => checker.valid)
+        // console.log(
+        //   updatedCheckers.length,
+        //   updatedCheckers.map((checker) => checker.valid)
+        // )
+        const allPassed =
+          updatedCheckers.length > 0 && updatedCheckers.every((checker) => checker.valid)
         if (allPassed && courseId && currentSlideId) {
           completeLesson({
             id: courseId,
@@ -188,15 +189,16 @@ export function useCheckers() {
   const allSlidesCompleted = useMemo(() => {
     if (!lessonContent || !contentValidations || !lesson) return false
     fnIncUse(153)
-    
+
     // Check if every slide has validations and all validations are passed
-    return lessonContent.every(slide => {
+    return lessonContent.every((slide) => {
       if (!slide.validations || slide.validations.length === 0) return true // Skip slides without validations
-      
-      const slideValidation = contentValidations.find(item => item.contentId === slide.id)
-      if (!slideValidation || !slideValidation.checkers || slideValidation.checkers.length === 0) return false
-      
-      return slideValidation.checkers.every(checker => checker.valid)
+
+      const slideValidation = contentValidations.find((item) => item.contentId === slide.id)
+      if (!slideValidation || !slideValidation.checkers || slideValidation.checkers.length === 0)
+        return false
+
+      return slideValidation.checkers.every((checker) => checker.valid)
     })
   }, [lessonContent, contentValidations, lesson])
 
@@ -205,7 +207,7 @@ export function useCheckers() {
     if (allSlidesCompleted && lesson?.id) {
       completeStudentLesson({
         studentId: '', // Will be filled by the backend from the authenticated user
-        lessonId: lesson.id
+        lessonId: lesson.id,
       })
     }
   }, [allSlidesCompleted, lesson?.id, completeStudentLesson])

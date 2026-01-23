@@ -40,8 +40,8 @@ interface CodePanelSlidesRenderProps {
 }
 
 export function CodePanelSlidesRender({
-  onSubmitLesson = () => { },
-  onSubmitChallenge = () => { },
+  onSubmitLesson = () => {},
+  onSubmitChallenge = () => {},
   lessonType,
   lessonName,
   lessonId,
