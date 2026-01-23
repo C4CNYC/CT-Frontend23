@@ -70,6 +70,15 @@ export default function Iframe() {
           "environments":${JSON.stringify(slide?.environments || [])},
           "validate":(t,v,type='checker-validation')=>{
             window.parent.postMessage({type,checkerId: t,valid: v},'*')
+          },
+          "nextSlide":(skip=false)=>{
+            window.parent.postMessage({type:'nextSlide',skip},'*')
+          },
+          "prevSlide":()=>{
+            window.parent.postMessage({type:'prevSlide'},'*')
+          },
+          "goToSlide":(slideIndex)=>{
+            window.parent.postMessage({type:'goToSlide',slideIndex},'*')
           }
         }
       `)

@@ -220,6 +220,25 @@ const SliderBlock: FC<ISliderBlock> = ({
     })
   }, [slideIndex])
 
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      const { type } = event.data
+      if (type === 'nextSlide') {
+        handleNext(event.data.skip)
+      } else if (type === 'prevSlide') {
+        handlePrev()
+      } else if (type === 'goToSlide') {
+        const targetIndex = event.data.slideIndex
+        if (typeof targetIndex === 'number' && targetIndex >= 0 && targetIndex < data.length) {
+          onBeforeChange(slideIndex, targetIndex)
+        }
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [handleNext, handlePrev, onBeforeChange, slideIndex, data.length])
+
   const slider = useMemo(() => {
     const currentSlide = data[slideIndex]
     console.log('currentSlide render', currentSlide) // eslint-disable-line no-console
