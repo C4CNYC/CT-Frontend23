@@ -21,7 +21,9 @@ export default function Iframe() {
     { id: router.query.lessonId as string },
     { skip: !router.query.lessonId }
   )
-  let slide = lessonContent ? lessonContent[0] : null
+  let slide = lessonContent
+    ? lessonContent.find((s) => s.id === router.query.slideId) || lessonContent[0]
+    : null
 
   let pageReady = !!slide && !!lesson
 
