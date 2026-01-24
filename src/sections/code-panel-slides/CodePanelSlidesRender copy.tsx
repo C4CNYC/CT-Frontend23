@@ -1,16 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
 import { Box } from '@mui/material'
-import { useDispatch } from 'react-redux'
 
 import { LoadingScreen } from '@/components'
 import { IIntegration } from '@/redux/interfaces/integration.interface'
-import {
-  setNextStepAble,
-  setSlideId,
-  setSlideIndex,
-  setSolutionCode,
-} from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
 import { BaseResponseInterface } from '@/utils/baseResponse.interface'
 import { useDebounceCallback } from '@root/src/hooks'
@@ -24,6 +17,7 @@ import Navigation from '../code-panel/components/body/blocks/slider-block/naviga
 import { CodeDocument } from '../code-panel/components/body/blocks/view-block/browser-view/types'
 
 import { BrowserViewTeacher } from './BrowserTeacher'
+import { useSlideNavigation } from './hooks/useSlideNavigation'
 import { useLessonManager } from './LessonManagerContext'
 import { TopPanel } from './TopPanel'
 
@@ -47,15 +41,13 @@ export function CodePanelSlidesRender({
   isLoadingLessonContent = false,
   lessonMeta,
 }: CodePanelSlidesRenderProps) {
-  const dispatch = useDispatch()
-  const { lesson, lessonContent, currentSlideUpdated } = useLessonManager()
+  const { lesson, lessonContent } = useLessonManager()
   let data = lessonContent ?? []
   let integrations = lesson?.integrations
   const [isSlideReady, setIsSlideReady] = useState(false)
 
   const profile = useSelector((state) => state.global.user)
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const slideId = useSelector((state) => state.codePanelGlobal.slideId)
 
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
   const { data: lastSlide, isLoading: isLastSlideLoading } = useGetStudentLastVisitedSlideQuery(
@@ -66,46 +58,6 @@ export function CodePanelSlidesRender({
   )
 
   const handleDebouncedCallback = useDebounceCallback(1000)
-
-  const hasNextStep = slideIndex < data?.length - 1
-  const stepHasValidation = !!data[slideIndex]?.validations?.length
-
-  const handlePrev = (): void => {
-    if (currentSlideUpdated) {
-      // Handle slide edited state - similar to working implementation
-      return
-    }
-
-    if (slideIndex > 0) {
-      onBeforeChange(slideIndex, slideIndex - 1)
-    }
-  }
-
-  useEffect(() => {
-    setIsSlideReady(false)
-    const timeout = setTimeout(() => {
-      setIsSlideReady(true)
-    }, 30)
-
-    return () => clearTimeout(timeout)
-  }, [slideIndex, setIsSlideReady])
-
-  const handleNext = (skip = false): void => {
-    if (currentSlideUpdated) {
-      // Handle slide edited state - similar to working implementation
-      return
-    }
-
-    if (stepHasValidation && !skip) {
-      const slideId = data[slideIndex]?.id
-      if (slideId) onSubmitChallenge(slideId, '')
-    }
-    if (hasNextStep) {
-      onBeforeChange(slideIndex, slideIndex + 1)
-    } else {
-      onSubmitLesson()
-    }
-  }
 
   const onUpdateLastSlide = (next: number) => {
     if (isLastSlideLoading) return
@@ -121,15 +73,21 @@ export function CodePanelSlidesRender({
     }
   }
 
-  const onBeforeChange = (current: number, next: number) => {
-    if (!data || !data?.length || !data[next]) return
-    let slideNextId = data[next]?.id
-    if (slideId == slideNextId) return
+  const { handlePrev, handleNext, onBeforeChange, hasNextStep, stepHasValidation } =
+    useSlideNavigation({
+      onSubmitChallenge,
+      onSubmitLesson,
+      onUpdateLastSlide,
+    })
 
-    dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ''))
-    dispatch(setSlideIndex(next))
-    if (slideNextId) dispatch(setSlideId(slideNextId))
-  }
+  useEffect(() => {
+    setIsSlideReady(false)
+    const timeout = setTimeout(() => {
+      setIsSlideReady(true)
+    }, 30)
+
+    return () => clearTimeout(timeout)
+  }, [slideIndex, setIsSlideReady])
 
   const connectIntegrations = (body: string): CodeDocument => {
     if (integrations) {
@@ -155,13 +113,6 @@ export function CodePanelSlidesRender({
       }
     }
   }, [lastSlide, data.length])
-
-  useEffect(() => {
-    dispatch(setNextStepAble(false))
-    handleDebouncedCallback(() => {
-      if (slideIndex >= 0) onUpdateLastSlide(slideIndex)
-    })
-  }, [slideIndex])
 
   const slider = useMemo(() => {
     const currentSlide = data[slideIndex]
