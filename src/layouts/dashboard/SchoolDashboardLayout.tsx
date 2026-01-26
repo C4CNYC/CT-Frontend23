@@ -5,10 +5,10 @@ import { m } from 'framer-motion'
 import Link from 'next/link'
 
 import PageNotFoundIllustration from '@/assets/illustrations/PageNotFoundIllustration'
-import { MotionContainer, varBounce } from '@/components/animate'
 import RoleBasedGuard from '@/auth/RoleBasedGuard'
-import { Role } from '@/redux/services/enums/role.enum'
+import { MotionContainer, varBounce } from '@/components/animate'
 import SkeletonPanel from '@/layouts/dashboard/SkeletonPanel'
+import { Role } from '@/redux/services/enums/role.enum'
 import { useGetMySchoolsQuery } from '@/redux/services/manager/schools-manager'
 import { RootState, useSelector } from '@/redux/store'
 
