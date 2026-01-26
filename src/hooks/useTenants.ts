@@ -41,6 +41,7 @@ export function useTenants() {
 
   useEffect(() => {
     const domain = getDomain()
+    const tenantName = localStorage.getItem('tenantName') || domain
 
     let savedTenantJson = localStorage.getItem('tenant')
     let savedTenant: Tenant | null = null
@@ -52,7 +53,7 @@ export function useTenants() {
       setTenant(savedTenant)
     }
 
-    fetchTenant(domain, (fetchedTenant) => {
+    fetchTenant(tenantName, (fetchedTenant) => {
       if (
         !savedTenant ||
         !savedTenant.updatedAt ||
