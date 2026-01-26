@@ -17,16 +17,15 @@ import { useCheckers } from './useCheckers'
 interface BrowserViewTeacherBareProps {
   onSubmitLesson?: () => void
   onSubmitChallenge?: (slideId: string, code?: string) => void
-  lessonId?: string
 }
 
 export function BrowserViewTeacherBare({
   onSubmitLesson = () => {},
   onSubmitChallenge = () => {},
-  lessonId,
 }: BrowserViewTeacherBareProps) {
   const { lesson, lessonContent, checkersAnimation } = useLessonManager()
   const profile = useSelector((state) => state.global.user)
+  const lessonId = lesson?.id
 
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
   const { isLoading: isLastSlideLoading } = useGetStudentLastVisitedSlideQuery(
