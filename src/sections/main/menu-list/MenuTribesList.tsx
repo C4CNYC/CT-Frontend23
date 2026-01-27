@@ -12,6 +12,7 @@ import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { MenuPopover, Scrollbar, useSettingsContext } from '@/components'
 import { StyledSubheader } from '@/components/nav-section/vertical/styles'
 import { Role } from '@/redux/services/enums/role.enum'
+import { useGetClassesQuery } from '@/redux/services/manager/classes-manager'
 import { useGetStudentClassesQuery } from '@/redux/services/manager/classes-student'
 import { useSelector } from '@/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -28,11 +29,29 @@ export default function MenuTribesList(): React.ReactElement {
   const translate = useTranslate()
 
   const profile = useSelector((state) => state.global.user)
+  const userRole = useSelector((state) => state.global.user?.role)
+  const schoolIdFromRedux = useSelector((state: any) => state.manager.schoolId)
+  const schoolId = schoolIdFromRedux || localStorage.getItem('x-school-id') || ''
 
   const [containerHeignt, setContainerHeignt] = useState('auto')
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null)
 
-  const { data, isLoading } = useGetStudentClassesQuery({}, { skip: !profile })
+  const isManager =
+    userRole === Role.Manager ||
+    userRole === Role.Admin ||
+    userRole === Role.SuperAdmin ||
+    userRole === Role.Owner
+
+  const classesQuery = useGetClassesQuery(
+    { schoolId },
+    { skip: !isManager || !schoolId, refetchOnMountOrArgChange: true }
+  )
+  const studentClassesQuery = useGetStudentClassesQuery(
+    {},
+    { skip: isManager || !profile, refetchOnMountOrArgChange: true }
+  )
+
+  const { data, isLoading } = isManager ? classesQuery : studentClassesQuery
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const isNavMini = themeLayout === 'mini' && !isMobile
@@ -51,7 +70,7 @@ export default function MenuTribesList(): React.ReactElement {
     if (data) {
       setContainerHeignt(data.data.length < 4 ? 'auto' : '150px')
     }
-  }, [isLoading])
+  }, [isLoading, schoolId])
 
   return (
     <Stack
