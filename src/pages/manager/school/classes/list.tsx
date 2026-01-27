@@ -41,6 +41,7 @@ import {
   useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
 } from '@/redux/services/manager/classes-manager'
+import { useStudentJoinClassMutation } from '@/redux/services/manager/students-manager'
 import { RootState } from '@/redux/store'
 import { MANAGER_PATH_DASHBOARD } from '@/routes/manager.paths'
 import { STUDENT_PATH_DASHBOARD } from '@/routes/student.paths'
@@ -101,6 +102,8 @@ export default function UserListPage(): React.ReactElement {
   const [createClassByManager, { isLoading: createClassLoading }] = useCreateClassesMutation()
   const [updateClassAvatar] = useUpdateClassesAvatarMutation()
   const [deleteCasses, { isLoading: isDeleting }] = useDeleteClassesMutation()
+  const [studentJoin] = useStudentJoinClassMutation()
+  const studentId = useSelector((state: RootState) => state.global.user?.student_profile?.id)
   const { data, isLoading } = useGetClassesQuery({ schoolId, ...filters }, { skip: !schoolId })
 
   const handleDeleteMember = async (classId: string): Promise<void> => {
@@ -175,6 +178,12 @@ export default function UserListPage(): React.ReactElement {
         const randomAvatar = await createRandomAvatar()
         file.append('file', randomAvatar)
         await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap()
+      }
+      if (studentId) {
+        await studentJoin({
+          classId: data.id,
+          student_id: studentId,
+        }).unwrap()
       }
       enqueueSnackbar(
         translate('classes_class_created', {

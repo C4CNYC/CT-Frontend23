@@ -5,8 +5,10 @@ import { m } from 'framer-motion'
 import Link from 'next/link'
 
 import PageNotFoundIllustration from '@/assets/illustrations/PageNotFoundIllustration'
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { MotionContainer, varBounce } from '@/components/animate'
 import SkeletonPanel from '@/layouts/dashboard/SkeletonPanel'
+import { Role } from '@/redux/services/enums/role.enum'
 import { useGetMySchoolsQuery } from '@/redux/services/manager/schools-manager'
 import { RootState, useSelector } from '@/redux/store'
 
@@ -39,13 +41,13 @@ export function SchoolDashboardLayout({
               variant='h3'
               paragraph
             >
-              Sorry, any school found!
+              No school found!
             </Typography>
           </m.div>
 
           <m.div variants={varBounce().in}>
             <Typography sx={{ color: 'text.secondary' }}>
-              Sorry, you don't have access to any shool. Pleas contact with you administrator.
+              Sorry, you don't have access to any school. Please contact your administrator.
             </Typography>
           </m.div>
 
@@ -58,11 +60,23 @@ export function SchoolDashboardLayout({
             />
           </m.div>
 
+          <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Owner]}>
+            <Button
+              component={Link}
+              href='/manager/organization/schools'
+              size='large'
+              variant='contained'
+              sx={{ mr: 2 }}
+            >
+              Create School
+            </Button>
+          </RoleBasedGuard>
+
           <Button
             component={Link}
             href='/'
             size='large'
-            variant='contained'
+            variant='outlined'
           >
             Contact Admin
           </Button>
