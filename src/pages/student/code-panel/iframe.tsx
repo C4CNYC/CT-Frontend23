@@ -21,7 +21,9 @@ export default function Iframe() {
     { id: router.query.lessonId as string },
     { skip: !router.query.lessonId }
   )
-  let slide = lessonContent ? lessonContent[0] : null
+  let slide = lessonContent
+    ? lessonContent.find((s) => s.id === router.query.slideId) || lessonContent[0]
+    : null
 
   let pageReady = !!slide && !!lesson
 
@@ -70,6 +72,15 @@ export default function Iframe() {
           "environments":${JSON.stringify(slide?.environments || [])},
           "validate":(t,v,type='checker-validation')=>{
             window.parent.postMessage({type,checkerId: t,valid: v},'*')
+          },
+          "nextSlide":(skip=false)=>{
+            window.parent.postMessage({type:'nextSlide',skip},'*')
+          },
+          "prevSlide":()=>{
+            window.parent.postMessage({type:'prevSlide'},'*')
+          },
+          "goToSlide":(slideIndex)=>{
+            window.parent.postMessage({type:'goToSlide',slideIndex},'*')
           }
         }
       `)
@@ -84,7 +95,7 @@ export default function Iframe() {
       integrationScripts.push(
         `window.addEventListener("message",
         (e) => {
-          let types = ["checker-validation", 'save-progress', 'app-ready']
+          let types = ["checker-validation", 'save-progress', 'app-ready', 'nextSlide', 'prevSlide']
           console.log("type", e.data.type)
           if (e.data && types.includes(e.data.type) ){
           console.log(window, window.parent, window == window.parent);

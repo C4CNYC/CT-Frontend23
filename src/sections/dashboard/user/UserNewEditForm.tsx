@@ -29,6 +29,7 @@ import { useTranslate } from '@/utils/translateHelper'
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string }
+  password?: string
 }
 
 interface Props {
@@ -54,6 +55,7 @@ export default function UserNewEditForm({
     email: Yup.string()
       .required(translate('required_email'))
       .email(translate('must_be_valid_email')),
+    password: Yup.string().min(6, translate('password_min_length')),
     role: Yup.string().required(translate('required_role')),
     verifired: Yup.boolean(),
     active: Yup.boolean(),
@@ -64,6 +66,7 @@ export default function UserNewEditForm({
       first_name: currentUser?.first_name ?? '',
       last_name: currentUser?.last_name ?? '',
       email: currentUser?.email ?? '',
+      password: '',
       role: (currentUser?.role as Role) ?? Role.Manager,
       verified: currentUser?.verified,
       active: currentUser?.active,
@@ -104,7 +107,7 @@ export default function UserNewEditForm({
     }).unwrap()
   }
 
-  const onSubmit = async ({ photoURL, ...data }: FormValuesProps): Promise<void> => {
+  const onSubmit = async ({ photoURL, password, ...data }: FormValuesProps): Promise<void> => {
     try {
       if (isEdit && currentUser?.id) {
         const { email, ...body } = data
@@ -125,6 +128,7 @@ export default function UserNewEditForm({
       } else {
         const user = await createUser({
           ...data,
+          password,
         }).unwrap()
         if (photoURL) {
           await updateAvatar(user.id, photoURL)
@@ -285,6 +289,13 @@ export default function UserNewEditForm({
                 name='email'
                 label={translate('email_address')}
               />
+              {!isEdit && (
+                <RHFTextField
+                  name='password'
+                  label={translate('password')}
+                  type='password'
+                />
+              )}
 
               <RHFSelect
                 native

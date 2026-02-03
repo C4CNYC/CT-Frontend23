@@ -6,7 +6,6 @@ import { type IChallenges } from '@/redux/interfaces/challenges.interface'
 import { ILessonContent, type ILesson } from '@/redux/interfaces/content.interface'
 import { type BaseResponseInterface } from '@/utils'
 import { useSnackbar } from '@root/src/components/snackbar'
-import { useBoolean } from '@root/src/hooks/use-boolean'
 import { useUpdateLessonContentMutation } from '@root/src/redux/services/manager/lesson-content-manager'
 import { useSelector } from '@root/src/redux/store'
 import { STUDENT_PATH_DASHBOARD } from '@root/src/routes/student.paths'
@@ -56,11 +55,6 @@ export const LessonManagerProvider: React.FC<{
   const [lessonContent, setLessonContent] = useState<(ILessonContent & BaseResponseInterface)[]>([])
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const [slidesUpdated, setSlidesUpdated] = useState<string[]>([])
-  const {
-    value: contentEditing,
-    onTrue: contentEditingOn,
-    onFalse: contentEditingOff,
-  } = useBoolean(false)
   const user = useSelector((state) => state.global.user)
   let userIsOwner = !!user?.id && lesson?.userId == user?.id
   const router = useRouter()

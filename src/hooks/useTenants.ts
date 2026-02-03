@@ -28,6 +28,7 @@ export function useTenants() {
 
   useEffect(() => {
     const domain = getDomain()
+    const tenantName = localStorage.getItem('tenantName') || domain
 
     let savedTenant: Tenant | null = null
     try {

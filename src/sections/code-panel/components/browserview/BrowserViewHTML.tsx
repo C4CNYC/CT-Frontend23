@@ -40,6 +40,15 @@ export function BrowserViewHTML({
     let tests = `;
     function validateChecker(t,v,type='checker-validation'){
       window.parent.postMessage({type,checkerId: t,valid: v},'*')
+    }
+    function nextSlide(skip=false){
+      window.parent.postMessage({type:'nextSlide',skip},'*')
+    }
+    function prevSlide(){
+      window.parent.postMessage({type:'prevSlide'},'*')
+    }
+    function goToSlide(slideIndex){
+      window.parent.postMessage({type:'goToSlide',slideIndex},'*')
     }`
     tests +=
       `\n //Test Files \n ` +

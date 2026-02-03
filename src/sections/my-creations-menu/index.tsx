@@ -4,10 +4,7 @@ import { ListItemIcon, ListItemText, MenuItem } from '@mui/material'
 import { IoDiamondOutline } from '@react-icons/all-files/io5/IoDiamondOutline'
 import { useRouter } from 'next/router'
 
-import {
-  useCreateByCloningLessonMutation,
-  useCreateLessonMutation,
-} from '@/redux/services/manager/lessons-manager'
+import { useCreateByCloningLessonMutation } from '@/redux/services/manager/lessons-manager'
 import AIIcon from '@root/src/assets/icons/AIIcon'
 import OnlyAdmin from '@root/src/auth/OnlyAdmin'
 import RoleBasedGuard from '@root/src/auth/RoleBasedGuard'
@@ -35,7 +32,6 @@ export default function MyCreationsMenu(): React.ReactElement {
 
   const isDesktop = useResponsive('up', 'md')
 
-  const [createLesson] = useCreateLessonMutation()
   const [createByCloningLesson] = useCreateByCloningLessonMutation()
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
@@ -59,16 +55,6 @@ export default function MyCreationsMenu(): React.ReactElement {
         }
       )
     }
-  }
-
-  const createNewLesson = async () => {
-    const lesson = await createLesson({
-      name: translate('my_new_lesson') as string,
-      description: translate('my_lesson_description') as string,
-      active: true,
-      duration: '60',
-    }).unwrap()
-    return lesson
   }
 
   return (
