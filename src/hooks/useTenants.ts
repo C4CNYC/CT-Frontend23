@@ -45,12 +45,14 @@ export function useTenants() {
       if (!savedTenant) {
         setTenant(fetchedTenant)
         localStorage.setItem('tenant', JSON.stringify(fetchedTenant))
+        localStorage.setItem('tenantName', fetchedTenant.slug)
         return
       }
 
       if (!savedTenant.updatedAt || fetchedTenant.updatedAt !== savedTenant.updatedAt) {
         setTenant(fetchedTenant)
         localStorage.setItem('tenant', JSON.stringify(fetchedTenant))
+        localStorage.setItem('tenantName', fetchedTenant.slug)
       }
     })()
   }, [])
