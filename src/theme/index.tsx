@@ -36,9 +36,11 @@ export function ThemeProvider({ children }: Props): React.ReactElement | null {
     [themeDirection, themeMode]
   )
 
-  const theme = createTheme(themeOptions)
-
-  theme.components = ComponentsOverrides(theme) as Components
+  const theme = useMemo(() => {
+    const t = createTheme(themeOptions)
+    t.components = ComponentsOverrides(t) as Components
+    return t
+  }, [themeOptions])
 
   return (
     <MUIThemeProvider theme={theme}>

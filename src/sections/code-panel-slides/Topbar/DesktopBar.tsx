@@ -1,18 +1,27 @@
 import { type FC } from 'react'
 
 import { Stack } from '@mui/system'
+import dynamic from 'next/dynamic'
 import { useDispatch } from 'react-redux'
 
 import { toggleBrowser, toggleInstrations } from '@/redux/slices/code-panel-global'
 import { useSelector } from '@/redux/store'
-import GalleryMenu from '@/sections/code-panel/components/footer/menu/index'
 import { SupportedLang } from '@/sections/code-panel/lib/types'
 
-import Menu from '../../code-panel/components/header/nav-bar/options/menu'
-import Timer from '../../code-panel/components/header/nav-bar/options/timer'
-import ViewTumbler from '../../code-panel/components/header/nav-bar/options/view-tumbler'
-
-import SettingDrawer from './SettingsDrawer'
+const SettingDrawer = dynamic(() => import('./SettingsDrawer'), { ssr: false })
+const GalleryMenu = dynamic(() => import('@/sections/code-panel/components/footer/menu/index'), {
+  ssr: false,
+})
+const Menu = dynamic(() => import('../../code-panel/components/header/nav-bar/options/menu'), {
+  ssr: false,
+})
+const Timer = dynamic(() => import('../../code-panel/components/header/nav-bar/options/timer'), {
+  ssr: false,
+})
+const ViewTumbler = dynamic(
+  () => import('../../code-panel/components/header/nav-bar/options/view-tumbler'),
+  { ssr: false }
+)
 
 interface IDesktopBar {
   language: SupportedLang
