@@ -1,7 +1,10 @@
-import SettingsDrawer from './drawer/SettingsDrawer'
+import dynamic from 'next/dynamic'
+
 import ThemeColorPresets from './ThemeColorPresets'
 import ThemeContrast from './ThemeContrast'
 import ThemeRtlLayout from './ThemeRtlLayout'
+
+const SettingsDrawer = dynamic(() => import('./drawer/SettingsDrawer'), { ssr: false })
 
 interface Props {
   children: React.ReactNode
