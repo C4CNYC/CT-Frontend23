@@ -12,12 +12,13 @@ import { progressGuestClearAll, progressGuestGetAllLessons } from '../utils/prog
 export function useLogin() {
   const [updateLastVisitedSlide] = useUpdateStudentLastVisitedSlideMutation()
   const [completeLesson] = useCompleteLessonMutation()
-  const user = useSelector((state: RootState) => state.global.user)
+  const userId = useSelector((state: RootState) => state.global.user?.id)
+
   useEffect(() => {
-    if (user) {
+    if (userId) {
       runAfterLogin()
     }
-  }, [user])
+  }, [userId])
 
   const runAfterLogin = () => {
     let lessons = progressGuestGetAllLessons()
