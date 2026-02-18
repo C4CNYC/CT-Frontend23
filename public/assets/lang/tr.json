@@ -1272,7 +1272,7 @@
   "import_csv_preview_title": "Öğrenci Önizlemesi ({count})",
   "import_csv_importing": "Öğrenciler içe aktarılıyor...",
   "import_csv_success": "İçe aktarma tamamlandı!",
-  "import_csv_summary": "{success} öğrenci başarıyla içe aktarıldı. {failed} başarısız oldu.",
+  "import_csv_summary": "{{success}} öğrenci başarıyla içe aktarıldı. {{failed}} başarısız oldu.",
   "import_csv_error_invalid_file": "Geçersiz dosya formatı. CSV veya TSV kullanın.",
   "import_csv_error_no_data": "Dosyada geçerli öğrenci verisi bulunamadı.",
   "import_csv_error_missing_columns": "Gerekli sütunlar eksik. Dosya şunları içermelidir: email, firstname, lastname",

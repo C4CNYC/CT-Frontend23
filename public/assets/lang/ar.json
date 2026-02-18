@@ -1283,7 +1283,7 @@
     "import_csv_preview_title": "معاينة الطلاب ({count})",
     "import_csv_importing": "جاري استيراد الطلاب...",
     "import_csv_success": "اكتمل الاستيراد!",
-    "import_csv_summary": "تم استيراد {success} طالب بنجاح. فشل {failed}.",
+    "import_csv_summary": "تم استيراد {{success}} طالب بنجاح. فشل {{failed}}.",
     "import_csv_error_invalid_file": "تنسيق ملف غير صالح. استخدم CSV أو TSV.",
     "import_csv_error_no_data": "لم يتم العثور على بيانات طالب صالحة في الملف.",
     "import_csv_error_missing_columns": "أعمدة مطلوبة مفقودة. يجب أن يحتوي الملف على: email, firstname, lastname",

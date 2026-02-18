@@ -1281,7 +1281,7 @@
     "import_csv_preview_title": "Aperçu des Étudiants ({count})",
     "import_csv_importing": "Importation des étudiants...",
     "import_csv_success": "Importation terminée !",
-    "import_csv_summary": "{success} étudiants importés avec succès. {failed} ont échoué.",
+    "import_csv_summary": "{{success}} étudiants importés avec succès. {{failed}} ont échoué.",
     "import_csv_error_invalid_file": "Format de fichier non valide. Veuillez utiliser CSV ou TSV.",
     "import_csv_error_no_data": "Aucune donnée d'étudiant valide trouvée dans le fichier.",
     "import_csv_error_missing_columns": "Colonnes requises manquantes. Le fichier doit contenir : email, firstname, lastname",

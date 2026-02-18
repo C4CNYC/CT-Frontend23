@@ -1343,7 +1343,7 @@
     "import_csv_preview_title": "Preview Students ({count})",
     "import_csv_importing": "Importing students...",
     "import_csv_success": "Import complete!",
-    "import_csv_summary": "Imported {success} students successfully. {failed} failed.",
+    "import_csv_summary": "Imported {{success}} students successfully. {{failed}} failed.",
     "import_csv_error_invalid_file": "Invalid file format. Please use CSV or TSV.",
     "import_csv_error_no_data": "No valid student data found in file.",
     "import_csv_error_missing_columns": "Missing required columns. File must contain: email, firstname, lastname",
