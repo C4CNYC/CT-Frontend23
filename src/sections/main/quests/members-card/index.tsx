@@ -288,10 +288,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
           </Box>
 
           <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
-            <StudentImportModal
-              schoolId={query.schoolId as string}
-              classId={query.id as string}
-            >
+            <StudentImportModal classId={query.id as string}>
               <Button
                 variant='outlined'
                 startIcon={<FiFileText size={16} />}

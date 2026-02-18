@@ -114,7 +114,7 @@ export default function StudentNewEditForm({
   }, [isEdit, currentUser])
 
   const updateAvatar = async (id: string, photoURL?: File): Promise<unknown> => {
-    if (!id ?? !photoURL) return
+    if (!photoURL) return
 
     const file = new FormData()
     file.append('file', photoURL)
