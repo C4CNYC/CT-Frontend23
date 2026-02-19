@@ -201,8 +201,10 @@ export async function parseCSV(file: File): Promise<ParseResult> {
           const email = values[headerMap.get('email')!] || ''
           const firstName = values[headerMap.get('first_name')!] || ''
           const lastName = values[headerMap.get('last_name')!] || ''
-          const username = values[headerMap.get('username')] || undefined
-          const password = values[headerMap.get('password')] || undefined
+          const usernameIndex = headerMap.get('username')
+          const username = usernameIndex !== undefined ? values[usernameIndex] : undefined
+          const passwordIndex = headerMap.get('password')
+          const password = passwordIndex !== undefined ? values[passwordIndex] : undefined
 
           const validation = validateStudentData({
             email,
