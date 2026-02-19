@@ -30,7 +30,7 @@ import LoaderStep from './LoaderStep'
 
 type ISimpleAiGenerateProps = {
   resetRoad: () => void
-  updateForm: (name: string, value: string) => void
+  updateForm: (name: 'RpromptR', value: string) => void
   getFormValue: (name: string) => string
 }
 

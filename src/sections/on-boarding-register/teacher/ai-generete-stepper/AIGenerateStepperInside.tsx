@@ -112,6 +112,7 @@ export default function AIGenerateStepperInside({
       tone: data.RcustomToneR || data.RtoneR,
       context: data.RcontextR,
       newLessonId: '',
+      lesson_id: '',
     }
     if (!profile) {
       localStorage.setItem('AiGenerateLessonData', JSON.stringify(lessonData))
@@ -159,6 +160,8 @@ export default function AIGenerateStepperInside({
           }
 
           if (lessonData.lessonType.includes('n8n')) {
+            /* Template Lesson is in  lessonData.lessonType */
+            lessonData.lesson_id = lessonData.lessonType.replace('n8n', '')
             lessonData.lessonType = lessonData.lessonType.replace('n8n', '')
             redirectAfter = STUDENT_PATH_DASHBOARD.codePanel.root
             createLessonUsingN8n(lessonData)
@@ -219,8 +222,8 @@ export default function AIGenerateStepperInside({
         {activeStep === 0 && (
           <SimpleAiGenerate
             resetRoad={resetRoad}
-            updateForm={methods.setValue as any}
-            getFormValue={methods.getValues as any}
+            updateForm={methods.setValue}
+            getFormValue={methods.getValues}
           />
         )}
         {activeStep === 1 && (

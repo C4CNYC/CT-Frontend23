@@ -72,7 +72,12 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ['Pendings', 'ClassesStudentList', 'Pendings'],
     }),
-    createStudent: builder.mutation<IStudent & BaseResponseInterface, { schoolId: string }>({
+    createStudent: builder.mutation<
+      IStudent & BaseResponseInterface,
+      { schoolId: string } & Partial<
+        Omit<IStudent, 'id' | 'school' | 'account' | 'socials' | 'createdAt'>
+      >
+    >({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/student`,
         method: 'POST',

@@ -3,13 +3,13 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import GuestGuard from '@/auth/GuestGuard'
+import { useAuthContext } from '@/auth/useAuthContext'
 import { LoadingScreen } from '@/components'
 import { useGetPublicTribeQuery } from '@/redux/services/public/tribe-public'
-import { useSelector } from '@/redux/store'
 import JoinTribeModal from '@/sections/join-tribe/JoinTribeModal'
 
 export default function JoinTribe(): React.ReactElement {
-  const user = useSelector((state) => state.global.user)
+  const { isAuthenticated, isInitialized } = useAuthContext()
   const { query } = useRouter()
   const { data, isLoading } = useGetPublicTribeQuery(
     {
@@ -24,11 +24,11 @@ export default function JoinTribe(): React.ReactElement {
     }
   }, [query.id, data])
 
-  if (isLoading || !data) {
+  if (isLoading || !data || !isInitialized) {
     return <LoadingScreen />
   }
 
-  if (user) {
+  if (isAuthenticated) {
     return (
       <JoinTribeModal
         classInfo={data}

@@ -29,6 +29,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css'
 import 'simplebar/dist/simplebar.css'
 import '@/lib/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
+import { DEFAULT_TENANT } from '../redux/slices/tenant'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode
@@ -45,8 +46,8 @@ export default function MyApp({
   serverTenant,
   ...props
 }: MyAppProps): React.ReactElement {
-  const tenant = useTenants()
-  const initialTenant = serverTenant || tenant
+  const tenantFromHook = useTenants()
+  const stableTenant = serverTenant ?? tenantFromHook ?? DEFAULT_TENANT
   const getLayout = Component.getLayout ?? ((page) => page)
 
   const favicon = useMemo(() => {
@@ -55,35 +56,34 @@ export default function MyApp({
         <link
           rel='apple-touch-icon'
           sizes='180x180'
-          href={initialTenant?.favicon}
+          href={stableTenant?.favicon}
         />
         <link
           rel='icon'
           type='image/png'
           sizes='32x32'
-          href={initialTenant?.favicon}
+          href={stableTenant?.favicon}
         />
         <link
           rel='icon'
           type='image/png'
           sizes='16x16'
-          href={initialTenant?.favicon}
+          href={stableTenant?.favicon}
         />
       </>
     )
-  }, [initialTenant])
+  }, [stableTenant])
 
   const socialMetaTags = useMemo(() => {
-    if (!initialTenant) return null
+    if (!stableTenant) return null
 
-    const name = initialTenant?.name || 'Codetribe'
-    const title = initialTenant?.meta?.meta_title || initialTenant?.name || 'CodeTribe'
+    const name = stableTenant?.name || 'Codetribe'
+    const title = stableTenant?.meta?.meta_title || stableTenant?.name || 'CodeTribe'
     const description =
-      initialTenant?.meta?.meta_description ||
+      stableTenant?.meta?.meta_description ||
       'Text-based Coding for Teens, Schools & Summer Camps – Coding real-world, social-impact websites. Learn web development with friends.'
-    const image = initialTenant?.min_logo || ''
-    const url =
-      getPrimaryDomainWithHttps(initialTenant?.domain || 'https://app.codetribe.com') || ''
+    const image = stableTenant?.min_logo || ''
+    const url = getPrimaryDomainWithHttps(stableTenant?.domain || 'https://app.codetribe.com') || ''
 
     return (
       <>
@@ -142,7 +142,7 @@ export default function MyApp({
         />
       </>
     )
-  }, [initialTenant])
+  }, [stableTenant])
 
   return (
     <EmotionAppCacheProvider {...props}>
@@ -164,7 +164,7 @@ export default function MyApp({
       </Head>
       <GoogleAnalytics></GoogleAnalytics>
       <ReduxProvider store={store}>
-        <AuthProvider tenant={tenant}>
+        <AuthProvider tenant={stableTenant}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <SettingsProvider>
               <MotionLazyContainer>
