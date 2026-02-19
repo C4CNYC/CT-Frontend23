@@ -8,6 +8,7 @@ export interface ParsedStudent {
   first_name: string
   last_name: string
   username?: string
+  password?: string
   valid: boolean
   errors?: string[]
   rowIndex: number
@@ -133,7 +134,7 @@ function parseCSVLine(line: string, delimiter: string): string[] {
 
 /**
  * Parses CSV/TSV file and returns student data
- * Expected columns (case-insensitive): email, firstname/e, lastname/e, username (optional)
+ * Expected columns (case-insensitive): email, firstname/e, lastname/e, username (optional), password (optional)
  */
 export async function parseCSV(file: File): Promise<ParseResult> {
   return new Promise((resolve, reject) => {
@@ -175,6 +176,7 @@ export async function parseCSV(file: File): Promise<ParseResult> {
           )
             headerMap.set('last_name', index)
           else if (normalized === 'username') headerMap.set('username', index)
+          else if (normalized === 'password') headerMap.set('password', index)
         })
 
         // Validate required columns
@@ -200,6 +202,7 @@ export async function parseCSV(file: File): Promise<ParseResult> {
           const firstName = values[headerMap.get('first_name')!] || ''
           const lastName = values[headerMap.get('last_name')!] || ''
           const username = values[headerMap.get('username')] || undefined
+          const password = values[headerMap.get('password')] || undefined
 
           const validation = validateStudentData({
             email,
@@ -212,6 +215,7 @@ export async function parseCSV(file: File): Promise<ParseResult> {
             first_name: firstName.trim(),
             last_name: lastName.trim(),
             username: username?.trim() || generateUsername(firstName, lastName),
+            password: password?.trim() || undefined,
             valid: validation.valid,
             errors: validation.valid ? undefined : validation.errors,
             rowIndex: i + 1,
@@ -246,10 +250,11 @@ export function getValidStudents(
 ): Omit<ParsedStudent, 'valid' | 'errors' | 'rowIndex'>[] {
   return result.students
     .filter((s) => s.valid)
-    .map(({ email, first_name, last_name, username }) => ({
+    .map(({ email, first_name, last_name, username, password }) => ({
       email,
       first_name,
       last_name,
       username,
+      password,
     }))
 }

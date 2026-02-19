@@ -1288,7 +1288,7 @@
     "import_csv_drag_drop": "Arrastra y suelta un archivo CSV/TSV aquí",
     "import_csv_browse": "o haz clic para navegar",
     "import_csv_supported_formats": "Formatos compatibles: .csv, .tsv",
-    "import_csv_instructions": "El archivo debe contener columnas: email, firstname, lastname, username (opcional)",
+    "import_csv_instructions": "El archivo debe contener columnas: email, firstname, lastname, username (opcional), password (opcional). Si no se proporciona contraseña, la contraseña por defecto es {{password}}",
     "import_csv_preview_title": "Vista Previa de Estudiantes ({count})",
     "import_csv_importing": "Importando estudiantes...",
     "import_csv_success": "¡Importación completa!",

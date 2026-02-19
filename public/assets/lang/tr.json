@@ -1268,7 +1268,7 @@
   "import_csv_drag_drop": "CSV/TSV dosyasını buraya sürükleyin ve bırakın",
   "import_csv_browse": "veya göz atmak için tıklayın",
   "import_csv_supported_formats": "Desteklenen formatlar: .csv, .tsv",
-  "import_csv_instructions": "Dosya şu sütunları içermelidir: email, firstname, lastname, username (isteğe bağlı)",
+  "import_csv_instructions": "Dosya şu sütunları içermelidir: email, firstname, lastname, username (isteğe bağlı), password (isteğe bağlı). Şifre girilmezse varsayılan şifre {{password}}",
   "import_csv_preview_title": "Öğrenci Önizlemesi ({count})",
   "import_csv_importing": "Öğrenciler içe aktarılıyor...",
   "import_csv_success": "İçe aktarma tamamlandı!",

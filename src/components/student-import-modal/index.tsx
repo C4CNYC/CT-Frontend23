@@ -63,6 +63,7 @@ export default function StudentImportModal({ children, classId }: IStudentImport
 
   const [createStudent] = useCreateStudentMutation()
   const [studentJoinClass] = useStudentJoinClassMutation()
+  const password = '12345678'
 
   // Reset state when modal closes
   const handleClose = () => {
@@ -83,7 +84,7 @@ export default function StudentImportModal({ children, classId }: IStudentImport
   // Download example CSV
   const handleDownloadExample = () => {
     const exampleContent =
-      'email,firstname,lastname,username\njohn.doe@example.com,John,Doe,johndoe1234\njane.smith@example.com,Jane,Smith,janesmith5678\nbob.wilson@example.com,Bob,Wilson,bobwilson9012'
+      'email,firstname,lastname,username,password\njohn.doe@example.com,John,Doe,johndoe1234,MyPass123\njane.smith@example.com,Jane,Smith,janesmith5678,\nbob.wilson@example.com,Bob,Wilson,bobwilson9012,SecurePass'
     const blob = new Blob([exampleContent], { type: 'text/csv' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -228,7 +229,7 @@ export default function StudentImportModal({ children, classId }: IStudentImport
           first_name: student.first_name,
           last_name: student.last_name,
           username: student.username,
-          password: Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8),
+          password: student.password || password,
           role: 'student' as const,
         }).unwrap()
 
@@ -299,9 +300,9 @@ export default function StudentImportModal({ children, classId }: IStudentImport
 
       <Typography
         variant='body2'
-        sx={{ mb: 2, color: 'text.secondary' }}
+        sx={{ mb: 2, color: 'text.secondary', whiteSpace: 'pre-line' }}
       >
-        {translate('import_csv_instructions')}
+        {translate('import_csv_instructions', { password })}
       </Typography>
 
       <Tabs
@@ -407,7 +408,7 @@ export default function StudentImportModal({ children, classId }: IStudentImport
             multiline
             rows={8}
             fullWidth
-            placeholder={`email,firstname,lastname,username\njohn.doe@example.com,John,Doe\njane.smith@example.com,Jane,Smith,janesmith`}
+            placeholder={`email,firstname,lastname,username,password\njohn.doe@example.com,John,Doe,johndoe1234,MyPass123\njane.smith@example.com,Jane,Smith,`}
             value={pastedData}
             onChange={(e) => setPastedData(e.target.value)}
             sx={{

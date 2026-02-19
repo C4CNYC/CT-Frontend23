@@ -1279,7 +1279,7 @@
     "import_csv_drag_drop": "اسحب وأفلت ملف CSV/TSV هنا",
     "import_csv_browse": "أو انقر للاستعراض",
     "import_csv_supported_formats": "التنسيقات المدعومة: .csv, .tsv",
-    "import_csv_instructions": "يجب أن يحتوي الملف على الأعمدة: email, firstname, lastname, username (اختياري)",
+    "import_csv_instructions": "يجب أن يحتوي الملف على الأعمدة: email, firstname, lastname, username (اختياري), password (اختياري). إذا لم يتم توفير كلمة المرور، كلمة المرور الافتراضية هي {{password}}",
     "import_csv_preview_title": "معاينة الطلاب ({count})",
     "import_csv_importing": "جاري استيراد الطلاب...",
     "import_csv_success": "اكتمل الاستيراد!",
