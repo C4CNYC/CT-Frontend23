@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react'
 
 import { LoadingButton } from '@mui/lab'
 import {
+  Box,
+  Button,
   Card,
   Divider,
   IconButton,
   Skeleton,
+  Stack,
   Tab,
   Table,
   TableBody,
@@ -13,9 +16,11 @@ import {
   Tabs,
   Tooltip,
 } from '@mui/material'
+import { FiFileText } from '@react-icons/all-files/fi/FiFileText'
 import { FiTrash2 } from '@react-icons/all-files/fi/FiTrash2'
 import { useRouter } from 'next/router'
 
+import RoleBasedGuard from '@/auth/RoleBasedGuard'
 import { useAuthContext } from '@/auth/useAuthContext'
 import {
   ConfirmDialog,
@@ -31,6 +36,7 @@ import {
   useSnackbar,
   useTable,
 } from '@/components'
+import StudentImportModal from '@/components/student-import-modal'
 import { useFilters } from '@/hooks'
 import { Role } from '@/redux/services/enums/role.enum'
 import { IStudent } from '@/redux/services/interfaces/user.interface'
@@ -263,11 +269,36 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
 
         <Divider />
 
-        <UserTableToolbar
-          filterName={filterName}
-          onFilterName={handleFilterName}
-          onResetFilter={handleResetFilter}
-        />
+        <Stack
+          direction='row'
+          sx={{
+            px: 2.5,
+            py: 2,
+            bgcolor: 'background.neutral',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ flex: 1 }}>
+            <UserTableToolbar
+              filterName={filterName}
+              onFilterName={handleFilterName}
+              onResetFilter={handleResetFilter}
+            />
+          </Box>
+
+          <RoleBasedGuard roles={[Role.SuperAdmin, Role.Admin, Role.Manager, Role.Owner]}>
+            <StudentImportModal classId={query.id as string}>
+              <Button
+                variant='outlined'
+                startIcon={<FiFileText size={16} />}
+                sx={{ height: 36 }}
+              >
+                {translate('actions_import')}
+              </Button>
+            </StudentImportModal>
+          </RoleBasedGuard>
+        </Stack>
 
         <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
           <TableSelectedAction
