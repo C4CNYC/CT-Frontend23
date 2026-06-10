@@ -121,7 +121,7 @@ export default function AddQuest(): React.ReactElement {
         name: assignment?.name,
         description: isJson(assignment?.description)
           ? JSON.parse(assignment?.description)
-          : assignment?.description ?? '',
+          : (assignment?.description ?? ''),
         type: assignment?.type ?? type,
         module: assignment?.courseUnit?.id,
         lesson: assignment?.lessonId,
@@ -147,7 +147,7 @@ export default function AddQuest(): React.ReactElement {
       name: assignment?.name ?? RANDOM_NAME,
       description: isJson(assignment?.description)
         ? JSON.parse(assignment?.description || '')
-        : assignment?.description ?? '',
+        : (assignment?.description ?? ''),
       type: assignment?.type ?? (query?.type as AssignmentTypes) ?? AssignmentTypes.COURSE,
       category: assignment?.category ?? AssignmentProjectCategories.CREATIVE_PROJECT,
       language: assignment?.language ?? AssignmentProjectLanguages.HTML_CSS_JSS,
