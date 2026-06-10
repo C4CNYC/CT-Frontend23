@@ -136,7 +136,7 @@
     "husky": "^8.0.0",
     "patch-package": "^8.0.0",
     "prettier": "^3.8.4",
-    "typescript": "^5.3.3"
+    "typescript": "^5.8.0"
   },
   "resolutions": {
     "yjs": "13.6.11"

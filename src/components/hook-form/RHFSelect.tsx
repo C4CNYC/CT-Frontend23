@@ -98,8 +98,9 @@ export function RHFMultiSelect({
 }: RHFMultiSelectProps): React.ReactElement | null | string {
   const { control } = useFormContext()
 
-  const renderValues = (selectedIds: string[]): React.ReactElement | string => {
-    const selectedItems = options.filter((item) => selectedIds.includes(item.value))
+  const renderValues = (selectedIds: unknown): React.ReactElement | string => {
+    const ids = selectedIds as string[]
+    const selectedItems = options.filter((item) => ids.includes(item.value))
 
     if (!selectedItems.length && placeholder) {
       return (

@@ -60,7 +60,7 @@ export default function ProfileEditForm({ isEdit, currentUser }: Props): React.R
   }, [isEdit, currentUser])
 
   const updateAvatar = async (id: string, photoURL?: File): Promise<unknown> => {
-    if (!id ?? !photoURL) return
+    if (!id || !photoURL) return
 
     const file = new FormData()
     file.append('file', photoURL)
