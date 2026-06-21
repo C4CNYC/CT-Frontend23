@@ -72,7 +72,7 @@ export function RHFSelect({
   )
 }
 
-interface RHFMultiSelectProps extends SelectProps {
+type RHFMultiSelectProps = SelectProps & {
   name: string
   label?: string
   chip?: boolean
