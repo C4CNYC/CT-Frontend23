@@ -139,7 +139,9 @@
     "typescript": "^5.8.0"
   },
   "resolutions": {
-    "yjs": "13.6.11"
+    "yjs": "13.6.11",
+    "@types/react": "18.2.51",
+    "@types/react-dom": "18.2.18"
   },
   "browser": {
     "crypto": false
