@@ -213,7 +213,7 @@ export function CodePanelLayout(): ReactElement | null {
       router.query.lessonId ??
       (unitId === lastUnitId && lastLessonId
         ? lastLessonId
-        : courseContent.units[0].lessons[0].id ?? false)
+        : (courseContent.units[0].lessons[0].id ?? false))
 
     if (!courseId && !unitId && !lessonId) {
       void router.replace(STUDENT_PATH_DASHBOARD.page404)

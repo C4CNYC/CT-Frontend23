@@ -2,6 +2,7 @@
   "name": "codetribe",
   "version": "0.0.0",
   "license": "UNLICENSED",
+  "packageManager": "yarn@4.10.3",
   "scripts": {
     "dev": "next dev -p 8080",
     "dev:turbo": "next dev -p 8080 --turbo",
@@ -78,7 +79,7 @@
     "markdown-it-container": "^4.0.0",
     "mui-color-input": "^1.0.4",
     "mui-tel-input": "^5.0.0",
-    "next": "^14.1.0",
+    "next": "^14.2.25",
     "notistack": "^3.0.1",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
@@ -135,11 +136,13 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "husky": "^8.0.0",
     "patch-package": "^8.0.0",
-    "prettier": "^3.2.4",
-    "typescript": "^5.3.3"
+    "prettier": "^3.8.4",
+    "typescript": "^5.8.0"
   },
   "resolutions": {
-    "yjs": "13.6.11"
+    "yjs": "13.6.11",
+    "@types/react": "18.2.51",
+    "@types/react-dom": "18.2.18"
   },
   "browser": {
     "crypto": false

@@ -32,7 +32,7 @@ import FilterLessons from './filter'
 
 function moveItemInArray<T>(array: T[], from: number, to: number, on: number = 1): T[] {
   // eslint-disable-next-line no-return-assign,no-sequences
-  return (array = array.slice()), array.splice(to, 0, ...array.splice(from, on)), array
+  return ((array = array.slice()), array.splice(to, 0, ...array.splice(from, on)), array)
 }
 
 function parseSort(sort?: number) {

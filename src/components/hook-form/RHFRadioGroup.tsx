@@ -74,7 +74,7 @@ export function RHFRadioGroup({
             ))}
           </RadioGroup>
 
-          {(!!error ?? helperText) && (
+          {(!!error || helperText) && (
             <FormHelperText
               error={!!error}
               sx={{ mx: 0 }}

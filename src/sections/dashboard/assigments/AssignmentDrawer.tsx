@@ -56,7 +56,7 @@ export default function AssignmentDrawer({
       name: assignment.name,
       description: isJson(assignment?.description)
         ? JSON.parse(assignment?.description)
-        : assignment?.description ?? '',
+        : (assignment?.description ?? ''),
       startDate: format(DATE_PARSER(assignment.start_date), DATE_FORMAT),
       dueDate: format(DATE_PARSER(assignment.end_date), DATE_FORMAT),
       closeDate: format(DATE_PARSER(assignment.close_date), DATE_FORMAT),

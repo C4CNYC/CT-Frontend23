@@ -43,3 +43,8 @@ tsconfig.tsbuildinfo
 # pnpm
 pnpm-lock.yaml
 
+
+# Yarn 4 local cache
+.yarn/install-state.gz
+.yarn/build-state.yml
+.yarn/cache
