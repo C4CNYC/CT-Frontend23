@@ -4,8 +4,6 @@ import { AppCacheProvider as EmotionAppCacheProvider } from '@mui/material-nextj
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { NextPage } from 'next'
-import type { AppContext } from 'next/app'
-import App from 'next/app'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -20,10 +18,8 @@ import ThemeLocalization from '@/locales'
 import { store } from '@/redux/store'
 import { ThemeProvider } from '@/theme'
 import { getPrimaryDomainWithHttps } from '@/utils/getPrimaryDomainWithHttps'
-import { getTenantByDomain } from '@/utils/serverUtils'
 
 import { useTenants } from '../hooks/useTenants'
-import { Tenant } from '../redux/slices/tenant'
 import '@/locales/i18n'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import 'simplebar/dist/simplebar.css'
@@ -37,17 +33,11 @@ type NextPageWithLayout = NextPage & {
 
 interface MyAppProps extends AppProps {
   Component: NextPageWithLayout
-  serverTenant: Tenant
 }
 
-export default function MyApp({
-  Component,
-  pageProps,
-  serverTenant,
-  ...props
-}: MyAppProps): React.ReactElement {
+export default function MyApp({ Component, pageProps, ...props }: MyAppProps): React.ReactElement {
   const tenantFromHook = useTenants()
-  const stableTenant = serverTenant ?? tenantFromHook ?? DEFAULT_TENANT
+  const stableTenant = tenantFromHook ?? DEFAULT_TENANT
   const getLayout = Component.getLayout ?? ((page) => page)
 
   const favicon = useMemo(() => {
@@ -185,22 +175,4 @@ export default function MyApp({
       </ReduxProvider>
     </EmotionAppCacheProvider>
   )
-}
-
-MyApp.getInitialProps = async (appContext: AppContext) => {
-  const appProps = await App.getInitialProps(appContext)
-
-  const req = appContext.ctx.req
-  const host = req?.headers?.host || 'codetribe.com'
-  let domain = host.split(':')[0]
-  if (domain && domain === 'localhost') {
-    domain = 'codetribe'
-  }
-
-  const tenant = await getTenantByDomain(domain)
-
-  return {
-    ...appProps,
-    serverTenant: tenant,
-  }
 }
