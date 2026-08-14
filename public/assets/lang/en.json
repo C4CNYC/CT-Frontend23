@@ -1316,6 +1316,13 @@
     "lessons_language_select": "Select Programming language",
     "lessons_grading_method": "Code Run Mode",
     "lessons_one_file_per_type_toggle": "One file per type",
+    "to_payment_dialog_text_1": "Try out the",
+    "to_payment_dialog_text_2_1": "pro",
+    "to_payment_dialog_text_2_2": "version",
+    "to_payment_dialog_text_3_1": "free",
+    "to_payment_dialog_text_3_2": "for 14 days",
+    "to_payment_dialog_btn_1": "Start trial now",
+    "to_payment_dialog_btn_2": "Use basic version",
     "privacy_policy": "Privacy Policy",
     "cp_teacher_tour":[
       {"title":"Hi there 👋🏼", "body":"We are generating your new lesson","button":"GOT IT!"},

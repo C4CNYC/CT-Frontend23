@@ -76,5 +76,6 @@ export const SUBMIT_BTN_SX = {
   '&:hover': {
     background: '#43D4DD80',
     color: '#2FAAB3',
+    boxShadow: '0px 4px 10px rgba(67, 212, 221, 0.4)',
   },
 }
