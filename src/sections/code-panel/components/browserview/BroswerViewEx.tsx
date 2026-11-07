@@ -58,7 +58,7 @@ export function BrowserViewEx({ iframeKey }: { iframeKey: number }) {
     stdoutSet('')
     let code = java ? prepareJavaCode(java, test) : preparePythonCode(pys, test)
 
-    fetch('https://ct-n8n-bbf1b54b7ede.herokuapp.com/webhook/CodeRunner', {
+    fetch('https://ct26n8n.codetribe.ai/webhook/CodeRunner', {
       method: 'POST',
       headers: {
         'x-school-id': '6e81fc6a-ffc0-4e07-b84b-d415d524d6df',
