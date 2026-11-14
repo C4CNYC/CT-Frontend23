@@ -19,6 +19,7 @@ JWT-based authentication with role-based access control
 ## Authentication Methods
 - Email/password login
 - Google OAuth (`loginWithGoogle`, `registerWithGoogle`)
+  - Uses `@react-oauth/google`, not Firebase. The OAuth client lives in Google Cloud; setup is in the private devops docs (`docs/devops/devops.md`, section 1.5).
 - Tenant registration
 
 ## User Roles
