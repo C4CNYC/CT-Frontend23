@@ -1,3 +1,8 @@
+---
+title: Authentication & Authorization
+description: Frontend sign-in and roles, with the JWT context, auth and role guards, auth forms and session handling.
+---
+
 # Authentication & Authorization
 
 ## Auth System

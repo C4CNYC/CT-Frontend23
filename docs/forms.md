@@ -1,3 +1,8 @@
+---
+title: Forms & Validation
+description: React Hook Form with Yup, the RHF wrapper components in src/components/hook-form, and where the schemas are.
+---
+
 # Forms & Validation
 
 ## Form Library

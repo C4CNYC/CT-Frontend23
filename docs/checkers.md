@@ -1,3 +1,8 @@
+---
+title: Checkers System
+description: Lesson checks that validate student code (regex checks and iframe signals), where their code lives and how they run.
+---
+
 # Checkers System
 
 ## Overview
