@@ -1,3 +1,8 @@
+---
+title: Styling
+description: The MUI theme (palette, typography, shadows), component overrides, global styles and settings.
+---
+
 # Styling
 
 ## Theme System

@@ -1,3 +1,8 @@
+---
+title: Helpers & Utils
+description: Utility functions in src/utils (time, numbers, strings, localStorage) and the custom hooks in src/hooks.
+---
+
 # Helpers & Utils
 
 ## Utils (`src/utils/`)

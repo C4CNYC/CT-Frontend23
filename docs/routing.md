@@ -1,3 +1,8 @@
+---
+title: Routing
+description: Next.js pages-directory routes, dynamic routes, API routes and protected routes.
+---
+
 # Routing
 
 ## Pages Directory Structure

@@ -1,3 +1,8 @@
+---
+title: Components
+description: Where UI code lives (src/components, src/sections, src/layouts) and the main reusable components.
+---
+
 # Components
 
 ## Structure

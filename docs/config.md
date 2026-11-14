@@ -1,3 +1,8 @@
+---
+title: Configuration
+description: Tenant JSON configs in public/configs, how tenant config is fetched, the Next.js config and environment detection.
+---
+
 # Configuration
 
 ## Multi-tenant Configuration

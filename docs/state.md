@@ -1,3 +1,8 @@
+---
+title: State Management
+description: The Redux Toolkit store, its slices, the RTK Query services and the React context providers.
+---
+
 # State Management
 
 ## Redux Toolkit

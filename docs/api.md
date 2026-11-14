@@ -1,3 +1,8 @@
+---
+title: API Integration
+description: Frontend data fetching with RTK Query services in src/redux/services, the Axios client, and the Next.js API proxy routes.
+---
+
 # API Integration
 
 ## Data Fetching

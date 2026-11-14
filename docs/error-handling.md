@@ -1,3 +1,8 @@
+---
+title: Error Handling & Patterns
+description: Error pages (403, 404, 500), RTK Query error handling, form validation errors and notifications.
+---
+
 # Error Handling & Patterns
 
 ## Error Pages
