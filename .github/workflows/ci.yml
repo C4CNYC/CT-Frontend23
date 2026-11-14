@@ -17,7 +17,9 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
       - name: Install Dependency
-        run: yarn install --legacy-peer-deps
+        run: yarn install
       - name: Lint
         run: yarn lint
